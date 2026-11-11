@@ -1,0 +1,28 @@
+/* One native scrolling surface in the case tools: works over evidence and deduction. */
+#caseGame .case-v18-overlay:not([hidden]) {
+  display:block!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  padding:24px 14px!important;
+  scrollbar-width:thin;
+}
+#caseGame .case-v18-overlay .v18-modal {
+  position:relative;
+  margin:0 auto!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overscroll-behavior:auto!important;
+  box-sizing:border-box;
+}
+#caseGame .case-v18-overlay #v18ModalContent,
+#caseGame .case-v18-overlay .v20-deduction,
+#caseGame .case-v18-overlay .v20-deduction-list {
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+@media(max-width:600px){#caseGame .case-v18-overlay:not([hidden]){padding:8px!important}}

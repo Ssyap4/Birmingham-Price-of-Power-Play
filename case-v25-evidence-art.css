@@ -1,0 +1,8 @@
+/* Illustrated evidence cards: real individual artwork, not repeated icon tiles. */
+#caseGame .case-inventory .v25-evidence-tile{display:flex;flex-direction:column;align-items:stretch;gap:5px;padding:5px 5px 9px;min-width:0;overflow:hidden;background:linear-gradient(150deg,#241a13,#100e0c);border:1px solid #795b38;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+#caseGame .case-inventory .v25-evidence-tile:hover,#caseGame .case-inventory .v25-evidence-tile:focus-visible{border-color:#e2b776;transform:translateY(-2px);box-shadow:0 5px 18px #0009}
+#caseGame .v25-evidence-tile .v25-evidence-picture{display:block;width:100%;height:clamp(75px,8vw,120px);background-size:cover;background-position:center;border-bottom:1px solid #8c673b}
+#caseGame .v25-evidence-tile>img{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#caseGame .v25-evidence-tile>span:not(.v25-evidence-picture){display:block;font:600 11px/1.35 Georgia,serif;color:#ead1a8;text-align:center;overflow-wrap:anywhere}
+#caseGame .v20-evidence-detail img{width:min(100%,520px);height:auto;max-height:58vh;object-fit:contain;border:1px solid #a27a4b;box-shadow:0 15px 35px #0009}
+@media(max-width:700px){#caseGame .v25-evidence-tile .v25-evidence-picture{height:105px}}

@@ -1,0 +1,7 @@
+/* v4: one real scrollable dialog; wheel remains functional over selects, evidence, and cards */
+#caseGame .case-v18-overlay:not([hidden]){position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:12px!important;z-index:99999!important}
+#caseGame .case-v18-overlay .v18-modal{display:block!important;position:relative!important;flex:0 1 760px!important;max-height:min(72vh,690px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;scrollbar-width:thin!important;scrollbar-color:#b8945b #17120f!important;touch-action:pan-y!important;margin:0 auto!important}
+#caseGame .case-v18-overlay #v18ModalContent,#caseGame .case-v18-overlay .v20-deduction-list{height:auto!important;max-height:none!important;overflow:visible!important}
+#caseGame .case-inventory .case-item>img.case-evidence-photo{height:clamp(100px,9vw,145px)!important;object-fit:cover!important;border-radius:2px!important}
+#caseGame .v20-evidence-detail img{width:min(100%,380px)!important;max-height:340px!important;object-fit:contain!important}
+@media(max-width:700px){#caseGame .case-v18-overlay .v18-modal{max-height:calc(100dvh - 22px)!important}}

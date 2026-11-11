@@ -1,0 +1,11 @@
+/* Cinematic edition: desktop native wheel scrolling + mobile-safe flow */
+#caseGame .v18-case-art{background-image:linear-gradient(0deg,rgba(5,6,7,.82),rgba(5,6,7,.03) 60%),url("assets/case-scenes/city.webp")!important;background-position:center!important;background-size:cover!important;min-height:190px}
+@media(min-width:1100px){
+ html:has(#caseGame:not([hidden])),body:has(#caseGame:not([hidden])){overflow-y:auto!important;height:auto!important;overscroll-behavior-y:auto!important}
+ #caseGame .case-v18-layout{height:auto!important;max-height:none!important;min-height:670px!important}
+ #caseGame .case-v18-left,#caseGame .case-v18-middle,#caseGame .case-v18-right,#caseGame .case-paper{overflow:visible!important;max-height:none!important;height:auto!important;overscroll-behavior:auto!important}
+ #caseGame .case-v18-middle{min-height:650px!important}
+ #caseGame .case-scene{height:clamp(290px,29vw,420px)!important}
+}
+@media(max-width:1099px){#caseGame .case-v18-layout{height:auto!important;max-height:none!important}#caseGame .case-v18-middle,#caseGame .case-v18-right{max-height:none!important;overflow:visible!important}#caseGame .case-paper{max-height:none!important;overflow:visible!important}}
+@media(max-width:700px){#caseGame .case-v18-layout{display:flex!important;flex-direction:column!important}#caseGame .case-scene{height:245px!important}#caseGame .case-inventory{grid-template-columns:repeat(2,minmax(0,1fr))!important}}

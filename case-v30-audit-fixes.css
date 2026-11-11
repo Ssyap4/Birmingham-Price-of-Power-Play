@@ -1,0 +1,13 @@
+/* v3: location-checked art, original evidence photography, robust modal scrolling. */
+#caseGame .case-art{background-position:center center!important;background-size:cover!important}
+#caseGame .case-inventory .case-item{position:relative!important;display:flex!important;flex-direction:column!important;gap:8px!important;min-width:0!important;padding:7px 7px 10px!important;background:linear-gradient(145deg,#292016,#120f0d)!important;border:1px solid #87673f!important;cursor:pointer}
+#caseGame .case-inventory .case-item>img.case-evidence-photo{display:block!important;position:static!important;opacity:1!important;visibility:visible!important;width:100%!important;height:clamp(100px,10vw,155px)!important;object-fit:contain!important;pointer-events:none!important;filter:none!important;background:#1b1510!important;border:1px solid #5e4930!important}
+#caseGame .case-inventory .case-item>span{font:600 12px/1.35 Georgia,serif!important;color:#f0d6ad!important;text-align:center!important}
+#caseGame .case-v18-overlay:not([hidden]){display:flex!important;align-items:center!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:12px!important;touch-action:pan-y!important}
+#caseGame .case-v18-overlay .v18-modal{width:min(760px,100%)!important;max-width:760px!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;touch-action:pan-y!important;margin:auto!important;scrollbar-width:thin;scrollbar-color:#b38b55 #17120f}
+#caseGame .case-v18-overlay #v18ModalContent,#caseGame .case-v18-overlay .v20-deduction,#caseGame .case-v18-overlay .v20-deduction-list{max-height:none!important;overflow:visible!important}
+#caseGame .v20-pair-result{min-height:0!important;margin:8px 0 12px!important}
+#caseGame .v20-deduction-list:empty{display:none!important}
+#caseGame .v30-empty-findings{padding:12px 15px;margin:8px 0 0;background:#171410;border:1px dashed #6c5134;color:#bda888;font-size:14px}
+#caseGame .v20-evidence-detail img{width:clamp(180px,40%,310px)!important;max-height:340px!important;object-fit:contain!important;filter:none!important}
+@media(max-width:700px){#caseGame .case-v18-overlay .v18-modal{max-height:calc(100dvh - 16px)!important}#caseGame .case-inventory .case-item>img.case-evidence-photo{height:115px!important}}

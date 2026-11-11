@@ -1,0 +1,50 @@
+/* v2.0 visual refinement pass 01: typography, evidence, controls, accessibility. */
+#caseGame{--v20-brass:#caa36b;--v20-ivory:#efe0c6;--v20-rule:rgba(202,163,107,.29)}
+#caseGame .case-scene{border:1px solid var(--v20-rule);box-shadow:0 14px 42px rgba(0,0,0,.28);overflow:hidden}
+#caseGame .case-scene-inner h2{font-family:Georgia,'Times New Roman',serif;text-wrap:balance;text-shadow:0 2px 15px rgba(0,0,0,.8)}
+#caseGame .case-place{letter-spacing:.1em;text-transform:uppercase}
+#caseGame .case-choices button,#caseGame .case-v18-footer button,#caseGame .v20-pair-controls button{transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+#caseGame button:focus-visible,#caseGame select:focus-visible,#caseGame .case-item:focus-visible{outline:2px solid #f2ce8d!important;outline-offset:3px!important}
+#caseGame .case-choices button:hover:not(:disabled),#caseGame .case-v18-footer button:hover:not(:disabled){border-color:#e2bc7b;box-shadow:inset 0 0 0 1px rgba(226,188,123,.2)}
+#caseGame .case-item img{object-fit:contain!important;object-position:center!important}
+#caseGame .v20-evidence-detail{align-items:center}
+#caseGame .v20-evidence-detail img{aspect-ratio:4/5;max-height:220px;object-fit:contain;box-sizing:border-box}
+#caseGame .case-v18-overlay{overscroll-behavior:contain}
+#caseGame .case-v18-overlay .v18-modal{max-height:min(88dvh,740px);overscroll-behavior:contain;scrollbar-color:#9e7a4c #1a1916}
+#caseGame .v20-deduction-list{scrollbar-color:#9e7a4c #1a1916}
+@media(max-width:700px){#caseGame .case-scene-inner h2{font-size:clamp(1.3rem,5vw,2rem)}#caseGame .case-v18-overlay .v18-modal{max-height:90dvh}#caseGame .v20-evidence-detail img{max-height:180px}}
+@media(prefers-reduced-motion:reduce){#caseGame .case-choices button,#caseGame .case-v18-footer button,#caseGame .v20-pair-controls button{transition:none}}
+/* v2.0 refinement pass 02 — legibility and responsive evidence examination. */
+#caseGame .case-v18-layout{align-items:start}
+#caseGame .case-v18-left,#caseGame .case-v18-right{background-image:linear-gradient(160deg,rgba(61,43,27,.23),transparent 44%),linear-gradient(160deg,#1c1510,#0b0b0c 70%)}
+#caseGame .case-v18-right{overflow-wrap:anywhere}
+#caseGame .case-v19-goals li{font-size:12px;line-height:1.5}
+#caseGame .case-v18-footer button{min-height:42px}
+#caseGame .case-v18-overlay{box-sizing:border-box;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));overflow-y:auto}
+#caseGame .case-v18-overlay .v18-modal{box-sizing:border-box;overflow-y:auto;width:min(100%,680px);max-height:calc(100dvh - 32px);padding:clamp(18px,3vw,30px)}
+#caseGame .v18-close{min-width:38px;min-height:38px;z-index:2}
+#caseGame .case-v19-evidence-detail img,#caseGame .v18-evidence-detail img{width:clamp(90px,18vw,180px);height:auto;max-height:240px;object-fit:contain;flex-shrink:0}
+#caseGame .case-v19-evidence-detail,#caseGame .v18-evidence-detail{align-items:flex-start}
+@media(max-width:700px){#caseGame .case-v18-layout{gap:10px}#caseGame .case-v18-right{padding:14px}#caseGame .case-v18-footer button{min-width:0;flex:1 1 42%}#caseGame .case-v19-evidence-detail,#caseGame .v18-evidence-detail{flex-direction:column;align-items:center;text-align:left}#caseGame .case-v18-overlay .v18-modal{max-height:calc(100dvh - 24px)}#caseGame .case-v18-overlay .v18-modal h3{font-size:clamp(24px,6vw,35px);padding-inline:18px}}
+/* v2.0 refinement pass 03: cinematic depth without compromising legibility. */
+#caseGame .case-v18-left,#caseGame .case-v18-right{border-color:rgba(191,145,83,.34);box-shadow:inset 0 1px 0 rgba(240,199,128,.08),0 10px 28px rgba(0,0,0,.23)}
+#caseGame .case-v18-left::selection,#caseGame .case-v18-right::selection{background:#b18a53;color:#14100b}
+#caseGame .case-scene img{image-rendering:auto}
+#caseGame .case-choices button:active:not(:disabled),#caseGame .case-v18-footer button:active:not(:disabled){transform:translateY(1px)}
+#caseGame .case-v18-overlay .v18-modal{box-shadow:0 25px 85px rgba(0,0,0,.78),inset 0 1px 0 rgba(245,207,145,.15)}
+@media (hover:none){#caseGame .case-choices button,#caseGame .case-v18-footer button{min-height:44px}}
+@media (max-width:420px){#caseGame .case-v18-overlay{padding:8px}#caseGame .case-v18-overlay .v18-modal{padding:16px;max-height:calc(100dvh - 16px)}}
+/* v2.0 refinement pass 04 — restrained cinematic framing, no stretched artwork. */
+#caseGame .case-scene{isolation:isolate;background-color:#111513}
+#caseGame .case-art{background-position:center 43%;background-size:cover;filter:saturate(.79) contrast(1.06)}
+#caseGame .case-scene::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgba(8,10,11,.05) 10%,rgba(8,10,11,.64) 100%)}
+#caseGame .case-scene-inner{position:relative;z-index:1}
+#caseGame .case-v18-left .v18-case-art{background-position:center;background-size:cover}
+#caseGame .case-v18-left h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:.01em}
+#caseGame .case-v18-middle{min-width:0}
+#caseGame .case-v18-right{min-width:0}
+#caseGame .case-dialogue-copy{min-width:0}
+#caseGame .case-dialogue-copy p{overflow-wrap:break-word}
+#caseGame .case-v18-overlay[hidden]{display:none!important}
+#caseGame .case-v18-overlay .v18-modal img{max-width:100%;height:auto}
+@media(max-width:760px){#caseGame .case-art{background-position:center 38%}#caseGame .case-v18-left .v18-case-art{background-position:center 30%}}

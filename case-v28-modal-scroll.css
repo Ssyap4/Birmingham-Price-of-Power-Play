@@ -1,0 +1,7 @@
+/* Modal scroll: one native wheel/touch scrolling container for every case tool. */
+#caseGame .case-v18-overlay{overflow-y:auto;overscroll-behavior:auto;touch-action:pan-y;align-items:safe center}
+#caseGame .case-v18-overlay .v18-modal{box-sizing:border-box;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:auto;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:#b18b55 #17120f}
+#caseGame .case-v18-overlay .v20-deduction-list{max-height:none;overflow:visible;overscroll-behavior:auto}
+#caseGame .case-v18-overlay .v20-deduction{min-height:0;overflow:visible}
+#caseGame .case-v18-overlay select,#caseGame .case-v18-overlay button{touch-action:manipulation}
+@media(max-width:600px){#caseGame .case-v18-overlay{padding:8px}#caseGame .case-v18-overlay .v18-modal{max-height:calc(100dvh - 16px)}}

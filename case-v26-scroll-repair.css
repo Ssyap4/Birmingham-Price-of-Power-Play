@@ -1,0 +1,33 @@
+/* v2.0 scroll repair: native document scrolling on desktop, no wheel traps.
+   Deliberately overrides the earlier viewport-locked case layout. */
+@media (min-width:1100px){
+  #caseGame .case-v18-layout{
+    height:auto!important;
+    min-height:min(660px,calc(100dvh - 190px))!important;
+    max-height:none!important;
+    align-items:stretch!important;
+  }
+  #caseGame .case-v18-left,
+  #caseGame .case-v18-middle,
+  #caseGame .case-v18-right{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    overscroll-behavior:auto!important;
+  }
+  #caseGame .case-v18-middle{display:flex;flex-direction:column}
+  #caseGame .case-paper{
+    overflow:visible!important;
+    max-height:none!important;
+    flex:1 1 auto!important;
+    overscroll-behavior:auto!important;
+  }
+  #caseGame .case-scene{
+    height:clamp(260px,30vw,440px)!important;
+    min-height:260px!important;
+    flex-shrink:0;
+  }
+  #caseGame .case-v18-file{height:auto!important;min-height:100%}
+}
+/* Keep touch scrolling natural for the eventual Telegram Mini App. */
+#caseGame{touch-action:pan-y pinch-zoom}
