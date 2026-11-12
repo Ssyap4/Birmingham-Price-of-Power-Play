@@ -46,3 +46,17 @@
   grid-template-rows:65px 54px repeat(4,44px)!important;align-content:start!important;-webkit-overflow-scrolling:touch;
  }
 }
+
+/* WebKit 667px regression: the old portrait drawer leaves a dark gradient
+   over half of the landscape cabinet art. Disable only in the phone shell. */
+@media (orientation:landscape) and (max-height:720px){
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-scene::before{
+  display:none!important;content:none!important;background:none!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-scene{
+  background:#1b110d!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-room{
+  filter:none!important;opacity:1!important;
+ }
+}
