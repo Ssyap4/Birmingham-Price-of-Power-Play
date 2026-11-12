@@ -42,7 +42,7 @@ assert "mobile-portrait-v1.css" in html, "Portrait-first responsive stylesheet m
 assert "pointer-events:none!important" in content('case-health-v1.css')
 
 hub_definitions=hub[hub.index('const ACH=['):hub.index('function metrics(')]
-assert hub_definitions.count("\n ['")==42, "Expected 42 distinct campaign achievements"
+assert hub_definitions.count("\n ['")==18, "Expected 18 curated campaign achievements"
 assert 'birmingham_campaign_unique_rewards_v1' in hub
 assert 'function uniqueRewards(runs)' in hub
 assert 'function renderUniqueRewards(el,runs)' in hub
