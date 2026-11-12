@@ -12,6 +12,9 @@ on:
       - 'tests/case001/mobile_feedback_smoke.py'
       - '.github/workflows/case001-district-briefing.yml'
   workflow_dispatch:
+concurrency:
+  group: case001-map-briefing-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
