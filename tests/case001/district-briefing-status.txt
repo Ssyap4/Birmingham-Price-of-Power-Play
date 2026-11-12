@@ -1,6 +1,6 @@
-tested_commit=d420eb02fce2174aed81365f997011eb57aeb47b
+tested_commit=d4d02b50720b4f703625d7883acd5875ff969767
 result=1
-workflow_run=43319497626
+workflow_run=43320411794
 PASS chromium 375 five districts, rules->story->game, back, intact art
 PASS chromium 390 five districts, rules->story->game, back, intact art
 Traceback (most recent call last):
@@ -31,7 +31,7 @@ Call log:
       - scrolling into view if needed
       - done scrolling
       - performing click action
-      - <path d="M145 115L340 75L435 170L395 305L220 310L100 230Z"></path> from <svg aria-hidden="true" viewBox="0 0 800 640" class="districts-svg" preserveAspectRatio="xMidYMid meet">…</svg> subtree intercepts pointer events
+      - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
     - retrying click action
     - waiting 20ms
     2 × waiting for element to be visible, enabled and stable
@@ -39,15 +39,15 @@ Call log:
       - scrolling into view if needed
       - done scrolling
       - performing click action
-      - <path d="M145 115L340 75L435 170L395 305L220 310L100 230Z"></path> from <svg aria-hidden="true" viewBox="0 0 800 640" class="districts-svg" preserveAspectRatio="xMidYMid meet">…</svg> subtree intercepts pointer events
+      - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
     - retrying click action
       - waiting 100ms
-    49 × waiting for element to be visible, enabled and stable
+    51 × waiting for element to be visible, enabled and stable
        - element is visible, enabled and stable
        - scrolling into view if needed
        - done scrolling
        - performing click action
-       - <path d="M145 115L340 75L435 170L395 305L220 310L100 230Z"></path> from <svg aria-hidden="true" viewBox="0 0 800 640" class="districts-svg" preserveAspectRatio="xMidYMid meet">…</svg> subtree intercepts pointer events
+       - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
      - retrying click action
        - waiting 500ms
 
