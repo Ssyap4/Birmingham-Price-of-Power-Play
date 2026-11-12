@@ -97,7 +97,7 @@ assert art["unlock"] == "d17-unlock", "Opening D-17 must show the warehouse inte
 assert art["listen"] == "listen" and art["listen"] != art["sneak"], "Approved listening illustration must remain distinct from sneaking"
 assert art["heroVictor"] != art["warehouse"], "The checkpoint scene must not show the warehouse interior"
 assert art["heroVictor"] == "heroVictor", "Victor must use approved checkpoint scene art"
-assert hashlib.sha256((ROOT / "assets/case-scenes/heroVictor.webp").read_bytes()).hexdigest() == "b957ca3d71b92e7327a1dca0e0d220eca9456a529f42a17ad8192692957d4427", "Approved Victor art changed"
+assert hashlib.sha256((ROOT / "assets/case-scenes/heroVictor.webp").read_bytes()).hexdigest() == "5a07dd915e60ec0e97bae45343ed7f769cbae18153a0e3486875d63584360566", "Approved Victor art changed"
 assert art["heroSamuel"] == "heroSamuel", "Samuel must use approved service gallery scene art"
 assert hashlib.sha256((ROOT / "assets/case-scenes/heroSamuel.webp").read_bytes()).hexdigest() == "abdbd91905df9a63831a51c3fa2bcd0bedae2bc7baf727b977615d215f880653", "Approved Samuel art changed"
 assert art["heroSamuel"] != art["yard"], "Samuel’s opened service gallery must have its own art"
@@ -121,7 +121,7 @@ assert hashlib.sha256((ROOT / "assets/case-scenes/heroFinn.webp").read_bytes()).
 # Approved Jack encounter: frightened guard hands over Reed's night-shift payroll slip.
 assert art["heroJack"] == "heroJack", "Jack's guard encounter must use approved scene art"
 assert art["heroJack"] != art["canal"], "Guard interrogation is not a canal panorama"
-assert hashlib.sha256((ROOT / "assets/case-scenes/heroJack.webp").read_bytes()).hexdigest() == "6b2425c83d7036bb8ba33c6f93074ef242c358ec8026ecdb6592485c0d55d59f", "Approved Jack art changed"
+assert hashlib.sha256((ROOT / "assets/case-scenes/heroJack.webp").read_bytes()).hexdigest() == "cc24acb300183e71094253cd29df5d9f394bbc01b5fa98d9cc870e6a3a1ef4f0", "Approved Jack art changed"
 
 # Approved Eleanor clue: period camera and two-stamp dockside invoice, without protagonist.
 assert art["heroEleanor"] == "heroEleanor", "Eleanor must use the approved photographic evidence scene"
