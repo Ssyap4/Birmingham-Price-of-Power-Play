@@ -123,8 +123,9 @@ function celebrate(title,group){
  next();
 }
 function awards(runs,announce=false){
- const m=metrics(runs),a=readJSON(AWARD_KEY,{});
- let dirty=false;
+ const m=metrics(runs),stored=readJSON(AWARD_KEY,{});
+ const a=stored&&typeof stored==='object'&&!Array.isArray(stored)?stored:{};
+ let dirty=stored!==a;
  for(const [id,title,,group,pred] of ACH){
   if(!a[id]&&pred(m)){a[id]=Date.now();dirty=true;if(announce)celebrate(title,group)}
  }
