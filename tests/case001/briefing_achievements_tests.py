@@ -25,7 +25,11 @@ with sync_playwright() as p:
  briefing.locator('.briefing-start').click()
  assert briefing.is_hidden() and page.locator('#heroSelection').is_visible(),'Manual rules must not start case'
  page.locator('#heroSelection .hero-begin').click()
- assert page.locator('#caseGame').is_visible(),'Remembered onboarding should start directly'
+ assert briefing.is_visible(),'Fresh attempt shows rules before case story'
+ briefing.locator('.briefing-start').click()
+ assert briefing.locator('.case001-story-intro').is_visible(),'Case story must follow rules'
+ briefing.locator('.briefing-start').click()
+ assert page.locator('#caseGame').is_visible(),'Begin after story overview'
  assert page.evaluate("localStorage.getItem('birmingham_case001_briefing_seen_v1')")=='1'
  # Six different completed outcomes in the archive are represented by actual
  # game-defined IDs, not fake DOM markup. Opening this archive never replays
@@ -42,7 +46,9 @@ with sync_playwright() as p:
  page.locator('#launchFirstCase').click()
  page.locator('#heroSelection .hero-card').nth(1).click()
  page.locator('#heroSelection .hero-begin').click()
- assert briefing.is_hidden() and page.locator('#caseGame').is_visible(),'Onboarding preference persisted'
+ assert briefing.is_visible() and briefing.locator('.case001-story-intro').is_visible(),'Rules preference skips rules but retains story'
+ briefing.locator('.briefing-start').click()
+ assert briefing.is_hidden() and page.locator('#caseGame').is_visible(),'Resume after story overview'
  # Store four genuine past endings, then trigger the existing chapter observer.
  # No fake achievement event is used; the normal evaluation grants rewards.
  page.evaluate("""() => {
