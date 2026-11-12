@@ -1,0 +1,84 @@
+/* Portrait navigation and touch polish — shared motion language.
+   Presentation only. Existing JS screens, focus order, save and story stay intact. */
+@media (orientation:portrait) and (max-width:700px){
+  :root{
+    --bh-mobile-ink:#f4ddba;
+    --bh-mobile-brass:#d4aa70;
+    --bh-mobile-edge:#a77d4b;
+    --bh-mobile-ease:cubic-bezier(.22,.8,.25,1);
+  }
+  /* Keep the approved illustrated home entrance independent. Prevent
+     legacy slide animations from flashing on new non-home sections. */
+  #choose.screen:not([hidden]),
+  #play.screen:not([hidden]),
+  #result.screen:not([hidden]),
+  #districts.screen:not([hidden]),
+  #caseGame.screen:not([hidden]),
+  .campaign-hub.screen:not([hidden]){
+    animation:bh-mobile-screen-arrive .25s var(--bh-mobile-ease) both!important;
+    transform-origin:center top!important;
+    will-change:auto!important;
+  }
+  @keyframes bh-mobile-screen-arrive{
+    0%{opacity:.35;transform:translate3d(0,7px,0)}
+    100%{opacity:1;transform:translate3d(0,0,0)}
+  }
+  /* Core navigation controls share a single safe 44px+ target. */
+  #districtBack,#caseBack,#homeBtn,
+  .campaign-hub .campaign-return,
+  .campaign-hub .campaign-profile-links button{
+    box-sizing:border-box!important;
+    min-height:48px!important;
+    min-width:44px!important;
+    padding:11px 14px!important;
+    line-height:1.4!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    touch-action:manipulation!important;
+    border:1px solid var(--bh-mobile-edge)!important;
+    background:linear-gradient(145deg,#392719,#1b1511)!important;
+    color:var(--bh-mobile-ink)!important;
+    box-shadow:inset 0 1px #edcf962b,0 4px 14px #0007!important;
+  }
+  #homeBtn:not([hidden]){margin:0!important}
+  #districtBack{width:100%!important;margin-top:12px!important}
+  #districtBack:active,#caseBack:active,#homeBtn:active,
+  .campaign-hub .campaign-return:active,
+  .campaign-hub .campaign-profile-links button:active{
+    transform:scale(.985)!important;
+    filter:brightness(1.13)!important;
+  }
+  /* Clear focus indication for external keyboards and accessibility switches. */
+  #home button:focus-visible,#choose button:focus-visible,
+  #play button:focus-visible,#result button:focus-visible,
+  #districts button:focus-visible,#heroSelection button:focus-visible,
+  #caseGame button:focus-visible,.campaign-hub button:focus-visible,
+  .v33-window button:focus-visible{
+    outline:2px solid #ffe2ac!important;
+    outline-offset:2px!important;
+  }
+  #caseGame button,#districts button,#heroSelection button,#choose button,
+  #play button,.campaign-hub button,.v33-window button{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  /* Avoid losing focus under the iPhone home indicator in scrolling modals. */
+  .hero-panel,.v33-window{
+    scroll-padding-bottom:max(28px,env(safe-area-inset-bottom,0px))!important;
+  }
+  .hero-panel button,.v33-window button{
+    scroll-margin-block:14px;
+  }
+}
+/* Accessibility preference always takes priority over decorative motion. */
+@media (prefers-reduced-motion:reduce){
+  #choose.screen:not([hidden]),#play.screen:not([hidden]),
+  #result.screen:not([hidden]),#districts.screen:not([hidden]),
+  #caseGame.screen:not([hidden]),.campaign-hub.screen:not([hidden]){
+    animation:none!important;transform:none!important;opacity:1!important;
+  }
+  #districtBack,#caseBack,#homeBtn,
+  .campaign-hub .campaign-return,.campaign-hub .campaign-profile-links button{
+    transition:none!important;
+  }
+}
