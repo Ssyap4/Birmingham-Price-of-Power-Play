@@ -53,20 +53,33 @@ let state;const fresh=()=>({node:'intro',items:[],flags:{},trail:[],ending:null,
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY())||'null');if(s&&scenes[s.node]&&Array.isArray(s.items)&&s.flags&&Array.isArray(s.trail)){s.health=Number.isFinite(s.health)?Math.max(0,Math.min(100,s.health)):100;s.riskSeen=Array.isArray(s.riskSeen)?s.riskSeen:[];s.bandaged=!!s.bandaged;s.medicalKits=Number.isInteger(s.medicalKits)?Math.max(0,Math.min(2,s.medicalKits)):(s.bandaged?0:((window.BirminghamHero?.selectedId||'jack')==='jack'?1:0));s.medicalKitFound=!!s.medicalKitFound;if(s.flags.traded)s.items=s.items.filter(item=>item!=='ledger');return s}}catch{}return fresh()}
 // Visual scene manifest, reviewed against each location and story beat (v5).
 const ART={
- intro:'intro-meeting', envelope:'office', widow:'widow', interview:'widow', warn:'widow',
- heroJack:'warehouse',heroFinn:'warehouse-interior',heroEleanor:'canal',heroVictor:'warehouse',heroSamuel:'pump-cinematic',
- office:'office', searchOffice:'office',
- canal:'canal', bribe:'canal',
- sneak:'warehouse', unlock:'warehouse', warehouse:'warehouse-interior', listen:'warehouse',
- reed:'police-cinematic', reedProof:'police-cinematic', accuse:'police-cinematic', pretend:'police-cinematic', confession:'police-cinematic',
- escort:'pump-cinematic', pump:'pump-cinematic', yard:'pump-cinematic',
- rescue:'pump-basement', confront:'pump-basement', trade:'pump-basement', expose:'pump-basement', pressure:'pump-basement',
- endingRescue:'case-archive', endingEvidence:'case-archive', endingDeal:'case-archive', endingTruth:'case-archive', endingPower:'case-archive', endingDeath:'case-archive'
+ intro:'intro', envelope:'envelope', widow:'widow-home', interview:'interview-kitchen', warn:'evelyn-warning',
+ heroJack:'heroJack',heroFinn:'heroFinn',heroEleanor:'heroEleanor',heroVictor:'heroVictor',heroSamuel:'heroSamuel',
+ office:'office-approved', searchOffice:'searchOffice',
+ canal:'canal-approved', bribe:'bribe',
+ sneak:'d17-sneak', unlock:'d17-unlock', warehouse:'d17-warehouse', listen:'listen',
+ reed:'reed', reedProof:'reedProof', accuse:'accuse', pretend:'pretend', confession:'confession',
+ escort:'escort', pump:'pump', yard:'yard',
+ rescue:'rescue', confront:'confront', trade:'trade', expose:'expose', pressure:'pressure',
+ endingRescue:'endingRescue-approved', endingEvidence:'endingEvidence', endingDeal:'endingDeal-approved', endingTruth:'endingTruth', endingPower:'endingPower-approved', endingDeath:'endingDeath'
 };
 const ACTORS={intro:['ЭВЕЛИН ПРАЙС','«Прошу вас... найдите Артура. Я не знаю, кому ещё можно доверять».','evelyn'],widow:['ЭВЕЛИН ПРАЙС','«Он сказал: ищи не деньги, а вторую книгу. Я думала, это просто страх».','evelyn'],interview:['ЭВЕЛИН ПРАЙС','«Я слышала имя Рид. Но Артур просил меня никому об этом не говорить».','evelyn'],reed:['СЕРЖАНТ РИД','«Я могу обеспечить защиту. Но сперва покажите мне бумаги».','reed'],reedProof:['СЕРЖАНТ РИД','«Это не то, чем кажется. Меня заставили подписать накладную».','reed'],confront:['УОЛТЕР КРЕЙН','«Ты думаешь, здесь есть невиновные? Спроси своего счетовода».','crane'],pump:['АРТУР ПРАЙС','«Не отдавай ему вторую книгу. Она единственное доказательство».','arthur']};
 // v2.0 visual pass: use location-specific art already bundled with the game.
 // No remote image requests: opening index.html via file:// remains supported.
 const sceneArt=name=>'assets/case-scenes/'+name+'.webp';
+// Preflight the actual WebP bytes before displaying an illustration. CSS background
+// URLs fail silently; this detects broken assets and keeps the scene readable.
+const verifiedArt=new Map();
+function verifySceneArt(name){
+ if(verifiedArt.has(name))return;
+ verifiedArt.set(name,'loading');
+ const img=new Image();
+ img.onload=()=>verifiedArt.set(name,'ready');
+ img.onerror=()=>{verifiedArt.set(name,'missing');console.error('[Case 001] Missing scene illustration:',name,sceneArt(name));};
+ img.src=sceneArt(name);
+}
+// Load art only when its scene is visited. Do not fetch the entire case on mobile.
+
 const portraitFiles={evelyn:'evelyn',investigator:'investigator',reed:'reed-portrait',crane:'crane-portrait',arthur:'arthur-portrait'};
 const portraitArt=name=>portraitFiles[name]?'assets/case-scenes/'+portraitFiles[name]+'.webp':null;
 const danger={sneak:{source:'Сторож склада D-17',damage:25,base:0.30,desc:'При скрытном проникновении охранник заметил движение.'},yard:{source:'Охрана насосной станции',damage:30,base:0.32,desc:'У вентиляционной решётки прозвучал выстрел.'},rescue:{source:'Уолтер Крейн',damage:35,base:0.38,desc:'Крейн открыл огонь во время освобождения Артура.'},endingEvidence:{source:'Люди Крейна',damage:40,base:0.40,desc:'Попытка захватить папку обернулась перестрелкой.'},retreatCrane:{source:'Уолтер Крейн',damage:25,base:0.30,desc:'Крейн заметил попытку отступить и выстрелил вслед.'}};
@@ -123,7 +136,7 @@ function premiumGate(){
  if(!independent)missing.push('независимое подтверждение заговора');
  return missing.length?'Требуется: '+missing.join('; '):null;
 }
-function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=n.place||'СМОЛЛ-ХИТ · АРХИВ';$('caseTitle').textContent=n.title;$('caseText').textContent=n.text;$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=ACTORS[state.node]||null;const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
+function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=n.place||'СМОЛЛ-ХИТ · АРХИВ';$('caseTitle').textContent=n.title;$('caseText').textContent=n.text;$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';verifySceneArt(ART[state.node]||'intro-meeting');$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=ACTORS[state.node]||null;const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
 function renderChoices(){const n=scenes[state.node];$('caseChoices').replaceChildren();$('caseOutcome').hidden=!n.end;if(n.end){state.ending=state.node;$('caseOutcome').textContent=n.outcome+(state.node==='endingDeath'?' · Причина: '+(state.deathCause||'опасное столкновение'):' · Репутация +'+n.reputation);save();const b=button('ПЕРЕИГРАТЬ ДЕЛО С НАЧАЛА',()=>{if(confirm('Начать дело заново? Текущие решения будут заменены.')){state=fresh();save();render()}});$('caseChoices').append(b);return}healChoice();for(const [label,target,requirement] of n.choices){
 // Each one-time scene grants a unique clue. Those existing permanent clues
 // survive the bounded journal and also cover old saves without a schema change.

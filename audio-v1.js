@@ -4,7 +4,7 @@ const base='assets/audio/';
 const playlists={menu:['night-on-the-docks.mp3'],case:['case-fog.ogg','case-ledger.ogg','case-shadows.ogg']};
 const saved=(key,def)=>{try{const v=localStorage.getItem(key);return v===null?def:v==='true'}catch{return def}};
 let musicOn=saved('bh_music_enabled',true),effectsOn=saved('bh_effects_enabled',true),ctx=null,mode='',index=0,active=0,transitioning=false,started=false;
-const players=[new Audio(),new Audio()];players.forEach(p=>{p.preload='auto';p.volume=0;p.addEventListener('error',()=>{if(musicOn&&started)console.warn('Аудиофайл недоступен:',p.src)})});
+const players=[new Audio(),new Audio()];players.forEach(p=>{p.preload='none';p.volume=0;p.addEventListener('error',()=>{if(musicOn&&started)console.warn('Аудиофайл недоступен:',p.src)})});
 const wrap=document.createElement('div');wrap.className='bh-audio-controls';wrap.innerHTML='<button id="bhMusic" type="button" aria-label="Включить или выключить музыку"></button><button id="bhEffects" type="button" aria-label="Включить или выключить звуковые эффекты"></button>';
 document.body.append(wrap);
 const mBtn=wrap.querySelector('#bhMusic'),sBtn=wrap.querySelector('#bhEffects');

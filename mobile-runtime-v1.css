@@ -1,0 +1,83 @@
+/* Native iPhone/Android and Telegram Mini App landscape safe-area polish. */
+:root{--bh-inset-left:max(env(safe-area-inset-left,0px),var(--tg-content-safe-area-inset-left,0px));--bh-inset-right:max(env(safe-area-inset-right,0px),var(--tg-content-safe-area-inset-right,0px));--bh-inset-top:max(env(safe-area-inset-top,0px),var(--tg-content-safe-area-inset-top,0px));--bh-inset-bottom:max(env(safe-area-inset-bottom,0px),var(--tg-content-safe-area-inset-bottom,0px))}
+#cabinetRotatePrompt{box-sizing:border-box}
+#cabinetRotatePrompt small{max-width:330px;font:12px/1.5 Arial,sans-serif;color:#ad9878}
+#cabinetRotatePrompt .bh-landscape-request{min-height:48px;padding:11px 18px;max-width:100%;background:#5b321d;border:1px solid #e0bb82;color:#fae5bf;font:700 13px Arial,sans-serif;cursor:pointer;touch-action:manipulation}
+#cabinetRotatePrompt .bh-landscape-request:focus-visible{outline:3px solid #f2cf99;outline-offset:3px}
+@media (orientation:landscape) and (max-height:650px){
+ html,body{max-width:100%;overflow-x:clip}
+ body>.shell{box-sizing:border-box;min-width:0;max-width:100%;padding-left:max(8px,var(--bh-inset-left));padding-right:max(8px,var(--bh-inset-right));padding-bottom:var(--bh-inset-bottom)}
+ #caseGame.case-screen{box-sizing:border-box;min-width:0;max-width:100%;padding:6px 0 100px!important}
+ #caseGame .case-choice{min-height:44px!important;touch-action:manipulation}
+ #caseGame .case-topline button{min-height:44px}
+ .hero-selection{box-sizing:border-box;padding:max(6px,var(--bh-inset-top)) max(6px,var(--bh-inset-right)) max(6px,var(--bh-inset-bottom)) max(6px,var(--bh-inset-left));overscroll-behavior:contain}
+ .hero-panel{box-sizing:border-box;max-height:calc(100dvh - var(--bh-inset-top) - var(--bh-inset-bottom) - 12px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+ .v33-shade{box-sizing:border-box;padding:max(5px,var(--bh-inset-top)) max(5px,var(--bh-inset-right)) max(5px,var(--bh-inset-bottom)) max(5px,var(--bh-inset-left))}
+ .v33-window{box-sizing:border-box;max-height:calc(100dvh - var(--bh-inset-top) - var(--bh-inset-bottom) - 10px);overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+ .v33-result{max-height:calc(100dvh - var(--bh-inset-top) - var(--bh-inset-bottom) - 12px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+ .campaign-hub{box-sizing:border-box;max-width:100%;margin-bottom:95px}
+ .campaign-tabs button{min-height:44px}
+}
+@media (orientation:landscape) and (max-height:460px) and (max-width:980px){
+ #caseGame .case-scene{height:clamp(145px,38dvh,210px)!important}
+ #caseGame .case-dialogue{min-height:60px!important}
+ #caseGame .case-portrait{width:58px!important;height:62px!important;flex-basis:58px!important;min-width:58px!important}
+ #caseGame .case-paper{padding:12px 14px!important}
+ #caseGame .case-choices{gap:8px!important}
+ #caseGame .case-choice{padding:10px 12px 10px 38px!important;font-size:13px!important}
+ .case-v18-right{padding:12px 9px}
+}
+
+/* Landscape menu keeps a 44px touch area across iPhone and Android sizes. */
+@media (orientation:landscape) and (max-height:500px) and (max-width:980px){
+ #home.cabinet-art-ready .cabinet-menu{grid-template-rows:clamp(40px,14dvh,54px) repeat(5,minmax(44px,auto))!important;overflow-y:auto!important;overscroll-behavior:contain}
+ #home.cabinet-art-ready .cabinet-entry{min-height:44px!important;height:44px!important;max-height:none!important}
+ #home.cabinet-art-ready .cabinet-entry-primary{min-height:48px!important;height:48px!important}
+}
+
+/* Make the five illustrated cabinet entries fit above the fold on a landscape phone. */
+@media (orientation:landscape) and (max-height:500px) and (max-width:980px){
+ body>.shell{padding-top:0!important}
+ body>.shell>.top{box-sizing:border-box;height:54px;min-height:54px;margin-bottom:0!important;padding:4px 8px!important}
+ body>.shell>.top .brand-mark{width:35px;height:35px;font-size:25px;flex:none}
+ body>.shell>.top .brand{gap:8px}
+ body>.shell>.top .brand strong{font-size:16px;letter-spacing:1.7px}
+ body>.shell>.top .brand small{font-size:8px}
+ body:has(#home:not([hidden]))>.shell{padding-bottom:0!important}
+ #home.cabinet-art-ready .cabinet-scene{height:calc(100dvh - 54px - var(--bh-inset-top) - var(--bh-inset-bottom))!important;min-height:0!important}
+ #home.cabinet-art-ready .cabinet-menu{height:100%!important}
+}
+
+/* Artwork is intentionally text-bearing. Never paint DOM labels over the letters baked into it.
+   Buttons retain explicit aria-labels for accessibility; this applies only after all art loaded. */
+#home.cabinet-art-ready .cabinet-entry > *,
+#home.cabinet-art-ready .cabinet-heading > *{display:none!important}
+@media (orientation:landscape) and (max-height:500px) and (max-width:980px){
+ body>.shell>.top .brand-mark{width:34px!important;height:34px!important;font-size:22px!important}
+ body>.shell>.top .brand{min-width:0;max-width:100%}
+ body>.shell>.top .brand strong{font-size:16px!important;line-height:1.05!important;letter-spacing:1px!important;white-space:nowrap}
+ body>.shell>.top .brand strong i{display:none!important}
+ body>.shell>.top .brand small{font-size:8px!important;letter-spacing:1px!important}
+ body>.shell>.top .top-actions{min-width:0;flex:none}
+}
+
+/* The .screen entrance transform changes the containing block of fixed dialogs;
+   leave transitions to internal scenes instead of shifting the entire case viewport. */
+#caseGame.case-screen{animation:none!important;transform:none!important;filter:none!important}
+body.v34-board-open #caseHealthToasts,
+body:has(#caseGame:not([hidden]) .case-v18-overlay:not([hidden])) #caseHealthToasts,
+body:has(#heroSelection:not([hidden])) #caseHealthToasts{display:none!important}
+
+/* Mobile landscape: a dedicated toolbar consumes its own row before case art.
+   Unlike fixed utilities, it cannot obscure a choice, dialogue, or inventory. */
+@media (orientation:landscape) and (max-height:650px) and (max-width:980px){
+ #caseGame > .bh-audio-controls{
+  position:relative!important;inset:auto!important;left:auto!important;right:auto!important;
+  bottom:auto!important;top:auto!important;z-index:1!important;
+  box-sizing:border-box;width:100%!important;max-width:100%!important;
+  margin:0 0 8px!important;padding:4px max(8px,var(--bh-inset-right))!important;
+  display:flex!important;justify-content:flex-end;flex-wrap:wrap!important;gap:6px;
+  border-bottom:1px solid rgba(189,145,88,.35);background:rgba(15,14,13,.94);
+ }
+ #caseGame > .bh-audio-controls button{min-height:44px!important;white-space:nowrap}
+}

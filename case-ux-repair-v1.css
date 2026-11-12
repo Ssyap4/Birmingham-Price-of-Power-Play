@@ -1,0 +1,25 @@
+/* Case 001 UX repairs: desktop controls, scrollable evidence, chapter scenes. */
+#caseGame .case-v18-footer{display:none!important}
+/* Audio and exit share one row; fixed controls never stack over each other. */
+.bh-audio-controls{z-index:100!important;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;right:max(8px,var(--bh-inset-right,8px))!important;bottom:max(8px,var(--bh-inset-bottom,8px))!important;max-width:calc(100vw - 16px);pointer-events:auto}
+.bh-audio-controls button{min-height:44px;touch-action:manipulation}
+#gameExitBtn{position:static!important;right:auto!important;bottom:auto!important;z-index:auto!important;min-height:44px!important;white-space:nowrap}
+#cabinetSettingsDialog #gameExitBtn{display:none!important}
+body.v34-board-open>.bh-audio-controls,
+body:has(#caseGame:not([hidden]) .case-v18-overlay:not([hidden]))>.bh-audio-controls,
+body:has(#heroSelection:not([hidden]))>.bh-audio-controls{display:none!important}
+.v33-shade[hidden],.v33-solved[hidden]{display:none!important}
+.v33-shade{overflow-y:auto!important;align-items:center}
+.v33-window{overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:auto;scrollbar-color:#b58a50 #18130e}
+.v33-window:focus-visible{outline:2px solid #ddb67c}
+.v33-solved{margin-top:22px;padding-top:17px;border-top:1px solid #806139}
+.v33-solved h3{font:600 24px Georgia,serif;color:#e8c797;margin:0 0 7px}
+.v33-solved>p{font-size:13px;color:#baa487;margin:0 0 12px}
+.v33-solved-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px}
+.v33-solved-board .v33-tile{border-color:#677b63;background:#142019;opacity:.84}
+.v33-solved-board .v33-tile:focus-visible{opacity:1}
+.v18-case-art{background-position:center;background-size:cover;transition:background-image .18s ease}
+@media(max-width:620px){#gameExitBtn{bottom:calc(74px + env(safe-area-inset-bottom))!important}
+.v33-solved-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+
+@media (orientation:landscape) and (max-height:460px){.bh-audio-controls{gap:4px}.bh-audio-controls button{font-size:10px!important;padding:8px 9px!important;min-height:40px}#gameExitBtn{min-height:40px!important}}

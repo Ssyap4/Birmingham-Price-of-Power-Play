@@ -75,3 +75,20 @@
     z-index: 9999;
   }
 }
+
+/* Landscape phones (667–844 CSS px): the case exit used to overlap audio.
+   The <=620px portrait rule above never matched these screen widths. */
+@media (orientation: landscape) and (max-height: 450px) and (max-width: 900px) {
+  /* The portrait-only 44px close target misses landscape phones 667–844px wide. */
+  .v33-close {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #gameExitBtn {
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    min-height: 44px;
+  }
+}
