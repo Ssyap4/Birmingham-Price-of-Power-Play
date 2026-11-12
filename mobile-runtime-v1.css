@@ -81,3 +81,63 @@ body:has(#heroSelection:not([hidden])) #caseHealthToasts{display:none!important}
  }
  #caseGame > .bh-audio-controls button{min-height:44px!important;white-space:nowrap}
 }
+
+
+/* iPhone Safari landscape — usable viewport is smaller than the physical
+   display because Safari/ChatGPT reserve their browser chrome. Never use
+   physical-screen units or fixed six-row minima for the home artwork. */
+@media (orientation:landscape) and (max-width:1100px) and (max-height:700px){
+  html,body{width:100%;max-width:100%;min-width:0;overflow-x:clip}
+  body>.shell{
+    box-sizing:border-box!important;width:100%!important;max-width:none!important;
+    min-width:0!important;margin:0!important;
+    padding:0 max(0px,var(--bh-inset-right)) var(--bh-inset-bottom) max(0px,var(--bh-inset-left))!important;
+  }
+  body:has(#home:not([hidden]))>.shell{padding-bottom:0!important}
+  body>.shell>.top{
+    box-sizing:border-box!important;position:relative!important;top:auto!important;
+    height:clamp(40px,11dvh,54px)!important;min-height:0!important;
+    margin:0!important;padding:3px 10px!important;
+    flex-shrink:0!important;
+  }
+  #home.cabinet-art-ready{width:100%!important;max-width:none!important;padding:0!important}
+  #home.cabinet-art-ready .cabinet-scene{
+    display:flex!important;flex-direction:row!important;
+    width:100%!important;max-width:none!important;
+    height:calc(100dvh - clamp(40px,11dvh,54px) - var(--bh-inset-top) - var(--bh-inset-bottom))!important;
+    min-height:0!important;max-height:none!important;overflow:hidden!important;
+  }
+  #home.cabinet-art-ready .cabinet-room{
+    position:absolute!important;inset:0 40% 0 0!important;
+    width:auto!important;height:auto!important;min-height:0!important;
+    background-size:100% 100%!important;
+  }
+  #home.cabinet-art-ready .cabinet-menu{
+    box-sizing:border-box!important;display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,.95fr) repeat(5,minmax(0,1fr))!important;
+    align-content:stretch!important;justify-content:stretch!important;
+    flex:0 0 40%!important;width:40%!important;max-width:40%!important;
+    height:100%!important;min-height:0!important;max-height:none!important;
+    margin:0!important;padding:3px 5px!important;
+    gap:clamp(1px,.5dvh,3px)!important;
+    overflow-y:auto!important;overflow-x:hidden!important;transform:none!important;
+  }
+  #home.cabinet-art-ready .cabinet-heading,
+  #home.cabinet-art-ready .cabinet-entry,
+  #home.cabinet-art-ready .cabinet-entry-primary{
+    box-sizing:border-box!important;width:100%!important;height:100%!important;
+    min-height:0!important;max-height:100%!important;margin:0!important;
+    background-size:100% 100%!important;
+  }
+  #home.cabinet-art-ready .cabinet-menu-toggle{display:none!important}
+}
+/* When a browser provides exceptionally little vertical space, prioritize
+   reachable controls over forced clipping. The menu remains independently scrollable. */
+@media (orientation:landscape) and (max-width:1100px) and (max-height:310px){
+  #home.cabinet-art-ready .cabinet-menu{
+    grid-template-rows:35px repeat(5,40px)!important;
+    align-content:start!important;
+    -webkit-overflow-scrolling:touch;
+  }
+}
