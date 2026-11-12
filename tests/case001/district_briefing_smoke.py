@@ -20,6 +20,7 @@ for engine in ('chromium','webkit'):
     page.locator('#home.cabinet-art-ready').wait_for(timeout=15000)
     page.locator('#districtsCard').click()
     page.locator('#districts').wait_for(state='visible')
+    if engine=='webkit':page.evaluate("""() => {window.__districtTapCount=0;document.addEventListener('click',e=>{if(e.target.closest('.map-pin'))window.__districtTapCount++},true)}""")
     for district in ['small-heath','aston','digbeth','centre','jewellery']:
      pin=page.locator('.map-pin[data-district="'+district+'"]')
      if engine=='webkit':pin.dispatch_event('click') # WebKit synthetic touch hit-testing is unreliable; verify actual handler separately.
@@ -30,7 +31,7 @@ for engine in ('chromium','webkit'):
       const panel=document.querySelector('.district-detail').getBoundingClientRect();
       return {top:panel.top,bottom:panel.bottom,name:document.querySelector('#districtTitle').textContent,
        active:document.querySelector('.map-pin.selected')?.dataset.district,
-       focused:document.activeElement?.id,viewport:innerHeight};
+       focused:document.activeElement?.id,viewport:innerHeight,scrollY:scrollY,scrollHeight:document.scrollingElement.scrollHeight,clientHeight:document.scrollingElement.clientHeight,clicks:window.__districtTapCount||0,overflow:getComputedStyle(document.scrollingElement).overflowY};
      }""")
      assert data['active']==district,(engine,w,district,data)
      assert -15<=data['top']<=h*.55,(engine,w,district,'description not in viewport',data)
