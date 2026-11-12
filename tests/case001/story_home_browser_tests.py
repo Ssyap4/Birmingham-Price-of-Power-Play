@@ -53,7 +53,7 @@ with sync_playwright() as p:
         assert metrics["feature"] > 200, f"Campaign tile too narrow at {width}"
         page.locator("#storyStart").click()
         assert page.locator("#campaignAchievements").is_visible(), "Achievements must open their own page"
-        assert page.locator("#campaignAchievements .campaign-award").count() >= 28, "Campaign achievements missing"
+        assert page.locator("#campaignAchievements .campaign-award").count() == 18, "Curated campaign achievements missing"
         page.locator("#homeBtn").click()
         page.locator("#districtsCard").click()
         assert page.locator("#districts").is_visible(), f"Map did not open at {width}"
