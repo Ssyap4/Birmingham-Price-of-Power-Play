@@ -8,7 +8,7 @@ const heroes=[
 ];
 const STORE='birmingham_hero_selection_v1';let chosen='jack';
 const api={get selectedId(){return localStorage.getItem(STORE)||'jack'},heroes};window.BirminghamHero=api;
-const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР ДЕТЕКТИВА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
+const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР ДЕТЕКТИВА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-rules" type="button">ПРАВИЛА ДЕЛА</button><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
 document.body.append(modal);
 const cards=modal.querySelector('#heroCards'),detail=modal.querySelector('#heroDetails');
 function draw(){cards.replaceChildren();heroes.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='hero-card'+(h.id===chosen?' active':'');b.setAttribute('aria-pressed',String(h.id===chosen));b.innerHTML=`<img src="assets/heroes/${h.id}.webp" alt=""><strong>${h.name}</strong><small>${h.role}</small>`;b.onclick=()=>{chosen=h.id;draw()};cards.append(b)});const h=heroes.find(x=>x.id===chosen);detail.innerHTML=`<img class="hero-detail-photo" src="assets/heroes/${h.id}.webp" alt=""><div class="hero-biography"><span class="hero-eyebrow">${h.alias.toUpperCase()} · ${h.role.toUpperCase()}</span><h3>${h.name}</h3><p>${h.bio}</p><h4>Стартовое снаряжение</h4><div class="hero-gear">${h.items.map(x=>`<span>✦ ${x}</span>`).join('')}</div></div><div class="hero-traits"><h4>Специализация</h4><p>${h.trait}</p><h4>Стиль игры</h4><p>${h.style}</p><small>На канале доступно личное действие героя. Оно открывает свой путь или даёт улику и используется один раз за расследование.</small></div>`;const resumable=window.BirminghamCase.hasProgress(chosen);modal.querySelector('.hero-begin').textContent=resumable?'ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ →':window.BirminghamCase.hasSavedCase(chosen)?'ОТКРЫТЬ ОТЧЁТ →':'НАЧАТЬ РАССЛЕДОВАНИЕ →';modal.querySelector('.hero-new').hidden=!window.BirminghamCase.hasSavedCase(chosen)}
@@ -17,7 +17,8 @@ function open(){chosen='jack';draw();modal.hidden=false;document.body.classList.
 api.openSelection=open;modal.querySelector('.hero-close').onclick=close;modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
 const launch=document.getElementById('launchFirstCase');if(!launch)return;
 launch.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open()},true);
-function begin(newAttempt){
+function begin(newAttempt,briefed=false){
+ if(!briefed&&(newAttempt||!window.BirminghamCase.hasSavedCase(chosen))&&window.BirminghamCaseRules){window.BirminghamCaseRules.open(()=>begin(newAttempt,true));return}
  if(newAttempt&&window.BirminghamCase.hasSavedCase(chosen)&&!confirm('Начать новое расследование? Сохранённая попытка этого героя будет заменена.'))return;
  const h=chosen,key='birmingham_case_smol_heath_v1_'+h;
  try{
@@ -26,6 +27,7 @@ function begin(newAttempt){
  }catch(e){console.warn('Сохранение персонажа недоступно',e)}
  close();if(newAttempt||!window.BirminghamCase.hasSavedCase(h))window.BirminghamCase.startNew();else window.BirminghamCase.resume();
 }
+modal.querySelector('.hero-rules').onclick=()=>window.BirminghamCaseRules?.open(()=>{}, {force:true});
 modal.querySelector('.hero-begin').onclick=()=>begin(false);
 modal.querySelector('.hero-new').onclick=()=>begin(true);
 })();
