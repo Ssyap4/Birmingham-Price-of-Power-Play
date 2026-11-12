@@ -1,53 +1,53 @@
-tested_commit=d4d02b50720b4f703625d7883acd5875ff969767
+tested_commit=377a38840559e0351928d3941b8c0b88c1ec433b
 result=1
-workflow_run=43320411794
+workflow_run=43321296591
 PASS chromium 375 five districts, rules->story->game, back, intact art
 PASS chromium 390 five districts, rules->story->game, back, intact art
 Traceback (most recent call last):
   File "/home/runner/work/Birmingham-Price-of-Power-Play/Birmingham-Price-of-Power-Play/tests/case001/district_briefing_smoke.py", line 24, in <module>
-    page.locator('.map-pin[data-district="'+district+'"]').click()
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 17876, in click
+    page.locator('.map-pin[data-district="'+district+'"]').tap()
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 20248, in tap
     self._sync(
   File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
     return task.result()
            ^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_locator.py", line 165, in click
-    return await self._frame._click(self._selector, strict=True, **params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 593, in _click
-    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_locator.py", line 676, in tap
+    return await self._frame.tap(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 625, in tap
+    await self._channel.send("tap", self._timeout, locals_to_params(locals()))
   File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
     return await self._connection.wrap_api_call(
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+playwright._impl._errors.TimeoutError: Locator.tap: Timeout 30000ms exceeded.
 Call log:
   - waiting for locator(".map-pin[data-district=\"small-heath\"]")
     - locator resolved to <button type="button" aria-pressed="true" class="map-pin selected" data-district="small-heath">…</button>
-  - attempting click action
+  - attempting tap action
     2 × waiting for element to be visible, enabled and stable
       - element is visible, enabled and stable
       - scrolling into view if needed
       - done scrolling
-      - performing click action
-      - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
-    - retrying click action
+      - performing tap action
+      - <div class="map-panel">…</div> intercepts pointer events
+    - retrying tap action
     - waiting 20ms
     2 × waiting for element to be visible, enabled and stable
       - element is visible, enabled and stable
       - scrolling into view if needed
       - done scrolling
-      - performing click action
-      - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
-    - retrying click action
+      - performing tap action
+      - <div class="map-panel">…</div> intercepts pointer events
+    - retrying tap action
       - waiting 100ms
     51 × waiting for element to be visible, enabled and stable
        - element is visible, enabled and stable
        - scrolling into view if needed
        - done scrolling
-       - performing click action
-       - <div role="group" class="map-art" aria-label="Интерактивная схема районов Бирмингема">…</div> intercepts pointer events
-     - retrying click action
+       - performing tap action
+       - <div class="map-panel">…</div> intercepts pointer events
+     - retrying tap action
        - waiting 500ms
 
