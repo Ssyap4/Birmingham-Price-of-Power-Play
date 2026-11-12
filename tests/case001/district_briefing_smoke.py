@@ -21,6 +21,19 @@ for engine in ('chromium','webkit'):
     page.locator('#districtsCard').click()
     page.locator('#districts').wait_for(state='visible')
     for district in ['small-heath','aston','digbeth','centre','jewellery']:
+     if engine=='webkit':
+      probe=page.evaluate("""id=>{
+       const pin=document.querySelector('.map-pin[data-district="'+id+'"]');
+       const r=pin.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+       const at=document.elementFromPoint(x,y);
+       const css=e=>e?getComputedStyle(e).pointerEvents:null;
+       return {rect:{x,y,left:r.left,top:r.top,width:r.width,height:r.height},
+        hit:at?.outerHTML?.slice(0,125),hitPin:at?.closest('.map-pin')?.dataset.district||'',
+        pinPointer:css(pin),mapPointer:css(document.querySelector('.map-art')),
+        panelPointer:css(document.querySelector('.map-panel')),
+        svgPointer:css(document.querySelector('.districts-svg'))};
+      }""",district)
+      print('WEBKIT HIT PROBE',w,district,probe,flush=True)
      page.locator('.map-pin[data-district="'+district+'"]').tap()
      page.wait_for_timeout(120)
      data=page.evaluate("""() => {
