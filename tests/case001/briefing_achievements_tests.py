@@ -31,6 +31,8 @@ with sync_playwright() as p:
  # game-defined IDs, not fake DOM markup. Opening this archive never replays
  # previously earned popups.
  page.locator('#caseBack').click()
+ if page.locator('#districts').is_visible():
+  page.locator('#districtBack').click()
  page.locator('#storyStart').click()
  assert page.locator('#campaignAchievements .campaign-award').count()==18
  assert page.locator('#campaignAchievements .campaign-reward-card').count()==30
