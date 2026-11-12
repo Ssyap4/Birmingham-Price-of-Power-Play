@@ -244,6 +244,14 @@ with sync_playwright() as p:
    assert metrics['cells']>=(6 if ending=='endingDeath' else 3),(ENGINE,width,ending,'missing ending metrics',metrics)
    assert metrics['cellWidth']>width*.55,(ENGINE,width,ending,'ending metrics not stacked',metrics)
    if width in (320,390) and ending in ('endingTruth','endingDeath'):
+    # Ensure the last metric is readable above the fixed sound/exit HUD.
+    page.evaluate("window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'})")
+    page.wait_for_timeout(120)
+    last_metric=page.locator('#caseGame .v33-ending-metrics>div').last.evaluate("""el=>{
+     const r=el.getBoundingClientRect();
+     return {bottom:r.bottom,visibleHeight:window.visualViewport?.height||innerHeight};
+    }""")
+    assert last_metric['bottom']<=last_metric['visibleHeight']-75,(ENGINE,width,ending,'final metric covered by floating HUD',last_metric)
     page.locator('#caseGame .v33-ending-report').scroll_into_view_if_needed()
     page.screenshot(path=str(OUT/f'{ENGINE}-portrait-{ending}-{width}.png'),full_page=False)
   assert not errors,(ENGINE,width,errors)
