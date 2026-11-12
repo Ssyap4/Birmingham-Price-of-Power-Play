@@ -130,6 +130,7 @@ with sync_playwright() as p:
   if page.locator('#case001Briefing').is_visible():
    assert page.locator('#case001Briefing .case001-briefing-points section').count()==4
    page.locator('#case001Briefing .briefing-start').click()
+   page.locator('#case001Briefing .briefing-start').click()
   assert page.locator('#caseGame').is_visible()
   toolbar=page.evaluate("""() => {
    const screen=document.querySelector('#caseGame');
