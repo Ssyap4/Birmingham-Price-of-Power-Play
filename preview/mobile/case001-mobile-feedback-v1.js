@@ -31,7 +31,7 @@ function next(){
  const title=document.createElement('strong');title.textContent=active.title;
  copy.append(eyebrow,title);
  if(active.subtitle){const sub=document.createElement('p');sub.textContent=active.subtitle;copy.append(sub)}
- head.append(symbol,copy);
+ if(active.type==='clue'&&active.evidenceId){const photo=document.createElement('img');photo.className='bh-feedback-evidence-photo';photo.alt='';photo.src='assets/evidence-cinematic/'+active.evidenceId+'.webp';photo.onerror=()=>{photo.onerror=null;photo.src='assets/case-v17/icon-'+active.evidenceId+'.svg'};head.append(photo,copy)}else head.append(symbol,copy);
  const close=document.createElement('button');close.type='button';close.className='bh-feedback-dismiss';close.setAttribute('aria-label','Закрыть уведомление');close.textContent='×';close.onclick=dismiss;
  card.append(head,close);
  if(active.type==='clue'){
@@ -57,7 +57,7 @@ function snapshot(){
    session=key;prior=ids;initialized=true;return;
  }
  const gained=[...ids].filter(id=>!prior.has(id));prior=ids;
- if(gained.length)enqueue({type:'clue',title:gained.map(id=>names[id]||id).join(' · '),subtitle:'Добавлено в инвентарь расследования',count:ids.size});
+ if(gained.length)enqueue({type:'clue',title:gained.map(id=>names[id]||id).join(' · '),subtitle:'Добавлено в инвентарь расследования',count:ids.size,evidenceId:gained[0]});
 }
 new MutationObserver(snapshot).observe(inventory,{childList:true,subtree:true});
 new MutationObserver(snapshot).observe(game,{attributes:true,attributeFilter:['hidden']});
