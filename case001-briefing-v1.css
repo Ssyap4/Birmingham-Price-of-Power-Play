@@ -20,3 +20,20 @@
 .case001-briefing button:focus-visible{outline:3px solid #ffe1a3;outline-offset:2px}
 @media(max-width:380px){.case001-briefing{padding:7px}.case001-briefing-panel{padding:14px;max-height:calc(100dvh - 14px)}.case001-briefing-points{gap:6px}.case001-briefing-points section{padding:8px}.case001-briefing-points p{font-size:13px;line-height:1.35}.case001-briefing-points h3{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.case001-briefing{backdrop-filter:none}}
+
+/* Case 001 story prologue after briefing: readable on narrow Safari screens. */
+.case001-briefing-points[hidden],.case001-story-intro[hidden],.case001-briefing-footer label[hidden]{display:none!important}
+.case001-story-intro{display:grid;gap:11px}
+.case001-story-stamp{font:700 11px/1.4 Arial,sans-serif;letter-spacing:1.3px;color:#e4bb83}
+.case001-story-intro h3{font:700 clamp(24px,6.4vw,33px)/1.15 Georgia,serif;color:#f6d9ac;margin:0}
+.case001-story-intro>p{font:16px/1.63 Georgia,serif;color:#ebd5b7;margin:0}
+.case001-story-objectives{border:1px solid #92704b;background:linear-gradient(140deg,#382618,#191511);padding:14px;display:grid;gap:9px}
+.case001-story-objectives h4{font:700 18px Georgia,serif;color:#f4cf99;margin:0}
+.case001-story-objectives p{font:14px/1.6 Arial,sans-serif;color:#e2cdb2;margin:0}
+.case001-story-objectives small{font:12px/1.5 Arial,sans-serif;color:#bdab92}
+@media(max-width:700px){
+ .case001-briefing{padding:max(7px,env(safe-area-inset-top,0px)) max(7px,env(safe-area-inset-right,0px)) max(7px,env(safe-area-inset-bottom,0px)) max(7px,env(safe-area-inset-left,0px))}
+ .case001-briefing-panel{max-height:100%;-webkit-overflow-scrolling:touch;scroll-padding-bottom:25px}
+ .case001-story-intro>p{font-size:15px;line-height:1.52}
+ .case001-story-objectives{padding:12px}
+}
