@@ -5,3 +5,10 @@
 @media(prefers-reduced-motion:reduce){.map-pin{transition:none}}
 /* Decorative city geometry must never intercept Safari taps on map pins. */
 #districts .districts-svg,#districts .districts-svg *{pointer-events:none!important}
+
+/* Mobile district navigation: make it easy to compare regions after auto-scroll. */
+.district-back-to-map{display:none}
+@media(max-width:700px){
+ #districts .district-back-to-map{display:block;width:100%;min-height:46px;margin:0 0 16px;padding:10px 12px;border:1px solid #c19963;background:linear-gradient(110deg,#4a311b,#211912);color:#efd3a8;font:700 12px Arial,sans-serif;cursor:pointer;touch-action:manipulation}
+ #districts .district-back-to-map:focus-visible{outline:2px solid #ffdfaf}
+}
