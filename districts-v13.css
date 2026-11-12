@@ -21,3 +21,9 @@
 /* Safari: parent map panel must not block its explicit interactive descendants. */
 #districts .map-panel{pointer-events:none!important}
 #districts .map-panel .map-pin{pointer-events:auto!important}
+
+/* Explicit input overlay outside the background SVG, preserving city artwork. */
+#districts .map-panel{pointer-events:auto!important}
+#districts .district-pin-overlay{position:absolute;left:0;right:0;z-index:40;pointer-events:none}
+#districts .district-pin-overlay .map-pin{pointer-events:auto!important;z-index:41!important;touch-action:manipulation}
+#districts .district-pin-overlay .map-pin *{pointer-events:none!important}
