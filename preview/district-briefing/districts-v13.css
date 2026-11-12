@@ -17,3 +17,7 @@
 #districts .map-art{pointer-events:none!important}
 #districts .map-art .map-pin{pointer-events:auto!important;position:absolute!important;z-index:20!important}
 #districts .map-art .map-pin *{pointer-events:none!important}
+
+/* Safari: parent map panel must not block its explicit interactive descendants. */
+#districts .map-panel{pointer-events:none!important}
+#districts .map-panel .map-pin{pointer-events:auto!important}
