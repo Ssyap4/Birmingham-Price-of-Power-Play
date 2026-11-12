@@ -12,3 +12,8 @@
  #districts .district-back-to-map{display:block;width:100%;min-height:46px;margin:0 0 16px;padding:10px 12px;border:1px solid #c19963;background:linear-gradient(110deg,#4a311b,#211912);color:#efd3a8;font:700 12px Arial,sans-serif;cursor:pointer;touch-action:manipulation}
  #districts .district-back-to-map:focus-visible{outline:2px solid #ffdfaf}
 }
+
+/* WebKit hit testing: only real district buttons receive pointer events. */
+#districts .map-art{pointer-events:none!important}
+#districts .map-art .map-pin{pointer-events:auto!important;position:absolute!important;z-index:20!important}
+#districts .map-art .map-pin *{pointer-events:none!important}
