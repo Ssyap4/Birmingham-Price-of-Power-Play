@@ -21,7 +21,7 @@ for engine in ('chromium','webkit'):
     page.locator('#districtsCard').click()
     page.locator('#districts').wait_for(state='visible')
     for district in ['small-heath','aston','digbeth','centre','jewellery']:
-     page.locator('.map-pin[data-district="'+district+'"]').click()
+     page.locator('.map-pin[data-district="'+district+'"]').tap()
      page.wait_for_timeout(120)
      data=page.evaluate("""() => {
       const target=document.querySelector('#districtTitle').getBoundingClientRect();
@@ -33,6 +33,10 @@ for engine in ('chromium','webkit'):
      assert data['active']==district,(engine,w,district,data)
      assert -15<=data['top']<=h*.55,(engine,w,district,'description not in viewport',data)
      assert data['focused']=='districtTitle',(engine,w,district,'details not focused',data)
+     page.locator('.district-back-to-map').tap()
+     page.wait_for_timeout(110)
+     map_bounds=page.locator('#districts .map-panel').bounding_box()
+     assert map_bounds and map_bounds['y']<h*.55,(engine,w,district,'return-to-map failed',map_bounds)
     page.locator('.map-pin[data-district="small-heath"]').click()
     page.locator('#launchFirstCase').click()
     page.locator('.hero-card').first.click()
