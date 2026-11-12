@@ -61,7 +61,7 @@ with sync_playwright() as p:
    localStorage.setItem('birmingham_campaign_records_v1',JSON.stringify(runs));
    document.querySelector('#caseChapter').textContent += ' ';
  }""")
- page.locator('.campaign-unlock-popup').wait_for(state='visible',timeout=6000)
+ page.locator('#bh-feedback-stage .bh-feedback-achievement').wait_for(state='visible',timeout=6000)
  names=page.evaluate("Object.keys(JSON.parse(localStorage.getItem('birmingham_campaign_awards_v1')||'{}'))")
  assert 'end2' in names and 'end4' in names,(names,'new milestone awards missing')
  assert 'start' not in names and 'clue1' not in names,'trivial rewards returned'
