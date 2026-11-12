@@ -146,6 +146,46 @@ with sync_playwright() as p:
   assert computed['document']<=computed['viewport']+3,(ENGINE,width,'case cinematic layout overflow',computed)
   assert 'linear-gradient' in computed['dialogueBackground'],(ENGINE,width,'case cinematic dialogue style missing',computed)
   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-case-{width}.png'),full_page=True)
+  # Stress the actual story UI with deliberately long dialogue and answer text,
+  # then restore the DOM immediately. This does not touch the story or saves.
+  stress=page.evaluate("""() => {
+   const scene=document.querySelector('#caseGame .case-scene h2');
+   const dialogue=document.querySelector('#caseGame .case-dialogue');
+   const speaker=document.querySelector('#caseSpeaker');
+   const line=document.querySelector('#caseDialogue');
+   const paragraph=document.querySelector('#caseText');
+   const choices=document.querySelector('#caseChoices');
+   const previous={title:scene.textContent,hidden:dialogue.hidden,
+    speaker:speaker.textContent,line:line.textContent,
+    paragraph:paragraph.textContent};
+   const testButton=document.createElement('button');
+   testButton.className='case-choice';testButton.type='button';
+   testButton.textContent='Потребовать подробного объяснения всех обстоятельств исчезновения Артура, проверить документы и сопоставить показания свидетелей прежде, чем принимать окончательное решение';
+   try{
+    dialogue.hidden=false;
+    scene.textContent='ПРОМЫШЛЕННЫЙ БИРМИНГЕМ — ЗАПУТАННАЯ ИСТОРИЯ ИСЧЕЗНОВЕНИЯ';
+    speaker.textContent='СВИДЕТЕЛЬ ИЗ ЮВЕЛИРНОГО КВАРТАЛА';
+    line.textContent='Вчера я видел Артура у склада, но затем человек в тёмном пальто передал ему конверт. Я пытался предупредить его, однако никто не слушал, а разговор продолжался достаточно долго, чтобы мы успели заметить автомобиль у ворот.';
+    paragraph.textContent='Вы изучаете следы на полу и сопоставляете показания сразу нескольких свидетелей. В документах обнаружились противоречия, которые невозможно разрешить без подробного изучения маршрута, бухгалтерской ведомости и записки пропавшего человека.';
+    choices.append(testButton);
+    const root=document.documentElement;
+    const box=el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
+    const cards=[scene,dialogue,line,paragraph,testButton].map(box);
+    const style=getComputedStyle(testButton);
+    return {viewport:root.clientWidth,doc:root.scrollWidth,cards,
+     choiceFont:parseFloat(style.fontSize),choiceHeight:cards.at(-1).height,
+     portraitWidth:box(document.querySelector('#casePortrait')).width,
+     dialogueGrid:getComputedStyle(dialogue).gridTemplateColumns};
+   }finally{
+    testButton.remove();scene.textContent=previous.title;
+    speaker.textContent=previous.speaker;line.textContent=previous.line;
+    paragraph.textContent=previous.paragraph;dialogue.hidden=previous.hidden;
+   }
+  }""")
+  assert stress['doc']<=stress['viewport']+3,(ENGINE,width,'long story causes horizontal scrolling',stress)
+  assert all(card['left']>=-3 and card['right']<=width+3 for card in stress['cards']),(ENGINE,width,'long dialogue extends beyond phone',stress)
+  assert stress['choiceHeight']>=52 and stress['choiceFont']>=13,(ENGINE,width,'long decision target too small',stress)
+  assert stress['portraitWidth']>=50,(ENGINE,width,'dialogue portrait squeezed',stress)
   page.locator('.v34-open-inventory').click()
   assert page.locator('.v33-window').is_visible()
   win=page.locator('.v33-window').bounding_box()
