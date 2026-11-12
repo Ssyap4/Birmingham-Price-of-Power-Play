@@ -127,6 +127,9 @@ with sync_playwright() as p:
   }""",timeout=15000)
   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-heroes-{width}.png'),full_page=False)
   page.locator('#heroSelection .hero-begin').click()
+  if page.locator('#case001Briefing').is_visible():
+   assert page.locator('#case001Briefing .case001-briefing-points section').count()==4
+   page.locator('#case001Briefing .briefing-start').click()
   assert page.locator('#caseGame').is_visible()
   toolbar=page.evaluate("""() => {
    const screen=document.querySelector('#caseGame');
