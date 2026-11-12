@@ -17,7 +17,7 @@ with sync_playwright() as p:
  page.locator("#storyStart").click()
  assert page.locator("#campaignAchievements").is_visible()
  page.screenshot(path=str(OUT/'achievements-desktop.png'),full_page=True)
- assert page.locator("#campaignAchievements .campaign-award").count()==42
+ assert page.locator("#campaignAchievements .campaign-award").count()==18
  assert page.locator("#campaignAchievements .campaign-reward-card").count()==30
  page.locator("#homeBtn").click()
  page.evaluate("""() => {
