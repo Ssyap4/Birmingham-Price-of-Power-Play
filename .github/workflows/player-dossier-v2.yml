@@ -1,0 +1,40 @@
+name: Player dossier v2 focused QA
+on:
+  push:
+    branches: [feat/player-dossier-v2]
+    paths: ['player-dossier-v2.js', 'player-dossier-v2.css', 'profile-page.js', 'campaign-hub-v1.js', 'index.html', 'tests/case001/dossier_v2_smoke.py', '.github/workflows/player-dossier-v2.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright engines
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Check syntax
+        run: |
+          node --check player-dossier-v2.js
+          node --check profile-page.js
+          node --check campaign-hub-v1.js
+      - name: Browser profile test
+        run: |
+          set +e
+          python tests/case001/dossier_v2_smoke.py > /tmp/dossier.log 2>&1
+          status=$?
+          cat /tmp/dossier.log
+          echo "result=$status" > tests/case001/dossier-v2-status.txt
+          tail -n 45 /tmp/dossier.log >> tests/case001/dossier-v2-status.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/case001/dossier-v2-status.txt
+          git commit -m "ci: dossier v2 browser report [skip ci]" || true
+          git push origin HEAD:feat/player-dossier-v2
+          exit "$status"
