@@ -22,7 +22,7 @@ jobs:
           root=Path('.')
           dest=Path('dist')
           dest.mkdir(exist_ok=True)
-          excluded={'.git','.github','tests','docs','dist','node_modules','__pycache__'}
+          excluded={'.git','.github','tests','docs','dist','node_modules','__pycache__','tools'}
           skipped={'.gitignore','.gitattributes','package-lock.json','package.json'}
           files=[p for p in root.rglob('*') if p.is_file()
             and not any(part in excluded for part in p.parts)
