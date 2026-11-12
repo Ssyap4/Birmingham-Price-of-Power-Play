@@ -2,9 +2,17 @@ name: Focused Case 001 mobile UX smoke
 on:
   push:
     branches: [feat/case001-mobile-ux-followup]
+    paths:
+      - '.github/workflows/case001-mobile-ux-smoke.yml'
+      - 'tests/case001/mobile_feedback_smoke.py'
+      - 'case001-mobile-feedback-v1.js'
+      - 'case001-mobile-feedback-v1.css'
+      - 'case-v33-inventory.js'
+      - 'heroes-v1.js'
+      - 'index.html'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   phone-smoke:
     runs-on: ubuntu-latest
@@ -23,5 +31,28 @@ jobs:
           node --check case-v33-inventory.js
           node --check heroes-v1.js
           node --check case001-mobile-feedback-v1.js
-      - name: Focused mobile scenarios
-        run: python tests/case001/mobile_feedback_smoke.py
+      - name: Focused mobile browser scenarios
+        id: smoke
+        run: |
+          set +e
+          python tests/case001/mobile_feedback_smoke.py > /tmp/mobile-smoke.log 2>&1
+          status=$?
+          cat /tmp/mobile-smoke.log
+          echo "result=$status" >> "$GITHUB_OUTPUT"
+          exit "$status"
+      - name: Report mobile QA result to development branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p tests/case001
+          {
+            echo "tested_commit=${GITHUB_SHA}"
+            echo "result=${{ steps.smoke.outputs.result || 'not_run' }}"
+            echo "workflow_run=${GITHUB_RUN_ID}"
+            echo "time=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            cat /tmp/mobile-smoke.log 2>/dev/null || true
+          } > tests/case001/mobile-smoke-status.txt
+          git add tests/case001/mobile-smoke-status.txt
+          git commit -m "ci: focused mobile smoke report [skip ci]" || exit 0
+          git push origin HEAD:feat/case001-mobile-ux-followup
