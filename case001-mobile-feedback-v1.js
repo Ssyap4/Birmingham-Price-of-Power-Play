@@ -12,8 +12,9 @@ panel.setAttribute('role','region');
 panel.setAttribute('aria-label','Уведомления расследования');
 panel.setAttribute('aria-live','polite');
 document.body.append(panel);
+document.body.classList.add('bh-feedback-ready');
 const queue=[];let active=null,hideTimer=null,session='',prior=new Set(),initialized=false;
-const modalActive=()=>!document.querySelector('.v33-shade:not([hidden]),.hero-selection:not([hidden]),.case-v18-overlay:not([hidden])');
+const modalActive=()=>!!document.querySelector('.v33-shade:not([hidden]),.hero-selection:not([hidden]),.case-v18-overlay:not([hidden]),.v33-result-layer');
 function dismiss(){
  clearTimeout(hideTimer);hideTimer=null;
  panel.replaceChildren();panel.hidden=true;active=null;
