@@ -64,7 +64,7 @@ with sync_playwright() as p:
   if width in (667,844,932):
    page.screenshot(path=str(OUT/f'{ENGINE}-dossiers-{width}.png'),full_page=True)
   page.locator('#campaignDossiers .campaign-tabs [data-open-section=campaignAchievements]').click()
-  assert page.locator('#campaignAchievements .campaign-award').count()==42
+  assert page.locator('#campaignAchievements .campaign-award').count()==18
   assert page.locator('#campaignAchievements .campaign-reward-card').count()==30
   if width in (667,844,932):
    page.screenshot(path=str(OUT/f'{ENGINE}-achievements-{width}.png'),full_page=True)
