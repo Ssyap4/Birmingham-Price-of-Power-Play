@@ -1,0 +1,64 @@
+/* Case 001 phone ergonomics: safe scrollable inventory and in-viewport feedback. */
+@media (max-width:700px) {
+  .v33-shade{
+    position:fixed!important;inset:0!important;
+    width:100%!important;height:100dvh!important;
+    overflow:hidden!important;
+    padding:max(6px,env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) max(6px,env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))!important;
+    box-sizing:border-box!important;
+  }
+  .v33-window{
+    box-sizing:border-box!important;
+    height:100%!important;max-height:100%!important;
+    min-height:0!important;overflow-y:scroll!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;
+    overscroll-behavior:contain!important;
+    scroll-padding-bottom:calc(36px + env(safe-area-inset-bottom,0px))!important;
+    padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))!important;
+  }
+  .v33-board,.v33-findings,.v33-solved,.v33-findings-list{
+    min-height:0!important;overflow:visible!important;
+  }
+  .v33-tile{touch-action:pan-y!important;}
+  #heroSelection .hero-details{scroll-margin-top:14px!important;outline:none!important;}
+  #heroSelection .hero-panel{-webkit-overflow-scrolling:touch!important;scroll-behavior:smooth;}
+  /* Unlike a document-top toast, this stays visible during long scene scrolling. */
+  .campaign-unlock-tray{
+    top:25dvh!important;bottom:auto!important;
+    width:min(calc(100vw - 24px),440px)!important;
+    z-index:16000!important;
+  }
+  .campaign-unlock-popup{
+    min-height:104px!important;padding:17px 15px!important;
+    border-width:2px!important;box-shadow:0 0 0 2px #1b110b,0 22px 70px #000e!important;
+  }
+}
+.bh-mobile-find-notice[hidden]{display:none!important}
+.bh-mobile-find-notice{
+  position:fixed;z-index:15500;
+  left:max(12px,env(safe-area-inset-left,0px));
+  right:max(12px,env(safe-area-inset-right,0px));
+  bottom:calc(88px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  box-sizing:border-box;max-width:520px;margin:auto;
+  padding:14px;background:linear-gradient(110deg,#4b301a,#181612 90%);
+  border:2px solid #e9be7e;box-shadow:0 12px 42px #000d;
+  color:#f8e2bb;font-family:Georgia,serif;
+}
+.bh-mobile-find-copy{display:grid;gap:5px;min-width:0}
+.bh-mobile-find-copy small{font:700 11px Arial,sans-serif;letter-spacing:1px;color:#f5cd8e}
+.bh-mobile-find-copy strong{font:700 17px/1.2 Georgia,serif;overflow-wrap:anywhere}
+.bh-mobile-find-notice button{
+  flex-shrink:0;min-height:48px;max-width:125px;white-space:normal;
+  border:1px solid #e7c18a;background:#b58a53;
+  color:#1e130a;font:700 11px/1.3 Arial,sans-serif;padding:10px;cursor:pointer;
+}
+@media(max-width:360px){
+ .bh-mobile-find-notice{padding:10px;gap:7px}
+ .bh-mobile-find-copy strong{font-size:15px}
+ .bh-mobile-find-notice button{max-width:105px}
+}
+@media(prefers-reduced-motion:reduce){
+ #heroSelection .hero-panel{scroll-behavior:auto!important}
+}
