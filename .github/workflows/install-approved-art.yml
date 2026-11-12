@@ -1,0 +1,62 @@
+name: Install approved Case 001 art (visual-only)
+on:
+  push:
+    branches: [feat/portrait-mobile-development]
+    paths: [tools/approved_art_upload_url.txt]
+permissions:
+  contents: write
+  actions: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/portrait-mobile-development
+          persist-credentials: true
+      - name: Retrieve exactly one approved archive
+        env:
+          URL_FILE: tools/approved_art_upload_url.txt
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          url=Path('tools/approved_art_upload_url.txt').read_text().strip()
+          if not re.fullmatch(r'https://github.com/user-attachments/files/[0-9]+/[a-zA-Z0-9._-]+\.zip(?:\?[^\s]*)?',url):
+            raise SystemExit('Only public GitHub issue ZIP attachments are accepted')
+          Path('/tmp/approved_art_url').write_text(url)
+          PY
+          curl --fail --location --retry 3 --max-time 90 \
+            --output /tmp/approved-case001-art.zip "$(cat /tmp/approved_art_url)"
+      - name: Validate signatures, replace only eight approved WebP files
+        run: |
+          python3 tools/apply_approved_case001_art.py /tmp/approved-case001-art.zip
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          paths=['assets/districts/centre.webp','assets/districts/small-heath.webp',
+            'assets/districts/digbeth.webp','assets/districts/aston.webp',
+            'assets/heroes/jack.webp','assets/heroes/victor.webp',
+            'assets/case-scenes/heroJack.webp','assets/case-scenes/heroVictor.webp']
+          assert all(Path(p).stat().st_size>=90000 for p in paths)
+          print('PASS: approved artwork replaced and size checked')
+          PY
+      - name: Commit approved illustrations on development branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- assets/districts/centre.webp assets/districts/small-heath.webp \
+            assets/districts/digbeth.webp assets/districts/aston.webp \
+            assets/heroes/jack.webp assets/heroes/victor.webp \
+            assets/case-scenes/heroJack.webp assets/case-scenes/heroVictor.webp
+          if git diff --cached --quiet; then
+            echo "All approved images already installed"
+          else
+            git commit -m "Install eight approved district and hero portraits for Case 001"
+            git push origin HEAD:feat/portrait-mobile-development
+          fi
+      - name: Trigger focused QA after bot-created asset commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run case001-tests.yml --ref feat/portrait-mobile-development -f full_suite=false
