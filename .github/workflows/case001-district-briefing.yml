@@ -4,6 +4,7 @@ on:
     branches: [feat/case001-district-briefing-phone]
     paths:
       - 'districts-v13.js'
+      - 'districts-v13.css'
       - 'case001-briefing-v1.js'
       - 'case001-briefing-v1.css'
       - 'tests/case001/district_briefing_smoke.py'
