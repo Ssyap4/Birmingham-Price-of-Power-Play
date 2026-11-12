@@ -32,7 +32,7 @@ assert all((ROOT/x).is_file() for x in [
 "assets/case-scenes/intro.webp","assets/case-scenes/office-approved.webp",
 "assets/case-scenes/canal-approved.webp","assets/case-scenes/reed.webp",
 "assets/case-scenes/pump.webp"])
-print("OK: campaign screens, 42 achievements and 30 single-grant hero/ending rewards wired")
+print("OK: campaign screens, 18 curated achievements and 30 single-grant hero/ending rewards wired")
 
 assert 'mobile-runtime-v1.js' in html and 'mobile-runtime-v1.css' in html
 mobile=content('mobile-runtime-v1.js')
