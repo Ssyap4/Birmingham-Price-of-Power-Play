@@ -48,7 +48,7 @@ start.addEventListener('click',()=>{
 root.addEventListener('keydown',e=>{
  if(e.key==='Escape'){e.preventDefault();close();return}
  if(e.key!=='Tab')return;
- const focusable=[...root.querySelectorAll('button,input')];
+ const focusable=[...root.querySelectorAll('button,input')].filter(el=>el.getClientRects().length>0&&!el.disabled);
  const i=focusable.indexOf(document.activeElement);
  if(e.shiftKey&&i===0){e.preventDefault();focusable.at(-1).focus()}
  else if(!e.shiftKey&&i===focusable.length-1){e.preventDefault();focusable[0].focus()}
