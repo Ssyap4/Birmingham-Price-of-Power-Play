@@ -55,6 +55,19 @@ with sync_playwright() as p:
   }""")
   assert all(ok for name,ok in decoded),(ENGINE,width,'approved artwork missing or low-res',decoded)
   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-home-{width}.png'),full_page=True)
+  # Trials must present five independently tappable difficulty cards,
+  # with no horizontal overflow or miniature PC-sized type.
+  page.locator('#home .cabinet-entry-quiz').click()
+  assert page.locator('#choose').is_visible(),(ENGINE,width,'difficulty screen missing')
+  assert page.locator('#difficultyList .mode').count()==5,(ENGINE,width,'difficulty options missing')
+  assess(page,'trials',width)
+  quiz_cards=page.locator('#difficultyList .mode').evaluate_all("""els=>els.map(el=>{
+   const r=el.getBoundingClientRect(); return {width:r.width,height:r.height};
+  })""")
+  assert all(card['height']>=44 and card['width']>=width*.7 for card in quiz_cards),(ENGINE,width,'trials buttons too small',quiz_cards)
+  if width in (320,390):
+   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-trials-{width}.png'),full_page=False)
+  page.locator('#homeBtn').click()
   # Archive is a primary phone destination: test real tabs, legibility and overflow.
   page.locator('#profileCard').click()
   assert page.locator('#campaignDossiers').is_visible()
