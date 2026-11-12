@@ -59,6 +59,14 @@ with sync_playwright() as p:
   # with no horizontal overflow or miniature PC-sized type.
   page.locator('#home .cabinet-entry-quiz').click()
   assert page.locator('#choose').is_visible(),(ENGINE,width,'difficulty screen missing')
+  # Reduced-motion users must not be forced through entrance effects.
+  entry_motion=page.locator('#choose').evaluate('e=>getComputedStyle(e).animationName')
+  assert entry_motion=='none',(ENGINE,width,'reduced-motion screen animation remains',entry_motion)
+  home_nav=page.locator('#homeBtn').evaluate("""e=>{
+   const r=e.getBoundingClientRect();return {w:r.width,h:r.height,focus:getComputedStyle(e).outlineStyle};
+  }""")
+  assert home_nav['w']>=44 and home_nav['h']>=44,(ENGINE,width,'back navigation tap target too small',home_nav)
+
   assert page.locator('#difficultyList .mode').count()==5,(ENGINE,width,'difficulty options missing')
   assess(page,'trials',width)
   quiz_cards=page.locator('#difficultyList .mode').evaluate_all("""els=>els.map(el=>{
