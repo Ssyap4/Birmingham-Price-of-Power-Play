@@ -57,6 +57,7 @@ class Game:
   before=self.state()
   self.p.locator('#launchFirstCase').click()
   self.p.locator('.hero-card').nth(HEROES.index(self.hero)).click();self.p.locator('.hero-begin').click()
+  if self.p.locator('#case001Briefing').is_visible():self.p.locator('#case001Briefing .briefing-start').click()
   assert self.p.locator('#caseGame').is_visible()
   if before is not None:assert self.state()==before,'Continue must preserve the entire saved investigation'
   else:assert self.state()['node']=='intro'
