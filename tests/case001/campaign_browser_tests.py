@@ -64,6 +64,7 @@ with sync_playwright() as p:
  page.locator("#heroSelection .hero-begin").click()
  if page.locator("#case001Briefing").is_visible():
   page.locator("#case001Briefing .briefing-start").click()
+  page.locator("#case001Briefing .briefing-start").click()
  # Verify the real computed background for all five chapters on desktop,
  # not just the JS data attribute that was misleading in the previous build.
  for node,image in [('intro','intro.webp'),('office','office-approved.webp'),('canal','canal-approved.webp'),('reed','reed.webp'),('pump','pump.webp')]:
