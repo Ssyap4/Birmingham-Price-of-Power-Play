@@ -4,8 +4,8 @@ import re, subprocess, json, os
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=(ROOT/'case-v14.js').read_text(encoding='utf-8')
-ART_RE=r'const ART=\\{[\\s\\S]*?\\};'
-ACTORS_RE=r'const ACTORS=\\{[\\s\\S]*?\\};'
+ART_RE=r'const ART=\{[\s\S]*?\};'
+ACTORS_RE=r'const ACTORS=\{[\s\S]*?\};'
 def block(source, pattern):
  m=re.search(pattern,source)
  assert m,('missing manifest',pattern)
@@ -14,7 +14,7 @@ def block(source, pattern):
 BASE=subprocess.check_output(['git','show','origin/main:case-v14.js'],cwd=ROOT,text=True)
 assert block(SOURCE,ART_RE)==block(BASE,ART_RE),'ART mapping has changed'
 assert block(SOURCE,ACTORS_RE)==block(BASE,ACTORS_RE),'ACTORS/portrait mapping has changed'
-art=dict(re.findall(r'(\\w+):\\s*\'([^\']+)\'',block(SOURCE,ART_RE)))
+art=dict(re.findall(r'(\w+):\s*\'([^\']+)\'',block(SOURCE,ART_RE)))
 assert len(art)==37,('scene art mapping count',len(art))
 for scene,picture in art.items():
  assert (ROOT/'assets'/'case-scenes'/(picture+'.webp')).exists(),(scene,picture)
