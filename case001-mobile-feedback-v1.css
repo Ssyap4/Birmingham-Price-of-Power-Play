@@ -22,7 +22,7 @@
   #heroSelection .hero-details{scroll-margin-top:14px!important;outline:none!important}
   #heroSelection .hero-panel{-webkit-overflow-scrolling:touch!important;scroll-behavior:smooth}
   /* The original unlock card is observed for new awards, not shown twice. */
-  .campaign-unlock-tray{visibility:hidden!important;pointer-events:none!important}
+  .bh-feedback-ready .campaign-unlock-tray{visibility:hidden!important;pointer-events:none!important}
 }
 #bh-feedback-stage[hidden]{display:none!important}
 #bh-feedback-stage{
