@@ -7,6 +7,8 @@ on:
       - 'case001-briefing-v1.js'
       - 'case001-briefing-v1.css'
       - 'tests/case001/district_briefing_smoke.py'
+      - 'tests/case001/briefing_achievements_tests.py'
+      - 'tests/case001/mobile_feedback_smoke.py'
       - '.github/workflows/case001-district-briefing.yml'
   workflow_dispatch:
 permissions:
@@ -35,7 +37,7 @@ jobs:
         id: test
         run: |
           set +e
-          python tests/case001/district_briefing_smoke.py > /tmp/district-briefing.log 2>&1
+          { python tests/case001/district_briefing_smoke.py && python tests/case001/briefing_achievements_tests.py && python tests/case001/mobile_feedback_smoke.py; } > /tmp/district-briefing.log 2>&1
           code=$?
           cat /tmp/district-briefing.log
           echo "result=$code" >> "$GITHUB_OUTPUT"
