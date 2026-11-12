@@ -1,0 +1,68 @@
+/* Persistent campaign-specific pages. Local-only, case-aware foundation. */
+.campaign-hub{max-width:1280px;margin:18px auto 100px;padding:28px 30px!important;background:linear-gradient(145deg,#20170f,#0b0d0e 80%);border:1px solid #8f6b40;color:#e9d0a7}
+.campaign-head{text-align:left;border-bottom:1px solid #866240;padding-bottom:16px;margin-bottom:18px}
+.campaign-head small,.campaign-eyebrow{color:#c79c62;letter-spacing:2px;font-size:11px}
+.campaign-head h2{font:700 clamp(27px,4vw,46px)/1.08 Georgia,serif;color:#f2d6ab;margin:10px 0}
+.campaign-head p,.campaign-intro{font:15px/1.6 Georgia,serif;color:#cbb697}
+.campaign-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.campaign-card{display:flex;flex-direction:column;overflow:hidden;border:1px solid #82613d;background:#15110e}
+.campaign-portrait{width:100%;height:230px;object-fit:cover;object-position:center 25%;background:#14100c}
+.campaign-card-body{padding:16px}.campaign-card h3{font:700 26px Georgia,serif;color:#f1d4a8;margin:7px 0}
+.campaign-card p{line-height:1.5;color:#c9b392;font-size:13px}.campaign-count{color:#f3d39d!important;font-weight:700}
+.campaign-live{color:#86cca0!important}.campaign-future{opacity:.75}
+.campaign-tags{display:grid;gap:6px;margin-top:12px}.campaign-tags span{font:12px/1.3 Georgia,serif;padding:6px 8px;border:1px solid #56442d;background:#14120f}
+.campaign-tags .earned{border-color:#648e68;color:#c5e6c6}.campaign-tags .locked{color:#92806a}
+.campaign-group-title{margin:26px 0 12px;font:700 26px Georgia,serif;color:#e8c897}
+.campaign-award-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:11px}
+.campaign-award{display:flex;align-items:center;gap:15px;border:1px solid #6e5437;background:#17130f;padding:13px}
+.campaign-award.locked{opacity:.63}.campaign-medal{font:33px Georgia,serif;color:#d5b477;flex:0 0 40px}
+.campaign-award strong{display:block;color:#f1d6b0;font:700 17px Georgia,serif}.campaign-award p{margin:5px 0;color:#bea98a;line-height:1.35;font-size:13px}
+.campaign-award small{color:#b98f58;font-size:10px;letter-spacing:1px}.campaign-award.unlocked{border-color:#749268;background:#19241a}
+.campaign-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.campaign-summary>div{border:1px solid #78603e;padding:16px;background:#1d160f}.campaign-summary small{display:block;font-size:10px;color:#bda075;letter-spacing:1px}.campaign-summary strong{display:block;font:700 28px Georgia,serif;margin-top:5px;color:#edcea4}
+.campaign-history-list{display:grid;gap:10px}.campaign-run{display:grid;grid-template-columns:1fr 1.4fr 1.3fr;gap:12px;align-items:center;padding:16px;background:#171310;border:1px solid #745735;color:#dbc3a0}
+.campaign-run strong{font:700 18px Georgia,serif}.campaign-run span{font:16px Georgia,serif}.campaign-run small{color:#bdaa8d}
+.campaign-return,.campaign-profile-links button{border:1px solid #aa824e;background:linear-gradient(100deg,#3f2b18,#1e1710);color:#e9cc9e;cursor:pointer;padding:12px 18px;font:700 12px Arial,sans-serif;letter-spacing:1px}
+.campaign-return{margin-top:24px}.campaign-profile-links{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+@media(max-width:700px){.campaign-hub{margin:0 auto 60px;padding:17px 13px!important}.campaign-grid,.campaign-award-grid{grid-template-columns:1fr}.campaign-portrait{height:190px}.campaign-summary{grid-template-columns:1fr}.campaign-run{grid-template-columns:1fr;gap:5px}}
+
+.campaign-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:19px}.campaign-tabs button{flex:1 1 165px;min-height:44px;padding:10px 12px;border:1px solid #88643d;background:#18120e;color:#d7bd91;font:700 12px Arial,sans-serif;letter-spacing:1px;cursor:pointer;touch-action:manipulation}.campaign-tabs button[aria-current="true"]{background:#4c301b;border-color:#ddb377;color:#fff0ce}.campaign-tabs button:focus-visible{outline:2px solid #f5cd88;outline-offset:2px}
+@media (orientation:landscape) and (max-height:520px){.campaign-hub{margin:0 auto 50px;padding:12px 16px!important}.campaign-portrait{height:145px}.campaign-head h2{font-size:28px}.campaign-tabs{margin-bottom:10px}}
+
+/* Permanent rewards for each unique case × hero × ending outcome. */
+.campaign-reward-group{border:1px solid #816341;background:#16120e;margin:10px 0;overflow:hidden}
+.campaign-reward-group summary{cursor:pointer;min-height:48px;display:flex;align-items:center;padding:12px 16px;color:#ecd0a2;font:700 18px Georgia,serif;list-style:inside;touch-action:manipulation}
+.campaign-reward-group summary:focus-visible{outline:2px solid #f5d08e;outline-offset:-2px}
+.campaign-reward-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;padding:12px}
+.campaign-reward-card{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid #675039;background:#15120e}
+.campaign-reward-card.earned{border-color:#73966d;background:#1b281b}
+.campaign-reward-card.locked{opacity:.58}
+.campaign-reward-card strong{display:block;font:700 15px Georgia,serif;color:#efdbb4}
+.campaign-reward-card small{display:block;font:13px Georgia,serif;color:#d1b18c;margin-top:3px}
+.campaign-reward-card p{font:11px Arial,sans-serif;color:#b19a7f;margin:6px 0 0}
+@media(max-width:680px){.campaign-reward-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:8px}.campaign-reward-card{padding:8px}.campaign-reward-card .campaign-medal{flex-basis:20px;font-size:22px}.campaign-reward-card strong{font-size:13px}}
+@media(max-width:440px){.campaign-reward-grid{grid-template-columns:1fr}}
+
+/* Five heroes form balanced rows rather than four cards and a lonely fifth. */
+.campaign-grid{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:16px}
+.campaign-card{box-sizing:border-box;flex:0 1 350px;width:min(100%,380px);max-width:380px;min-width:0}
+@media(max-width:700px){.campaign-grid{display:flex;flex-direction:column;align-items:stretch}.campaign-card{max-width:100%;width:100%;flex:none}}
+/* The archive is a reading surface, not a game-action screen. Keep global music/exit
+   controls in cabinet settings instead of covering the dossier and history text. */
+body:has(.campaign-hub:not([hidden]))>.bh-audio-controls,
+body:has(#profile:not([hidden]))>.bh-audio-controls{display:none!important}
+
+/* Full account of a single case attempt; expandable and keyboard accessible. */
+.campaign-attempt{border:1px solid #745735;background:#171310;color:#dbc3a0;min-width:0}
+.campaign-attempt[open]{border-color:#b58a50}
+.campaign-attempt-summary{display:grid;grid-template-columns:1fr 1.4fr 1.3fr;align-items:center;gap:12px;padding:16px;min-height:44px;cursor:pointer;touch-action:manipulation}
+.campaign-attempt-summary strong{font:700 18px Georgia,serif;color:#f0d7b2}
+.campaign-attempt-summary span{font:16px Georgia,serif}
+.campaign-attempt-summary small{color:#bdaa8d}
+.campaign-attempt-summary:focus-visible{outline:2px solid #f3cc87;outline-offset:-2px}
+.campaign-attempt-detail{padding:14px 18px 20px;border-top:1px solid #6d5438;overflow-wrap:anywhere}
+.campaign-attempt-detail>p{font:14px/1.5 Georgia,serif;color:#d6be9a;margin:7px 0}
+.campaign-attempt-section{margin-top:16px}
+.campaign-attempt-section h4{font:700 17px Georgia,serif;color:#eecf9f;margin:0 0 8px}
+.campaign-attempt-list{display:flex;gap:8px;flex-wrap:wrap;padding:0;margin:0;list-style:none}
+.campaign-attempt-list li{padding:7px 10px;background:#261d14;border:1px solid #74583b;font:13px/1.4 Georgia,serif;color:#ddc5a0}
+@media(max-width:700px){.campaign-attempt-summary{grid-template-columns:1fr;gap:4px;padding:12px;min-height:48px}.campaign-attempt-detail{padding:12px}.campaign-attempt-summary span{font-size:14px}}

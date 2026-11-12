@@ -1,0 +1,307 @@
+/* Cabinet of Power: approved right-hand menu, real HTML controls.
+   The room art remains a replaceable decorative layer; never rasterize the controls. */
+#home.cabinet-home{padding:0!important;max-width:none!important}
+#home .cabinet-scene{position:relative;isolation:isolate;min-height:min(780px,calc(100svh - 95px));display:flex;justify-content:flex-end;align-items:center;overflow:hidden;background:#100c0b}
+#home .cabinet-room{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(6,5,5,.02) 0%,rgba(10,7,7,.06) 47%,rgba(9,6,6,.67) 70%,rgba(6,4,4,.92) 100%),url('assets/cinema/city.webp') center/cover no-repeat}
+#home .cabinet-scene:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 24% 45%,transparent 20%,rgba(5,4,4,.38) 100%)}
+#home .cabinet-location{position:absolute;top:22px;left:28px;font:600 10px Georgia,serif;letter-spacing:3px;color:#e0bc83;text-shadow:0 2px 10px #000}
+#home .cabinet-menu{box-sizing:border-box;display:flex;flex-direction:column;gap:11px;width:min(40%,530px);margin:28px clamp(22px,4vw,64px) 28px 12px;padding:16px 0;color:#f5dfba}
+#home .cabinet-heading{text-align:center;display:flex;flex-direction:column;gap:4px;margin-bottom:14px;text-shadow:0 4px 16px #000}
+#home .cabinet-heading span{font:700 clamp(37px,4vw,65px)/.92 'Cormorant Garamond',Georgia,serif;letter-spacing:.03em;color:#f4d7a5}
+#home .cabinet-heading small{font:600 clamp(14px,1.6vw,22px) Georgia,serif;letter-spacing:.33em;color:#e5bd7f}
+#home .cabinet-heading i{font:normal 12px Georgia,serif;color:#a77b49;letter-spacing:9px;margin-top:8px}
+#home .cabinet-entry{appearance:none;box-sizing:border-box;display:flex;align-items:center;gap:16px;min-height:72px;width:100%;padding:10px 18px;border:1px solid #947044;background:linear-gradient(120deg,rgba(24,18,17,.95),rgba(10,9,9,.91));box-shadow:inset 0 0 0 3px #0b0909,inset 0 0 0 4px #5d462c,0 7px 20px #0008;color:#f4d9ad;text-align:left;cursor:pointer;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);transition:background .25s,border-color .25s,filter .25s,transform .25s}
+#home .cabinet-entry-primary{min-height:88px;background:linear-gradient(115deg,#59151c,#300b10 80%);border-color:#d6a15e;box-shadow:inset 0 0 0 3px #300b10,inset 0 0 0 4px #bd8950,0 8px 24px #000b}
+#home .cabinet-entry-icon{display:grid;place-items:center;flex:0 0 46px;height:46px;border:1px solid #795833;font:28px Georgia,serif;color:#e7bb76}
+#home .cabinet-entry-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+#home .cabinet-entry-copy strong{font:700 clamp(23px,2vw,32px)/1 'Cormorant Garamond',Georgia,serif;letter-spacing:.01em}
+#home .cabinet-entry-copy small{font:400 11px/1.35 Georgia,serif;color:#d0ac79}
+#home .cabinet-entry-arrow{font:34px Georgia,serif;color:#e7bd80}
+#home .cabinet-entry:hover{transform:translateX(-4px);filter:brightness(1.18);border-color:#e7bb79}
+#home .cabinet-entry:focus-visible{outline:3px solid #f6d9a2;outline-offset:4px}
+#home .cabinet-menu-footer{text-align:center;margin-top:11px;font:10px Georgia,serif;letter-spacing:2.5px;color:#c6a16d}
+#home .atelier-dashboard{margin:12px auto 0}
+@media(max-width:1000px){#home .cabinet-menu{width:min(49%,490px);margin-right:18px}#home .cabinet-entry{min-height:65px}#home .cabinet-entry-primary{min-height:77px}}
+@media(max-width:700px){#home .cabinet-scene{min-height:calc(100svh - 70px);align-items:flex-end}#home .cabinet-room{background-position:35% center}#home .cabinet-scene:before{background:linear-gradient(0deg,rgba(8,6,6,.98),rgba(8,6,6,.76) 62%,rgba(8,6,6,.12))}#home .cabinet-menu{width:100%;margin:90px 14px 16px;padding:0;gap:8px}#home .cabinet-heading{margin-bottom:7px}#home .cabinet-heading span{font-size:clamp(35px,9vw,52px)}#home .cabinet-entry{min-height:58px;padding:8px 13px;gap:12px}#home .cabinet-entry-primary{min-height:70px}#home .cabinet-entry-icon{flex-basis:36px;height:36px;font-size:23px}#home .cabinet-entry-copy strong{font-size:clamp(23px,6vw,29px)}#home .cabinet-entry-copy small{font-size:10px}#home .cabinet-location{left:15px;top:15px}#home .cabinet-menu-footer{font-size:9px}}
+@media(max-width:350px){#home .cabinet-entry{gap:8px;padding:7px 10px}#home .cabinet-entry-copy strong{font-size:22px}#home .cabinet-menu{margin-left:9px;margin-right:9px}}
+@media(prefers-reduced-motion:reduce){#home .cabinet-entry{transition:none!important}}
+
+/* Accessible in-world settings: a dialog rather than a dead decorative entry. */
+#cabinetSettingsDialog{max-width:min(420px,calc(100vw - 30px));width:100%;padding:30px;border:1px solid #bd9055;background:linear-gradient(145deg,#30221b,#120e0c);box-shadow:0 18px 80px #000b;color:#f2d7a5}
+#cabinetSettingsDialog::backdrop{background:rgba(5,4,3,.82);backdrop-filter:blur(5px)}
+#cabinetSettingsDialog form{display:flex;flex-direction:column;gap:20px}
+#cabinetSettingsDialog h2{margin:0;font:700 30px Georgia,serif;letter-spacing:3px;text-align:center}
+#cabinetSettingsDialog .cabinet-setting-option{display:flex;align-items:center;gap:12px;font:16px Georgia,serif}
+#cabinetSettingsDialog input{accent-color:#9e6436;width:18px;height:18px}
+#cabinetSettingsDialog button{padding:13px 18px;border:1px solid #bb8c50;background:#4b181a;color:#f2d7a5;font:700 14px Georgia,serif;cursor:pointer}
+.cabinet-reduced-motion #home .cabinet-entry{transition:none!important}
+
+/* Final cabinet composition: illustration fills the left, controls occupy their own
+   wood-panel zone. When the approved art is checked in, it replaces the fallback. */
+#home .cabinet-scene{background:linear-gradient(110deg,#1b100c 0%,#0d0807 72%,#100b09 100%)}
+#home .cabinet-room{right:32%;background:linear-gradient(90deg,transparent 72%,#100b09 100%),url('assets/cabinet/birmingham_cabinet_office_art.webp') center center/cover no-repeat,url('assets/cinema/city.webp') center center/cover no-repeat}
+#home .cabinet-menu{width:32%;max-width:none;flex:0 0 32%;margin:0;padding:clamp(18px,2.5vw,40px) clamp(12px,1.5vw,26px);min-height:100%;justify-content:center;background:linear-gradient(90deg,#160e0b,#24150e 15%,#110b09 96%);border-left:3px ridge #a27947;box-shadow:-12px 0 25px #0008,inset 0 0 0 2px #49321e}
+#home .cabinet-entry-copy strong{font-size:clamp(19px,1.8vw,29px)}
+#home .cabinet-entry-copy small{font-size:clamp(9px,.75vw,11px)}
+#home .cabinet-entry-icon{flex-basis:38px;height:38px}
+@media(max-width:1000px){#home .cabinet-room{right:40%}#home .cabinet-menu{width:40%;flex-basis:40%}}
+@media(max-width:700px){#home .cabinet-room{right:0;bottom:37%;background:linear-gradient(0deg,#100b09 0%,transparent 40%),url('assets/cabinet/birmingham_cabinet_office_art.webp') center center/cover no-repeat,url('assets/cinema/city.webp') center/cover no-repeat}#home .cabinet-scene{display:flex;align-items:flex-end;justify-content:stretch;min-height:100svh}#home .cabinet-menu{width:100%;flex-basis:auto;min-height:auto;margin:0;padding:15px 12px 20px;border:0;border-top:2px ridge #a27947;box-shadow:0 -12px 30px #000a}#home .cabinet-heading{margin-bottom:8px}#home .cabinet-entry{min-height:55px}#home .cabinet-entry-primary{min-height:66px}#home .cabinet-location{z-index:1}}
+
+/* The cabinet is the home navigation: hide the duplicate global dossier action only here. */
+body:has(#home:not([hidden])) .top-actions #profileBtn{display:none!important}
+
+/* Approved illustrated cabinet: activate only after all seven assets load. */
+#home.cabinet-art-ready .cabinet-room{right:32%;background-image:url('assets/cabinet/cabinet-scene.webp');background-position:center;background-size:cover}
+#home.cabinet-art-ready .cabinet-menu{gap:clamp(5px,.5vw,9px);padding:clamp(12px,1.6vw,24px) clamp(5px,.6vw,11px);background:#160d09;border-left:0;box-shadow:none;justify-content:center}
+#home.cabinet-art-ready .cabinet-heading{height:clamp(112px,12vw,195px);min-height:0;margin:0;background:url('assets/cabinet/cabinet-title.webp') center/100% 100% no-repeat}
+#home.cabinet-art-ready .cabinet-heading>*{opacity:0}
+#home.cabinet-art-ready .cabinet-entry{width:100%;height:clamp(74px,7vw,115px);min-height:0;margin:0;padding:0;flex:none;border:0;border-radius:0;clip-path:none;transform:none;background-size:100% 100%;background-position:center;background-repeat:no-repeat;box-shadow:none;filter:none}
+#home.cabinet-art-ready .cabinet-entry-primary{height:clamp(88px,8vw,134px);background-image:url('assets/cabinet/cabinet-campaign.webp')}
+#home.cabinet-art-ready .cabinet-entry-quiz{background-image:url('assets/cabinet/cabinet-trials.webp')}
+#home.cabinet-art-ready .cabinet-entry-achievements{background-image:url('assets/cabinet/cabinet-achievements.webp')}
+#home.cabinet-art-ready .cabinet-entry-dossier{background-image:url('assets/cabinet/cabinet-dossier.webp')}
+#home.cabinet-art-ready .cabinet-entry-settings{background-image:url('assets/cabinet/cabinet-settings.webp')}
+#home.cabinet-art-ready .cabinet-entry>*{opacity:0;pointer-events:none}
+#home.cabinet-art-ready .cabinet-entry:focus-visible{outline:3px solid #f6d08e;outline-offset:-5px}
+#home.cabinet-art-ready .cabinet-entry:hover{filter:brightness(1.18)}
+#home.cabinet-art-ready .cabinet-menu-footer{display:none}
+#home.cabinet-art-ready .cabinet-location{display:none}
+@media(max-width:1000px){#home.cabinet-art-ready .cabinet-room{right:40%}}
+@media(max-width:700px){
+ #home.cabinet-art-ready .cabinet-scene{display:flex;min-height:100svh;align-items:flex-end}
+ #home.cabinet-art-ready .cabinet-room{right:0;bottom:52%;background-position:center 38%}
+ #home.cabinet-art-ready .cabinet-menu{width:100%;flex-basis:auto;gap:2px;min-height:0;padding:6px 7px 12px;border-top:2px solid #8b653c}
+ #home.cabinet-art-ready .cabinet-heading{height:clamp(90px,22vw,150px)}
+ #home.cabinet-art-ready .cabinet-entry{height:clamp(54px,14vw,76px)}
+ #home.cabinet-art-ready .cabinet-entry-primary{height:clamp(61px,16vw,87px)}
+}
+
+/* Keep fixed global utilities away from the illustrated cabinet navigation. */
+body:has(#home:not([hidden])) #gameExitBtn{display:none!important}
+body:has(#home:not([hidden]))>.bh-audio-controls{display:none!important}
+#cabinetSettingsDialog .bh-audio-controls{position:static!important;display:flex!important;flex-wrap:wrap;gap:8px;pointer-events:auto;justify-content:center;margin:0}
+#cabinetSettingsDialog .bh-audio-controls button{flex:1;min-width:125px}
+
+/* Mobile art direction: preserve the cinematic room as a distinct upper scene.
+   Keep all five illustrated buttons readable and fully reachable below it. */
+@media (max-width:700px){
+ #home.cabinet-art-ready .cabinet-scene{
+   display:grid;grid-template-rows:minmax(180px,52vw) auto;
+   align-items:stretch;justify-content:stretch;
+   min-height:0;overflow:visible;
+ }
+ #home.cabinet-art-ready .cabinet-room{
+   position:relative;inset:auto;right:auto;bottom:auto;
+   width:100%;height:100%;min-height:180px;
+   background-position:center 45%;background-size:cover;
+ }
+ #home.cabinet-art-ready .cabinet-scene:before{display:none}
+ #home.cabinet-art-ready .cabinet-menu{
+   box-sizing:border-box;width:100%;min-width:0;
+   display:flex;flex-direction:column;justify-content:flex-start;
+   margin:0;padding:8px clamp(8px,3vw,16px) 18px;
+   gap:clamp(3px,1vw,7px);
+   background:linear-gradient(90deg,#160e0b,#26170e 50%,#160e0b);
+   border:0;border-top:2px ridge #a27947;
+ }
+ #home.cabinet-art-ready .cabinet-heading{
+   width:100%;height:clamp(78px,22vw,120px);
+   flex:0 0 auto;background-size:100% 100%;
+ }
+ #home.cabinet-art-ready .cabinet-entry{
+   width:100%;height:clamp(67px,19vw,95px);
+   flex:0 0 auto;background-size:100% 100%;
+   touch-action:manipulation;
+ }
+ #home.cabinet-art-ready .cabinet-entry-primary{
+   height:clamp(76px,22vw,108px);
+ }
+}
+@media (max-width:360px){
+ #home.cabinet-art-ready .cabinet-scene{grid-template-rows:180px auto}
+ #home.cabinet-art-ready .cabinet-entry{height:68px}
+ #home.cabinet-art-ready .cabinet-entry-primary{height:78px}
+}
+
+/* Restore the complete approved room illustration on desktop; avoid cover cropping
+   that discards the desk, evidence and foreground props. */
+@media (min-width:701px){
+ #home.cabinet-art-ready .cabinet-room{
+  background-image:url('assets/cabinet/cabinet-scene.webp');
+  background-size:100% 100%;background-position:center;background-repeat:no-repeat;
+ }
+}
+
+/* Restore the original map-on-desk cabinet art (pistol, papers, lamp) already
+   committed to this branch. Keep the approved illustrated button artwork. */
+@media(min-width:701px){
+ #home.cabinet-art-ready .cabinet-room{
+  background-image:url('assets/cabinet/birmingham_cabinet_office_art.webp');
+  background-position:center;background-size:100% 100%;background-repeat:no-repeat;
+ }
+}
+
+/* Mobile cinematic cabinet: room first, slide-up menu on demand.
+   Desktop rules are deliberately untouched. */
+@media(max-width:700px){
+ #home.cabinet-art-ready .cabinet-scene{
+  display:block;position:relative;isolation:isolate;
+  height:calc(100svh - 70px);min-height:480px;overflow:hidden;
+  background:#130c09;
+ }
+ #home.cabinet-art-ready .cabinet-room{
+  position:absolute;inset:0;z-index:0;width:100%;height:100%;min-height:0;
+  background-image:url('assets/cabinet/birmingham_cabinet_office_art.webp');
+  background-size:cover;background-position:35% center;background-repeat:no-repeat;
+ }
+ #home.cabinet-art-ready .cabinet-scene:before{
+  content:'';display:block;position:absolute;inset:0;z-index:1;
+  pointer-events:none;background:linear-gradient(0deg,rgba(8,5,4,.68),transparent 37%);
+ }
+ #home.cabinet-art-ready .cabinet-menu{
+  position:absolute;z-index:2;bottom:0;left:0;right:0;
+  width:100%;height:auto;max-height:min(84%,700px);min-height:0;
+  margin:0;padding:12px 12px max(18px,env(safe-area-inset-bottom));
+  overflow-y:auto;overscroll-behavior:contain;
+  display:flex;flex-direction:column;gap:5px;justify-content:flex-start;
+  border:0;border-top:2px ridge #a27947;
+  background:linear-gradient(90deg,#160e0b,#26170e 50%,#160e0b);
+  box-shadow:0 -12px 32px #000b;
+  transform:translateY(calc(100% - 69px));
+  transition:transform .38s cubic-bezier(.2,.75,.25,1);
+ }
+ #home.cabinet-art-ready .cabinet-scene.cabinet-menu-open .cabinet-menu{transform:translateY(0)}
+ #home.cabinet-art-ready .cabinet-menu-toggle{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;min-height:45px;flex:none;padding:10px 12px;
+  border:1px solid #aa804b;background:linear-gradient(#68272b,#42191d);
+  color:#f8e0b4;font:700 13px Georgia,serif;letter-spacing:2px;
+  cursor:pointer;touch-action:manipulation;
+ }
+ #home.cabinet-art-ready .cabinet-menu-toggle:focus-visible{outline:3px solid #f6d08e}
+ #home.cabinet-art-ready .cabinet-heading{height:clamp(76px,21vw,115px);width:100%;flex:none}
+ #home.cabinet-art-ready .cabinet-entry{height:clamp(65px,18vw,91px);width:100%;flex:none}
+ #home.cabinet-art-ready .cabinet-entry-primary{height:clamp(74px,21vw,103px)}
+}
+@media(max-width:360px){
+ #home.cabinet-art-ready .cabinet-scene{height:calc(100svh - 60px)}
+ #home.cabinet-art-ready .cabinet-entry{height:66px}
+ #home.cabinet-art-ready .cabinet-entry-primary{height:75px}
+}
+@media(min-width:701px){
+ #home .cabinet-menu-toggle{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #home.cabinet-art-ready .cabinet-menu{transition:none}
+}
+
+/* Closed drawer must contain ONLY the toggle, never a peeking heading. */
+@media(max-width:700px){
+ #home.cabinet-art-ready .cabinet-menu{
+  box-sizing:border-box;height:69px;max-height:min(84%,700px);
+  overflow:hidden;transform:none;
+  transition:height .32s ease;
+ }
+ #home.cabinet-art-ready .cabinet-scene.cabinet-menu-open .cabinet-menu{
+  height:min(84%,700px);overflow-y:auto;transform:none;
+ }
+ #home.cabinet-art-ready .cabinet-menu-toggle{position:sticky;top:0;z-index:3}
+}
+
+/* Landscape mobile game: restore desktop-like left scene + right art menu. */
+#cabinetRotatePrompt[hidden]{display:none!important}
+#cabinetRotatePrompt{display:none}
+@media(pointer:coarse) and (orientation:portrait) and (max-width:900px){
+ #cabinetRotatePrompt:not([hidden]){
+  position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;text-align:center;
+  padding:28px;background:radial-gradient(ellipse at 50% 30%,#39271b,#100b09 75%);
+  color:#f2d9ad;font-family:Georgia,serif;
+ }
+ #cabinetRotatePrompt strong{font-size:clamp(21px,6vw,30px);letter-spacing:2px}
+ #cabinetRotatePrompt p{max-width:290px;line-height:1.5;color:#cba97a}
+ #cabinetRotatePrompt .cabinet-rotate-symbol{font-size:68px;color:#d6a15e;line-height:1}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-height:700px){
+ #home.cabinet-art-ready .cabinet-scene{
+  display:flex;flex-direction:row;justify-content:flex-end;align-items:stretch;
+  position:relative;min-height:0;height:calc(100svh - 58px);overflow:hidden;
+ }
+ #home.cabinet-art-ready .cabinet-room{
+  position:absolute;inset:0 40% 0 0;z-index:-2;width:auto;height:auto;min-height:0;
+  background-image:url('assets/cabinet/birmingham_cabinet_office_art.webp');
+  background-position:center;background-size:100% 100%;background-repeat:no-repeat;
+ }
+ #home.cabinet-art-ready .cabinet-scene:before{display:block}
+ #home.cabinet-art-ready .cabinet-menu{
+  position:relative;left:auto;right:auto;bottom:auto;z-index:1;
+  display:flex;flex-direction:column;justify-content:center;overflow-y:auto;
+  transform:none;transition:none;
+  box-sizing:border-box;width:40%;flex:0 0 40%;height:100%;max-height:none;
+  margin:0;padding:5px 7px;gap:clamp(2px,1vh,6px);
+  border:0;background:#160d09;box-shadow:none;
+ }
+ #home.cabinet-art-ready .cabinet-heading{height:clamp(40px,17vh,95px);flex:0 0 auto}
+ #home.cabinet-art-ready .cabinet-entry{height:clamp(37px,12vh,66px);flex:0 0 auto}
+ #home.cabinet-art-ready .cabinet-entry-primary{height:clamp(43px,14vh,77px)}
+ #home.cabinet-art-ready .cabinet-menu-toggle{display:none!important}
+}
+
+/* Mobile landscape layout must not depend on pointer media emulation:
+   Telegram WebViews differ in how they expose touch capabilities. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:700px){
+ #home.cabinet-art-ready .cabinet-scene{
+  display:flex!important;flex-direction:row!important;align-items:stretch!important;
+  justify-content:flex-end!important;position:relative!important;
+  height:calc(100svh - 62px)!important;min-height:290px!important;
+  overflow:hidden!important;
+ }
+ #home.cabinet-art-ready .cabinet-room{
+  position:absolute!important;inset:0 40% 0 0!important;
+  z-index:0!important;width:auto!important;height:auto!important;min-height:0!important;
+  background-image:url('assets/cabinet/birmingham_cabinet_office_art.webp')!important;
+  background-position:center!important;background-size:100% 100%!important;
+ }
+ #home.cabinet-art-ready .cabinet-menu{
+  position:relative!important;z-index:2!important;display:flex!important;
+  flex-direction:column!important;justify-content:flex-start!important;
+  flex:0 0 40%!important;width:40%!important;height:100%!important;
+  max-height:none!important;min-height:0!important;
+  margin:0!important;padding:4px 6px!important;gap:2px!important;
+  overflow-y:auto!important;transform:none!important;
+  background:#160d09!important;border:0!important;
+ }
+ #home.cabinet-art-ready .cabinet-heading{
+  width:100%!important;height:clamp(43px,17vh,78px)!important;flex:none!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry{
+  width:100%!important;height:clamp(39px,11vh,65px)!important;flex:none!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-primary{
+  height:clamp(44px,13vh,73px)!important;
+ }
+ #home.cabinet-art-ready .cabinet-menu-toggle{display:none!important}
+ #home .atelier-dashboard,#home .footnote{display:none!important}
+}
+
+/* Landscape compactness: all illustrated targets fit without overlapping.
+   Scrolling remains available for unusually short Telegram viewports. */
+@media(orientation:landscape) and (max-width:900px) and (max-height:700px){
+ #home.cabinet-art-ready .cabinet-menu{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:clamp(36px,14vh,65px) repeat(5,minmax(36px,1fr))!important;
+  align-content:stretch!important;justify-content:stretch!important;
+  overflow-y:auto!important;overflow-x:hidden!important;
+  gap:clamp(1px,.6vh,4px)!important;
+ }
+ #home.cabinet-art-ready .cabinet-heading{
+  height:100%!important;min-height:0!important;max-height:100%!important;
+  pointer-events:none!important;overflow:hidden!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry,
+ #home.cabinet-art-ready .cabinet-entry-primary{
+  height:100%!important;min-height:36px!important;max-height:100%!important;
+  position:relative!important;z-index:1!important;
+ }
+ #home.cabinet-art-ready .cabinet-heading>*{pointer-events:none!important}
+}

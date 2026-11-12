@@ -1,0 +1,79 @@
+/* Mobile iPhone/Android landscape cabinet v2. Keep desktop and story screens unchanged. */
+@media (orientation:landscape) and (max-height:720px){
+ html.bh-phone-landscape,html.bh-phone-landscape body{width:100%;min-width:0;max-width:100%;overflow-x:clip}
+ html.bh-phone-landscape body:has(#home:not([hidden])){overflow-y:hidden}
+ html.bh-phone-landscape body>.shell{box-sizing:border-box!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:0!important}
+ /* Cabinet artwork already has its title; hide duplicate global bar on the home screen. */
+ html.bh-phone-landscape body:has(#home:not([hidden]))>.shell>.top{display:none!important}
+ html.bh-phone-landscape #home.cabinet-home{display:block;box-sizing:border-box;width:100%!important;max-width:none!important;min-height:0!important;height:auto!important;margin:0!important;padding:0!important}
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-scene{
+  display:flex!important;flex-flow:row nowrap!important;justify-content:flex-end!important;align-items:stretch!important;
+  position:relative!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;
+  height:calc(var(--bh-visible-height,100dvh) - var(--bh-inset-top) - var(--bh-inset-bottom))!important;
+  min-height:0!important;max-height:none!important;overflow:hidden!important;margin:0!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-room{
+  position:absolute!important;z-index:0!important;inset:0 36% 0 0!important;width:auto!important;height:auto!important;
+  min-height:0!important;max-height:none!important;
+  background-image:url('assets/cabinet/birmingham_cabinet_office_art.webp')!important;
+  background-size:cover!important;background-position:center 63%!important;background-repeat:no-repeat!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-menu{
+  position:relative!important;z-index:2!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1.75fr) minmax(0,1.13fr) repeat(4,minmax(44px,.96fr))!important;
+  align-content:stretch!important;justify-items:stretch!important;box-sizing:border-box!important;
+  width:36%!important;max-width:36%!important;flex:0 0 36%!important;height:100%!important;
+  min-height:0!important;max-height:none!important;margin:0!important;
+  padding:2px max(5px,var(--bh-inset-right)) 2px 5px!important;gap:clamp(1px,.4dvh,3px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;transform:none!important;transition:none!important;
+  background:#160d09!important;border:0!important;box-shadow:none!important;overscroll-behavior:contain;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-heading,
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-entry,
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-entry-primary{
+  box-sizing:border-box!important;position:relative!important;width:100%!important;max-width:100%!important;
+  height:100%!important;min-height:0!important;max-height:100%!important;margin:0!important;padding:0!important;
+  flex:auto!important;background-size:contain!important;background-repeat:no-repeat!important;
+  background-position:center!important;touch-action:manipulation;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-menu-toggle,
+ html.bh-phone-landscape #home .atelier-dashboard,
+ html.bh-phone-landscape #home .footnote{display:none!important}
+}
+@media (orientation:landscape) and (max-height:300px){
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-menu{
+  grid-template-rows:65px 54px repeat(4,44px)!important;align-content:start!important;-webkit-overflow-scrolling:touch;
+ }
+}
+
+/* WebKit 667px regression: the old portrait drawer leaves a dark gradient
+   over half of the landscape cabinet art. Disable only in the phone shell. */
+@media (orientation:landscape) and (max-height:720px){
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-scene::before{
+  display:none!important;content:none!important;background:none!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-scene{
+  background:#1b110d!important;
+ }
+ html.bh-phone-landscape #home.cabinet-art-ready .cabinet-room{
+  filter:none!important;opacity:1!important;
+ }
+}
+
+/* Story has its own 'КАРТА ГОРОДА' back action. On horizontal phones
+   the global header duplicates navigation and consumes a whole viewport row. */
+@media (orientation:landscape) and (max-height:720px){
+ html.bh-phone-landscape body:has(#caseGame:not([hidden]))>.shell>.top{
+  display:none!important;
+ }
+ html.bh-phone-landscape #caseGame.case-screen{
+  margin-top:0!important;padding-top:0!important;
+ }
+ html.bh-phone-landscape #caseGame .case-topline{
+  min-height:44px!important;
+ }
+ html.bh-phone-landscape #caseGame > .bh-audio-controls{
+  margin-bottom:4px!important;
+ }
+}

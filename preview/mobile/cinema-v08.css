@@ -1,0 +1,44 @@
+
+/* v0.8: cinematic layout corrections */
+:root{--gold:#c99c62;--gold-light:#f1d4a3}
+html{scroll-padding-top:100px}
+body{background:#070709!important}
+body:before{opacity:.18!important;filter:grayscale(1)}
+.top{position:relative!important;top:auto!important;z-index:30;margin-bottom:0!important;padding:18px 42px!important;background:#09090b!important;box-shadow:0 12px 40px #0008!important}
+.atelier-home{padding-top:24px!important}
+.atelier-stage{min-height:590px;border-color:#c698598c;box-shadow:0 30px 100px #000d, inset 0 0 80px #0006}
+.stage-scene{background:linear-gradient(90deg,#070708ec 0%,#08090ad8 35%,#07070835 78%),linear-gradient(0deg,#050507e6,transparent 48%),url('assets/shelby-intro-bg.jpg') 58% 40%/cover no-repeat!important;filter:contrast(1.08) saturate(.85)}
+.stage-copy{padding-top:145px;max-width:900px}
+.stage-copy h1{font-size:clamp(66px,7.8vw,120px);line-height:.88;text-shadow:0 4px 24px #000,0 0 70px #000}
+.stage-copy h1 em{font-size:.62em}
+.stage-start{border-radius:2px;box-shadow:0 0 0 1px #62451f,0 0 24px #c08a3b4d}
+.atelier-section-title{padding:70px 0 30px!important}
+.atelier-section-title h2{font-size:clamp(34px,4.6vw,64px);line-height:1.08;margin:18px auto 14px;max-width:1000px}
+.atelier-tiles{gap:20px}
+.atelier-tile{min-height:425px;padding:24px;box-shadow:0 22px 50px #0009}
+.atelier-tile:before{background:linear-gradient(0deg,#050508 1%,#08090ce8 28%,#08090c50 75%,#08090c13 100%),var(--tile-art) center/cover no-repeat!important;filter:saturate(.9) contrast(1.12)!important}
+.atelier-tile:hover:before{transform:scale(1.07);filter:saturate(1.05) contrast(1.13) brightness(1.1)!important}
+.tile-challenge{--tile-art:url('assets/scenes/challenge-new.webp')}
+.tile-time{--tile-art:url('assets/scenes/time-new.webp')}
+.tile-profile{--tile-art:url('assets/scenes/dossier-new.webp')}
+.tile-future{--tile-art:url('assets/scenes/city-new.webp')}
+.tile-content b{font-size:clamp(28px,2.55vw,42px);line-height:1.03;text-shadow:0 3px 16px #000}
+.tile-index{font-weight:700;text-shadow:0 2px 8px #000}
+.tile-link{display:block;border:1px solid #c89b65b0;padding:14px 10px;text-align:center;background:#080808bc;transition:background .25s,box-shadow .25s}
+.atelier-tile:hover .tile-link{background:#8c602bd9;box-shadow:0 0 24px #c9955b50;color:#fff1d5}
+.tile-future .tile-link{opacity:.6}
+#choose{padding-top:40px!important}#choose:before{margin-top:0!important}
+#choose h2{font-size:clamp(36px,5vw,60px)}
+#choose .modes{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#choose .mode{min-height:125px;background:linear-gradient(100deg,#13100fe8,#171313de),url('assets/scenes/city.webp') center/cover;border:1px solid #8d6a4455}
+#choose .mode:nth-child(1){background:linear-gradient(90deg,#12100feb,#16110dc4),url('assets/scenes/challenge-new.webp') center/cover}
+#choose .mode:nth-child(2){background:linear-gradient(90deg,#12100feb,#16110dc4),url('assets/scenes/time-new.webp') center/cover}
+#choose .mode:nth-child(3){background:linear-gradient(90deg,#12100feb,#16110dc4),url('assets/scenes/dossier-new.webp') center/cover}
+#choose .mode:nth-child(4){background:linear-gradient(90deg,#12100feb,#16110dc4),url('assets/scenes/city-new.webp') center/cover}
+#choose .mode:nth-child(5){grid-column:1/-1}
+.profile-hero:before{background:linear-gradient(90deg,#09090cf5,#09090c9a 54%,#09090c38),url('assets/scenes/dossier-new.webp') right center/cover no-repeat!important}
+#play:before{background:linear-gradient(0deg,#151013,transparent),url('assets/scenes/challenge-new.webp') center/cover!important}
+.grain{display:none!important}.smoke{opacity:.07!important}
+@media(max-width:900px){.atelier-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.atelier-tile{min-height:370px}.top{padding:14px 22px!important}}
+@media(max-width:650px){.shell{padding-left:14px;padding-right:14px}.top{margin:0 -14px!important;padding:12px 14px!important}.atelier-stage{min-height:510px}.stage-copy{padding:160px 22px 85px}.stage-copy h1{font-size:clamp(48px,11vw,75px)}.atelier-section-title{padding:45px 0 20px!important}.atelier-tiles{gap:12px}.atelier-tile{min-height:290px;padding:15px}.tile-content b{font-size:clamp(23px,5vw,32px)}.tile-link{font-size:8px;padding:12px 5px}#choose .modes{grid-template-columns:1fr}}
+@media(max-width:370px){.atelier-tiles{grid-template-columns:1fr}.atelier-tile{min-height:250px}}

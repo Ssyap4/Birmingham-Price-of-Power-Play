@@ -1,0 +1,94 @@
+/* Mobile-first interaction polish for Case 001. No story or save-state changes. */
+@media (max-width: 620px) {
+  /* Keep the evidence board within the visible phone viewport, including safe areas. */
+  .v33-shade {
+    padding: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  }
+  .v33-window {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-width: 0;
+    padding: 16px 12px 22px;
+    -webkit-overflow-scrolling: touch;
+    overflow-wrap: anywhere;
+  }
+  .v33-head { gap: 10px; align-items: flex-start; }
+  .v33-head h2 { font-size: clamp(23px, 7vw, 32px); line-height: 1.15; }
+  .v33-head p { line-height: 1.55; }
+  .v33-close { flex: 0 0 auto; min-width: 44px; min-height: 44px; }
+  .v33-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v33-tile { min-width: 0; min-height: 44px; }
+  .v33-tile span { overflow-wrap: anywhere; }
+  .v33-findings-list { grid-template-columns: minmax(0, 1fr); }
+  .v33-result-layer {
+    box-sizing: border-box;
+    padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  }
+  .v33-result {
+    box-sizing: border-box;
+    min-width: 0;
+    max-height: 100%;
+    padding: 18px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .v33-result h3 { font-size: clamp(24px, 7vw, 34px); overflow-wrap: anywhere; }
+  .v33-result-photos { flex-wrap: wrap; }
+  .v33-result-photos img { max-width: calc(50% - 7px); height: auto; aspect-ratio: 110 / 95; }
+  .v33-result button, .v34-sidebar-actions button { min-height: 44px; }
+  #caseGame .case-v18-overlay { box-sizing: border-box; padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
+  #caseGame .case-v18-overlay .v18-modal { box-sizing: border-box; width: 100%; max-width: 100%; max-height: 100%; -webkit-overflow-scrolling: touch; overflow-wrap: anywhere; }
+  #caseGame .v32-evidence-choice { min-height: 44px; }
+}
+@media (max-width: 360px) {
+  .v33-head { flex-wrap: wrap; }
+  .v33-close { margin-left: auto; }
+  .v33-tile img { height: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v33-tile { transition: none; }
+}
+
+/* Prevent narrow devices from expanding the layout viewport to a desktop-sized minimum. */
+@media (max-width: 360px) {
+  html, body { min-width: 0 !important; max-width: 100%; overflow-x: clip; }
+  .shell, #caseGame { box-sizing: border-box; min-width: 0 !important; max-width: 100%; }
+  .v33-shade { box-sizing: border-box; width: 100%; max-width: 100%; }
+  .v33-window { min-width: 0 !important; max-width: 100%; }
+}
+
+/* iPhone/Android: keep exit separate from music and effects controls. */
+@media (max-width: 620px) {
+  .bh-audio-controls {
+    left: auto;
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 9990;
+    max-width: calc(100vw - 20px);
+  }
+  .bh-audio-controls button { min-height: 44px; }
+  #gameExitBtn {
+    right: max(10px, env(safe-area-inset-right)) !important;
+    bottom: calc(64px + env(safe-area-inset-bottom)) !important;
+    min-height: 44px;
+    z-index: 9999;
+  }
+}
+
+/* Landscape phones (667–844 CSS px): the case exit used to overlap audio.
+   The <=620px portrait rule above never matched these screen widths. */
+@media (orientation: landscape) and (max-height: 450px) and (max-width: 900px) {
+  /* The portrait-only 44px close target misses landscape phones 667–844px wide. */
+  .v33-close {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #gameExitBtn {
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    min-height: 44px;
+  }
+}

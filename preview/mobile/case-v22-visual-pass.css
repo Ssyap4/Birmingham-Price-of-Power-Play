@@ -1,0 +1,28 @@
+/* v2.0 cinematic pass: the scene is the focal point, not the frame. */
+#caseGame.case-screen {max-width:1760px!important;}
+#caseGame .case-v18-layout {gap:clamp(10px,1vw,18px);}
+#caseGame .case-v18-left,#caseGame .case-v18-right {border-color:#84633e;box-shadow:inset 0 0 0 1px #d3a86b33,0 12px 32px #0008;}
+#caseGame .case-v18-middle {gap:0;background:#0e0e0d;border:1px solid #9e7949;box-shadow:0 16px 40px #0009;}
+#caseGame .case-scene {position:relative;overflow:hidden;border:0!important;border-bottom:1px solid #9e7949!important;}
+#caseGame .case-art {filter:saturate(.78) contrast(1.1);background-position:center 42%!important;transform:scale(1.005);}
+#caseGame .case-scene:after {content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,#0c0c0d55,transparent 45%),linear-gradient(0deg,#090a0be8,transparent 48%);}
+#caseGame .case-scene-inner {z-index:2;position:relative;}
+#caseGame .case-scene h2 {max-width:92%;text-wrap:balance;text-shadow:0 2px 16px #000,0 1px 2px #000;}
+#caseGame .case-dialogue {margin:0!important;border:0!important;border-bottom:1px solid #85613d!important;background:linear-gradient(105deg,#292017,#11110f 76%)!important;}
+#caseGame .case-portrait {border:1px solid #b78e56!important;box-shadow:0 0 0 3px #17110c,0 5px 18px #0008;}
+#caseGame .case-paper {border:0!important;box-shadow:none!important;background:linear-gradient(145deg,#241b13,#10100f 75%)!important;}
+#caseGame .case-choice {transition:background-color .14s ease,border-color .14s ease,transform .14s ease;}
+#caseGame .case-choice:hover:not(:disabled),#caseGame .case-choice:focus-visible {transform:translateX(3px);background:#4a321d!important;border-color:#e0b477!important;}
+#caseGame .case-v18-footer {margin-top:12px;}
+@media(min-width:1100px){
+  #caseGame .case-v18-layout {grid-template-columns:minmax(185px,220px) minmax(0,1fr) minmax(235px,270px);}
+  #caseGame .case-scene {height:clamp(330px,43dvh,520px)!important;}
+  #caseGame .case-v18-left,#caseGame .case-v18-right {align-self:stretch;}
+}
+@media(max-width:700px){
+  #caseGame .case-scene {height:clamp(245px,37dvh,360px)!important;}
+  #caseGame .case-scene h2 {font-size:clamp(27px,7vw,39px)!important;}
+  #caseGame .case-v18-right {margin-top:10px;}
+  #caseGame .case-choice {min-height:44px!important;}
+}
+@media(prefers-reduced-motion:reduce){#caseGame .case-choice{transition:none}}

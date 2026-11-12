@@ -1,0 +1,10 @@
+/* v8: inventory and deduction share one interaction and scroll model. */
+body.v34-board-open{overflow:hidden!important}
+.v33-shade{overflow:hidden!important;align-items:center;overscroll-behavior:contain}
+.v33-window{height:min(790px,calc(100dvh - 36px));max-height:calc(100dvh - 36px);overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin}
+.v33-result{max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain}
+.v34-sidebar-actions{display:grid;gap:8px;margin:14px 0 20px}
+.v34-sidebar-actions button{cursor:pointer;min-height:42px;border:1px solid #b58a50;background:linear-gradient(90deg,#48331e,#211912);color:#f2d5a7;letter-spacing:1px;font-weight:700;font-size:12px}
+.v34-sidebar-actions button:hover,.v34-sidebar-actions button:focus-visible{border-color:#efc58c;background:#533a22;outline:1px solid #cba46c}
+.v33-shade[data-mode="deduction"] .v33-tile.v33-compatible{border-color:#5ce493;box-shadow:0 0 0 2px #58d78b55,0 0 24px #40b36d80}
+@media(max-width:620px){.v33-window{height:calc(100dvh - 10px);max-height:calc(100dvh - 10px)}}

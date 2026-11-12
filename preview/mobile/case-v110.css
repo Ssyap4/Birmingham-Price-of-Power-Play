@@ -1,0 +1,22 @@
+/* v1.10: screenshot-led interface repairs */
+#caseGame .case-scene{isolation:isolate}
+/* Cover the small baked-in, cropped location badge from the older scene artwork. */
+#caseGame .case-scene:before{content:"";position:absolute;right:0;top:0;width:min(32%,295px);height:39px;background:linear-gradient(90deg,transparent,#0b0d0f 35%,#0b0d0f 100%);z-index:1;pointer-events:none}
+#caseGame .case-scene-inner{position:relative;z-index:2}
+#caseGame .case-place{display:block!important;max-width:100%;white-space:normal!important;overflow-wrap:anywhere;line-height:1.5!important}
+/* The left dossier is a document, not a duplicate scene image. */
+#caseGame .v18-case-art{position:relative;height:112px!important;margin:12px 0!important;background:radial-gradient(ellipse at center,#3b2a1c 0%,#130f0e 75%)!important;border:1px solid #8d6b44!important;display:grid;place-items:center;overflow:hidden}
+#caseGame .v18-case-art:before{content:'♜';font:normal 59px Georgia,serif;color:#d2a56a;filter:drop-shadow(0 0 15px #b1803b66)}
+#caseGame .v18-case-art:after{content:'АРХИВ БИРМИНГЕМА · 1920';position:absolute;bottom:9px;font:700 8px Manrope,Arial,sans-serif;letter-spacing:1.2px;color:#c9a47b}
+#caseGame .case-v18-right{gap:9px!important}
+#caseGame .case-v18-footer{position:static!important;backdrop-filter:none!important;margin-top:12px!important}
+#caseGame .case-v18-footer button{min-height:43px}
+#caseGame .case-v19-goals{padding:10px 0!important}
+#caseGame .case-v19-goals li{color:#d0b797!important}
+#caseGame .case-v19-goals li.done{color:#a9d2ad!important}
+#caseGame .case-v19-goals .v110-note{font:italic 11px/1.5 Georgia,serif;color:#aa9477;margin:8px 0 0}
+#caseGame .case-item{overflow-wrap:anywhere;word-break:normal}
+#caseGame .case-item img{object-fit:contain}
+#caseGame .case-v18-overlay .v18-modal{max-height:min(85vh,700px);overflow-y:auto}
+@media(max-width:1050px){#caseGame .case-v18-right{position:static!important}}
+@media(max-width:700px){#caseGame .case-scene:before{width:44%;height:30px}#caseGame .case-v18-footer{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#caseGame .case-v18-footer button{max-width:none}#caseGame .case-v18-right{overflow:visible!important}}

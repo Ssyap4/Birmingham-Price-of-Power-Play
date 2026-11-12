@@ -1,0 +1,126 @@
+{
+  "intro": {
+    "location": "Смолл-Хит · улица Уотери-Лейн",
+    "image": "intro-meeting.webp"
+  },
+  "envelope": {
+    "location": "Контора Прайса",
+    "image": "office.webp"
+  },
+  "widow": {
+    "location": "Дом Прайсов",
+    "image": "widow.webp"
+  },
+  "interview": {
+    "location": "Дом Прайсов · кухня",
+    "image": "widow.webp"
+  },
+  "warn": {
+    "location": "Дом Прайсов",
+    "image": "widow.webp"
+  },
+  "office": {
+    "location": "Контора Прайса",
+    "image": "office.webp"
+  },
+  "searchOffice": {
+    "location": "Контора Прайса · задняя комната",
+    "image": "office.webp"
+  },
+  "canal": {
+    "location": "Дигбет · складские причалы",
+    "image": "canal.webp"
+  },
+  "bribe": {
+    "location": "Дигбет · складские причалы",
+    "image": "canal.webp"
+  },
+  "sneak": {
+    "location": "Дигбет · задний двор",
+    "image": "warehouse.webp"
+  },
+  "unlock": {
+    "location": "Дигбет · склад D-17",
+    "image": "warehouse.webp"
+  },
+  "warehouse": {
+    "location": "Склад D-17",
+    "image": "warehouse-interior.webp"
+  },
+  "listen": {
+    "location": "Дигбет · за стеной склада",
+    "image": "warehouse.webp"
+  },
+  "reed": {
+    "location": "Участок на окраине",
+    "image": "police-cinematic.webp"
+  },
+  "reedProof": {
+    "location": "Полицейский участок",
+    "image": "police-cinematic.webp"
+  },
+  "accuse": {
+    "location": "Полицейский участок",
+    "image": "police-cinematic.webp"
+  },
+  "pretend": {
+    "location": "Полицейский участок",
+    "image": "police-cinematic.webp"
+  },
+  "confession": {
+    "location": "Полицейский участок",
+    "image": "police-cinematic.webp"
+  },
+  "escort": {
+    "location": "Дорога к насосной станции",
+    "image": "pump-cinematic.webp"
+  },
+  "pump": {
+    "location": "Старая насосная станция",
+    "image": "pump-cinematic.webp"
+  },
+  "yard": {
+    "location": "Насосная станция · двор",
+    "image": "pump-cinematic.webp"
+  },
+  "rescue": {
+    "location": "Насосная станция · подвал",
+    "image": "pump-basement.webp"
+  },
+  "confront": {
+    "location": "Насосная станция · машинный зал",
+    "image": "pump-basement.webp"
+  },
+  "trade": {
+    "location": "Насосная станция",
+    "image": "pump-basement.webp"
+  },
+  "expose": {
+    "location": "Насосная станция",
+    "image": "pump-basement.webp"
+  },
+  "pressure": {
+    "location": "Насосная станция",
+    "image": "pump-basement.webp"
+  },
+  "endingRescue": {
+    "location": "Финал / архив",
+    "image": "case-archive.webp"
+  },
+  "endingEvidence": {
+    "location": "Финал / архив",
+    "image": "case-archive.webp"
+  },
+  "endingDeal": {
+    "location": "Финал / архив",
+    "image": "case-archive.webp"
+  },
+  "endingTruth": {
+    "location": "Финал / архив",
+    "image": "case-archive.webp"
+  },
+  "endingPower": {
+    "location": "Финал / архив",
+    "image": "case-archive.webp"
+  }
+}

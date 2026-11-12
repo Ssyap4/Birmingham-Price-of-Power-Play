@@ -1,0 +1,12 @@
+/* v6: evidence-board deduction without nested scrolling. */
+#caseGame .v32-evidence-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:18px 0 10px}
+#caseGame .v32-evidence-choice{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:7px;background:#16120f;border:1px solid #775637;color:#e4cda7;cursor:pointer;font:600 12px/1.3 Georgia,serif}
+#caseGame .v32-evidence-choice img{width:100%;aspect-ratio:4/3;object-fit:contain;background:#1c1510}
+#caseGame .v32-evidence-choice span{overflow-wrap:anywhere;text-align:center}
+#caseGame .v32-evidence-choice.is-first{border:2px solid #dcb376;background:#302218}
+#caseGame .v32-evidence-choice.is-second{border:2px solid #8ab5a1;background:#1c3028}
+#caseGame .v32-evidence-choice:focus-visible{outline:2px solid #f6dca5;outline-offset:3px}
+#caseGame .v20-deduction-list{display:grid;gap:10px}
+#caseGame .v20-deduction-card{border-radius:0}
+@media(max-width:620px){#caseGame .v32-evidence-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:420px){#caseGame .v32-evidence-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}

@@ -1,0 +1,27 @@
+/* Cinematic workspace overhaul — keeps the existing game state and controls intact. */
+@media(min-width:1100px){
+ #caseGame.case-screen{max-width:1720px!important;padding:8px clamp(12px,2vw,32px) 18px!important}
+ #caseGame .case-v18-layout{height:calc(100dvh - 183px);min-height:590px;max-height:950px;grid-template-columns:clamp(185px,15vw,230px) minmax(0,1fr) clamp(250px,20vw,315px);gap:12px;align-items:stretch}
+ #caseGame .case-v18-left,#caseGame .case-v18-middle,#caseGame .case-v18-right{min-height:0;max-height:100%}
+ #caseGame .case-v18-middle{overflow:hidden;display:flex;flex-direction:column}
+ #caseGame .case-scene{height:clamp(285px,48%,570px)!important;min-height:285px;flex-shrink:0}
+ #caseGame .case-paper{overflow-y:auto;min-height:0;flex:1;scrollbar-width:thin;scrollbar-color:#a47a49 #14100e}
+ #caseGame .case-v18-right{overflow-y:auto;scrollbar-width:thin;scrollbar-color:#a47a49 #14100e}
+ #caseGame .case-v18-file{height:100%;box-sizing:border-box;display:flex;flex-direction:column}
+ #caseGame .v18-case-art{flex:1;min-height:150px;max-height:310px;background-image:linear-gradient(0deg,#07080888,transparent),url('assets/case-scenes/smallheath.webp')}
+ #caseGame .case-v18-footer{margin-top:8px}
+}
+#caseGame .case-v18-left{background:linear-gradient(160deg,#24190f,#080a0b 75%)}
+#caseGame .case-v18-middle{background:#100f0e}
+#caseGame .case-scene-inner{background:linear-gradient(0deg,#08090aee,transparent 88%)!important}
+#caseGame .case-scene:after{background:linear-gradient(0deg,#06070866,transparent 70%);z-index:0}
+#caseGame .case-inventory .case-item{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 20%,#60412465,transparent 68%),linear-gradient(145deg,#241c14,#100f0e)!important;border:1px solid #8d673d!important;min-height:116px!important;gap:7px!important;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+#caseGame .case-inventory .case-item img{width:65px!important;height:65px!important;object-fit:contain!important;filter:drop-shadow(0 7px 8px #000b)}
+#caseGame .case-inventory .case-item:hover{transform:translateY(-2px);border-color:#e0b77d!important;box-shadow:0 8px 20px #0009}
+#caseGame .case-v18-overlay .v18-modal{width:min(760px,100%);max-width:760px;background:radial-gradient(ellipse at 18% 15%,#59402b,#211912 48%,#0d0d0e 100%)}
+#caseGame .v20-evidence-detail{display:grid;grid-template-columns:minmax(180px,45%) minmax(0,1fr);gap:26px;align-items:center}
+#caseGame .v20-evidence-detail img{width:100%!important;height:min(46dvh,380px)!important;max-height:380px!important;aspect-ratio:auto!important;padding:24px;box-sizing:border-box;object-fit:contain;background:radial-gradient(ellipse at center,#79532d45,#100e0c 70%);border:1px solid #8c693e;filter:drop-shadow(0 10px 20px #0008)}
+#caseGame .v20-evidence-detail h4{color:#f0d2a1;font-size:clamp(21px,2.2vw,29px);font-family:Georgia,serif;margin:0 0 12px}
+#caseGame .v20-evidence-detail p{font-size:15px;line-height:1.65}
+@media(max-width:700px){#caseGame .v20-evidence-detail{grid-template-columns:1fr;gap:12px}#caseGame .v20-evidence-detail img{height:220px!important;max-height:220px!important}#caseGame .case-inventory .case-item{min-height:100px!important}#caseGame .case-inventory .case-item img{width:48px!important;height:48px!important}}
+@media(prefers-reduced-motion:reduce){#caseGame .case-inventory .case-item{transition:none}}

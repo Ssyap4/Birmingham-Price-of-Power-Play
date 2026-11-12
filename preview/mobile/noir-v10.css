@@ -1,0 +1,44 @@
+/* v1.0 The Gilded Hour: cinematic polish */
+:root{--noir-gold:#cba06a;--noir-cream:#f5e5c8}
+body{background:radial-gradient(ellipse at 50% 5%,#21180f,#090a0c 45%,#060709)!important}
+.grain{display:none!important}.smoke{opacity:.04!important}
+.top{z-index:50!important;backdrop-filter:blur(16px);box-shadow:0 9px 25px #0008!important;position:relative!important}
+.top:after{content:"";position:absolute;bottom:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#e4b97999,transparent)}
+.brand small{letter-spacing:3px!important}.brand strong i{letter-spacing:4px!important}
+.top-actions button{min-height:44px!important}
+button:focus-visible{outline:2px solid #ffe1a2!important;outline-offset:4px!important}
+.atelier-stage{isolation:isolate;overflow:hidden!important;border-radius:3px!important;box-shadow:0 0 0 5px #1c1510,0 22px 85px #000d!important}
+.stage-scene{transform-origin:65% 45%}.stage-copy{z-index:5!important;position:relative}
+.chapter-stamp{display:inline-flex;gap:15px;align-items:center;font:700 10px/1.5 Manrope,Arial,sans-serif;letter-spacing:2.7px;color:#e3b778;border-bottom:1px solid #cba06a75;padding-bottom:11px;text-shadow:0 1px 8px #000}.chapter-stamp span{color:#fff0c8}
+.stage-copy h1{text-shadow:0 4px 25px #000!important}.stage-copy p{text-shadow:0 2px 9px #000!important}
+.stage-start{min-height:58px!important;border:1px solid #ffe2a8!important;box-shadow:0 0 0 4px #0008,0 0 32px #dca15e45!important;letter-spacing:1.5px!important}
+.stage-start:active,.atelier-tile:active:not(.tile-future){transform:translateY(1px) scale(.995)!important}
+.stage-sidequote{font-family:'Cormorant Garamond',Georgia,serif!important;font-size:24px!important;font-style:italic!important;text-shadow:0 3px 8px #000!important}
+.atelier-section-title:before{content:"";display:block;width:110px;height:2px;background:linear-gradient(90deg,transparent,#e4ad6e,transparent);margin:0 auto 25px}
+.atelier-section-title>span{letter-spacing:4px!important}.atelier-section-title h2{text-shadow:0 3px 20px #000!important}
+.atelier-tile{overflow:hidden!important;isolation:isolate;border-radius:3px!important;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s!important}
+.atelier-tile:before{transition:transform 1.2s cubic-bezier(.2,.7,.1,1),filter .6s!important}
+.atelier-tile:hover:before,.atelier-tile:focus-visible:before{transform:scale(1.075)!important;filter:contrast(1.12) saturate(1.04)!important}
+.atelier-tile .tile-index{letter-spacing:2px!important;color:#e5c18e!important;text-shadow:0 1px 7px #000}.atelier-tile .tile-symbol{text-shadow:0 0 22px #d7a35460}.atelier-tile .tile-content b{text-shadow:0 3px 10px #000!important}
+.atelier-tile .tile-link{min-height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 12px!important;box-shadow:inset 0 0 0 1px #e7bd6833!important}
+.tile-future{filter:saturate(.65)}
+.atelier-dashboard{background:linear-gradient(120deg,#1a120d,#0a0a0c 55%,#1a120d)!important;box-shadow:inset 0 1px #e4b97935,0 20px 50px #0008}
+.atelier-dashboard>div{position:relative}.atelier-dashboard>div:not(:last-child):after{content:"";position:absolute;right:0;top:20%;height:60%;width:1px;background:linear-gradient(transparent,#c99b5c70,transparent)}
+#choose,#profile,#play,#result{animation:noirScreenIn .48s ease both}
+#choose h2,#profile h2,#result h2{font-family:'Cormorant Garamond',Georgia,serif!important;text-shadow:0 3px 16px #000}
+#choose .mode{border:1px solid #c6a16a66!important;box-shadow:inset 0 0 0 1px #000b,0 8px 30px #0006!important;transition:transform .3s,border-color .3s,box-shadow .3s!important}
+#choose .mode:hover:not(.upcoming){transform:translateX(7px)!important;border-color:#f0c78c!important;box-shadow:0 0 22px #c6975d35!important}
+#play .question-card{position:relative;border:1px solid #bd966358!important;background:linear-gradient(145deg,#191511f5,#0b0c0ef8)!important;box-shadow:0 25px 65px #0008,inset 0 1px #d6aa6c2b!important}
+.quiz-corner{position:absolute;right:23px;top:18px;color:#d7a96b88;font-size:22px}
+#play .answer{transition:transform .2s,border-color .2s,background .2s!important}#play .answer:hover:not(:disabled){transform:translateX(4px)!important;border-color:#e8ba7b!important;background:#33271c!important}
+#play #progressFill{background:linear-gradient(90deg,#79512c,#c99b5c,#f3d5a3)!important;box-shadow:0 0 12px #cba06a70}
+.profile-hero{position:relative;overflow:hidden;border:1px solid #c49a6166!important;box-shadow:0 18px 50px #0009!important}
+.dossier-stamp{position:absolute;right:35px;top:32px;z-index:3;transform:rotate(9deg);border:2px double #bb916783;color:#d6b18b;font:800 14px/1.5 Manrope,Arial,sans-serif;letter-spacing:3px;padding:12px 16px;text-align:center;opacity:.7}
+.profile-tile,.achievement-grid>*,#levelRecords>*{border-color:#b68e5b5c!important;box-shadow:inset 0 1px #d9ac6c1f,0 9px 25px #0006!important}
+#result{text-align:center;max-width:900px;margin:auto}#result .result-score{text-shadow:0 0 30px #d6a66e65}
+@keyframes noirScreenIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1051px){.atelier-tile:first-child{border-color:#e0b47a!important;box-shadow:0 0 0 5px #090909,0 0 28px #c8975945,0 16px 45px #000b!important}}
+@media(max-width:750px){.dossier-stamp{display:none}.chapter-stamp{font-size:8px;letter-spacing:1.3px}.stage-sidequote{display:none!important}}
+@media(max-width:650px){.atelier-tile{min-height:320px!important}.stage-start{max-width:100%;font-size:11px!important}.atelier-section-title{padding-top:42px!important}}
+@media(max-width:390px){.atelier-tile{min-height:280px!important}}
+@media(prefers-reduced-motion:reduce){#choose,#profile,#play,#result{animation:none!important}}

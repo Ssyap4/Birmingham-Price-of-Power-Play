@@ -1,0 +1,39 @@
+/* v1.2 — living dossier */
+#profile{max-width:1160px;margin-inline:auto}
+#profile .profile-hero{min-height:310px;position:relative}
+#profile .profile-hero:after{content:'PRIVATE ARCHIVE · 1920';position:absolute;right:20px;bottom:18px;font:700 9px Manrope,Arial,sans-serif;letter-spacing:3px;color:#e0b98080}
+#profile .profile-hero h2{font-size:clamp(38px,6vw,76px)!important;line-height:.96}
+#profile .profile-hero p{max-width:580px}
+#profile .rank-track{height:8px!important;overflow:hidden;box-shadow:inset 0 2px 5px #000b,0 0 0 1px #c99a5a45}
+#profile #rankProgress{background:linear-gradient(90deg,#75512e,#d8aa6e,#ffe0a3)!important;box-shadow:0 0 17px #d4a05c75;transition:width .7s ease}
+.dossier-identity{margin:24px 0;display:flex;align-items:center;gap:20px;padding:18px 23px;background:linear-gradient(100deg,#20180f,#0d0d0e 65%,#19130e);border:1px solid #bc94635c;box-shadow:inset 0 1px #dfb67c25,0 15px 30px #0007}
+.identity-seal{display:grid;place-items:center;width:66px;height:66px;flex:none;border:1px solid #d0a26a80;border-radius:50%;color:#dfb77e;font-size:32px;box-shadow:inset 0 0 0 5px #1a140d,0 0 0 3px #d1a26a25}
+.dossier-identity>div:nth-child(2){display:flex;flex-direction:column;gap:3px}
+.identity-label,.identity-status{font:700 9px Manrope,Arial,sans-serif;letter-spacing:2px;color:#c5a47a}
+.dossier-identity strong{font:600 30px 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;color:#f0d5aa}
+.dossier-identity small{font:700 9px Manrope,Arial,sans-serif;letter-spacing:2px;color:#89745e}
+.identity-status{margin-left:auto;white-space:nowrap;color:#a7bba6}
+.dossier-history{padding-top:15px}
+.dossier-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dossier-section-head>span{font:700 9px Manrope,Arial,sans-serif;letter-spacing:2px;color:#9e815f}
+.dossier-history-list{display:grid;gap:9px;margin:14px 0 25px}
+.dossier-record{display:grid;grid-template-columns:45px minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 17px;border:1px solid #ac885745;background:linear-gradient(105deg,#211911,#111214 75%);transition:border-color .2s,transform .2s}
+.dossier-record:hover{border-color:#d8ac727a;transform:translateX(3px)}
+.dossier-record .record-icon{display:grid;place-items:center;width:43px;height:43px;border:1px solid #bd956a70;border-radius:50%;font-size:21px;color:#d3a66f}
+.dossier-record.loss .record-icon{color:#aa7770;border-color:#9a645f70}
+.record-main{min-width:0}
+.record-main b{display:block;font:600 17px 'Cormorant Garamond',Georgia,serif;letter-spacing:.5px;color:#f2dfc1}
+.record-main small{display:block;margin-top:4px;font:600 10px Manrope,Arial,sans-serif;color:#aa977e;letter-spacing:.4px}
+.record-score{text-align:right}
+.record-score b{display:block;font:600 23px 'Cormorant Garamond',Georgia,serif;color:#eac28c}
+.record-score small{display:block;font:700 9px Manrope,Arial,sans-serif;color:#98836b;letter-spacing:1px}
+.dossier-empty{padding:22px;border:1px dashed #ac885755;text-align:center;color:#b9a182;font:italic 20px 'Cormorant Garamond',Georgia,serif}
+#profile .achievement-grid{gap:12px!important}
+#profile .achievement{position:relative;min-height:88px;transition:transform .25s,border-color .25s}
+#profile .achievement:hover{transform:translateY(-2px);border-color:#d6ac75a0!important}
+#profile .achievement.locked{filter:saturate(.45);opacity:.72}
+#profile .achievement .medal{filter:drop-shadow(0 0 9px #bc8c4a40)}
+#profile .profile-tile{position:relative;overflow:hidden}
+#profile .profile-tile:before{content:'✦';position:absolute;right:12px;top:7px;color:#c6a26a40;font-size:17px}
+@media(max-width:700px){.dossier-identity{gap:12px;padding:13px}.identity-seal{width:47px;height:47px;font-size:23px}.identity-status{display:none}.dossier-identity strong{font-size:24px}.dossier-section-head>span{display:none}.dossier-record{padding:11px;gap:9px;grid-template-columns:37px minmax(0,1fr) auto}.dossier-record .record-icon{width:36px;height:36px}.record-main b{font-size:15px}.record-main small{font-size:9px}.record-score b{font-size:20px}}
+@media(prefers-reduced-motion:reduce){#profile #rankProgress,.dossier-record,#profile .achievement{transition:none!important}}

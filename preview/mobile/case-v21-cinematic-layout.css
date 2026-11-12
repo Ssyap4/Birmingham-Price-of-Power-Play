@@ -1,0 +1,16 @@
+/* Cinematic investigation layout: work in progress, tested for CSS structure only. */
+@media (min-width:1051px) {
+  #caseGame .case-v18-layout {grid-template-columns:minmax(190px,220px) minmax(0,1fr) minmax(240px,280px);gap:14px;align-items:stretch;min-height:min(790px,calc(100dvh - 160px));}
+  #caseGame .case-v18-middle {min-height:min(790px,calc(100dvh - 160px));}
+  #caseGame .case-scene {height:clamp(290px,39dvh,470px)!important;border-bottom:1px solid rgba(207,160,96,.5)!important;}
+  #caseGame .case-paper {min-height:210px;}
+  #caseGame .case-v18-right {position:relative;top:auto;max-height:none;overflow-y:auto;}
+  #caseGame .case-v18-left {position:relative;top:auto;}
+}
+@media (min-width:701px) and (max-width:1050px) {
+  #caseGame .case-scene {height:clamp(280px,37dvh,410px)!important;}
+}
+#caseGame .case-scene {background:#11110f;}
+#caseGame .case-art {background-size:cover!important;background-repeat:no-repeat!important;}
+#caseGame .case-scene-inner {background:linear-gradient(0deg,rgba(7,7,8,.93),rgba(7,7,8,.06) 82%)!important;}
+#caseGame .case-paper {border-top:1px solid rgba(202,163,107,.35)!important;}

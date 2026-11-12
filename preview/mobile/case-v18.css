@@ -1,0 +1,38 @@
+/* v1.8 — new real game layout, not an image masquerading as UI */
+#caseGame.case-screen{max-width:1680px!important;padding:8px 20px 34px!important}
+#caseGame .case-topline{margin:0 0 8px!important}
+.case-v18-layout{display:grid;grid-template-columns:minmax(200px,235px) minmax(0,1fr) minmax(240px,285px);gap:12px;align-items:stretch;min-height:680px}
+.case-v18-left,.case-v18-right{min-width:0;background:linear-gradient(160deg,#1c1510,#0b0b0c 70%);border:1px solid #b88b50;box-shadow:inset 0 0 0 3px #080808,0 0 0 1px #3c2c1b}
+.case-v18-file{padding:20px 14px}.v18-kicker{font:700 10px Manrope,Arial,sans-serif;letter-spacing:2px;color:#d6ab70;text-align:center}.case-v18-file h3{font:600 31px/1.03 'Cormorant Garamond',Georgia,serif;color:#f4d9ae;text-align:center;margin:12px 0}.case-v18-file>span{display:block;text-align:center;color:#c7a377;font:600 10px Manrope,Arial,sans-serif;letter-spacing:1px}.v18-case-art{height:170px;margin:16px -6px;background:linear-gradient(0deg,#07080899,transparent),url('assets/case-v18/house.webp') center/cover;border:1px solid #ae8452}
+.v18-chapters{padding:0;margin:15px 0;list-style:none;counter-reset:chap}.v18-chapters li{position:relative;counter-increment:chap;padding:12px 6px 12px 40px;border-bottom:1px solid #88643a50;color:#98816b;font:600 13px/1.3 'Cormorant Garamond',Georgia,serif}.v18-chapters li:before{content:counter(chap,upper-roman);position:absolute;left:6px;top:10px;width:26px;height:26px;display:grid;place-items:center;border:1px solid #775a3c;border-radius:50%;font:700 11px Georgia,serif}.v18-chapters li.active{color:#f8d8a2;background:linear-gradient(90deg,#74502d88,transparent);box-shadow:inset 3px 0 #f5b965}.v18-chapters li.complete{color:#bda580}.v18-chapters li.complete:before{content:'✓';color:#dcb879}
+.case-v18-middle{min-width:0;display:flex;flex-direction:column;gap:8px}
+#caseGame .case-scene{height:clamp(235px,25vw,340px)!important;flex:0 0 auto;border-color:#c6985a!important}
+#caseGame .case-scene-inner{padding:14px 22px!important;background:linear-gradient(0deg,#090a0be6,transparent)!important}
+#caseGame .case-scene h2{font-size:clamp(28px,3.2vw,46px)!important}
+#caseGame .case-place{font-size:10px!important;letter-spacing:1.5px!important}
+#caseGame .case-dialogue{min-height:100px!important;padding:12px!important;border:1px solid #bd8b51!important;gap:14px!important;align-items:center!important}
+#caseGame .case-portrait{flex:0 0 82px!important;width:82px!important;height:90px!important;min-width:82px!important;background-position:center!important;background-size:cover!important}
+#caseGame .case-dialogue-copy p{font-size:clamp(18px,1.55vw,23px)!important;line-height:1.24!important}
+#caseGame .case-paper{flex:1;padding:15px 18px!important;background:linear-gradient(125deg,#1b1510,#0c0d0f 90%)!important}
+#caseGame .case-paper>p{font-size:clamp(17px,1.45vw,21px)!important;line-height:1.3!important;margin:0 0 12px!important}
+#caseGame .case-section-label{font-size:9px!important;margin:0 0 9px!important}
+#caseGame .case-choices{gap:5px!important}
+#caseGame .case-choice{font:600 12px/1.25 Manrope,Arial,sans-serif!important;min-height:39px!important;padding:8px 14px 8px 42px!important;position:relative;border-color:#ac814b!important}
+#caseGame .case-choice:before{content:'◇';position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:18px;color:#e8b976}
+#caseGame .case-choice:disabled{opacity:.42}
+.case-v18-right{display:flex;flex-direction:column;padding:16px 13px;gap:6px}
+#caseGame .case-progress-meta{margin:0 0 5px!important;display:flex!important;flex-direction:column;gap:5px;align-items:stretch;font-size:9px!important}
+#caseGame .case-progress-track{height:9px!important;margin:0 0 13px!important}
+#caseGame .case-sidebar{padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+#caseGame .case-sidebar h3{font-size:26px!important;margin-bottom:12px!important}
+#caseGame .case-inventory{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+#caseGame .case-item{min-width:0;min-height:86px!important;padding:7px!important;flex-direction:column;justify-content:center;text-align:center;cursor:pointer;font-size:10px!important;line-height:1.25!important}
+#caseGame .case-item:hover,#caseGame .case-item:focus-visible{outline:1px solid #f5c78a;outline-offset:1px;background:#47301b!important}
+#caseGame .case-item img{width:36px;height:36px}
+#caseGame .case-sidebar>p{font-size:10px!important;line-height:1.4!important}
+#caseGame .case-secondary{margin-top:8px!important;font-size:11px!important;padding:9px!important}
+.case-v18-footer{margin:9px 0 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding:7px;border:1px solid #a9824e;background:linear-gradient(90deg,#17120f,#090a0b,#17120f)}.case-v18-footer button{background:#1a1511;color:#e4bc86;border:1px solid #77532e;padding:10px 13px;cursor:pointer;font:600 12px Georgia,serif}.case-v18-footer button:hover,.case-v18-footer button:focus-visible{border-color:#f0c58b;background:#332216}
+.case-v18-overlay[hidden]{display:none!important}.case-v18-overlay{position:fixed;inset:0;background:#000b;z-index:300;display:grid;place-items:center;padding:20px}.v18-modal{position:relative;max-width:510px;width:100%;padding:30px;background:linear-gradient(135deg,#271c12,#0c0d0e);border:1px solid #d0a36d;box-shadow:0 20px 80px #000}.v18-modal h3{font:600 35px Georgia,serif;color:#eed2a9;text-align:center}.v18-modal p,.v18-modal #v18ModalContent{color:#d9c3a4;line-height:1.6}.v18-close{position:absolute;top:10px;right:10px;background:none;color:#e9c79a;border:1px solid #967148;padding:7px 11px;cursor:pointer}.v18-evidence-detail{display:flex;align-items:center;gap:18px}.v18-evidence-detail img{width:92px;height:92px;flex:none;filter:drop-shadow(0 0 12px #c19b5c55)}
+@media(max-width:1050px){.case-v18-layout{grid-template-columns:minmax(0,1fr) 260px}.case-v18-left{display:none}.case-v18-middle{grid-column:1}.case-v18-right{grid-column:2}}
+@media(max-width:700px){#caseGame.case-screen{padding:6px 10px 30px!important}.case-v18-layout{grid-template-columns:minmax(0,1fr)}.case-v18-middle,.case-v18-right{grid-column:1}.case-v18-right{grid-row:2}.case-v18-middle{grid-row:1}#caseGame .case-scene{height:230px!important}#caseGame .case-inventory{grid-template-columns:repeat(3,minmax(0,1fr))!important}.case-v18-footer button{flex:1 1 30%}#caseGame .case-paper{padding:14px!important}}
+@media(prefers-reduced-motion:reduce){.case-v18-footer button{transition:none}}

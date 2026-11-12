@@ -1,0 +1,13 @@
+/* Main menu visual clarity: warmer lamps, readable cards, no obsolete locked styling. */
+#home .atelier-tile::before {
+ background: linear-gradient(0deg,rgba(6,6,8,.92) 0%,rgba(8,8,10,.66) 26%,rgba(7,7,9,.18) 68%,rgba(9,8,8,.06) 100%), var(--tile-art) center/cover no-repeat !important;
+ filter:brightness(1.28) saturate(1.04) contrast(1.04) !important;
+}
+#home .atelier-tile::after {box-shadow:inset 0 0 14px rgba(0,0,0,.35) !important}
+#home .atelier-tile:hover::before {filter:brightness(1.43) saturate(1.1) contrast(1.05) !important}
+#home .atelier-tile .tile-link {opacity:1 !important; color:#f6d49d !important; border-color:#d3a363 !important; background:linear-gradient(90deg,rgba(66,41,20,.91),rgba(20,14,11,.92)) !important; box-shadow:inset 0 0 0 1px rgba(241,190,112,.18),0 0 15px rgba(211,145,70,.12) !important}
+#home .atelier-tile:hover .tile-link {background:#a57940 !important;color:#fff !important}
+#home .tile-districts {opacity:1 !important;filter:none !important;cursor:pointer !important}
+#home .tile-districts::before {background:linear-gradient(0deg,rgba(6,6,8,.9) 0%,rgba(8,8,10,.55) 30%,rgba(7,7,9,.12) 78%),url('assets/original-art/city-card-clean.webp') center/cover no-repeat !important}
+#home .tile-districts:hover {transform:translateY(-8px) !important; border-color:#ffd28b !important;box-shadow:0 0 0 5px #090909,0 20px 55px #000c,0 0 30px #e4a7595c !important}
+#home .tile-districts:hover::before {transform:scale(1.06) !important;filter:brightness(1.38) saturate(1.1) !important}

@@ -1,0 +1,13 @@
+/* Case 001: distinct cinematic finale moods without changing scene locations or artwork. */
+#caseGame .case-scene.case-ending{--ending-tone:#c9a879;--ending-glow:rgba(177,133,73,.16);border-color:var(--ending-tone);box-shadow:0 14px 48px rgba(0,0,0,.48),0 0 34px var(--ending-glow)}
+#caseGame .case-scene.case-ending .case-scene-inner{position:relative}
+#caseGame .case-scene.case-ending .case-scene-inner::before{content:'ДОСЬЕ ЗАКРЫТО';display:block;width:max-content;max-width:100%;margin-bottom:12px;padding:5px 10px;border:1px solid var(--ending-tone);background:rgba(12,11,10,.7);color:var(--ending-tone);font-size:10px;font-weight:700;letter-spacing:.19em}
+#caseGame .case-scene.case-ending .case-place{color:var(--ending-tone)}
+#caseGame .case-scene.case-ending[data-ending="endingRescue"]{--ending-tone:#e5c58c;--ending-glow:rgba(222,172,89,.22)}
+#caseGame .case-scene.case-ending[data-ending="endingEvidence"]{--ending-tone:#9db8b6;--ending-glow:rgba(106,164,170,.18)}
+#caseGame .case-scene.case-ending[data-ending="endingDeal"]{--ending-tone:#c9a078;--ending-glow:rgba(173,119,66,.2)}
+#caseGame .case-scene.case-ending[data-ending="endingTruth"]{--ending-tone:#d4c6a6;--ending-glow:rgba(222,210,166,.2)}
+#caseGame .case-scene.case-ending[data-ending="endingPower"]{--ending-tone:#b7a3cf;--ending-glow:rgba(135,97,171,.2)}
+#caseGame .case-scene.case-ending[data-ending="endingDeath"]{--ending-tone:#d58e84;--ending-glow:rgba(166,53,49,.25)}
+#caseGame .case-scene.case-ending[data-ending="endingDeath"] .case-scene-inner::before{content:'РАССЛЕДОВАНИЕ ОБОРВАНО'}
+@media(prefers-reduced-motion:reduce){#caseGame .case-scene.case-ending{transition:none}}
