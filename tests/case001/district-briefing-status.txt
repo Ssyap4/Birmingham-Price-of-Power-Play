@@ -1,11 +1,10 @@
-tested_commit=d48a040728dc15564c12f075cc3bdb30f0dfc47c
+tested_commit=f7458bfe7147d1b340092e78f617aad6a254958f
 result=1
-workflow_run=43324827712
+workflow_run=43325884513
 PASS chromium 375 five districts, rules->story->game, back, intact art
 PASS chromium 390 five districts, rules->story->game, back, intact art
-WEBKIT HIT PROBE 375 small-heath {'rect': {'x': 131.7243766784668, 'y': 433.26429748535156, 'left': 92.41625213623047, 'top': 399.0400085449219, 'width': 78.61624908447266, 'height': 68.44857788085938}, 'hit': '<button class="map-pin selected" type="button" data-district="small-heath" style="--x:34%;--y:37%" aria-pressed="true"><span ', 'hitPin': 'small-heath', 'pinPointer': 'auto', 'mapPointer': 'none', 'panelPointer': 'auto', 'svgPointer': 'none'}
 Traceback (most recent call last):
-  File "/home/runner/work/Birmingham-Price-of-Power-Play/Birmingham-Price-of-Power-Play/tests/case001/district_briefing_smoke.py", line 54, in <module>
+  File "/home/runner/work/Birmingham-Price-of-Power-Play/Birmingham-Price-of-Power-Play/tests/case001/district_briefing_smoke.py", line 36, in <module>
     assert -15<=data['top']<=h*.55,(engine,w,district,'description not in viewport',data)
            ^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: ('webkit', 375, 'small-heath', 'description not in viewport', {'top': 660.34375, 'bottom': 1447.6875, 'name': 'СМОЛЛ-ХИТ', 'active': 'small-heath', 'focused': '', 'viewport': 812})
