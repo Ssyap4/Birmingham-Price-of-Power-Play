@@ -1,0 +1,27 @@
+name: Focused Case 001 mobile UX smoke
+on:
+  push:
+    branches: [feat/case001-mobile-ux-followup]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  phone-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright Chromium and WebKit
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Check JavaScript syntax
+        run: |
+          node --check case-v33-inventory.js
+          node --check heroes-v1.js
+          node --check case001-mobile-feedback-v1.js
+      - name: Focused mobile scenarios
+        run: python tests/case001/mobile_feedback_smoke.py
