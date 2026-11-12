@@ -1,6 +1,6 @@
 /* Compact briefing for Case 001; phone-first with no scrolling on common iPhones. */
 .case001-briefing[hidden]{display:none!important}
-.case001-briefing{position:fixed;inset:0;z-index:11000;display:grid;place-items:center;padding:12px;box-sizing:border-box;background:rgba(3,5,6,.92);backdrop-filter:blur(6px)}
+.case001-briefing{position:fixed;inset:0;z-index:21000;display:grid;place-items:center;padding:12px;box-sizing:border-box;background:rgba(3,5,6,.92);backdrop-filter:blur(6px)}
 .case001-briefing-panel{width:min(100%,570px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;padding:21px;border:1px solid #c99e65;border-radius:4px;background:radial-gradient(ellipse at top,#3d291a,#18120f 55%,#0b0e0d);box-shadow:inset 0 0 0 3px #100c0a,0 22px 70px #000e;color:#ead5b4}
 .case001-briefing-panel header{border-bottom:1px solid #84643e;padding-bottom:12px;margin-bottom:13px}
 .case001-briefing-panel header small{font:700 10px/1.4 Arial,sans-serif;letter-spacing:1.5px;color:#dbb57e}
