@@ -83,6 +83,8 @@ with sync_playwright() as p:
   if width in (667,844,932):
    page.screenshot(path=str(OUT/f'{ENGINE}-heroes-{width}.png'),full_page=False)
   page.locator('#heroSelection .hero-begin').click()
+  if page.locator('#case001Briefing').is_visible():
+   page.locator('#case001Briefing .briefing-start').click()
   assert page.locator('#caseGame').is_visible()
   assert page.locator('body>.shell>.top').evaluate('e=>getComputedStyle(e).display')=='none',(ENGINE,width,'redundant top header covers case scene')
   assert page.locator('#caseGame > .bh-audio-controls').count()==1,(ENGINE,width,'utilities must dock in the story layout')
