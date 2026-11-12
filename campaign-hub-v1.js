@@ -72,56 +72,65 @@ function renderDossiers(el,runs){
   body.append(make('p','campaign-future','Следующие сюжетные и побочные дела появятся здесь после их выпуска.'));card.append(body);grid.append(card);
  }el.append(grid);
 }
+/* Curated Case 001 achievements: no free entry or one-clue rewards.
+   Unique hero × ending seals remain in their independent 30-item archive. */
 const ACH=[
- ['start','Первая страница','Начать расследование дела №001','Расследование',c=>c.started>0],
- ['clue1','Первый след','Найти хотя бы одну улику','Расследование',c=>c.maxClues>=1],
- ['clue5','Собиратель следов','Найти пять улик за одно прохождение','Расследование',c=>c.maxClues>=5],
- ['clue9','Полный блокнот','Найти девять улик за одно прохождение','Расследование',c=>c.maxClues>=9],
- ['clue11','Ни одна деталь','Собрать все 11 улик за одно прохождение','Расследование',c=>c.maxClues>=11],
- ['deduce1','Первая связь','Установить первую связь улик','Дедукция',c=>c.maxLinks>=1],
- ['deduce3','Три нити','Установить три связи за одно прохождение','Дедукция',c=>c.maxLinks>=3],
- ['deduce6','Целая картина','Установить шесть связей за одно прохождение','Дедукция',c=>c.maxLinks>=6],
- ['rescue','Спасти Артура','Получить концовку «Человек важнее бумаг»','Концовки',c=>c.endings.has('endingRescue')],
- ['evidence','Цена истины','Получить концовку «Цена доказательств»','Концовки',c=>c.endings.has('endingEvidence')],
- ['deal','Опасная сделка','Получить концовку «Договор с тенью»','Концовки',c=>c.endings.has('endingDeal')],
- ['truth','Газеты заговорили','Получить концовку «Город узнает правду»','Концовки',c=>c.endings.has('endingTruth')],
- ['power','Хранитель компромата','Получить концовку «Власть в твоих руках»','Концовки',c=>c.endings.has('endingPower')],
- ['death','Последняя ошибка','Увидеть трагическую концовку','Концовки',c=>c.endings.has('endingDeath')],
- ['end2','Развилка судеб','Открыть две разные концовки','Концовки',c=>c.endings.size>=2],
- ['end4','Цена выбора','Открыть четыре разные концовки','Концовки',c=>c.endings.size>=4],
- ['end6','Все дороги','Открыть все шесть концовок','Концовки',c=>c.endings.size>=6],
- ['hero2','Два лица города','Завершить дело двумя героями','Персонажи',c=>c.heroes.size>=2],
- ['hero3','Три судьбы','Завершить дело тремя героями','Персонажи',c=>c.heroes.size>=3],
+ ['clue9','Внимательный сыщик','Собрать девять улик в одной попытке','Расследование',c=>c.maxClues>=9],
+ ['clue11','Ни одна деталь','Собрать все 11 улик в одной попытке','Расследование',c=>c.maxClues>=11],
+ ['deduce3','Три нити','Установить три доказательные связи в одной попытке','Дедукция',c=>c.maxLinks>=3],
+ ['deduce6','Целая картина','Установить все шесть связей в одной попытке','Дедукция',c=>c.maxLinks>=6],
+ ['end2','На распутье','Открыть две разных концовки','Разные исходы',c=>c.endings.size>=2],
+ ['end4','Цена выбора','Открыть четыре разных концовки','Разные исходы',c=>c.endings.size>=4],
+ ['end6','Шесть судеб','Открыть все шесть концовок','Разные исходы',c=>c.endings.size>=6],
+ ['hero3','Три судьбы','Завершить дело тремя разными героями','Персонажи',c=>c.heroes.size>=3],
  ['hero5','Ближний круг','Завершить дело всеми пятью героями','Персонажи',c=>c.heroes.size>=5],
- ['once','Первое завершение','Впервые завершить дело №001','Прохождения',c=>c.runs.length>=1],
- ['runs5','Хронист','Завершить пять прохождений','Прохождения',c=>c.runs.length>=5],
- ['runs10','Несколько жизней','Завершить десять прохождений','Прохождения',c=>c.runs.length>=10],
- ['combos5','Пять уникальных путей','Открыть пять комбинаций героя и концовки','Прохождения',c=>c.combos.size>=5],
- ['combos15','Пятнадцать путей','Открыть 15 уникальных комбинаций героя и концовки','Прохождения',c=>c.combos.size>=15],
- ['combos30','Хозяин всех исходов','Открыть все 30 комбинаций героя и концовки','Прохождения',c=>c.combos.size>=30],
- ['survivor','На ногах','Завершить дело живым','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health>0)],
- ['wounded','Выстоял','Завершить дело живым с неполным здоровьем','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health>0&&r.health<100)],
- ['unbroken','Ни царапины','Завершить дело со 100 HP','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health===100)],
- ['lastBreath','Последний вздох','Выжить и закончить дело при 30 HP или меньше','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health>0&&r.health<=30),true],
- ['craneEye','В глаза Крейну','Встретиться с Крейном и выжить','Маршруты',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.visited?.includes('confront'))],
- ['paperTrail','Потайная бухгалтерия','Осмотреть кабинет и заднюю комнату в одном расследовании','Маршруты',c=>c.runs.some(r=>r.visited?.includes('office')&&r.visited?.includes('searchOffice'))],
- ['seventeenth','Семнадцатая дверь','Открыть склад ключом или отмычками','Маршруты',c=>c.runs.some(r=>r.visited?.includes('unlock')||r.visited?.includes('heroFinn'))],
- ['shadowWitness','Невидимый свидетель','Подслушать разговор на складе','Маршруты',c=>c.runs.some(r=>r.visited?.includes('listen'))],
- ['nightRoute','Ночной маршрут','Пройти склад и насосную станцию в одном расследовании','Маршруты',c=>c.runs.some(r=>r.visited?.includes('warehouse')&&r.visited?.includes('pump'))],
- ['reedSecret','Две стороны значка','Найти свидетельство против сержанта Рида','Маршруты',c=>c.runs.some(r=>r.visited?.includes('reedProof'))],
- ['jackPath','Закон улицы','Открыть личный путь Джека у склада','Персонажи',c=>c.runs.some(r=>r.heroId==='jack'&&r.visited?.includes('heroJack'))],
- ['finnPath','Без шума','Открыть личный путь Финна у склада','Персонажи',c=>c.runs.some(r=>r.heroId==='finn'&&r.visited?.includes('heroFinn'))],
- ['eleanorPath','Фото на память','Открыть личный путь Элеоноры у склада','Персонажи',c=>c.runs.some(r=>r.heroId==='eleanor'&&r.visited?.includes('heroEleanor'))],
- ['victorPath','Проверка по чужому имени','Открыть личный путь Виктора у склада','Персонажи',c=>c.runs.some(r=>r.heroId==='victor'&&r.visited?.includes('heroVictor'))],
- ['samuelPath','Свой среди машин','Открыть личный путь Сэмюэла у склада','Персонажи',c=>c.runs.some(r=>r.heroId==='samuel'&&r.visited?.includes('heroSamuel'))],
- ['allPaths','Пять секретов склада','Исследовать личный путь каждого из пяти героев','Персонажи',c=>['jack','finn','eleanor','victor','samuel'].every(id=>c.runs.some(r=>r.heroId===id&&r.visited?.includes('hero'+id[0].toUpperCase()+id.slice(1)))),true]
+ ['combos5','Пять уникальных путей','Получить пять уникальных сочетаний героя и концовки','Мастерство',c=>c.combos.size>=5],
+ ['combos15','Пятнадцать путей','Получить 15 уникальных сочетаний героя и концовки','Мастерство',c=>c.combos.size>=15],
+ ['combos30','Хозяин всех исходов','Открыть все 30 сочетаний героя и концовки','Мастерство',c=>c.combos.size>=30,true],
+ ['unbroken','Ни царапины','Завершить дело живым со 100 HP','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health===100)],
+ ['lastBreath','Последний вздох','Выжить и завершить дело с 30 HP или меньше','Выживание',c=>c.runs.some(r=>r.ending!=='endingDeath'&&r.health>0&&r.health<=30),true],
+ ['paperTrail','Тайная бухгалтерия','Осмотреть кабинет и заднюю комнату в одной попытке','Скрытые пути',c=>c.runs.some(r=>r.visited?.includes('office')&&r.visited?.includes('searchOffice'))],
+ ['nightRoute','Ночной маршрут','Посетить склад и насосную станцию за одну попытку','Скрытые пути',c=>c.runs.some(r=>r.visited?.includes('warehouse')&&r.visited?.includes('pump'))],
+ ['reedSecret','Две стороны значка','Найти доказательство против сержанта Рида','Скрытые пути',c=>c.runs.some(r=>r.visited?.includes('reedProof'))],
+ ['allPaths','Пять секретов склада','Исследовать личный путь каждого из пяти героев','Скрытые пути',c=>['jack','finn','eleanor','victor','samuel'].every(id=>c.runs.some(r=>r.heroId===id&&r.visited?.includes('hero'+id[0].toUpperCase()+id.slice(1)))),true]
 ];
 function metrics(runs){
  let s=0,maxClues=0,maxLinks=0;for(const h of HEROES()){const cur=state(h.id);if(cur){s++;maxClues=Math.max(maxClues,cur.items.length);maxLinks=Math.max(maxLinks,findings(h.id,cur).length)}}
  for(const r of runs){maxClues=Math.max(maxClues,r.items?.length||0);maxLinks=Math.max(maxLinks,r.deductions?.length||0)}
  return {started:s,runs,maxClues,maxLinks,heroes:new Set(runs.map(r=>r.heroId)),endings:new Set(runs.map(r=>r.ending)),combos:new Set(runs.map(r=>r.caseId+':'+r.heroId+':'+r.ending))};
 }
-function awards(runs){const m=metrics(runs),a=readJSON(AWARD_KEY,{});let dirty=false;for(const [id,,,group,pred] of ACH){if(!a[id]&&pred(m)){a[id]=Date.now();dirty=true}}if(dirty)put(AWARD_KEY,a);return a}
+/* Notify only as the player earns an award during this session.
+   Historic achievements are backfilled silently to avoid a startup avalanche. */
+const unlockQueue=[];let unlockBusy=false;
+const toastRoot=document.createElement('div');toastRoot.className='campaign-unlock-tray';
+toastRoot.setAttribute('role','status');toastRoot.setAttribute('aria-live','polite');
+document.body.append(toastRoot);
+function celebrate(title,group){
+ unlockQueue.push({title,group});
+ if(unlockBusy)return;
+ function next(){
+  if(!unlockQueue.length){unlockBusy=false;return}
+  unlockBusy=true;
+  const prize=unlockQueue.shift();
+  const card=make('div','campaign-unlock-popup');
+  card.append(make('span','campaign-unlock-star','✦'));
+  const text=make('div','campaign-unlock-copy');
+  text.append(make('small','','ДОСТИЖЕНИЕ ОТКРЫТО · '+prize.group),make('strong','',prize.title));
+  card.append(text);toastRoot.replaceChildren(card);
+  // Never intercept taps or leave a modal in the player’s way.
+  setTimeout(()=>{card.classList.add('leaving');setTimeout(()=>{card.remove();next()},350)},2900);
+ }
+ next();
+}
+function awards(runs,announce=false){
+ const m=metrics(runs),a=readJSON(AWARD_KEY,{});
+ let dirty=false;
+ for(const [id,title,,group,pred] of ACH){
+  if(!a[id]&&pred(m)){a[id]=Date.now();dirty=true;if(announce)celebrate(title,group)}
+ }
+ if(dirty)put(AWARD_KEY,a);
+ return a;
+}
 function renderUniqueRewards(el,runs){
  const earned=uniqueRewards(runs),total=HEROES().length*Object.keys(ENDINGS).length;
  const n=Object.keys(earned).filter(k=>k.startsWith(CASE_ID+':')).length;
@@ -184,8 +193,11 @@ function renderHistory(el,runs){
  el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Основные, связанные и побочные дела будут добавляться в общий архив по их постоянным идентификаторам. Пока доступны только записи дела №001.'));
 }
 function render(id){const runs=persistFinished();const box=$(id)?.querySelector('.campaign-content');if(!box)return;box.replaceChildren();if(id==='campaignDossiers')renderDossiers(box,runs);if(id==='campaignAchievements')renderAchievements(box,runs);if(id==='campaignHistory')renderHistory(box,runs)}
-function sync(){persistFinished();const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}
+function sync(){const runs=persistFinished();awards(runs,true);const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}
 const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(outcome,{childList:true,subtree:true});
+// Existing history is registered without retroactive celebrations on page load.
+awards(persistFinished(),false);
+const chapter=$('caseChapter');if(chapter)new MutationObserver(sync).observe(chapter,{childList:true});
 document.addEventListener('birmingham:case-findings-changed',sync);
 window.BirminghamCampaign={open,records:()=>persistFinished()};
 })();
