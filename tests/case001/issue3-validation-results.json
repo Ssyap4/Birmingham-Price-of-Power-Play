@@ -1,0 +1,2541 @@
+{
+  "baseline": {
+    "total": 154,
+    "passed": 154,
+    "failed": 0
+  },
+  "regressions": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0
+  },
+  "regression_groups": {
+    "regression_tests.py": {
+      "total": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    "issue3_tests.py": {
+      "total": 29,
+      "passed": 29,
+      "failed": 0
+    },
+    "session_exit_tests.py": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  "page_errors": [],
+  "http_errors": [],
+  "results": [
+    {
+      "name": "ending/jack/endingRescue",
+      "status": "passed",
+      "seconds": 3.9,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingRescue",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/jack/endingEvidence",
+      "status": "passed",
+      "seconds": 4.38,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingEvidence",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/jack/endingDeal",
+      "status": "passed",
+      "seconds": 3.57,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingDeal",
+        "health": 100,
+        "items": [
+          "key",
+          "route"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "canal",
+          "bribe",
+          "pump",
+          "confront"
+        ]
+      }
+    },
+    {
+      "name": "ending/jack/endingTruth",
+      "status": "passed",
+      "seconds": 6.07,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingTruth",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/jack/endingPower",
+      "status": "passed",
+      "seconds": 5.3,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingPower",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/jack/endingDeath",
+      "status": "passed",
+      "seconds": 3.03,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingDeath",
+        "health": 0,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingRescue",
+      "status": "passed",
+      "seconds": 2.42,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingRescue",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingEvidence",
+      "status": "passed",
+      "seconds": 3.51,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingEvidence",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingDeal",
+      "status": "passed",
+      "seconds": 3.7,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingDeal",
+        "health": 100,
+        "items": [
+          "key",
+          "route"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "canal",
+          "bribe",
+          "pump",
+          "confront"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingTruth",
+      "status": "passed",
+      "seconds": 8.6,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingTruth",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingPower",
+      "status": "passed",
+      "seconds": 8.34,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingPower",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/finn/endingDeath",
+      "status": "passed",
+      "seconds": 3.2,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingDeath",
+        "health": 0,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingRescue",
+      "status": "passed",
+      "seconds": 3.24,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingRescue",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingEvidence",
+      "status": "passed",
+      "seconds": 3.18,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingEvidence",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingDeal",
+      "status": "passed",
+      "seconds": 3.47,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingDeal",
+        "health": 100,
+        "items": [
+          "key",
+          "route"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "canal",
+          "bribe",
+          "pump",
+          "confront"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingTruth",
+      "status": "passed",
+      "seconds": 6.33,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingTruth",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingPower",
+      "status": "passed",
+      "seconds": 5.88,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingPower",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/eleanor/endingDeath",
+      "status": "passed",
+      "seconds": 3.35,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingDeath",
+        "health": 0,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingRescue",
+      "status": "passed",
+      "seconds": 2.96,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingRescue",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingEvidence",
+      "status": "passed",
+      "seconds": 3.07,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingEvidence",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingDeal",
+      "status": "passed",
+      "seconds": 3.14,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingDeal",
+        "health": 100,
+        "items": [
+          "key",
+          "route"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "canal",
+          "bribe",
+          "pump",
+          "confront"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingTruth",
+      "status": "passed",
+      "seconds": 5.18,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingTruth",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingPower",
+      "status": "passed",
+      "seconds": 6.03,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingPower",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/victor/endingDeath",
+      "status": "passed",
+      "seconds": 2.86,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingDeath",
+        "health": 0,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingRescue",
+      "status": "passed",
+      "seconds": 2.52,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingRescue",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingEvidence",
+      "status": "passed",
+      "seconds": 3.26,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingEvidence",
+        "health": 100,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingDeal",
+      "status": "passed",
+      "seconds": 2.31,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingDeal",
+        "health": 100,
+        "items": [
+          "key",
+          "route"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "canal",
+          "bribe",
+          "pump",
+          "confront"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingTruth",
+      "status": "passed",
+      "seconds": 4.65,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingTruth",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingPower",
+      "status": "passed",
+      "seconds": 3.83,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingPower",
+        "health": 100,
+        "items": [
+          "key",
+          "witness",
+          "envelope",
+          "invoice",
+          "ash",
+          "overheard",
+          "receipt",
+          "ledger",
+          "note",
+          "route",
+          "testimony"
+        ],
+        "trail": [
+          "intro",
+          "widow",
+          "interview",
+          "envelope",
+          "widow",
+          "office",
+          "searchOffice",
+          "canal",
+          "listen",
+          "sneak",
+          "warehouse",
+          "warn",
+          "office",
+          "canal",
+          "bribe",
+          "warehouse",
+          "reed",
+          "reedProof",
+          "confession",
+          "pump",
+          "confront",
+          "expose"
+        ]
+      }
+    },
+    {
+      "name": "ending/samuel/endingDeath",
+      "status": "passed",
+      "seconds": 4.66,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingDeath",
+        "health": 0,
+        "items": [
+          "envelope",
+          "receipt",
+          "ledger"
+        ],
+        "trail": [
+          "intro",
+          "envelope",
+          "canal",
+          "sneak",
+          "warehouse",
+          "pump",
+          "yard",
+          "rescue"
+        ]
+      }
+    },
+    {
+      "name": "edge/intro/widow",
+      "status": "passed",
+      "seconds": 1.82,
+      "detail": {
+        "source": "intro",
+        "target": "widow"
+      }
+    },
+    {
+      "name": "edge/intro/envelope",
+      "status": "passed",
+      "seconds": 2.21,
+      "detail": {
+        "source": "intro",
+        "target": "envelope"
+      }
+    },
+    {
+      "name": "edge/envelope/widow",
+      "status": "passed",
+      "seconds": 2.29,
+      "detail": {
+        "source": "envelope",
+        "target": "widow"
+      }
+    },
+    {
+      "name": "edge/envelope/canal",
+      "status": "passed",
+      "seconds": 2.49,
+      "detail": {
+        "source": "envelope",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/widow/office",
+      "status": "passed",
+      "seconds": 2.36,
+      "detail": {
+        "source": "widow",
+        "target": "office"
+      }
+    },
+    {
+      "name": "edge/widow/interview",
+      "status": "passed",
+      "seconds": 1.76,
+      "detail": {
+        "source": "widow",
+        "target": "interview"
+      }
+    },
+    {
+      "name": "edge/widow/canal",
+      "status": "passed",
+      "seconds": 1.45,
+      "detail": {
+        "source": "widow",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/widow/reed",
+      "status": "passed",
+      "seconds": 1.33,
+      "detail": {
+        "source": "widow",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/office/canal",
+      "status": "passed",
+      "seconds": 1.48,
+      "detail": {
+        "source": "office",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/office/searchOffice",
+      "status": "passed",
+      "seconds": 1.32,
+      "detail": {
+        "source": "office",
+        "target": "searchOffice"
+      }
+    },
+    {
+      "name": "edge/office/reed",
+      "status": "passed",
+      "seconds": 1.13,
+      "detail": {
+        "source": "office",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/office/widow",
+      "status": "passed",
+      "seconds": 1.15,
+      "detail": {
+        "source": "office",
+        "target": "widow"
+      }
+    },
+    {
+      "name": "edge/canal/bribe",
+      "status": "passed",
+      "seconds": 1.62,
+      "detail": {
+        "source": "canal",
+        "target": "bribe"
+      }
+    },
+    {
+      "name": "edge/canal/sneak",
+      "status": "passed",
+      "seconds": 1.94,
+      "detail": {
+        "source": "canal",
+        "target": "sneak"
+      }
+    },
+    {
+      "name": "edge/canal/unlock",
+      "status": "passed",
+      "seconds": 1.8,
+      "detail": {
+        "source": "canal",
+        "target": "unlock"
+      }
+    },
+    {
+      "name": "edge/canal/reed",
+      "status": "passed",
+      "seconds": 2.1,
+      "detail": {
+        "source": "canal",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/canal/listen",
+      "status": "passed",
+      "seconds": 2.05,
+      "detail": {
+        "source": "canal",
+        "target": "listen"
+      }
+    },
+    {
+      "name": "edge/bribe/warehouse",
+      "status": "passed",
+      "seconds": 1.71,
+      "detail": {
+        "source": "bribe",
+        "target": "warehouse"
+      }
+    },
+    {
+      "name": "edge/bribe/pump",
+      "status": "passed",
+      "seconds": 1.56,
+      "detail": {
+        "source": "bribe",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/sneak/warehouse",
+      "status": "passed",
+      "seconds": 1.63,
+      "detail": {
+        "source": "sneak",
+        "target": "warehouse"
+      }
+    },
+    {
+      "name": "edge/sneak/reed",
+      "status": "passed",
+      "seconds": 1.75,
+      "detail": {
+        "source": "sneak",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/unlock/warehouse",
+      "status": "passed",
+      "seconds": 1.4,
+      "detail": {
+        "source": "unlock",
+        "target": "warehouse"
+      }
+    },
+    {
+      "name": "edge/unlock/pump",
+      "status": "passed",
+      "seconds": 2.02,
+      "detail": {
+        "source": "unlock",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/warehouse/reed",
+      "status": "passed",
+      "seconds": 2.17,
+      "detail": {
+        "source": "warehouse",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/warehouse/pump",
+      "status": "passed",
+      "seconds": 2.06,
+      "detail": {
+        "source": "warehouse",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/warehouse/warn",
+      "status": "passed",
+      "seconds": 2.92,
+      "detail": {
+        "source": "warehouse",
+        "target": "warn"
+      }
+    },
+    {
+      "name": "edge/reed/reedProof",
+      "status": "passed",
+      "seconds": 2.52,
+      "detail": {
+        "source": "reed",
+        "target": "reedProof"
+      }
+    },
+    {
+      "name": "edge/reed/accuse",
+      "status": "passed",
+      "seconds": 1.8,
+      "detail": {
+        "source": "reed",
+        "target": "accuse"
+      }
+    },
+    {
+      "name": "edge/reed/pretend",
+      "status": "passed",
+      "seconds": 1.85,
+      "detail": {
+        "source": "reed",
+        "target": "pretend"
+      }
+    },
+    {
+      "name": "edge/reed/canal",
+      "status": "passed",
+      "seconds": 1.75,
+      "detail": {
+        "source": "reed",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/reedProof/escort",
+      "status": "passed",
+      "seconds": 2.5,
+      "detail": {
+        "source": "reedProof",
+        "target": "escort"
+      }
+    },
+    {
+      "name": "edge/reedProof/pump",
+      "status": "passed",
+      "seconds": 2.27,
+      "detail": {
+        "source": "reedProof",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/reedProof/confession",
+      "status": "passed",
+      "seconds": 3.06,
+      "detail": {
+        "source": "reedProof",
+        "target": "confession"
+      }
+    },
+    {
+      "name": "edge/accuse/canal",
+      "status": "passed",
+      "seconds": 2.51,
+      "detail": {
+        "source": "accuse",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/accuse/pump",
+      "status": "passed",
+      "seconds": 2.14,
+      "detail": {
+        "source": "accuse",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/pretend/pump",
+      "status": "passed",
+      "seconds": 2.35,
+      "detail": {
+        "source": "pretend",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/pretend/warn",
+      "status": "passed",
+      "seconds": 1.72,
+      "detail": {
+        "source": "pretend",
+        "target": "warn"
+      }
+    },
+    {
+      "name": "edge/confession/pump",
+      "status": "passed",
+      "seconds": 1.94,
+      "detail": {
+        "source": "confession",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/confession/warn",
+      "status": "passed",
+      "seconds": 2.41,
+      "detail": {
+        "source": "confession",
+        "target": "warn"
+      }
+    },
+    {
+      "name": "edge/escort/pump",
+      "status": "passed",
+      "seconds": 1.92,
+      "detail": {
+        "source": "escort",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/escort/yard",
+      "status": "passed",
+      "seconds": 3.08,
+      "detail": {
+        "source": "escort",
+        "target": "yard"
+      }
+    },
+    {
+      "name": "edge/warn/pump",
+      "status": "passed",
+      "seconds": 1.76,
+      "detail": {
+        "source": "warn",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "edge/warn/office",
+      "status": "passed",
+      "seconds": 2.08,
+      "detail": {
+        "source": "warn",
+        "target": "office"
+      }
+    },
+    {
+      "name": "edge/pump/yard",
+      "status": "passed",
+      "seconds": 1.47,
+      "detail": {
+        "source": "pump",
+        "target": "yard"
+      }
+    },
+    {
+      "name": "edge/pump/confront",
+      "status": "passed",
+      "seconds": 1.57,
+      "detail": {
+        "source": "pump",
+        "target": "confront"
+      }
+    },
+    {
+      "name": "edge/pump/trade",
+      "status": "passed",
+      "seconds": 1.66,
+      "detail": {
+        "source": "pump",
+        "target": "trade"
+      }
+    },
+    {
+      "name": "edge/yard/rescue",
+      "status": "passed",
+      "seconds": 1.77,
+      "detail": {
+        "source": "yard",
+        "target": "rescue"
+      }
+    },
+    {
+      "name": "edge/yard/confront",
+      "status": "passed",
+      "seconds": 2.31,
+      "detail": {
+        "source": "yard",
+        "target": "confront"
+      }
+    },
+    {
+      "name": "edge/rescue/endingRescue",
+      "status": "passed",
+      "seconds": 1.89,
+      "detail": {
+        "source": "rescue",
+        "target": "endingRescue"
+      }
+    },
+    {
+      "name": "edge/rescue/endingEvidence",
+      "status": "passed",
+      "seconds": 2.0,
+      "detail": {
+        "source": "rescue",
+        "target": "endingEvidence"
+      }
+    },
+    {
+      "name": "edge/rescue/confront",
+      "status": "passed",
+      "seconds": 1.82,
+      "detail": {
+        "source": "rescue",
+        "target": "confront"
+      }
+    },
+    {
+      "name": "edge/confront/expose",
+      "status": "passed",
+      "seconds": 1.77,
+      "detail": {
+        "source": "confront",
+        "target": "expose"
+      }
+    },
+    {
+      "name": "edge/confront/pressure",
+      "status": "passed",
+      "seconds": 2.6,
+      "detail": {
+        "source": "confront",
+        "target": "pressure"
+      }
+    },
+    {
+      "name": "edge/confront/endingDeal",
+      "status": "passed",
+      "seconds": 2.03,
+      "detail": {
+        "source": "confront",
+        "target": "endingDeal"
+      }
+    },
+    {
+      "name": "edge/confront/yard",
+      "status": "passed",
+      "seconds": 5.39,
+      "detail": {
+        "source": "confront",
+        "target": "yard"
+      }
+    },
+    {
+      "name": "edge/trade/endingDeal",
+      "status": "passed",
+      "seconds": 4.66,
+      "detail": {
+        "source": "trade",
+        "target": "endingDeal"
+      }
+    },
+    {
+      "name": "edge/trade/endingEvidence",
+      "status": "passed",
+      "seconds": 5.11,
+      "detail": {
+        "source": "trade",
+        "target": "endingEvidence"
+      }
+    },
+    {
+      "name": "edge/expose/endingTruth",
+      "status": "passed",
+      "seconds": 11.05,
+      "detail": {
+        "source": "expose",
+        "target": "endingTruth"
+      }
+    },
+    {
+      "name": "edge/expose/endingPower",
+      "status": "passed",
+      "seconds": 4.97,
+      "detail": {
+        "source": "expose",
+        "target": "endingPower"
+      }
+    },
+    {
+      "name": "edge/expose/endingRescue",
+      "status": "passed",
+      "seconds": 1.99,
+      "detail": {
+        "source": "expose",
+        "target": "endingRescue"
+      }
+    },
+    {
+      "name": "edge/pressure/endingTruth",
+      "status": "passed",
+      "seconds": 3.68,
+      "detail": {
+        "source": "pressure",
+        "target": "endingTruth"
+      }
+    },
+    {
+      "name": "edge/pressure/endingPower",
+      "status": "passed",
+      "seconds": 4.08,
+      "detail": {
+        "source": "pressure",
+        "target": "endingPower"
+      }
+    },
+    {
+      "name": "edge/interview/envelope",
+      "status": "passed",
+      "seconds": 2.09,
+      "detail": {
+        "source": "interview",
+        "target": "envelope"
+      }
+    },
+    {
+      "name": "edge/interview/office",
+      "status": "passed",
+      "seconds": 1.88,
+      "detail": {
+        "source": "interview",
+        "target": "office"
+      }
+    },
+    {
+      "name": "edge/interview/reed",
+      "status": "passed",
+      "seconds": 2.04,
+      "detail": {
+        "source": "interview",
+        "target": "reed"
+      }
+    },
+    {
+      "name": "edge/searchOffice/office",
+      "status": "passed",
+      "seconds": 2.07,
+      "detail": {
+        "source": "searchOffice",
+        "target": "office"
+      }
+    },
+    {
+      "name": "edge/searchOffice/canal",
+      "status": "passed",
+      "seconds": 1.97,
+      "detail": {
+        "source": "searchOffice",
+        "target": "canal"
+      }
+    },
+    {
+      "name": "edge/searchOffice/interview",
+      "status": "passed",
+      "seconds": 1.83,
+      "detail": {
+        "source": "searchOffice",
+        "target": "interview"
+      }
+    },
+    {
+      "name": "edge/listen/sneak",
+      "status": "passed",
+      "seconds": 2.63,
+      "detail": {
+        "source": "listen",
+        "target": "sneak"
+      }
+    },
+    {
+      "name": "edge/listen/warn",
+      "status": "passed",
+      "seconds": 2.24,
+      "detail": {
+        "source": "listen",
+        "target": "warn"
+      }
+    },
+    {
+      "name": "edge/listen/pump",
+      "status": "passed",
+      "seconds": 2.28,
+      "detail": {
+        "source": "listen",
+        "target": "pump"
+      }
+    },
+    {
+      "name": "inventory/desktop",
+      "status": "passed",
+      "seconds": 7.7,
+      "detail": {
+        "items": 11,
+        "deductions": 6,
+        "repeated_pairs": "unchanged",
+        "mobile": false
+      }
+    },
+    {
+      "name": "inventory/mobile",
+      "status": "passed",
+      "seconds": 20.02,
+      "detail": {
+        "items": 11,
+        "deductions": 6,
+        "repeated_pairs": "unchanged",
+        "mobile": true
+      }
+    },
+    {
+      "name": "healing/jack",
+      "status": "passed",
+      "seconds": 2.63,
+      "detail": {
+        "initial_kits": 2,
+        "healed_health": 100
+      }
+    },
+    {
+      "name": "restart/jack",
+      "status": "passed",
+      "seconds": 12.49,
+      "detail": {
+        "old_metadata_still_stored": {
+          "started": 1794337915617,
+          "deductions": [
+            "Уничтоженные записи"
+          ],
+          "reactions": []
+        },
+        "new_started": 1794337926300
+      }
+    },
+    {
+      "name": "healing/finn",
+      "status": "passed",
+      "seconds": 2.35,
+      "detail": {
+        "initial_kits": 1,
+        "healed_health": 90
+      }
+    },
+    {
+      "name": "restart/finn",
+      "status": "passed",
+      "seconds": 11.86,
+      "detail": {
+        "old_metadata_still_stored": {
+          "started": 1794337929907,
+          "deductions": [
+            "Уничтоженные записи"
+          ],
+          "reactions": []
+        },
+        "new_started": 1794337940548
+      }
+    },
+    {
+      "name": "healing/eleanor",
+      "status": "passed",
+      "seconds": 1.89,
+      "detail": {
+        "initial_kits": 1,
+        "healed_health": 90
+      }
+    },
+    {
+      "name": "restart/eleanor",
+      "status": "passed",
+      "seconds": 11.76,
+      "detail": {
+        "old_metadata_still_stored": {
+          "started": 1794337943579,
+          "deductions": [
+            "Уничтоженные записи"
+          ],
+          "reactions": []
+        },
+        "new_started": 1794337954238
+      }
+    },
+    {
+      "name": "healing/victor",
+      "status": "passed",
+      "seconds": 2.1,
+      "detail": {
+        "initial_kits": 1,
+        "healed_health": 90
+      }
+    },
+    {
+      "name": "restart/victor",
+      "status": "passed",
+      "seconds": 11.85,
+      "detail": {
+        "old_metadata_still_stored": {
+          "started": 1794337957606,
+          "deductions": [
+            "Уничтоженные записи"
+          ],
+          "reactions": []
+        },
+        "new_started": 1794337968197
+      }
+    },
+    {
+      "name": "healing/samuel",
+      "status": "passed",
+      "seconds": 2.41,
+      "detail": {
+        "initial_kits": 1,
+        "healed_health": 90
+      }
+    },
+    {
+      "name": "restart/samuel",
+      "status": "passed",
+      "seconds": 11.62,
+      "detail": {
+        "old_metadata_still_stored": {
+          "started": 1794337971651,
+          "deductions": [
+            "Уничтоженные записи"
+          ],
+          "reactions": []
+        },
+        "new_started": 1794337982262
+      }
+    },
+    {
+      "name": "resume/reload",
+      "status": "passed",
+      "seconds": 1.94,
+      "detail": {}
+    },
+    {
+      "name": "resume/map",
+      "status": "passed",
+      "seconds": 11.79,
+      "detail": {}
+    },
+    {
+      "name": "gate_refresh/expose",
+      "status": "passed",
+      "seconds": 2.91,
+      "detail": {}
+    },
+    {
+      "name": "gate_refresh/pressure",
+      "status": "passed",
+      "seconds": 3.02,
+      "detail": {}
+    },
+    {
+      "name": "reaction/crane",
+      "status": "passed",
+      "seconds": 3.06,
+      "detail": {}
+    },
+    {
+      "name": "risk/jack/rescue/0.25",
+      "status": "passed",
+      "seconds": 1.67,
+      "detail": {
+        "roll": 0.25,
+        "damage": 0
+      }
+    },
+    {
+      "name": "risk/finn/sneak/0.2",
+      "status": "passed",
+      "seconds": 1.48,
+      "detail": {
+        "roll": 0.2,
+        "damage": 0
+      }
+    },
+    {
+      "name": "risk/eleanor/sneak/0.28",
+      "status": "passed",
+      "seconds": 1.48,
+      "detail": {
+        "roll": 0.28,
+        "damage": 0
+      }
+    },
+    {
+      "name": "risk/victor/rescue/0.32",
+      "status": "passed",
+      "seconds": 1.7,
+      "detail": {
+        "roll": 0.32,
+        "damage": 0
+      }
+    },
+    {
+      "name": "risk/samuel/yard/0.2",
+      "status": "passed",
+      "seconds": 1.76,
+      "detail": {
+        "roll": 0.2,
+        "damage": 0
+      }
+    },
+    {
+      "name": "risk/jack/sneak/0.2",
+      "status": "passed",
+      "seconds": 1.84,
+      "detail": {
+        "roll": 0.2,
+        "damage": 25
+      }
+    },
+    {
+      "name": "risk/jack/yard/0.2",
+      "status": "passed",
+      "seconds": 1.68,
+      "detail": {
+        "roll": 0.2,
+        "damage": 30
+      }
+    },
+    {
+      "name": "semantic/retreat_label",
+      "status": "passed",
+      "seconds": 5.11,
+      "detail": {}
+    },
+    {
+      "name": "semantic/trade_consumption",
+      "status": "passed",
+      "seconds": 4.23,
+      "detail": {}
+    },
+    {
+      "name": "semantic/pressure_deadend",
+      "status": "passed",
+      "seconds": 4.68,
+      "detail": {}
+    },
+    {
+      "name": "semantic/requirement_gates",
+      "status": "passed",
+      "seconds": 2.54,
+      "detail": {
+        "missing_key": "blocked",
+        "missing_ledger": "blocked"
+      }
+    },
+    {
+      "name": "semantic/one_time",
+      "status": "passed",
+      "seconds": 2.66,
+      "detail": {
+        "ordinary_one_time_visits": "hidden"
+      }
+    },
+    {
+      "name": "semantic/long_history",
+      "status": "passed",
+      "seconds": 10.99,
+      "detail": {}
+    },
+    {
+      "name": "semantic/death_report",
+      "status": "passed",
+      "seconds": 3.87,
+      "detail": {}
+    },
+    {
+      "name": "semantic/hero_unique_actions",
+      "status": "passed",
+      "seconds": 15.8,
+      "detail": {}
+    },
+    {
+      "name": "semantic/inventory_drag",
+      "status": "passed",
+      "seconds": 2.82,
+      "detail": {}
+    },
+    {
+      "name": "semantic/restart_from_ending",
+      "status": "passed",
+      "seconds": 3.21,
+      "detail": {
+        "started_changed": true
+      }
+    },
+    {
+      "name": "reaction_refresh/evelyn",
+      "status": "passed",
+      "seconds": 3.75,
+      "detail": {}
+    },
+    {
+      "name": "reaction_refresh/reed",
+      "status": "passed",
+      "seconds": 4.66,
+      "detail": {}
+    },
+    {
+      "name": "reaction_refresh/crane",
+      "status": "passed",
+      "seconds": 6.13,
+      "detail": {}
+    },
+    {
+      "name": "reaction_once/evelyn",
+      "status": "passed",
+      "seconds": 4.53,
+      "detail": {
+        "reaction_count": 1
+      }
+    },
+    {
+      "name": "reaction_once/reed",
+      "status": "passed",
+      "seconds": 4.95,
+      "detail": {
+        "reaction_count": 1
+      }
+    },
+    {
+      "name": "isolated_risk/jack/rescue/0.25",
+      "status": "passed",
+      "seconds": 4.03,
+      "detail": {
+        "roll": 0.25,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/finn/sneak/0.2",
+      "status": "passed",
+      "seconds": 2.52,
+      "detail": {
+        "roll": 0.2,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/eleanor/sneak/0.28",
+      "status": "passed",
+      "seconds": 2.17,
+      "detail": {
+        "roll": 0.28,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/victor/rescue/0.32",
+      "status": "passed",
+      "seconds": 3.08,
+      "detail": {
+        "roll": 0.32,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/samuel/yard/0.2",
+      "status": "passed",
+      "seconds": 2.55,
+      "detail": {
+        "roll": 0.2,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/jack/sneak/0.2",
+      "status": "passed",
+      "seconds": 2.18,
+      "detail": {
+        "roll": 0.2,
+        "damage": 25
+      }
+    },
+    {
+      "name": "isolated_risk/jack/yard/0.2",
+      "status": "passed",
+      "seconds": 3.22,
+      "detail": {
+        "roll": 0.2,
+        "damage": 30
+      }
+    },
+    {
+      "name": "isolated_risk/jack/endingEvidence/0.32",
+      "status": "passed",
+      "seconds": 3.34,
+      "detail": {
+        "roll": 0.32,
+        "damage": 0
+      }
+    },
+    {
+      "name": "isolated_risk/finn/yard/0.25",
+      "status": "passed",
+      "seconds": 2.97,
+      "detail": {
+        "roll": 0.25,
+        "damage": 0
+      }
+    },
+    {
+      "name": "health/severity_and_exhaustion",
+      "status": "passed",
+      "seconds": 5.84,
+      "detail": {
+        "health_sequence": [
+          100,
+          75,
+          45,
+          10,
+          35,
+          60
+        ],
+        "kits_remaining": 0
+      }
+    },
+    {
+      "name": "health/risk_penalty/light",
+      "status": "passed",
+      "seconds": 3.22,
+      "detail": {
+        "before": 75,
+        "after": 45
+      }
+    },
+    {
+      "name": "health/risk_penalty/serious",
+      "status": "passed",
+      "seconds": 2.95,
+      "detail": {
+        "before": 45,
+        "after": 10
+      }
+    },
+    {
+      "name": "health/risk_penalty/critical",
+      "status": "passed",
+      "seconds": 3.45,
+      "detail": {
+        "before": 10,
+        "after": 0
+      }
+    },
+    {
+      "name": "reward/reputation_storage",
+      "status": "passed",
+      "seconds": 3.55,
+      "detail": {
+        "persistent_keys": [
+          "birmingham_hero_selection_v1",
+          "birmingham_case_smol_heath_v1_jack"
+        ],
+        "case_fields": [
+          "node",
+          "items",
+          "flags",
+          "trail",
+          "ending",
+          "started",
+          "health",
+          "riskSeen",
+          "bandaged",
+          "medicalKits",
+          "medicalKitFound",
+          "deathCause"
+        ],
+        "note": "Reputation is an ending label; no accumulated reputation account exists in current implementation."
+      }
+    },
+    {
+      "name": "regression/pressure/jack",
+      "status": "passed",
+      "seconds": 3.8,
+      "detail": {
+        "hero": "jack",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "regression/pressure/finn",
+      "status": "passed",
+      "seconds": 4.65,
+      "detail": {
+        "hero": "finn",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "regression/pressure/eleanor",
+      "status": "passed",
+      "seconds": 4.51,
+      "detail": {
+        "hero": "eleanor",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "regression/pressure/victor",
+      "status": "passed",
+      "seconds": 5.43,
+      "detail": {
+        "hero": "victor",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "regression/pressure/samuel",
+      "status": "passed",
+      "seconds": 6.14,
+      "detail": {
+        "hero": "samuel",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "regression/immediate/expose/endingTruth",
+      "status": "passed",
+      "seconds": 6.98,
+      "detail": {}
+    },
+    {
+      "name": "regression/immediate/expose/endingPower",
+      "status": "passed",
+      "seconds": 5.81,
+      "detail": {}
+    },
+    {
+      "name": "regression/immediate/pressure/endingTruth",
+      "status": "passed",
+      "seconds": 5.56,
+      "detail": {}
+    },
+    {
+      "name": "regression/immediate/pressure/endingPower",
+      "status": "passed",
+      "seconds": 5.53,
+      "detail": {}
+    },
+    {
+      "name": "regression/deduction_idempotence",
+      "status": "passed",
+      "seconds": 5.94,
+      "detail": {}
+    },
+    {
+      "name": "regression/event_attempt_scope",
+      "status": "passed",
+      "seconds": 4.88,
+      "detail": {}
+    },
+    {
+      "name": "regression/long_cycle_scenes_and_events",
+      "status": "passed",
+      "seconds": 17.05,
+      "detail": {
+        "cyclic_transitions": 90,
+        "trail_length": 80,
+        "health": 75
+      }
+    },
+    {
+      "name": "regression/envelope_after_90_transitions",
+      "status": "passed",
+      "seconds": 10.49,
+      "detail": {}
+    },
+    {
+      "name": "regression/new_attempt_one_time_reset",
+      "status": "passed",
+      "seconds": 12.86,
+      "detail": {}
+    },
+    {
+      "name": "issue3/resume/jack/reload",
+      "status": "passed",
+      "seconds": 6.11,
+      "detail": {
+        "hero": "jack",
+        "mode": "reload",
+        "node_restored": "sneak",
+        "health": 100,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/jack/map",
+      "status": "passed",
+      "seconds": 14.53,
+      "detail": {
+        "hero": "jack",
+        "mode": "map",
+        "node_restored": "sneak",
+        "health": 100,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/finn/reload",
+      "status": "passed",
+      "seconds": 6.58,
+      "detail": {
+        "hero": "finn",
+        "mode": "reload",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/finn/map",
+      "status": "passed",
+      "seconds": 15.31,
+      "detail": {
+        "hero": "finn",
+        "mode": "map",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/eleanor/reload",
+      "status": "passed",
+      "seconds": 4.38,
+      "detail": {
+        "hero": "eleanor",
+        "mode": "reload",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/eleanor/map",
+      "status": "passed",
+      "seconds": 14.04,
+      "detail": {
+        "hero": "eleanor",
+        "mode": "map",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/victor/reload",
+      "status": "passed",
+      "seconds": 4.29,
+      "detail": {
+        "hero": "victor",
+        "mode": "reload",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/victor/map",
+      "status": "passed",
+      "seconds": 14.35,
+      "detail": {
+        "hero": "victor",
+        "mode": "map",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/samuel/reload",
+      "status": "passed",
+      "seconds": 4.92,
+      "detail": {
+        "hero": "samuel",
+        "mode": "reload",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/resume/samuel/map",
+      "status": "passed",
+      "seconds": 14.6,
+      "detail": {
+        "hero": "samuel",
+        "mode": "map",
+        "node_restored": "sneak",
+        "health": 90,
+        "deductions_preserved": 1
+      }
+    },
+    {
+      "name": "issue3/new_attempt_explicit",
+      "status": "passed",
+      "seconds": 12.25,
+      "detail": {}
+    },
+    {
+      "name": "issue3/hero_save_isolation",
+      "status": "passed",
+      "seconds": 24.2,
+      "detail": {}
+    },
+    {
+      "name": "issue3/invalid_save/json",
+      "status": "passed",
+      "seconds": 4.28,
+      "detail": {}
+    },
+    {
+      "name": "issue3/invalid_save/shape",
+      "status": "passed",
+      "seconds": 1.99,
+      "detail": {}
+    },
+    {
+      "name": "issue3/trade/reload",
+      "status": "passed",
+      "seconds": 11.63,
+      "detail": {}
+    },
+    {
+      "name": "issue3/trade/map",
+      "status": "passed",
+      "seconds": 12.3,
+      "detail": {}
+    },
+    {
+      "name": "issue3/legacy_trade_save",
+      "status": "passed",
+      "seconds": 5.02,
+      "detail": {}
+    },
+    {
+      "name": "issue3/death_report/jack",
+      "status": "passed",
+      "seconds": 3.26,
+      "detail": {
+        "hero": "jack",
+        "cause": "Люди Крейна",
+        "report_restored": true
+      }
+    },
+    {
+      "name": "issue3/hero_action/jack",
+      "status": "passed",
+      "seconds": 4.14,
+      "detail": {
+        "hero": "jack",
+        "action": "heroJack",
+        "clue": "receipt",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "issue3/death_report/finn",
+      "status": "passed",
+      "seconds": 3.35,
+      "detail": {
+        "hero": "finn",
+        "cause": "Люди Крейна",
+        "report_restored": true
+      }
+    },
+    {
+      "name": "issue3/hero_action/finn",
+      "status": "passed",
+      "seconds": 2.64,
+      "detail": {
+        "hero": "finn",
+        "action": "heroFinn",
+        "clue": "ledger",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "issue3/death_report/eleanor",
+      "status": "passed",
+      "seconds": 2.96,
+      "detail": {
+        "hero": "eleanor",
+        "cause": "Люди Крейна",
+        "report_restored": true
+      }
+    },
+    {
+      "name": "issue3/hero_action/eleanor",
+      "status": "passed",
+      "seconds": 3.02,
+      "detail": {
+        "hero": "eleanor",
+        "action": "heroEleanor",
+        "clue": "invoice",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "issue3/death_report/victor",
+      "status": "passed",
+      "seconds": 3.0,
+      "detail": {
+        "hero": "victor",
+        "cause": "Люди Крейна",
+        "report_restored": true
+      }
+    },
+    {
+      "name": "issue3/hero_action/victor",
+      "status": "passed",
+      "seconds": 2.6,
+      "detail": {
+        "hero": "victor",
+        "action": "heroVictor",
+        "clue": "route",
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "issue3/death_report/samuel",
+      "status": "passed",
+      "seconds": 2.24,
+      "detail": {
+        "hero": "samuel",
+        "cause": "Люди Крейна",
+        "report_restored": true
+      }
+    },
+    {
+      "name": "issue3/hero_action/samuel",
+      "status": "passed",
+      "seconds": 2.51,
+      "detail": {
+        "hero": "samuel",
+        "action": "heroSamuel",
+        "clue": null,
+        "ending": "endingRescue"
+      }
+    },
+    {
+      "name": "issue3/hero_action_after_90_transitions",
+      "status": "passed",
+      "seconds": 20.88,
+      "detail": {}
+    },
+    {
+      "name": "issue3/completed_case_new_run",
+      "status": "passed",
+      "seconds": 1.65,
+      "detail": {}
+    },
+    {
+      "name": "session_exit/active_jack_keeps_finn",
+      "status": "passed",
+      "seconds": 3.12,
+      "detail": {
+        "active_hero": "jack",
+        "other_hero_preserved": true,
+        "own_findings_removed": true
+      }
+    },
+    {
+      "name": "session_exit/active_finn_keeps_jack",
+      "status": "passed",
+      "seconds": 3.18,
+      "detail": {
+        "active_hero": "finn",
+        "other_hero_preserved": true,
+        "own_findings_removed": true
+      }
+    },
+    {
+      "name": "session_exit/from_menu_preserves_save",
+      "status": "passed",
+      "seconds": 2.96,
+      "detail": {
+        "menu_save_preserved": true,
+        "node": "widow"
+      }
+    },
+    {
+      "name": "session_exit/completed_report_preserved",
+      "status": "passed",
+      "seconds": 3.72,
+      "detail": {
+        "completed_ending_preserved": "endingDeal"
+      }
+    },
+    {
+      "name": "session_exit/cancel_preserves_everything",
+      "status": "passed",
+      "seconds": 2.31,
+      "detail": {
+        "cancel_preserved_all_storage": true,
+        "node": "widow"
+      }
+    }
+  ]
+}

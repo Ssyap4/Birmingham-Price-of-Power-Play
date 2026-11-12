@@ -4,7 +4,7 @@
  const controls=document.querySelector('.bh-audio-controls');
  const top=caseScreen?.querySelector('.case-topline');
  if(!caseScreen||!controls||!top)return;
- const compact=window.matchMedia('(orientation: landscape) and (max-height: 650px) and (max-width: 980px)');
+ const compact=window.matchMedia('(orientation: portrait) and (max-width: 700px), (orientation: landscape) and (max-height: 650px) and (max-width: 980px)');
  function arrange(){
   if(controls.closest('#cabinetSettingsDialog'))return;
   const inCase=controls.parentElement===caseScreen;
