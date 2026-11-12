@@ -1,0 +1,705 @@
+{
+  "baseline": {
+    "total": 154,
+    "passed": 148,
+    "failed": 6
+  },
+  "regressions": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "page_errors": [],
+  "http_errors": [],
+  "base_commit": "1b724e9fe24117637fbb547e4fa00fac5b5f8604",
+  "fixed_baseline_scenarios": [
+    "gate_refresh/expose",
+    "gate_refresh/pressure",
+    "semantic/pressure_deadend",
+    "semantic/long_history",
+    "reaction_refresh/evelyn",
+    "reaction_refresh/reed",
+    "reaction_refresh/crane"
+  ],
+  "new_failures_against_audit": [],
+  "results": [
+    {
+      "name": "ending/jack/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "ending/jack/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "ending/jack/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "ending/jack/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "ending/jack/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "ending/jack/endingDeath",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "ending/finn/endingDeath",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "ending/eleanor/endingDeath",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "ending/victor/endingDeath",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "ending/samuel/endingDeath",
+      "status": "passed"
+    },
+    {
+      "name": "edge/intro/widow",
+      "status": "passed"
+    },
+    {
+      "name": "edge/intro/envelope",
+      "status": "passed"
+    },
+    {
+      "name": "edge/envelope/widow",
+      "status": "passed"
+    },
+    {
+      "name": "edge/envelope/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/widow/office",
+      "status": "passed"
+    },
+    {
+      "name": "edge/widow/interview",
+      "status": "passed"
+    },
+    {
+      "name": "edge/widow/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/widow/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/office/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/office/searchOffice",
+      "status": "passed"
+    },
+    {
+      "name": "edge/office/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/office/widow",
+      "status": "passed"
+    },
+    {
+      "name": "edge/canal/bribe",
+      "status": "passed"
+    },
+    {
+      "name": "edge/canal/sneak",
+      "status": "passed"
+    },
+    {
+      "name": "edge/canal/unlock",
+      "status": "passed"
+    },
+    {
+      "name": "edge/canal/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/canal/listen",
+      "status": "passed"
+    },
+    {
+      "name": "edge/bribe/warehouse",
+      "status": "passed"
+    },
+    {
+      "name": "edge/bribe/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/sneak/warehouse",
+      "status": "passed"
+    },
+    {
+      "name": "edge/sneak/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/unlock/warehouse",
+      "status": "passed"
+    },
+    {
+      "name": "edge/unlock/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/warehouse/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/warehouse/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/warehouse/warn",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reed/reedProof",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reed/accuse",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reed/pretend",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reed/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reedProof/escort",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reedProof/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/reedProof/confession",
+      "status": "passed"
+    },
+    {
+      "name": "edge/accuse/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/accuse/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pretend/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pretend/warn",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confession/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confession/warn",
+      "status": "passed"
+    },
+    {
+      "name": "edge/escort/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/escort/yard",
+      "status": "passed"
+    },
+    {
+      "name": "edge/warn/pump",
+      "status": "passed"
+    },
+    {
+      "name": "edge/warn/office",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pump/yard",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pump/confront",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pump/trade",
+      "status": "passed"
+    },
+    {
+      "name": "edge/yard/rescue",
+      "status": "passed"
+    },
+    {
+      "name": "edge/yard/confront",
+      "status": "passed"
+    },
+    {
+      "name": "edge/rescue/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "edge/rescue/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "edge/rescue/confront",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confront/expose",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confront/pressure",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confront/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/confront/yard",
+      "status": "passed"
+    },
+    {
+      "name": "edge/trade/endingDeal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/trade/endingEvidence",
+      "status": "passed"
+    },
+    {
+      "name": "edge/expose/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "edge/expose/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "edge/expose/endingRescue",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pressure/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "edge/pressure/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "edge/interview/envelope",
+      "status": "passed"
+    },
+    {
+      "name": "edge/interview/office",
+      "status": "passed"
+    },
+    {
+      "name": "edge/interview/reed",
+      "status": "passed"
+    },
+    {
+      "name": "edge/searchOffice/office",
+      "status": "passed"
+    },
+    {
+      "name": "edge/searchOffice/canal",
+      "status": "passed"
+    },
+    {
+      "name": "edge/searchOffice/interview",
+      "status": "passed"
+    },
+    {
+      "name": "edge/listen/sneak",
+      "status": "passed"
+    },
+    {
+      "name": "edge/listen/warn",
+      "status": "passed"
+    },
+    {
+      "name": "edge/listen/pump",
+      "status": "passed"
+    },
+    {
+      "name": "inventory/desktop",
+      "status": "passed"
+    },
+    {
+      "name": "inventory/mobile",
+      "status": "passed"
+    },
+    {
+      "name": "healing/jack",
+      "status": "passed"
+    },
+    {
+      "name": "restart/jack",
+      "status": "passed"
+    },
+    {
+      "name": "healing/finn",
+      "status": "passed"
+    },
+    {
+      "name": "restart/finn",
+      "status": "passed"
+    },
+    {
+      "name": "healing/eleanor",
+      "status": "passed"
+    },
+    {
+      "name": "restart/eleanor",
+      "status": "passed"
+    },
+    {
+      "name": "healing/victor",
+      "status": "passed"
+    },
+    {
+      "name": "restart/victor",
+      "status": "passed"
+    },
+    {
+      "name": "healing/samuel",
+      "status": "passed"
+    },
+    {
+      "name": "restart/samuel",
+      "status": "passed"
+    },
+    {
+      "name": "resume/reload",
+      "status": "failed",
+      "error": "Saved investigation reset to intro on reopening: {\"before\": {\"node\": \"sneak\", \"items\": [\"key\", \"invoice\", \"receipt\"], \"flags\": {\"spotted\": true}, \"trail\": [\"intro\", \"widow\", \"office\", \"canal\"], \"ending\": null, \"started\": 1794333594126, \"health\": 100, \"riskSeen\": [\"sneak\"], \"bandaged\": false, \"medicalKits\": 2, \"medicalKitFound\": true, \"deathCause\": \"\"}, \"after\": {\"node\": \"intro\", \"items\": [], \"flags\": {}, \"trail\": [], \"ending\": null, \"started\": 1794333595047, \"health\": 100, \"riskSeen\": [], \"bandaged\": false, \"medicalKits\": 1, \"medicalKitFound\": false, \"deathCause\": \"\"}}"
+    },
+    {
+      "name": "resume/map",
+      "status": "failed",
+      "error": "Saved investigation reset to intro on reopening: {\"before\": {\"node\": \"sneak\", \"items\": [\"key\", \"invoice\", \"receipt\"], \"flags\": {\"spotted\": true}, \"trail\": [\"intro\", \"widow\", \"office\", \"canal\"], \"ending\": null, \"started\": 1794333596830, \"health\": 100, \"riskSeen\": [\"sneak\"], \"bandaged\": false, \"medicalKits\": 2, \"medicalKitFound\": true, \"deathCause\": \"\"}, \"after\": {\"node\": \"intro\", \"items\": [], \"flags\": {}, \"trail\": [], \"ending\": null, \"started\": 1794333607575, \"health\": 100, \"riskSeen\": [], \"bandaged\": false, \"medicalKits\": 1, \"medicalKitFound\": false, \"deathCause\": \"\"}}"
+    },
+    {
+      "name": "gate_refresh/expose",
+      "status": "passed"
+    },
+    {
+      "name": "gate_refresh/pressure",
+      "status": "passed"
+    },
+    {
+      "name": "reaction/crane",
+      "status": "passed"
+    },
+    {
+      "name": "risk/jack/rescue/0.25",
+      "status": "passed"
+    },
+    {
+      "name": "risk/finn/sneak/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "risk/eleanor/sneak/0.28",
+      "status": "passed"
+    },
+    {
+      "name": "risk/victor/rescue/0.32",
+      "status": "passed"
+    },
+    {
+      "name": "risk/samuel/yard/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "risk/jack/sneak/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "risk/jack/yard/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/retreat_label",
+      "status": "failed",
+      "error": "{'choice_text': 'Отступить и искать другой вход · ⚠ возможное ранение −30 HP', 'actual_damage': 25}"
+    },
+    {
+      "name": "semantic/trade_consumption",
+      "status": "failed",
+      "error": "Крейн забирает ведомость, but ledger remains usable in inventory"
+    },
+    {
+      "name": "semantic/pressure_deadend",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/requirement_gates",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/one_time",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/long_history",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/death_report",
+      "status": "failed",
+      "error": "Death ending has no dedicated final report unlike other five endings"
+    },
+    {
+      "name": "semantic/hero_unique_actions",
+      "status": "failed",
+      "error": "All five heroes have identical canal actions; unique abilities/gear actions are not implemented"
+    },
+    {
+      "name": "semantic/inventory_drag",
+      "status": "passed"
+    },
+    {
+      "name": "semantic/restart_from_ending",
+      "status": "passed"
+    },
+    {
+      "name": "reaction_refresh/evelyn",
+      "status": "passed"
+    },
+    {
+      "name": "reaction_refresh/reed",
+      "status": "passed"
+    },
+    {
+      "name": "reaction_refresh/crane",
+      "status": "passed"
+    },
+    {
+      "name": "reaction_once/evelyn",
+      "status": "passed"
+    },
+    {
+      "name": "reaction_once/reed",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/jack/rescue/0.25",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/finn/sneak/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/eleanor/sneak/0.28",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/victor/rescue/0.32",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/samuel/yard/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/jack/sneak/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/jack/yard/0.2",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/jack/endingEvidence/0.32",
+      "status": "passed"
+    },
+    {
+      "name": "isolated_risk/finn/yard/0.25",
+      "status": "passed"
+    },
+    {
+      "name": "health/severity_and_exhaustion",
+      "status": "passed"
+    },
+    {
+      "name": "health/risk_penalty/light",
+      "status": "passed"
+    },
+    {
+      "name": "health/risk_penalty/serious",
+      "status": "passed"
+    },
+    {
+      "name": "health/risk_penalty/critical",
+      "status": "passed"
+    },
+    {
+      "name": "reward/reputation_storage",
+      "status": "passed"
+    },
+    {
+      "name": "regression/pressure/jack",
+      "status": "passed"
+    },
+    {
+      "name": "regression/pressure/finn",
+      "status": "passed"
+    },
+    {
+      "name": "regression/pressure/eleanor",
+      "status": "passed"
+    },
+    {
+      "name": "regression/pressure/victor",
+      "status": "passed"
+    },
+    {
+      "name": "regression/pressure/samuel",
+      "status": "passed"
+    },
+    {
+      "name": "regression/immediate/expose/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "regression/immediate/expose/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "regression/immediate/pressure/endingTruth",
+      "status": "passed"
+    },
+    {
+      "name": "regression/immediate/pressure/endingPower",
+      "status": "passed"
+    },
+    {
+      "name": "regression/deduction_idempotence",
+      "status": "passed"
+    },
+    {
+      "name": "regression/event_attempt_scope",
+      "status": "passed"
+    },
+    {
+      "name": "regression/long_cycle_scenes_and_events",
+      "status": "passed"
+    },
+    {
+      "name": "regression/envelope_after_90_transitions",
+      "status": "passed"
+    },
+    {
+      "name": "regression/new_attempt_one_time_reset",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+name: Case 001 Playwright tests
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '15 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      full_suite:
+        description: 'Run all 202 story scenarios'
+        type: boolean
+        default: false
+
+concurrency:
+  group: case001-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  scope:
+    name: Select safe QA scope
+    runs-on: ubuntu-latest
+    outputs:
+      full: ${{ steps.select.outputs.full }}
+      ui: ${{ steps.select.outputs.ui }}
+      art: ${{ steps.select.outputs.art }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: select
+        name: Classify incremental changes (fail closed)
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_ACTION: ${{ github.event.action }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BEFORE_SHA: ${{ github.event.before }}
+          MANUAL_FULL: ${{ inputs.full_suite }}
+        run: |
+          python3 tests/case001/ci_scope.py \
+            --event "$EVENT_NAME" \
+            --action "$EVENT_ACTION" \
+            --head "$HEAD_SHA" \
+            --before "$BEFORE_SHA" \
+            --manual-full "${MANUAL_FULL:-true}" \
+            --out "$GITHUB_OUTPUT"
+
+  quick:
+    name: Fast integrity and story-art checks
+    needs: scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check artwork mapping, approved SHA-256, and all scene files
+        run: python3 tests/case001/art_continuity_tests.py
+      - name: Check JavaScript syntax and cabinet structure
+        run: |
+          find . -maxdepth 1 -name '*.js' -type f -print0 | xargs -0 -n1 node --check
+          python3 tests/case001/story_first_home_tests.py
+          python3 tests/case001/ci_scope_tests.py
+          python3 tests/case001/campaign_hub_tests.py
+      - name: Install image decoder for visual QA
+        if: needs.scope.outputs.art == 'true'
+        run: python3 -m pip install --disable-pip-version-check 'pillow>=11,<13'
+      - name: Verify images decode and generate review gallery
+        if: needs.scope.outputs.art == 'true'
+        run: python3 tests/case001/scene_art_gallery.py
+      - name: Upload actual scene gallery
+        if: needs.scope.outputs.art == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-scene-gallery-${{ github.run_id }}
+          path: tests/case001/artifacts/scene-art-gallery/
+          if-no-files-found: warn
+          retention-days: 14
+
+  cabinet-smoke:
+    name: Cabinet visual and navigation smoke test
+    needs: scope
+    if: needs.scope.outputs.ui == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright and Chromium
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install chromium
+      - name: Check cabinet across desktop and phone widths
+        run: python3 tests/case001/story_home_browser_tests.py
+      - name: Check campaign archive and inventory interactions
+        run: python3 tests/case001/campaign_browser_tests.py
+      - name: Check touchscreen navigation and landscape safe areas
+        run: python3 tests/case001/mobile_safety_tests.py
+      - name: Portrait-first mobile navigation and layout QA
+        run: python3 tests/case001/portrait_browser_tests.py
+      - name: Check Case 001 layouts at three phone widths
+        run: python3 tests/case001/mobile_layout_tests.py
+        env:
+          PYTHONUNBUFFERED: '1'
+      - name: Upload browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cabinet-screenshots-${{ github.run_id }}
+          path: |
+            tests/case001/artifacts/story-home/
+            tests/case001/artifacts/mobile/
+            tests/case001/artifacts/mobile-platform/
+            tests/case001/artifacts/portrait/
+            tests/case001/artifacts/campaign/
+          if-no-files-found: warn
+          retention-days: 14
+
+  case001:
+    name: 202 story scenarios and mobile layout
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node.js for scene extraction
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install Playwright and Chromium
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install chromium
+      - name: Run all 202 Case 001 scenarios
+        run: python3 tests/case001/run_all.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          CASE001_QA_WORKERS: '1'
+      - name: Upload test logs, JSON results and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-playwright-results-${{ github.run_id }}
+          path: tests/case001/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  webkit-mobile:
+    name: WebKit iPhone landscape and touch smoke
+    needs: scope
+    if: needs.scope.outputs.ui == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install WebKit and native libraries
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install --with-deps webkit
+      - name: Check iPhone WebKit landscape navigation and tap targets
+        env:
+          BIRMINGHAM_MOBILE_BROWSER: webkit
+        run: python3 tests/case001/mobile_safety_tests.py
+      - name: Portrait-first mobile navigation and layout QA
+        env:
+          BIRMINGHAM_MOBILE_BROWSER: webkit
+        run: python3 tests/case001/portrait_browser_tests.py
+
+      - name: Upload WebKit phone screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webkit-phone-screenshots-${{ github.run_id }}
+          path: |
+            tests/case001/artifacts/mobile-platform/
+            tests/case001/artifacts/portrait/
+          if-no-files-found: warn
+          retention-days: 14
