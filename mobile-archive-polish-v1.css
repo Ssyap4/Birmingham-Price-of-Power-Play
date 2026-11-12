@@ -1,0 +1,114 @@
+/* Portrait archive visual pass 01. Five dossier portraits, achievements and
+   case history share the approved mobile cabinet's restrained brass palette.
+   Presentation only: no JS state, award rules, or player data modified. */
+@media (orientation:portrait) and (max-width:700px){
+ .campaign-hub{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  margin:0 auto max(52px,env(safe-area-inset-bottom,0px))!important;
+  padding:18px 12px 38px!important;
+  background:radial-gradient(ellipse at 50% 0%,#302014 0%,#17120e 38%,#0b0d0e 90%)!important;
+  border:0!important;border-top:1px solid #9e7543!important;
+  box-shadow:inset 0 2px 22px #0008!important;overflow-wrap:anywhere;
+ }
+ .campaign-hub .campaign-head{padding:0 3px 16px!important;margin-bottom:16px!important;border-bottom:1px solid #946d46!important}
+ .campaign-hub .campaign-head small,.campaign-hub .campaign-eyebrow{
+  font:700 11px/1.4 Arial,sans-serif!important;letter-spacing:1.3px!important;color:#d2aa73!important
+ }
+ .campaign-hub .campaign-head h2{
+  font:700 clamp(28px,8.5vw,39px)/1.08 Georgia,serif!important;
+  letter-spacing:.2px!important;color:#f5ddba!important;margin:12px 0 9px!important;
+  text-shadow:0 2px 14px #0009;
+ }
+ .campaign-hub .campaign-head p,.campaign-hub .campaign-intro{
+  font-size:15px!important;line-height:1.62!important;color:#e0cbb0!important
+ }
+ .campaign-hub .campaign-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:0 0 19px!important}
+ .campaign-hub .campaign-tabs button{
+  box-sizing:border-box!important;min-width:0!important;min-height:49px!important;
+  padding:12px 8px!important;border:1px solid #977247!important;
+  background:linear-gradient(145deg,#332316,#17120f)!important;
+  box-shadow:inset 0 1px #edc58a18,0 3px 10px #0005!important;
+  color:#f0d3aa!important;font-size:12px!important;line-height:1.35!important;
+  letter-spacing:.5px!important;white-space:normal!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
+ }
+ .campaign-hub .campaign-tabs button:last-child:nth-child(odd){grid-column:1/-1}
+ .campaign-hub .campaign-tabs button[aria-current="true"]{
+  background:linear-gradient(155deg,#654022,#372317)!important;border-color:#f2c889!important;
+  box-shadow:inset 0 1px #fce9be55,0 0 0 1px #c69a6033!important;
+  color:#fff1d2!important;
+ }
+ .campaign-hub .campaign-tabs button:active{transform:scale(.985)}
+ .campaign-hub .campaign-tabs button:focus-visible{outline:3px solid #ffdd9c!important;outline-offset:2px}
+ .campaign-hub .campaign-grid{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:14px!important}
+ .campaign-hub .campaign-card{
+  box-sizing:border-box!important;position:relative;width:100%!important;max-width:none!important;
+  overflow:hidden!important;flex:none!important;border:1px solid #a27c4d!important;
+  background:linear-gradient(140deg,#2b1c12,#11100d 70%)!important;
+  box-shadow:inset 0 0 0 3px #080707,0 12px 23px #0006!important;
+ }
+ .campaign-hub .campaign-portrait{display:block!important;width:100%!important;height:clamp(192px,62vw,285px)!important;object-fit:cover!important;object-position:center 20%!important;background:#100e0d}
+ .campaign-hub .campaign-card-body{padding:16px 15px 19px!important;border-top:1px solid #b38b56}
+ .campaign-hub .campaign-card h3{font:700 clamp(22px,6.7vw,29px)/1.13 Georgia,serif!important;color:#f6dfbb!important;margin:5px 0 9px!important}
+ .campaign-hub .campaign-card p{font-size:14px!important;line-height:1.58!important;color:#d9c3a6!important}
+ .campaign-hub .campaign-count{font-size:13px!important}
+ .campaign-hub .campaign-tags{gap:7px!important}
+ .campaign-hub .campaign-tags span{
+  font-size:13px!important;line-height:1.5!important;padding:9px 10px!important;
+  background:#120f0dbb!important;border-color:#826340!important;color:#e3c8a0!important
+ }
+ .campaign-hub .campaign-group-title{font:700 clamp(24px,7vw,30px)/1.18 Georgia,serif!important;margin:25px 0 14px!important;color:#f2d5a7!important}
+ .campaign-hub .campaign-award-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+ .campaign-hub .campaign-award{
+  gap:13px!important;padding:14px 13px!important;background:linear-gradient(130deg,#271c13,#11110f)!important;
+  border:1px solid #896b45!important;box-shadow:inset 0 1px #ffe1a018!important
+ }
+ .campaign-hub .campaign-award.locked{opacity:.76!important}
+ .campaign-hub .campaign-award strong{font-size:17px!important;line-height:1.34!important}
+ .campaign-hub .campaign-award p{font-size:14px!important;line-height:1.5!important}
+ .campaign-hub .campaign-award small{font-size:11px!important;line-height:1.5!important}
+ .campaign-hub .campaign-medal{flex:0 0 38px!important;font-size:28px!important}
+ .campaign-hub .campaign-reward-grid{grid-template-columns:minmax(0,1fr)!important;gap:8px!important;padding:11px!important}
+ .campaign-hub .campaign-reward-card{min-height:68px!important;padding:12px!important;gap:12px!important}
+ .campaign-hub .campaign-reward-card strong{font-size:15px!important;line-height:1.35!important}
+ .campaign-hub .campaign-reward-card small{font-size:13px!important;line-height:1.45!important}
+ .campaign-hub .campaign-reward-card p{font-size:12px!important;line-height:1.45!important}
+ .campaign-hub .campaign-reward-group summary{font-size:18px!important;line-height:1.35!important;padding:14px 12px!important;min-height:49px!important}
+ .campaign-hub .campaign-summary{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .campaign-hub .campaign-summary>div{min-width:0!important;padding:13px 11px!important;background:linear-gradient(135deg,#302216,#1b1510)!important}
+ .campaign-hub .campaign-summary>div:last-child:nth-child(odd){grid-column:1/-1}
+ .campaign-hub .campaign-summary small{font-size:11px!important;line-height:1.3!important}
+ .campaign-hub .campaign-summary strong{font-size:26px!important;overflow-wrap:anywhere}
+ .campaign-hub .campaign-history-list{gap:12px!important}
+ .campaign-hub .campaign-attempt{background:linear-gradient(120deg,#2b2015,#12100e)!important;border-color:#987245!important}
+ .campaign-hub .campaign-attempt-summary{grid-template-columns:1fr!important;gap:6px!important;padding:15px 13px!important;min-height:56px!important}
+ .campaign-hub .campaign-attempt-summary strong{font-size:18px!important;line-height:1.3!important}
+ .campaign-hub .campaign-attempt-summary span{font-size:15px!important;line-height:1.5!important}
+ .campaign-hub .campaign-attempt-summary small{font-size:13px!important;line-height:1.5!important}
+ .campaign-hub .campaign-attempt-detail{padding:16px 13px!important}
+ .campaign-hub .campaign-attempt-detail>p{font-size:14px!important;line-height:1.65!important}
+ .campaign-hub .campaign-attempt-section h4{font-size:18px!important;line-height:1.4!important}
+ .campaign-hub .campaign-attempt-list li{font-size:14px!important;line-height:1.5!important;padding:9px 10px!important}
+ .campaign-hub .campaign-return,.campaign-hub .campaign-profile-links button{
+  box-sizing:border-box;min-height:48px!important;padding:13px 15px!important;
+  font-size:12px!important;line-height:1.4!important;white-space:normal!important
+ }
+ .campaign-hub .campaign-profile-links{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+}
+@media (orientation:portrait) and (max-width:360px){
+ .campaign-hub{padding-inline:9px!important}
+ .campaign-hub .campaign-tabs{gap:6px!important}
+ .campaign-hub .campaign-tabs button{font-size:11px!important;padding:10px 5px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .campaign-hub .campaign-tabs button{transition:none!important}
+}
+
+/* Tab navigation always starts at the heading, not at a scroll position
+   inherited from a much longer dossier/achievement screen. */
+@media (orientation:portrait) and (max-width:700px){
+ html:has(.campaign-hub:not([hidden])){scroll-behavior:auto!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .campaign-hub.screen{animation:none!important;transform:none!important;filter:none!important}
+}

@@ -1,0 +1,123 @@
+/* Mobile Case 001 — cinematic readability pass.
+   Pure presentation: no changes to dialogue, evidence, endings or save data.
+   Uses real scene images and separate interactive controls. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame.case-screen{
+  background:radial-gradient(ellipse at 50% 3%,#372314 0%,#17110d 34%,#0b0c0c 80%)!important;
+  color:#f2dfc0!important;
+ }
+ #caseGame .case-v18-layout{gap:16px!important}
+ #caseGame .case-v18-middle{gap:11px!important}
+ #caseGame .case-topline{
+  padding:8px 8px 10px!important;border-bottom:1px solid #926d40!important;
+  background:linear-gradient(90deg,#211710b8,#09090900)!important;
+ }
+ #caseGame .case-topline button{
+  border:1px solid #b18b55!important;background:linear-gradient(135deg,#3c2819,#17120f)!important;
+  color:#f7dfb9!important;box-shadow:inset 0 1px #ffe6ac25,0 3px 12px #0006!important;
+ }
+ #caseGame .case-scene{
+  position:relative!important;overflow:hidden!important;
+  border:1px solid #cba16a!important;border-radius:3px!important;
+  box-shadow:inset 0 0 0 3px #110c09,0 10px 28px #0009,0 0 0 1px #48311c!important;
+ }
+ #caseGame .case-scene-inner{
+  padding:15px 17px!important;
+  background:linear-gradient(0deg,#090908f2,#0b0b0b9e 40%,#09090900 88%)!important;
+ }
+ #caseGame .case-scene h2{
+  color:#ffdfae!important;text-shadow:0 3px 10px #000,0 0 12px #000c!important;
+  letter-spacing:.25px!important;
+ }
+ #caseGame .case-place{
+  color:#e7c18b!important;text-shadow:0 2px 7px #000!important;
+ }
+ #caseGame .case-dialogue{
+  min-height:102px!important;
+  border:1px solid #b68a51!important;border-radius:2px!important;
+  background:linear-gradient(115deg,#332116,#15110f 72%,#0a0b0b)!important;
+  box-shadow:inset 0 1px #e9bf8340,0 6px 17px #0007!important;
+ }
+ #caseGame .case-portrait{
+  border:1px solid #d9b17a!important;
+  box-shadow:inset 0 0 0 2px #21140c,0 3px 10px #0008!important;
+  border-radius:2px!important;object-fit:cover!important;
+ }
+ #caseGame .case-dialogue-copy p{
+  color:#f3e1c8!important;text-shadow:0 1px 1px #000!important;
+ }
+ #caseGame .case-paper{
+  border:1px solid #9d7548!important;border-radius:2px!important;
+  background:linear-gradient(160deg,#302014,#17130f 50%,#0e1010)!important;
+  box-shadow:inset 0 1px #e3bc7830,0 6px 16px #0008!important;
+ }
+ #caseGame .case-paper>p{color:#e8d3b5!important}
+ #caseGame .case-section-label{
+  color:#ddaf72!important;font-weight:700!important;
+  border-bottom:1px solid #85623b!important;padding-bottom:8px!important;
+ }
+ #caseGame .case-choice{
+  color:#f5dcb8!important;
+  border:1px solid #a37a49!important;border-left:3px solid #c79558!important;
+  border-radius:2px!important;
+  background:linear-gradient(100deg,#38271a,#1b1612 65%,#15120f)!important;
+  box-shadow:inset 0 1px #f7d6a919,0 3px 9px #0005!important;
+  transition:transform .15s ease,border-color .15s ease,filter .15s ease,background .15s ease!important;
+ }
+ #caseGame .case-choice:not(:disabled):active{
+  transform:scale(.987)!important;filter:brightness(1.17)!important;
+ }
+ #caseGame .case-choice:not(:disabled):focus-visible{
+  outline:2px solid #f8d29a!important;outline-offset:2px!important;
+ }
+ #caseGame .case-choice:disabled{filter:saturate(.72)}
+ #caseGame .case-v18-right{
+  border:1px solid #927045!important;border-radius:2px!important;
+  background:linear-gradient(145deg,#241a12,#101111 80%)!important;
+  box-shadow:inset 0 1px #e6ba752b,0 8px 21px #0008!important;
+ }
+ #caseGame .case-v18-right h3,#caseGame .case-v18-right h4{
+  color:#efd0a1!important;text-shadow:0 1px 6px #0007!important;
+ }
+ #caseGame .case-v18-right p,#caseGame .case-v18-right li{color:#dcc7a9!important}
+ #caseGame .case-v18-right button{
+  min-height:44px;touch-action:manipulation;
+ }
+ #caseGame .case-v18-overlay .v18-modal{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  padding:22px 14px 18px!important;border:1px solid #d3a56e!important;
+  border-radius:3px!important;box-shadow:0 16px 55px #000d!important;
+ }
+ #caseGame .case-v18-overlay .v18-modal h3{
+  font-size:clamp(25px,7vw,33px)!important;line-height:1.16!important;
+ }
+ #caseGame .case-v18-overlay .v18-modal p{
+  font-size:16px!important;line-height:1.6!important;
+ }
+ #caseGame .case-v18-overlay .v18-close{
+  min-width:44px!important;min-height:44px!important;display:grid!important;place-items:center!important;
+ }
+ .v33-window{
+  border:1px solid #c69b60!important;
+  background:radial-gradient(ellipse at 50% 0%,#382717,#201710 43%,#0d1010 100%)!important;
+  box-shadow:inset 0 0 0 3px #0c0b0a,0 16px 48px #000d!important;
+ }
+ .v33-tile{
+  border:1px solid #8c693f!important;
+  background:linear-gradient(145deg,#2a1f15,#141311)!important;
+  box-shadow:inset 0 1px #ffda9a26,0 3px 10px #0006!important;
+  border-radius:2px!important;
+ }
+ .v33-tile img{
+  border:1px solid #5d462d!important;background:radial-gradient(ellipse,#282018,#0c0c0b)!important;
+ }
+ .v33-tile span{color:#f1dab4!important}
+ .v33-findings-list article{
+  background:linear-gradient(140deg,#291e14,#14120f)!important;
+  border-color:#8a693f!important;
+ }
+ .v33-close,.v33-result button{min-height:44px!important;touch-action:manipulation}
+}
+@media(prefers-reduced-motion:reduce){
+ #caseGame .case-choice{transition:none!important}
+}
