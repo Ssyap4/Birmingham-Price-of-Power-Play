@@ -1,0 +1,57 @@
+/* Dossier 2.0 — cinematic player identity, not a second achievements archive. */
+#profile.player-dossier-v2{min-height:100vh;padding:clamp(12px,3vw,30px) 12px 70px;background:linear-gradient(180deg,#10100f,#15120f 55%,#090b0b);color:#ead6b9}
+#profile .pd-shell{width:min(100%,1000px);margin:0 auto;display:grid;gap:19px}
+#profile .pd-hero{position:relative;overflow:hidden;min-height:205px;padding:clamp(24px,4vw,44px);border:1px solid #997852;background:linear-gradient(90deg,#101010ea 15%,#101010ac 85%),url('assets/scenes/city-new.webp') center/cover}
+#profile .pd-hero:before{content:'';position:absolute;inset:10px;border:1px solid #88684380;pointer-events:none}
+#profile .pd-kicker{font:700 10px/1.45 Manrope,Arial,sans-serif;letter-spacing:2px;color:#bd9a67}
+#profile .pd-hero h2{font:600 clamp(38px,7vw,74px)/1 Cormorant Garamond,Georgia,serif;letter-spacing:.055em;margin:16px 0;color:#f7e7cc}
+#profile .pd-hero p{max-width:600px;color:#e2cdb1;font:clamp(15px,2.8vw,19px)/1.6 Georgia,serif;margin:0}
+#profile .pd-identity{display:flex;align-items:center;gap:18px;padding:22px;border:1px solid #a58258;background:linear-gradient(135deg,#271b13,#151312)}
+#profile .pd-mark{display:grid;place-items:center;flex:none;width:70px;height:70px;border:1px solid #b28d5d;border-radius:50%;color:#ebcc95;font:38px Georgia,serif;box-shadow:0 0 0 5px #7b573330}
+#profile .pd-identity-details{display:grid;gap:7px;min-width:0}
+#profile .pd-alias{font:600 clamp(25px,5vw,38px)/1.1 Cormorant Garamond,Georgia,serif;color:#f5dfbf;overflow-wrap:anywhere}
+#profile .pd-number{color:#bca787;font:11px/1.4 Arial,sans-serif;letter-spacing:1px}
+#profile .pd-edit-alias{width:max-content;max-width:100%;min-height:34px;padding:7px 12px;border:1px solid #866a47;color:#e6c798;background:#211811;font:700 10px Arial,sans-serif;letter-spacing:.8px;cursor:pointer}
+#profile .pd-rank{border:1px solid #74604a;background:#161410;padding:19px 21px;display:grid;gap:12px}
+#profile .pd-rank-title{font:700 14px/1.5 Arial,sans-serif;color:#f0cc91;letter-spacing:2px}
+#profile .pd-track{height:8px;border:1px solid #6e573b;background:#070707;overflow:hidden}
+#profile .pd-track-fill{display:block;background:linear-gradient(90deg,#916837,#e2bc7a);height:100%;transition:width .25s ease}
+#profile .pd-rank-caption{color:#cbb596;font:12px/1.5 Arial,sans-serif}
+#profile .pd-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#profile .pd-stat{min-height:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid #846649;background:linear-gradient(145deg,#241c16,#101010);padding:16px 10px;text-align:center}
+#profile .pd-stat b{color:#f5d9a4;font:600 clamp(27px,5vw,38px)/1 Cormorant Garamond,Georgia,serif}
+#profile .pd-stat small{color:#c5b3a0;text-transform:uppercase;letter-spacing:1px;font:10px/1.45 Arial,sans-serif}
+#profile .pd-current,#profile .pd-activity,#profile .pd-archive{border:1px solid #766044;padding:clamp(18px,3vw,28px);background:linear-gradient(130deg,#201810,#101110)}
+#profile .pd-section-heading{display:grid;gap:7px;margin-bottom:14px}
+#profile .pd-section-heading h3{font:600 clamp(27px,5vw,36px)/1.12 Cormorant Garamond,Georgia,serif;color:#f3dfbc;margin:0}
+#profile .pd-section-heading p{color:#ad9b86;margin:2px 0 0;font:13px/1.55 Arial,sans-serif}
+#profile .pd-muted{font:14px/1.65 Georgia,serif;color:#cab79c}
+#profile .pd-current-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;padding:12px 0;border-top:1px solid #69533c}
+#profile .pd-current-row strong{color:#f0d6aa;font:600 18px Georgia,serif}
+#profile .pd-current-row span{font:12px/1.4 Arial,sans-serif;color:#cfb899}
+#profile .pd-event-list{display:grid;gap:8px}
+#profile .pd-event{display:flex;align-items:center;gap:13px;padding:12px 0;border-top:1px solid #624f3b}
+#profile .pd-event-emblem{width:38px;height:38px;flex:none;display:grid;place-items:center;border:1px solid #a2804e;color:#e9bd75}
+#profile .pd-event-content{display:grid;gap:5px;min-width:0}
+#profile .pd-event-content strong{font:600 17px Georgia,serif;color:#f2d9b3}
+#profile .pd-event-content small{font:11px/1.45 Arial,sans-serif;color:#b8a286}
+#profile .pd-archive-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#profile .pd-archive-link{position:relative;min-height:130px;display:flex;flex-direction:column;text-align:left;gap:12px;padding:16px 14px;border:1px solid #a17d52;background:linear-gradient(150deg,#342517,#17120f);cursor:pointer;color:#f0d3a7}
+#profile .pd-archive-link strong{font:600 23px/1.1 Cormorant Garamond,Georgia,serif}
+#profile .pd-archive-link small{color:#cfb99b;font:12px/1.5 Arial,sans-serif;max-width:90%}
+#profile .pd-arrow{position:absolute;right:12px;bottom:10px;color:#d3a66e;font-size:20px}
+#profile .pd-archive-link:hover,#profile .pd-archive-link:focus-visible,#profile .pd-edit-alias:focus-visible{border-color:#ffe0aa;outline:1px solid #cba474;outline-offset:2px}
+#profile .pd-footnote{padding:4px 8px;color:#a99882;text-align:center;font:12px/1.5 Arial,sans-serif;margin:0}
+@media(max-width:700px){
+ #profile.player-dossier-v2{padding:12px max(9px,env(safe-area-inset-right)) 75px max(9px,env(safe-area-inset-left))}
+ #profile .pd-hero{min-height:190px}
+ #profile .pd-identity{padding:16px;gap:12px}
+ #profile .pd-mark{width:54px;height:54px;font-size:29px}
+ #profile .pd-archive-grid{grid-template-columns:1fr}
+ #profile .pd-archive-link{min-height:91px}
+ #profile .pd-stats{gap:8px}
+ #profile .pd-stat{min-height:92px;padding:11px 5px}
+ #profile .pd-stat small{font-size:9px}
+}
+@media(max-width:370px){#profile .pd-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){#profile .pd-track-fill{transition:none}}
