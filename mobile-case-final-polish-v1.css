@@ -148,3 +148,17 @@
 @media(prefers-reduced-motion:reduce){
  .v33-tile,.v33-result button{transition:none!important}
 }
+
+/* Final reports must remain readable above the floating music/effects/exit HUD.
+   Keep the HUD available, but reserve enough scroll runway for the last metric. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame.case-screen:has(.v33-ending-report){
+  padding-bottom:max(158px,calc(140px + env(safe-area-inset-bottom,0px)))!important;
+ }
+ #caseGame .v33-ending-report{
+  scroll-margin-bottom:155px!important;
+ }
+ #caseGame .v33-ending-metrics>div:last-child{
+  scroll-margin-bottom:150px!important;
+ }
+}
