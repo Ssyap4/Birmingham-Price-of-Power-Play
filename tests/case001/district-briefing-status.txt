@@ -1,10 +1,11 @@
-tested_commit=377a38840559e0351928d3941b8c0b88c1ec433b
+tested_commit=dd2a0a4a68024d5845215790d95c51f1a9d93f5d
 result=1
-workflow_run=43321296591
+workflow_run=43322140665
 PASS chromium 375 five districts, rules->story->game, back, intact art
 PASS chromium 390 five districts, rules->story->game, back, intact art
+WEBKIT HIT PROBE 375 small-heath {'rect': {'x': 131.7243766784668, 'y': 433.34242248535156, 'left': 92.41625213623047, 'top': 399.1181335449219, 'width': 78.61624908447266, 'height': 68.44857788085938}, 'hit': '<button class="map-pin selected" type="button" data-district="small-heath" style="--x:34%;--y:37%" aria-pressed="true"><span ', 'hitPin': 'small-heath', 'pinPointer': 'auto', 'mapPointer': 'none', 'panelPointer': 'none', 'svgPointer': 'none'}
 Traceback (most recent call last):
-  File "/home/runner/work/Birmingham-Price-of-Power-Play/Birmingham-Price-of-Power-Play/tests/case001/district_briefing_smoke.py", line 24, in <module>
+  File "/home/runner/work/Birmingham-Price-of-Power-Play/Birmingham-Price-of-Power-Play/tests/case001/district_briefing_smoke.py", line 37, in <module>
     page.locator('.map-pin[data-district="'+district+'"]').tap()
   File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 20248, in tap
     self._sync(
@@ -31,7 +32,7 @@ Call log:
       - scrolling into view if needed
       - done scrolling
       - performing tap action
-      - <div class="map-panel">…</div> intercepts pointer events
+      - <div class="districts-layout">…</div> intercepts pointer events
     - retrying tap action
     - waiting 20ms
     2 × waiting for element to be visible, enabled and stable
@@ -39,15 +40,15 @@ Call log:
       - scrolling into view if needed
       - done scrolling
       - performing tap action
-      - <div class="map-panel">…</div> intercepts pointer events
+      - <div class="districts-layout">…</div> intercepts pointer events
     - retrying tap action
       - waiting 100ms
-    51 × waiting for element to be visible, enabled and stable
+    50 × waiting for element to be visible, enabled and stable
        - element is visible, enabled and stable
        - scrolling into view if needed
        - done scrolling
        - performing tap action
-       - <div class="map-panel">…</div> intercepts pointer events
+       - <div class="districts-layout">…</div> intercepts pointer events
      - retrying tap action
        - waiting 500ms
 
