@@ -37,7 +37,7 @@ for engine in ('chromium','webkit'):
      page.wait_for_timeout(110)
      map_bounds=page.locator('#districts .map-panel').bounding_box()
      assert map_bounds and map_bounds['y']<h*.55,(engine,w,district,'return-to-map failed',map_bounds)
-    page.locator('.map-pin[data-district="small-heath"]').click()
+    page.locator('.map-pin[data-district="small-heath"]').tap()
     page.locator('#launchFirstCase').click()
     page.locator('.hero-card').first.click()
     page.locator('.hero-begin').click()
