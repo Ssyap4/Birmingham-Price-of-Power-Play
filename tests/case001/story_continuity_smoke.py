@@ -93,6 +93,24 @@ def check(browser,engine):
  load(page,'warehouse',items=('ledger',),trail=('intro','widow','canal','unlock'))
  assert 'дополнительные записи' in page.locator('#caseText').inner_text()
  art_for(page,'warehouse')
+ # Each ordinary ending remains achievable under the right evidence conditions.
+ load(page,'confront')
+ choose(page,'Согласиться уничтожить бумаги')
+ assert state(page)['node']=='endingDeal'
+ art_for(page,'endingDeal')
+ for option,expected in (('Передать документы независимому журналисту','endingTruth'),('Оставить документы себе для будущего давления','endingPower')):
+  load(page,'expose',items=('ledger','testimony'))
+  page.evaluate("""() => {
+   localStorage.setItem('birmingham_case_v20_findings_jack',JSON.stringify({
+    started:987654321,deductions:['Деньги и двойной учёт'],reactions:[]
+   }));
+   window.BirminghamCase.resume();
+  }""")
+  choose(page,option)
+  assert state(page)['node']==expected,(engine,expected,state(page)['node'])
+  art_for(page,expected)
+ load(page,'endingDeath')
+ art_for(page,'endingDeath')
  # Six ending illustration assignments checked above; no browser script errors.
  assert not errors,(engine,errors)
  print('PASS',engine,'one-time actions, saved flags, Arthur, Reed, trade and no JS errors',flush=True)
