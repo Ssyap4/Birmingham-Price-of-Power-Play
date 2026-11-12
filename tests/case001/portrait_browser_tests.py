@@ -153,7 +153,21 @@ with sync_playwright() as p:
   if page.locator('.v33-tile span').count():
    item_font=page.locator('.v33-tile span').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')
    assert item_font>=13,(ENGINE,width,'evidence label too small',item_font)
+  board_layout=page.locator('.v33-window').evaluate("""el => {
+   const r=el.getBoundingClientRect(),c=getComputedStyle(el);
+   const h=document.documentElement.clientHeight;
+   const metrics=document.querySelector('.v33-ending-metrics');
+   return {x:r.x,right:r.right,top:r.top,bottom:r.bottom,h,
+    overflowY:c.overflowY,boardBackground:c.backgroundImage,
+    metricColumns:metrics?getComputedStyle(metrics).gridTemplateColumns:null};
+  }""")
+  assert board_layout['top']>=-2 and board_layout['bottom']<=height+2,(ENGINE,width,'inventory clips vertically',board_layout)
+  assert board_layout['overflowY']=='auto',(ENGINE,width,'inventory cannot scroll',board_layout)
+  assert 'radial-gradient' in board_layout['boardBackground'],(ENGINE,width,'evidence polish not loaded',board_layout)
   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-inventory-{width}.png'),full_page=False)
+  if width in (320,390):
+   page.locator('.v33-window').evaluate('el=>el.scrollTop=el.scrollHeight')
+   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-inventory-bottom-{width}.png'),full_page=False)
   page.locator('.v33-close').click()
   assert page.locator('.v33-shade').is_hidden()
   assert not errors,(ENGINE,width,errors)
