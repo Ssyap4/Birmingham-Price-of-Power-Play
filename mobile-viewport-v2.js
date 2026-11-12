@@ -3,7 +3,7 @@
  const root=document.documentElement;let last='';
  function update(){
   const phone=/iPhone|iPod|Android|Mobile/i.test(navigator.userAgent)||
-   (navigator.maxTouchPoints>0&&Math.min(innerWidth,innerHeight)<=700);
+   (Math.min(innerWidth,innerHeight)<=700&&Math.max(innerWidth,innerHeight)<=1200);
   const landscape=matchMedia('(orientation:landscape)').matches&&innerHeight<=720;
   root.classList.toggle('bh-phone-landscape',phone&&landscape);
   const v=window.visualViewport;
