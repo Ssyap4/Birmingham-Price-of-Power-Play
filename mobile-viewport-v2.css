@@ -60,3 +60,20 @@
   filter:none!important;opacity:1!important;
  }
 }
+
+/* Story has its own 'КАРТА ГОРОДА' back action. On horizontal phones
+   the global header duplicates navigation and consumes a whole viewport row. */
+@media (orientation:landscape) and (max-height:720px){
+ html.bh-phone-landscape body:has(#caseGame:not([hidden]))>.shell>.top{
+  display:none!important;
+ }
+ html.bh-phone-landscape #caseGame.case-screen{
+  margin-top:0!important;padding-top:0!important;
+ }
+ html.bh-phone-landscape #caseGame .case-topline{
+  min-height:44px!important;
+ }
+ html.bh-phone-landscape #caseGame > .bh-audio-controls{
+  margin-bottom:4px!important;
+ }
+}
