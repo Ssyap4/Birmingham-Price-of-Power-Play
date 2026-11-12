@@ -1,0 +1,15 @@
+/* One tasteful unlock card, no full-screen overlay and no new mechanic. */
+.campaign-unlock-tray{position:fixed;z-index:10500;top:max(16px,env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),410px);pointer-events:none}
+.campaign-unlock-popup{display:flex;align-items:center;gap:14px;min-height:86px;box-sizing:border-box;padding:14px 17px;border:1px solid #e5b779;border-radius:3px;background:linear-gradient(115deg,#3e2a1a,#17120e 80%);box-shadow:inset 0 0 0 3px #100e0b,0 15px 40px #000d;color:#f6d9ac;animation:campaign-achievement-arrive .5s cubic-bezier(.15,.85,.24,1.1) both}
+.campaign-unlock-star{flex:none;display:grid;place-items:center;width:49px;height:49px;border:1px solid #d8a968;border-radius:50%;font:34px Georgia,serif;color:#ffe0a6;background:radial-gradient(circle,#72502b,#2b1d13);text-shadow:0 0 12px #f0b95b99;box-shadow:0 0 18px #e2a75c44}
+.campaign-unlock-copy{min-width:0;display:grid;gap:5px}
+.campaign-unlock-copy small{font:700 10px/1.45 Arial,sans-serif;letter-spacing:1.2px;color:#d9ac70}
+.campaign-unlock-copy strong{font:700 clamp(19px,5.3vw,25px)/1.15 Georgia,serif;color:#ffdfac;overflow-wrap:anywhere}
+.campaign-unlock-popup.leaving{animation:campaign-achievement-leave .3s ease-in both}
+@keyframes campaign-achievement-arrive{0%{opacity:0;transform:translate3d(0,-105px,0) scale(.94);filter:blur(5px)}70%{opacity:1;transform:translate3d(0,5px,0) scale(1.01);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes campaign-achievement-leave{to{opacity:0;transform:translateY(-42px) scale(.96)}}
+@media(max-width:380px){.campaign-unlock-popup{padding:11px 12px;min-height:76px;gap:10px}.campaign-unlock-star{width:42px;height:42px;font-size:28px}}
+@media(prefers-reduced-motion:reduce){.campaign-unlock-popup{animation:none}.campaign-unlock-popup.leaving{animation:none}}
+.hero-rules{min-height:44px;border:1px solid #947246;background:linear-gradient(135deg,#302116,#17130f);color:#e9ca99;padding:9px 12px;font:700 12px Arial,sans-serif;cursor:pointer}
+.hero-rules:focus-visible{outline:2px solid #ffe1a6;outline-offset:2px}
+@media(orientation:portrait) and (max-width:700px){.hero-rules{width:100%;min-height:48px}}
