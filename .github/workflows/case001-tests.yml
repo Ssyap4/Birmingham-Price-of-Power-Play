@@ -100,6 +100,8 @@ jobs:
         run: python3 tests/case001/story_home_browser_tests.py
       - name: Check campaign archive and inventory interactions
         run: python3 tests/case001/campaign_browser_tests.py
+      - name: Verify exit confirmation and save isolation
+        run: python3 tests/case001/session_exit_tests.py
       - name: Check touchscreen navigation and landscape safe areas
         run: python3 tests/case001/mobile_safety_tests.py
       - name: Portrait-first mobile navigation and layout QA
