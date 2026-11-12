@@ -170,6 +170,82 @@ with sync_playwright() as p:
    page.screenshot(path=str(OUT/f'{ENGINE}-portrait-inventory-bottom-{width}.png'),full_page=False)
   page.locator('.v33-close').click()
   assert page.locator('.v33-shade').is_hidden()
+  # Exercise a genuinely populated case inventory, never a mocked HTML panel.
+  # Each browser context is isolated; these fixture saves are discarded on close.
+  page.evaluate("""() => {
+   const hero=window.BirminghamHero.selectedId;
+   const key='birmingham_case_smol_heath_v1_'+hero;
+   const s=JSON.parse(localStorage.getItem(key));
+   s.node='intro';
+   s.items=['envelope','key','invoice','route','ledger','receipt',
+            'ash','testimony','overheard','witness','note'];
+   localStorage.setItem(key,JSON.stringify(s));
+   localStorage.setItem('birmingham_case_v20_findings_'+hero,
+    JSON.stringify({started:s.started,
+      deductions:['След склада D-17','Деньги и двойной учёт'],reactions:[]}));
+   window.BirminghamCase.resume();
+  }""")
+  page.locator('.v34-open-inventory').click()
+  assert page.locator('.v33-shade').is_visible()
+  assert page.locator('.v33-tile').count()>=11,(ENGINE,width,'missing collected evidence')
+  assert page.locator('.v33-solved-board .v33-tile').count()>=4,(ENGINE,width,'solved evidence missing')
+  page.wait_for_function("""() => {
+   const imgs=[...document.querySelectorAll('.v33-shade .v33-tile img')];
+   return imgs.length>=11 && imgs.every(i=>i.complete && i.naturalWidth>0);
+  }""",timeout=15000)
+  page.locator('.v33-window').evaluate('el=>el.scrollTop=0')
+  if width in (320,390):
+   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-inventory-filled-{width}.png'),full_page=False)
+  scrollability=page.locator('.v33-window').evaluate("""el=>{
+   el.scrollTop=el.scrollHeight;
+   return {top:el.scrollTop,limit:el.scrollHeight-el.clientHeight,
+    doc:document.documentElement.scrollWidth,
+    viewport:document.documentElement.clientWidth};
+  }""")
+  assert scrollability['limit']>50 and scrollability['top']>50,(ENGINE,width,'filled inventory does not scroll',scrollability)
+  assert scrollability['doc']<=scrollability['viewport']+3,(ENGINE,width,'filled inventory horizontal overflow',scrollability)
+  if width in (320,390):
+   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-inventory-filled-bottom-{width}.png'),full_page=False)
+  # Tap-to-connect must open a real deduction result for a known pair.
+  page.locator('.v33-tile[data-id="invoice"]').first.click()
+  page.locator('.v33-tile[data-id="route"]').first.click()
+  assert page.locator('.v33-result-layer').is_visible(),(ENGINE,width,'deduction result not visible')
+  result_rect=page.locator('.v33-result').bounding_box()
+  assert result_rect and result_rect['x']>=-2 and result_rect['x']+result_rect['width']<=width+2,(ENGINE,width,'deduction result clipped',result_rect)
+  if width in (320,390):
+   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-deduction-{width}.png'),full_page=False)
+  page.keyboard.press('Escape')
+  assert page.locator('.v33-result-layer').count()==0
+  page.locator('.v33-close').click()
+  assert page.locator('.v33-shade').is_hidden()
+  # Verify all actual ending reports including the longer death report.
+  endings=['endingRescue','endingEvidence','endingDeal',
+           'endingTruth','endingPower','endingDeath']
+  for ending in endings:
+   page.evaluate("""ending => {
+    const hero=window.BirminghamHero.selectedId;
+    const key='birmingham_case_smol_heath_v1_'+hero;
+    const s=JSON.parse(localStorage.getItem(key));
+    s.node=ending;
+    if(ending==='endingDeath')s.deathCause='Опасное столкновение на складе D-17';
+    localStorage.setItem(key,JSON.stringify(s));
+    window.BirminghamCase.resume();
+   }""",ending)
+   page.locator('#caseGame .v33-ending-report').wait_for(state='visible',timeout=10000)
+   metrics=page.locator('#caseGame .v33-ending-report').evaluate("""el=>{
+    const r=el.getBoundingClientRect(),cells=[...el.querySelectorAll('.v33-ending-metrics>div')];
+    const first=cells[0]?.getBoundingClientRect();
+    return {width:r.width,left:r.left,right:r.right,
+      viewport:document.documentElement.clientWidth,
+      columns:getComputedStyle(el.querySelector('.v33-ending-metrics')).gridTemplateColumns,
+      cells:cells.length,cellWidth:first?.width};
+   }""")
+   assert metrics['right']<=width+3 and metrics['left']>=-3,(ENGINE,width,ending,'ending report clipped',metrics)
+   assert metrics['cells']>=(6 if ending=='endingDeath' else 3),(ENGINE,width,ending,'missing ending metrics',metrics)
+   assert metrics['cellWidth']>width*.55,(ENGINE,width,ending,'ending metrics not stacked',metrics)
+   if width in (320,390) and ending in ('endingTruth','endingDeath'):
+    page.locator('#caseGame .v33-ending-report').scroll_into_view_if_needed()
+    page.screenshot(path=str(OUT/f'{ENGINE}-portrait-{ending}-{width}.png'),full_page=False)
   assert not errors,(ENGINE,width,errors)
   print('PASS',ENGINE,width,height,flush=True)
   ctx.close()
