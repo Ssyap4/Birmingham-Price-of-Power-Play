@@ -1,0 +1,22 @@
+/* Compact briefing for Case 001; phone-first with no scrolling on common iPhones. */
+.case001-briefing[hidden]{display:none!important}
+.case001-briefing{position:fixed;inset:0;z-index:11000;display:grid;place-items:center;padding:12px;box-sizing:border-box;background:rgba(3,5,6,.92);backdrop-filter:blur(6px)}
+.case001-briefing-panel{width:min(100%,570px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;padding:21px;border:1px solid #c99e65;border-radius:4px;background:radial-gradient(ellipse at top,#3d291a,#18120f 55%,#0b0e0d);box-shadow:inset 0 0 0 3px #100c0a,0 22px 70px #000e;color:#ead5b4}
+.case001-briefing-panel header{border-bottom:1px solid #84643e;padding-bottom:12px;margin-bottom:13px}
+.case001-briefing-panel header small{font:700 10px/1.4 Arial,sans-serif;letter-spacing:1.5px;color:#dbb57e}
+.case001-briefing-panel h2{font:700 clamp(26px,6.8vw,37px)/1.1 Georgia,serif;color:#ffe1b6;margin:7px 0}
+.case001-briefing-panel header p{font-size:13px;margin:0;color:#e0c7a3}
+.case001-briefing-points{display:grid;gap:9px}
+.case001-briefing-points section{display:grid;grid-template-columns:31px minmax(0,1fr);gap:10px;padding:10px;border:1px solid #755737;background:#24190f8f}
+.case001-briefing-points .briefing-number{display:grid;place-items:start center;color:#edc48a;font:700 21px Georgia,serif}
+.case001-briefing-points h3{font:700 17px/1.2 Georgia,serif;margin:0 0 4px;color:#f6d7a7}
+.case001-briefing-points p{font:14px/1.45 Arial,sans-serif;margin:0;color:#dfceb6}
+.case001-briefing-footer{margin-top:16px}
+.case001-briefing-footer label{display:flex;align-items:center;gap:8px;font:13px/1.4 Arial,sans-serif;color:#ddc8ac}
+.case001-briefing-footer input{width:17px;height:17px;accent-color:#c49759}
+.case001-briefing-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:9px;margin-top:12px}
+.case001-briefing-actions button{min-width:0;min-height:48px;padding:11px 7px;border:1px solid #b88b50;background:linear-gradient(145deg,#38281a,#171410);color:#f2d5a9;font:700 12px/1.3 Arial,sans-serif;cursor:pointer}
+.case001-briefing-actions .briefing-start{background:linear-gradient(135deg,#a97b47,#6a482c);color:#fff3d9}
+.case001-briefing button:focus-visible{outline:3px solid #ffe1a3;outline-offset:2px}
+@media(max-width:380px){.case001-briefing{padding:7px}.case001-briefing-panel{padding:14px;max-height:calc(100dvh - 14px)}.case001-briefing-points{gap:6px}.case001-briefing-points section{padding:8px}.case001-briefing-points p{font-size:13px;line-height:1.35}.case001-briefing-points h3{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.case001-briefing{backdrop-filter:none}}
