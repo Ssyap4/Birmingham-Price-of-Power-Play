@@ -128,6 +128,25 @@ with sync_playwright() as p:
   page.screenshot(path=str(OUT/f'{ENGINE}-portrait-heroes-{width}.png'),full_page=False)
   page.locator('#heroSelection .hero-begin').click()
   assert page.locator('#caseGame').is_visible()
+  toolbar=page.evaluate("""() => {
+   const screen=document.querySelector('#caseGame');
+   const bar=screen.querySelector(':scope > .bh-audio-controls');
+   const scene=screen.querySelector('.case-scene');
+   if(!bar)return {docked:false};
+   const b=bar.getBoundingClientRect(),s=scene.getBoundingClientRect();
+   return {docked:true,barTop:b.top,barBottom:b.bottom,sceneTop:s.top,
+    barLeft:b.left,barRight:b.right,
+    viewport:document.documentElement.clientWidth,
+    position:getComputedStyle(bar).position,
+    buttons:[...bar.querySelectorAll('button')].map(el=>{
+      const r=el.getBoundingClientRect();return {height:r.height,width:r.width};
+    })};
+  }""")
+  assert toolbar['docked'],(ENGINE,width,'sound and exit toolbar not inside case',toolbar)
+  assert toolbar['position']!='fixed',(ENGINE,width,'toolbar still overlays story',toolbar)
+  assert toolbar['barBottom']<=toolbar['sceneTop']+3,(ENGINE,width,'toolbar obscures scene',toolbar)
+  assert toolbar['barLeft']>=-3 and toolbar['barRight']<=width+3,(ENGINE,width,'toolbar exceeds phone',toolbar)
+  assert len(toolbar['buttons'])==3 and all(b['height']>=44 for b in toolbar['buttons']),(ENGINE,width,'toolbar button missing or too small',toolbar)
   assess(page,'case',width)
   story_font=page.locator('#caseGame .case-paper>p').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')
   assert story_font>=15,(ENGINE,width,'case story text too small',story_font)
