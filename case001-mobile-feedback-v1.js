@@ -37,7 +37,7 @@ function next(){
  if(active.type==='clue'){
    const actions=document.createElement('div');actions.className='bh-feedback-actions';
    const open=document.createElement('button');open.type='button';open.textContent='ОТКРЫТЬ ИНВЕНТАРЬ';
-   open.onclick=()=>{dismiss();document.querySelector('.v34-open-inventory')?.click()};
+   open.onclick=()=>{document.querySelector('.v34-open-inventory')?.click();dismiss()};
    actions.append(open);card.append(actions);
  }
  panel.replaceChildren(card);panel.hidden=false;
