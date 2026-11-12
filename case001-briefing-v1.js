@@ -21,13 +21,14 @@ function close(){root.hidden=true;document.body.classList.remove('case001-briefi
 function open(callback,{force=false}={}){
  if(typeof callback!=='function')return;
  if(!force){try{if(localStorage.getItem(STORAGE)==='1'){callback();return}}catch{}}
- onStart=callback;returnFocus=document.activeElement;root.hidden=false;
+ onStart=callback;returnFocus=document.activeElement;
+ start.textContent=force?'ПОНЯТНО · К ВЫБОРУ':'ВСЁ ПОНЯТНО · НАЧАТЬ →';root.hidden=false;
  document.body.classList.add('case001-briefing-open');start.focus();
 }
 cancel.addEventListener('click',close);
 start.addEventListener('click',()=>{
  const cb=onStart;
- if(root.querySelector('#case001BriefingRemember').checked){try{localStorage.setItem(STORAGE,'1')}catch{}}
+ try{if(root.querySelector('#case001BriefingRemember').checked)localStorage.setItem(STORAGE,'1');else localStorage.removeItem(STORAGE)}catch{}
  close();cb?.();
 });
 root.addEventListener('keydown',e=>{
