@@ -1,0 +1,48 @@
+name: Package mobile test build
+on:
+  push:
+    branches: [feat/portrait-mobile-development]
+    paths:
+      - '.github/workflows/mobile-build.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package portable browser game
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import json
+          root=Path('.')
+          dest=Path('dist')
+          dest.mkdir(exist_ok=True)
+          excluded={'.git','.github','tests','docs','dist','node_modules','__pycache__'}
+          skipped={'.gitignore','.gitattributes','package-lock.json','package.json'}
+          files=[p for p in root.rglob('*') if p.is_file()
+            and not any(part in excluded for part in p.parts)
+            and p.name not in skipped
+            and p.suffix.lower() not in {'.md','.txt','.py','.cjs','.json'}]
+          # All game assets and runtime files are retained.
+          assert Path('index.html') in files
+          assert Path('mobile-story-continuity-v1.css') in files
+          assert Path('assets/mobile-menu/approved-campaign.webp') in files
+          output=dest/'Birmingham-Mobile-Preview.zip'
+          with ZipFile(output,'w',ZIP_DEFLATED,compresslevel=6) as z:
+            for p in sorted(files):
+              z.write(p,p.as_posix())
+          print(json.dumps({'files':len(files),'bytes':output.stat().st_size,
+            'archive':str(output)},ensure_ascii=False))
+          PY
+      - name: Upload downloadable mobile build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Birmingham-Mobile-Preview
+          path: dist/Birmingham-Mobile-Preview.zip
+          retention-days: 7
+          if-no-files-found: error
