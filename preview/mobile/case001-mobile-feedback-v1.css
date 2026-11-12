@@ -1,7 +1,7 @@
 /* Portrait-first Case 001: fixed viewport feedback, safe-area scrolling. */
 @media (max-width:700px) {
   .v33-shade{
-    position:fixed!important;inset:0!important;
+    position:fixed!important;inset:0!important;z-index:17000!important;
     width:100%!important;height:100dvh!important;
     overflow:hidden!important;
     padding:max(6px,env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) max(6px,env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))!important;
