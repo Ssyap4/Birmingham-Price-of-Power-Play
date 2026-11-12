@@ -45,6 +45,7 @@
 .bh-feedback-symbol{flex:none;display:grid;place-items:center;width:45px;height:45px;
   border:1px solid #d4a667;border-radius:50%;color:#ffdc9e;font-size:28px;
   background:radial-gradient(circle,#79512b,#281b12);}
+.bh-feedback-evidence-photo{display:block;flex:none;width:58px;height:64px;object-fit:contain;border:1px solid #b18b5d;background:#17130e}
 .bh-feedback-copy{min-width:0;display:grid;gap:6px}
 .bh-feedback-copy small{font:700 10px/1.4 Arial,sans-serif;letter-spacing:1.2px;color:#edbd7b}
 .bh-feedback-copy strong{font:700 clamp(18px,5vw,24px)/1.2 Georgia,serif;overflow-wrap:anywhere}
