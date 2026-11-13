@@ -6,7 +6,9 @@
  */
 const assert=require("node:assert/strict");
 const {createEngine}=require("../../src/case002/engine-v3.js");
-const {graph,contract}=require("../../src/case002/browser-data-v3.js");
+const {graph,contract,narration}=require("../../src/case002/browser-data-v3.js");
+const {render}=require("../../src/case002/story-variants-v4.js");
+const story={graph,contract,narration};
 function storage(){
  const db=new Map();
  return {getItem:k=>db.has(k)?db.get(k):null,setItem:(k,v)=>db.set(k,String(v))};
@@ -27,6 +29,17 @@ for(const [index,hero] of contract.heroes.entries()){
    const v=e.view(),s=e.snapshot();
    coverage.add(s.node);
    assert(v.choices.every(x=>typeof x.enabled==="boolean"));
+   const narrationText=render(story,v);
+   assert(narrationText.length>20,"missing actual story text: "+hero+"/"+s.node);
+   assert(!narrationText.includes("undefined"),"unresolved text interpolation: "+s.node);
+   if(s.node==="D06"&&s.witnesses.tommy==="detained")
+     assert(narrationText.includes("не выходит"),"detained Tommy described as freed");
+   if(s.node==="F09"&&s.flags.accountsGivenToWorkers)
+     assert(!narrationText.includes("сохранение власти над счетами"),"handed accounts still grant power");
+   if(s.node==="Z02"&&!Object.values(s.witnesses).includes("evacuated"))
+     assert(narrationText.includes("Никто из свидетелей не покинул город"),
+       "narrative invented witness evacuation");
+
    assert.equal(new Set(s.evidence).size,s.evidence.length);
    for(const id of ["ada","tommy","mercer"])assert(contract.witnessStates.includes(s.witnesses[id]));
    if(s.node==="B01"){
