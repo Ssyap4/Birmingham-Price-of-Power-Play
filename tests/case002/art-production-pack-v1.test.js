@@ -63,7 +63,11 @@ assert(b03.forbidden.some(x=>x.includes("Брэкетту")));
 // full canonical roster of ten NPCs; approved portraits may exceed this subset.
 assert(manifest.sceneImages.some(x=>x.sceneId==="P01"&&x.review==="approved"),
  "Existing genuine P01 artwork must not be erased by the new production pack");
-const allowedScenes=new Set(result.shots.map(s=>s.sceneId));
+// This pack specifies only the first 16 shots, while later approved waves
+// may legitimately register B05 and subsequent canonical storyboard scenes.
+// Unknown IDs remain forbidden; the separate art-audit gate proves that every
+// registered file really exists and matches its immutable review checksum.
+const allowedScenes=new Set(board.sceneAssets.map(s=>s.id));
 for(const item of manifest.sceneImages)
  assert(item.review==="approved"&&allowedScenes.has(item.sceneId),
    "Unreviewed or unknown scene entered the production manifest");
