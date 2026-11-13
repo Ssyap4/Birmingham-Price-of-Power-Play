@@ -183,9 +183,25 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     assert "Роуэн" in page.locator("#sceneCast").inner_text()
                     assert "Томми" not in page.locator("#sceneCast").inner_text()
+                    page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.naturalWidth === 720 && el.naturalHeight === 900 && "
+                        "el.currentSrc.endsWith('/case002-a03-scene--mobile.webp')"
+                    ), f"{browser_name}: A03 must show its own approved phone artwork"
                     page.locator(".choice:not([disabled])").first.click()  # A05
                     assert page.locator("#sceneId").inner_text().startswith("A05")
                     assert page.locator("#game").get_attribute("data-art-scene") == "A05"
+                    page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.naturalWidth === 720 && el.naturalHeight === 900 && "
+                        "el.currentSrc.endsWith('/case002-a05-scene--mobile.webp')"
+                    ), f"{browser_name}: A05 old ticket must show its own approved phone artwork"
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
                     assert page.locator("#noticeJump").is_visible()
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
