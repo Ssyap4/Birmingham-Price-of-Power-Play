@@ -200,5 +200,5 @@ const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(out
 awards(persistFinished(),false);
 const chapter=$('caseChapter');if(chapter)new MutationObserver(sync).observe(chapter,{childList:true});
 document.addEventListener('birmingham:case-findings-changed',sync);
-window.BirminghamCampaign={open,records:()=>persistFinished()};
+window.BirminghamCampaign={open,records:()=>{const runs=persistFinished();awards(runs,false);return runs}};
 })();
