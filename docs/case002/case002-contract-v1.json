@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "case002-contract-v1",
+  "caseId": "002",
+  "status": "planning-only",
+  "heroes": [
+    "jack",
+    "finn",
+    "eleanor",
+    "victor",
+    "samuel"
+  ],
+  "witnessIds": [
+    "ada",
+    "tommy",
+    "mercer"
+  ],
+  "witnessStates": [
+    "missing",
+    "located",
+    "detained",
+    "protected",
+    "evacuated",
+    "deceased"
+  ],
+  "supportedEvidence": [
+    "dispatch_manifest",
+    "arrival_manifest",
+    "points_log",
+    "seal_scrap",
+    "guard_payment",
+    "freight_chalk",
+    "pressure_log",
+    "valve_photo",
+    "inspection_copy",
+    "victim_register",
+    "ada_statement",
+    "mercer_signed_statement",
+    "old_excursion_ticket",
+    "hale_coat",
+    "brackett_wire",
+    "bridge_witness",
+    "guard_bootmark",
+    "evacuation_route",
+    "private_siding_map",
+    "brackett_accounts",
+    "vale_guarantee",
+    "public_contact",
+    "family_protection",
+    "mabel_confession",
+    "clerk_witness"
+  ],
+  "deductionRules": {
+    "provedFirstForgery": [
+      [
+        "dispatch_manifest",
+        "mabel_confession"
+      ],
+      [
+        "dispatch_manifest",
+        "clerk_witness"
+      ]
+    ],
+    "provedWagonDiversion": [
+      [
+        "points_log",
+        "seal_scrap"
+      ],
+      [
+        "points_log",
+        "guard_payment"
+      ],
+      [
+        "freight_chalk",
+        "guard_payment"
+      ]
+    ],
+    "provedSecondForgery": [
+      [
+        "arrival_manifest",
+        "points_log"
+      ],
+      [
+        "arrival_manifest",
+        "seal_scrap"
+      ]
+    ],
+    "provedFactoryCoverup": [
+      [
+        "pressure_log",
+        "inspection_copy"
+      ],
+      [
+        "valve_photo",
+        "mercer_signed_statement"
+      ],
+      [
+        "pressure_log",
+        "victim_register"
+      ]
+    ],
+    "provedHaleMurder": [
+      [
+        "hale_coat",
+        "brackett_wire"
+      ],
+      [
+        "bridge_witness",
+        "guard_bootmark"
+      ]
+    ],
+    "provedBrackettNetwork": [
+      [
+        "brackett_accounts",
+        "guard_payment"
+      ],
+      [
+        "brackett_accounts",
+        "arrival_manifest"
+      ]
+    ]
+  },
+  "endings": [
+    {
+      "id": "trainTruth",
+      "title": "Три имени",
+      "requiresFacts": [
+        "provedFactoryCoverup",
+        "provedWagonDiversion"
+      ],
+      "requiresFlags": [
+        "publicContactSecured"
+      ],
+      "minSafe": 2
+    },
+    {
+      "id": "trainEscape",
+      "title": "Люди без прошлого",
+      "requiresFacts": [],
+      "requiresFlags": [
+        "chapterAtLeastV"
+      ],
+      "minSafe": 0,
+      "alwaysFallback": true
+    },
+    {
+      "id": "trainScapegoat",
+      "title": "Удобный виновник",
+      "requiresFacts": [
+        "provedHaleMurder"
+      ],
+      "requiresFlags": [
+        "brackettCanBeHandedOver"
+      ],
+      "minSafe": 0
+    },
+    {
+      "id": "trainDeal",
+      "title": "Цена сделки",
+      "requiresFacts": [
+        "provedFactoryCoverup"
+      ],
+      "requiresFlags": [
+        "valeContact",
+        "valeGuarantee"
+      ],
+      "minSafe": 1
+    },
+    {
+      "id": "trainSabotage",
+      "title": "Сломанная стрелка",
+      "requiresFacts": [
+        "provedWagonDiversion"
+      ],
+      "requiresFlags": [
+        "safeSidingAccess",
+        "workersCleared"
+      ],
+      "minSafe": 1
+    },
+    {
+      "id": "trainControl",
+      "title": "Хозяин маршрутов",
+      "requiresFacts": [
+        "provedBrackettNetwork"
+      ],
+      "requiresFlags": [
+        "brackettAccountsHeld",
+        "localIntermediary"
+      ],
+      "minSafe": 1
+    },
+    {
+      "id": "trainDeath",
+      "title": "Последний рейс",
+      "requiresFacts": [],
+      "requiresFlags": [
+        "fatalChoiceAcknowledged"
+      ],
+      "minSafe": 0,
+      "requiresHealthLte": 0
+    }
+  ]
+}
