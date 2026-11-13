@@ -1,0 +1,39 @@
+name: Build unified mobile menu frames (art-only)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/build_unified_menu_frames.py'
+      - 'preview/dossier-cinematic/assets/unified-gold-frame.webp'
+      - '.github/workflows/build-unified-menu-frames.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: unified-menu-frames
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Create five uniform panels from approved art and exact frame
+        run: |
+          python3 -m pip install --disable-pip-version-check 'pillow>=11,<13' 'numpy>=2,<3'
+          python3 tools/build_unified_menu_frames.py
+      - name: Publish only derived menu images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- preview/dossier-cinematic/assets/framed-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "art(preview): unify gold border on all five menu panels"
+            git push origin HEAD:main
+          fi
