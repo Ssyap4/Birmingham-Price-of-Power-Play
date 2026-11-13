@@ -22,9 +22,15 @@ function resolveInsets(webApp){
 }
 function bind(host){
  const app=host&&host.Telegram&&host.Telegram.WebApp;
- const style=host&&host.document&&host.document.documentElement&&
-   host.document.documentElement.style;
+ const element=host&&host.document&&host.document.documentElement;
+ const style=element&&element.style;
  if(!app||!style)return ()=>{};
+ // Safari/WebKit can ignore max(env(...),var(...)) on Telegram WebViews.
+ // Mark the root only when Telegram actually provides inset metadata;
+ // CSS can then use a direct pixel fallback without double counting notches.
+ const supportsInsets=Boolean(app.safeAreaInset||app.contentSafeAreaInset);
+ if(supportsInsets&&typeof element.setAttribute==="function")
+   element.setAttribute("data-case002-telegram","true");
  let active=true;
  const update=()=>{
    if(!active)return;
@@ -42,6 +48,8 @@ function bind(host){
    if(typeof app.offEvent==="function")
      for(const event of EVENTS)app.offEvent(event,update);
    for(const side of SIDES)style.removeProperty("--case002-safe-"+side);
+   if(supportsInsets&&typeof element.removeAttribute==="function")
+     element.removeAttribute("data-case002-telegram");
  };
 }
 return {SIDES,EVENTS,resolveInsets,bind};

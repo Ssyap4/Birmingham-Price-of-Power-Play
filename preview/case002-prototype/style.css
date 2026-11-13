@@ -180,3 +180,37 @@
   padding-right:calc(4px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
  }
 }
+
+/* Safari/WebKit Telegram explicit pixel inset fallback. Some WKWebView builds
+ * fail to compute max(env(...),var(...)) even when both operands are valid.
+ * The bridge supplies device+Telegram insets, so use them directly only when
+ * available. Standalone Safari retains the native env() safe-area rules. */
+html[data-case002-telegram="true"] .app-shell{
+ padding-top:var(--case002-safe-top);
+ padding-left:calc(14px + var(--case002-safe-left));
+ padding-right:calc(14px + var(--case002-safe-right));
+ padding-bottom:calc(24px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] #game{
+ padding-bottom:calc(92px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] .case-quick-nav{
+ padding-left:calc(8px + var(--case002-safe-left));
+ padding-right:calc(8px + var(--case002-safe-right));
+ padding-bottom:calc(8px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] .notice{
+ bottom:calc(78px + var(--case002-safe-bottom));
+}
+@media(min-width:580px){
+ html[data-case002-telegram="true"] .app-shell{
+  padding-left:calc(20px + var(--case002-safe-left));
+  padding-right:calc(20px + var(--case002-safe-right));
+ }
+}
+@media(max-width:359px){
+ html[data-case002-telegram="true"] .case-quick-nav{
+  padding-left:calc(4px + var(--case002-safe-left));
+  padding-right:calc(4px + var(--case002-safe-right));
+ }
+}

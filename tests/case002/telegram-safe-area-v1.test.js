@@ -27,7 +27,13 @@ const app={
 };
 assert.equal(typeof bind({document:{documentElement:{style}}}),"function");
 assert.equal(values.size,0,"Standalone browser mode must never inject fake insets");
-const unbind=bind({document:{documentElement:{style}},Telegram:{WebApp:app}});
+const attributes=new Map();
+const element={style,
+ setAttribute:(name,value)=>attributes.set(name,value),
+ removeAttribute:name=>attributes.delete(name)
+};
+const unbind=bind({document:{documentElement:element},Telegram:{WebApp:app}});
+assert.equal(attributes.get("data-case002-telegram"),"true");
 assert.equal(values.get("--case002-safe-top"),"68px");
 assert.equal(values.get("--case002-safe-bottom"),"34px");
 assert.equal(handlers.size,3);
@@ -43,6 +49,7 @@ assert.equal(values.get("--case002-safe-bottom"),"0px");
 unbind();
 assert.equal(values.size,0);
 assert.equal(handlers.size,0);
+assert.equal(attributes.size,0,"Telegram-only CSS override must be removed");
 unbind();
 assert.equal(typeof bind(null),"function");
 console.log("PASS Case002 Telegram safe area: offline fallback, combined insets, events, cleanup and clamped values.");
