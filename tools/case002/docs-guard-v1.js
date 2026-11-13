@@ -15,7 +15,8 @@ const mandatory=[
  "docs/decisions/README.md",
  "docs/decisions/0001-branches-save-ownership-history.md",
  "docs/decisions/0002-art-approval-and-visual-canon.md",
- "docs/decisions/0003-autonomous-art-review-and-scoped-qa.md"
+ "docs/decisions/0003-autonomous-art-review-and-scoped-qa.md",
+ "docs/decisions/0004-phone-first-telegram-safe-area.md"
 ];
 const read=file=>fs.readFileSync(path.join(root,file),"utf8");
 for(const file of mandatory)assert(fs.existsSync(path.join(root,file)),
