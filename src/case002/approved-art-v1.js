@@ -12,6 +12,41 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"B06",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b06-scene.webp",cast:[],
+   mobileFile:"case002-b06-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"944bfc4d81f5a24afb5a43914c35541e9d2ee7f0171ba6b216a8d1ad04ed9f10"
+  }),
+  Object.freeze({
+   sceneId:"B07",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b07-scene.webp",cast:[],
+   mobileFile:"case002-b07-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"e58222ba77c56d93e62c9fa3596ad0748044688335eb3ce3e32d7efb793787f9"
+  }),
+  Object.freeze({
+   sceneId:"B08",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b08-scene.webp",cast:["gatekeeper"],
+   mobileFile:"case002-b08-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"bbbad3d85651f55af3558b502a290c33b0f089e29497d7b15b0cf16a54d77053"
+  }),
+  Object.freeze({
+   sceneId:"B09",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b09-scene.webp",cast:["worker"],
+   mobileFile:"case002-b09-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"9b285069a128e3611b6978309beed15b4b5ce3ef2d69280f137f6cb1a092bc35"
+  }),
+  Object.freeze({
+   sceneId:"B10",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b10-scene.webp",cast:[],
+   mobileFile:"case002-b10-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"47d40555017a053f0e227cc47d329cbc26b1da5987f31bc32c9f795fb104a798"
+  }),
+  Object.freeze({
    sceneId:"B05",variantKey:"default",review:"approved",
    file:"case002-b05-scene.webp",cast:[],
    width:1200,height:675,

@@ -1,5 +1,13 @@
 # CHANGELOG.md — история разработки «Бирмингем: Цена власти»
 
+## 2026-11-14 — Case 002: completed mobile artwork wave 14, scenes B06–B10
+
+- Installed five independent 720×900, original vertical WebP images for B06–B10, total 555542 bytes, plus five reviewed `mobileOnly:true` manifest registrations; no new landscape master.
+- B06: canal cart ruts + fragment of freight seal; B07: empty boilerhouse + glove and tea tin; B08: independent gatekeeper checking a pass; B09: worker's hands over a payment ledger; B10: industrial inspection report with corrected safety-valve line.
+- All images visually reviewed against canonical storyboard and fictional player identity restrictions; source files registered with exact SHA-256 checksums. New images show no single fixed playable protagonist.
+- Prior P01–B05 shots, all ten NPC portraits, Case 001 and stable `main` stay unchanged. Scoped artwork CI and phone Chromium are triggered by this batch, without full 400 seeded routes.
+
+
 ## 2026-11-14 — Case 002, mobile art wave 14: candidate QA and regression fixture
 
 - Two original **local portrait candidates**, B06 (canal ruts and broken railway seal) and B07 (empty boilerhouse, wet glove, tea tin), reviewed at 720×900 and checksum-locked in documentation. Not yet committed as playable assets; B08–B10 remain outstanding.
