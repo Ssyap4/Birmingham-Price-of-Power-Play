@@ -1,28 +1,39 @@
-/* Approved dossier art, same rendering model as the four adjacent mobile buttons.
-   No JS gate, pseudo-element frames, CSS masks, or image overlays. */
+/* Birmingham mobile menu: one approved ornamental frame on all five cards.
+   These are precomposed WebP images; no CSS borders, filters or JS loaders.
+   Original approved panels remain as silent fallback images. */
 @media (orientation:portrait) and (max-width:700px){
+ #home.cabinet-art-ready .cabinet-entry-primary{
+   background-image:url('./assets/framed-campaign.webp'),url('../../assets/mobile-menu/approved-campaign.webp')!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-quiz{
+   background-image:url('./assets/framed-trials.webp'),url('../../assets/mobile-menu/approved-trials.webp')!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-achievements{
+   background-image:url('./assets/framed-achievements.webp'),url('../../assets/mobile-menu/approved-achievements.webp')!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-dossier{
+   background-image:url('./assets/framed-characters.webp'),url('../../assets/mobile-menu/approved-dossiers.webp')!important;
+ }
  #home .cabinet-entry-player,
  #home.cabinet-art-ready .cabinet-entry-player,
  #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player{
-   box-sizing:border-box!important;
-   display:block!important;
-   position:relative!important;
-   flex:0 0 auto!important;
-   width:100%!important;
-   min-height:44px!important;
-   height:auto!important;
-   aspect-ratio:984/183!important;
-   margin:0!important;
-   padding:0!important;
-   border:0!important;
-   border-radius:0!important;
-   overflow:visible!important;
+   box-sizing:border-box!important;display:block!important;position:relative!important;
+   width:100%!important;height:auto!important;min-height:44px!important;
+   aspect-ratio:984/183!important;flex:0 0 auto!important;
+   padding:0!important;margin:0!important;border:0!important;
+   border-radius:0!important;overflow:visible!important;
    background-color:#160f0a!important;
-   background-image:url('./my-dossier-menu-final.webp')!important;
-   background-size:100% 100%!important;
-   background-position:center center!important;
-   background-repeat:no-repeat!important;
+   background-image:url('./assets/framed-player.webp'),url('./my-dossier-menu-final.webp')!important;
    box-shadow:0 3px 10px #0007!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-primary,
+ #home.cabinet-art-ready .cabinet-entry-quiz,
+ #home.cabinet-art-ready .cabinet-entry-achievements,
+ #home.cabinet-art-ready .cabinet-entry-dossier,
+ #home .cabinet-entry-player{
+   background-size:100% 100%,100% 100%!important;
+   background-position:center!important;
+   background-repeat:no-repeat!important;
  }
  #home .cabinet-entry-player::before,#home .cabinet-entry-player::after,
  #home.cabinet-art-ready .cabinet-entry-player::before,
@@ -31,7 +42,6 @@
  }
  #home .cabinet-entry-player > *{display:none!important}
  #home .cabinet-entry-player:focus-visible{
-   outline:3px solid #ffdb98!important;
-   outline-offset:-4px!important;
+   outline:3px solid #ffdb98!important;outline-offset:-4px!important;
  }
 }
