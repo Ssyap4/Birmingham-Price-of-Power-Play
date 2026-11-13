@@ -42,6 +42,8 @@ jobs:
         run: node tests/case002/validate-storyboard-v1.js
       - name: Verify reused approved hero portraits are real existing WebP files
         run: node tests/case002/approved-hero-portraits.test.js
+      - name: Prevent pre-introduction character spoilers and future phantom portraits
+        run: node tests/case002/cast-registry-v1.test.js
       - name: Verify state-dependent illustration selection
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
@@ -55,6 +57,7 @@ jobs:
           node --check src/case002/engine-v3.js
           node --check src/case002/story-variants-v4.js
           node --check src/case002/scene-art-v1.js
+          node --check src/case002/cast-registry-v1.js
           node --check src/case002/consequences-v1.js
           node --check src/case002/journal-v1.js
           node --check preview/case002-prototype/app.js
