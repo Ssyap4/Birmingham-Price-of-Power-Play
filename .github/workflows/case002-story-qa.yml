@@ -1,0 +1,23 @@
+name: Case 002 story logic (draft only)
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - 'docs/case002/**'
+      - 'tests/case002/**'
+      - '.github/workflows/case002-story-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  story-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Case 002 evidence and ending predicates
+        run: node tests/case002/validate-contract.js
+      - name: Validate chapter graph and hero routes
+        run: node tests/case002/validate-beat-graph.js
