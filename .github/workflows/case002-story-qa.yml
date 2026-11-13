@@ -46,6 +46,8 @@ jobs:
         run: node tests/case002/cast-registry-v1.test.js
       - name: Guard correct Cross surname and visually distinct Mabel/Ada identity briefs
         run: node tests/case002/identity-and-portrait-brief-v1.test.js
+      - name: Validate dialogue speaker presence and spoiler-free portraits in all story states
+        run: node tests/case002/scene-cast-v1.test.js
       - name: Verify state-dependent illustration selection
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
@@ -60,6 +62,7 @@ jobs:
           node --check src/case002/story-variants-v4.js
           node --check src/case002/scene-art-v1.js
           node --check src/case002/cast-registry-v1.js
+          node --check src/case002/scene-cast-v1.js
           node --check src/case002/consequences-v1.js
           node --check src/case002/journal-v1.js
           node --check preview/case002-prototype/app.js
