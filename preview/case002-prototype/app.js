@@ -5,6 +5,22 @@ const $=id=>document.getElementById(id);
 const heroNames={jack:"Джек Харпер",finn:"Финн О’Коннор",eleanor:"Элеонора Блэквуд",victor:"Виктор Мэллоу",samuel:"Сэмюэл Рид"};
 const witnessNames={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
 const witnessLabels={missing:"местонахождение неизвестно",located:"найден",detained:"под охраной",protected:"под защитой",evacuated:"эвакуирован",deceased:"погиб"};
+const evidenceLabels={
+ dispatch_manifest:"Грузовая ведомость отправления",arrival_manifest:"Подложная ведомость прибытия",
+ points_log:"Журнал стрелочного поста",seal_scrap:"Обрывок пломбы вагона",
+ guard_payment:"Расходный ордер охраны",freight_chalk:"Меловая пометка груза",
+ pressure_log:"Журнал давления на заводе",valve_photo:"Фотография защитного клапана",
+ inspection_copy:"Копия акта Мерсера",victim_register:"Реестр погибших работников",
+ ada_statement:"Показания Ады Уэбб",mercer_signed_statement:"Подписанные показания Мерсера",
+ old_excursion_ticket:"Старинный билет Курзон-стрит",hale_coat:"Описание шинели Эдварда Хейла",
+ brackett_wire:"Заверенная телеграмма Брэкетта",bridge_witness:"Показания сторожа у моста",
+ guard_bootmark:"След каблука у моста",brackett_boots:"Отпечаток каблука Брэкетта",
+ evacuation_route:"Маршрут эвакуации",private_siding_map:"Схема частного отвода",
+ brackett_accounts:"Копия счетов Брэкетта",vale_guarantee:"Гарантия Гидеона Вейла",
+ public_contact:"Контакт Норы Келл",family_protection:"Гарантия безопасности семьи",
+ mabel_confession:"Признание Мэйбл Кросс",clerk_witness:"Показания ночного клерка"
+};
+const evidenceName=id=>evidenceLabels[id]||id.replaceAll("_"," ");
 const proofLabels={provedFirstForgery:"Подлог отправления Мэйбл",provedWagonDiversion:"Перехват вагона F-4182",provedSecondForgery:"Подложная запись о прибытии",provedFactoryCoverup:"Сокрытие заводской аварии",provedHaleMurder:"Убийство Хейла Брэкеттом",provedBrackettNetwork:"Счета преступной сети"};
 const stageLabels={P:"ПРОЛОГ",I:"ГЛАВА I · МЁРТВЫЙ ПАССАЖИР",II:"ГЛАВА II · ТРИ МАРШРУТА",III:"ГЛАВА III · НОЧНОЙ СТРЕЛОЧНИК",IV:"ГЛАВА IV · ТЕ, КТО НЕ ДОЛЖЕН ГОВОРИТЬ",V:"ГЛАВА V · ЦЕНА МОЛЧАНИЯ",VI:"ГЛАВА VI · ПОСЛЕДНИЙ СИГНАЛ",END:"ИСХОД РАССЛЕДОВАНИЯ"};
 const actionLabels={
@@ -208,7 +224,7 @@ function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
  let items=[];
- if(tab==="evidence")items=v.state.evidence.map(x=>x.replaceAll("_"," "));
+ if(tab==="evidence")items=v.state.evidence.map(evidenceName);
  if(tab==="deductions")items=Object.entries(v.facts).map(([id,proved])=>(proved?"✓ ":"○ ")+proofLabels[id]);
  if(tab==="witnesses")items=Object.entries(v.state.witnesses).map(([id,status])=>witnessNames[id]+" — "+witnessLabels[status]);
  if(!items.length){root.append(make("p","Здесь пока нет записей.","empty"));return;}
@@ -223,7 +239,7 @@ function select(choice){
   const gained=next.evidence.filter(x=>!before.evidence.includes(x));
   const moved=Object.entries(next.witnesses).filter(([id,state])=>state!==before.witnesses[id]);
   render();
-  if(gained.length)showNotice("Новая улика: "+gained.map(x=>x.replaceAll("_"," ")).join(", "));
+  if(gained.length)showNotice("Новая улика: "+gained.map(evidenceName).join(", "));
   else if(moved.length)showNotice(moved.map(([id,state])=>witnessNames[id]+" — "+witnessLabels[state]).join("; "));
   else showNotice(next.finished?"Расследование завершено. Итог сохранён.":"");
   window.scrollTo(0,0);
