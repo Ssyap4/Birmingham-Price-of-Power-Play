@@ -316,7 +316,11 @@
         s.witnesses.tommy="protected";
       if(action==="protectMercer")s.witnesses.mercer="protected";
       if(action==="betrayAda"){
-        if(s.witnesses.ada==="protected")s.witnesses.ada="detained";
+        // The private address is compromised in the same atomic transition.
+        // Whether Ada was merely located or temporarily protected, guards seize
+        // her hiding place; she must not remain free in subsequent dialogue.
+        s.witnesses.ada="detained";
+        s.flags.adaHideoutCompromised=true;
         s.flags.mercerBetrayed=true;
       }
       if(action==="verifyForPublication")s.flags.publicContactSecured=true;
