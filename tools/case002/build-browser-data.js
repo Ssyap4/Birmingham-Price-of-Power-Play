@@ -22,7 +22,9 @@ for(const doc of docs){
   const id=headers[i][1],start=headers[i].index+headers[i][0].length;
   const end=i+1<headers.length?headers[i+1].index:text.length;
   if(Object.hasOwn(narration,id))throw Error("duplicate story ID "+id);
-  narration[id]=text.slice(start,end).replace(/\n###\s[\s\S]*$/,"")
+  // Editor and chapter headings (##, ###, etc.) are not playable prose.
+  // Stop extraction at the first heading after the scene's own ID heading.
+  narration[id]=text.slice(start,end).replace(/\n#{2,6}[ \t]+[^\n]*[\s\S]*$/,"")
    .replace(/\[[^\]]*\]/g,"").replace(/\*\*/g,"").replace(/\*/g,"")
    .replace(/^[ \t]*---[ \t]*$/gm,"").replace(/\n{3,}/g,"\n\n").trim();
  }
