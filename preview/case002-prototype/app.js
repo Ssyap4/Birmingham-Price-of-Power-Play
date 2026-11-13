@@ -3,6 +3,13 @@
 const data=window.BirminghamCase002Data,api=window.BirminghamCase002Engine;
 const $=id=>document.getElementById(id);
 const heroNames={jack:"Джек Харпер",finn:"Финн О’Коннор",eleanor:"Элеонора Блэквуд",victor:"Виктор Мэллоу",samuel:"Сэмюэл Рид"};
+const approvedHeroPortraits={
+  jack:"../../assets/case-scenes/heroJack.webp",
+  finn:"../../assets/case-scenes/heroFinn.webp",
+  eleanor:"../../assets/case-scenes/heroEleanor.webp",
+  victor:"../../assets/case-scenes/heroVictor.webp",
+  samuel:"../../assets/case-scenes/heroSamuel.webp"
+};
 const witnessNames={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
 const witnessLabels={missing:"местонахождение неизвестно",located:"найден",detained:"под охраной",protected:"под защитой",evacuated:"эвакуирован",deceased:"погиб"};
 const evidenceLabels={
@@ -166,6 +173,16 @@ function render(){
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);
  setText($("sceneTitle"),scene.title);
+ setText($("heroName"),heroNames[s.hero]);
+ const portrait=$("heroPortrait");
+ if(portrait.dataset.hero!==s.hero){
+   portrait.dataset.hero=s.hero;
+   portrait.alt="Портрет сыщика: "+heroNames[s.hero];
+   portrait.src=approvedHeroPortraits[s.hero];
+   portrait.hidden=false;
+ }
+ portrait.onerror=()=>{portrait.hidden=true;};
+ portrait.onload=()=>{portrait.hidden=false;};
  const region=$("sceneText");region.replaceChildren();
  const raw=sceneNarration(v);
  for(const paragraph of raw.split(/\n\s*\n/)){
