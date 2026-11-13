@@ -1,5 +1,12 @@
 # CHANGELOG.md — история разработки «Бирмингем: Цена власти»
 
+## 2026-11-14 — Case 002, artistic wave 15: B11–B14 portrait scenes
+
+- Four independent original **720×900 mobile-only WebP**: B11 (contrasting manifests and a blank timing sheet), B12 (night railway clerk tracking wagon count), B13 (extra escort payment in freight papers), B14 (empty timeline at signal-post window).
+- All four files visually reviewed, optimized (total 424844 bytes), transferred as real Git blobs with verified hashes, and registered with SHA-256 in `src/case002/approved-art-v1.js` using `mobileOnly:true`; total **26 approved story scenes and 10 NPC portraits**.
+- No collage crops, guessed protagonist portraits, fabricated desktop masters or changes to Case 001. Scope remains the working branch; `main` is unchanged. Run scoped art CI and mobile Chromium; no 400-route narrative suite for pure assets.
+
+
 ## 2026-11-14 — Case 002: completed mobile artwork wave 14, scenes B06–B10
 
 - Installed five independent 720×900, original vertical WebP images for B06–B10, total 555542 bytes, plus five reviewed `mobileOnly:true` manifest registrations; no new landscape master.

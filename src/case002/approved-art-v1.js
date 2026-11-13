@@ -12,6 +12,34 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"B11",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b11-scene.webp",cast:[],
+   mobileFile:"case002-b11-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"a5e092001fb258ed007777563656f16dba6a3cd002ba6e0bfbc1e48ff3c3a68b"
+  }),
+  Object.freeze({
+   sceneId:"B12",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b12-scene.webp",cast:["night-clerk"],
+   mobileFile:"case002-b12-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"3e8205a1d72cb6942bd4427b39147d26cb5e35f2143fe3225164710a2d371048"
+  }),
+  Object.freeze({
+   sceneId:"B13",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b13-scene.webp",cast:[],
+   mobileFile:"case002-b13-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"fb12931ae8a0d0389ff3a6204da1d1704aa51a8cc4e6c64bb808ba3ab816819d"
+  }),
+  Object.freeze({
+   sceneId:"B14",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b14-scene.webp",cast:[],
+   mobileFile:"case002-b14-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"306e8aa02cbd895198373aba7477da9ecb037cf7588f2e31cfa57345fda4ab56"
+  }),
+  Object.freeze({
    sceneId:"B06",variantKey:"default",review:"approved",mobileOnly:true,
    file:"case002-b06-scene.webp",cast:[],
    mobileFile:"case002-b06-scene--mobile.webp",
