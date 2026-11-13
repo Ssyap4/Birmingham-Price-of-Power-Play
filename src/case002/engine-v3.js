@@ -34,6 +34,37 @@
     }
     return resolved;
   }
+  // What the hero has recorded is separate from who physically holds a copy.
+  // "source" is a stable acquisition scene, not proof of personal ownership.
+  const EVIDENCE_PROVENANCE = {
+    old_excursion_ticket:["police","notes"], hale_coat:["police","notes"],
+    guard_bootmark:["bridge","impression"], dispatch_manifest:["railway","certified-copy"],
+    freight_chalk:["canal","rubbing"],seal_scrap:["canal","photograph"],
+    victim_register:["factory","copy"],inspection_copy:["factory","copy"],
+    clerk_witness:["railway","statement"],guard_payment:["railway","copy"],
+    private_siding_map:["railway","sketch"],points_log:["signal-box","copy"],
+    mabel_confession:["mabel","statement"],arrival_manifest:["railway","copy"],
+    bridge_witness:["bridge","statement"],brackett_wire:["railway","authenticated-copy"],
+    pressure_log:["ada","copy"],ada_statement:["ada","statement"],
+    mercer_signed_statement:["mercer","signed-statement"],
+    brackett_boots:["brackett","photograph"],brackett_accounts:["brackett","copy"]
+  };
+  function custodyRecord(id, source) {
+    const meta=EVIDENCE_PROVENANCE[id]||["unknown","record"];
+    return {source:source||"legacy-save",originalHolder:meta[0],form:meta[1],
+      holder:"hero",verified:true};
+  }
+  function recordEvidence(s,id,source) {
+    addUnique(s.evidence,id);
+    if(!s.evidenceLedger)s.evidenceLedger={};
+    if(!s.evidenceLedger[id])s.evidenceLedger[id]=custodyRecord(id,source);
+  }
+  function normalizeLedger(s) {
+    if(s.evidenceLedger===undefined)s.evidenceLedger={}; // older v3 draft save
+    for(const id of s.evidence)
+      if(!s.evidenceLedger[id])s.evidenceLedger[id]=custodyRecord(id,"legacy-save");
+    return s;
+  }
   const EVIDENCE_BY_NODE = {
     A05:["old_excursion_ticket"],A06:["hale_coat"],A08:["guard_bootmark"],
     B03:["dispatch_manifest"],B05:["freight_chalk"],B06:["seal_scrap"],
@@ -62,7 +93,7 @@
     "E07:E08": ["continue","verifyGuarantee"],
     "E08:E09": ["continue","copyAccounts","handoverMurderEvidence"],
     "E08:HJ03": ["continue","copyAccounts","handoverMurderEvidence"],
-    "E09:E10": ["continue","trustedIntermediary"],
+    "E09:E10": ["continue","trustedIntermediary","passAccountsToWorkers"],
     "E11:F01": ["continue","prepareEvacuation"],
     "F06:F07": ["acknowledgeDanger"],
     "F07:Z07": ["acceptFatalRisk"]
@@ -83,6 +114,7 @@
     copyAccounts:"Снять копию счетов Брэкетта",
     handoverMurderEvidence:"Подготовить доказательства против Брэкетта",
     trustedIntermediary:"Договориться с независимым посредником",
+    passAccountsToWorkers:"Передать копию счетов представителю рабочих",
     prepareEvacuation:"Подготовить путь вывода свидетелей",
     acknowledgeDanger:"Войти в опасный проход",
     acceptFatalRisk:"Не отступать, несмотря на смертельную опасность"
@@ -105,6 +137,9 @@
   }
   function endingAllowed(s, ending, contract) {
     if (!ending) return false;
+    if(ending.id==="trainControl" &&
+       (s.evidenceLedger?.brackett_accounts?.holder!=="hero" ||
+        s.flags.accountsGivenToWorkers))return false;
     if (s.health <= 0 && ending.id !== "trainDeath") return false;
     if (ending.id !== "trainDeath" && !s.flags.chapterAtLeastV) return false;
     const facts = factsFor(contract, s.evidence);
@@ -128,6 +163,26 @@
     ensure(typeof s.attemptId==="string" && s.attemptId.length>0 && s.attemptId.length<160,"Invalid attempt");
     ensure(nodes.has(s.node),"Unknown saved scene");
     ensure(validSet(s.evidence, contract.supportedEvidence),"Invalid evidence IDs");
+    ensure(s.evidenceLedger && typeof s.evidenceLedger==="object" &&
+      !Array.isArray(s.evidenceLedger),"Invalid evidence custody ledger");
+    ensure(Object.keys(s.evidenceLedger).length===s.evidence.length,
+      "Evidence custody entries must match recorded facts");
+    for(const id of s.evidence){
+      const record=s.evidenceLedger[id];
+      ensure(record && typeof record.source==="string" && record.source.length>0 &&
+        typeof record.form==="string" && record.form.length>0 &&
+        typeof record.originalHolder==="string" &&
+        ["hero","workers"].includes(record.holder) && record.verified===true,
+        "Invalid evidence origin, holder or verification for "+id);
+    }
+    if(s.flags.accountsGivenToWorkers){
+      ensure(s.evidenceLedger.brackett_accounts?.holder==="workers" &&
+        !s.flags.brackettAccountsHeld,"Accounts handed away cannot remain held");
+    }
+    if(s.flags.brackettAccountsHeld){
+      ensure(s.evidenceLedger.brackett_accounts?.holder==="hero",
+        "Brackett accounts cannot be held by two parties");
+    }
     ensure(validSet(s.routes, ["rail","canal","factory"]),"Invalid route list");
     ensure(validSet(s.visited, [...nodes.keys()]),"Invalid visited list");
     ensure(typeof s.flags==="object" && s.flags!==null && !Array.isArray(s.flags),"Invalid flags");
@@ -166,7 +221,7 @@
     function fresh(){
       return {version:VERSION,caseId:"002",hero,attemptId,node:"P01",
         startedAt:now(),prior:prior?copy(prior):null,health:100,
-        evidence:[],routes:[],visited:["P01"],flags:{},
+        evidence:[],evidenceLedger:{},routes:[],visited:["P01"],flags:{},
         witnesses:{ada:"missing",tommy:"detained",mercer:"located"},
         history:[],finished:false,ending:null,completedAt:null};
     }
@@ -184,7 +239,7 @@
       const entry={caseId:"002",heroId:hero,attemptId:state.attemptId,started:state.startedAt,
         finished:state.completedAt,ending:state.ending,prior:copy(state.prior),
         witnesses:copy(state.witnesses),evidence:[...state.evidence],
-        flags:copy(state.flags)};
+        evidenceLedger:copy(state.evidenceLedger),flags:copy(state.flags)};
       const records=storageRead(store,RECORD_KEY,[]);
       ensure(Array.isArray(records),"Draft record archive corrupted");
       if(!records.some(r=>r.attemptId===entry.attemptId)){
@@ -200,7 +255,7 @@
       if(!store)return snapshot();
       const raw=store.getItem(key);
       if(raw===null)return snapshot();
-      const candidate=JSON.parse(raw);
+      const candidate=normalizeLedger(JSON.parse(raw));
       assertState(candidate,graph,contract,hero,nodes);
       state=copy(candidate);
       if(state.finished)flushCompletion(); // recover an interrupted completion write
@@ -217,10 +272,11 @@
       addUnique(s.visited,to);
       if(firstVisit){
         for(const id of EVIDENCE_BY_NODE[to]||[]){
-          if(to!=="C04"||s.evidence.includes("dispatch_manifest"))addUnique(s.evidence,id);
+          if(to!=="C04"||s.evidence.includes("dispatch_manifest"))recordEvidence(s,id,to);
         }
       }
-      if(to==="D08" && s.flags.mercerWilling)addUnique(s.evidence,"mercer_signed_statement");
+      if(to==="D08" && s.flags.mercerWilling)
+        recordEvidence(s,"mercer_signed_statement",to);
       if(ROUTES[to])addUnique(s.routes,ROUTES[to]);
       if(to==="D02"&&s.witnesses.ada==="missing")s.witnesses.ada="located";
       if(to==="E01")s.flags.chapterAtLeastV=true;
@@ -295,16 +351,19 @@
       if(action==="handoverMurderEvidence")
         ensure(factsFor(contract,s.evidence).provedHaleMurder,
           "Insufficient proof to hand over Brackett");
-      if(action==="trustedIntermediary")ensure(s.evidence.includes("brackett_accounts"),
-        "Need a documented leverage route");
+      if(action==="trustedIntermediary")ensure(s.evidenceLedger.brackett_accounts?.holder==="hero",
+        "Need the Brackett accounts in hand for intermediary negotiations");
+      if(action==="passAccountsToWorkers")
+        ensure(s.evidenceLedger.brackett_accounts?.holder==="hero",
+          "Cannot transfer a copy of accounts no longer in your possession");
       if(action==="prepareEvacuation")ensure(safeCount(s)>0,"No protected witness to evacuate");
       if(action==="acknowledgeDanger")s.flags.dangerWasExplained=true;
       if(action==="acceptFatalRisk"){
         ensure(s.flags.dangerWasExplained,"Fatal danger wasn't acknowledged");
         s.flags.fatalChoiceAcknowledged=true;s.health=0;
       }
-      if(action==="copyManifest"){addUnique(s.evidence,"dispatch_manifest");s.flags.finnManifestCopy=true;}
-      if(action==="copyInspection"){addUnique(s.evidence,"inspection_copy");s.flags.finnInspectionCopy=true;}
+      if(action==="copyManifest"){recordEvidence(s,"dispatch_manifest",from);s.flags.finnManifestCopy=true;}
+      if(action==="copyInspection"){recordEvidence(s,"inspection_copy",from);s.flags.finnInspectionCopy=true;}
       if(action==="verifyTommyGuarantee"){
         s.flags.victorGuaranteedTommy=true;
         s.witnesses.tommy="protected";
@@ -329,12 +388,18 @@
       if(from==="E06" && to==="E07")s.flags.valeContact=true;
       if(action==="verifyGuarantee")s.flags.valeGuarantee=true;
       if(action==="copyAccounts"){
-        addUnique(s.evidence,"brackett_accounts");s.flags.brackettAccountsHeld=true;
+        recordEvidence(s,"brackett_accounts",from);
+        s.flags.brackettAccountsHeld=true;
       }
       if(action==="handoverMurderEvidence")s.flags.brackettCanBeHandedOver=true;
       if(action==="trustedIntermediary")s.flags.localIntermediary=true;
+      if(action==="passAccountsToWorkers"){
+        s.evidenceLedger.brackett_accounts.holder="workers";
+        s.flags.brackettAccountsHeld=false;
+        s.flags.accountsGivenToWorkers=true;
+      }
       if(action==="prepareEvacuation"){
-        addUnique(s.evidence,"evacuation_route");s.flags.evacuationRoutePrepared=true;
+        recordEvidence(s,"evacuation_route",from);s.flags.evacuationRoutePrepared=true;
       }
       applyArrival(s,to);
       if(to in END_NODES){
@@ -373,6 +438,7 @@
       const node=nodes.get(state.node);
       const facts=factsFor(contract,state.evidence);
       return {scene:copy(node),state:snapshot(),facts,
+        evidenceDossier:state.evidence.map(id=>({id,...copy(state.evidenceLedger[id])})),
         safeWitnessCount:safeCount(state),choices:availableChoices(),
         endingCatalog:contract.endings.map(x=>({id:x.id,title:x.title,
            unlocked:state.finished?state.ending===x.id:endingAllowed(state,x,contract)}))};
