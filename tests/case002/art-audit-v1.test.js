@@ -27,16 +27,16 @@ const failures=(edit,pattern)=>{
  const invalid=clone();edit(invalid);
  assert.throws(()=>audit({source:invalid}),pattern);
 };
-failures(v=>v.sceneImages[0].sha256="0".repeat(64),/changed without review/);
-failures(v=>v.sceneImages[0].mobileSha256="a".repeat(64),/changed without review/);
-failures(v=>v.sceneImages[0].width=2048,/dimensions mismatch/);
-failures(v=>delete v.sceneImages[0].sha256,/Missing immutable/);
-failures(v=>v.sceneImages[0].mobileFile="case002-a01-scene--mobile.webp",/different scene/);
-failures(v=>v.sceneImages.push(v.sceneImages[0]),/Duplicate approved scene/);
-failures(v=>{v.sceneImages[0].sceneId="A11";v.sceneImages[0].file="case002-a11-scene.webp";},/does not exist/);
-failures(v=>v.sceneImages[0].review="draft",/Unreviewed scene/);
-failures(v=>v.sceneImages[0].mobileOnly=true,/Mobile-only scene must not pretend/);
-failures(v=>v.sceneImages[0].mobileOnly="yes",/Unknown scene display mode/);
+// Mutations target a known legacy landscape+mobile pair, not the first\n// manifest entry: later mobile-only waves can legitimately be registered first.\nfailures(v=>v.sceneImages.find(x=>x.sceneId==="P01").sha256="0".repeat(64),/changed without review/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileSha256="a".repeat(64),/changed without review/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").width=2048,/dimensions mismatch/);
+failures(v=>delete v.sceneImages.find(x=>x.sceneId==="P01").sha256,/Missing immutable/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileFile="case002-a01-scene--mobile.webp",/different scene/);
+failures(v=>v.sceneImages.push(v.sceneImages.find(x=>x.sceneId==="P01")),/Duplicate approved scene/);
+failures(v=>{v.sceneImages.find(x=>x.sceneId==="P01").sceneId="A11";v.sceneImages.find(x=>x.sceneId==="P01").file="case002-a11-scene.webp";},/does not exist/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").review="draft",/Unreviewed scene/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileOnly=true,/Mobile-only scene must not pretend/);
+failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileOnly="yes",/Unknown scene display mode/);
 // Positive end-to-end mobile-only binary audit, with one genuine verified WebP.
 // A temporary renamed fixture tests the code path without approving B06.
 const os=require("node:os");
