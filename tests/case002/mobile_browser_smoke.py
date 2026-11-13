@@ -121,9 +121,24 @@ def main():
                         "#sceneText"
                     ).inner_text(), "Scene prose must keep original story words"
                     assert page.locator("#sceneText script").count() == 0
-                    assert page.locator("#sceneCast img").count() == 0, (
-                        "Unapproved Mabel portrait must not be substituted"
-                    )
+                    mabel_registered = page.evaluate("""() =>
+                        window.BirminghamCase002ApprovedArt.manifest.npcPortraits.some(
+                            e => e.id === 'mabel' && e.review === 'approved'
+                        )""")
+                    if mabel_registered:
+                        page.wait_for_function(
+                            "() => { const i = document.querySelector('#sceneCast img'); return i && i.complete && i.naturalWidth >= 500 && i.naturalHeight >= 600; }",
+                            timeout=8000
+                        )
+                        assert page.locator("#sceneCast img").count() == 1
+                        assert page.locator("#sceneCast img").evaluate(
+                            "(img) => img.currentSrc.endsWith('/case002-mabel-portrait.webp')"
+                        ), "P02 must display the approved Mabel portrait"
+                        assert page.locator("#sceneCast .scene-participant-monogram").is_hidden()
+                    else:
+                        assert page.locator("#sceneCast img").count() == 0, (
+                            "Unapproved Mabel portrait must not be substituted"
+                        )
                     assert page.locator("#saveStatus").inner_text().startswith("Автосохранение")
                     page.reload(wait_until="load")
                     assert page.locator("#resume").is_enabled()
