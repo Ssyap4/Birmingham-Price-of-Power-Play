@@ -1,0 +1,60 @@
+name: Install Case 002 art wave 07 (8 WebP, scoped QA)
+on:
+  workflow_dispatch:
+    inputs:
+      github_attachment_url:
+        description: 'Public GitHub issue attachment ZIP URL (wave 07)'
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: case002-wave07-install
+  cancel-in-progress: false
+jobs:
+  install:
+    if: github.ref_name == 'feat/case002-story-bible-v1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/case002-story-bible-v1
+          fetch-depth: 1
+          persist-credentials: true
+      - name: Validate GitHub attachment source
+        env:
+          ART_URL: ${{ inputs.github_attachment_url }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          url=os.environ['ART_URL']
+          if not re.fullmatch(r'https://github.com/user-attachments/files/[0-9]+/[A-Za-z0-9._-]+\\.zip(?:\\?[^\\s]*)?',url):
+              raise SystemExit("Only public ZIP attachments hosted by GitHub are allowed")
+          with open('/tmp/case002-wave07-url','w') as f: f.write(url)
+          PY
+      - name: Fetch artwork archive
+        run: |
+          curl --fail --location --retry 3 --max-time 120 \
+            --output /tmp/case002-wave07.zip "$(cat /tmp/case002-wave07-url)"
+      - name: Install eight checksum-locked assets
+        run: python3 tools/case002/install-art-wave-07.py /tmp/case002-wave07.zip
+      - name: Run ONLY art-specific checks
+        run: |
+          node tools/case002/art-audit-v1.js
+          node tests/case002/art-audit-v1.test.js
+          node tests/case002/b03-art-continuity.test.js
+      - name: Commit on Case 002 branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- assets/case002/scenes/case002-{p02,a02,a10,b03}-scene.webp \
+            assets/case002/scenes/case002-{p02,a02,a10,b03}-scene--mobile.webp \
+            src/case002/approved-art-v1.js tests/case002/b03-art-continuity.test.js
+          git diff --cached --quiet && { echo "No new assets"; exit 1; }
+          git commit -m "art(case002): install four reviewed scenes (16/16)"
+          git push origin HEAD:feat/case002-story-bible-v1
+      - name: Follow-up focused mobile QA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run case002-mobile-smoke.yml --ref feat/case002-story-bible-v1
