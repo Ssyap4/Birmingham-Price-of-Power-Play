@@ -88,6 +88,8 @@ function readStorage(){
  }catch(_){return null;}
 }
 function init(){
+ // Works in ordinary Safari/file:// too; only reads the Telegram bridge if present.
+ window.BirminghamCase002TelegramSafeArea?.bind(window);
  if(!data||!api||!data.narration||data.graph.nodes.length!==89){
   appError("Не удалось загрузить сценарный пакет. Откройте страницу из полной папки проекта.");
   $("begin").disabled=true;$("resume").disabled=true;return;
