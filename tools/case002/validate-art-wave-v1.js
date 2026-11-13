@@ -5,6 +5,16 @@
  * Binary approval and browser decode remain separate CI gates.
  */
 const assert=require("node:assert/strict");
+const fs=require("node:fs"),path=require("node:path");
+const repoRoot=path.resolve(__dirname,"../..");
+function verifyCommittedWebP(folder,name){
+ const full=path.join(repoRoot,"assets/case002",folder,name);
+ assert(fs.existsSync(full),"Approved art is not committed: "+name);
+ const bytes=fs.readFileSync(full);
+ assert(bytes.length>4000&&bytes.toString("ascii",0,4)==="RIFF"&&
+   bytes.toString("ascii",8,12)==="WEBP",
+   "Approved art is not a real WebP file: "+name);
+}
 const wave=require("../../docs/case002/art-wave-01-v1.json");
 const board=require("../../docs/case002/case002-art-storyboard-v1.json");
 const registry=require("../../src/case002/cast-registry-v1.js");
@@ -47,6 +57,10 @@ function validateWave(plan=wave,storyboard=board,cast=registry,approved=manifest
    assert(registered.every(e=>e.variantKey==="default"&&e.review==="approved"),
      "Unexpected/unreviewed registration for "+item.id);
    assert(registered.length<=1,"Multiple approved images for "+item.id);
+   if(registered.length){
+     assert.equal(registered[0].file,canonical.asset,"Incorrect image filename");
+     verifyCommittedWebP("scenes",canonical.asset);
+   }
    shots.push({id:item.id,file:canonical.asset,location:canonical.location,
      cast:canonical.cast,approved:registered.length===1});
  }
@@ -68,6 +82,11 @@ function validateWave(plan=wave,storyboard=board,cast=registry,approved=manifest
    const registered=approved.npcPortraits.filter(e=>e.id===id);
    assert(registered.length<=1&&registered.every(e=>e.review==="approved"),
      "Invalid registered portrait for "+id);
+   if(registered.length){
+     const filename="case002-"+id+"-portrait.webp";
+     assert.equal(registered[0].file,filename,"Wrong portrait identity filename");
+     verifyCommittedWebP("portraits",filename);
+   }
    portraits.push({id,name:npc.name,approved:registered.length===1});
  }
  assert(portraitIds.has("mabel")&&portraitIds.has("ada")&&portraitIds.has("tommy"),
