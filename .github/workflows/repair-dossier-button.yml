@@ -1,0 +1,34 @@
+name: Repair approved mobile dossier panel (visual-only)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/build_approved_dossier_button.py'
+      - '.github/workflows/repair-dossier-button.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Generate matching high-quality fifth button
+        run: |
+          python3 -m pip install --disable-pip-version-check 'pillow>=11,<13'
+          python3 tools/build_approved_dossier_button.py
+      - name: Publish approved visual asset only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add preview/dossier-cinematic/approved-my-dossier-menu-framed.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "art(preview): rebuild dossier panel using approved button frame"
+            git push origin HEAD:main
+          fi
