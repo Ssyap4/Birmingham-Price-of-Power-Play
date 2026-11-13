@@ -276,11 +276,8 @@ function render(){
  }
  portrait.onerror=()=>{portrait.hidden=true;};
  portrait.onload=()=>{portrait.hidden=false;};
- const region=$("sceneText");region.replaceChildren();
- const raw=sceneNarration(v);
- for(const paragraph of raw.split(/\n\s*\n/)){
-   if(paragraph.trim())region.append(make("p",paragraph.trim()));
- }
+ const region=$("sceneText");
+ window.BirminghamCase002SceneProse.render(region,sceneNarration(v));
  const choices=$("choiceList");choices.replaceChildren();
  if(s.finished){
    choices.append(make("p","Расследование завершено. Отчёт и уникальный исход сохранены в черновом архиве.","muted"));
