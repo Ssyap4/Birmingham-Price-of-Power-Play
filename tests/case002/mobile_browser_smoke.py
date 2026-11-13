@@ -57,7 +57,7 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     page.locator(".choice:not([disabled])").first.click()  # A05
                     assert page.locator("#sceneId").inner_text().startswith("A05")
-                    assert "old_excursion_ticket" in page.locator("#notice").inner_text()
+                    assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
                     assert page.locator("#toolContent li").count() >= 1
                     page.locator('button[data-tab="witnesses"]').click()
                     assert "Томми Кросс" in page.locator("#toolContent").inner_text()
