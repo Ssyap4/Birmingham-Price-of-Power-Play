@@ -4,6 +4,7 @@ on:
     branches: [feat/case002-story-bible-v1]
     paths:
       - 'ARCHITECTURE.md'
+      - 'Architecture.md'
       - 'CHANGELOG.md'
       - 'docs/decisions/**'
       - 'docs/case002/**'
