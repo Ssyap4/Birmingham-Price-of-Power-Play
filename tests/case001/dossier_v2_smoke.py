@@ -24,14 +24,15 @@ for engine in ('chromium','webkit'):
     score=page.evaluate('window.BirminghamProfileV2.model().score')
     assert score>=48 and page.locator('.pd-rank-title').inner_text()!='НОВИЧОК СМОЛЛ-ХИТА'
     page.reload(wait_until='load');page.locator('#home.cabinet-art-ready').wait_for(timeout=15000)
-    page.locator('#profileBtn').click()
+    page.locator('#profileCard').click()
     assert page.locator('.pd-number').inner_text()==number,'local ID changed'
     assert page.locator('.pd-stat-runs').inner_text()=='3','campaign stats lost'
     assert page.evaluate('window.BirminghamProfileV2.model().score')==score,'reputation inflated'
     for dest in ('campaignDossiers','campaignAchievements','campaignHistory'):
      page.locator('.pd-archive-link[data-archive="'+dest+'"]').click()
      assert page.locator('#'+dest).is_visible(),('wrong archive destination',dest)
-     page.locator('#profileBtn').click()
+     page.locator('#'+dest+' .campaign-back-profile').click()
+     assert page.locator('#profile').is_visible()
     assert page.evaluate('document.documentElement.scrollWidth')<=w+2,'horizontal overflow'
     assert not errors,(engine,w,errors)
     ctx.close();print('PASS',engine,w,'identity rank stats history navigation')
