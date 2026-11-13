@@ -204,13 +204,10 @@ function select(choice){
  const before=engine.snapshot();
  try{
   const next=engine.choose(choice.to,choice.action);
-  const gained=next.evidence.filter(x=>!before.evidence.includes(x));
-  const moved=Object.entries(next.witnesses).filter(([id,state])=>state!==before.witnesses[id]);
+  const receipt=window.BirminghamCase002Consequences.primary(
+    before,next,choice.action,evidenceName);
   render();
-  if(gained.length)showNotice("Новая улика: "+gained.map(evidenceName).join(", "));
-  else if(moved.length)showNotice(moved.map(([id,state])=>witnessNames[id]+" — "+witnessLabels[state]).join("; "));
-  else if(choice.action==="passAccountsToWorkers")showNotice("Копия счетов передана рабочим. Сведения остались в досье, но лично использовать бумаги для давления больше нельзя.");
-  else showNotice(next.finished?"Расследование завершено. Итог сохранён.":"");
+  showNotice(receipt);
   window.scrollTo(0,0);
  }catch(e){
   showNotice("Действие не применено: "+e.message);
