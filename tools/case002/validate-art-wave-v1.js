@@ -36,6 +36,8 @@ function validateWave(plan=wave,storyboard=board,cast=registry,approved=manifest
    "Real approved-art registry required");
 
  const names=new Set(),allScenes=new Map(storyboard.sceneAssets.map(x=>[x.id,x]));
+ const storyboardOrder=new Map(storyboard.sceneAssets.map((x,i)=>[x.id,i]));
+ let previousScenePosition=-1;
  const shots=[];
  for(const item of plan.shots){
    assert(item&&/^(?:P|[A-F])\d{2}$/.test(item.id),
@@ -44,6 +46,9 @@ function validateWave(plan=wave,storyboard=board,cast=registry,approved=manifest
    names.add(item.id);
    const canonical=allScenes.get(item.id);
    assert(canonical,"Unscripted art-wave scene "+item.id);
+   assert(storyboardOrder.get(item.id)>previousScenePosition,
+     "Batch must retain the canonical storyboard order: "+item.id);
+   previousScenePosition=storyboardOrder.get(item.id);
    assert(Array.isArray(canonical.stateVariants)&&canonical.stateVariants.length===0,
      "State-dependent scene needs a separately specified variant: "+item.id);
    assert(canonical.asset==="case002-"+item.id.toLowerCase()+"-scene.webp",
