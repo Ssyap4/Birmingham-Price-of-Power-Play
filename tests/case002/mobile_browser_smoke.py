@@ -78,6 +78,13 @@ def main():
                     assert page.locator("#sceneCast").is_visible()
                     assert page.locator("#sceneCast").get_attribute("data-people") == "mabel"
                     assert "Мэйбл Кросс" in page.locator("#sceneCast").inner_text()
+                    assert page.locator("#sceneText .scene-spoken-line").count() >= 3, (
+                        "P02 must visually distinguish direct dialogue from narration"
+                    )
+                    assert "К моему брату. Томми больше нет дома." in page.locator(
+                        "#sceneText"
+                    ).inner_text(), "Scene prose must keep original story words"
+                    assert page.locator("#sceneText script").count() == 0
                     assert page.locator("#sceneCast img").count() == 0, (
                         "Unapproved Mabel portrait must not be substituted"
                     )
