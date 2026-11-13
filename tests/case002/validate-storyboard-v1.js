@@ -15,7 +15,7 @@ assert.equal(distinctFiles.size,89,"scene images must have unique output paths")
 const validPrefixes=["witnesses.","flags.","facts."];
 const expectedCast={HJ:"jack",HF:"finn",HE:"eleanor",HV:"victor",HS:"samuel"};
 const knownCast=new Set(["hero",...contract.heroes,
- "mabel","tommy","ada","mercer","vale","brackett","nora","hale","rowan",
+ "mabel","tommy","ada","mercer","vale","brackett","nora","hale","rowan","unidentified-guard",
  "signalman","night-clerk","retired-clerk","clerk","boatman","guard","guards",
  "worker","gatekeeper","messenger"]);
 for(const beat of graph.nodes){
