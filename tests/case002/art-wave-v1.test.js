@@ -49,6 +49,6 @@ dishonestApproved.sceneImages.push({
  file:"case002-a02-scene.webp",width:1600,height:900,cast:[]
 });
 assert.throws(()=>validateWave(clone(),board,cast,dishonestApproved),
- /Approved art is not committed/);
+ /Multiple approved images/);
 console.log("PASS Case002 first art wave: 16 canonical scene shots, five original identity references, "+
  "14 malformed/spoiler-sensitive cases, no false approval claims.");

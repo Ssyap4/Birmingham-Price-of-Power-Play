@@ -25,5 +25,5 @@ assert.match(production.directorFocus,/не доказательство уби�
 assert(production.forbidden.some(x=>/Брэкетт/.test(x)),"Do not attribute Mabel's first change to Brackett");
 assert(production.forbidden.some(x=>/вторая/.test(x)),"Do not reveal later arrival forgery");
 assert(production.forbidden.some(x=>/гибели Хейла/.test(x)),"No premature accusation");
-assert(!manifest.sceneImages.some(x=>x.sceneId==="B03"),"B03 requires visual QA and real WebP before approval");
+assert(manifest.sceneImages.some(x=>x.sceneId==="B03"),"B03 reviewed WebP must be physically installed");
 console.log("PASS Case002 B03 art gate: F-4182 provenance, no early reveal, no false approval");

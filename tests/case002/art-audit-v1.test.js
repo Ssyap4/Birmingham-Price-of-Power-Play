@@ -33,7 +33,7 @@ failures(v=>v.sceneImages[0].width=2048,/dimensions mismatch/);
 failures(v=>delete v.sceneImages[0].sha256,/Missing immutable/);
 failures(v=>v.sceneImages[0].mobileFile="case002-a01-scene--mobile.webp",/different scene/);
 failures(v=>v.sceneImages.push(v.sceneImages[0]),/Duplicate approved scene/);
-failures(v=>{v.sceneImages[0].sceneId="A02";v.sceneImages[0].file="case002-a02-scene.webp";},/does not exist/);
+failures(v=>{v.sceneImages[0].sceneId="A11";v.sceneImages[0].file="case002-a11-scene.webp";},/does not exist/);
 failures(v=>v.sceneImages[0].review="draft",/Unreviewed scene/);
 function synthetic(format,width,height){
  const bytes=Buffer.alloc(36);

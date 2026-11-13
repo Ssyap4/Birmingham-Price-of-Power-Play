@@ -12,6 +12,42 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"P02",variantKey:"default",review:"approved",
+   file:"case002-p02-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"0d490d87cc7a48ddb7094443515e613b001fe0c06c3b693617b3f64fa8ed9cb8",
+   mobileFile:"case002-p02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"fa9399ff7bcbe07635042f2b1b4458adc2d5d84031422d5a8f2e0d0a198e3774"
+  }),
+  Object.freeze({
+   sceneId:"A02",variantKey:"default",review:"approved",
+   file:"case002-a02-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"681f5553aff23502d9d6882573f6450c7f4247943ec378596e8bc88aa31910cd",
+   mobileFile:"case002-a02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"396ced336efec4faf8a5d9131a58edbe2ce8ec2ffe0f3bab9eb5d0e3c552249d"
+  }),
+  Object.freeze({
+   sceneId:"A10",variantKey:"default",review:"approved",
+   file:"case002-a10-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"e36da533ee45e26d59aee636cab29c89b7be3779ccf4e0d555928b68c8a1f181",
+   mobileFile:"case002-a10-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"71f4be91f544d5d2263203f8fd0b9f03b21e1d907bea6c7c29f55eb6c72307c6"
+  }),
+  Object.freeze({
+   sceneId:"B03",variantKey:"default",review:"approved",
+   file:"case002-b03-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"fd54e0972f7e326373338e936981fa19cc87558c0c1070d61359785150a4a363",
+   mobileFile:"case002-b03-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"505e41792bc77ce761ea184efac9847adf89e9bdf6dc096c40624727d2d12074"
+  }),
+  Object.freeze({
    sceneId:"P01",variantKey:"default",review:"approved",
    file:"case002-p01-scene.webp",cast:[],
    width:1200,height:675,
