@@ -20,7 +20,7 @@
 Критические ID (реальные улики):
 - Rail: `dispatch_manifest` (подписан Мэйбл), `arrival_manifest` (подменён охраной), `points_log`, `seal_scrap`, `guard_payment`, `freight_chalk`.
 - Factory: `pressure_log`, `valve_photo`, `inspection_copy`, `victim_register`, `ada_statement`, `mercer_signed_statement`.
-- Hale: `old_excursion_ticket`, `hale_coat`, `brackett_wire`, `bridge_witness`, `guard_bootmark`.
+- Hale: `old_excursion_ticket`, `hale_coat`, `brackett_wire`, `bridge_witness`, `guard_bootmark`, `brackett_boots` (верифицированный снимок повреждённого каблука Брэкетта).
 - Safety / leverage: `evacuation_route`, `private_siding_map`, `brackett_accounts`, `vale_guarantee`, `public_contact`, `family_protection`.
 Метки «настоящий документ», «копия», «слышал от друга» — не взаимозаменяемы. Предметы `dispatch_manifest` и его фотография — **один источник**, не два независимых.
 Не помещать в инвентарь подлинный документ и утверждать, что его передали противнику, не выполнив реальную транзакцию. Нужны отдельные `hasCopy`, `originalOwner`, `wasPublished`.
@@ -30,7 +30,7 @@
 `provedWagonDiversion`: (`points_log` + `seal_scrap`) ИЛИ (`points_log` + `guard_payment`) ИЛИ (`freight_chalk` + `guard_payment`). Вывод: F-4182 отцепили и увели на частный отвод.
 `provedSecondForgery`: `arrival_manifest` + (`points_log` ИЛИ `seal_scrap`). Вывод: след вагона удалён после отправки.
 `provedFactoryCoverup`: (`pressure_log` + `inspection_copy`) ИЛИ (`valve_photo` + `mercer_signed_statement`) ИЛИ (`pressure_log` + `victim_register`). В каждой паре документы разных происхождений.
-`provedHaleMurder`: (`hale_coat` + `brackett_wire`) ИЛИ (`bridge_witness` + `guard_bootmark`). Не путать доказательство насильственной смерти с доказательством конкретного убийцы.
+`provedHaleMurder`: (`hale_coat` + `brackett_wire`) ИЛИ (`bridge_witness` + `brackett_boots`). `bridge_witness` должен уверенно опознать Брэкетта, а `brackett_boots` — сверить с независимым следом и временем; одного похожего отпечатка недостаточно. `brackett_wire` — проверенный зарегистрированный приказ, не анонимная записка «Л.Б.». Не путать доказательство насильственной смерти с доказательством конкретного убийцы.
 `provedBrackettNetwork`: `brackett_accounts` + `guard_payment` ИЛИ `brackett_accounts` + `arrival_manifest`; это иной вывод, чем убийство.
 Каждый вывод сопровождается человеческим пояснением и может быть проверен в «доске дедукции»; нельзя выдавать результат без двух допустимых источников. В v2 оформить эти формулы как тестируемые предикаты.
 
