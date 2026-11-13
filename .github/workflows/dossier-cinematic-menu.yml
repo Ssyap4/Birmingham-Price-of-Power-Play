@@ -1,0 +1,58 @@
+name: Dossier 2.1 artwork and menu smoke
+on:
+  push:
+    branches: [feat/dossier-cinematic-menu-polish]
+    paths:
+      - 'index.html'
+      - 'player-dossier-v2.js'
+      - 'profile-page.js'
+      - 'campaign-hub-v1.js'
+      - 'dossier-cinematic-v21.css'
+      - 'assets/dossier/**'
+      - 'tests/case001/dossier_cinematic_menu_smoke.py'
+      - '.github/workflows/dossier-cinematic-menu.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cinematic-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Chromium and WebKit
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: JavaScript checks
+        run: |
+          node --check player-dossier-v2.js
+          node --check campaign-hub-v1.js
+          node --check profile-page.js
+      - name: Artwork and navigation browser smoke
+        id: smoke
+        run: |
+          set +e
+          python tests/case001/dossier_cinematic_menu_smoke.py > /tmp/dossier-art-menu.log 2>&1
+          status=$?
+          cat /tmp/dossier-art-menu.log
+          echo "result=$status" >> "$GITHUB_OUTPUT"
+          exit "$status"
+      - name: Save focused verification log
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo "tested_commit=${GITHUB_SHA}"
+            echo "result=${{ steps.smoke.outputs.result || 'not_run' }}"
+            cat /tmp/dossier-art-menu.log 2>/dev/null || true
+          } > tests/case001/dossier-cinematic-status.txt
+          git add tests/case001/dossier-cinematic-status.txt
+          git commit -m "ci: dossier artwork and menu QA [skip ci]" || exit 0
+          git push origin HEAD:feat/dossier-cinematic-menu-polish
