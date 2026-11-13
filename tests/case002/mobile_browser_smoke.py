@@ -131,6 +131,20 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("P02"), "save didn't reload"
                     page.locator(".choice:not([disabled])").first.click()  # A01
                     assert page.locator("#sceneId").inner_text().startswith("A01")
+                    page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert page.locator("#sceneArtwork").is_visible(), (
+                        "Approved A01 scene must be visible on the phone"
+                    )
+                    assert page.locator("#sceneArtwork").get_attribute("data-portrait") == "true"
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.naturalWidth === 720 && el.naturalHeight === 900"
+                    ), "A01 must load a separate 720x900 phone WebP"
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.currentSrc.endsWith('/case002-a01-scene--mobile.webp')"
+                    ), "Wrong A01 mobile image"
                     assert page.locator("#chapterIntertitle").is_visible()
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "I"
                     assert "ВИАДУКА" in page.locator("#intertitleLine").inner_text().upper()

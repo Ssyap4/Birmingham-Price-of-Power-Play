@@ -19,6 +19,24 @@ const manifest=Object.freeze({
    mobileFile:"case002-p01-scene--mobile.webp",
    mobileWidth:720,mobileHeight:900,
    mobileSha256:"dd53cf2459852779f8f1552153342c43e977423a7cd99888e7be9838513b27bd"
+  }),
+  Object.freeze({
+   sceneId:"A01",variantKey:"default",review:"approved",
+   file:"case002-a01-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"8a3fa26b875d47a43b0b886b65d8b8c9af66be671628796f59e139015456161c",
+   mobileFile:"case002-a01-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"7fd9ed6fbfa7e00d370216800626b6c3a583372732bd738f702144ffbc31e4ae"
+  }),
+  Object.freeze({
+   sceneId:"A04",variantKey:"default",review:"approved",
+   file:"case002-a04-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"e0176d8c3c2b94cf0491b12ece40360a128851272b960545728a83d63b4f2193",
+   mobileFile:"case002-a04-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"5468c285c746bf7942aabdf72cbf454f7361fd327cfb53cb8d5e7d83479c93df"
   })
  ]),
  npcPortraits:Object.freeze([])
