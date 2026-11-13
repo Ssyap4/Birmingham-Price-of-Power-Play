@@ -6,5 +6,5 @@ document.addEventListener('DOMContentLoaded',()=>{
  const image=new Image();
  image.onload=()=>{if(image.naturalWidth>=400)home.classList.add('dossier-menu-art-loaded')};
  image.onerror=()=>home.classList.remove('dossier-menu-art-loaded');
- image.src='preview/dossier-cinematic/approved-my-dossier-menu.webp';
+ image.src='preview/dossier-cinematic/approved-my-dossier-menu-hq.webp';
 });
