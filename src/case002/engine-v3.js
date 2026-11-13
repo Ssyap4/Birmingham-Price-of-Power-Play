@@ -20,7 +20,7 @@
   // A branch is resolved only when its consequences have been committed at D10.
   // Derive from the existing action history so previous v3 saves remain readable.
   const WITNESS_BRANCH = {
-    "D03":"ada","HE02":"ada",
+    "D02":"ada","D03":"ada","HE02":"ada",
     "D06":"tommy","HV02":"tommy",
     "D09":"mercer","HF03":"mercer"
   };
@@ -44,6 +44,8 @@
     E08:["brackett_boots"]
   };
   const ACTIONS = {
+    "D02:D10": ["withdrawAda"],
+    "HE02:D10": ["withdrawAda"],
     "D03:D10": ["continue","hideAda"],
     "HJ02:D06": ["continue","extractTommy"],
     "HF01:B04": ["continue","copyManifest"],
@@ -67,6 +69,7 @@
   };
   const ACTION_TITLES = {
     continue:"Продолжить",hideAda:"Найти Аде безопасное убежище",
+    withdrawAda:"Отступить без показаний Ады и продолжить поиски",
     copyManifest:"Сделать заверенную копию грузовой ведомости",
     copyInspection:"Скопировать акт и записать его происхождение",
     verifyTommyGuarantee:"Получить письменное освобождение Томми",
