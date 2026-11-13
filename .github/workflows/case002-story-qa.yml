@@ -21,3 +21,5 @@ jobs:
         run: node tests/case002/validate-contract.js
       - name: Validate chapter graph and hero routes
         run: node tests/case002/validate-beat-graph.js
+      - name: Simulate 35 nontrivial ending paths through draft graph
+        run: node tests/case002/simulate-story-model-v2.js
