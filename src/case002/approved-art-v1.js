@@ -157,6 +157,10 @@ const manifest=Object.freeze({
   })
  ]),
  npcPortraits:Object.freeze([
+  Object.freeze({id:"nora",review:"approved",file:"case002-nora-portrait.webp",width:640,height:800,sha256:"8403e29e7d3ad519afa126684cd6c62567628ec76056a9e7de81770600dbf43a"}),
+  Object.freeze({id:"hale",review:"approved",file:"case002-hale-portrait.webp",width:640,height:800,sha256:"6eaba7d0b0eb52310ee482d349395ce2bcd5025b66d816f9155b7815ae0ea0da"}),
+  Object.freeze({id:"rowan",review:"approved",file:"case002-rowan-portrait.webp",width:640,height:800,sha256:"ffe8774c41be69b5074f30afa017e547288b9c4458c7d654c3bfbb75d21ba44f"}),
+  Object.freeze({id:"signalman",review:"approved",file:"case002-signalman-portrait.webp",width:640,height:800,sha256:"946a6d9f6173e5a68be6ee537b37ad49537680e51a535350bd5215fead7e27f8"}),
   Object.freeze({id:"brackett",review:"approved",file:"case002-brackett-portrait.webp",width:640,height:800,sha256:"e7b822fd2930d3d794bb6b33424a3b4607f349909ad119310402a0ce7bebfb98"}),
   Object.freeze({id:"vale",review:"approved",file:"case002-vale-portrait.webp",width:640,height:800,sha256:"e30c59ba1e4ac2f6965d9e82d52dce69cc00cebc0a8fa555873723caead95b0f"}),
   Object.freeze({id:"mercer",review:"approved",file:"case002-mercer-portrait.webp",width:640,height:800,sha256:"5638d2c9a2a04f34f70249a8561cef9f7296fce1517f0f42ad8ce1c0a6f67294"}),
