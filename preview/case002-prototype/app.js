@@ -68,7 +68,7 @@ const actionLabels={
  "E09:E10:continue":"Продолжить без посредника",
  "E11:F01:continue":"Идти к финалу без плана эвакуации"
 };
-let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null;
+let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -100,7 +100,16 @@ function init(){
  }catch(e){console.warn("[Case 002] Old archive is unreadable; neutral start available",e);}
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
- $("backToLaunch").addEventListener("click",()=>{$("game").hidden=true;$("launch").hidden=false;window.scrollTo(0,0);});
+ $("backToLaunch").addEventListener("click",()=>{
+   hideNotice();$("game").hidden=true;$("launch").hidden=false;window.scrollTo(0,0);
+ });
+ $("noticeDismiss").addEventListener("click",hideNotice);
+ $("noticeJump").addEventListener("click",()=>{
+   if(activeNoticeFocus)jumpTo(activeNoticeFocus.tab,activeNoticeFocus.id);
+ });
+ for(const button of document.querySelectorAll("#quickNav [data-go]")){
+   button.addEventListener("click",()=>jumpTo(button.dataset.go));
+ }
  for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{tab=button.dataset.tab;evidenceFocus=null;renderTools();});
  $("hero").addEventListener("change",refreshResume);
  refreshResume();
@@ -141,6 +150,7 @@ function resume(){
 function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
+ hideNotice();evidenceFocus=null;
  render();window.scrollTo(0,0);
 }
 function setText(element,value){element.textContent=String(value);}
@@ -148,8 +158,43 @@ function make(tag,text,cls){const e=document.createElement(tag);if(cls)e.classNa
 function sceneNarration(view){
  return window.BirminghamCase002Narrative.render(data,view);
 }
-function showNotice(text){
- const notice=$("notice");setText(notice,text);notice.hidden=!text;
+function hideNotice(){
+ $("notice").hidden=true;
+ $("noticeJump").hidden=true;
+ activeNoticeFocus=null;
+}
+function showNotice(text,focus=null){
+ const notice=$("notice");
+ setText($("noticeContent"),text);
+ notice.hidden=!text;
+ activeNoticeFocus=text&&focus?focus:null;
+ const jump=$("noticeJump");
+ jump.hidden=!activeNoticeFocus;
+ if(activeNoticeFocus){
+   const names={evidence:"УЛИКУ",witnesses:"ЛЮДЕЙ",journal:"ХОД ДЕЛА",deductions:"ВЫВОДЫ"};
+   setText(jump,"ОТКРЫТЬ: "+(names[activeNoticeFocus.tab]||"ДОСЬЕ"));
+ }
+}
+function jumpTo(where,evidenceId=null){
+ if(!engine)return;
+ const view=engine.view();
+ let target;
+ if(where==="scene")target=$("storyPanel");
+ else if(where==="choices")target=$("choicesPanel");
+ else if(["evidence","deductions","witnesses","journal"].includes(where)){
+   tab=where;
+   evidenceFocus=where==="evidence"?evidenceId:null;
+   renderTools();
+   target=$("caseTools");
+ }else return;
+ hideNotice();
+ // Scroll to a real on-screen panel; never change story state or spend a choice.
+ const row=evidenceId&&where==="evidence"?
+   [...$("toolContent").querySelectorAll(".evidence-card")]
+      .find(item=>item.dataset.evidenceId===evidenceId):null;
+ const focusTarget=row||target;
+ focusTarget.focus({preventScroll:true});
+ focusTarget.scrollIntoView({block:"start",behavior:"auto"});
 }
 function translateReason(choice,view){
  const reason=choice.reason||"";
@@ -252,6 +297,9 @@ function renderSceneCast(stage,state){
 }
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
+ setText($("pulseEvidence"),"Улик: "+s.evidence.length);
+ setText($("pulseProof"),"Выводов: "+Object.values(v.facts).filter(Boolean).length);
+ setText($("pulseSafe"),"В безопасности: "+v.safeWitnessCount);
  // Future artwork is selected by game state, but never displayed until a
  // verified asset exists. Stage metadata is useful for browser QA now.
  const stage=window.BirminghamCase002ArtDirector.select(data.storyboard,v);
@@ -417,10 +465,11 @@ function select(choice){
  const before=engine.snapshot();
  try{
   const next=engine.choose(choice.to,choice.action);
-  const receipt=window.BirminghamCase002Consequences.primary(
-    before,next,choice.action,evidenceName);
+  const event=window.BirminghamCase002UIEvents.plan(
+    before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
+  evidenceFocus=null;
   render();
-  showNotice(receipt);
+  showNotice(event.message,event.focus);
   window.scrollTo(0,0);
  }catch(e){
   showNotice("Действие не применено: "+e.message);
