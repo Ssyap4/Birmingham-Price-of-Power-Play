@@ -323,13 +323,38 @@ function renderTools(){
    root.append(listing);return;
  }
  let items=[];
- if(tab==="evidence")items=v.evidenceDossier.map(item=>{
-    const place=item.holder==="workers"?"передано представителю рабочих":
-      ["copy","certified-copy","authenticated-copy"].includes(item.form)?"копия у героя":
-      ["photograph","impression","rubbing","sketch"].includes(item.form)?"зафиксированный след":
-      ["statement","signed-statement"].includes(item.form)?"записанные показания":"сведения в досье";
-    return evidenceName(item.id)+" · "+place;
-  });
+ if(tab==="evidence"){
+    const dossier=v.evidenceDossier;
+    if(!dossier.length){
+      root.append(make("p","Улик пока нет. Найденные предметы и записи появятся здесь.","empty"));
+      return;
+    }
+    root.append(make("p","Собранные материалы: "+dossier.length,"evidence-heading"));
+    const list=make("ul",undefined,"evidence-gallery");
+    for(const item of dossier){
+      const place=item.holder==="workers"?"Передано представителю рабочих":
+        ["copy","certified-copy","authenticated-copy"].includes(item.form)?"Копия у героя":
+        ["photograph","impression","rubbing","sketch"].includes(item.form)?"Зафиксированный след":
+        ["statement","signed-statement"].includes(item.form)?"Записанные показания":"Сведения в досье";
+      const li=make("li",undefined,"evidence-card");
+      li.dataset.evidenceId=item.id;
+      li.dataset.holder=item.holder;
+      const icon=window.BirminghamCase002EvidenceArt.create(item.id);
+      icon.classList.add("evidence-symbol");
+      icon.setAttribute("aria-hidden","true");
+      const description=make("div",undefined,"evidence-description");
+      description.append(make("strong",evidenceName(item.id)));
+      description.append(make("span",place,"evidence-custody"));
+      const source=data.graph.nodes.find(node=>node.id===item.source);
+      if(source)description.append(make("small","Получено: "+source.title,"evidence-origin"));
+      else if(item.source==="legacy-save")description.append(
+        make("small","Перенесено из старого сохранения","evidence-origin"));
+      li.append(icon,description);
+      list.append(li);
+    }
+    root.append(list);
+    return;
+  }
  if(tab==="deductions")items=Object.entries(v.facts).map(([id,proved])=>(proved?"✓ ":"○ ")+proofLabels[id]);
  if(tab==="witnesses"){
     const contacts=window.BirminghamCase002Cast.discovered(v.state);
