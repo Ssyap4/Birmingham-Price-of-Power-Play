@@ -17,6 +17,23 @@
     Z04:"trainDeal",Z05:"trainSabotage",Z06:"trainControl",Z07:"trainDeath"
   };
   const ROUTES = {B04:"rail",B07:"canal",B10:"factory"};
+  // A branch is resolved only when its consequences have been committed at D10.
+  // Derive from the existing action history so previous v3 saves remain readable.
+  const WITNESS_BRANCH = {
+    "D03":"ada","HE02":"ada",
+    "D06":"tommy","HV02":"tommy",
+    "D09":"mercer","HF03":"mercer"
+  };
+  const WITNESS_ENTRANCES = {D02:"ada",D04:"tommy",D07:"mercer"};
+  const RAIL_ENTRANCES = {B02:"rail",B05:"canal",B08:"factory"};
+  function resolvedWitnessBranches(s) {
+    const resolved = new Set();
+    for (const entry of s.history) {
+      if (entry.to === "D10" && WITNESS_BRANCH[entry.from])
+        resolved.add(WITNESS_BRANCH[entry.from]);
+    }
+    return resolved;
+  }
   const EVIDENCE_BY_NODE = {
     A05:["old_excursion_ticket"],A06:["hale_coat"],A08:["guard_bootmark"],
     B03:["dispatch_manifest"],B05:["freight_chalk"],B06:["seal_scrap"],
@@ -230,14 +247,30 @@
       const permitted=ACTIONS[from+":"+to]||["continue"];
       ensure(permitted.includes(action),"Invalid action for this transition");
       const s=snapshot();
+      // No re-entering a completed investigation route to farm the same scene.
+      if(from==="B01" && RAIL_ENTRANCES[to])
+        ensure(!s.routes.includes(RAIL_ENTRANCES[to]),
+          "This investigation route was completed; consult collected evidence instead");
       if(to==="B11")ensure(s.routes.length>=2,"Inspect at least two independent routes");
-      if(to==="D03" && from==="D02"){
+      // Irreversible witness consequences: a finished interview cannot be replayed.
+      const witnessResolved=resolvedWitnessBranches(s);
+      if(from==="D01" && WITNESS_ENTRANCES[to])
+        ensure(!witnessResolved.has(WITNESS_ENTRANCES[to]),
+          "This witness storyline is closed; its consequences cannot be undone");
+      if(from==="D10" && to==="D01")
+        ensure(witnessResolved.size<3,"All witness storylines are closed; proceed to the next chapter");
+      if(to==="D03" && (from==="D02" || from==="HE02")){
+        ensure(s.witnesses.ada==="located",
+          "Ada is no longer available at the hideout");
         const proofs=factsFor(contract,s.evidence);
         ensure(proofs.provedWagonDiversion || s.evidence.includes("inspection_copy") ||
           s.evidence.includes("victim_register"),"Ada needs a credible independent clue");
       }
       if(to==="D11")ensure(["D03","D06","D09","HF03","HV02"].some(x=>s.visited.includes(x)),
         "Investigate at least one witness");
+      if(action==="betrayAda")
+        ensure(s.witnesses.ada==="located" || s.witnesses.ada==="protected",
+          "You cannot disclose a hideout you have not found");
       if(action==="hideAda")ensure(s.witnesses.ada==="located",
         "Ada cannot be hidden again after the hideout was compromised");
       if(action==="verifyTommyGuarantee")ensure(s.witnesses.tommy==="detained",
@@ -338,7 +371,8 @@
            unlocked:state.finished?state.ending===x.id:endingAllowed(state,x,contract)}))};
     }
     return {view,snapshot,choose,load,reset,flushCompletion,
-      facts:()=>factsFor(contract,state.evidence),availableChoices,
+      facts:()=>factsFor(contract,state.evidence),
+      resolvedWitnessBranches:()=>[...resolvedWitnessBranches(state)],availableChoices,
       storageKey:key,recordKey:RECORD_KEY,rewardKey:REWARD_KEY};
   }
 
