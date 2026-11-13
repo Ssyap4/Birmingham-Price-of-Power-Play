@@ -44,6 +44,8 @@ jobs:
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
         run: node tests/case002/consequences-v1.test.js
+      - name: Verify persistent decision journal and legacy save compatibility
+        run: node tests/case002/journal-v1.test.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
@@ -52,4 +54,5 @@ jobs:
           node --check src/case002/story-variants-v4.js
           node --check src/case002/scene-art-v1.js
           node --check src/case002/consequences-v1.js
+          node --check src/case002/journal-v1.js
           node --check preview/case002-prototype/app.js
