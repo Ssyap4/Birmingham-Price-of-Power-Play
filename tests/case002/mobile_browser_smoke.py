@@ -4,6 +4,8 @@ No 202 Case 001 scenarios. Runs both Chromium and WebKit at phone widths.
 """
 import contextlib
 import functools
+import json
+import subprocess
 import http.server
 from pathlib import Path
 import threading
@@ -72,6 +74,15 @@ def main():
                     assert "Томми Кросс" in page.locator("#toolContent").inner_text()
                     page.locator('button[data-tab="deductions"]').click()
                     assert "Подлог отправления" in page.locator("#toolContent").inner_text()
+                    page.locator('button[data-tab="journal"]').click()
+                    assert "Сцена A05" in page.locator("#toolContent").inner_text()
+                    assert "Старинный билет Курзон-стрит" in page.locator("#toolContent").inner_text()
+                    page.reload(wait_until="load")
+                    page.locator("#resume").click()
+                    page.locator('button[data-tab="journal"]').click()
+                    assert "Сцена A05" in page.locator("#toolContent").inner_text(), (
+                        "Chronicle entries must survive Safari/Chromium reloads"
+                    )
                     for width in (360, 390, 430):
                         page.set_viewport_size({"width": width, "height": 790})
                         overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1")
@@ -80,8 +91,55 @@ def main():
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
                     assert not failures, f"{browser_name} console errors: {failures}"
-                    print(f"PASS {browser_name}: 360/390/430px, touch targets, clue notice, save resume, inventory, deduced facts")
+                    print(f"PASS {browser_name}: 360/390/430px, touch targets, clue notice, saved journal, inventory, deductions")
                     context.close()
+                    if browser_name == "chromium":
+                        route_source = (
+                            "const m=require('./tests/case002/simulate-story-model-v2.js');"
+                            "console.log(JSON.stringify(m.goodRoute('jack','trainEscape').actionLog));"
+                        )
+                        output = subprocess.check_output(
+                            ["node", "-e", route_source], cwd=ROOT, text=True
+                        )
+                        route = json.loads(output.strip().splitlines()[-1])
+                        full_ctx = browser.new_context(
+                            viewport={"width": 390, "height": 844},
+                            device_scale_factor=3, is_mobile=True, has_touch=True
+                        )
+                        full_page = full_ctx.new_page()
+                        errors = []
+                        full_page.on("pageerror", lambda err: errors.append(str(err)))
+                        full_page.goto(address, wait_until="load")
+                        full_page.locator("#begin").click()
+                        for source, target, action in route[:-1]:
+                            assert full_page.locator("#sceneId").inner_text().startswith(source), (
+                                f"Full mobile route drifted at {source} -> {target}"
+                            )
+                            choice = full_page.locator(
+                                f'button.choice[data-to="{target}"][data-action="{action}"]'
+                            )
+                            assert choice.count() == 1 and choice.is_enabled(), (
+                                f"Missing enabled choice {source} -> {target}/{action}"
+                            )
+                            choice.click()
+                        assert full_page.locator("#sceneId").inner_text().startswith("F09")
+                        final_choices = full_page.locator("button.choice")
+                        assert final_choices.count() == 1, (
+                            "Unqualified endings were exposed as disabled plot spoilers"
+                        )
+                        assert final_choices.first.get_attribute("data-to") == "Z02"
+                        full_page.locator('button[data-tab="journal"]').click()
+                        assert full_page.locator(".case-journal > li").count() > 0
+                        full_page.reload(wait_until="load")
+                        full_page.locator("#resume").click()
+                        assert full_page.locator("#sceneId").inner_text().startswith("F09")
+                        assert full_page.locator("button.choice").count() == 1
+                        assert not errors, f"Full-route browser errors: {errors}"
+                        print(
+                            "PASS chromium: full Case 002 mobile route, earned-only endings, "
+                            "saved story consequences and restoration"
+                        )
+                        full_ctx.close()
                 finally:
                     browser.close()
     finally:
