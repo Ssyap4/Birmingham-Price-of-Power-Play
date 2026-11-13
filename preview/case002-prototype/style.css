@@ -136,3 +136,12 @@
  font:italic .89rem/1.5 Georgia,serif;max-width:440px}
 @media(max-width:359px){.chapter-intertitle{padding:15px 11px}
  .chapter-intertitle-name{letter-spacing:.055em}}
+
+/* An approved mobile crop has its OWN file; never stretch a 16:9 scene
+   into a 9:16 portrait. Without a reviewed crop, keep the original ratio. */
+.scene-artwork picture{display:block;width:100%;height:100%}
+@media(max-width:680px){
+ .scene-artwork[data-portrait="true"]{aspect-ratio:4/5}
+ .scene-artwork[data-portrait="true"] img{aspect-ratio:4/5;
+   width:100%;height:100%;object-fit:cover;object-position:center}
+}
