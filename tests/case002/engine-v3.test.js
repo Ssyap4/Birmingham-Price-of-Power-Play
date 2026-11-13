@@ -143,6 +143,30 @@ for(const hero of contract.heroes){
  assert.throws(()=>game.choose("D01"),/All witness storylines are closed/);
  assert(game.availableChoices().find(x=>x.to==="D11").enabled);
 }
+// Retreat without Ada's papers is not a hard-lock and does not mean rescue.
+// If Mercer later gives away her known hideout, the seizure is atomic.
+{
+ const game=engine("jack");
+ const route=goodRoute("jack","trainEscape").actionLog;
+ for(const [from,to,action] of route){
+   if(from==="D01" && to==="D07")break;
+   game.choose(to,action);
+ }
+ assert.equal(game.snapshot().node,"D01");
+ game.choose("D02");
+ const withdraw=game.availableChoices().find(x=>x.to==="D10"&&x.action==="withdrawAda");
+ assert(withdraw.enabled,"must be able to leave without her statement");
+ game.choose("D10","withdrawAda");
+ assert.equal(game.snapshot().witnesses.ada,"located");
+ assert(game.resolvedWitnessBranches().includes("ada"));
+ game.choose("D01");game.choose("D07");game.choose("D08");game.choose("D09");
+ game.choose("D10","betrayAda");
+ assert.equal(game.snapshot().witnesses.ada,"detained");
+ assert.equal(game.snapshot().flags.adaHideoutCompromised,true);
+ assert.equal(game.snapshot().flags.mercerBetrayed,true);
+ game.choose("D01");
+ assert.equal(game.availableChoices().find(x=>x.to==="D02").enabled,false);
+}
 // No betrayal of a witness whose hiding place was never discovered.
 {
  const game=engine("jack");
