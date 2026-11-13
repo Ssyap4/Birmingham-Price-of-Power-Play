@@ -78,3 +78,40 @@
  to{opacity:1;transform:translateY(0)}
 }
 @media(prefers-reduced-motion:reduce){.story{animation:none}}
+
+/* Case 002 mobile command deck: the player never has to scroll the whole
+   chapter just to reach clues, deductions, witnesses or a pending decision. */
+#game{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+.case-pulse{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.case-pulse span{border:1px solid #71563a;background:#221911;color:#e4c294;
+ border-radius:999px;padding:6px 9px;font:600 .7rem system-ui,sans-serif;white-space:nowrap}
+#storyPanel,#choicesPanel,#caseTools{scroll-margin-top:14px}
+.case-quick-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+ z-index:10;width:min(100%,640px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:3px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
+ background:linear-gradient(0deg,#17110d,#302317);border:1px solid #8f693c;
+ border-bottom:0;border-radius:12px 12px 0 0;box-shadow:0 -8px 30px #000b}
+.case-quick-nav button{min-width:0;min-height:48px;padding:9px 2px;border:1px solid #6c5032;
+ background:#282017;color:#f0d5a8;white-space:nowrap;font:700 clamp(.58rem,2.1vw,.74rem) system-ui,sans-serif;
+ letter-spacing:.012em;touch-action:manipulation}
+.case-quick-nav button:active{background:#8b693b;color:#16120c}
+.case-quick-nav button:focus-visible{outline-offset:-2px}
+.notice{position:fixed;top:auto;left:50%;bottom:calc(78px + env(safe-area-inset-bottom,0px));
+ transform:translateX(-50%);z-index:12;width:min(calc(100% - 28px),612px);
+ max-height:min(42dvh,320px);overflow-y:auto;overscroll-behavior:contain;
+ padding:12px 14px;background:linear-gradient(145deg,#44301f,#241a12);
+ border:1px solid #ddb477;box-shadow:0 10px 40px #000d;
+ border-radius:9px;color:#fff0db}
+.notice[hidden]{display:none}
+.notice-kicker{font:700 .65rem system-ui,sans-serif;letter-spacing:.12em;color:#f0bf78;margin-bottom:6px}
+.notice-content{font:.88rem/1.42 system-ui,sans-serif;overflow-wrap:anywhere}
+.notice-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:10px}
+.notice-actions button{min-height:44px;padding:9px 13px;font:700 .73rem system-ui,sans-serif}
+.notice-actions .notice-close{background:#201913;color:#e0c49b;border-color:#8c6b44}
+.notice-actions .notice-open{background:#8a6436;color:#fff3de;border-color:#d5ad6e}
+@media(max-width:359px){.case-quick-nav{gap:2px;padding-inline:4px}
+ .case-quick-nav button{font-size:.59rem;letter-spacing:0;padding-inline:1px}
+ .notice-actions button{flex:1}}
+@media(prefers-reduced-motion:reduce){
+ .case-quick-nav button,.notice{animation:none!important;transition:none!important}
+}
