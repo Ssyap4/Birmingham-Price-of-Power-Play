@@ -68,7 +68,7 @@ const actionLabels={
  "E09:E10:continue":"Продолжить без посредника",
  "E11:F01:continue":"Идти к финалу без плана эвакуации"
 };
-let store=null,engine=null,tab="evidence",priorRecords=[];
+let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -101,7 +101,7 @@ function init(){
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
  $("backToLaunch").addEventListener("click",()=>{$("game").hidden=true;$("launch").hidden=false;window.scrollTo(0,0);});
- for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{tab=button.dataset.tab;renderTools();});
+ for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{tab=button.dataset.tab;evidenceFocus=null;renderTools();});
  $("hero").addEventListener("change",refreshResume);
  refreshResume();
 }
@@ -306,6 +306,43 @@ function render(){
 function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
+ if(tab==="deductions"){
+   const leads=window.BirminghamCase002DeductionBoard.board(data.contract,v.state.evidence);
+   if(!leads.length){
+     root.append(make("p","Пока нет подтверждённых выводов или зацепок. Продолжайте искать доказательства.","empty"));
+     return;
+   }
+   const listing=make("div",undefined,"deduction-gallery");
+   for(const lead of leads){
+     const card=make("article",undefined,"deduction-card"+(lead.verified?" is-proven":" is-lead"));
+     card.dataset.deductionId=lead.id;
+     card.dataset.verified=String(lead.verified);
+     const status=make("span",lead.status,"deduction-status");
+     card.append(status,make("h4",lead.title),make("p",lead.explanation,"deduction-explanation"));
+     const caption=make("span",lead.verified?"Подтверждающие материалы":"Обнаруженная зацепка","deduction-caption");
+     card.append(caption);
+     const sources=make("div",undefined,"deduction-sources");
+     for(const id of lead.relatedEvidence){
+       const btn=make("button",evidenceName(id),"deduction-source");
+       btn.type="button";
+       btn.dataset.evidenceId=id;
+       btn.setAttribute("aria-label","Открыть улику: "+evidenceName(id));
+       btn.addEventListener("click",()=>{
+         tab="evidence";evidenceFocus=id;renderTools();
+         const evidenceCard=[...root.querySelectorAll(".evidence-card")]
+           .find(row=>row.dataset.evidenceId===id);
+         if(evidenceCard){
+           evidenceCard.tabIndex=-1;
+           evidenceCard.focus({preventScroll:true});
+           evidenceCard.scrollIntoView({block:"center",behavior:"auto"});
+         }
+       });
+       sources.append(btn);
+     }
+     card.append(sources);listing.append(card);
+   }
+   root.append(listing);return;
+ }
  if(tab==="journal"){
    const entries=window.BirminghamCase002Journal.entries(v.state,evidenceName);
    if(!entries.length){
@@ -339,6 +376,7 @@ function renderTools(){
       const li=make("li",undefined,"evidence-card");
       li.dataset.evidenceId=item.id;
       li.dataset.holder=item.holder;
+      if(item.id===evidenceFocus)li.classList.add("is-focused");
       const icon=window.BirminghamCase002EvidenceArt.create(item.id);
       icon.classList.add("evidence-symbol");
       icon.setAttribute("aria-hidden","true");
@@ -355,7 +393,7 @@ function renderTools(){
     root.append(list);
     return;
   }
- if(tab==="deductions")items=Object.entries(v.facts).map(([id,proved])=>(proved?"✓ ":"○ ")+proofLabels[id]);
+
  if(tab==="witnesses"){
     const contacts=window.BirminghamCase002Cast.discovered(v.state);
     const hd=make("p","Обнаруженные персонажи","people-heading");
