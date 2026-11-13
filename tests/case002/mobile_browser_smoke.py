@@ -48,6 +48,16 @@ def main():
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
+                    assert page.locator("#quickNav button").count() == 5
+                    assert page.locator("#pulseEvidence").inner_text() == "Улик: 0"
+                    assert page.locator("#pulseProof").inner_text() == "Выводов: 0"
+                    page.locator('#quickNav button[data-go="choices"]').click()
+                    assert page.locator("#choicesPanel").is_visible()
+                    assert page.locator("#sceneId").inner_text().startswith("P01"), (
+                        "Quick navigation must not advance the story"
+                    )
+                    page.locator('#quickNav button[data-go="scene"]').click()
+                    assert page.locator("#storyPanel").is_visible()
                     assert page.locator("#heroPortrait").is_visible()
                     assert page.locator("#heroPortrait").get_attribute("alt").startswith(
                         "Портрет сыщика:"
@@ -103,7 +113,19 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A05")
                     assert page.locator("#game").get_attribute("data-art-scene") == "A05"
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
+                    assert page.locator("#noticeJump").is_visible()
+                    assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
+                    assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
                     assert page.locator("#toolContent li").count() >= 1
+                    page.locator("#noticeJump").click()
+                    assert page.locator("#notice").is_hidden()
+                    assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
+                    assert page.locator(
+                        '.evidence-card[data-evidence-id="old_excursion_ticket"]'
+                    ).evaluate("(el) => document.activeElement === el"), (
+                        "New evidence must receive keyboard focus after jumping from notice"
+                    )
+                    assert page.locator("#sceneId").inner_text().startswith("A05")
                     assert "сведения в досье" in page.locator("#toolContent").inner_text().lower(), (
                         "clue must show recorded-not-original custody on iPhone"
                     )
@@ -115,7 +137,8 @@ def main():
                     assert "Кирпичный виадук" not in ticket.inner_text(), (
                         "Evidence origin must come from actual acquired source"
                     )
-                    page.locator('button[data-tab="witnesses"]').click()
+                    page.locator('#quickNav button[data-go="witnesses"]').click()
+                    assert page.locator('button[data-tab="witnesses"]').get_attribute("aria-pressed") == "true"
                     people = page.locator("#toolContent").inner_text()
                     assert "Мэйбл Кросс" in people
                     assert "Констебль Роуэн" in people
@@ -143,6 +166,13 @@ def main():
                     )
                     for width in (360, 390, 430):
                         page.set_viewport_size({"width": width, "height": 790})
+                        nav = page.locator("#quickNav").bounding_box()
+                        assert nav and nav["width"] <= width + 1
+                        assert nav["y"] + nav["height"] <= 791, (
+                            f"{browser_name}: bottom navigation escapes phone viewport"
+                        )
+                        for navbutton in page.locator("#quickNav button").all():
+                            assert navbutton.bounding_box()["height"] >= 44
                         overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1")
                         assert not overflow, f"{browser_name}: horizontal overflow at {width}"
                         icons = page.locator(".evidence-card svg.evidence-symbol")
