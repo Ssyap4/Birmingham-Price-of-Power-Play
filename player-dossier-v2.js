@@ -122,6 +122,7 @@ function open(){
 }
 window.BirminghamProfileV2={open,render,model};
 $('profileBtn')?.addEventListener('click',e=>{e.preventDefault();open()});
+$('cabinetPlayerDossier')?.addEventListener('click',e=>{e.preventDefault();open()});
 const observer=new MutationObserver(()=>{if(!PROFILE.hidden)render()});observer.observe(PROFILE,{attributes:true,attributeFilter:['hidden']});
 create();
 })();
