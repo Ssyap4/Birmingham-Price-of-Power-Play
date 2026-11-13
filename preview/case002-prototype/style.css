@@ -3,3 +3,15 @@
 .scene-heading{display:flex;align-items:center;gap:14px;margin-bottom:16px;min-height:100px}.scene-heading-title{min-width:0;flex:1}.scene-heading h2{margin:7px 0 8px}.hero-portrait{width:80px;height:100px;flex-shrink:0;object-fit:cover;object-position:center 25%;border-radius:7px;border:1px solid #8e6c40;background:#0f0b09;box-shadow:0 4px 17px #0008}.hero-portrait[hidden]{display:none}.portrait-label{color:#cba678;letter-spacing:.12em;font:600 .63rem system-ui,sans-serif}.hero-name{color:#cab497;font:.79rem system-ui,sans-serif}@media(max-width:360px){.scene-heading{gap:10px}.hero-portrait{width:68px;height:88px}.scene-heading h2{font-size:1.25rem}}
 /* NPC dossier cards: monograms deliberately replace missing, unapproved art. */
 .people-heading{font:700 .75rem system-ui,sans-serif;letter-spacing:.08em;color:var(--gold);margin:0 0 13px}.person-entry{display:flex;align-items:center;gap:12px;padding:12px 1px;border-bottom:1px solid #56412e}.person-entry:last-child{border-bottom:0}.person-monogram{display:grid;place-items:center;border:1px solid #85663f;background:linear-gradient(145deg,#443320,#16100e);width:44px;height:50px;flex-shrink:0;border-radius:6px;color:#e2be87;font:600 1rem Georgia,serif}.person-copy{min-width:0;display:flex;flex-direction:column;gap:4px}.person-copy strong{font-size:.99rem;color:#efddc4}.person-role,.person-status{font:.78rem system-ui,sans-serif;color:#c5ac8c}.person-status{color:#ebc88f}
+
+/* Case 002 draft dialogue speaker slots: show only discovered, physically
+   present people. Monograms are deliberate until original NPC art exists. */
+.scene-cast{display:flex;flex-wrap:wrap;gap:9px;padding:12px 0 16px;margin:0 0 15px;border-bottom:1px solid #655035}
+.scene-cast[hidden]{display:none}
+.scene-participant{display:flex;gap:10px;align-items:center;min-width:0;flex:1 1 180px;max-width:100%;padding:8px 10px;background:#191510;border:1px solid #594329;border-radius:7px}
+.scene-participant-monogram{display:grid;place-items:center;flex:0 0 46px;width:46px;height:52px;border-radius:5px;background:linear-gradient(145deg,#4c3825,#1c1611);border:1px solid #856540;color:#e9c792;font:700 1.03rem Georgia,serif}
+.scene-participant-description{display:flex;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere}
+.scene-participant-description strong{color:#f0d3a5;font:.96rem Georgia,serif}
+.scene-participant-role,.scene-participant-status{color:#c8af8d;font:.75rem system-ui,sans-serif;line-height:1.35}
+.scene-participant-status{color:#e5c18a}
+@media(max-width:360px){.scene-cast{gap:7px;padding:10px 0}.scene-participant{flex-basis:100%}}
