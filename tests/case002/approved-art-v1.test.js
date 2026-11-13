@@ -52,6 +52,14 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
    check(e.view());
  }
 }
+// Golden routes do not visit every optional node (A04 is one such example).
+// Validate the art gate against ALL 89 storyboard nodes as well, without
+// changing the engine or requiring 400 complete campaign permutations.
+for(const node of graph.nodes){
+ const e=createEngine({graph,contract,hero:node.hero||"jack",
+   attemptId:"art-gate-node-"+node.id});
+ check({...e.view(),scene:node});
+}
 const sampleStage=director.select(storyboard,createEngine({
  graph,contract,hero:"jack",attemptId:"art-gate-fixture"}).view());
 const file=sampleStage.desiredAsset;
