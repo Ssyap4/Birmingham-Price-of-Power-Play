@@ -1,5 +1,14 @@
 # CHANGELOG.md — история разработки «Бирмингем: Цена власти»
 
+## 2026-11-14 — Case 002, portrait-only artwork and actor-neutral scenes
+
+- Author-approved policy: no new horizontal illustrations; all future scene artwork is **portrait only**, optimized for phone and Telegram Mini App. Previously approved images remain intact.
+- Scene resolver, binary art audit and mobile renderer now support genuine `mobileOnly:true` registrations without phantom desktop images; UI and art tests protect the new mode.
+- Shared cutscenes are not allowed to depict one specific selectable male/female protagonist; independent NPCs and props remain allowed. The B05 mobile artwork needs no replacement.
+- Future artwork is reviewed and uploaded in **complete batches**. B06 candidate exists only locally; two mistaken repeats of the canal for B07 were rejected, no new artwork uploaded in this policy update.
+- No Case 001 edits, no changes to stable `main`, no 400-route logic suite (presentation/manifest-only modifications).
+
+
 
 ## 2026-11-14 — Case 002, художественная волна 13: B05 «Шлюз Дигбета»
 
