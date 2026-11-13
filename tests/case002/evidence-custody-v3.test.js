@@ -30,7 +30,7 @@ let assertions=0;
 // Giving the only verified Brackett accounts copy to workers retains knowledge
 // of the criminal network but removes the physical leverage for a power ending.
 {
- const g=engine("jack",store());
+ const storage=store(),g=engine("jack",storage);
  for(const [from,to,action] of goodRoute("jack","trainControl").actionLog){
   if(from==="E09"&&to==="E10")break;
   assert.equal(g.snapshot().node,from);
@@ -55,11 +55,12 @@ let assertions=0;
  assert.throws(()=>g.choose("Z06"),/Ending requirements/);
  g.choose("Z02");
  assert.equal(g.snapshot().ending,"trainEscape");
- const records=JSON.parse(g.view().state.finished?g.flushCompletion()&&g.snapshot()&&
-    // Archive checked separately below, to avoid claiming a public reward.
-    JSON.stringify([]):"[]");
- assert(Array.isArray(records));
- assertions+=13;
+ const records=JSON.parse(storage.getItem(g.recordKey));
+ assert.equal(records.length,1);
+ assert.equal(records[0].evidenceLedger.brackett_accounts.holder,"workers");
+ assert.equal(JSON.parse(storage.getItem(g.rewardKey)).length,1,
+   "The draft-only ending index remains separate from public rewards");
+ assertions+=15;
 }
 // Legacy draft v3 saves had evidence IDs but not a custody ledger.
 // The read migration reconstructs conservative records without touching Case 001.
