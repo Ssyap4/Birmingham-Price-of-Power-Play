@@ -38,7 +38,9 @@
       "chapter": "I",
       "title": "Два следа",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Два адреса на столе: мост и дом Мэйбл; рука героя над дорогой картой",
       "asset": "case002-a01-scene.webp",
       "stateVariants": [],
@@ -133,7 +135,9 @@
       "chapter": "I",
       "title": "Оттиск у моста",
       "location": "bridge-viaduct",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Макрослед повреждённой подошвы на мокром камне рядом со слепком",
       "asset": "case002-a08-scene.webp",
       "stateVariants": [],
@@ -144,7 +148,9 @@
       "chapter": "I",
       "title": "Архивная заметка",
       "location": "archive-room",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Газетная вырезка под латунной лупой и на обороте билета карандашный знак",
       "asset": "case002-a09-scene.webp",
       "stateVariants": [],
@@ -169,7 +175,9 @@
       "chapter": "II",
       "title": "Карта интересов",
       "location": "map-table",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Три бумажные карты и восковые печати: железная дорога, канал, завод, без текста поверх",
       "asset": "case002-b01-scene.webp",
       "stateVariants": [],
@@ -194,7 +202,9 @@
       "chapter": "II",
       "title": "Первая запись",
       "location": "freight-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Рука в перчатке раскрывает подлинную запись F-4182 и ложные запасные части",
       "asset": "case002-b03-scene.webp",
       "stateVariants": [],
@@ -205,7 +215,9 @@
       "chapter": "II",
       "title": "Замятый угол",
       "location": "freight-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Косой свет на продавленный оттиск другой бумаги на обороте ведомости",
       "asset": "case002-b04-scene.webp",
       "stateVariants": [],
@@ -230,7 +242,9 @@
       "chapter": "II",
       "title": "Шины в грязи",
       "location": "canal-lock",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Обломок пломбы у двойного следа телеги в грязи, след крупным планом",
       "asset": "case002-b06-scene.webp",
       "stateVariants": [],
@@ -241,7 +255,9 @@
       "chapter": "II",
       "title": "Котельная",
       "location": "old-boiler-house",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Пустая котельная, женская мокрая перчатка и жестянка чая, никого не видно",
       "asset": "case002-b07-scene.webp",
       "stateVariants": [],
@@ -280,7 +296,9 @@
       "chapter": "II",
       "title": "Акт Мерсера",
       "location": "factory-records",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Заводской акт Мерсера с изменённой строкой о клапане, масляная лампа",
       "asset": "case002-b10-scene.webp",
       "stateVariants": [],
@@ -291,7 +309,9 @@
       "chapter": "II",
       "title": "Два оттиска",
       "location": "map-table",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Две ведомости с разными оттисками на столе, третий пустой лист для времени",
       "asset": "case002-b11-scene.webp",
       "stateVariants": [],
@@ -316,7 +336,9 @@
       "chapter": "II",
       "title": "Платёж охране",
       "location": "freight-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Счёт охраны среди грузовых распоряжений, тень чужой руки у двери",
       "asset": "case002-b13-scene.webp",
       "stateVariants": [],
@@ -327,7 +349,9 @@
       "chapter": "II",
       "title": "Право на вопрос",
       "location": "freight-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Незаполненная временная шкала и стрелочный пункт за запотевшим окном",
       "asset": "case002-b14-scene.webp",
       "stateVariants": [],
@@ -394,7 +418,9 @@
       "chapter": "III",
       "title": "Вторая ложь",
       "location": "arrival-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Поддельная строка прибытия и отличающийся штамп охраны, взгляд по диагонали",
       "asset": "case002-c05-scene.webp",
       "stateVariants": [],
@@ -447,7 +473,9 @@
       "chapter": "III",
       "title": "След грузовика",
       "location": "private-siding",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "След грузовика у заброшенной ветки; три расходящиеся дорожки в грязи",
       "asset": "case002-c09-scene.webp",
       "stateVariants": [],
@@ -458,7 +486,9 @@
       "chapter": "III",
       "title": "Не исчезнувший поезд",
       "location": "map-table",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Состав и один отцепленный вагон на схеме из вырезок, вывод без портрета злодея",
       "asset": "case002-c10-scene.webp",
       "stateVariants": [],
@@ -469,7 +499,9 @@
       "chapter": "IV",
       "title": "Три разных страха",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Три карточки с именами свидетелей; карты котельной, завода и пансиона",
       "asset": "case002-d01-scene.webp",
       "stateVariants": [
@@ -605,7 +637,9 @@
       "chapter": "IV",
       "title": "Кто защищён",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Три карточки статусов свидетелей на пробковой доске, метки должны быть динамическими",
       "asset": "case002-d10-scene.webp",
       "stateVariants": [
@@ -638,7 +672,9 @@
       "chapter": "V",
       "title": "Три предложения",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Три конверта и потухший чай на столе; разные пути решения",
       "asset": "case002-e01-scene.webp",
       "stateVariants": [],
@@ -774,7 +810,9 @@
       "chapter": "V",
       "title": "Промежуточный отчёт",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Промежуточный отчёт, оригиналы/копии и статусы свидетелей без выдуманных наград",
       "asset": "case002-e10-scene.webp",
       "stateVariants": [
@@ -802,7 +840,9 @@
       "chapter": "VI",
       "title": "F-4182",
       "location": "map-table",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Один вагон F-4182 на схеме трёх мест; символы маршрутных отметок",
       "asset": "case002-f01-scene.webp",
       "stateVariants": [],
@@ -813,7 +853,9 @@
       "chapter": "VI",
       "title": "Два подлога",
       "location": "map-table",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Два разных почерка и печати на соседних ведомостях, не один общий подлог",
       "asset": "case002-f02-scene.webp",
       "stateVariants": [
@@ -843,7 +885,9 @@
       "chapter": "VI",
       "title": "Шесть имён",
       "location": "factory-records",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Две фамилии официального акта против шести имён на журнале, сухое освещение",
       "asset": "case002-f04-scene.webp",
       "stateVariants": [
@@ -856,7 +900,9 @@
       "chapter": "VI",
       "title": "Судьбы",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Три карточки Ады Томми Мерсера и их реальные статусы; без портретов всех вместе",
       "asset": "case002-f05-scene.webp",
       "stateVariants": [
@@ -871,7 +917,9 @@
       "chapter": "VI",
       "title": "Угроза",
       "location": "private-siding",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Узкий опасный проход и безопасный обход, свет на гильзе без крови",
       "asset": "case002-f06-scene.webp",
       "stateVariants": [],
@@ -913,7 +961,9 @@
       "chapter": "VI",
       "title": "Цена власти",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Только открытые по логике исходы как предметы на столе, не все семь иконок",
       "asset": "case002-f09-scene.webp",
       "stateVariants": [
@@ -1151,7 +1201,9 @@
       "chapter": "END",
       "title": "Люди без прошлого",
       "location": "railway-platform",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "При 0 вывезенных пустая платформа; при 1–3 только действительно эвакуированные",
       "asset": "case002-z02-scene.webp",
       "stateVariants": [
@@ -1220,7 +1272,9 @@
       "chapter": "END",
       "title": "Хозяин маршрутов",
       "location": "detective-office",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Копии счетов физически у героя и темнота за дверью, нет газеты и суда",
       "asset": "case002-z06-scene.webp",
       "stateVariants": [
@@ -1236,7 +1290,9 @@
       "chapter": "END",
       "title": "Последний рейс",
       "location": "canal-lock",
-      "cast": "hero",
+      "cast": [
+        "hero"
+      ],
       "shot": "Потухший фонарь и закрытый футляр записок у шлюза; без гламуризации смерти",
       "asset": "case002-z07-scene.webp",
       "stateVariants": [
