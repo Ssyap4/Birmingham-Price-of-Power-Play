@@ -40,6 +40,8 @@ jobs:
         run: node tests/case002/story-variants-v4.test.js
       - name: Validate 89 future visual briefs against canonical scenes and story flags
         run: node tests/case002/validate-storyboard-v1.js
+      - name: Verify reused approved hero portraits are real existing WebP files
+        run: node tests/case002/approved-hero-portraits.test.js
       - name: Verify state-dependent illustration selection
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
