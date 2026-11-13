@@ -1,4 +1,4 @@
-name: Case 002 story logic (draft only)
+name: Case 002 scoped quality checks (draft only)
 on:
   push:
     branches: [feat/case002-story-bible-v1]
@@ -14,64 +14,69 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: case002-story-qa-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  story-contract:
+  case002-scoped:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
-      - name: Validate Case 002 evidence and ending predicates
-        run: node tests/case002/validate-contract.js
-      - name: Validate chapter graph and hero routes
-        run: node tests/case002/validate-beat-graph.js
-      - name: Simulate 35 nontrivial ending paths through draft graph
-        run: node tests/case002/simulate-story-model-v2.js
-      - name: Check Case 001 → 002 canon and reward compatibility
-        run: node tests/case002/validate-canon-v2.js
-      - name: Exercise implemented Case 002 draft engine and persistence
-        run: node tests/case002/engine-v3.test.js
-      - name: Verify all 15 specialist story detours
-        run: node tests/case002/hero-v3.test.js
-      - name: Explore 400 seeded playthroughs, locked branches and saved-state reloads
-        run: node tests/case002/explore-v3.test.js
-      - name: Verify evidence source/custody, irreversible transfer and legacy saves
-        run: node tests/case002/evidence-custody-v3.test.js
-      - name: Validate dynamic narrative and 35 state-sensitive epilogues
-        run: node tests/case002/story-variants-v4.test.js
-      - name: Validate 89 future visual briefs against canonical scenes and story flags
-        run: node tests/case002/validate-storyboard-v1.js
-      - name: Verify reused approved hero portraits are real existing WebP files
-        run: node tests/case002/approved-hero-portraits.test.js
-      - name: Prevent pre-introduction character spoilers and future phantom portraits
-        run: node tests/case002/cast-registry-v1.test.js
-      - name: Guard correct Cross surname and visually distinct Mabel/Ada identity briefs
-        run: node tests/case002/identity-and-portrait-brief-v1.test.js
-      - name: Validate dialogue speaker presence and spoiler-free portraits in all story states
-        run: node tests/case002/scene-cast-v1.test.js
-      - name: Refuse unapproved or mismatched scene and NPC illustrations
-        run: node tests/case002/approved-art-v1.test.js
-      - name: Verify original visual icons for all 26 tracked evidence types
-        run: node tests/case002/evidence-icons-v1.test.js
-      - name: Verify six spoiler-safe deductions and only earned proof chains
-        run: node tests/case002/deduction-board-v1.test.js
-      - name: Verify state-dependent illustration selection
-        run: node tests/case002/scene-art-v1.test.js
-      - name: Verify honest notifications for decisions and consequences
-        run: node tests/case002/consequences-v1.test.js
-      - name: Verify persistent decision journal and legacy save compatibility
-        run: node tests/case002/journal-v1.test.js
-      - name: Check offline scene bundle and mobile-preview JavaScript syntax
+        with:
+          fetch-depth: 0
+      - name: Choose checks based on actual changed files
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: node tools/case002/ci-scope-v1.js --github-output
+      - name: Validate the scope selector (including fail-closed behavior)
+        run: node tests/case002/ci-scope-v1.test.js
+      - name: Syntax-check all small modules and browser entrypoint
         run: |
-          node tools/case002/build-browser-data.js --check
-          node --check src/case002/browser-data-v3.js
-          node --check src/case002/engine-v3.js
-          node --check src/case002/story-variants-v4.js
-          node --check src/case002/scene-art-v1.js
-          node --check src/case002/cast-registry-v1.js
-          node --check src/case002/scene-cast-v1.js
-          node --check src/case002/approved-art-v1.js
-          node --check src/case002/evidence-icons-v1.js
-          node --check src/case002/deduction-board-v1.js
-          node --check src/case002/consequences-v1.js
-          node --check src/case002/journal-v1.js
-          node --check preview/case002-prototype/app.js
+          node --check tools/case002/ci-scope-v1.js
+          for src in src/case002/*.js preview/case002-prototype/app.js; do node --check "$src"; done
+      - name: Verify offline scene bundle only when its sources may have changed
+        if: steps.scope.outputs.run_bundle == 'true'
+        run: node tools/case002/build-browser-data.js --check
+      - name: Deep contract, transitions, persistence and 400 seeded routes
+        if: steps.scope.outputs.run_full == 'true'
+        run: |
+          node tests/case002/validate-contract.js
+          node tests/case002/validate-beat-graph.js
+          node tests/case002/simulate-story-model-v2.js
+          node tests/case002/validate-canon-v2.js
+          node tests/case002/engine-v3.test.js
+          node tests/case002/hero-v3.test.js
+          node tests/case002/explore-v3.test.js
+          node tests/case002/evidence-custody-v3.test.js
+      - name: Targeted narrative variants and 35 epilogues
+        if: steps.scope.outputs.run_story == 'true'
+        run: node tests/case002/story-variants-v4.test.js
+      - name: Targeted visual story, cast, approved assets and state-specific shots
+        if: steps.scope.outputs.run_art == 'true'
+        run: |
+          node tests/case002/validate-storyboard-v1.js
+          node tests/case002/cast-registry-v1.test.js
+          node tests/case002/identity-and-portrait-brief-v1.test.js
+          node tests/case002/scene-cast-v1.test.js
+          node tests/case002/approved-art-v1.test.js
+          node tests/case002/scene-art-v1.test.js
+      - name: Targeted evidence icon and deduction integrity
+        if: steps.scope.outputs.run_evidence == 'true'
+        run: |
+          node tests/case002/evidence-icons-v1.test.js
+          node tests/case002/deduction-board-v1.test.js
+      - name: Targeted decision notifications and historical journal
+        if: steps.scope.outputs.run_reporting == 'true'
+        run: |
+          node tests/case002/consequences-v1.test.js
+          node tests/case002/journal-v1.test.js
+      - name: Targeted mobile UI assets and cinematic dialogue fidelity
+        if: steps.scope.outputs.run_ui == 'true'
+        run: |
+          node tests/case002/approved-hero-portraits.test.js
+          node tests/case002/scene-prose-v1.test.js
