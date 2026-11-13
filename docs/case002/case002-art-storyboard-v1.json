@@ -1,0 +1,1250 @@
+{
+  "status": "STORYBOARD_ONLY_NO_IMAGES_YET",
+  "caseId": "002",
+  "v": 1,
+  "imageStyle": "Original 1920 Birmingham industrial noir, cinematic sepia-gold, restrained smoke and fog, natural period costume, no copyrighted series likenesses; same visual language as approved Case 001. Do not typeset dialogue inside images.",
+  "portraitStyle": "Distinct anatomically consistent original faces for 5 player heroes + major witnesses and antagonists; strict identity sheet before scene rendering.",
+  "layout": "mobile-first, subject within central 60 percent, center-safe for vertical 9:16 crop, keep lower dialogue panel free of essential narrative detail; export optimized WebP from high-res master",
+  "sceneAssets": [
+    {
+      "id": "P01",
+      "chapter": "P",
+      "title": "Ночной тормоз",
+      "location": "private-siding",
+      "cast": [
+        "hale",
+        "unidentified-guard"
+      ],
+      "shot": "Один фонарь на мокрой шпале; расцепленный F-4182 скользит в туман; убийца неузнаваем",
+      "asset": "case002-p01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "P02",
+      "chapter": "P",
+      "title": "Гостья под дождём",
+      "location": "detective-office",
+      "cast": [
+        "mabel"
+      ],
+      "shot": "Мэйбл в мокром сером пальто держит сложенную ведомость у двери; герой в полутьме",
+      "asset": "case002-p02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A01",
+      "chapter": "I",
+      "title": "Два следа",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Два адреса на столе: мост и дом Мэйбл; рука героя над дорогой картой",
+      "asset": "case002-a01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A02",
+      "chapter": "I",
+      "title": "Время Мэйбл",
+      "location": "detective-office",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "shot": "Неловкое молчание Мэйбл, блики складских часов в окне; лицо не в лоб",
+      "asset": "case002-a02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A03",
+      "chapter": "I",
+      "title": "Виадук",
+      "location": "bridge-viaduct",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "shot": "Свежие следы волочения у кирпичной арки, констебль светит фонарём вниз",
+      "asset": "case002-a03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A04",
+      "chapter": "I",
+      "title": "Строка в журнале",
+      "location": "freight-office",
+      "cast": [
+        "hero",
+        "clerk"
+      ],
+      "shot": "Косой взгляд на лист с подписью Мэйбл и пустой графой сопровождения",
+      "asset": "case002-a04-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A05",
+      "chapter": "I",
+      "title": "Билет на мертвеца",
+      "location": "bridge-viaduct",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "shot": "Полицейский пакет с потёртым старым билетом Curzon Street; чёткая предметная композиция",
+      "asset": "case002-a05-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A06",
+      "chapter": "I",
+      "title": "Полицейская версия",
+      "location": "police-desk",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "shot": "Участковый стол и незаполненный протокол, силуэт героя против мутного стекла",
+      "asset": "case002-a06-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A07",
+      "chapter": "I",
+      "title": "Старая касса",
+      "location": "old-ticket-counter",
+      "cast": [
+        "retired-clerk",
+        "hero"
+      ],
+      "shot": "Старый кассир открывает альбом пассажирских билетов конца XIX века, пыль в луче",
+      "asset": "case002-a07-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A08",
+      "chapter": "I",
+      "title": "Оттиск у моста",
+      "location": "bridge-viaduct",
+      "cast": "hero",
+      "shot": "Макрослед повреждённой подошвы на мокром камне рядом со слепком",
+      "asset": "case002-a08-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A09",
+      "chapter": "I",
+      "title": "Архивная заметка",
+      "location": "archive-room",
+      "cast": "hero",
+      "shot": "Газетная вырезка под латунной лупой и на обороте билета карандашный знак",
+      "asset": "case002-a09-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "A10",
+      "chapter": "I",
+      "title": "Три двери",
+      "location": "detective-office",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "shot": "Мэйбл у окна; за стеклом три направления города сквозь дождь",
+      "asset": "case002-a10-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B01",
+      "chapter": "II",
+      "title": "Карта интересов",
+      "location": "map-table",
+      "cast": "hero",
+      "shot": "Три бумажные карты и восковые печати: железная дорога, канал, завод, без текста поверх",
+      "asset": "case002-b01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B02",
+      "chapter": "II",
+      "title": "Грузовая контора",
+      "location": "freight-office",
+      "cast": [
+        "clerk",
+        "hero"
+      ],
+      "shot": "Уставший клерк за барьером грузовой конторы, стопки листов и ночные лампы",
+      "asset": "case002-b02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B03",
+      "chapter": "II",
+      "title": "Первая запись",
+      "location": "freight-office",
+      "cast": "hero",
+      "shot": "Рука в перчатке раскрывает подлинную запись F-4182 и ложные запасные части",
+      "asset": "case002-b03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B04",
+      "chapter": "II",
+      "title": "Замятый угол",
+      "location": "freight-office",
+      "cast": "hero",
+      "shot": "Косой свет на продавленный оттиск другой бумаги на обороте ведомости",
+      "asset": "case002-b04-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B05",
+      "chapter": "II",
+      "title": "Шлюз",
+      "location": "canal-lock",
+      "cast": [
+        "boatman",
+        "hero"
+      ],
+      "shot": "Шлюз Дигбета: мокрый канат, грузчик указывает на колеи над водой",
+      "asset": "case002-b05-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B06",
+      "chapter": "II",
+      "title": "Шины в грязи",
+      "location": "canal-lock",
+      "cast": "hero",
+      "shot": "Обломок пломбы у двойного следа телеги в грязи, след крупным планом",
+      "asset": "case002-b06-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B07",
+      "chapter": "II",
+      "title": "Котельная",
+      "location": "old-boiler-house",
+      "cast": "hero",
+      "shot": "Пустая котельная, женская мокрая перчатка и жестянка чая, никого не видно",
+      "asset": "case002-b07-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B08",
+      "chapter": "II",
+      "title": "Заводской пропуск",
+      "location": "aston-factory-gate",
+      "cast": [
+        "gatekeeper",
+        "hero"
+      ],
+      "shot": "Вахтёр при проверке заводского пропуска, бесконечные рабочие под дымом",
+      "asset": "case002-b08-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B09",
+      "chapter": "II",
+      "title": "Чужая зарплата",
+      "location": "factory-records",
+      "cast": [
+        "worker",
+        "hero"
+      ],
+      "shot": "Открытая платёжная книга: строки чужих имён и изношенные руки рабочего",
+      "asset": "case002-b09-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B10",
+      "chapter": "II",
+      "title": "Акт Мерсера",
+      "location": "factory-records",
+      "cast": "hero",
+      "shot": "Заводской акт Мерсера с изменённой строкой о клапане, масляная лампа",
+      "asset": "case002-b10-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B11",
+      "chapter": "II",
+      "title": "Два оттиска",
+      "location": "map-table",
+      "cast": "hero",
+      "shot": "Две ведомости с разными оттисками на столе, третий пустой лист для времени",
+      "asset": "case002-b11-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B12",
+      "chapter": "II",
+      "title": "Ночной клерк",
+      "location": "freight-office",
+      "cast": [
+        "night-clerk",
+        "hero"
+      ],
+      "shot": "Ночной клерк показывает подсчёт вагонов на краю конторской книги",
+      "asset": "case002-b12-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B13",
+      "chapter": "II",
+      "title": "Платёж охране",
+      "location": "freight-office",
+      "cast": "hero",
+      "shot": "Счёт охраны среди грузовых распоряжений, тень чужой руки у двери",
+      "asset": "case002-b13-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "B14",
+      "chapter": "II",
+      "title": "Право на вопрос",
+      "location": "freight-office",
+      "cast": "hero",
+      "shot": "Незаполненная временная шкала и стрелочный пункт за запотевшим окном",
+      "asset": "case002-b14-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C01",
+      "chapter": "III",
+      "title": "23:12",
+      "location": "freight-yard",
+      "cast": [
+        "hero",
+        "night-clerk"
+      ],
+      "shot": "Грузовой состав ночью, часы 23:12 как механическая деталь, дым и фонари",
+      "asset": "case002-c01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C02",
+      "chapter": "III",
+      "title": "Железная схема",
+      "location": "signal-box",
+      "cast": [
+        "signalman",
+        "hero"
+      ],
+      "shot": "Палец на схеме частного отвода, шестерни и механические рычаги",
+      "asset": "case002-c02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C03",
+      "chapter": "III",
+      "title": "23:31",
+      "location": "private-siding",
+      "cast": [
+        "signalman",
+        "hero"
+      ],
+      "shot": "След стальной сцепки после отцепки в 23:31, без убийства на кадре",
+      "asset": "case002-c03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C04",
+      "chapter": "III",
+      "title": "Первая ложь",
+      "location": "detective-office",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "shot": "Мэйбл признаётся у раскрытой ведомости, стиснутые пальцы и один тёплый свет",
+      "asset": "case002-c04-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C05",
+      "chapter": "III",
+      "title": "Вторая ложь",
+      "location": "arrival-office",
+      "cast": "hero",
+      "shot": "Поддельная строка прибытия и отличающийся штамп охраны, взгляд по диагонали",
+      "asset": "case002-c05-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C06",
+      "chapter": "III",
+      "title": "23:47",
+      "location": "bridge-viaduct",
+      "cast": [
+        "hero",
+        "rowan"
+      ],
+      "shot": "Пустое место у моста, часы 23:47 на служебной бумаге, без тела в кадре",
+      "asset": "case002-c06-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C07",
+      "chapter": "III",
+      "title": "Ночной фонарь",
+      "location": "signal-box",
+      "cast": [
+        "signalman",
+        "hero"
+      ],
+      "shot": "Старый стрелочник под лампой вспоминает каблук охранника, туман за окном",
+      "asset": "case002-c07-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C08",
+      "chapter": "III",
+      "title": "Чужое предложение",
+      "location": "railway-office",
+      "cast": [
+        "messenger",
+        "hero"
+      ],
+      "shot": "Посыльный протягивает заверенную телеграмму с закрытым пальцем номером",
+      "asset": "case002-c08-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C09",
+      "chapter": "III",
+      "title": "След грузовика",
+      "location": "private-siding",
+      "cast": "hero",
+      "shot": "След грузовика у заброшенной ветки; три расходящиеся дорожки в грязи",
+      "asset": "case002-c09-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "C10",
+      "chapter": "III",
+      "title": "Не исчезнувший поезд",
+      "location": "map-table",
+      "cast": "hero",
+      "shot": "Состав и один отцепленный вагон на схеме из вырезок, вывод без портрета злодея",
+      "asset": "case002-c10-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D01",
+      "chapter": "IV",
+      "title": "Три разных страха",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Три карточки с именами свидетелей; карты котельной, завода и пансиона",
+      "asset": "case002-d01-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D02",
+      "chapter": "IV",
+      "title": "Ада",
+      "location": "old-boiler-house",
+      "cast": [
+        "ada",
+        "hero"
+      ],
+      "shot": "Ада с гаечным ключом у холодной решётки, настороженный взгляд и полосы света",
+      "asset": "case002-d02-scene.webp",
+      "stateVariants": [
+        "witnesses.ada"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D03",
+      "chapter": "IV",
+      "title": "Журнал давления",
+      "location": "old-boiler-house",
+      "cast": [
+        "ada",
+        "hero"
+      ],
+      "shot": "Ада открывает журнал давления рядом с шестиименами, бумага и дрожащие руки",
+      "asset": "case002-d03-scene.webp",
+      "stateVariants": [
+        "witnesses.ada"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D04",
+      "chapter": "IV",
+      "title": "Томми за воротами",
+      "location": "aston-factory-gate",
+      "cast": [
+        "tommy",
+        "guard"
+      ],
+      "shot": "Томми за решёткой сторожки с больничной повязкой, рядом силуэт охранника",
+      "asset": "case002-d04-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D05",
+      "chapter": "IV",
+      "title": "Цена доступа",
+      "location": "aston-factory-gate",
+      "cast": [
+        "hero",
+        "guards"
+      ],
+      "shot": "Три разных выхода из промышленной проходной, часовой и безоружный герой",
+      "asset": "case002-d05-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D06",
+      "chapter": "IV",
+      "title": "Сестра ждёт",
+      "location": "factory-alley",
+      "cast": [
+        "mabel",
+        "tommy",
+        "hero"
+      ],
+      "shot": "Потенциальная встреча сестры с братом в проулке; при detained только Мэйбл одна",
+      "asset": "case002-d06-scene.webp",
+      "stateVariants": [
+        "witnesses.tommy"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D07",
+      "chapter": "IV",
+      "title": "Испуганный инспектор",
+      "location": "mercer-room",
+      "cast": [
+        "mercer",
+        "hero"
+      ],
+      "shot": "Утомлённый Мерсер открывает дверь пансиона с задвинутой цепочкой",
+      "asset": "case002-d07-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D08",
+      "chapter": "IV",
+      "title": "Ложный акт",
+      "location": "mercer-room",
+      "cast": [
+        "mercer",
+        "hero"
+      ],
+      "shot": "Ложный акт рядом с семейной фотографией, Мерсер не смотрит герою в лицо",
+      "asset": "case002-d08-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D09",
+      "chapter": "IV",
+      "title": "Второе предательство",
+      "location": "mercer-room",
+      "cast": [
+        "mercer",
+        "messenger"
+      ],
+      "shot": "Тень посыльного за гостиничным окном и письмо с адресом, сомнение Мерсера",
+      "asset": "case002-d09-scene.webp",
+      "stateVariants": [
+        "witnesses.ada"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D10",
+      "chapter": "IV",
+      "title": "Кто защищён",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Три карточки статусов свидетелей на пробковой доске, метки должны быть динамическими",
+      "asset": "case002-d10-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "D11",
+      "chapter": "IV",
+      "title": "Перед выбором",
+      "location": "detective-office",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "shot": "Мэйбл принесла список семей погибших, пустое место для будущего решения",
+      "asset": "case002-d11-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E01",
+      "chapter": "V",
+      "title": "Три предложения",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Три конверта и потухший чай на столе; разные пути решения",
+      "asset": "case002-e01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E02",
+      "chapter": "V",
+      "title": "Нора Келл",
+      "location": "newsroom",
+      "cast": [
+        "nora",
+        "hero"
+      ],
+      "shot": "Нора Келл за печатным столом отказывается от непроверенной сенсации",
+      "asset": "case002-e02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E03",
+      "chapter": "V",
+      "title": "Угол газеты",
+      "location": "newsroom",
+      "cast": [
+        "nora",
+        "hero"
+      ],
+      "shot": "Две папки доказательств; в verified они сверены, иначе закрытый наборный шрифт",
+      "asset": "case002-e03-scene.webp",
+      "stateVariants": [
+        "flags.publicContactSecured"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E04",
+      "chapter": "V",
+      "title": "Частный перевод",
+      "location": "private-siding",
+      "cast": [
+        "hero",
+        "worker"
+      ],
+      "shot": "Частный перевод и работающая смена за ограждением, оценка безопасного пути",
+      "asset": "case002-e04-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E05",
+      "chapter": "V",
+      "title": "Пустая смена",
+      "location": "private-siding",
+      "cast": [
+        "worker",
+        "hero"
+      ],
+      "shot": "До эвакуации люди у путей; после — пустые рельсы и двое за оградой",
+      "asset": "case002-e05-scene.webp",
+      "stateVariants": [
+        "flags.workersCleared"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E06",
+      "chapter": "V",
+      "title": "Комната Вейла",
+      "location": "vale-office",
+      "cast": [
+        "vale",
+        "hero"
+      ],
+      "shot": "Вейл у портрета основателя завода, лицо наполовину в тени",
+      "asset": "case002-e06-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E07",
+      "chapter": "V",
+      "title": "Подпись сделки",
+      "location": "vale-office",
+      "cast": [
+        "vale",
+        "hero"
+      ],
+      "shot": "Руки Вейла над гарантийным листом, до подписи лист пуст, после — подписан",
+      "asset": "case002-e07-scene.webp",
+      "stateVariants": [
+        "flags.valeGuarantee"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E08",
+      "chapter": "V",
+      "title": "Брэкетт торгуется",
+      "location": "brackett-office",
+      "cast": [
+        "brackett",
+        "hero"
+      ],
+      "shot": "Брэкетт накрывает ладонью книгу счетов, кожаное кресло, угроза без оружия",
+      "asset": "case002-e08-scene.webp",
+      "stateVariants": [
+        "flags.valeGuarantee",
+        "flags.publicContactSecured",
+        "flags.workersCleared"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E09",
+      "chapter": "V",
+      "title": "Рабочий у ворот",
+      "location": "aston-factory-gate",
+      "cast": [
+        "worker",
+        "hero"
+      ],
+      "shot": "Рабочий у ворот с руками в чернилах; при accountsGivenToWorkers копия под пальто",
+      "asset": "case002-e09-scene.webp",
+      "stateVariants": [
+        "flags.brackettAccountsHeld",
+        "flags.accountsGivenToWorkers"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E10",
+      "chapter": "V",
+      "title": "Промежуточный отчёт",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Промежуточный отчёт, оригиналы/копии и статусы свидетелей без выдуманных наград",
+      "asset": "case002-e10-scene.webp",
+      "stateVariants": [
+        "flags.localIntermediary",
+        "flags.accountsGivenToWorkers"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "E11",
+      "chapter": "V",
+      "title": "Последнее убежище",
+      "location": "detective-office",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "shot": "Мэйбл у двери в полумраке; выбор между риском и уходом",
+      "asset": "case002-e11-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F01",
+      "chapter": "VI",
+      "title": "F-4182",
+      "location": "map-table",
+      "cast": "hero",
+      "shot": "Один вагон F-4182 на схеме трёх мест; символы маршрутных отметок",
+      "asset": "case002-f01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F02",
+      "chapter": "VI",
+      "title": "Два подлога",
+      "location": "map-table",
+      "cast": "hero",
+      "shot": "Два разных почерка и печати на соседних ведомостях, не один общий подлог",
+      "asset": "case002-f02-scene.webp",
+      "stateVariants": [
+        "facts.provedFirstForgery",
+        "facts.provedSecondForgery"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F03",
+      "chapter": "VI",
+      "title": "Смерть под мостом",
+      "location": "police-desk",
+      "cast": [
+        "hero",
+        "rowan"
+      ],
+      "shot": "Два доказательства Хейла рядом с прежним протоколом падения",
+      "asset": "case002-f03-scene.webp",
+      "stateVariants": [
+        "facts.provedHaleMurder"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F04",
+      "chapter": "VI",
+      "title": "Шесть имён",
+      "location": "factory-records",
+      "cast": "hero",
+      "shot": "Две фамилии официального акта против шести имён на журнале, сухое освещение",
+      "asset": "case002-f04-scene.webp",
+      "stateVariants": [
+        "facts.provedFactoryCoverup"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F05",
+      "chapter": "VI",
+      "title": "Судьбы",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Три карточки Ады Томми Мерсера и их реальные статусы; без портретов всех вместе",
+      "asset": "case002-f05-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F06",
+      "chapter": "VI",
+      "title": "Угроза",
+      "location": "private-siding",
+      "cast": "hero",
+      "shot": "Узкий опасный проход и безопасный обход, свет на гильзе без крови",
+      "asset": "case002-f06-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F07",
+      "chapter": "VI",
+      "title": "Последний риск",
+      "location": "private-siding",
+      "cast": [
+        "hero",
+        "guards"
+      ],
+      "shot": "Охрана с оружием в тумане, герой на границе укрытия, явный риск",
+      "asset": "case002-f07-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F08",
+      "chapter": "VI",
+      "title": "Перед приговором",
+      "location": "detective-office",
+      "cast": [
+        "hero",
+        "mabel"
+      ],
+      "shot": "Герой закрывает папку, Мэйбл на пороге, из рук нельзя рисовать отданные счета",
+      "asset": "case002-f08-scene.webp",
+      "stateVariants": [
+        "flags.brackettAccountsHeld",
+        "flags.accountsGivenToWorkers"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "F09",
+      "chapter": "VI",
+      "title": "Цена власти",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Только открытые по логике исходы как предметы на столе, не все семь иконок",
+      "asset": "case002-f09-scene.webp",
+      "stateVariants": [
+        "endingAvailable"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HJ01",
+      "chapter": "II",
+      "title": "Джек: сменный караул",
+      "location": "canal-lock",
+      "cast": [
+        "jack",
+        "guard"
+      ],
+      "shot": "Джек останавливает сменного охранника без удара, туман над колеёй",
+      "asset": "case002-hj01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HJ02",
+      "chapter": "IV",
+      "title": "Джек: вывести Томми",
+      "location": "aston-factory-gate",
+      "cast": [
+        "jack",
+        "tommy",
+        "guard"
+      ],
+      "shot": "Джек прикрывает Томми у проходной, никаких случайных раненых рабочих",
+      "asset": "case002-hj02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HJ03",
+      "chapter": "V",
+      "title": "Джек: не стрелять",
+      "location": "brackett-office",
+      "cast": [
+        "jack",
+        "brackett"
+      ],
+      "shot": "Джек держит руку подальше от револьвера, Брэкетт напротив",
+      "asset": "case002-hj03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HF01",
+      "chapter": "II",
+      "title": "Финн: боковая лестница",
+      "location": "freight-office",
+      "cast": [
+        "finn"
+      ],
+      "shot": "Финн на внешней лестнице у открытого конторского окна, без бессмысленного взлома",
+      "asset": "case002-hf01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HF02",
+      "chapter": "III",
+      "title": "Финн: чужой ключ",
+      "location": "signal-box",
+      "cast": [
+        "finn"
+      ],
+      "shot": "Финн снимает карандашный слепок таблички стрелочного поста и оставляет её",
+      "asset": "case002-hf02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HF03",
+      "chapter": "IV",
+      "title": "Финн: сейф инспектора",
+      "location": "mercer-room",
+      "cast": [
+        "finn",
+        "mercer"
+      ],
+      "shot": "Финн открывает сейф Мерсера и бережно отодвигает семейную фотографию",
+      "asset": "case002-hf03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HE01",
+      "chapter": "II",
+      "title": "Элеонора: фотография",
+      "location": "freight-office",
+      "cast": [
+        "eleanor"
+      ],
+      "shot": "Элеонора фотографирует след оттиска в косом свете, источник записан",
+      "asset": "case002-he01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HE02",
+      "chapter": "IV",
+      "title": "Элеонора: не печатать",
+      "location": "old-boiler-house",
+      "cast": [
+        "eleanor",
+        "ada"
+      ],
+      "shot": "Элеонора кладёт блокнот лицом вниз, чтобы Ада ей поверила",
+      "asset": "case002-he02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HE03",
+      "chapter": "V",
+      "title": "Элеонора: две подписи",
+      "location": "newsroom",
+      "cast": [
+        "eleanor",
+        "nora"
+      ],
+      "shot": "Элеонора останавливает набор сенсационного заголовка до проверки",
+      "asset": "case002-he03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HV01",
+      "chapter": "II",
+      "title": "Виктор: кабинет",
+      "location": "vale-office",
+      "cast": [
+        "victor",
+        "vale"
+      ],
+      "shot": "Виктор сидит у чайного столика так, чтобы видеть сейф и управляющего",
+      "asset": "case002-hv01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HV02",
+      "chapter": "IV",
+      "title": "Виктор: слово сестре",
+      "location": "factory-alley",
+      "cast": [
+        "victor",
+        "mabel"
+      ],
+      "shot": "Виктор передаёт проверяемую бумагу Мэйбл, без изображения Томми уже на свободе",
+      "asset": "case002-hv02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HV03",
+      "chapter": "V",
+      "title": "Виктор: контракт",
+      "location": "vale-office",
+      "cast": [
+        "victor",
+        "vale"
+      ],
+      "shot": "Виктор указывает на обязательную подпись и проверяемые условия в контракте",
+      "asset": "case002-hv03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HS01",
+      "chapter": "II",
+      "title": "Сэмюэл: смазка",
+      "location": "canal-lock",
+      "cast": [
+        "samuel"
+      ],
+      "shot": "Сэмюэл изучает следы механической смазки на расцепке в рукавицах",
+      "asset": "case002-hs01-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HS02",
+      "chapter": "III",
+      "title": "Сэмюэл: стрелка",
+      "location": "signal-box",
+      "cast": [
+        "samuel",
+        "signalman"
+      ],
+      "shot": "Сэмюэл карандашом наносит недостающую перемычку, требует подпись стрелочника",
+      "asset": "case002-hs02-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "HS03",
+      "chapter": "V",
+      "title": "Сэмюэл: пустой путь",
+      "location": "private-siding",
+      "cast": [
+        "samuel",
+        "worker"
+      ],
+      "shot": "Сэмюэл отводит рабочих до касания стрелочного рычага",
+      "asset": "case002-hs03-scene.webp",
+      "stateVariants": [],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z01",
+      "chapter": "END",
+      "title": "Три имени",
+      "location": "newsroom",
+      "cast": [
+        "nora",
+        "hero"
+      ],
+      "shot": "Нора печатает проверенную историю, ни одного автоматически осуждённого Вейла",
+      "asset": "case002-z01-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z02",
+      "chapter": "END",
+      "title": "Люди без прошлого",
+      "location": "railway-platform",
+      "cast": "hero",
+      "shot": "При 0 вывезенных пустая платформа; при 1–3 только действительно эвакуированные",
+      "asset": "case002-z02-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z03",
+      "chapter": "END",
+      "title": "Удобный виновник",
+      "location": "police-desk",
+      "cast": [
+        "brackett",
+        "rowan"
+      ],
+      "shot": "Брэкетт под охраной у полицейского стола, заводская управа вне обвинения",
+      "asset": "case002-z03-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z04",
+      "chapter": "END",
+      "title": "Цена сделки",
+      "location": "vale-office",
+      "cast": [
+        "vale",
+        "hero"
+      ],
+      "shot": "Подписанная гарантия на столе, фабрика работает, нет выдуманных освобождённых",
+      "asset": "case002-z04-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z05",
+      "chapter": "END",
+      "title": "Сломанная стрелка",
+      "location": "private-siding",
+      "cast": [
+        "worker",
+        "hero"
+      ],
+      "shot": "Пустой от людей остановленный путь, сменщики смотрят на потерянный заработок",
+      "asset": "case002-z05-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z06",
+      "chapter": "END",
+      "title": "Хозяин маршрутов",
+      "location": "detective-office",
+      "cast": "hero",
+      "shot": "Копии счетов физически у героя и темнота за дверью, нет газеты и суда",
+      "asset": "case002-z06-scene.webp",
+      "stateVariants": [
+        "flags.brackettAccountsHeld",
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    },
+    {
+      "id": "Z07",
+      "chapter": "END",
+      "title": "Последний рейс",
+      "location": "canal-lock",
+      "cast": "hero",
+      "shot": "Потухший фонарь и закрытый футляр записок у шлюза; без гламуризации смерти",
+      "asset": "case002-z07-scene.webp",
+      "stateVariants": [
+        "witnesses.ada",
+        "witnesses.tommy",
+        "witnesses.mercer"
+      ],
+      "status": "planned-not-generated"
+    }
+  ]
+}
