@@ -59,6 +59,9 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A05")
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
                     assert page.locator("#toolContent li").count() >= 1
+                    assert "сведения в досье" in page.locator("#toolContent").inner_text(), (
+                        "clue must show recorded-not-original custody on iPhone"
+                    )
                     page.locator('button[data-tab="witnesses"]').click()
                     assert "Томми Кросс" in page.locator("#toolContent").inner_text()
                     page.locator('button[data-tab="deductions"]').click()
