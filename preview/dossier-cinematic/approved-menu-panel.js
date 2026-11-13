@@ -1,10 +1,10 @@
-/* Show the approved illustrated fifth button only when its image has loaded. */
+/* Use a real image only after it has fully decoded; retain text fallback otherwise. */
 document.addEventListener('DOMContentLoaded',()=>{
  const home=document.getElementById('home');
  const button=document.getElementById('cabinetPlayerDossier');
  if(!home||!button)return;
- const image=new Image();
- image.onload=()=>{if(image.naturalWidth>=400)home.classList.add('dossier-menu-art-loaded')};
- image.onerror=()=>home.classList.remove('dossier-menu-art-loaded');
- image.src='preview/dossier-cinematic/approved-my-dossier-menu-hq.webp';
+ const img=new Image();
+ img.onload=()=>{if(img.naturalWidth===984&&img.naturalHeight===183)home.classList.add('dossier-menu-art-loaded')};
+ img.onerror=()=>home.classList.remove('dossier-menu-art-loaded');
+ img.src='preview/dossier-cinematic/approved-my-dossier-menu-framed.webp';
 });
