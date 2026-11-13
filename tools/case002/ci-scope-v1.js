@@ -37,7 +37,7 @@ function category(file){
    if(/(?:story-variants|hero-v3|narrative-production)/.test(p))return "story";
    if(/(?:deduction-board|evidence-icons)/.test(p))return "evidence";
    if(/(?:journal|consequences)/.test(p))return "reporting";
-   if(/(?:mobile_browser|scene-prose|scene-presentation|ui-events)/.test(p))return "ui";
+   if(/(?:mobile_browser|scene-prose|scene-presentation|telegram-safe-area|ui-events)/.test(p))return "ui";
    return "art";
  }
  if(p===".github/workflows/case002-story-qa.yml")return "ci";
