@@ -145,3 +145,38 @@
  .scene-artwork[data-portrait="true"] img{aspect-ratio:4/5;
    width:100%;height:100%;object-fit:cover;object-position:center}
 }
+
+
+/* Case 002 mobile-first viewport, including optional Telegram Mini App controls.
+ * The bridge combines Telegram's hardware/content insets, and max() avoids
+ * double-counting native Safari env() insets. No SDK/network needed offline. */
+:root{--case002-safe-top:0px;--case002-safe-bottom:0px;
+ --case002-safe-left:0px;--case002-safe-right:0px}
+.app-shell{
+ padding-top:max(env(safe-area-inset-top,0px),var(--case002-safe-top));
+ padding-left:calc(14px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+ padding-right:calc(14px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ padding-bottom:calc(24px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+}
+#game{padding-bottom:calc(92px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+.case-quick-nav{
+ padding-left:calc(8px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+ padding-right:calc(8px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ padding-bottom:calc(8px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+}
+.notice{
+ bottom:calc(78px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+ max-width:calc(100% - 28px - var(--case002-safe-left) - var(--case002-safe-right));
+}
+@media(min-width:580px){
+ .app-shell{
+  padding-left:calc(20px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+  padding-right:calc(20px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ }
+}
+@media(max-width:359px){
+ .case-quick-nav{
+  padding-left:calc(4px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+  padding-right:calc(4px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ }
+}
