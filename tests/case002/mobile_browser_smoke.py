@@ -197,6 +197,48 @@ def main():
                         for selector in (".choice:not([disabled])", ".tool-tab"):
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
+                    # Simulate a reviewed landscape scene and a missing
+                    # mobile-specific crop. The production manifest remains
+                    # untouched: this mock is strictly inside the browser QA.
+                    art_context = browser.new_context(
+                        viewport={"width": 390, "height": 844},
+                        device_scale_factor=3, is_mobile=True, has_touch=True
+                    )
+                    art_page = art_context.new_page()
+                    svg_landscape = (
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900">'
+                        '<rect width="1600" height="900" fill="#252525"/></svg>'
+                    )
+                    art_page.route("**/assets/case002/scenes/mobile-test-landscape.webp",
+                        lambda route: route.fulfill(
+                            status=200, content_type="image/svg+xml", body=svg_landscape
+                        )
+                    )
+                    art_page.goto(address, wait_until="load")
+                    art_page.evaluate("""() => {
+                        const gate = window.BirminghamCase002ApprovedArt;
+                        const original = gate.resolveScene;
+                        gate.resolveScene = stage => stage.sceneId === 'P01' ? {
+                          sceneId: 'P01', variantKey: 'default',
+                          src: '../../assets/case002/scenes/mobile-test-landscape.webp',
+                          mobileSrc: '../../assets/case002/scenes/mobile-test-missing--mobile.webp',
+                          alt: 'Проверка резервного кадра'
+                        } : original(stage);
+                    }""")
+                    art_page.locator("#begin").click()
+                    art_page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=6000
+                    )
+                    assert art_page.locator("#game").get_attribute("data-art-fallback") == "true", (
+                        f"{browser_name}: missing phone WebP did not fall back to approved landscape"
+                    )
+                    assert art_page.locator("#sceneArtwork").is_visible()
+                    assert art_page.locator("#sceneArtwork").get_attribute("data-portrait") == "false"
+                    assert art_page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.naturalWidth === 1600 && el.naturalHeight === 900"
+                    ), f"{browser_name}: scene fallback geometry invalid"
+                    art_context.close()
                     # In a real Telegram webview the native and Telegram UI
                     # safe areas must stack, without requiring network SDK
                     # access when opened as plain Safari/Chromium HTML.
