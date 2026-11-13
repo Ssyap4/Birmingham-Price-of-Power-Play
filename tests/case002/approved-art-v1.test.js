@@ -13,14 +13,34 @@ const {manifest,resolveScene,resolveNpc}=require("../../src/case002/approved-art
 const cast=require("../../src/case002/cast-registry-v1.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 assert.equal(manifest.schemaVersion,1);
-assert.deepEqual(manifest.sceneImages,[],"unreviewed scene images must not be registered");
-assert.deepEqual(manifest.npcPortraits,[],"unreviewed NPC portraits must not be registered");
-let states=0;
+assert(Array.isArray(manifest.sceneImages),"scene approval list required");
+assert(Array.isArray(manifest.npcPortraits),"NPC approval list required");
+let states=0,verifiedSceneViews=0,verifiedPortraitViews=0;
+const visibleKeys=new Set();
 const check=view=>{
  const stage=director.select(storyboard,view);
- assert.equal(resolveScene(stage),null,"unapproved story art was exposed");
- for(const person of cast.discovered(view.state))
-   assert.equal(resolveNpc(person),null,"unapproved NPC portrait exposed");
+ visibleKeys.add(stage.sceneId+":"+stage.variantKey);
+ // Only explicitly approved art may be exposed. An absent file remains null.
+ const actual=resolveScene(stage);
+ const matching=manifest.sceneImages.filter(e=>e.sceneId===stage.sceneId&&
+   e.variantKey===stage.variantKey);
+ if(matching.length){
+   assert.equal(matching.length,1,"duplicate art registration");
+   assert.equal(matching[0].review,"approved","unreviewed scene exposed");
+   assert(actual && actual.src.endsWith("/"+matching[0].file),
+     "registered art does not match the actual game state");
+   verifiedSceneViews++;
+ }else assert.equal(actual,null,"unregistered scene image was exposed");
+ for(const person of cast.discovered(view.state)){
+   const portrait=resolveNpc(person);
+   const registered=manifest.npcPortraits.filter(e=>e.id===person.id);
+   if(registered.length){
+     assert.equal(registered.length,1,"duplicate NPC approval");
+     assert.equal(registered[0].review,"approved","unreviewed portrait exposed");
+     assert(portrait && portrait.src.endsWith("/"+registered[0].file));
+     verifiedPortraitViews++;
+   }else assert.equal(portrait,null,"unregistered NPC portrait exposed");
+ }
  states++;
 };
 for(const hero of contract.heroes)for(const ending of contract.endings){
@@ -71,6 +91,10 @@ const approvedFingerprints=new Map();
 const evelynFingerprint=digest(fs.readFileSync(
  path.join(base,"assets/case-scenes/evelyn.webp")));
 for(const e of manifest.sceneImages){
+ assert(visibleKeys.has(e.sceneId+":"+e.variantKey),
+   "Registered art has no verified reachable scene state: "+e.sceneId+
+   ":"+e.variantKey);
+ assert.equal(e.review,"approved","Only reviewed scene files may be registered");
  const expected=path.join(base,"assets/case002/scenes",e.file);
  assert(fs.existsSync(expected),"Approved scene asset missing: "+e.file);
  const bytes=fs.readFileSync(expected);
@@ -78,6 +102,8 @@ for(const e of manifest.sceneImages){
    bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
 }
 for(const e of manifest.npcPortraits){
+ assert.equal(e.review,"approved","Only reviewed portraits may be registered");
+ assert(cast.character(e.id),"Unknown registered NPC identity: "+e.id);
  const expected=path.join(base,"assets/case002/portraits",e.file);
  assert(fs.existsSync(expected),"Approved portrait missing: "+e.file);
  const bytes=fs.readFileSync(expected);
@@ -91,5 +117,7 @@ for(const e of manifest.npcPortraits){
  approvedFingerprints.set(fingerprint,e.id);
 }
 console.log("PASS Case002 approved-art gate: "+states+
- " state views; zero unapproved portraits or story images; strict id, cast, "+
- "variant and file checks for future real art.");
+ " state views; "+manifest.sceneImages.length+" approved scenes / "+
+ manifest.npcPortraits.length+" approved portraits; "+
+ verifiedSceneViews+" scene and "+verifiedPortraitViews+
+ " portrait display checks; strict id, cast, variant and real-file checks.");
