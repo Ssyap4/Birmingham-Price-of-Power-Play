@@ -193,6 +193,7 @@ function jumpTo(where,evidenceId=null){
    [...$("toolContent").querySelectorAll(".evidence-card")]
       .find(item=>item.dataset.evidenceId===evidenceId):null;
  const focusTarget=row||target;
+ if(row)row.tabIndex=-1;
  focusTarget.focus({preventScroll:true});
  focusTarget.scrollIntoView({block:"start",behavior:"auto"});
 }
