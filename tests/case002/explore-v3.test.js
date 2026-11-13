@@ -9,6 +9,9 @@ const {createEngine}=require("../../src/case002/engine-v3.js");
 const {graph,contract,narration}=require("../../src/case002/browser-data-v3.js");
 const {render}=require("../../src/case002/story-variants-v4.js");
 const story={graph,contract,narration};
+const board=require("../../docs/case002/case002-art-storyboard-v1.json");
+const art=require("../../src/case002/scene-art-v1.js");
+const consequences=require("../../src/case002/consequences-v1.js");
 function storage(){
  const db=new Map();
  return {getItem:k=>db.has(k)?db.get(k):null,setItem:(k,v)=>db.set(k,String(v))};
@@ -29,6 +32,14 @@ for(const [index,hero] of contract.heroes.entries()){
    const v=e.view(),s=e.snapshot();
    coverage.add(s.node);
    assert(v.choices.every(x=>typeof x.enabled==="boolean"));
+   const selectedArtwork=art.select(board,v);
+   assert.equal(selectedArtwork.sceneId,s.node);
+   assert.equal(selectedArtwork.assetVerified,false,"Uncreated art falsely claimed available");
+   if(s.node==="Z02"){
+     for(const id of ["ada","tommy","mercer"])
+       assert.equal(selectedArtwork.visibleCast.includes(id),
+         s.witnesses[id]==="evacuated","Artwork contradicts who escaped");
+   }
    const narrationText=render(story,v);
    assert(narrationText.length>20,"missing actual story text: "+hero+"/"+s.node);
    assert(!narrationText.includes("undefined"),"unresolved text interpolation: "+s.node);
@@ -74,6 +85,15 @@ for(const [index,hero] of contract.heroes.entries()){
    actionCoverage.add(s.node+":"+selected.to+":"+selected.action);
    const before=JSON.stringify(s);
    const next=e.choose(selected.to,selected.action);
+   const changes=consequences.receipts(s,next,selected.action);
+   for(const id of next.evidence.filter(id=>!s.evidence.includes(id)))
+     assert(changes.some(x=>x.kind==="evidence"&&x.text.includes(id)),
+       "A newly collected item has no evidence notice");
+   for(const [id,status] of Object.entries(next.witnesses)){
+     if(status!==s.witnesses[id])
+       assert(changes.some(x=>x.kind==="witness"),"Witness change omitted from notice");
+   }
+
    assert.notEqual(JSON.stringify(next),before);
    assert.equal(next.history.length,s.history.length+1);
    assert(!once.has(next.attemptId+":"+next.history.length));
