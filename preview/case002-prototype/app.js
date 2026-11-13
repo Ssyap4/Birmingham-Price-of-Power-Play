@@ -10,6 +10,30 @@ const approvedHeroPortraits={
   victor:"../../assets/case-scenes/heroVictor.webp",
   samuel:"../../assets/case-scenes/heroSamuel.webp"
 };
+const sceneLocations={
+ "private-siding":"Частная железнодорожная ветка",
+ "detective-office":"Контора сыщика",
+ "bridge-viaduct":"Кирпичный виадук",
+ "freight-office":"Грузовая контора",
+ "police-desk":"Полицейский участок",
+ "old-ticket-counter":"Старая билетная касса",
+ "archive-room":"Городской архив",
+ "map-table":"Стол расследования",
+ "canal-lock":"Шлюзы Дигбета",
+ "old-boiler-house":"Заброшенная котельная",
+ "aston-factory-gate":"Заводская проходная Астона",
+ "factory-records":"Архив завода",
+ "freight-yard":"Грузовой двор",
+ "signal-box":"Стрелочный пост",
+ "arrival-office":"Контора прибытия",
+ "railway-office":"Железнодорожное управление",
+ "factory-alley":"Переулок у завода",
+ "mercer-room":"Комната Мерсера",
+ "newsroom":"Редакция газеты",
+ "vale-office":"Кабинет Вейла",
+ "brackett-office":"Кабинет Брэкетта",
+ "railway-platform":"Железнодорожная платформа"
+};
 const witnessNames={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
 const witnessLabels={missing:"местонахождение неизвестно",located:"найден",detained:"под охраной",protected:"под защитой",evacuated:"эвакуирован",deceased:"погиб"};
 const evidenceLabels={
@@ -160,6 +184,34 @@ function translateReason(choice,view){
  for(const [part,label] of rules)if(reason.includes(part))return label;
  return "Этот вариант пока недоступен";
 }
+let artRenderSerial=0;
+function renderApprovedSceneArt(stage){
+ const root=$("sceneArtwork"),img=$("sceneArtworkImage"),host=$("game");
+ const serial=++artRenderSerial;
+ root.hidden=true;
+ host.dataset.artVerified="false";
+ img.onload=null;
+ img.onerror=null;
+ img.removeAttribute("src");
+ const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
+ if(!approved)return;
+ img.alt=approved.alt;
+ img.onload=()=>{
+   if(serial!==artRenderSerial || host.dataset.artScene!==stage.sceneId ||
+      host.dataset.artVariant!==stage.variantKey)return;
+   if(img.naturalWidth>=800 && img.naturalHeight>=450){
+     root.hidden=false;
+     host.dataset.artVerified="true";
+   }
+ };
+ img.onerror=()=>{
+   if(serial===artRenderSerial){
+     root.hidden=true;
+     host.dataset.artVerified="false";
+   }
+ };
+ img.src=approved.src;
+}
 function renderSceneCast(stage,state){
  const root=$("sceneCast");
  const people=window.BirminghamCase002SceneCast.participants(
@@ -175,6 +227,21 @@ function renderSceneCast(stage,state){
      "scene-participant-monogram");
    mark.setAttribute("aria-hidden","true");
    card.append(mark);
+   const approvedPortrait=window.BirminghamCase002ApprovedArt.resolveNpc(person);
+   if(approvedPortrait){
+     const portraitImg=make("img",undefined,"scene-participant-portrait");
+     portraitImg.alt=approvedPortrait.alt;
+     portraitImg.decoding="async";
+     portraitImg.hidden=true;
+     portraitImg.onload=()=>{
+       if(portraitImg.naturalWidth>=500&&portraitImg.naturalHeight>=600){
+         portraitImg.hidden=false;mark.hidden=true;
+       }
+     };
+     portraitImg.onerror=()=>{portraitImg.hidden=true;mark.hidden=false;};
+     portraitImg.src=approvedPortrait.src;
+     card.append(portraitImg);
+   }
    const desc=make("div",undefined,"scene-participant-description");
    desc.append(make("strong",person.name));
    desc.append(make("span",person.role,"scene-participant-role"));
@@ -192,7 +259,9 @@ function render(){
  host.dataset.artScene=stage.sceneId;
  host.dataset.artVariant=stage.variantKey;
  host.dataset.artLocation=stage.location;
- host.dataset.artVerified=String(stage.assetVerified);
+ host.dataset.artVerified="false";
+ setText($("sceneLocation"),sceneLocations[stage.location]||"Место расследования");
+ renderApprovedSceneArt(stage);
  renderSceneCast(stage,s);
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);
