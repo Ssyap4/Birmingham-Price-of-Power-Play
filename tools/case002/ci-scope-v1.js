@@ -9,6 +9,9 @@ const {execFileSync}=require("node:child_process");
 const CATEGORIES=["deep","story","art","evidence","reporting","ui","visual","docs","ci"];
 function category(file){
  const p=String(file||"").replace(/\\/g,"/");
+ if(p==="ARCHITECTURE.md"||p==="CHANGELOG.md"||p.startsWith("docs/decisions/"))
+   return "docs";
+ if(p==="tools/case002/docs-guard-v1.js")return "docs";
  if(p==="docs/case002/README.md"||p==="docs/case002/case002-first-portrait-production-brief-v1.md")
    return "docs";
  if(/^docs\/case002\/.*(?:art-storyboard|visual-bible)/.test(p))return "art";
