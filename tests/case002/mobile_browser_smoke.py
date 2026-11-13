@@ -197,6 +197,52 @@ def main():
                         for selector in (".choice:not([disabled])", ".tool-tab"):
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
+                    # In a real Telegram webview the native and Telegram UI
+                    # safe areas must stack, without requiring network SDK
+                    # access when opened as plain Safari/Chromium HTML.
+                    tg_context = browser.new_context(
+                        viewport={"width": 390, "height": 844},
+                        device_scale_factor=3, is_mobile=True, has_touch=True
+                    )
+                    tg_page = tg_context.new_page()
+                    tg_page.add_init_script("""() => {
+                        window.__case002TelegramHandlers = {};
+                        window.Telegram = {WebApp: {
+                          safeAreaInset: {top:24,bottom:18,left:6,right:6},
+                          contentSafeAreaInset: {top:40,bottom:8,left:0,right:0},
+                          onEvent(name, cb) {window.__case002TelegramHandlers[name] = cb;},
+                          offEvent(name) {delete window.__case002TelegramHandlers[name];}
+                        }};
+                    }""")
+                    tg_page.goto(address, wait_until="load")
+                    tg_insets = tg_page.evaluate("""() => {
+                        const st = document.documentElement.style;
+                        return {
+                          top:st.getPropertyValue('--case002-safe-top'),
+                          bottom:st.getPropertyValue('--case002-safe-bottom'),
+                          left:st.getPropertyValue('--case002-safe-left')
+                        };
+                    }""")
+                    assert tg_insets == {"top":"64px","bottom":"26px","left":"6px"}, (
+                        f"{browser_name}: Telegram content and device safe areas not combined: {tg_insets}"
+                    )
+                    tg_page.locator("#begin").click()
+                    assert tg_page.locator("#quickNav").is_visible()
+                    shell_top = tg_page.locator(".app-shell").evaluate(
+                        "(el) => parseFloat(getComputedStyle(el).paddingTop)"
+                    )
+                    nav_bottom_padding = tg_page.locator("#quickNav").evaluate(
+                        "(el) => parseFloat(getComputedStyle(el).paddingBottom)"
+                    )
+                    assert shell_top >= 64, f"{browser_name}: Telegram header overlaps case"
+                    assert nav_bottom_padding >= 34, f"{browser_name}: Telegram home bar overlaps commands"
+                    updated_top = tg_page.evaluate("""() => {
+                        window.Telegram.WebApp.contentSafeAreaInset.top = 72;
+                        window.__case002TelegramHandlers.contentSafeAreaChanged();
+                        return document.documentElement.style.getPropertyValue('--case002-safe-top');
+                    }""")
+                    assert updated_top == "96px", f"{browser_name}: safe-area event is stale"
+                    tg_context.close()
                     assert not failures, f"{browser_name} console errors: {failures}"
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()
