@@ -30,6 +30,8 @@ jobs:
         run: node tests/case002/validate-canon-v2.js
       - name: Exercise implemented Case 002 draft engine and persistence
         run: node tests/case002/engine-v3.test.js
+      - name: Verify all 15 specialist story detours
+        run: node tests/case002/hero-v3.test.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
