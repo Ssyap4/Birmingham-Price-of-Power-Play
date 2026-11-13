@@ -36,9 +36,12 @@ jobs:
         run: node tests/case002/explore-v3.test.js
       - name: Verify evidence source/custody, irreversible transfer and legacy saves
         run: node tests/case002/evidence-custody-v3.test.js
+      - name: Validate dynamic narrative and 35 state-sensitive epilogues
+        run: node tests/case002/story-variants-v4.test.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
           node --check src/case002/browser-data-v3.js
           node --check src/case002/engine-v3.js
+          node --check src/case002/story-variants-v4.js
           node --check preview/case002-prototype/app.js
