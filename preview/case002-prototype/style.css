@@ -115,3 +115,24 @@
 @media(prefers-reduced-motion:reduce){
  .case-quick-nav button,.notice{animation:none!important;transition:none!important}
 }
+
+/* No splash overlay: chapter card is an in-flow title, safe for 360px phones
+   and reduced-motion settings. Plot buttons and inventory stay accessible. */
+.chapter-intertitle{margin:11px 0 17px;padding:20px 16px;
+ background:radial-gradient(ellipse at 85% 25%,#76512b55,transparent 62%),
+   linear-gradient(135deg,#1f1914,#33271b 55%,#181310);
+ border:1px solid #986f42;border-radius:8px;position:relative;
+ box-shadow:inset 0 0 0 3px #b28a3417,0 10px 25px #0006;
+ text-align:center;overflow:hidden}
+.chapter-intertitle[hidden]{display:none}
+.chapter-intertitle::before,.chapter-intertitle::after{
+ content:"";display:block;height:1px;width:70%;margin:0 auto;
+ background:linear-gradient(90deg,transparent,#c89b58 45%,transparent)}
+.chapter-intertitle::after{margin-top:15px}
+.chapter-intertitle-name{font:600 clamp(.91rem,3.5vw,1.1rem) Georgia,serif;
+ letter-spacing:.13em;line-height:1.45;color:#eaca93;text-wrap:balance;
+ margin:13px auto}
+.chapter-intertitle-line{margin:0 auto;color:#d6c0a4;
+ font:italic .89rem/1.5 Georgia,serif;max-width:440px}
+@media(max-width:359px){.chapter-intertitle{padding:15px 11px}
+ .chapter-intertitle-name{letter-spacing:.055em}}
