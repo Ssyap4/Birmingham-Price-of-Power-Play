@@ -3,6 +3,9 @@ on:
   push:
     branches: [feat/case002-story-bible-v1]
     paths:
+      - 'ARCHITECTURE.md'
+      - 'CHANGELOG.md'
+      - 'docs/decisions/**'
       - 'docs/case002/**'
       - 'tests/case002/**'
       - 'src/case002/**'
@@ -35,6 +38,8 @@ jobs:
         run: node tools/case002/ci-scope-v1.js --github-output
       - name: Validate the scope selector (including fail-closed behavior)
         run: node tests/case002/ci-scope-v1.test.js
+      - name: Validate architecture, change history and decision record links
+        run: node tools/case002/docs-guard-v1.js
       - name: Syntax-check all small modules and browser entrypoint
         run: |
           node --check tools/case002/ci-scope-v1.js
