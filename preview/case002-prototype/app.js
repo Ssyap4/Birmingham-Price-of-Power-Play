@@ -54,6 +54,17 @@ const evidenceLabels={
 const evidenceName=id=>evidenceLabels[id]||id.replaceAll("_"," ");
 const proofLabels={provedFirstForgery:"Подлог отправления Мэйбл",provedWagonDiversion:"Перехват вагона F-4182",provedSecondForgery:"Подложная запись о прибытии",provedFactoryCoverup:"Сокрытие заводской аварии",provedHaleMurder:"Убийство Хейла Брэкеттом",provedBrackettNetwork:"Счета преступной сети"};
 const stageLabels={P:"ПРОЛОГ",I:"ГЛАВА I · МЁРТВЫЙ ПАССАЖИР",II:"ГЛАВА II · ТРИ МАРШРУТА",III:"ГЛАВА III · НОЧНОЙ СТРЕЛОЧНИК",IV:"ГЛАВА IV · ТЕ, КТО НЕ ДОЛЖЕН ГОВОРИТЬ",V:"ГЛАВА V · ЦЕНА МОЛЧАНИЯ",VI:"ГЛАВА VI · ПОСЛЕДНИЙ СИГНАЛ",END:"ИСХОД РАССЛЕДОВАНИЯ"};
+const chapterOpenings={P:"P01",I:"A01",II:"B01",III:"C01",IV:"D01",V:"E01",VI:"F01"};
+const chapterMood={
+ P:"Ночь, когда в путевых книгах появилась первая ложь.",
+ I:"Под аркой виадука дождь смыл следы, но не вопросы.",
+ II:"У каждого пути — своё молчание.",
+ III:"Поезд исчез не там, где его искали.",
+ IV:"Найти свидетеля ещё не значит спасти его.",
+ V:"Цена молчания написана чужой рукой.",
+ VI:"Последний сигнал нельзя подать дважды.",
+ END:"Теперь город узнает цену принятого решения."
+};
 const actionLabels={
  "D03:D10:continue":"Оставить убежище пока незащищённым",
  "D05:D06:continue":"Остаться без официального освобождения",
@@ -312,6 +323,14 @@ function render(){
  setText($("sceneLocation"),sceneLocations[stage.location]||"Место расследования");
  renderApprovedSceneArt(stage);
  renderSceneCast(stage,s);
+ const chapterCard=$("chapterIntertitle");
+ const isFirst=scene.chapter==="END"||chapterOpenings[scene.chapter]===scene.id;
+ chapterCard.hidden=!isFirst;
+ if(isFirst){
+   chapterCard.dataset.chapter=scene.chapter;
+   setText($("intertitleName"),stageLabels[scene.chapter]||scene.chapter);
+   setText($("intertitleLine"),chapterMood[scene.chapter]||"Расследование продолжается.");
+ }
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);
  setText($("sceneTitle"),scene.title);
