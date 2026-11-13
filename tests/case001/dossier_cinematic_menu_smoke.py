@@ -24,7 +24,11 @@ for engine in ('chromium','webkit'):
     assert page.locator('#cabinetSettings').count()==0,('old menu settings',engine,width)
     assert page.locator('#cabinetPlayerDossier').is_visible(),('new dossier entry',engine,width)
     assert page.locator('#profileCard').is_visible(),('five heroes entry vanished',engine,width)
-    assert page.locator('#bhMusic').count()==1 and page.locator('#bhEffects').count()==1,('audio toggles missing',engine,width)
+    assert page.locator('#bhMusic').is_visible() and page.locator('#bhEffects').is_visible(),('audio controls hidden in main menu',engine,width)
+    page.locator('#bhEffects').click()
+    assert page.locator('#bhEffects').get_attribute('aria-pressed')=='false',('effects cannot be switched off',engine,width)
+    page.locator('#bhEffects').click()
+    assert page.locator('#bhEffects').get_attribute('aria-pressed')=='true',('effects cannot be switched on',engine,width)
     page.locator('#cabinetPlayerDossier').click()
     assert page.locator('#profile').is_visible() and page.locator('.pd-alias').is_visible(),('wrong player profile',engine,width)
     for selector,path in [('.pd-hero','dossier-archive-scene.svg'),('.pd-identity','dossier-unknown-detective.svg')]:
