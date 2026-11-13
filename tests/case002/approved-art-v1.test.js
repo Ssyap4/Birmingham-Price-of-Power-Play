@@ -118,7 +118,7 @@ for(const e of manifest.sceneImages){
  assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
    bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
  if(e.mobileFile!==undefined){
-   const expectedMobile=e.file.replace(/\\.webp$/,"--mobile.webp");
+   const expectedMobile=e.file.replace(/\.webp$/,"--mobile.webp");
    assert.equal(e.mobileFile,expectedMobile,
      "Approved mobile crop must belong to the exact same scene/variant");
    assert(Number.isInteger(e.mobileWidth)&&e.mobileWidth>=500 &&
