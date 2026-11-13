@@ -1,0 +1,49 @@
+/* Dossier 2.1 — decorative illustrations with protected text contrast.
+   Do not change scene-art or portrait mappings from Case 001. */
+#profile.player-dossier-v2 .pd-hero{
+ min-height:clamp(245px,32vw,360px);
+ display:flex;flex-direction:column;justify-content:center;
+ background-image:
+   linear-gradient(90deg,rgba(8,9,9,.95) 0%,rgba(10,10,10,.86) 26%,rgba(10,9,8,.40) 65%,rgba(9,8,7,.16) 100%),
+   linear-gradient(0deg,rgba(8,7,7,.55),transparent 60%),
+   url('assets/dossier/dossier-archive-scene.svg');
+ background-position:center,center,center;
+ background-size:cover;
+}
+#profile.player-dossier-v2 .pd-hero>*{position:relative;z-index:1}
+#profile.player-dossier-v2 .pd-hero h2{text-shadow:0 3px 16px #030303,0 0 30px #030303;max-width:760px}
+#profile.player-dossier-v2 .pd-hero p{max-width:540px;text-shadow:0 2px 12px #060503}
+#profile.player-dossier-v2 .pd-identity{
+ position:relative;isolation:isolate;overflow:hidden;
+ display:flex;justify-content:flex-end;align-items:center;
+ min-height:clamp(250px,27vw,330px);
+ padding:clamp(24px,4vw,48px);
+ background-image:linear-gradient(90deg,rgba(4,7,8,.06) 3%,rgba(7,8,9,.15) 36%,rgba(9,9,10,.92) 61%,rgba(6,7,7,.97) 100%),url('assets/dossier/dossier-unknown-detective.svg');
+ background-size:cover;background-position:center;
+}
+#profile.player-dossier-v2 .pd-identity:before{content:'';position:absolute;inset:12px;border:1px solid #ab885c55;pointer-events:none;z-index:1}
+#profile.player-dossier-v2 .pd-identity .pd-mark{display:none}
+#profile.player-dossier-v2 .pd-identity-details{position:relative;z-index:2;width:min(52%,430px);max-width:100%;padding:18px 12px;text-shadow:0 2px 14px #000}
+#profile.player-dossier-v2 .pd-identity .pd-alias{font-size:clamp(30px,4.5vw,48px)}
+#profile.player-dossier-v2 .pd-identity .pd-number{color:#d6b992}
+#profile.player-dossier-v2 .pd-edit-alias{background:#181411dc}
+#home .cabinet-entry-player{
+ background-image:linear-gradient(90deg,rgba(7,8,9,.82),rgba(7,8,9,.46) 55%,rgba(7,8,9,.05)),url('assets/dossier/dossier-unknown-detective.svg');
+ background-size:cover;background-position:center 52%;
+ border-color:#b58d5f;
+}
+#home .cabinet-entry-player .cabinet-entry-copy strong,#home .cabinet-entry-player .cabinet-entry-copy small{text-shadow:0 2px 8px #000,0 0 14px #000}
+#home .cabinet-entry-player .cabinet-entry-icon{background:#100c0abf}
+@media(max-width:700px){
+ #profile.player-dossier-v2 .pd-hero{
+   min-height:260px;padding:24px;
+   background-image:linear-gradient(90deg,rgba(7,8,8,.95) 0%,rgba(8,8,8,.8) 58%,rgba(8,8,8,.55)),url('assets/dossier/dossier-archive-scene.svg');
+   background-position:center,right center;
+ }
+ #profile.player-dossier-v2 .pd-hero h2{font-size:clamp(35px,10vw,55px)}
+ #profile.player-dossier-v2 .pd-identity{min-height:345px;justify-content:flex-end;align-items:flex-end;padding:22px 16px;background-image:linear-gradient(0deg,rgba(6,8,9,.98) 0%,rgba(7,9,10,.94) 28%,rgba(7,9,10,.16) 78%),url('assets/dossier/dossier-unknown-detective.svg');background-position:center 50%,35% 46%}
+ #profile.player-dossier-v2 .pd-identity-details{width:100%;padding:10px 4px 1px}
+ #profile.player-dossier-v2 .pd-identity .pd-alias{font-size:clamp(27px,8vw,39px)}
+ #home.cabinet-art-ready .cabinet-entry-player{background-image:linear-gradient(90deg,rgba(8,8,9,.93),rgba(8,8,9,.5) 60%,rgba(8,8,9,.04)),url('assets/dossier/dossier-unknown-detective.svg')!important;background-size:cover!important;background-position:center 45%!important}
+}
+@media(prefers-reduced-motion:reduce){#profile.player-dossier-v2 .pd-identity,#profile.player-dossier-v2 .pd-hero{animation:none!important}}
