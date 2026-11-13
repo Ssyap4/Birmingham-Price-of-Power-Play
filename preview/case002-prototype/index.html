@@ -37,8 +37,20 @@
     <div class="chapter-row">
       <span id="chapterLabel">ГЛАВА</span><span id="sceneId">P01</span>
     </div>
-    <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
-    <article class="story" aria-labelledby="sceneTitle">
+    <div class="notice" id="notice" role="status" aria-live="polite" hidden>
+      <div class="notice-kicker">ИЗМЕНЕНИЯ В ДЕЛЕ</div>
+      <div id="noticeContent" class="notice-content"></div>
+      <div class="notice-actions">
+        <button id="noticeJump" type="button" class="notice-open" hidden>ОТКРЫТЬ В ДОСЬЕ</button>
+        <button id="noticeDismiss" type="button" class="notice-close">ПОНЯТНО</button>
+      </div>
+    </div>
+    <div class="case-pulse" id="casePulse" aria-label="Состояние расследования">
+      <span id="pulseEvidence">Улик: 0</span>
+      <span id="pulseProof">Выводов: 0</span>
+      <span id="pulseSafe">В безопасности: 0</span>
+    </div>
+    <article class="story" id="storyPanel" aria-labelledby="sceneTitle" tabindex="-1">
       <div class="scene-heading">
         <img id="heroPortrait" class="hero-portrait" alt="" width="80" height="100" decoding="async">
         <div class="scene-heading-title"><span class="portrait-label">ИСТОРИЯ ГЕРОЯ</span><h2 id="sceneTitle"></h2><span id="heroName" class="hero-name"></span></div>
@@ -50,11 +62,11 @@
       <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
       <div class="story-content" id="sceneText"></div>
     </article>
-    <section class="choices" aria-label="Действия">
+    <section class="choices" id="choicesPanel" aria-label="Действия" tabindex="-1">
       <h3>Ваше решение</h3>
       <div id="choiceList" class="choice-list"></div>
     </section>
-    <section class="case-tools" aria-label="Досье расследования">
+    <section class="case-tools" id="caseTools" aria-label="Досье расследования" tabindex="-1">
       <div class="tool-tabs" role="group" aria-label="Вспомогательные разделы">
         <button class="tool-tab" data-tab="evidence" aria-pressed="true">УЛИКИ</button>
         <button class="tool-tab" data-tab="deductions" aria-pressed="false">ВЫВОДЫ</button>
@@ -63,6 +75,13 @@
       </div>
       <div id="toolContent" class="tool-content"></div>
     </section>
+    <nav id="quickNav" class="case-quick-nav" aria-label="Быстрый переход по делу">
+      <button type="button" data-go="scene">СЦЕНА</button>
+      <button type="button" data-go="choices">РЕШЕНИЕ</button>
+      <button type="button" data-go="evidence">УЛИКИ</button>
+      <button type="button" data-go="deductions">ВЫВОДЫ</button>
+      <button type="button" data-go="witnesses">ЛЮДИ</button>
+    </nav>
     <div class="underbar">
       <span id="saveStatus">Автосохранение после каждого решения</span>
       <button id="backToLaunch" type="button" class="text-button">К ВЫБОРУ ГЕРОЯ</button>
@@ -81,6 +100,7 @@
 <script src="../../src/case002/evidence-icons-v1.js"></script>
 <script src="../../src/case002/deduction-board-v1.js"></script>
 <script src="../../src/case002/scene-prose-v1.js"></script>
+<script src="../../src/case002/ui-events-v1.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
