@@ -19,7 +19,7 @@ const sourceItems={
  B10:["inspection_copy"],B12:["clerk_witness"],B13:["guard_payment"],
  C02:["private_siding_map"],C03:["points_log"],C04:["mabel_confession"],
  C05:["arrival_manifest"],C07:["bridge_witness"],C08:["brackett_wire"],
- D03:["pressure_log","ada_statement"],D08:["mercer_signed_statement"],
+ D03:["pressure_log","ada_statement"],D08:[],
  E08:["brackett_boots"],E09:[]
 };
 const initial=hero=>({
@@ -53,6 +53,7 @@ function enter(s,id){
  const gains=sourceItems[id]||[];
  if(id!=="C04"||s.evidence.has("dispatch_manifest"))
    for(const item of gains)s.evidence.add(item);
+ if(id==="D08"&&s.flags.mercerWilling)s.evidence.add("mercer_signed_statement");
  if(id==="B04")s.visitedRoutes.add("rail");
  if(id==="B07")s.visitedRoutes.add("canal");
  if(id==="B10")s.visitedRoutes.add("factory");
@@ -71,13 +72,16 @@ function transition(s,to,action="continue"){
  assert(allowed.includes(to),"illegal edge "+from+" -> "+to);
  if(byId.get(to).hero&&byId.get(to).hero!==s.hero)throw Error("wrong hero edge "+from+" -> "+to);
  if(to==="B11"&&s.visitedRoutes.size<2)throw Error("two independent routes required");
+ if(to==="D03"&&from==="D02"&&!facts(s).provedWagonDiversion&&!s.evidence.has("inspection_copy")&&!s.evidence.has("victim_register"))
+   throw Error("Ada needs independently verified context");
  if(to==="D11"&&!["D03","D06","D09","HF03","HV02"].some(id=>s.visited.has(id)))
    throw Error("need at least one investigated witness");
  const old=clone(s); // On any invalid choice state must remain unchanged.
  if(from==="D03"&&to==="D10"&&action==="hideAda"&&s.witnesses.ada==="located")s.witnesses.ada="protected";
+ if(from==="D07"&&to==="D08"&&action==="offerProtectedTestimony")s.flags.mercerWilling=true;
  if(from==="D05"&&to==="D06"&&action==="extractTommy")s.flags.tommyExtraction=true;
  if(from==="D06"&&s.flags.tommyExtraction&&s.witnesses.tommy==="detained")s.witnesses.tommy="protected";
- if(from==="D09"&&to==="D10"&&action==="protectMercer"&&s.witnesses.mercer==="located")s.witnesses.mercer="protected";
+ if(from==="D09"&&to==="D10"&&action==="protectMercer"&&s.witnesses.mercer==="located"&&s.flags.mercerWilling)s.witnesses.mercer="protected";
  if(from==="D09"&&to==="D10"&&action==="betrayAda"){
    if(s.witnesses.ada==="protected")s.witnesses.ada="detained"; // address disclosed
    s.flags.mercerBetrayed=true;
@@ -191,5 +195,18 @@ assert.throws(()=>transition(mismatch,"HF01"),/wrong hero edge/);
 // Must prove two routes before the junction.
 const premature=run("jack",[...commonIntro,"B01","B02","B03","B04"]);
 assert.throws(()=>transition(premature,"B11"),/two independent routes required/);
+
+const betrayal=run("jack",[...commonIntro,...railAndCanal,...chapterThree,
+ "D01","D02","D03",["D10","hideAda"],"D01","D07","D08","D09",["D10","betrayAda"],
+ "D01","D02","D03",["D10","hideAda"]]);
+assert.equal(betrayal.witnesses.ada,"detained","compromised shelter cannot magically protect Ada again");
+// Signed confession is not automatically obtained by interviewing a frightened inspector.
+const noPromise=run("jack",[...commonIntro,...railAndCanal,...chapterThree,
+ "D01","D07","D08"]);
+assert(!noPromise.evidence.has("mercer_signed_statement"));
+const withPromise=run("jack",[...commonIntro,...railAndCanal,...chapterThree,
+ "D01","D07",["D08","offerProtectedTestimony"]]);
+assert(withPromise.evidence.has("mercer_signed_statement"));
+
 console.log("PASS model v2: "+tested+" actual scripted routes (5×7), "+
  rejected+" forbidden outcomes, 0-rescue fallback, no repeated loot, no hero leaks, two-route gate.");
