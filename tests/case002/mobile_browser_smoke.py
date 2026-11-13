@@ -64,8 +64,15 @@ def main():
                     assert page.locator("#game").get_attribute("data-art-verified") == "false", (
                         "Uncreated illustrations must never be presented as available"
                     )
+                    assert page.locator("#sceneArtwork").is_hidden()
+                    assert page.locator("#sceneArtworkImage").get_attribute("src") is None
+                    assert "Частная железнодорожная ветка" in page.locator(
+                        "#sceneLocation"
+                    ).inner_text()
                     page.locator(".choice:not([disabled])").first.click()
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#sceneArtwork").is_hidden()
+                    assert "Контора сыщика" in page.locator("#sceneLocation").inner_text()
                     assert page.locator("#sceneCast").is_visible()
                     assert page.locator("#sceneCast").get_attribute("data-people") == "mabel"
                     assert "Мэйбл Кросс" in page.locator("#sceneCast").inner_text()
