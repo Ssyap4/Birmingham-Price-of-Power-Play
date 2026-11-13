@@ -29,7 +29,15 @@ for engine in ('chromium','webkit'):
     assert page.locator('#profile').is_visible() and page.locator('.pd-alias').is_visible(),('wrong player profile',engine,width)
     for selector,path in [('.pd-hero','dossier-archive-scene.svg'),('.pd-identity','dossier-unknown-detective.svg')]:
      image=page.locator(selector).evaluate('e=>getComputedStyle(e).backgroundImage')
-     assert path in image,(engine,width,selector,image)
+     assert 'data:image/webp;base64,' in image,(engine,width,selector,'cinematic WebP not applied')
+    image_status=page.evaluate("""async () => {
+      const raw=getComputedStyle(document.documentElement).getPropertyValue('--pd-photo-archive');
+      const raw2=getComputedStyle(document.documentElement).getPropertyValue('--pd-photo-detective');
+      const test=async raw => {const m=raw.match(/data:image\\/webp;base64,[A-Za-z0-9+/=]+/);if(!m)return 0;
+       const image=new Image();image.src=m[0];try{await image.decode();return image.naturalWidth}catch{return 0}};
+      return [await test(raw),await test(raw2)];
+    }""")
+    assert image_status==[900,900],(engine,width,'art did not decode',image_status)
     assert page.evaluate("document.documentElement.scrollWidth")<=width+3,('overflow in profile',engine,width)
     page.locator('#homeBtn').click()
     assert page.locator('#home').is_visible()
