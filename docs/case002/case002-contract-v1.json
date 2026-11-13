@@ -40,6 +40,7 @@
     "brackett_wire",
     "bridge_witness",
     "guard_bootmark",
+    "brackett_boots",
     "evacuation_route",
     "private_siding_map",
     "brackett_accounts",
@@ -105,7 +106,7 @@
       ],
       [
         "bridge_witness",
-        "guard_bootmark"
+        "brackett_boots"
       ]
     ],
     "provedBrackettNetwork": [
