@@ -27,8 +27,17 @@ const check=view=>{
  if(matching.length){
    assert.equal(matching.length,1,"duplicate art registration");
    assert.equal(matching[0].review,"approved","unreviewed scene exposed");
-   assert(actual && actual.src.endsWith("/"+matching[0].file),
+   const approved=matching[0];
+   const actualFile=approved.mobileOnly?approved.mobileFile:approved.file;
+   assert(actual&&typeof actualFile==="string"&&
+     actual.src.endsWith("/"+actualFile),
      "registered art does not match the actual game state");
+   if(approved.mobileOnly){
+     assert.equal(actual.mobileSrc,actual.src,
+       "Mobile-only scene must render its physical portrait original");
+     assert.equal(actual.mobileOnly,true,
+       "Portrait-only source must not pretend a landscape master exists");
+   }
    verifiedSceneViews++;
  }else assert.equal(actual,null,"unregistered scene image was exposed");
  for(const person of cast.discovered(view.state)){
