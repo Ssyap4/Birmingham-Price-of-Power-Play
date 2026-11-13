@@ -5,6 +5,7 @@
  */
 const assert=require("node:assert/strict");
 const fs=require("node:fs"),path=require("node:path");
+const {createHash}=require("node:crypto");
 const {createEngine}=require("../../src/case002/engine-v3.js");
 const {graph,contract,storyboard}=require("../../src/case002/browser-data-v3.js");
 const director=require("../../src/case002/scene-art-v1.js");
@@ -65,6 +66,10 @@ assert.throws(()=>resolveNpc(npc,{...pretend,npcPortraits:[
 // On any future acceptance, CI must refuse a registered file without actual
 // WebP bytes in the correct folder and expected header.
 const base=path.resolve(__dirname,"../..");
+const digest=bytes=>createHash("sha256").update(bytes).digest("hex");
+const approvedFingerprints=new Map();
+const evelynFingerprint=digest(fs.readFileSync(
+ path.join(base,"assets/case-scenes/evelyn.webp")));
 for(const e of manifest.sceneImages){
  const expected=path.join(base,"assets/case002/scenes",e.file);
  assert(fs.existsSync(expected),"Approved scene asset missing: "+e.file);
@@ -78,6 +83,12 @@ for(const e of manifest.npcPortraits){
  const bytes=fs.readFileSync(expected);
  assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
    bytes.toString("ascii",8,12)==="WEBP","Invalid registered NPC portrait");
+ const fingerprint=digest(bytes);
+ assert.notEqual(fingerprint,evelynFingerprint,
+   "New Case002 NPC cannot reuse Case001 Evelyn portrait");
+ assert(!approvedFingerprints.has(fingerprint),
+   "Two NPCs share identical image bytes: "+approvedFingerprints.get(fingerprint)+" and "+e.id);
+ approvedFingerprints.set(fingerprint,e.id);
 }
 console.log("PASS Case002 approved-art gate: "+states+
  " state views; zero unapproved portraits or story images; strict id, cast, "+
