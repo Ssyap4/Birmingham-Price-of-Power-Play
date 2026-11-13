@@ -37,6 +37,31 @@ failures(v=>{v.sceneImages[0].sceneId="A11";v.sceneImages[0].file="case002-a11-s
 failures(v=>v.sceneImages[0].review="draft",/Unreviewed scene/);
 failures(v=>v.sceneImages[0].mobileOnly=true,/Mobile-only scene must not pretend/);
 failures(v=>v.sceneImages[0].mobileOnly="yes",/Unknown scene display mode/);
+// Positive end-to-end mobile-only binary audit, with one genuine verified WebP.
+// A temporary renamed fixture tests the code path without approving B06.
+const os=require("node:os");
+const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"case002-mobile-only-"));
+try{
+ const folder=path.join(tmp,"assets/case002/scenes");
+ fs.mkdirSync(folder,{recursive:true});
+ fs.copyFileSync(path.join(root,"assets/case002/scenes",first.mobileFile),
+   path.join(folder,"case002-b06-scene--mobile.webp"));
+ const fixture={schemaVersion:1,npcPortraits:[],sceneImages:[{
+   sceneId:"B06",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-b06-scene.webp",cast:[],
+   mobileFile:"case002-b06-scene--mobile.webp",
+   mobileWidth:first.mobileWidth,mobileHeight:first.mobileHeight,
+   mobileSha256:first.mobileSha256
+ }]};
+ const positive=audit({root:tmp,source:fixture});
+ assert.equal(positive.sceneCount,1);
+ assert.equal(positive.exportedCount,1,"No phantom desktop file in a phone-only wave");
+ assert.equal(positive.files[0].file,"case002-b06-scene--mobile.webp");
+ fixture.sceneImages[0].mobileSha256="0".repeat(64);
+ assert.throws(()=>audit({root:tmp,source:fixture}),/changed without review/);
+}finally{
+ fs.rmSync(tmp,{recursive:true,force:true});
+}
 function synthetic(format,width,height){
  const bytes=Buffer.alloc(36);
  bytes.write("RIFF",0,"ascii");bytes.writeUInt32LE(bytes.length-8,4);

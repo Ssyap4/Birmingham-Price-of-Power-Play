@@ -1,5 +1,13 @@
 # CHANGELOG.md — история разработки «Бирмингем: Цена власти»
 
+## 2026-11-14 — Case 002, mobile art wave 14: candidate QA and regression fixture
+
+- Two original **local portrait candidates**, B06 (canal ruts and broken railway seal) and B07 (empty boilerhouse, wet glove, tea tin), reviewed at 720×900 and checksum-locked in documentation. Not yet committed as playable assets; B08–B10 remain outstanding.
+- Rejected repeated canal/rut generations and collage outputs for B08/B09 instead of falsely registering the wrong story scene. Batch upload is deferred until all five scenes meet the visual contract.
+- Added a **positive mobile-only binary audit test** using a real image in an isolated temporary fixture: verifies one vertical file without a fictional desktop master and rejects altered SHA-256.
+- Technical/documentary change only. No 400 seeded story runs; Case 001, stable `main`, engine and saves unchanged.
+
+
 ## 2026-11-14 — Case 002, portrait-only artwork and actor-neutral scenes
 
 - Author-approved policy: no new horizontal illustrations; all future scene artwork is **portrait only**, optimized for phone and Telegram Mini App. Previously approved images remain intact.
