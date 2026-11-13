@@ -55,3 +55,7 @@
 }
 @media(max-width:370px){#profile .pd-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){#profile .pd-track-fill{transition:none}}
+
+/* The three detailed archive books have an explicit path home to the personal file. */
+.campaign-back-profile{display:block;width:min(100%,440px);min-height:46px;margin:15px auto;padding:12px;border:1px solid #b99360;background:linear-gradient(100deg,#3d2a1d,#17130f);color:#f0d4aa;font:700 12px Arial,sans-serif;letter-spacing:1px;cursor:pointer}
+.campaign-back-profile:focus-visible{outline:2px solid #e3bf88;outline-offset:2px}
