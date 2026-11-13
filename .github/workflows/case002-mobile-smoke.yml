@@ -1,4 +1,4 @@
-name: Case 002 mobile smoke (draft only)
+name: Case 002 scoped mobile smoke (draft only)
 on:
   push:
     branches: [feat/case002-story-bible-v1]
@@ -19,12 +19,31 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Select quick or full mobile QA according to changes
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: node tools/case002/ci-scope-v1.js --github-output
       - uses: actions/setup-python@v5
+        if: steps.scope.outputs.run_browser == 'true'
         with:
           python-version: '3.12'
-      - name: Install targeted Chromium and WebKit browser smoke dependencies
+      - name: Install only the needed test browsers
+        if: steps.scope.outputs.run_browser == 'true'
         run: |
           python -m pip install --disable-pip-version-check 'playwright==1.62.0'
-          python -m playwright install --with-deps chromium webkit
-      - name: Exercise Case 002 offline bundle via mobile localhost preview
+          if [ "${{ steps.scope.outputs.browser_full }}" = 'true' ]; then
+            python -m playwright install --with-deps chromium webkit
+          else
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Fast local mobile QA of changed scene presentation
+        if: steps.scope.outputs.run_browser == 'true' && steps.scope.outputs.browser_full != 'true'
+        run: python tests/case002/mobile_browser_smoke.py --quick
+      - name: Full WebKit iPhone and Chromium story UI QA
+        if: steps.scope.outputs.browser_full == 'true'
         run: python tests/case002/mobile_browser_smoke.py
