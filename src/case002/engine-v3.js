@@ -28,6 +28,12 @@
   };
   const ACTIONS = {
     "D03:D10": ["continue","hideAda"],
+    "HJ02:D06": ["continue","extractTommy"],
+    "HF01:B04": ["continue","copyManifest"],
+    "HF03:D10": ["continue","copyInspection"],
+    "HE03:E03": ["continue","verifyForPublication"],
+    "HV02:D10": ["continue","verifyTommyGuarantee"],
+    "HS03:E05": ["continue","safeAccess"],
     "D07:D08": ["continue","offerProtectedTestimony"],
     "D05:D06": ["continue","extractTommy"],
     "D09:D10": ["continue","protectMercer","betrayAda"],
@@ -44,6 +50,9 @@
   };
   const ACTION_TITLES = {
     continue:"Продолжить",hideAda:"Найти Аде безопасное убежище",
+    copyManifest:"Сделать заверенную копию грузовой ведомости",
+    copyInspection:"Скопировать акт и записать его происхождение",
+    verifyTommyGuarantee:"Получить письменное освобождение Томми",
     offerProtectedTestimony:"Обеспечить Мерсеру условия для показаний",
     extractTommy:"Вывести Томми из-под охраны",
     protectMercer:"Защитить Мерсера",betrayAda:"Передать адрес Ады",
@@ -88,8 +97,10 @@
     if (!target.includes(value)) target.push(value);
   }
   function storageRead(store, key, fallback) {
-    try { const raw=store.getItem(key); return raw === null ? fallback : JSON.parse(raw); }
-    catch (_) { return fallback; }
+    const raw=store.getItem(key);
+    if(raw===null)return fallback;
+    try { return JSON.parse(raw); }
+    catch (_) { throw new Error("Draft archive is damaged; refusing to overwrite existing records"); }
   }
   function assertState(s, graph, contract, hero, nodes) {
     ensure(s && typeof s==="object" && !Array.isArray(s),"Invalid saved state");
@@ -107,6 +118,8 @@
     ensure(s.ending===null || contract.endings.some(x=>x.id===s.ending),"Unknown ending");
     ensure(!s.finished || s.ending===END_NODES[s.node],"Contradictory ending");
     ensure(s.finished || s.ending===null,"Ending without completion");
+    ensure(!s.prior || !(s.prior.heroId===hero && s.prior.ending==="endingDeath"),
+      "Dead hero cannot continue same canon");
     ensure(Array.isArray(s.history) && s.history.length<=2000,"Invalid history");
     ensure(s.visited.includes(s.node),"Current scene not visited");
     return s;
@@ -191,6 +204,15 @@
       if(ROUTES[to])addUnique(s.routes,ROUTES[to]);
       if(to==="D02"&&s.witnesses.ada==="missing")s.witnesses.ada="located";
       if(to==="E01")s.flags.chapterAtLeastV=true;
+      if(to==="E06")s.flags.valeContact=true;
+      if(to==="HJ01"){s.flags.jackGuardConfronted=true;s.flags.mabelTrustWary=true;}
+      if(to==="HJ03")s.flags.jackHeldFire=true;
+      if(to==="HF02")s.flags.finnPostCopied=true;
+      if(to==="HE01")s.flags.eleanorPhotoLogged=true;
+      if(to==="HE02")s.flags.adaTrust=true;
+      if(to==="HV01")s.flags.valeDebt=true;
+      if(to==="HS01")s.flags.samuelCouplingTraced=true;
+      if(to==="HS02")s.flags.samuelMappedSiding=true;
       if(to in END_NODES){
         s.finished=true;s.ending=END_NODES[to];s.completedAt=now();
         if(to==="Z02" && s.flags.evacuationRoutePrepared){
@@ -218,6 +240,8 @@
         "Investigate at least one witness");
       if(action==="hideAda")ensure(s.witnesses.ada==="located",
         "Ada cannot be hidden again after the hideout was compromised");
+      if(action==="verifyTommyGuarantee")ensure(s.witnesses.tommy==="detained",
+        "Tommy is no longer detained; this guarantee cannot be used twice");
       if(action==="protectMercer")ensure(s.flags.mercerWilling && s.witnesses.mercer==="located",
         "Mercer has not agreed to protected testimony");
       if(action==="verifyForPublication"){
@@ -242,6 +266,12 @@
       if(action==="acceptFatalRisk"){
         ensure(s.flags.dangerWasExplained,"Fatal danger wasn't acknowledged");
         s.flags.fatalChoiceAcknowledged=true;s.health=0;
+      }
+      if(action==="copyManifest"){addUnique(s.evidence,"dispatch_manifest");s.flags.finnManifestCopy=true;}
+      if(action==="copyInspection"){addUnique(s.evidence,"inspection_copy");s.flags.finnInspectionCopy=true;}
+      if(action==="verifyTommyGuarantee"){
+        s.flags.victorGuaranteedTommy=true;
+        s.witnesses.tommy="protected";
       }
       if(action==="hideAda")s.witnesses.ada="protected";
       if(action==="offerProtectedTestimony")s.flags.mercerWilling=true;
