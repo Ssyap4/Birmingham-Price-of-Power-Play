@@ -28,7 +28,9 @@ def build():
     for name,source in SOURCES.items():
         with Image.open(source) as img:
             current=img.convert('RGB')
-        assert current.size==TARGET_SIZE,(name,current.size)
+        if current.size!=TARGET_SIZE:
+            # Approved source panels are 984x192, already resized to 984:183 by the browser.
+            current=current.resize(TARGET_SIZE,Image.Resampling.LANCZOS)
         # Replace mismatched outer border bands with contiguous pixels
         # extrapolated from just inside the artwork. No text stretching.
         pixels=np.array(current, dtype=np.uint8)
