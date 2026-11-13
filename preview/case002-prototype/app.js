@@ -142,6 +142,8 @@ function sceneNarration(view){
   raw="Рабочие ещё остаются у частного пути. Останавливать механизм сейчас опасно.\n— Я не стану рисковать чужими жизнями ради быстрой победы, — говорит герой.";
  if(n==="E07"&&!s.flags.valeGuarantee)
   raw="Вейл повторяет обещание безопасности. Но на столе нет ни подтверждённой подписи, ни залога.\n— Слов недостаточно, — отвечает герой.\nСделка пока не имеет силы.";
+ if(n==="E10"&&s.flags.accountsGivenToWorkers)
+  raw="У ворот представитель рабочих спрятал папку под пальто. На расписке осталась его подпись.\n— Теперь эти счета не только ваша история, — сказал он.\nГерой посмотрел на пустые руки. Переданная копия больше не могла служить ему личным рычагом давления на Брэкетта.";
  if(n==="F05"){
   const entries=Object.entries(s.witnesses).map(([id,status])=>witnessNames[id]+": "+witnessLabels[status]).join("\n");
   raw="Перед окончательным решением герой проверяет судьбы трёх свидетелей:\n"+entries+
@@ -154,6 +156,12 @@ function sceneNarration(view){
   raw=evacuated.length
     ?"На окраине города затихли колёса. Под вымышленными именами уехали: "+evacuated.join(", ")+".\nДругих людей ещё ждёт опасность. Публичного правосудия не будет."
     :"Герой ушёл один. Ни одного свидетеля он не вывез. Железнодорожные книги всё так же хранили чужую ложь.\nВ городе всё спокойно — по крайней мере, на бумаге.";
+ }
+ if(n.startsWith("Z") && s.finished){
+  const lines=Object.entries(s.witnesses).map(([id,status])=>
+    witnessNames[id]+" — "+witnessLabels[status]);
+  raw+="\n\nВ итоговой записи сохранились судьбы свидетелей:\n"+lines.join("\n")+
+       "\nНайти человека, защитить его и вывести из города — три разных результата.";
  }
  return raw;
 }
@@ -172,6 +180,8 @@ function translateReason(choice,view){
   if(missingFacts.length)reasons.push("не доказано: "+missingFacts.join(", "));
   if(missingFlags.length)reasons.push("не выполнено: "+missingFlags.join(", "));
   if(missingSafe)reasons.push("нужно защитить ещё "+missingSafe+" свид.");
+  if(id==="trainControl" && view.state.flags.accountsGivenToWorkers)
+    reasons.push("единственная копия счетов передана представителю рабочих");
   return reasons.join("; ")||"условия развязки пока не выполнены";
  }
  const rules=[
@@ -224,7 +234,13 @@ function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
  let items=[];
- if(tab==="evidence")items=v.state.evidence.map(evidenceName);
+ if(tab==="evidence")items=v.evidenceDossier.map(item=>{
+    const place=item.holder==="workers"?"передано представителю рабочих":
+      ["copy","certified-copy","authenticated-copy"].includes(item.form)?"копия у героя":
+      ["photograph","impression","rubbing","sketch"].includes(item.form)?"зафиксированный след":
+      ["statement","signed-statement"].includes(item.form)?"записанные показания":"сведения в досье";
+    return evidenceName(item.id)+" · "+place;
+  });
  if(tab==="deductions")items=Object.entries(v.facts).map(([id,proved])=>(proved?"✓ ":"○ ")+proofLabels[id]);
  if(tab==="witnesses")items=Object.entries(v.state.witnesses).map(([id,status])=>witnessNames[id]+" — "+witnessLabels[status]);
  if(!items.length){root.append(make("p","Здесь пока нет записей.","empty"));return;}
@@ -241,6 +257,7 @@ function select(choice){
   render();
   if(gained.length)showNotice("Новая улика: "+gained.map(evidenceName).join(", "));
   else if(moved.length)showNotice(moved.map(([id,state])=>witnessNames[id]+" — "+witnessLabels[state]).join("; "));
+  else if(choice.action==="passAccountsToWorkers")showNotice("Копия счетов передана рабочим. Сведения остались в досье, но лично использовать бумаги для давления больше нельзя.");
   else showNotice(next.finished?"Расследование завершено. Итог сохранён.":"");
   window.scrollTo(0,0);
  }catch(e){
