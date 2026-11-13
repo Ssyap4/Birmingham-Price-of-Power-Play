@@ -13,6 +13,7 @@ function category(file){
    return "docs";
  if(p==="tools/case002/docs-guard-v1.js")return "docs";
  if(p==="tools/case002/validate-art-wave-v1.js")return "art";
+ if(p==="tools/case002/art-audit-v1.js")return "art";
  if(p==="docs/case002/README.md"||p==="docs/case002/case002-first-portrait-production-brief-v1.md")
    return "docs";
  if(/^docs\/case002\/.*(?:art-storyboard|art-wave|visual-bible)/.test(p))return "art";
