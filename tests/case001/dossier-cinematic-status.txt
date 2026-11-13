@@ -1,0 +1,8 @@
+tested_commit=bf7f5075070409a019ead9c2afd4e3571c0d6c69
+result=0
+PASS chromium 375 player vs heroes, 2 art assets, settings removed, music remains, no overflow
+PASS chromium 390 player vs heroes, 2 art assets, settings removed, music remains, no overflow
+PASS chromium 1280 player vs heroes, 2 art assets, settings removed, music remains, no overflow
+PASS webkit 375 player vs heroes, 2 art assets, settings removed, music remains, no overflow
+PASS webkit 390 player vs heroes, 2 art assets, settings removed, music remains, no overflow
+PASS webkit 1280 player vs heroes, 2 art assets, settings removed, music remains, no overflow
