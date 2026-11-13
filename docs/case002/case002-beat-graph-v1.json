@@ -2,7 +2,7 @@
   "status": "OUTLINE_ONLY_NOT_GAME",
   "caseId": "002",
   "entry": "P01",
-  "note": "Structural reachability only: actual flags/ending gates must be applied from case002-contract-v1.json in future engine; conditional B11 requires 2 investigated routes.",
+  "note": "Draft v3: specialist detours keep essential cross-checks and rescues in sequence; ending gates are defined in the logic contract.",
   "nodes": [
     {
       "id": "P01",
@@ -752,7 +752,7 @@
       "title": "Виктор: слово сестре",
       "beat": "Гарантия Томми без покупки молчания Мэйбл",
       "next": [
-        "D08"
+        "D10"
       ],
       "hero": "victor"
     },
@@ -762,7 +762,7 @@
       "title": "Виктор: контракт",
       "beat": "Заводская гарантия должна быть предметной",
       "next": [
-        "E09"
+        "E07"
       ],
       "hero": "victor"
     },
@@ -782,7 +782,7 @@
       "title": "Сэмюэл: стрелка",
       "beat": "Объяснение механики отвода без магического знания",
       "next": [
-        "C05"
+        "C03"
       ],
       "hero": "samuel"
     },
@@ -792,7 +792,7 @@
       "title": "Сэмюэл: пустой путь",
       "beat": "Проверить очистку ветки до саботажа",
       "next": [
-        "E08"
+        "E05"
       ],
       "hero": "samuel"
     },
