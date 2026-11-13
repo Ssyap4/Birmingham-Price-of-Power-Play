@@ -48,6 +48,9 @@ def main():
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
+                    assert page.locator("#chapterIntertitle").is_visible()
+                    assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "P"
+                    assert "Ночь, когда" in page.locator("#intertitleLine").inner_text()
                     assert page.locator("#quickNav button").count() == 5
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 0"
                     assert page.locator("#pulseProof").inner_text() == "Выводов: 0"
@@ -83,6 +86,9 @@ def main():
                     ).text_content()
                     page.locator(".choice:not([disabled])").first.click()
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#chapterIntertitle").is_hidden(), (
+                        "Intertitle must not repeat on every scene of the chapter"
+                    )
                     assert page.locator("#sceneArtwork").is_hidden()
                     assert "Контора сыщика" in page.locator("#sceneLocation").text_content()
                     assert page.locator("#sceneCast").is_visible()
@@ -105,6 +111,9 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("P02"), "save didn't reload"
                     page.locator(".choice:not([disabled])").first.click()  # A01
                     assert page.locator("#sceneId").inner_text().startswith("A01")
+                    assert page.locator("#chapterIntertitle").is_visible()
+                    assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "I"
+                    assert "ВИАДУКА" in page.locator("#intertitleLine").inner_text().upper()
                     page.locator(".choice:not([disabled])").nth(1).click()  # A03 via bridge
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     assert "Роуэн" in page.locator("#sceneCast").inner_text()
