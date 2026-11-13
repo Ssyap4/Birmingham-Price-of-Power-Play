@@ -195,10 +195,15 @@ function resolveScene(stage,source=manifest){
  // Stage names are deterministic from the screenplay, not URLs in user data.
  const name="case002-"+stage.sceneId.toLowerCase()+"-scene"+
    (stage.variantKey==="default"?"":"--"+stage.variantKey)+".webp";
+ // Existing art retains wide+mobile pairs; later waves can be portrait-only.
+ const mobileOnly=e.mobileOnly===true;
+ if(e.mobileOnly!==undefined&&!mobileOnly)throw Error("Invalid mobile-only art flag");
  if(stage.desiredAsset!==name||e.file!==name||
    !Array.isArray(e.cast)||!e.cast.every(x=>stage.visibleCast.includes(x))||
-   !Number.isInteger(e.width)||e.width<800||
-   !Number.isInteger(e.height)||e.height<450)
+   (!mobileOnly&&(!Number.isInteger(e.width)||e.width<800||
+                 !Number.isInteger(e.height)||e.height<450))||
+   (mobileOnly&&(e.mobileFile===undefined||e.width!==undefined||
+                 e.height!==undefined||e.sha256!==undefined)))
    throw Error("Approved art conflicts with actual scene state");
  // Mobile composition is a separately approved WebP, NEVER a guessed URL.
  // Without one the landscape master remains the only allowed source.
@@ -211,8 +216,8 @@ function resolveScene(stage,source=manifest){
       throw Error("Approved mobile crop conflicts with actual scene");
    mobileSrc="../../assets/case002/scenes/"+mobileName;
  }
- return {src:"../../assets/case002/scenes/"+name,
-   mobileSrc,
+ const src=mobileOnly?mobileSrc:"../../assets/case002/scenes/"+name;
+ return {src,mobileSrc,mobileOnly,
    alt:"Иллюстрация эпизода "+stage.sceneId,
    sceneId:stage.sceneId,variantKey:stage.variantKey};
 }

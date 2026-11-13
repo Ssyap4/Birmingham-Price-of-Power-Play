@@ -262,10 +262,11 @@ function renderApprovedSceneArt(stage){
  if(!approved)return;
  img.alt=approved.alt;
  const phone=window.matchMedia("(max-width: 680px)").matches;
+ const mobileOnly=approved.mobileOnly===true;
  const hasMobile=phone&&Boolean(approved.mobileSrc);
  let fellBack=false;
  function landscapeFallback(){
-   if(!hasMobile||fellBack)return false;
+   if(mobileOnly||!hasMobile||fellBack)return false;
    fellBack=true;
    // A bad portrait should never erase a valid approved landscape image.
    mobile.removeAttribute("srcset");
@@ -276,14 +277,14 @@ function renderApprovedSceneArt(stage){
    return true;
  }
  if(approved.mobileSrc){
-   root.dataset.portrait=phone?"true":"false";
+   root.dataset.portrait=mobileOnly||phone?"true":"false";
    mobile.srcset=approved.mobileSrc;
  }
  img.onload=()=>{
    if(serial!==artRenderSerial||host.dataset.artScene!==stage.sceneId||
       host.dataset.artVariant!==stage.variantKey)return;
-   const mobileSelected=hasMobile&&!fellBack&&
-     img.currentSrc.includes("--mobile.webp");
+   const mobileSelected=mobileOnly||(hasMobile&&!fellBack&&
+     img.currentSrc.includes("--mobile.webp"));
    const valid=mobileSelected?
      img.naturalWidth>=500&&img.naturalHeight>=700:
      img.naturalWidth>=800&&img.naturalHeight>=450;

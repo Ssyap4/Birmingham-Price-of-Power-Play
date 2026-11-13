@@ -76,6 +76,18 @@ const mobileFixture={...fake,sceneImages:[{...fake.sceneImages[0],
  mobileFile,mobileWidth:900,mobileHeight:1200}]};
 assert.equal(resolveScene(sampleStage,mobileFixture).mobileSrc,
  "../../assets/case002/scenes/"+mobileFile);
+// The physical file of a mobile-only scene is the approved vertical WebP.
+const {width:_w,height:_h,...portraitEntry}=mobileFixture.sceneImages[0];
+const portraitOnly={...fake,sceneImages:[{...portraitEntry,mobileOnly:true}]};
+assert.equal(resolveScene(sampleStage,portraitOnly).src,
+ "../../assets/case002/scenes/"+mobileFile);
+assert.equal(resolveScene(sampleStage,portraitOnly).mobileOnly,true);
+assert.throws(()=>resolveScene(sampleStage,{
+ ...fake,sceneImages:[{...portraitEntry,mobileOnly:true,mobileFile:undefined}]
+}),/conflicts/);
+assert.throws(()=>resolveScene(sampleStage,{
+ ...fake,sceneImages:[{...portraitEntry,mobileOnly:true,width:1200}]
+}),/conflicts/);
 assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[{
  ...mobileFixture.sceneImages[0],mobileFile:"case002-a01-scene--mobile.webp"}]}),
  /mobile crop conflicts/);
@@ -125,11 +137,18 @@ for(const e of manifest.sceneImages){
    ":"+e.variantKey);
  assert.equal(e.review,"approved","Only reviewed scene files may be registered");
  const expected=path.join(base,"assets/case002/scenes",e.file);
- assert(fs.existsSync(expected),"Approved scene asset missing: "+e.file);
- const bytes=fs.readFileSync(expected);
- assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
-   bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
- if(e.sha256)assert.equal(digest(bytes),e.sha256,"Scene bytes changed after art review");
+ let bytes=null;
+ if(e.mobileOnly){
+   assert(!fs.existsSync(expected),"Mobile-only scene should not have desktop file");
+   assert(e.mobileFile,"Mobile-only scene must have a real portrait");
+ }else{
+   assert(fs.existsSync(expected),"Approved scene asset missing: "+e.file);
+   bytes=fs.readFileSync(expected);
+   assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
+     bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
+   if(e.sha256)assert.equal(digest(bytes),e.sha256,
+     "Scene bytes changed after art review");
+ }
  if(e.mobileFile!==undefined){
    const expectedMobile=e.file.replace(/\.webp$/,"--mobile.webp");
    assert.equal(e.mobileFile,expectedMobile,
@@ -146,7 +165,7 @@ for(const e of manifest.sceneImages){
      "Approved mobile crop is not a valid WebP: "+e.mobileFile);
    if(e.mobileSha256)assert.equal(digest(mobileBytes),e.mobileSha256,
      "Mobile image bytes changed after art review");
-   assert.notEqual(digest(bytes),digest(mobileBytes),
+   if(!e.mobileOnly)assert.notEqual(digest(bytes),digest(mobileBytes),
      "Mobile crop must be a separate export, not a relabelled desktop image");
  }
 }

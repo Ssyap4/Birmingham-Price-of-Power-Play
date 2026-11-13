@@ -35,6 +35,8 @@ failures(v=>v.sceneImages[0].mobileFile="case002-a01-scene--mobile.webp",/differ
 failures(v=>v.sceneImages.push(v.sceneImages[0]),/Duplicate approved scene/);
 failures(v=>{v.sceneImages[0].sceneId="A11";v.sceneImages[0].file="case002-a11-scene.webp";},/does not exist/);
 failures(v=>v.sceneImages[0].review="draft",/Unreviewed scene/);
+failures(v=>v.sceneImages[0].mobileOnly=true,/Mobile-only scene must not pretend/);
+failures(v=>v.sceneImages[0].mobileOnly="yes",/Unknown scene display mode/);
 function synthetic(format,width,height){
  const bytes=Buffer.alloc(36);
  bytes.write("RIFF",0,"ascii");bytes.writeUInt32LE(bytes.length-8,4);

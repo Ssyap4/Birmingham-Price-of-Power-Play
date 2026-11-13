@@ -82,9 +82,18 @@ function audit({root=ROOT,source=manifest}={}){
    assert(scene.file==="case002-"+scene.sceneId.toLowerCase()+"-scene"+
      (scene.variantKey==="default"?"":"--"+scene.variantKey)+".webp",
      "Invalid scene file binding: "+key);
-   out.push(inspect(root,"scenes",scene.file,
-     {width:scene.width,height:scene.height,sha256:scene.sha256},
-     "desktop",MAX_BYTES.desktop,seen));
+   const mobileOnly=scene.mobileOnly===true;
+   assert(scene.mobileOnly===undefined||mobileOnly,
+     "Unknown scene display mode: "+key);
+   if(mobileOnly){
+     assert(scene.mobileFile!==undefined&&scene.width===undefined&&
+       scene.height===undefined&&scene.sha256===undefined,
+       "Mobile-only scene must not pretend to have a landscape master: "+key);
+   }else{
+     out.push(inspect(root,"scenes",scene.file,
+       {width:scene.width,height:scene.height,sha256:scene.sha256},
+       "desktop",MAX_BYTES.desktop,seen));
+   }
    if(scene.mobileFile!==undefined){
      assert(scene.mobileFile===scene.file.replace(/\.webp$/,"--mobile.webp"),
        "Mobile crop belongs to different scene/variant: "+key);
