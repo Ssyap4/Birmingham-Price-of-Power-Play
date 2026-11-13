@@ -40,12 +40,12 @@ fails(p=>p.shots.splice(0,1),/Opening P01\/P02\/A01/);
 const dishonest=JSON.parse(JSON.stringify(manifest));
 dishonest.sceneImages.push({sceneId:"P01",variantKey:"default",review:"draft"});
 assert.throws(()=>validateWave(clone(),board,cast,dishonest),/Unexpected\/unreviewed/);
-const official=JSON.parse(JSON.stringify(manifest));
-official.sceneImages.push({sceneId:"P01",variantKey:"default",review:"approved"});
-official.npcPortraits.push({id:"mabel",review:"approved"});
-const withApprovals=validateWave(clone(),board,cast,official);
-assert.equal(withApprovals.approvedScenes,1);
-assert.equal(withApprovals.approvedPortraits,1);
-assert.equal(withApprovals.scenes.length,16);
+const dishonestApproved=JSON.parse(JSON.stringify(manifest));
+dishonestApproved.sceneImages.push({
+ sceneId:"P01",variantKey:"default",review:"approved",
+ file:"case002-p01-scene.webp",width:1600,height:900,cast:[]
+});
+assert.throws(()=>validateWave(clone(),board,cast,dishonestApproved),
+ /Approved art is not committed/);
 console.log("PASS Case002 first art wave: 16 canonical scene shots, five original identity references, "+
- "13 malformed/spoiler-sensitive cases, no false approval claims.");
+ "14 malformed/spoiler-sensitive cases, no false approval claims.");
