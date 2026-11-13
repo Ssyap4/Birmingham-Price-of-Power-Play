@@ -210,3 +210,6 @@ assert(withPromise.evidence.has("mercer_signed_statement"));
 
 console.log("PASS model v2: "+tested+" actual scripted routes (5×7), "+
  rejected+" forbidden outcomes, 0-rescue fallback, no repeated loot, no hero leaks, two-route gate.");
+
+// Reuse the approved 35 route fixtures in the real draft engine integration tests.
+module.exports = {goodRoute};
