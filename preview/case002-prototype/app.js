@@ -181,6 +181,7 @@ function render(){
     const btn=make("button",undefined,"choice"+(!c.enabled?" is-disabled":"")+
       (c.confirm?" is-danger":"")+(s.visited.includes(c.to)?" is-visited":""));
     btn.type="button";btn.disabled=!c.enabled;
+    btn.dataset.to=c.to;btn.dataset.action=c.action;
     let title=actionLabels[s.node+":"+c.to+":"+c.action]||c.actionTitle;
     if(c.action==="continue")title=c.title+(actionLabels[s.node+":"+c.to+":continue"]?" · "+title:"");
     btn.append(make("span",title,"choice-label"));
