@@ -95,8 +95,16 @@ def main():
                     assert page.locator("#game").get_attribute("data-art-scene") == "A05"
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
                     assert page.locator("#toolContent li").count() >= 1
-                    assert "сведения в досье" in page.locator("#toolContent").inner_text(), (
+                    assert "сведения в досье" in page.locator("#toolContent").inner_text().lower(), (
                         "clue must show recorded-not-original custody on iPhone"
+                    )
+                    ticket = page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"]')
+                    assert ticket.count() == 1
+                    assert ticket.locator("svg.evidence-symbol").count() == 1
+                    assert ticket.locator("svg.evidence-symbol").get_attribute("viewBox") == "0 0 64 64"
+                    assert "Старинный билет Курзон-стрит" in ticket.inner_text()
+                    assert "Кирпичный виадук" not in ticket.inner_text(), (
+                        "Evidence origin must come from actual acquired source"
                     )
                     page.locator('button[data-tab="witnesses"]').click()
                     people = page.locator("#toolContent").inner_text()
@@ -124,6 +132,11 @@ def main():
                         page.set_viewport_size({"width": width, "height": 790})
                         overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1")
                         assert not overflow, f"{browser_name}: horizontal overflow at {width}"
+                        icons = page.locator(".evidence-card svg.evidence-symbol")
+                        if icons.count():
+                            assert icons.first.bounding_box()["width"] >= 44, (
+                                f"{browser_name}: evidence icons too small at {width}px"
+                            )
                         cast_bounds = page.locator("#sceneCast").bounding_box()
                         if cast_bounds:
                             assert cast_bounds["width"] <= width + 1, (
