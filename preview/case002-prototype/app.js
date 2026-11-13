@@ -251,36 +251,56 @@ function renderApprovedSceneArt(stage){
  root.hidden=true;
  root.dataset.portrait="false";
  host.dataset.artVerified="false";
+ host.dataset.artFallback="false";
  img.onload=null;
  img.onerror=null;
- // Clear both sources to prevent a late load from the previous scene.
+ // Remove both old sources before resolving a new scene; old async images
+ // must never flash over the next scene or leak a previous witness.
  mobile.removeAttribute("srcset");
  img.removeAttribute("src");
  const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
  if(!approved)return;
  img.alt=approved.alt;
+ const phone=window.matchMedia("(max-width: 680px)").matches;
+ const hasMobile=phone&&Boolean(approved.mobileSrc);
+ let fellBack=false;
+ function landscapeFallback(){
+   if(!hasMobile||fellBack)return false;
+   fellBack=true;
+   // A bad portrait should never erase a valid approved landscape image.
+   mobile.removeAttribute("srcset");
+   root.dataset.portrait="false";
+   host.dataset.artFallback="true";
+   img.removeAttribute("src");
+   img.src=approved.src;
+   return true;
+ }
  if(approved.mobileSrc){
-   root.dataset.portrait="true";
+   root.dataset.portrait=phone?"true":"false";
    mobile.srcset=approved.mobileSrc;
  }
  img.onload=()=>{
-   if(serial!==artRenderSerial || host.dataset.artScene!==stage.sceneId ||
+   if(serial!==artRenderSerial||host.dataset.artScene!==stage.sceneId||
       host.dataset.artVariant!==stage.variantKey)return;
-   const mobileSelected=Boolean(approved.mobileSrc)&&
+   const mobileSelected=hasMobile&&!fellBack&&
      img.currentSrc.includes("--mobile.webp");
-   const dimensionsOK=mobileSelected?
+   const valid=mobileSelected?
      img.naturalWidth>=500&&img.naturalHeight>=700:
      img.naturalWidth>=800&&img.naturalHeight>=450;
-   if(dimensionsOK){
+   if(!valid&&landscapeFallback())return;
+   if(valid){
      root.hidden=false;
      host.dataset.artVerified="true";
-   }
- };
- img.onerror=()=>{
-   if(serial===artRenderSerial){
+   }else{
      root.hidden=true;
      host.dataset.artVerified="false";
    }
+ };
+ img.onerror=()=>{
+   if(serial!==artRenderSerial)return;
+   if(landscapeFallback())return;
+   root.hidden=true;
+   host.dataset.artVerified="false";
  };
  img.src=approved.src;
 }
