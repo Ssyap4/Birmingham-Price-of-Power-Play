@@ -28,7 +28,7 @@ assert.equal(render(target,t,doc),2);
 assert.equal(target.children.length,2);
 assert.equal(target.children[0].children.filter(x=>x.tag==="span"&&
  x.className==="scene-spoken-line").length,2);
-const flatten=x=>x.children?.map(flatten).join("")??x.textContent;
+const flatten=x=>x.children?.length?x.children.map(flatten).join(""):x.textContent;
 assert.equal(target.children.map(flatten).join("\n\n"),t);
 const malicious="<script>alert('x')</script>\n— <img src=x onerror=evil>";
 render(target,malicious,doc);
