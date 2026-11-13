@@ -25,9 +25,19 @@ const personRules=[
 ];
 function build(){
  if(wave.status!=="PRODUCTION_QUEUE_NOT_APPROVED_ART")throw Error("Wave already changed status");
+ if(!Array.isArray(wave.shots)||wave.shots.length<8)
+   throw Error("Production wave must contain a real multi-scene batch");
+ const seenScenes=new Set();
  const shots=wave.shots.map(entry=>{
+  if(seenScenes.has(entry.id))throw Error("Duplicate production scene: "+entry.id);
+  seenScenes.add(entry.id);
   const scene=sceneMap.get(entry.id);
   if(!scene||scene.stateVariants.length)throw Error("Unknown or variant-dependent scene "+entry.id);
+  if(scene.asset!=="case002-"+entry.id.toLowerCase()+"-scene.webp")
+   throw Error("Noncanonical art asset name for "+entry.id);
+  if(typeof entry.focus!=="string"||entry.focus.length<30||
+     !Array.isArray(entry.forbid)||entry.forbid.length<2)
+   throw Error("Incomplete art direction for "+entry.id);
   const people=scene.cast.filter(id=>cast.character(id)).map(id=>{
     const c=cast.character(id);return {id,name:c.name,appearance:c.appearance};
   });
