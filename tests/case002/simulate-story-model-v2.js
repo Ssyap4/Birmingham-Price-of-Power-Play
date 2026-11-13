@@ -173,7 +173,7 @@ assert.equal(skeleton.node,"F09");
 for(const e of ["Z01","Z03","Z04","Z05","Z06","Z07"]){
  const old=JSON.stringify({node:skeleton.node,health:skeleton.health,flags:skeleton.flags,
    evidence:[...skeleton.evidence].sort()});
- assert.throws(()=>transition(skeleton,Object.keys(byEnd).find(k=>byEnd[k]===e)),/ending not earned|illegal edge/);
+ assert.throws(()=>transition(skeleton,e),/ending not earned|illegal edge/);
  assert.equal(JSON.stringify({node:skeleton.node,health:skeleton.health,flags:skeleton.flags,
    evidence:[...skeleton.evidence].sort()}),old);
  rejected++;
