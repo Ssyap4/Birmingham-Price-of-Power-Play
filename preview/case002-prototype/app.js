@@ -155,6 +155,14 @@ function translateReason(choice,view){
 }
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
+ // Future artwork is selected by game state, but never displayed until a
+ // verified asset exists. Stage metadata is useful for browser QA now.
+ const stage=window.BirminghamCase002ArtDirector.select(data.storyboard,v);
+ const host=$("game");
+ host.dataset.artScene=stage.sceneId;
+ host.dataset.artVariant=stage.variantKey;
+ host.dataset.artLocation=stage.location;
+ host.dataset.artVerified=String(stage.assetVerified);
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);
  setText($("sceneTitle"),scene.title);
