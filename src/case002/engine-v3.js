@@ -407,7 +407,20 @@
         ensure(endingAllowed(s,ending,contract),"Ending requirements not met");
         if(to==="Z07")ensure(s.flags.dangerWasExplained,"Unexpected fatal ending");
       }
-      s.history.push({from,to,action});
+      // An immutable, restart-safe consequence record. This is a gameplay
+      // history, NOT an achievement/reward. Old draft saves may lack changes.
+      const delta={
+        evidence:s.evidence.filter(id=>!state.evidence.includes(id)),
+        witnesses:Object.fromEntries(Object.entries(s.witnesses)
+          .filter(([id,status])=>state.witnesses[id]!==status)
+          .map(([id,status])=>[id,{from:state.witnesses[id],to:status}])),
+        custody:Object.fromEntries(Object.entries(s.evidenceLedger)
+          .filter(([id,entry])=>state.evidenceLedger[id] &&
+            state.evidenceLedger[id].holder!==entry.holder)
+          .map(([id,entry])=>[id,{from:state.evidenceLedger[id].holder,to:entry.holder}])),
+        flags:Object.keys(s.flags).filter(id=>s.flags[id]===true&&state.flags[id]!==true)
+      };
+      s.history.push({from,to,action,changes:delta});
       ensure(s.history.length<=2000,"Attempt requires an explicit new run");
       assertState(s,graph,contract,hero,nodes);
       return s;
