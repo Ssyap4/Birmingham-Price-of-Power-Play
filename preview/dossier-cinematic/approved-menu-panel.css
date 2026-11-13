@@ -1,24 +1,37 @@
-/* Mobile-first fifth menu panel: the exact approved 984x183 illustrated frame.
-   No overlays, clipped text, border simulation, or changes to the other four. */
+/* Approved dossier art, same rendering model as the four adjacent mobile buttons.
+   No JS gate, pseudo-element frames, CSS masks, or image overlays. */
 @media (orientation:portrait) and (max-width:700px){
+ #home .cabinet-entry-player,
+ #home.cabinet-art-ready .cabinet-entry-player,
  #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player{
-   display:block!important;box-sizing:border-box!important;
-   position:relative!important;overflow:visible!important;isolation:auto!important;
-   width:100%!important;min-height:44px!important;height:auto!important;
-   aspect-ratio:984/183!important;margin:0!important;padding:0!important;
-   border:0!important;border-radius:0!important;
-   background-color:#140e0b!important;
-   background-image:url('approved-my-dossier-menu-framed.webp')!important;
-   background-position:center!important;background-size:100% 100%!important;
+   box-sizing:border-box!important;
+   display:block!important;
+   position:relative!important;
+   flex:0 0 auto!important;
+   width:100%!important;
+   min-height:44px!important;
+   height:auto!important;
+   aspect-ratio:984/183!important;
+   margin:0!important;
+   padding:0!important;
+   border:0!important;
+   border-radius:0!important;
+   overflow:visible!important;
+   background-color:#160f0a!important;
+   background-image:url('./my-dossier-menu-final.webp')!important;
+   background-size:100% 100%!important;
+   background-position:center center!important;
    background-repeat:no-repeat!important;
    box-shadow:0 3px 10px #0007!important;
  }
- #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player::before,
- #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player::after{
+ #home .cabinet-entry-player::before,#home .cabinet-entry-player::after,
+ #home.cabinet-art-ready .cabinet-entry-player::before,
+ #home.cabinet-art-ready .cabinet-entry-player::after{
    display:none!important;content:none!important;
  }
- #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player > *{display:none!important}
- #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player:focus-visible{
-   outline:3px solid #ffdb98!important;outline-offset:-4px!important
+ #home .cabinet-entry-player > *{display:none!important}
+ #home .cabinet-entry-player:focus-visible{
+   outline:3px solid #ffdb98!important;
+   outline-offset:-4px!important;
  }
 }
