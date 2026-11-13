@@ -56,7 +56,14 @@ def main():
             script_change = commit('game logic')
             scope = ci_scope.classify('pull_request', 'synchronize', script_change, visual_test, True)
             assert scope[0] is True, scope
-            assert ci_scope.classify('push', '', css, logic, True)[0] is True
+            assert ci_scope.classify('push', '', css, logic, True)[:3] == (False, True, False)
+            assert ci_scope.classify('push', '', script_change, visual_test, True)[0] is True
+            write('preview/dossier-cinematic/index.html', '<link rel="stylesheet" href="x.css?v=1">')
+            preview_initial = commit('preview baseline')
+            write('preview/dossier-cinematic/index.html', '<link rel="stylesheet" href="x.css?v=2">')
+            write('preview/dossier-cinematic/assets/menu-v2-campaign.webp', b'RIFF0000WEBP')
+            visual_preview = commit('visual preview')
+            assert ci_scope.classify('push', '', visual_preview, preview_initial, True)[:3] == (False, True, True)
             assert ci_scope.classify('workflow_dispatch', '', css, logic, False)[0] is False
         finally:
             os.chdir(old_cwd)

@@ -1,4 +1,4 @@
-"""Choose fast art/UI QA or full Case 001 regression for an incremental PR update.
+"""Choose fast art/UI QA or full Case 001 regression for changed files.
 
 A CI run triggered by a PR synchronization normally represents one pushed commit.
 Visual-only changes (CSS, images, UI screenshots and QA wiring) run fast browser checks.
@@ -31,10 +31,10 @@ def art_table_only(base, head):
         return False
 
 
-def stylesheet_links_only(base, head):
+def stylesheet_links_only(base, head, html_path='index.html'):
     """HTML-only addition/removal of CSS links is presentation, not gameplay."""
     def strip_stylesheets(rev):
-        source = git('show', f'{rev}:index.html')
+        source = git('show', f'{rev}:{html_path}')
         tags = re.findall(r'<link\s+rel="stylesheet"\s+href="[^"]+\.css(?:\?[^"]*)?"\s*/?>', source)
         if not tags:
             raise ValueError('Missing stylesheet links')
@@ -48,12 +48,12 @@ def stylesheet_links_only(base, head):
 def classify(event, action, head, before, manual_full):
     if event == 'schedule':
         return True, True, True, 'weekly scheduled full regression'
-    if event == 'push':
-        return True, True, True, 'main integration full regression'
     if event == 'workflow_dispatch':
         return manual_full, manual_full, True, 'manual full' if manual_full else 'manual quick'
-    if event != 'pull_request' or action != 'synchronize':
+    if event == 'pull_request' and action != 'synchronize':
         return True, True, True, 'PR baseline or approval transition'
+    if event not in ('pull_request', 'push'):
+        return True, True, True, 'unrecognized event; full regression'
 
     try:
         # Use the webhook's previous head when supplied. GitHub PR synchronize
@@ -75,6 +75,11 @@ def classify(event, action, head, before, manual_full):
                 ui = True
             else:
                 full = True
+        elif path == 'preview/dossier-cinematic/index.html':
+            if stylesheet_links_only(base, head, path):
+                ui = True
+            else:
+                full = True
         elif path == 'case-v14.js':
             if art_table_only(base, head):
                 art = True
@@ -83,6 +88,8 @@ def classify(event, action, head, before, manual_full):
         elif path == 'tests/case001/art_continuity_tests.py' or path == 'tests/case001/scene_art_gallery.py' or path == 'SCENE_MANIFEST_v5.json':
             art = True
         elif path.startswith('assets/') and path.lower().endswith(('.webp', '.png', '.jpg', '.jpeg', '.svg')):
+            art = True
+        elif path.startswith('preview/dossier-cinematic/assets/') and path.lower().endswith(('.webp', '.png', '.jpg', '.jpeg')):
             art = True
         elif path.endswith('.css'):
             ui = True
@@ -93,6 +100,8 @@ def classify(event, action, head, before, manual_full):
             'tests/case001/mobile_safety_tests.py',
             'tests/case001/campaign_browser_tests.py',
             '.github/workflows/case001-tests.yml',
+            'tests/case001/ci_scope.py',
+            'tests/case001/ci_scope_tests.py',
         ):
             # Browser UI/test infrastructure changes are quick-QA, not story logic.
             ui = True

@@ -3,16 +3,16 @@
    Original approved panels remain as silent fallback images. */
 @media (orientation:portrait) and (max-width:700px){
  #home.cabinet-art-ready .cabinet-entry-primary{
-   background-image:url('./assets/framed-campaign.webp'),url('../../assets/mobile-menu/approved-campaign.webp')!important;
+   background-image:url('./assets/menu-v2-campaign.webp'),url('../../assets/mobile-menu/approved-campaign.webp')!important;
  }
  #home.cabinet-art-ready .cabinet-entry-quiz{
-   background-image:url('./assets/framed-trials.webp'),url('../../assets/mobile-menu/approved-trials.webp')!important;
+   background-image:url('./assets/menu-v2-trials.webp'),url('../../assets/mobile-menu/approved-trials.webp')!important;
  }
  #home.cabinet-art-ready .cabinet-entry-achievements{
-   background-image:url('./assets/framed-achievements.webp'),url('../../assets/mobile-menu/approved-achievements.webp')!important;
+   background-image:url('./assets/menu-v2-achievements.webp'),url('../../assets/mobile-menu/approved-achievements.webp')!important;
  }
  #home.cabinet-art-ready .cabinet-entry-dossier{
-   background-image:url('./assets/framed-characters.webp'),url('../../assets/mobile-menu/approved-dossiers.webp')!important;
+   background-image:url('./assets/menu-v2-characters.webp'),url('../../assets/mobile-menu/approved-dossiers.webp')!important;
  }
  #home .cabinet-entry-player,
  #home.cabinet-art-ready .cabinet-entry-player,
@@ -23,7 +23,7 @@
    padding:0!important;margin:0!important;border:0!important;
    border-radius:0!important;overflow:visible!important;
    background-color:#160f0a!important;
-   background-image:url('./assets/framed-player.webp'),url('./my-dossier-menu-final.webp')!important;
+   background-image:url('./assets/menu-v2-player.webp'),url('./my-dossier-menu-final.webp')!important;
    box-shadow:0 3px 10px #0007!important;
  }
  #home.cabinet-art-ready .cabinet-entry-primary,
