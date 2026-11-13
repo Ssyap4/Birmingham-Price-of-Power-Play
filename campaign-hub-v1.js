@@ -49,7 +49,7 @@ document.addEventListener('click',e=>{
  const target=e.target.closest('#storyStart,#profileCard');
  if(!target)return;
  e.preventDefault();e.stopImmediatePropagation();
- if(target.id==='profileCard'){window.BirminghamProfileV2?.open?.();return}open('campaignAchievements');
+ if(target.id==='profileCard'){open('campaignDossiers');return}open('campaignAchievements');
 },true);
 for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(id).addEventListener('click',e=>{if(e.target.closest('[data-open-section]'))open(e.target.closest('[data-open-section]').dataset.openSection)});
 $('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>$(id).hidden=true)},true);
