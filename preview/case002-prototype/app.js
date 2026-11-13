@@ -243,20 +243,33 @@ function translateReason(choice,view){
 }
 let artRenderSerial=0;
 function renderApprovedSceneArt(stage){
- const root=$("sceneArtwork"),img=$("sceneArtworkImage"),host=$("game");
+ const root=$("sceneArtwork"),img=$("sceneArtworkImage"),
+       mobile=$("sceneArtworkMobile"),host=$("game");
  const serial=++artRenderSerial;
  root.hidden=true;
+ root.dataset.portrait="false";
  host.dataset.artVerified="false";
  img.onload=null;
  img.onerror=null;
+ // Clear both sources to prevent a late load from the previous scene.
+ mobile.removeAttribute("srcset");
  img.removeAttribute("src");
  const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
  if(!approved)return;
  img.alt=approved.alt;
+ if(approved.mobileSrc){
+   root.dataset.portrait="true";
+   mobile.srcset=approved.mobileSrc;
+ }
  img.onload=()=>{
    if(serial!==artRenderSerial || host.dataset.artScene!==stage.sceneId ||
       host.dataset.artVariant!==stage.variantKey)return;
-   if(img.naturalWidth>=800 && img.naturalHeight>=450){
+   const mobileSelected=Boolean(approved.mobileSrc)&&
+     img.currentSrc.includes("--mobile.webp");
+   const dimensionsOK=mobileSelected?
+     img.naturalWidth>=500&&img.naturalHeight>=700:
+     img.naturalWidth>=800&&img.naturalHeight>=450;
+   if(dimensionsOK){
      root.hidden=false;
      host.dataset.artVerified="true";
    }
