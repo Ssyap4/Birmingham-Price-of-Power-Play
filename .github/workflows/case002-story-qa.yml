@@ -52,6 +52,8 @@ jobs:
         run: node tests/case002/approved-art-v1.test.js
       - name: Verify original visual icons for all 26 tracked evidence types
         run: node tests/case002/evidence-icons-v1.test.js
+      - name: Verify six spoiler-safe deductions and only earned proof chains
+        run: node tests/case002/deduction-board-v1.test.js
       - name: Verify state-dependent illustration selection
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
@@ -69,6 +71,7 @@ jobs:
           node --check src/case002/scene-cast-v1.js
           node --check src/case002/approved-art-v1.js
           node --check src/case002/evidence-icons-v1.js
+          node --check src/case002/deduction-board-v1.js
           node --check src/case002/consequences-v1.js
           node --check src/case002/journal-v1.js
           node --check preview/case002-prototype/app.js
