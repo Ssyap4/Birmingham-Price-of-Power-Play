@@ -1,0 +1,53 @@
+name: Case002 visual character silhouette audit (temporary branch)
+on:
+  push:
+    branches:
+      - audit/case002-protagonist-silhouette
+    paths:
+      - .github/workflows/case002-character-silhouette-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render scene contact sheets for human inspection
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check Pillow==11.3.0 -q
+          python - <<'PY'
+          import base64, io
+          from PIL import Image,ImageDraw,ImageFont,ImageOps
+          from pathlib import Path
+          ids=["P01","P02"]+[f"A{i:02d}" for i in range(1,11)]
+          root=Path("assets/case002/scenes")
+          font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",19)
+          for shape in ("wide","mobile"):
+              for section in (0,1):
+                  selected=ids[section*6:(section+1)*6]
+                  thumb=(360,203) if shape=="wide" else (228,285)
+                  pad,head=14,32
+                  sheet=Image.new("RGB",(2*(thumb[0]+pad)+pad,3*(thumb[1]+head+pad)+pad),(17,17,19))
+                  draw=ImageDraw.Draw(sheet)
+                  for j,id in enumerate(selected):
+                      suffix="" if shape=="wide" else "--mobile"
+                      path=root/("case002-"+id.lower()+"-scene"+suffix+".webp")
+                      if not path.exists(): raise SystemExit("MISSING:"+str(path))
+                      with Image.open(path) as im: 
+                          im=ImageOps.fit(im.convert("RGB"),thumb)
+                      x=pad+(j%2)*(thumb[0]+pad)
+                      y=pad+(j//2)*(thumb[1]+head+pad)
+                      draw.text((x,y+2),id+" / "+shape,fill=(244,221,159),font=font)
+                      sheet.paste(im,(x,y+head))
+                  output=io.BytesIO()
+                  sheet.save(output,format="JPEG",quality=77,optimize=True)
+                  label="case002_"+shape+"_"+str(section+1)
+                  print("AUDIT_BEGIN_"+label,flush=True)
+                  text=base64.b64encode(output.getvalue()).decode("ascii")
+                  for i in range(0,len(text),3000):
+                      print(text[i:i+3000],flush=True)
+                  print("AUDIT_END_"+label,flush=True)
+          PY
