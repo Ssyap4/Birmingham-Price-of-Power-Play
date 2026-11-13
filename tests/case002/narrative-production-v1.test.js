@@ -12,7 +12,7 @@ assert.equal(Object.keys(narration).length,89);
 const forbidden=[
   /(?:^|\n)#{2,6}\s/m,
   /(?:^|\n)\s*\d+\.\s+(?:Не подменять|Любая физическая|Герои не|В мобильной)/mi,
-  /\b(?:Игрок|Если игрок|При выборе|семь одинаковых кнопок)\b/iu,
+  /Игрок может|Если игрок|При выборе|семь одинаковых кнопок/iu,
   /\b(?:редакторские проверки|Контроль персональных ветвей|Повтор визита не|не закрывает навсегда)\b/iu,
   /\[(?:Выбор|Не выдавать|Дополнительный способ|Флаг|Получает путь)[^\]]*\]/iu
 ];
@@ -57,6 +57,12 @@ for(const id of ["D10","F02","F09"]){
    "Internal UI direction leaked from state narrative "+id);
  assert(!text.includes("##"),"Editorial heading leaked from variant "+id);
 }
+const closeout=render({graph,contract,narration},{...example,scene:{...example.scene,id:"F09"}});
+assert(closeout.includes("отказаться от дальнейшей борьбы"),
+  "The fallback endgame decision must remain available in state-sensitive prose");
+const twoForged=render({graph,contract,narration},{...example,scene:{...example.scene,id:"F02"}});
+assert(twoForged.includes("ещё не всё могу доказать"),
+  "An unverified document must never become a definitive murder accusation");
 assert(narration.C10.length<700,"C10 includes leaked editorial appendix");
 for(const id of ["HJ03","HF03","HV03","HS03"])
  assert(narration[id].length<600,"Hero-only scene includes next actor section: "+id);
