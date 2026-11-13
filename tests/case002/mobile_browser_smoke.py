@@ -148,6 +148,37 @@ def main():
                     assert page.locator("#chapterIntertitle").is_visible()
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "I"
                     assert "ВИАДУКА" in page.locator("#intertitleLine").inner_text().upper()
+                    # Verify the optional A02 -> A04 route independently:
+                    # golden ending paths alone did not cover this real scene.
+                    form_context = browser.new_context(
+                        viewport={"width": 390, "height": 844},
+                        device_scale_factor=3, is_mobile=True, has_touch=True
+                    )
+                    form_page = form_context.new_page()
+                    form_errors = []
+                    form_page.on("pageerror", lambda err: form_errors.append(str(err)))
+                    form_page.goto(address, wait_until="load")
+                    form_page.locator("#begin").click()
+                    for target in ("P02", "A01", "A02", "A04"):
+                        action = form_page.locator(f'button.choice[data-to="{target}"]')
+                        assert action.count() == 1 and action.is_enabled(), (
+                            f"{browser_name}: optional route to {target} is unreachable"
+                        )
+                        action.click()
+                        assert form_page.locator("#sceneId").inner_text().startswith(target)
+                    form_page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert form_page.locator("#sceneArtwork").is_visible()
+                    assert form_page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.naturalWidth === 720 && el.naturalHeight === 900"
+                    ), f"{browser_name}: A04 mobile artwork is not decoded"
+                    assert form_page.locator("#sceneArtworkImage").evaluate(
+                        "(el) => el.currentSrc.endsWith('/case002-a04-scene--mobile.webp')"
+                    ), f"{browser_name}: A04 has wrong approved phone image"
+                    assert not form_errors, f"{browser_name} optional branch JS errors: {form_errors}"
+                    form_context.close()
                     page.locator(".choice:not([disabled])").nth(1).click()  # A03 via bridge
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     assert "Роуэн" in page.locator("#sceneCast").inner_text()
