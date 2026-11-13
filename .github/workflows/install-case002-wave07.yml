@@ -1,5 +1,8 @@
 name: Install Case 002 art wave 07 (8 WebP, scoped QA)
 on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths: [tools/case002/wave-07-upload-url.txt]
   workflow_dispatch:
     inputs:
       github_attachment_url:
@@ -28,8 +31,10 @@ jobs:
         run: |
           python3 - <<'PY'
           import os, re
-          url=os.environ['ART_URL']
-          if not re.fullmatch(r'https://github.com/user-attachments/files/[0-9]+/[A-Za-z0-9._-]+\\.zip(?:\\?[^\\s]*)?',url):
+          url=os.environ['ART_URL'].strip()
+          if not url:
+              url=open('tools/case002/wave-07-upload-url.txt').read().strip()
+          if not re.fullmatch(r'https://github.com/user-attachments/files/[0-9]+/[A-Za-z0-9._-]+\.zip(?:\?[^\s]*)?',url):
               raise SystemExit("Only public ZIP attachments hosted by GitHub are allowed")
           with open('/tmp/case002-wave07-url','w') as f: f.write(url)
           PY
