@@ -52,3 +52,41 @@
 body:has(#home:not([hidden]))>.bh-audio-controls{display:flex!important;position:fixed!important;top:max(14px,env(safe-area-inset-top,0px))!important;right:max(14px,env(safe-area-inset-right,0px))!important;bottom:auto!important;z-index:19000!important;gap:6px!important}
 body:has(#home:not([hidden]))>.bh-audio-controls button{padding:8px 10px!important;font-size:10px!important;max-width:48vw;white-space:nowrap}
 @media(max-width:700px){body:has(#home:not([hidden]))>.bh-audio-controls{top:max(12px,env(safe-area-inset-top,0px))!important;right:max(7px,env(safe-area-inset-right,0px))!important;gap:4px!important}body:has(#home:not([hidden]))>.bh-audio-controls button{font-size:9px!important;padding:7px 6px!important}}
+
+/* Mobile menu repair: the fifth dossier button must remain readable.
+   The approved image-backed four entries stay untouched; no new artwork. */
+@media (orientation:portrait) and (max-width:700px){
+ #home.cabinet-art-ready .cabinet-entry-player{
+   display:flex!important;align-items:center!important;justify-content:flex-start!important;
+   gap:clamp(10px,3vw,17px)!important;
+   padding:8px clamp(15px,5vw,25px)!important;
+   border:1px solid #b78a55!important;
+   border-radius:8px!important;
+   background-image:linear-gradient(90deg,rgba(10,8,7,.94),rgba(19,15,11,.78) 62%,rgba(10,9,9,.45)),url('assets/dossier/dossier-unknown-detective.svg')!important;
+   background-size:cover!important;background-position:center 45%!important;
+   color:#efd6a8!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-player .cabinet-entry-icon{
+   display:grid!important;place-items:center!important;flex:0 0 36px!important;
+   width:36px!important;height:36px!important;margin:0!important;
+   color:#edc68a!important;background:#1a100bbf!important;
+   border:1px solid #c09962a8!important;border-radius:50%!important;
+   font-size:21px!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-player .cabinet-entry-copy{
+   display:flex!important;flex:1 1 auto!important;min-width:0!important;
+   flex-direction:column!important;justify-content:center!important;gap:3px!important;
+   text-align:left!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-player .cabinet-entry-copy strong{
+   display:block!important;font:700 clamp(16px,4.4vw,22px)/1.1 Georgia,serif!important;
+   letter-spacing:.055em!important;text-transform:uppercase!important;color:#f1cf98!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-player .cabinet-entry-copy small{
+   display:block!important;font:clamp(10px,2.7vw,12px)/1.2 Georgia,serif!important;
+   color:#dfc7a5!important;
+ }
+ #home.cabinet-art-ready .cabinet-entry-player .cabinet-entry-arrow{
+   display:block!important;flex:none!important;color:#deb67d!important;font-size:26px!important;
+ }
+}
