@@ -81,8 +81,10 @@ for(const hero of contract.heroes){
  assert.throws(()=>game.choose("C01"),/Scene transition/);
  assert.equal(JSON.stringify(game.snapshot()),before);
  game.choose("B01");
- game.choose("B02");
- assert.throws(()=>game.choose("HF01"),/another hero/);
+ assert.throws(()=>game.choose("B02"),/route was completed/);
+ const other=engine();
+ for(const node of ["P02","A01","A03","A06","A08","A10","B01","B02"])other.choose(node);
+ assert.throws(()=>other.choose("HF01"),/another hero/);
 }
 // A completed rail route is no longer playable; inventory remains accessible.
 // Save failure must roll back the next genuinely available action.
