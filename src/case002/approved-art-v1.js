@@ -157,6 +157,7 @@ const manifest=Object.freeze({
   })
  ]),
  npcPortraits:Object.freeze([
+  Object.freeze({id:"mercer",review:"approved",file:"case002-mercer-portrait.webp",width:640,height:800,sha256:"5638d2c9a2a04f34f70249a8561cef9f7296fce1517f0f42ad8ce1c0a6f67294"}),
   Object.freeze({id:"mabel",review:"approved",file:"case002-mabel-portrait.webp",width:640,height:800,sha256:"5c100098f856fe0d487de76c3fe11d49e92b208531611c537dccacb18a089ac7"}),
   Object.freeze({id:"tommy",review:"approved",file:"case002-tommy-portrait.webp",width:640,height:800,sha256:"815b46969f4d7a4caac82ac83ee0d880219be47bb1ff2c1aa8e5347529a0f075"}),
   Object.freeze({id:"ada",review:"approved",file:"case002-ada-portrait.webp",width:640,height:800,sha256:"c6d43de26733e10c7489920f850e21e9adab0e47640b0e60288088e15224f63c"})

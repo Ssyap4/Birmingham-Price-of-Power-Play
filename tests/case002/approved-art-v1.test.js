@@ -104,7 +104,7 @@ const pretend={schemaVersion:1,sceneImages:[],npcPortraits:[{
 }]};
 assert.equal(resolveNpc(npc,pretend).alt,"Портрет: Мэйбл Кросс");
 assert.equal(resolveNpc(npc,manifest).src,"../../assets/case002/portraits/case002-mabel-portrait.webp");
-for(const id of ["tommy","ada"]){
+for(const id of ["tommy","ada","mercer"]){
  const p=cast.character(id);
  assert(p&&resolveNpc(p,manifest).src.endsWith("/case002-"+id+"-portrait.webp"),"Missing reviewed portrait for "+id);
 }
