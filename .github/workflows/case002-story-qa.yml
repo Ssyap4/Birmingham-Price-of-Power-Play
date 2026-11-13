@@ -55,7 +55,9 @@ jobs:
           node tests/case002/evidence-custody-v3.test.js
       - name: Targeted narrative variants and 35 epilogues
         if: steps.scope.outputs.run_story == 'true'
-        run: node tests/case002/story-variants-v4.test.js
+        run: |
+          node tests/case002/story-variants-v4.test.js
+          node tests/case002/narrative-production-v1.test.js
       - name: Targeted visual story, cast, approved assets and state-specific shots
         if: steps.scope.outputs.run_art == 'true'
         run: |
