@@ -57,8 +57,15 @@ assert(p01.forbidden.some(x=>x.includes("23:31")));
 assert(!p01.characterReferences.some(x=>x.id==="brackett"));
 const b03=result.shots.find(x=>x.sceneId==="B03");
 assert(b03.forbidden.some(x=>x.includes("Брэкетту")));
-assert.equal(manifest.sceneImages.length,0,
- "Production briefs cannot secretly register unreviewed artwork");
-assert.equal(manifest.npcPortraits.length,0,
- "Production briefs cannot secretly register unreviewed portraits");
+// Art approval is an independent source of truth: existing P01 stays approved,
+// but adding briefs must never silently approve the other 15 scenes or any NPC.
+assert(manifest.sceneImages.some(x=>x.sceneId==="P01"&&x.review==="approved"),
+ "Existing genuine P01 artwork must not be erased by the new production pack");
+const allowedScenes=new Set(result.shots.map(s=>s.sceneId));
+for(const item of manifest.sceneImages)
+ assert(item.review==="approved"&&allowedScenes.has(item.sceneId),
+   "Unreviewed or unknown scene entered the production manifest");
+for(const person of manifest.npcPortraits)
+ assert(person.review==="approved"&&result.portraits.some(p=>p.id===person.id),
+   "Unreviewed or unknown face entered the production manifest");
 console.log("PASS Case002 mobile art production: 16 canonical unique scene briefs, 5 identity sheets, no premature asset approval.");
