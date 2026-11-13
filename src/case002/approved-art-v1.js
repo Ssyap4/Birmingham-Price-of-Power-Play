@@ -156,7 +156,11 @@ const manifest=Object.freeze({
    mobileSha256:"3d386a581cd00f7c2d303ebb0ecf039971e251adeccf0877750e2582a8b63f97"
   })
  ]),
- npcPortraits:Object.freeze([])
+ npcPortraits:Object.freeze([
+  Object.freeze({id:"mabel",review:"approved",file:"case002-mabel-portrait.webp",width:640,height:800,sha256:"5c100098f856fe0d487de76c3fe11d49e92b208531611c537dccacb18a089ac7"}),
+  Object.freeze({id:"tommy",review:"approved",file:"case002-tommy-portrait.webp",width:640,height:800,sha256:"815b46969f4d7a4caac82ac83ee0d880219be47bb1ff2c1aa8e5347529a0f075"}),
+  Object.freeze({id:"ada",review:"approved",file:"case002-ada-portrait.webp",width:640,height:800,sha256:"c6d43de26733e10c7489920f850e21e9adab0e47640b0e60288088e15224f63c"})
+ ])
 });
 const safeId=id=>typeof id==="string"&&/^[A-Z]{1,2}\d{2}$/.test(id);
 const safeVariant=id=>typeof id==="string"&&/^[a-z][a-z0-9-]*$/.test(id);

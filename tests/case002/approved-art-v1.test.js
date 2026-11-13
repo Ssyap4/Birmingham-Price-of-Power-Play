@@ -103,7 +103,11 @@ const pretend={schemaVersion:1,sceneImages:[],npcPortraits:[{
  id:"mabel",review:"approved",file:"case002-mabel-portrait.webp",width:800,height:1000
 }]};
 assert.equal(resolveNpc(npc,pretend).alt,"Портрет: Мэйбл Кросс");
-assert.equal(resolveNpc(npc,manifest),null);
+assert.equal(resolveNpc(npc,manifest).src,"../../assets/case002/portraits/case002-mabel-portrait.webp");
+for(const id of ["tommy","ada"]){
+ const p=cast.character(id);
+ assert(p&&resolveNpc(p,manifest).src.endsWith("/case002-"+id+"-portrait.webp"),"Missing reviewed portrait for "+id);
+}
 assert.throws(()=>resolveNpc(npc,{...pretend,npcPortraits:[{
  ...pretend.npcPortraits[0],file:"evelyn.webp"}]}),/canonical/);
 assert.throws(()=>resolveNpc(npc,{...pretend,npcPortraits:[
