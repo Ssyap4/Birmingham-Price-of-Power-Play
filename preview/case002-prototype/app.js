@@ -238,7 +238,23 @@ function renderTools(){
     return evidenceName(item.id)+" · "+place;
   });
  if(tab==="deductions")items=Object.entries(v.facts).map(([id,proved])=>(proved?"✓ ":"○ ")+proofLabels[id]);
- if(tab==="witnesses")items=Object.entries(v.state.witnesses).map(([id,status])=>witnessNames[id]+" — "+witnessLabels[status]);
+ if(tab==="witnesses"){
+    const contacts=window.BirminghamCase002Cast.discovered(v.state);
+    const hd=make("p","Обнаруженные персонажи","people-heading");
+    root.append(hd);
+    for(const person of contacts){
+      const personRow=make("div",undefined,"person-entry");
+      const monogram=make("span",person.name.split(" ").map(word=>word[0]).join("").slice(0,2),"person-monogram");
+      monogram.setAttribute("aria-hidden","true");
+      const copy=make("div",undefined,"person-copy");
+      copy.append(make("strong",person.name));
+      copy.append(make("span",person.role,"person-role"));
+      if(person.status)copy.append(make("span",witnessLabels[person.status]||person.status,"person-status"));
+      personRow.append(monogram,copy);root.append(personRow);
+    }
+    if(!contacts.length)root.append(make("p","Знакомства появятся по мере расследования. Чужие личности заранее не раскрываются.","empty"));
+    return;
+  }
  if(!items.length){root.append(make("p","Здесь пока нет записей.","empty"));return;}
  const ul=make("ul");for(const i of items)ul.append(make("li",i));root.append(ul);
 }
