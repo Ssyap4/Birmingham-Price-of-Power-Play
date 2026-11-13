@@ -30,7 +30,7 @@ function category(file){
  if(p.startsWith("tools/case002/"))return "deep";
  if(p.startsWith("tests/case002/")){
    if(/(?:explore-v3|engine-v3|evidence-custody|validate-contract|validate-beat-graph|validate-canon|simulate-story-model)/.test(p))return "deep";
-   if(/(?:story-variants|hero-v3)/.test(p))return "story";
+   if(/(?:story-variants|hero-v3|narrative-production)/.test(p))return "story";
    if(/(?:deduction-board|evidence-icons)/.test(p))return "evidence";
    if(/(?:journal|consequences)/.test(p))return "reporting";
    if(/(?:mobile_browser|scene-prose|scene-presentation|ui-events)/.test(p))return "ui";
