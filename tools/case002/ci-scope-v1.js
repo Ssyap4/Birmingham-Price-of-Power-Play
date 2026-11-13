@@ -15,7 +15,10 @@ function category(file){
  if(/^docs\/case002\/.*(?:screenplay|hero-scenes|story-bible)/.test(p))return "story";
  if(/^docs\/case002\/(?:case002-contract|case002-beat-graph)/.test(p))return "deep";
  if(p.startsWith("docs/case002/"))return "docs";
- if(/^src\/case002\/(?:engine-v3|browser-data-v3)/.test(p))return "deep";
+ if(p==="src/case002/engine-v3.js")return "deep";
+ // The browser bundle is reproducibly rebuilt from screenplay + graph sources.
+ // Treat the generated blob as story: --check rejects any unsupported graph edit.
+ if(p==="src/case002/browser-data-v3.js")return "story";
  if(p==="src/case002/story-variants-v4.js")return "story";
  if(/^src\/case002\/(?:evidence-icons|deduction-board)/.test(p))return "evidence";
  if(/^src\/case002\/(?:consequences|journal)/.test(p))return "reporting";
