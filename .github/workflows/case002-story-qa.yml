@@ -23,3 +23,5 @@ jobs:
         run: node tests/case002/validate-beat-graph.js
       - name: Simulate 35 nontrivial ending paths through draft graph
         run: node tests/case002/simulate-story-model-v2.js
+      - name: Check Case 001 → 002 canon and reward compatibility
+        run: node tests/case002/validate-canon-v2.js
