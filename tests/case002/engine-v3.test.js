@@ -84,17 +84,22 @@ for(const hero of contract.heroes){
  game.choose("B02");
  assert.throws(()=>game.choose("HF01"),/another hero/);
 }
-// No repeated clue, and the browser storage write is atomic from the engine's view.
+// A completed rail route is no longer playable; inventory remains accessible.
+// Save failure must roll back the next genuinely available action.
 {
  const store=memoryStore();const game=engine("finn",store);
  for(const n of ["P02","A01","A03","A06","A08","A10","B01","B02","B03","B04"])game.choose(n);
  const amount=game.snapshot().evidence.length;
- game.choose("B01");game.choose("B02");game.choose("B03");game.choose("B04");
- assert.equal(game.snapshot().evidence.length,amount);
+ game.choose("B01");
  const before=JSON.stringify(game.snapshot());
  const onDisk=store.getItem(game.storageKey);
+ const completed=game.availableChoices().find(x=>x.to==="B02");
+ assert.equal(completed.enabled,false);
+ assert.throws(()=>game.choose("B02"),/already|completed/i);
+ assert.equal(game.snapshot().evidence.length,amount);
+ assert.equal(JSON.stringify(game.snapshot()),before);
  store.fail=true;
- assert.throws(()=>game.choose("B01"),/QuotaExceededError/);
+ assert.throws(()=>game.choose("B05"),/QuotaExceededError/);
  assert.equal(JSON.stringify(game.snapshot()),before);
  assert.equal(store.getItem(game.storageKey),onDisk);
 }
@@ -111,10 +116,42 @@ for(const hero of contract.heroes){
  game.choose("D01");game.choose("D07");game.choose("D08");game.choose("D09");
  game.choose("D10","betrayAda");
  assert.equal(game.snapshot().witnesses.ada,"detained");
- game.choose("D01");game.choose("D02");game.choose("D03");
- const candidate=game.availableChoices().find(x=>x.to==="D10"&&x.action==="hideAda");
- assert.equal(candidate.enabled,false);
- assert.throws(()=>game.choose("D10","hideAda"),/cannot be hidden again/);
+ game.choose("D01");
+ const locked=game.availableChoices().find(x=>x.to==="D02");
+ assert.equal(locked.enabled,false,"Ada's betrayed storyline may not reopen");
+ assert.throws(()=>game.choose("D02"),/storyline is closed/);
+ const stillOpen=game.availableChoices().find(x=>x.to==="D04");
+ assert.equal(stillOpen.enabled,true,"unvisited Tommy branch remains playable");
+}
+// All three witness investigations finish exactly once; no circular return from D10.
+{
+ const game=engine("jack");
+ const route=goodRoute("jack","trainTruth").actionLog;
+ for(const [from,to,action] of route){
+   if(from==="D10"&&to==="D11")break;
+   game.choose(to,action);
+ }
+ assert.equal(game.snapshot().node,"D10");
+ assert.equal(game.resolvedWitnessBranches().length,2,"Ada and Tommy are settled");
+ game.choose("D01");game.choose("D07");
+ game.choose("D08");game.choose("D09");game.choose("D10");
+ assert.equal(game.resolvedWitnessBranches().length,3);
+ const revisit=game.availableChoices().find(x=>x.to==="D01");
+ assert.equal(revisit.enabled,false);
+ assert.throws(()=>game.choose("D01"),/All witness storylines are closed/);
+ assert(game.availableChoices().find(x=>x.to==="D11").enabled);
+}
+// No betrayal of a witness whose hiding place was never discovered.
+{
+ const game=engine("jack");
+ const route=goodRoute("jack","trainEscape").actionLog;
+ for(const [from,to,action] of route){
+   if(from==="D09" && to==="D10")break;
+   game.choose(to,action);
+ }
+ assert.equal(game.snapshot().node,"D09");
+ assert.equal(game.availableChoices().find(x=>x.action==="betrayAda").enabled,false);
+ assert.throws(()=>game.choose("D10","betrayAda"),/hideout you have not found/);
 }
 // No empty content key, stale snapshots or last-run overwrite of canonical old game data.
 {
