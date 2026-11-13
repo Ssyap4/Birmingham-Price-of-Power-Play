@@ -40,10 +40,16 @@ jobs:
         run: node tests/case002/story-variants-v4.test.js
       - name: Validate 89 future visual briefs against canonical scenes and story flags
         run: node tests/case002/validate-storyboard-v1.js
+      - name: Verify state-dependent illustration selection
+        run: node tests/case002/scene-art-v1.test.js
+      - name: Verify honest notifications for decisions and consequences
+        run: node tests/case002/consequences-v1.test.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
           node --check src/case002/browser-data-v3.js
           node --check src/case002/engine-v3.js
           node --check src/case002/story-variants-v4.js
+          node --check src/case002/scene-art-v1.js
+          node --check src/case002/consequences-v1.js
           node --check preview/case002-prototype/app.js
