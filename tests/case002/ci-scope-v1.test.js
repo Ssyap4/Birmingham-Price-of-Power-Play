@@ -9,7 +9,7 @@ assert.deepEqual(one("docs/case002/README.md"),{
  run_reporting:false,run_ui:false,run_bundle:false,run_browser:false,
  browser_full:false,scope_label:"docs"
 });
-for(const doc of ["ARCHITECTURE.md","CHANGELOG.md",
+for(const doc of ["ARCHITECTURE.md","Architecture.md","CHANGELOG.md",
  "docs/decisions/README.md","docs/decisions/0001-branches-save-ownership-history.md",
  "tools/case002/docs-guard-v1.js"]){
  const selected=one(doc);
