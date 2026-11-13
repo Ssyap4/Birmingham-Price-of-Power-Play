@@ -20,7 +20,7 @@ const sourceItems={
  C02:["private_siding_map"],C03:["points_log"],C04:["mabel_confession"],
  C05:["arrival_manifest"],C07:["bridge_witness"],C08:["brackett_wire"],
  D03:["pressure_log","ada_statement"],D08:["mercer_signed_statement"],
- E08:[],E09:[]
+ E08:["brackett_boots"],E09:[]
 };
 const initial=hero=>({
  hero,node:null,health:100,evidence:new Set(),visited:new Set(),flags:{},
@@ -74,10 +74,10 @@ function transition(s,to,action="continue"){
  if(to==="D11"&&!["D03","D06","D09","HF03","HV02"].some(id=>s.visited.has(id)))
    throw Error("need at least one investigated witness");
  const old=clone(s); // On any invalid choice state must remain unchanged.
- if(from==="D03"&&to==="D10"&&action==="hideAda")s.witnesses.ada="protected";
+ if(from==="D03"&&to==="D10"&&action==="hideAda"&&s.witnesses.ada==="located")s.witnesses.ada="protected";
  if(from==="D05"&&to==="D06"&&action==="extractTommy")s.flags.tommyExtraction=true;
- if(from==="D06"&&s.flags.tommyExtraction)s.witnesses.tommy="protected";
- if(from==="D09"&&to==="D10"&&action==="protectMercer")s.witnesses.mercer="protected";
+ if(from==="D06"&&s.flags.tommyExtraction&&s.witnesses.tommy==="detained")s.witnesses.tommy="protected";
+ if(from==="D09"&&to==="D10"&&action==="protectMercer"&&s.witnesses.mercer==="located")s.witnesses.mercer="protected";
  if(from==="D09"&&to==="D10"&&action==="betrayAda"){
    if(s.witnesses.ada==="protected")s.witnesses.ada="detained"; // address disclosed
    s.flags.mercerBetrayed=true;
