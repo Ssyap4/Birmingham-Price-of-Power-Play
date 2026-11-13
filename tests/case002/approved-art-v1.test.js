@@ -61,6 +61,23 @@ const fake={schemaVersion:1,sceneImages:[{
 }],npcPortraits:[]};
 assert.equal(resolveScene(sampleStage,fake).src,
  "../../assets/case002/scenes/"+file);
+assert.equal(resolveScene(sampleStage,fake).mobileSrc,null,
+ "A non-existent mobile crop must never be guessed");
+const mobileFile="case002-p01-scene--mobile.webp";
+const mobileFixture={...fake,sceneImages:[{...fake.sceneImages[0],
+ mobileFile,mobileWidth:900,mobileHeight:1200}]};
+assert.equal(resolveScene(sampleStage,mobileFixture).mobileSrc,
+ "../../assets/case002/scenes/"+mobileFile);
+assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[{
+ ...mobileFixture.sceneImages[0],mobileFile:"case002-a01-scene--mobile.webp"}]}),
+ /mobile crop conflicts/);
+assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[{
+ ...mobileFixture.sceneImages[0],mobileWidth:120}]}),
+ /mobile crop conflicts/);
+assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[{
+ ...mobileFixture.sceneImages[0],mobileHeight:400}]}),
+ /mobile crop conflicts/);
+
 assert.equal(resolveScene(sampleStage,{...fake,sceneImages:[]}),null);
 assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[fake.sceneImages[0],
  fake.sceneImages[0]]}),/Duplicate/);
@@ -100,6 +117,23 @@ for(const e of manifest.sceneImages){
  const bytes=fs.readFileSync(expected);
  assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
    bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
+ if(e.mobileFile!==undefined){
+   const expectedMobile=e.file.replace(/\\.webp$/,"--mobile.webp");
+   assert.equal(e.mobileFile,expectedMobile,
+     "Approved mobile crop must belong to the exact same scene/variant");
+   assert(Number.isInteger(e.mobileWidth)&&e.mobileWidth>=500 &&
+     Number.isInteger(e.mobileHeight)&&e.mobileHeight>=700,
+     "Portrait crop dimensions are required");
+   const mobilePath=path.join(base,"assets/case002/scenes",e.mobileFile);
+   assert(fs.existsSync(mobilePath),"Approved mobile WebP missing: "+e.mobileFile);
+   const mobileBytes=fs.readFileSync(mobilePath);
+   assert(mobileBytes.length>4000 &&
+     mobileBytes.toString("ascii",0,4)==="RIFF" &&
+     mobileBytes.toString("ascii",8,12)==="WEBP",
+     "Approved mobile crop is not a valid WebP: "+e.mobileFile);
+   assert.notEqual(digest(bytes),digest(mobileBytes),
+     "Mobile crop must be a separate export, not a relabelled desktop image");
+ }
 }
 for(const e of manifest.npcPortraits){
  assert.equal(e.review,"approved","Only reviewed portraits may be registered");
