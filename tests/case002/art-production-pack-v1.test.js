@@ -58,7 +58,9 @@ assert(!p01.characterReferences.some(x=>x.id==="brackett"));
 const b03=result.shots.find(x=>x.sceneId==="B03");
 assert(b03.forbidden.some(x=>x.includes("Брэкетту")));
 // Art approval is an independent source of truth: existing P01 stays approved,
-// but adding briefs must never silently approve unrelated scenes or unknown NPCs.\n// The first art production brief covers five reference characters, not the\n// full canonical roster of ten NPCs; approved portraits may exceed this subset.
+// but adding briefs must never silently approve unrelated scenes or unknown NPCs.
+// The first art production brief covers five reference characters, not the
+// full canonical roster of ten NPCs; approved portraits may exceed this subset.
 assert(manifest.sceneImages.some(x=>x.sceneId==="P01"&&x.review==="approved"),
  "Existing genuine P01 artwork must not be erased by the new production pack");
 const allowedScenes=new Set(result.shots.map(s=>s.sceneId));
