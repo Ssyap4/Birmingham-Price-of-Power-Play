@@ -44,6 +44,8 @@ jobs:
         run: node tests/case002/approved-hero-portraits.test.js
       - name: Prevent pre-introduction character spoilers and future phantom portraits
         run: node tests/case002/cast-registry-v1.test.js
+      - name: Guard correct Cross surname and visually distinct Mabel/Ada identity briefs
+        run: node tests/case002/identity-and-portrait-brief-v1.test.js
       - name: Verify state-dependent illustration selection
         run: node tests/case002/scene-art-v1.test.js
       - name: Verify honest notifications for decisions and consequences
