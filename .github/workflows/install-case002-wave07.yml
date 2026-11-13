@@ -18,7 +18,7 @@ jobs:
   install:
     if: github.ref_name == 'feat/case002-story-bible-v1'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,6 +49,11 @@ jobs:
           node tools/case002/art-audit-v1.js
           node tests/case002/art-audit-v1.test.js
           node tests/case002/b03-art-continuity.test.js
+      - name: Targeted mobile Chromium smoke (no 400 story routes)
+        run: |
+          python3 -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python3 -m playwright install --with-deps chromium
+          python3 tests/case002/mobile_browser_smoke.py --quick
       - name: Commit on Case 002 branch
         run: |
           git config user.name "github-actions[bot]"
@@ -59,7 +64,3 @@ jobs:
           git diff --cached --quiet && { echo "No new assets"; exit 1; }
           git commit -m "art(case002): install four reviewed scenes (16/16)"
           git push origin HEAD:feat/case002-story-bible-v1
-      - name: Follow-up focused mobile QA
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run case002-mobile-smoke.yml --ref feat/case002-story-bible-v1
