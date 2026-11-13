@@ -59,3 +59,12 @@
 /* The three detailed archive books have an explicit path home to the personal file. */
 .campaign-back-profile{display:block;width:min(100%,440px);min-height:46px;margin:15px auto;padding:12px;border:1px solid #b99360;background:linear-gradient(100deg,#3d2a1d,#17130f);color:#f0d4aa;font:700 12px Arial,sans-serif;letter-spacing:1px;cursor:pointer}
 .campaign-back-profile:focus-visible{outline:2px solid #e3bf88;outline-offset:2px}
+
+#profile .pd-rank-note{color:#9f8d77;font:11px/1.55 Arial,sans-serif}
+#profile .pd-latest-awards{border:1px solid #766044;padding:clamp(18px,3vw,28px);background:linear-gradient(130deg,#201810,#101110)}
+#profile .pd-awards-list{display:grid;gap:9px}
+#profile .pd-award-preview{display:flex;align-items:center;gap:15px;padding:11px 0;border-top:1px solid #6e543b}
+#profile .pd-award-star{width:40px;height:40px;display:grid;place-items:center;border:1px solid #af8d55;background:#392919;color:#f7d19a;font-size:24px}
+#profile .pd-award-text{display:grid;gap:6px}
+#profile .pd-award-text strong{font:600 18px Georgia,serif;color:#ead1a5}
+#profile .pd-award-text small{font:11px Arial,sans-serif;color:#b6a289}
