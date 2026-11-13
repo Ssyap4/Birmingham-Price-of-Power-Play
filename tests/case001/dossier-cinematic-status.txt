@@ -1,4 +1,4 @@
-tested_commit=bf7f5075070409a019ead9c2afd4e3571c0d6c69
+tested_commit=8bdd6a4eb9e35fa9dcb1b0762800c0fe9253a0ed
 result=0
 PASS chromium 375 player vs heroes, 2 art assets, settings removed, music remains, no overflow
 PASS chromium 390 player vs heroes, 2 art assets, settings removed, music remains, no overflow
