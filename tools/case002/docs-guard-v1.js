@@ -10,6 +10,7 @@ const assert=require("node:assert/strict");
 const root=path.resolve(__dirname,"../..");
 const mandatory=[
  "ARCHITECTURE.md",
+ "Architecture.md",
  "CHANGELOG.md",
  "docs/decisions/README.md",
  "docs/decisions/0001-branches-save-ownership-history.md",
@@ -48,6 +49,6 @@ assert(!/89 (?:готовых|утверждённых) иллюстраций/.
  "Planned storyboard falsely described as finished assets");
 const decisions=read("docs/decisions/README.md");
 assert(decisions.includes("0001")&&decisions.includes("0002"));
-console.log("PASS project docs: 5 canonical documents, "+references+
+console.log("PASS project docs: "+mandatory.length+" canonical documents, "+references+
  " valid repository links, case002 v"+actualVersion[1]+
  " milestone synchronized, architecture/ADR present.");
