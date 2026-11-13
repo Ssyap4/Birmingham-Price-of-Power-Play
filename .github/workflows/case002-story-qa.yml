@@ -32,6 +32,8 @@ jobs:
         run: node tests/case002/engine-v3.test.js
       - name: Verify all 15 specialist story detours
         run: node tests/case002/hero-v3.test.js
+      - name: Explore 400 seeded playthroughs, locked branches and saved-state reloads
+        run: node tests/case002/explore-v3.test.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
