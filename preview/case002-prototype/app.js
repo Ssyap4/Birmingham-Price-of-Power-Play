@@ -69,9 +69,9 @@ function chosenPrior(){
  if(!record)throw Error("Выбранное предыдущее прохождение недоступно");
  return {heroId:record.heroId,ending:record.ending,recordKey:record.key};
 }
-function beginGame(){
+function beginGame(ignorePrior=false){
  $("launchError").hidden=true;
- const hero=$("hero").value,prior=chosenPrior();
+ const hero=$("hero").value,prior=ignorePrior?null:chosenPrior();
  return api.createEngine({graph:data.graph,contract:data.contract,hero,prior,store});
 }
 function start(){
@@ -86,7 +86,7 @@ function start(){
 }
 function resume(){
  try{
-  engine=beginGame();
+  engine=beginGame(true);
   engine.load();
   showGame();
  }catch(e){appError("Не удалось открыть сохранение: "+e.message);}
