@@ -61,7 +61,10 @@
       </div>
       <div id="sceneLocation" class="scene-location"></div>
       <figure id="sceneArtwork" class="scene-artwork" hidden>
-        <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
+        <picture>
+          <source id="sceneArtworkMobile" media="(max-width: 680px)" type="image/webp">
+          <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
+        </picture>
       </figure>
       <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
       <div class="story-content" id="sceneText"></div>
