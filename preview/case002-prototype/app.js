@@ -176,6 +176,8 @@ function render(){
    choices.append(make("p","Расследование завершено. Отчёт и уникальный исход сохранены в черновом архиве.","muted"));
  }else{
    for(const c of v.choices){
+    // Do not spoil undiscovered final endings with disabled grey buttons.
+    if(s.node==="F09"&&!c.enabled)continue;
     const btn=make("button",undefined,"choice"+(!c.enabled?" is-disabled":"")+
       (c.confirm?" is-danger":"")+(s.visited.includes(c.to)?" is-visited":""));
     btn.type="button";btn.disabled=!c.enabled;
@@ -193,6 +195,22 @@ function render(){
 function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
+ if(tab==="journal"){
+   const entries=window.BirminghamCase002Journal.entries(v.state,evidenceName);
+   if(!entries.length){
+     root.append(make("p","Важные решения появятся здесь после первого значимого поступка.","empty"));
+     return;
+   }
+   const listing=make("ol",undefined,"case-journal");
+   for(const item of entries){
+     const li=make("li");
+     li.append(make("strong","Сцена "+item.to));
+     const ul=make("ul");
+     for(const entry of item.notes)ul.append(make("li",entry));
+     li.append(ul);listing.append(li);
+   }
+   root.append(listing);return;
+ }
  let items=[];
  if(tab==="evidence")items=v.evidenceDossier.map(item=>{
     const place=item.holder==="workers"?"передано представителю рабочих":
