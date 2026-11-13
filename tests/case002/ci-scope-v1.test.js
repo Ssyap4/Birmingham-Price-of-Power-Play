@@ -9,6 +9,13 @@ assert.deepEqual(one("docs/case002/README.md"),{
  run_reporting:false,run_ui:false,run_bundle:false,run_browser:false,
  browser_full:false,scope_label:"docs"
 });
+for(const doc of ["ARCHITECTURE.md","CHANGELOG.md",
+ "docs/decisions/README.md","docs/decisions/0001-branches-save-ownership-history.md",
+ "tools/case002/docs-guard-v1.js"]){
+ const selected=one(doc);
+ assert.equal(selected.scope_label,"docs","Project documentation should avoid full 400-route QA: "+doc);
+ assert.equal(selected.run_full,false);
+}
 const css=one("preview/case002-prototype/style.css");
 assert(css.run_ui&&css.run_browser&&!css.run_full&&!css.browser_full);
 const mobile=one("preview/case002-prototype/app.js");
