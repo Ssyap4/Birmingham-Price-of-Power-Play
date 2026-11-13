@@ -118,7 +118,11 @@ def main():
                         "People dossier must not spoil unrevealed antagonist"
                     )
                     page.locator('button[data-tab="deductions"]').click()
-                    assert "Подлог отправления" in page.locator("#toolContent").inner_text()
+                    assert page.locator(".deduction-card").count() == 0, (
+                        "An old railway ticket must not reveal future deductions or murderer"
+                    )
+                    assert "Брэкеттом" not in page.locator("#toolContent").inner_text()
+                    assert "Пока нет подтверждённых" in page.locator("#toolContent").inner_text()
                     page.locator('button[data-tab="journal"]').click()
                     assert "Сцена A05" in page.locator("#toolContent").inner_text()
                     assert "Старинный билет Курзон-стрит" in page.locator("#toolContent").inner_text()
@@ -189,6 +193,22 @@ def main():
                         full_page.locator("#resume").click()
                         assert full_page.locator("#sceneId").inner_text().startswith("F09")
                         assert full_page.locator("button.choice").count() == 1
+                        full_page.locator('button[data-tab="deductions"]').click()
+                        deductions = full_page.locator(".deduction-card")
+                        assert deductions.count() >= 1, "Investigated case has no earned deductions"
+                        evidence_jump = full_page.locator(".deduction-source").first
+                        assert evidence_jump.count() == 1 and evidence_jump.is_enabled()
+                        expected_id = evidence_jump.get_attribute("data-evidence-id")
+                        evidence_jump.click()
+                        assert full_page.locator(
+                            'button[data-tab="evidence"]'
+                        ).get_attribute("aria-pressed") == "true"
+                        focused = full_page.locator(
+                            f'.evidence-card[data-evidence-id="{expected_id}"]'
+                        )
+                        assert focused.count() == 1 and "is-focused" in (
+                            focused.get_attribute("class") or ""
+                        ), "Deduction link must jump to acquired supporting evidence"
                         assert not errors, f"Full-route browser errors: {errors}"
                         print(
                             "PASS chromium: full Case 002 mobile route, earned-only endings, "
