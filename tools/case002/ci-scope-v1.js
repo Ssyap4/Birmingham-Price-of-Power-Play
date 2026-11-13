@@ -13,10 +13,11 @@ function category(file){
    return "docs";
  if(p==="tools/case002/docs-guard-v1.js")return "docs";
  if(p==="tools/case002/validate-art-wave-v1.js")return "art";
+ if(p==="tools/case002/build-art-production-pack-v1.js")return "art";
  if(p==="tools/case002/art-audit-v1.js")return "art";
  if(p==="docs/case002/README.md"||p==="docs/case002/case002-first-portrait-production-brief-v1.md")
    return "docs";
- if(/^docs\/case002\/.*(?:art-storyboard|art-wave|visual-bible)/.test(p))return "art";
+ if(/^docs\/case002\/.*(?:art-storyboard|art-wave|art-production-pack|visual-bible)/.test(p))return "art";
  if(/^docs\/case002\/.*(?:screenplay|hero-scenes|story-bible)/.test(p))return "story";
  if(/^docs\/case002\/(?:case002-contract|case002-beat-graph)/.test(p))return "deep";
  if(p.startsWith("docs/case002/"))return "docs";
