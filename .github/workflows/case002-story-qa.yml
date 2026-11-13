@@ -38,6 +38,8 @@ jobs:
         run: node tests/case002/evidence-custody-v3.test.js
       - name: Validate dynamic narrative and 35 state-sensitive epilogues
         run: node tests/case002/story-variants-v4.test.js
+      - name: Validate 89 future visual briefs against canonical scenes and story flags
+        run: node tests/case002/validate-storyboard-v1.js
       - name: Check offline scene bundle and mobile-preview JavaScript syntax
         run: |
           node tools/case002/build-browser-data.js --check
