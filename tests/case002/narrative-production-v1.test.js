@@ -46,6 +46,17 @@ for(const id of ["C10","HJ03","HF03","HV03","HS03"]){
  assert(!/редакторские|контроль персональных|Глава [IVX]+|Финн О’Коннор · «Призрак|Сэмюэл Рид · «Механик»/.test(text),
    "Editorial guide leaked into "+id);
 }
+const {createEngine}=require("../../src/case002/engine-v3.js");
+const {contract}=require("../../src/case002/browser-data-v3.js");
+const {render}=require("../../src/case002/story-variants-v4.js");
+const game=createEngine({graph,contract,hero:"jack",attemptId:"narrative-production-qa"});
+const example=game.view();
+for(const id of ["D10","F02","F09"]){
+ const text=render({graph,contract,narration},{...example,scene:{...example.scene,id}});
+ assert(!/Доступные тактики|Завершённых личных расследований|не закрывает навсегда/.test(text),
+   "Internal UI direction leaked from state narrative "+id);
+ assert(!text.includes("##"),"Editorial heading leaked from variant "+id);
+}
 assert(narration.C10.length<700,"C10 includes leaked editorial appendix");
 for(const id of ["HJ03","HF03","HV03","HS03"])
  assert(narration[id].length<600,"Hero-only scene includes next actor section: "+id);
