@@ -5,6 +5,8 @@ on:
     paths:
       - 'preview/case002-prototype/**'
       - 'src/case002/**'
+      - 'assets/case002/scenes/**'
+      - 'assets/case002/portraits/**'
       - 'tests/case002/mobile_browser_smoke.py'
       - '.github/workflows/case002-mobile-smoke.yml'
   workflow_dispatch:

@@ -10,6 +10,8 @@ on:
       - 'docs/case002/**'
       - 'tests/case002/**'
       - 'src/case002/**'
+      - 'assets/case002/scenes/**'
+      - 'assets/case002/portraits/**'
       - 'tools/case002/**'
       - 'preview/case002-prototype/**'
       - '.github/workflows/case002-story-qa.yml'

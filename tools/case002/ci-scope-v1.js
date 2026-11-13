@@ -19,6 +19,10 @@ function category(file){
  if(/^docs\/case002\/.*(?:screenplay|hero-scenes|story-bible)/.test(p))return "story";
  if(/^docs\/case002\/(?:case002-contract|case002-beat-graph)/.test(p))return "deep";
  if(p.startsWith("docs/case002/"))return "docs";
+ // Real approved scene/portrait WebP assets are visual changes, not game rules.
+ // Unknown extensions and paths still fail closed to the full safety gate.
+ if(/^assets\/case002\/(?:scenes|portraits)\/case002-[a-z0-9-]+\.webp$/.test(p))
+   return "art";
  if(p==="src/case002/engine-v3.js")return "deep";
  // The browser bundle is reproducibly rebuilt from screenplay + graph sources.
  // Treat the generated blob as story: --check rejects any unsupported graph edit.
