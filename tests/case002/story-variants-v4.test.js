@@ -82,6 +82,16 @@ assert(mut("Z02",()=>{}).includes("Никто из свидетелей не п�
 assert(mut("Z02",s=>{s.witnesses.ada="protected"}).includes("Под временной защитой остались"),
  "protected is not evacuated");
 assert(mut("Z02",s=>{s.witnesses.ada="evacuated"}).includes("Ада Уэбб"));
+assert(mut("E08",s=>{s.flags.valeGuarantee=true}).includes("Вейл дал письменную гарантию"));
+assert(mut("E08",s=>{s.flags.publicContactSecured=true}).includes("материалы ещё не опубликованы"));
+assert(mut("E09",s=>{s.flags.brackettAccountsHeld=true}).includes("В папке героя лежит"));
+assert(mut("E09",s=>{s.flags.accountsGivenToWorkers=true}).includes("Представитель рабочих получил"));
+assert(mut("E09",()=>{}).includes("осталась у владельца"));
+assert(mut("E10",s=>{s.flags.localIntermediary=true}).includes("Посредник подтвердил"));
+assert(mut("F09",()=>{}).includes("отказаться от дальнейшей борьбы"));
+assert(!mut("F09",()=>{}).includes("договор с Вейлом"),
+ "Final shouldn't advertise an unearned deal");
+assert(mut("F09",s=>{s.flags.accountsGivenToWorkers=true}).includes("отказаться"));
 assert(mut("F02",()=>{}).includes("ещё не всё могу доказать"));
 assert(mut("F03",()=>{}).includes("пока недостаточно независимых доказательств"));
 assert(mut("F04",()=>{}).includes("ещё предстоит подтвердить"));
@@ -90,4 +100,4 @@ assert(!mut("P02",()=>{}).includes("Предыдущее расследован�
 assert.equal(Object.keys(narration).length,89);
 console.log("PASS Case002 narrative variants: "+tested+" real-scene renders in 35 paths; "+
   scenes.size+" fixture scenes, "+terminal+" full epilogues, 89 authored nodes and "+
-  "17 contradiction-focused variants.");
+  "26 contradiction-focused variants.");
