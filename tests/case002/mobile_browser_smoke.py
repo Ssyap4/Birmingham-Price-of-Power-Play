@@ -9,6 +9,7 @@ import subprocess
 import http.server
 from pathlib import Path
 import threading
+import sys
 
 from playwright.sync_api import sync_playwright
 
@@ -20,6 +21,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 def main():
+    quick = "--quick" in sys.argv
     handler = functools.partial(QuietHandler, directory=str(ROOT))
     server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
@@ -27,7 +29,7 @@ def main():
     address = f"http://127.0.0.1:{server.server_port}{INDEX}"
     try:
         with sync_playwright() as p:
-            for browser_name in ("chromium", "webkit"):
+            for browser_name in (("chromium",) if quick else ("chromium", "webkit")):
                 browser = getattr(p, browser_name).launch(headless=True)
                 try:
                     context = browser.new_context(
@@ -150,9 +152,9 @@ def main():
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
                     assert not failures, f"{browser_name} console errors: {failures}"
-                    print(f"PASS {browser_name}: 360/390/430px, approved hero portrait, honest NPC speaker slots, saved journal and inventory")
+                    print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()
-                    if browser_name == "chromium":
+                    if browser_name == "chromium" and not quick:
                         route_source = (
                             "const m=require('./tests/case002/simulate-story-model-v2.js');"
                             "console.log(JSON.stringify(m.goodRoute('jack','trainEscape').actionLog));"
