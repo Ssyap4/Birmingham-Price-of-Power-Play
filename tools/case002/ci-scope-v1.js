@@ -26,7 +26,7 @@ function category(file){
  if(p==="src/case002/story-variants-v4.js")return "story";
  if(/^src\/case002\/(?:evidence-icons|deduction-board)/.test(p))return "evidence";
  if(/^src\/case002\/(?:consequences|journal)/.test(p))return "reporting";
- if(/^src\/case002\/(?:scene-prose|scene-presentation|ui-events)/.test(p))return "ui";
+ if(/^src\/case002\/(?:scene-prose|scene-presentation|telegram-safe-area|ui-events)/.test(p))return "ui";
  if(p.startsWith("src/case002/"))return "art";
  if(p==="preview/case002-prototype/style.css")return "visual";
  if(p.startsWith("preview/case002-prototype/"))return "ui";
