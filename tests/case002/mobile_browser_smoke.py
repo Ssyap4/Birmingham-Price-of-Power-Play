@@ -46,6 +46,16 @@ def main():
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
+                    assert page.locator("#heroPortrait").is_visible()
+                    assert page.locator("#heroPortrait").get_attribute("alt").startswith(
+                        "Портрет сыщика:"
+                    )
+                    page.locator("#heroPortrait").evaluate(
+                        "img => img.decode().then(() => true)"
+                    )
+                    assert page.locator("#heroPortrait").evaluate(
+                        "img => img.complete && img.naturalWidth > 0"
+                    ), f"{browser_name}: previously approved hero portrait did not load"
                     assert page.locator("#game").get_attribute("data-art-scene") == "P01"
                     assert page.locator("#game").get_attribute("data-art-variant") == "default"
                     assert page.locator("#game").get_attribute("data-art-verified") == "false", (
@@ -91,7 +101,7 @@ def main():
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
                     assert not failures, f"{browser_name} console errors: {failures}"
-                    print(f"PASS {browser_name}: 360/390/430px, touch targets, clue notice, saved journal, inventory, deductions")
+                    print(f"PASS {browser_name}: 360/390/430px, approved hero portrait, clue notice, saved journal and inventory")
                     context.close()
                     if browser_name == "chromium":
                         route_source = (
