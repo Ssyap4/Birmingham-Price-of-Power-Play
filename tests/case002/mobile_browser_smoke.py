@@ -81,7 +81,16 @@ def main():
                         "clue must show recorded-not-original custody on iPhone"
                     )
                     page.locator('button[data-tab="witnesses"]').click()
-                    assert "Томми Кросс" in page.locator("#toolContent").inner_text()
+                    people = page.locator("#toolContent").inner_text()
+                    assert "Мэйбл Кросс" in people
+                    assert "Констебль Роуэн" in people
+                    assert "Эдвард Хейл" in people
+                    assert "Томми Кросс" not in people, (
+                        "People dossier must not expose Tommy before his introduction"
+                    )
+                    assert "Льюис Брэкетт" not in people, (
+                        "People dossier must not spoil unrevealed antagonist"
+                    )
                     page.locator('button[data-tab="deductions"]').click()
                     assert "Подлог отправления" in page.locator("#toolContent").inner_text()
                     page.locator('button[data-tab="journal"]').click()
