@@ -205,7 +205,7 @@ def main():
                         device_scale_factor=3, is_mobile=True, has_touch=True
                     )
                     tg_page = tg_context.new_page()
-                    tg_page.add_init_script("""() => {
+                    tg_page.add_init_script("""(() => {
                         window.__case002TelegramHandlers = {};
                         window.Telegram = {WebApp: {
                           safeAreaInset: {top:24,bottom:18,left:6,right:6},
@@ -213,7 +213,7 @@ def main():
                           onEvent(name, cb) {window.__case002TelegramHandlers[name] = cb;},
                           offEvent(name) {delete window.__case002TelegramHandlers[name];}
                         }};
-                    }""")
+                    })();""")
                     tg_page.goto(address, wait_until="load")
                     tg_insets = tg_page.evaluate("""() => {
                         const st = document.documentElement.style;
