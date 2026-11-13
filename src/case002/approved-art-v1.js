@@ -35,7 +35,19 @@ function resolveScene(stage,source=manifest){
    !Number.isInteger(e.width)||e.width<800||
    !Number.isInteger(e.height)||e.height<450)
    throw Error("Approved art conflicts with actual scene state");
+ // Mobile composition is a separately approved WebP, NEVER a guessed URL.
+ // Without one the landscape master remains the only allowed source.
+ let mobileSrc=null;
+ if(e.mobileFile!==undefined){
+   const mobileName=name.replace(/\.webp$/,"--mobile.webp");
+   if(e.mobileFile!==mobileName||
+      !Number.isInteger(e.mobileWidth)||e.mobileWidth<500||
+      !Number.isInteger(e.mobileHeight)||e.mobileHeight<700)
+      throw Error("Approved mobile crop conflicts with actual scene");
+   mobileSrc="../../assets/case002/scenes/"+mobileName;
+ }
  return {src:"../../assets/case002/scenes/"+name,
+   mobileSrc,
    alt:"Иллюстрация эпизода "+stage.sceneId,
    sceneId:stage.sceneId,variantKey:stage.variantKey};
 }
