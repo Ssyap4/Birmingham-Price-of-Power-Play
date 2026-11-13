@@ -37,6 +37,7 @@ function model(){
  const active=HEROES.map(heroId=>({heroId,state:read('birmingham_case_smol_heath_v1_'+heroId,null)})).filter(({state})=>state&&Array.isArray(state.items)&&!ENDINGS.includes(state.node)&&Number.isFinite(Number(state.started)));
  return {finished,combos,distinctEndings,distinctCases,heroIds,achieved,rewardKeys,score,tier,current,next,progress,active};
 }
+const ACHIEVEMENT_TITLES={clue9:'Внимательный сыщик',clue11:'Ни одна деталь',deduce3:'Три нити',deduce6:'Целая картина',end2:'На распутье',end4:'Цена выбора',end6:'Шесть судеб',hero3:'Три судьбы',hero5:'Ближний круг',combos5:'Пять уникальных путей',combos15:'Пятнадцать путей',combos30:'Хозяин всех исходов',unbroken:'Ни царапины',lastBreath:'Последний вздох',paperTrail:'Тайная бухгалтерия',nightRoute:'Ночной маршрут',reedSecret:'Две стороны значка',allPaths:'Пять секретов склада'};
 const ACHIEVEMENT_IDS=new Set(['clue9','clue11','deduce3','deduce6','end2','end4','end6','hero3','hero5','combos5','combos15','combos30','unbroken','lastBreath','paperTrail','nightRoute','reedSecret','allPaths']);
 const recentName=heroId=>window.BirminghamHero?.heroes?.find(h=>h.id===heroId)?.name||({jack:'Джек',finn:'Финн',eleanor:'Элеонора',victor:'Виктор',samuel:'Сэмюэл'}[heroId]||'Сыщик');
 const fmt=date=>{const n=Number(date);return Number.isFinite(n)&&n>0?new Date(n).toLocaleDateString('ru-RU',{day:'numeric',month:'short',year:'numeric'}):'—'};
@@ -75,20 +76,21 @@ function create(){
   render();
  });
  details.append(rename);identity.append(mark,details);
- const rank=textEl('section','pd-rank','');rank.append(textEl('div','pd-rank-title',''),textEl('div','pd-track',''),textEl('small','pd-rank-caption',''));
+ const rank=textEl('section','pd-rank','');rank.append(textEl('div','pd-rank-title',''),textEl('div','pd-track',''),textEl('small','pd-rank-caption',''),textEl('small','pd-rank-note','Звание растёт от новых уникальных исходов и достижений. Повтор одной судьбы не добавляет репутацию.'));
  const trackFill=textEl('span','pd-track-fill','');rank.querySelector('.pd-track').append(trackFill);
  const stats=textEl('div','pd-stats','');
  const labels=[['cases','Завершённых дел'],['runs','Прохождений'],['outcomes','Уникальных исходов'],['awards','Достижений'],['seals','Памятных знаков'],['heroes','Героев с финалом']];
  for(const [id,label]of labels){const tile=textEl('div','pd-stat','');tile.append(textEl('b','pd-stat-'+id,'0'),textEl('small','',label));stats.append(tile)}
  const status=textEl('section','pd-current','');
  const activity=textEl('section','pd-activity','');
+ const latestAwards=textEl('section','pd-latest-awards','');
  const archive=textEl('section','pd-archive','');
  archive.append(sectionHeading('КНИГИ АРХИВА','Разделы личного дела','Одна система прогресса, разные способы посмотреть свою историю.'));
  const linkGrid=textEl('div','pd-archive-grid','');
  linkGrid.append(archiveLink('campaignDossiers','Пять героев','Личные пути и открытые концовки'),archiveLink('campaignAchievements','Награды','18 достижений и 30 знаков Дела №001'),archiveLink('campaignHistory','История дел','Полные записи завершённых расследований'));
  archive.append(linkGrid);
  const foot=textEl('p','pd-footnote','Прогресс пока хранится только в этом браузере. Номер BH-L — локальный номер устройства, не публичный Telegram ID.');
- shell.append(heading,identity,rank,stats,status,activity,archive,foot);PROFILE.append(shell);
+ shell.append(heading,identity,rank,stats,status,activity,latestAwards,archive,foot);PROFILE.append(shell);
  PROFILE.addEventListener('click',event=>{const button=event.target.closest('[data-archive]');if(button){const target=button.dataset.archive;window.BirminghamCampaign?.open?.(target)}});
 }
 function render(){
@@ -107,6 +109,11 @@ function render(){
  const activity=PROFILE.querySelector('.pd-activity');activity.replaceChildren(sectionHeading('ХРОНИКА РЕШЕНИЙ','Последние события'));
  if(!m.finished.length){activity.append(textEl('p','pd-muted','Архив ждёт первого завершённого расследования. Здесь появятся реальные итоги твоих решений.'))}
  else{const list=textEl('div','pd-event-list','');for(const run of [...m.finished].sort((a,b)=>(Number(b.finished)||0)-(Number(a.finished)||0)).slice(0,3)){const row=textEl('div','pd-event','');row.append(textEl('span','pd-event-emblem','✦'));const body=textEl('div','pd-event-content','');body.append(textEl('strong','',ENDING_LABELS[run.ending]||run.ending),textEl('small','', 'Дело №'+run.caseId+' · '+recentName(run.heroId)+' · '+fmt(run.finished)));row.append(body);list.append(row)}activity.append(list)}
+ const awardsBox=PROFILE.querySelector('.pd-latest-awards');awardsBox.replaceChildren(sectionHeading('ВИТРИНА ДОСТИЖЕНИЙ','Недавние награды'));
+ const stored=read(AWARDS,{});
+ const earned=m.achieved.map(id=>({id,date:Number(stored[id])||0})).sort((a,b)=>b.date-a.date).slice(0,2);
+ if(!earned.length)awardsBox.append(textEl('p','pd-muted','Первая награда появится здесь после настоящего достижения. Все условия и коллекции находятся в отдельном архиве.'));
+ else{const list=textEl('div','pd-awards-list','');for(const a of earned){const row=textEl('div','pd-award-preview','');row.append(textEl('span','pd-award-star','✦'));const body=textEl('div','pd-award-text','');body.append(textEl('strong','',ACHIEVEMENT_TITLES[a.id]||a.id),textEl('small','',fmt(a.date)));row.append(body);list.append(row)}awardsBox.append(list)}
 }
 function open(){
  for(const element of document.querySelectorAll('main .screen'))element.hidden=element.id!=='profile';
