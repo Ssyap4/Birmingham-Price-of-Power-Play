@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e0b0a">
+<title>Дело №002 — сценарный прототип</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" class="app-shell">
+  <header class="masthead">
+    <small>БИРМИНГЕМ • 1920</small>
+    <h1>Последний поезд из Бирмингема</h1>
+    <p>Дело №002 · Проверочная версия без художественных иллюстраций</p>
+  </header>
+  <section class="launch" id="launch">
+    <h2>Начать расследование</h2>
+    <label for="hero">Ваш сыщик</label>
+    <select id="hero">
+      <option value="jack">Джек Харпер · Сила</option>
+      <option value="finn">Финн О’Коннор · Скрытность</option>
+      <option value="eleanor">Элеонора Блэквуд · Дедукция</option>
+      <option value="victor">Виктор Мэллоу · Переговоры</option>
+      <option value="samuel">Сэмюэл Рид · Механика</option>
+    </select>
+    <label for="prior">Исход предыдущего дела</label>
+    <select id="prior"><option value="">Самостоятельное расследование · без канона №001</option></select>
+    <p class="muted">Выбранный исход №001 запоминается отдельно для этой попытки и не изменит прежние прохождения.</p>
+    <div class="launch-actions">
+      <button id="begin" type="button">НАЧАТЬ НОВОЕ ДЕЛО</button>
+      <button id="resume" type="button" class="secondary">ПРОДОЛЖИТЬ СОХРАНЕНИЕ</button>
+    </div>
+    <p class="error" id="launchError" role="alert" hidden></p>
+  </section>
+  <main id="game" hidden>
+    <div class="chapter-row">
+      <span id="chapterLabel">ГЛАВА</span><span id="sceneId">P01</span>
+    </div>
+    <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+    <article class="story" aria-labelledby="sceneTitle">
+      <h2 id="sceneTitle"></h2>
+      <div class="story-content" id="sceneText"></div>
+    </article>
+    <section class="choices" aria-label="Действия">
+      <h3>Ваше решение</h3>
+      <div id="choiceList" class="choice-list"></div>
+    </section>
+    <section class="case-tools" aria-label="Досье расследования">
+      <div class="tool-tabs" role="group" aria-label="Вспомогательные разделы">
+        <button class="tool-tab" data-tab="evidence" aria-pressed="true">УЛИКИ</button>
+        <button class="tool-tab" data-tab="deductions" aria-pressed="false">ВЫВОДЫ</button>
+        <button class="tool-tab" data-tab="witnesses" aria-pressed="false">СВИДЕТЕЛИ</button>
+      </div>
+      <div id="toolContent" class="tool-content"></div>
+    </section>
+    <div class="underbar">
+      <span id="saveStatus">Автосохранение после каждого решения</span>
+      <button id="backToLaunch" type="button" class="text-button">К ВЫБОРУ ГЕРОЯ</button>
+    </div>
+  </main>
+</div>
+<script src="../../src/case002/browser-data-v3.js"></script>
+<script src="../../src/case002/engine-v3.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
