@@ -57,12 +57,21 @@ def main():
                         "img => img.complete && img.naturalWidth > 0"
                     ), f"{browser_name}: previously approved hero portrait did not load"
                     assert page.locator("#game").get_attribute("data-art-scene") == "P01"
+                    assert not page.locator("#sceneCast").is_visible(), (
+                        "Unknown prologue figures must not reveal NPC identity"
+                    )
                     assert page.locator("#game").get_attribute("data-art-variant") == "default"
                     assert page.locator("#game").get_attribute("data-art-verified") == "false", (
                         "Uncreated illustrations must never be presented as available"
                     )
                     page.locator(".choice:not([disabled])").first.click()
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#sceneCast").is_visible()
+                    assert page.locator("#sceneCast").get_attribute("data-people") == "mabel"
+                    assert "Мэйбл Кросс" in page.locator("#sceneCast").inner_text()
+                    assert page.locator("#sceneCast img").count() == 0, (
+                        "Unapproved Mabel portrait must not be substituted"
+                    )
                     assert page.locator("#saveStatus").inner_text().startswith("Автосохранение")
                     page.reload(wait_until="load")
                     assert page.locator("#resume").is_enabled()
@@ -72,6 +81,8 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A01")
                     page.locator(".choice:not([disabled])").nth(1).click()  # A03 via bridge
                     assert page.locator("#sceneId").inner_text().startswith("A03")
+                    assert "Роуэн" in page.locator("#sceneCast").inner_text()
+                    assert "Томми" not in page.locator("#sceneCast").inner_text()
                     page.locator(".choice:not([disabled])").first.click()  # A05
                     assert page.locator("#sceneId").inner_text().startswith("A05")
                     assert page.locator("#game").get_attribute("data-art-scene") == "A05"
@@ -106,11 +117,16 @@ def main():
                         page.set_viewport_size({"width": width, "height": 790})
                         overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1")
                         assert not overflow, f"{browser_name}: horizontal overflow at {width}"
+                        cast_bounds = page.locator("#sceneCast").bounding_box()
+                        if cast_bounds:
+                            assert cast_bounds["width"] <= width + 1, (
+                                f"{browser_name}: cast overflows at {width}px"
+                            )
                         for selector in (".choice:not([disabled])", ".tool-tab"):
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
                     assert not failures, f"{browser_name} console errors: {failures}"
-                    print(f"PASS {browser_name}: 360/390/430px, approved hero portrait, clue notice, saved journal and inventory")
+                    print(f"PASS {browser_name}: 360/390/430px, approved hero portrait, honest NPC speaker slots, saved journal and inventory")
                     context.close()
                     if browser_name == "chromium":
                         route_source = (
