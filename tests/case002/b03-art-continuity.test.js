@@ -9,7 +9,7 @@ const read=(file)=>JSON.parse(fs.readFileSync(path.join(root,file),"utf8"));
 const board=read("docs/case002/case002-art-storyboard-v1.json");
 const pack=read("docs/case002/art-production-pack-01-v1.json");
 const {manifest}=require("../../src/case002/approved-art-v1.js");
-const shots=board.shots || board.scenes;
+const shots=board.sceneAssets;
 assert(Array.isArray(shots),"Storyboard needs scene array");
 const b03=shots.find(x=>x.id==="B03");
 const production=pack.shots.find(x=>x.sceneId==="B03");
