@@ -25,3 +25,5 @@ jobs:
         run: node tests/case002/simulate-story-model-v2.js
       - name: Check Case 001 → 002 canon and reward compatibility
         run: node tests/case002/validate-canon-v2.js
+      - name: Exercise implemented Case 002 draft engine and persistence
+        run: node tests/case002/engine-v3.test.js
