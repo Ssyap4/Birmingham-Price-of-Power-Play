@@ -44,6 +44,11 @@ def main():
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
+                    assert page.locator("#game").get_attribute("data-art-scene") == "P01"
+                    assert page.locator("#game").get_attribute("data-art-variant") == "default"
+                    assert page.locator("#game").get_attribute("data-art-verified") == "false", (
+                        "Uncreated illustrations must never be presented as available"
+                    )
                     page.locator(".choice:not([disabled])").first.click()
                     assert page.locator("#sceneId").inner_text().startswith("P02")
                     assert page.locator("#saveStatus").inner_text().startswith("Автосохранение")
@@ -57,6 +62,7 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     page.locator(".choice:not([disabled])").first.click()  # A05
                     assert page.locator("#sceneId").inner_text().startswith("A05")
+                    assert page.locator("#game").get_attribute("data-art-scene") == "A05"
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
                     assert page.locator("#toolContent li").count() >= 1
                     assert "сведения в досье" in page.locator("#toolContent").inner_text(), (
