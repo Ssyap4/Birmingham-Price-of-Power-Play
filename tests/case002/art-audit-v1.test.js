@@ -33,7 +33,7 @@ failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").width=2048,/dimensions mism
 failures(v=>delete v.sceneImages.find(x=>x.sceneId==="P01").sha256,/Missing immutable/);
 failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileFile="case002-a01-scene--mobile.webp",/different scene/);
 failures(v=>v.sceneImages.push(v.sceneImages.find(x=>x.sceneId==="P01")),/Duplicate approved scene/);
-failures(v=>{v.sceneImages.find(x=>x.sceneId==="P01").sceneId="A11";v.sceneImages.find(x=>x.sceneId==="P01").file="case002-a11-scene.webp";},/does not exist/);
+failures(v=>{const e=v.sceneImages.find(x=>x.sceneId==="P01");e.sceneId="A11";e.file="case002-a11-scene.webp";},/does not exist/);
 failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").review="draft",/Unreviewed scene/);
 failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileOnly=true,/Mobile-only scene must not pretend/);
 failures(v=>v.sceneImages.find(x=>x.sceneId==="P01").mobileOnly="yes",/Unknown scene display mode/);
