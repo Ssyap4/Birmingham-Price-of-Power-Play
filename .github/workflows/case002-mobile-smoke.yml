@@ -1,0 +1,30 @@
+name: Case 002 mobile smoke (draft only)
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - 'preview/case002-prototype/**'
+      - 'src/case002/**'
+      - 'tests/case002/mobile_browser_smoke.py'
+      - '.github/workflows/case002-mobile-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case002-mobile-smoke
+  cancel-in-progress: true
+jobs:
+  phone-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted Chromium and WebKit browser smoke dependencies
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Exercise Case 002 offline bundle via mobile localhost preview
+        run: python tests/case002/mobile_browser_smoke.py
