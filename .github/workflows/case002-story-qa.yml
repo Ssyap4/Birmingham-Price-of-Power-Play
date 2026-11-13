@@ -80,3 +80,4 @@ jobs:
         run: |
           node tests/case002/approved-hero-portraits.test.js
           node tests/case002/scene-prose-v1.test.js
+          node tests/case002/ui-events-v1.test.js
