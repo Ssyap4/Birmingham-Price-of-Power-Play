@@ -160,6 +160,29 @@ function translateReason(choice,view){
  for(const [part,label] of rules)if(reason.includes(part))return label;
  return "Этот вариант пока недоступен";
 }
+function renderSceneCast(stage,state){
+ const root=$("sceneCast");
+ const people=window.BirminghamCase002SceneCast.participants(
+   stage,state,window.BirminghamCase002Cast);
+ root.replaceChildren();
+ root.dataset.people=people.map(person=>person.id).join(",");
+ root.hidden=people.length===0;
+ for(const person of people){
+   const card=make("div",undefined,"scene-participant");
+   card.dataset.person=person.id;
+   // Until original portrait artwork is accepted, never substitute a random face.
+   const mark=make("span",person.name.split(" ").map(word=>word[0]).join("").slice(0,2),
+     "scene-participant-monogram");
+   mark.setAttribute("aria-hidden","true");
+   card.append(mark);
+   const desc=make("div",undefined,"scene-participant-description");
+   desc.append(make("strong",person.name));
+   desc.append(make("span",person.role,"scene-participant-role"));
+   if(person.status)desc.append(make("small",witnessLabels[person.status]||person.status,
+     "scene-participant-status"));
+   card.append(desc);root.append(card);
+ }
+}
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
  // Future artwork is selected by game state, but never displayed until a
@@ -170,6 +193,7 @@ function render(){
  host.dataset.artVariant=stage.variantKey;
  host.dataset.artLocation=stage.location;
  host.dataset.artVerified=String(stage.assetVerified);
+ renderSceneCast(stage,s);
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);
  setText($("sceneTitle"),scene.title);
