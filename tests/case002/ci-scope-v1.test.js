@@ -37,6 +37,9 @@ const prose=one("src/case002/scene-prose-v1.js");
 assert(prose.run_ui&&!prose.run_full);
 for(const artistic of [
  "tools/case002/validate-art-wave-v1.js",
+ "tools/case002/build-art-production-pack-v1.js",
+ "docs/case002/art-production-pack-01-v1.json",
+ "tests/case002/art-production-pack-v1.test.js",
  "tools/case002/art-audit-v1.js",
  "tests/case002/art-audit-v1.test.js",
  "docs/case002/art-wave-01-v1.json",
