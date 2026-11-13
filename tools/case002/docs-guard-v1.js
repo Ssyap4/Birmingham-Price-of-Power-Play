@@ -34,10 +34,12 @@ for(const file of mandatory){
  }
 }
 const architecture=read("ARCHITECTURE.md"),history=read("CHANGELOG.md");
-for(const term of ["main","Case 002","сохранен","CI","Дело №001","CHANGELOG.md","89","Telegram"]){
+for(const term of ["main","сохранен","CI","Дело №001","CHANGELOG.md","89","Telegram"]){
  assert(architecture.toLowerCase().includes(term.toLowerCase()),
   "Architecture lost necessary context: "+term);
 }
+assert(architecture.includes("Дело №002")||architecture.includes("Case 002"),
+ "Architecture must cover second case");
 const actualVersion=/· v(\d+\.\d+)\s*\(/.exec(read("docs/case002/README.md"));
 assert(actualVersion,"Case002 milestone label missing");
 assert(history.includes("v"+actualVersion[1]),
