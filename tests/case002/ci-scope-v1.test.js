@@ -32,6 +32,15 @@ assert(compiledStory.run_story&&compiledStory.run_bundle&&!compiledStory.run_ful
   "A text-only bundle rebuild must not trigger 400 complete campaigns");
 const prose=one("src/case002/scene-prose-v1.js");
 assert(prose.run_ui&&!prose.run_full);
+for(const artistic of [
+ "tools/case002/validate-art-wave-v1.js",
+ "docs/case002/art-wave-01-v1.json",
+ "tests/case002/art-wave-v1.test.js"
+]){
+ const scope=one(artistic);
+ assert(scope.run_art&&scope.run_browser&&!scope.run_full&&!scope.browser_full,
+   "Batch art must never trigger full gameplay QA by default: "+artistic);
+}
 const portraits=one("src/case002/cast-registry-v1.js");
 assert(portraits.run_art&&portraits.run_bundle&&!portraits.run_full);
 const epilogue=one("src/case002/story-variants-v4.js");
