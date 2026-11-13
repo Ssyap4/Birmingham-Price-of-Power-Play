@@ -1,0 +1,15 @@
+/* Approved fifth menu panel. Keep all four existing illustrated buttons untouched. */
+@media (orientation:portrait) and (max-width:700px){
+ #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player{
+   display:block!important;box-sizing:border-box!important;
+   padding:0!important;border:0!important;border-radius:0!important;
+   aspect-ratio:984/183!important;min-height:44px!important;height:auto!important;
+   background-image:url('approved-my-dossier-menu.webp')!important;
+   background-size:100% 100%!important;background-position:center!important;
+   background-repeat:no-repeat!important;box-shadow:0 3px 10px #0007!important;
+ }
+ #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player > *{display:none!important}
+ #home.cabinet-art-ready.dossier-menu-art-loaded .cabinet-entry-player:focus-visible{
+   outline:3px solid #ffdb98!important;outline-offset:-4px!important
+ }
+}
