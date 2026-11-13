@@ -10,9 +10,12 @@ const clone=()=>JSON.parse(JSON.stringify(wave));
 const check=p=>validateWave(p,board,cast,manifest);
 const report=check(clone());
 assert.equal(report.plannedScenes,16);
-assert.equal(report.approvedScenes,0);
+assert.equal(report.approvedScenes,manifest.sceneImages.filter(e=>
+  wave.shots.some(s=>s.id===e.sceneId)&&e.review==="approved").length);
+assert(report.approvedScenes>=1,"Opening P01 must have a real registered shot");
 assert.equal(report.plannedPortraits,5);
-assert.equal(report.approvedPortraits,0);
+assert.equal(report.approvedPortraits,manifest.npcPortraits.filter(e=>
+  wave.portraitIds.includes(e.id)&&e.review==="approved").length);
 assert.deepEqual(report.scenes.map(x=>x.id),
  ["P01","P02",..."A01 A02 A03 A04 A05 A06 A07 A08 A09 A10".split(" "),
  "B01","B02","B03","B04"]);
@@ -42,8 +45,8 @@ dishonest.sceneImages.push({sceneId:"P01",variantKey:"default",review:"draft"});
 assert.throws(()=>validateWave(clone(),board,cast,dishonest),/Unexpected\/unreviewed/);
 const dishonestApproved=JSON.parse(JSON.stringify(manifest));
 dishonestApproved.sceneImages.push({
- sceneId:"P01",variantKey:"default",review:"approved",
- file:"case002-p01-scene.webp",width:1600,height:900,cast:[]
+ sceneId:"A02",variantKey:"default",review:"approved",
+ file:"case002-a02-scene.webp",width:1600,height:900,cast:[]
 });
 assert.throws(()=>validateWave(clone(),board,cast,dishonestApproved),
  /Approved art is not committed/);

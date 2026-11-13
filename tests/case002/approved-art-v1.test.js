@@ -117,6 +117,7 @@ for(const e of manifest.sceneImages){
  const bytes=fs.readFileSync(expected);
  assert(bytes.length>4000 && bytes.toString("ascii",0,4)==="RIFF" &&
    bytes.toString("ascii",8,12)==="WEBP","Invalid registered scene image");
+ if(e.sha256)assert.equal(digest(bytes),e.sha256,"Scene bytes changed after art review");
  if(e.mobileFile!==undefined){
    const expectedMobile=e.file.replace(/\.webp$/,"--mobile.webp");
    assert.equal(e.mobileFile,expectedMobile,
@@ -131,6 +132,8 @@ for(const e of manifest.sceneImages){
      mobileBytes.toString("ascii",0,4)==="RIFF" &&
      mobileBytes.toString("ascii",8,12)==="WEBP",
      "Approved mobile crop is not a valid WebP: "+e.mobileFile);
+   if(e.mobileSha256)assert.equal(digest(mobileBytes),e.mobileSha256,
+     "Mobile image bytes changed after art review");
    assert.notEqual(digest(bytes),digest(mobileBytes),
      "Mobile crop must be a separate export, not a relabelled desktop image");
  }

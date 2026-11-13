@@ -1,7 +1,7 @@
 /* Case 002 approved-art gate v1.
  * Only an explicitly registered, reviewed asset may be shown.
  * Draft storyboard paths and generation candidates are NEVER approvals.
- * The default manifest intentionally contains NO NPC/scene illustrations.
+ * Only existing, visually reviewed WebP files are registered.
  */
 (function(root,factory){
  if(typeof module==="object"&&module.exports)module.exports=factory();
@@ -10,7 +10,17 @@
 "use strict";
 const manifest=Object.freeze({
  schemaVersion:1,
- sceneImages:Object.freeze([]),
+ sceneImages:Object.freeze([
+  Object.freeze({
+   sceneId:"P01",variantKey:"default",review:"approved",
+   file:"case002-p01-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"bc460b5919d603e50e1ea98ad8fec7e30616006ef09347697486960f52ee08f5",
+   mobileFile:"case002-p01-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"dd53cf2459852779f8f1552153342c43e977423a7cd99888e7be9838513b27bd"
+  })
+ ]),
  npcPortraits:Object.freeze([])
 });
 const safeId=id=>typeof id==="string"&&/^[A-Z]{1,2}\d{2}$/.test(id);

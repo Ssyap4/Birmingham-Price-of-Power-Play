@@ -76,11 +76,20 @@ def main():
                         "Unknown prologue figures must not reveal NPC identity"
                     )
                     assert page.locator("#game").get_attribute("data-art-variant") == "default"
-                    assert page.locator("#game").get_attribute("data-art-verified") == "false", (
-                        "Uncreated illustrations must never be presented as available"
+                    page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
                     )
-                    assert page.locator("#sceneArtwork").is_hidden()
-                    assert page.locator("#sceneArtworkImage").get_attribute("src") is None
+                    assert page.locator("#sceneArtwork").is_visible(), (
+                        "First approved P01 image must load on the phone"
+                    )
+                    assert page.locator("#sceneArtwork").get_attribute("data-portrait") == "true"
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.naturalWidth === 720 && img.naturalHeight === 900"
+                    ), "P01 mobile crop must be a genuine independently registered WebP"
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.currentSrc.endsWith('case002-p01-scene--mobile.webp')"
+                    )
                     assert "Частная железнодорожная ветка" in page.locator(
                         "#sceneLocation"
                     ).text_content()
@@ -89,7 +98,18 @@ def main():
                     assert page.locator("#chapterIntertitle").is_hidden(), (
                         "Intertitle must not repeat on every scene of the chapter"
                     )
-                    assert page.locator("#sceneArtwork").is_hidden()
+                    p02_registered = page.evaluate("""() =>
+                        window.BirminghamCase002ApprovedArt.manifest.sceneImages.some(
+                            e => e.sceneId === 'P02' && e.review === 'approved'
+                        )""")
+                    if p02_registered:
+                        page.wait_for_function(
+                            "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                            timeout=8000
+                        )
+                        assert page.locator("#sceneArtwork").is_visible()
+                    else:
+                        assert page.locator("#sceneArtwork").is_hidden()
                     assert "Контора сыщика" in page.locator("#sceneLocation").text_content()
                     assert page.locator("#sceneCast").is_visible()
                     assert page.locator("#sceneCast").get_attribute("data-people") == "mabel"
