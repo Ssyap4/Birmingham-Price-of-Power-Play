@@ -18,6 +18,9 @@ assert(deductions.run_evidence&&deductions.run_browser&&!deductions.run_full);
 const events=one("src/case002/ui-events-v1.js");
 assert(events.run_ui&&events.run_browser&&!events.run_full&&!events.run_art);
 assert(one("tests/case002/ui-events-v1.test.js").run_ui);
+const compiledStory=one("src/case002/browser-data-v3.js");
+assert(compiledStory.run_story&&compiledStory.run_bundle&&!compiledStory.run_full,
+  "A text-only bundle rebuild must not trigger 400 complete campaigns");
 const prose=one("src/case002/scene-prose-v1.js");
 assert(prose.run_ui&&!prose.run_full);
 const portraits=one("src/case002/cast-registry-v1.js");
