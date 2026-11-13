@@ -12,6 +12,15 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"B05",variantKey:"default",review:"approved",
+   file:"case002-b05-scene.webp",cast:[],
+   width:1200,height:675,
+   sha256:"407818603d36d08ef93b3507f689d0e1aee08282a634afca4c179fe05577372a",
+   mobileFile:"case002-b05-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"43cd41f45047899d5ef367cd8f282cda0a569e7fed6b1ac6d4358e4568316432"
+  }),
+  Object.freeze({
    sceneId:"P02",variantKey:"default",review:"approved",
    file:"case002-p02-scene.webp",cast:[],
    width:1200,height:675,
