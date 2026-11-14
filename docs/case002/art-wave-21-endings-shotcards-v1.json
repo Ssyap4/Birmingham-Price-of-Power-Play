@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "Original Case002 ending screenplay and storyboard; Z01–Z06 are separate accepted candidate image turns, with an extra Z02 neutral evacuated state.",
+  "source": "Original Case002 ending screenplay and storyboard; Z01–Z07 are seven distinct accepted main-ending candidate image turns, plus an additional neutral evacuated Z02 variant; all remain uninstalled.",
   "scenes": [
     {
       "id": "Z01",
@@ -140,6 +140,29 @@
         "Brackett or Vale signing a confession, appearing as a new face or voluntarily handing over the ledger"
       ],
       "intendedVariant": "accounts-hero"
+    },
+    {
+      "id": "Z07",
+      "sceneKind": "aftermath",
+      "focus": "an extinguished rain-wet brass-and-iron storm lantern beside one tightly closed worn dark leather notebook case on mossy stone at an empty industrial canal lock just after dawn",
+      "camera": "intimate low vertical composition along the canal-side stones; the closed case and cold unlit lantern fill the near foreground, while empty lock gates, water and brick mills recede into the morning mist without a human figure",
+      "location": "the old industrial Birmingham canal lock and warehouse district in the 1920s",
+      "required": [
+        "one unlit, water-speckled vintage storm lantern with its wick flame fully extinguished standing upright on the damp canal stone",
+        "one closed weathered dark leather notes case with clasp shut and no visible handwritten note, names, documents, hand or personal identity",
+        "still black canal water and timber lock gates beyond the mossy wet stone edge at a deserted canal lock"
+      ],
+      "background": "soot-dark brick warehouses, industrial chimney smoke, distant iron bridge, dripping stonework and rainwater reflections in the shallow grey-orange dawn mist",
+      "light": "pale blue-grey early dawn and subtle orange industrial window glow, with no active flame inside the nearby lantern; muted film noir contrast",
+      "npc": "empty aftermath view only; no hero or NPC present, no body, no face, no gender-identifiable clothing or person",
+      "knowledgeBoundary": "Z07 is a fatal ending only after the player knowingly chooses a warned dangerous action and health <= 0. The extinguished lantern and abandoned closed notes case visually mark the immediate aftermath by the canal lock; the narrative establishes the player's death, not the artwork. Someone will later remove the case before police arrive, but that future unknown person and action are not depicted. No fate of Ada, Tommy, Mercer, or any other witness is inferred and the selectable hero has no prescribed sex, age or visual identity.",
+      "avoid": [
+        "visible corpse, blood, gunshot impact, active shooter, weapon, crime reenactment or glamorized fatal violence",
+        "gender-specific or recognizable playable protagonist, full or cropped body, face, silhouette, boots or identifying clothing",
+        "readable notes, victim identification, police report, named witness, identifying case inscription or opened papers",
+        "a rescuer or thief taking the case, police arriving at the lock, new witness outcomes or celebratory resolution"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }

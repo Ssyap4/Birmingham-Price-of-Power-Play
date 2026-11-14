@@ -122,6 +122,18 @@ for(const [i,card] of batch.entries()){
    assert.equal(director.variant({scene:{id:"Z06"},state:{flags:{brackettAccountsHeld:true},
       witnesses:{ada:"missing",tommy:"detained",mercer:"protected"}},facts:{}}),"accounts-hero");
    assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z06").length,0);
+ }else if(card.id==="Z07"){
+   assert.equal(card.sceneKind,"aftermath");
+   assert.equal(card.intendedVariant,"default");
+   assert(card.knowledgeBoundary.includes("health <= 0"));
+   assert(card.required.some(v=>/unlit.*storm lantern/.test(v)));
+   assert(card.required.some(v=>/closed weathered dark leather notes case/.test(v)));
+   assert(card.required.some(v=>/timber lock gates/.test(v)));
+   assert(card.avoid.some(v=>/visible corpse/.test(v)));
+   assert(card.avoid.some(v=>/gender-specific/.test(v)));
+   assert.equal(director.variant({scene:{id:"Z07"},state:{health:0,flags:{},
+     witnesses:{ada:"missing",tommy:"detained",mercer:"protected"}},facts:{}}),"default");
+   assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z07").length,0);
  }
 
 }
@@ -191,4 +203,4 @@ for(const subset of permittedSubsets){
    "A proposed neutral shot must not silently install for any unreviewed combination");
 }
 
-console.log("PASS: Ending candidates Z01–Z06, Z02 neutral witness variants and archive exclusions verified; no ending art installed.");
+console.log("PASS: Ending candidates Z01–Z07, Z02 neutral witness variants and archive exclusions verified; no ending art installed.");

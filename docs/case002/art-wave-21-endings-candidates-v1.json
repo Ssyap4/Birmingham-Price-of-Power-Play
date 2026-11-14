@@ -105,6 +105,24 @@
       "generatorImageId": "cd636e61-36d3-4222-93d8-8e91ecd45936",
       "visualReview": "Accepted: genuine loose account copies are physically held by an anonymous single black-gloved hand on the desk, dark open door and rainy industrial night beyond. No playable face or body, no courtroom, publication, celebration or declared witness fate.",
       "knowledgeBoundary": "The player possesses true copies of Brackett's accounts when brackettAccountsHeld is true; private leverage is obtained but justice is deliberately delayed. Illegible account columns are cinematic texture, not new canonical debts, names or sums."
+    },
+    {
+      "sceneId": "Z07",
+      "variantKey": "default",
+      "candidateFile": "case002-z07-scene--mobile.webp",
+      "sha256": "e57c4b9228c957483166a843c513aa8794dc8541d4eef9b885c28c1082e09064",
+      "gitBlobSha1": "f15bed00ddcf9dc73f4fce6927815c0d26a6b4a9",
+      "bytes": 92030,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "0b385c51-1a5f-4a6e-9025-8953929c82f5",
+      "visualReview": "ACCEPTED: unlit storm lantern beside one closed weathered leather note case on the wet canal-lock edge at grey dawn; empty lock gate and factories recede in the rain. No body, violence, gendered hero or identifiable witnesses.",
+      "knowledgeBoundary": "A terminal health <= 0 action causes Z07; the narrative confirms death, whereas this still frame shows only objects left by the deserted lock. It does not reveal the future unknown retriever of the case or independently settle any witness's survival."
     }
   ],
   "rejectedGenerations": [
