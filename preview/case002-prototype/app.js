@@ -158,7 +158,29 @@ function init(){
 }
 function refreshResume(){
  const hero=$("hero").value;
- $("resume").disabled=!store||!store.getItem(api.SAVE_PREFIX+hero);
+ let available=false;
+ try{available=Boolean(store&&store.getItem(api.SAVE_PREFIX+hero));}
+ catch(e){
+  appError("Не удалось прочитать сохранение. Проверьте доступность хранилища браузера.");
+  console.warn("[Case002] save availability check failed",e);
+ }
+ $("resume").disabled=!available;
+}
+// Guard against an older Safari/Telegram tab overwriting a newer saved run.
+// This compares existing slot data; the engine and save schema stay untouched.
+function assertCurrentSave(){
+ if(!store)return;
+ let raw;
+ try{raw=store.getItem(engine.storageKey);}
+ catch(_){throw Error("Хранилище временно недоступно. Решение не записано.");}
+ if(raw===null)throw Error("Сохранение пропало из хранилища. Перезагрузите дело перед новым решением.");
+ let disk;
+ try{disk=JSON.parse(raw);}
+ catch(_){throw Error("Сохранение повреждено. Новые решения заблокированы до проверки архива.");}
+ const active=engine.snapshot();
+ if(!disk||disk.attemptId!==active.attemptId||disk.node!==active.node||
+    JSON.stringify(disk.history)!==JSON.stringify(active.history))
+  throw Error("Сохранение обновилось в другой вкладке. Вернитесь к выбору героя и откройте актуальное прохождение.");
 }
 function chosenPrior(){
  const index=$("prior").value;
@@ -449,7 +471,8 @@ function render(){
     btn.append(make("span",title,"choice-label"));
     if(c.action!=="continue")btn.append(make("span","Следующая сцена: "+c.title,"choice-detail"));
     if(!c.enabled)btn.append(make("span",translateReason(c,v),"choice-detail lock-reason"));
-    btn.addEventListener("click",()=>select(c));
+    // A detached old button cannot repeat an already committed transition.
+    btn.addEventListener("click",()=>select(c,s.node));
     choices.append(btn);
    }
  }
@@ -566,11 +589,13 @@ function renderTools(){
  if(!items.length){root.append(make("p","Здесь пока нет записей.","empty"));return;}
  const ul=make("ul");for(const i of items)ul.append(make("li",i));root.append(ul);
 }
-function select(choice){
- if(!engine||!choice.enabled)return;
- if(choice.confirm&&!window.confirm("Этот поступок может закончиться гибелью героя. Вы действительно принимаете смертельный риск?"))return;
+function select(choice,fromScene){
+ if(!engine||!choice.enabled||engine.snapshot().node!==fromScene)return;
  const before=engine.snapshot();
  try{
+  // Check the current save BEFORE asking confirmation for dangerous actions.
+  assertCurrentSave();
+  if(choice.confirm&&!window.confirm("Этот поступок может закончиться гибелью героя. Вы действительно принимаете смертельный риск?"))return;
   const next=engine.choose(choice.to,choice.action);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
