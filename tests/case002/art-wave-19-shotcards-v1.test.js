@@ -181,4 +181,18 @@ assert.equal(director.variant({scene:{id:"E09"},state:{flags:{brackettAccountsHe
 assert.equal(director.variant({scene:{id:"E09"},state:{flags:{brackettAccountsHeld:true,accountsGivenToWorkers:true},witnesses:{}}}),"accounts-workers");
 assert(e09Hero.shotCard.knowledgeBoundary.includes("accountsGivenToWorkers"),"Do not imply worker transfer from possession");
 
+
+const e09WorkerTransfer=variantsSpec.variants.find(x=>x.sceneId==="E09"&&x.variantKey==="accounts-workers");
+assert(e09WorkerTransfer,"Transferred accounts must have their own image and state-specific file");
+assert.notEqual(e09WorkerTransfer.sha256,staged.find(x=>x[0]==="E09")[1],
+ "A factory-gate discussion cannot stand in for accounts delivered to workers");
+assert.notEqual(e09WorkerTransfer.sha256,e09Hero.sha256,
+ "Documents delivered to workers must not reuse the investigator-held frame");
+assert.equal(director.variant({scene:{id:"E09"},state:{flags:{accountsGivenToWorkers:true,brackettAccountsHeld:false},witnesses:{}}}),"accounts-workers");
+assert.equal(director.variant({scene:{id:"E09"},state:{flags:{accountsGivenToWorkers:false,brackettAccountsHeld:true},witnesses:{}}}),"accounts-hero");
+assert(e09WorkerTransfer.shotCard.knowledgeBoundary.includes("accountsGivenToWorkers"),
+ "The visual must remain conditional on the recorded transfer, not infer it");
+assert(e09WorkerTransfer.shotCard.required.some(x=>/worker's bare soot-stained hands/.test(x)),
+ "Receipt by worker must be physically visible");
+
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));

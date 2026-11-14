@@ -134,6 +134,40 @@
           "celebration, confirmed closure of the factory or a settled union agreement"
         ]
       }
+    },
+    {
+      "sceneId": "E09",
+      "variantKey": "accounts-workers",
+      "candidateFile": "case002-e09-scene--accounts-workers--mobile.webp",
+      "sha256": "08d41e5dd364e051352b21fc778ac1f88091a521a4cedd2dd3d3523488575492",
+      "gitBlobSha1": "1b02127baacc17e1edca2592e7e2bd104f430745",
+      "bytes": 119850,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "dhashDistanceVsAccountsHero": 30,
+      "shotCard": {
+        "id": "E09",
+        "sceneKind": "action",
+        "focus": "an anonymous soot-marked factory worker receives a bundle of bound accounting extracts from the gloved hands of an unseen investigator at the factory's rainy iron gate",
+        "camera": "intimate eye-level side-on medium-close shot centered on the precise handover; worker's worn hands securely hold one end of the tied document bundle while black-gloved hands still touch the other end, with the investigator's face outside the frame",
+        "location": "the brick entrance of an industrial factory in rain-soaked Aston, Birmingham in the 1920s",
+        "required": [
+          "one bundle of yellowed handwritten accounting extracts with twine around its middle physically passing into the worker's bare soot-stained hands",
+          "the anonymous factory worker in a worn flat cap and threadbare dark coat receiving the pages while a black-gloved investigator remains cropped at the right edge",
+          "a few other anonymous workers visible farther back behind wet wrought iron gate posts and glowing lantern"
+        ],
+        "background": "rain-darkened factory brickwork, vertical wrought iron railings, cold puddles, smoke-stack silhouettes and dim old industrial windows",
+        "light": "warm amber gas lantern illuminating the bundle and tense hands against cold slate-blue rain and factory smoke",
+        "npc": "one anonymous mustachioed factory worker in period flat cap and coat; other background workers indistinct; investigator represented only by a cropped dark sleeve and black gloves without a recognizable face",
+        "knowledgeBoundary": "This variant depicts an accounting-document transfer to workers only after the game has set accountsGivenToWorkers. It does not prove the accounting entries correct, a widow's pension paid, protected intermediary arranged, workers rescued, or a factory shutdown.",
+        "avoid": [
+          "the original factory accounts ledger visibly kept by the investigator instead of the worker receiving records",
+          "readable personal names, monetary amounts or fabricated accounting conclusions on the papers",
+          "identifiable face or canonical appearance for any selectable player character",
+          "celebration, completed pension compensation, official verdict or protected worker status"
+        ]
+      }
     }
   ]
 }
