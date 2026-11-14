@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 2,
+  "source": "docs/case002/case002-art-storyboard-v1.json — Chapter IV hero-specific H branches",
+  "scenes": [
+    {
+      "id": "HJ02",
+      "sceneKind": "action",
+      "focus": "a broad-shouldered factory visitor in a dark 1920s work coat shields an injured young worker from the gaze of a stern watchman at a brick factory checkpoint",
+      "camera": "medium low angle from behind the two men, partly obscured faces, a single guarded gate",
+      "location": "a narrow industrial checkpoint at the Aston factory gate",
+      "required": [
+        "one protective arm resting against a young worker's shoulder",
+        "an old hospital bandage visible at the younger man's sleeve",
+        "a watchman standing behind a half-open iron factory gate"
+      ],
+      "background": "wet brick wall, iron gate bars and cobblestones beyond the checkpoint",
+      "light": "pale misty dawn through the gate with an oil lamp lighting sleeves",
+      "npc": "a protective man seen only from behind, a wounded young workman in side-back silhouette, and one watchman",
+      "knowledgeBoundary": "Only Jack's character-specific intervention is shown; Tommy remains exposed to the risk of detention until he actually exits safely",
+      "avoid": [
+        "recognisable face contradicting a player character portrait",
+        "unknown injured civilians",
+        "a released prisoner celebrating outside the factory",
+        "modern tactical equipment"
+      ]
+    },
+    {
+      "id": "HF03",
+      "sceneKind": "evidence",
+      "focus": "gloved investigator's hands carefully open the small metal safe in a frightened inspector's rented room while gently moving a framed family photograph aside",
+      "camera": "overhead three-quarter close view of a squat metal safe, photo frame and cautious hands at one tabletop",
+      "location": "a modest boarding-house room behind an industrial railway",
+      "required": [
+        "a small period iron strongbox with its door opening",
+        "a framed family photograph set delicately to one side",
+        "leather-gloved hands handling the safe without showing the owner's identity"
+      ],
+      "background": "worn wallpaper, faded curtain and cluttered documents on a rough desk",
+      "light": "soft desk lamp amber light on metal against cold rain outside",
+      "npc": "only the selected investigator's gloved hands visible; no face; inspector may remain outside the picture",
+      "knowledgeBoundary": "This character-specific safe interaction does not establish that a separate protected sworn statement has been obtained",
+      "avoid": [
+        "a readable list of secret names or codes",
+        "identifiable player character face",
+        "safe contents claiming guilt before text reveals them",
+        "damaged or destroyed family photograph"
+      ]
+    },
+    {
+      "id": "HE02",
+      "sceneKind": "emotion",
+      "focus": "a poised woman's gloved hand deliberately places a small closed investigative notebook face-down on a grimy boiler-house bench to reassure a wary female mechanic",
+      "camera": "close low three-quarter tabletop view with both women's hands and the closed notebook central",
+      "location": "the cold brick boiler room of an old Birmingham factory",
+      "required": [
+        "one small notebook lying face-down on worn wood",
+        "one pair of careful gloved hands withdrawing from it",
+        "a soot-marked mechanic's hand beside a heavy steel wrench"
+      ],
+      "background": "rusted pipes, cold boiler bars and narrow shafts of dusty light",
+      "light": "silver morning rays through high industrial windows with a quiet amber rim",
+      "npc": "only hands and sleeves of two women in 1920s clothing; neither face visible",
+      "knowledgeBoundary": "This hero-specific trust gesture does not automatically unlock the confidential original logbook or confer witness protection",
+      "avoid": [
+        "readable notebook accusations",
+        "playable protagonist's unapproved face",
+        "a completed sworn confession",
+        "the mechanic already rescued or celebrating"
+      ]
+    },
+    {
+      "id": "HV02",
+      "sceneKind": "action",
+      "focus": "a well-dressed visitor reaches across a rainy brick factory-alley threshold to hand a carefully folded verification paper to an anxious young woman waiting alone",
+      "camera": "waist-level close-up on two sets of hands and the folded document against the factory wall",
+      "location": "the wet red-brick service alley next to an Aston factory",
+      "required": [
+        "one folded official-looking paper passed from one hand to another",
+        "young woman's plain wool sleeve and hand receiving it",
+        "empty alley receding beyond puddles and brick arches"
+      ],
+      "background": "industrial drainpipes, lamp reflection and damp night cobblestones",
+      "light": "dim copper wall lantern with cold blue shadows in the street",
+      "npc": "only the male visitor's sleeves and the woman's receiving hands; no portrait faces",
+      "knowledgeBoundary": "The diplomatic exchange is about reliable evidence and a promise to the sister; Tommy has not yet been shown to be free",
+      "avoid": [
+        "Tommy visibly liberated",
+        "signed victory certificate or readable invented names",
+        "a definitive playable hero portrait",
+        "visible police escort or freed witness"
+      ]
+    }
+  ]
+}

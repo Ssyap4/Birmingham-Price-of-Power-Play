@@ -22,8 +22,8 @@ function requiredString(v,name,max=500){
 }
 function validateCard(c,{requiresKind=false}={}){
  if(!c||typeof c!=="object")throw Error("Invalid scene card");
- const id=requiredString(c.id,"id",3);
- if(!/^[A-Z]\d{2}$/.test(id))throw Error("Invalid scene ID "+id);
+ const id=requiredString(c.id,"id",4);
+ if(!/^[A-Z]{1,2}\d{2}$/.test(id))throw Error("Invalid scene ID "+id);
  if(requiresKind&&!Object.hasOwn(SHOT_KINDS,c.sceneKind))
   throw Error(id+": missing or unsupported sceneKind");
  if(c.sceneKind!==undefined&&!Object.hasOwn(SHOT_KINDS,c.sceneKind))
@@ -37,7 +37,7 @@ function validateCard(c,{requiresKind=false}={}){
  c.required.forEach((v,i)=>requiredString(v,id+".required"+i,220));
  c.avoid.forEach((v,i)=>requiredString(v,id+".avoid"+i,220));
  const details=JSON.stringify(Object.fromEntries(Object.entries(c).filter(([k])=>k!=="id")));
- if(/\b[A-F]\d{2}\b/i.test(details))throw Error(id+": another scene ID leaked into card");
+ if(/\b[A-Z]{1,2}\d{2}\b/i.test(details))throw Error(id+": another scene ID leaked into card");
  return c;
 }
 function validateBatch(spec){
@@ -69,7 +69,7 @@ function promptFor(card){
   "Believable physical materials, realistic perspective, natural atmospheric depth, restrained period color grading."
  ].join("\n");
  if(UNSAFE_RENDER.test(p))throw Error(c.id+": production/status words contaminated render-only prompt");
- if(/\b[A-F]\d{2}\b/.test(p))throw Error(c.id+": scene ID contaminated render-only prompt");
+ if(/\b[A-Z]{1,2}\d{2}\b/.test(p))throw Error(c.id+": scene ID contaminated render-only prompt");
  if(/\b(?:[01]?\d|2[0-3]):[0-5]\d\b/.test(p))throw Error(c.id+": exact clock time belongs in game text, not generated pixels");
  return p;
 }
