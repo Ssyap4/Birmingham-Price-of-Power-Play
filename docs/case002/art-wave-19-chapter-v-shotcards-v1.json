@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "source": "Chapter V screenplay and case002-art-storyboard-v1.json; initial E01 shotcard, expand one scene after each accepted cycle",
+  "scenes": [
+    {
+      "id": "E01",
+      "sceneKind": "transition",
+      "focus": "exactly three separate aged wax-sealed letters arranged in a loose triangle on an old oak detective desk, with a cup of long-cold tea between them",
+      "camera": "medium-close high three-quarter view of all three sealed envelopes on the single desktop, no people present",
+      "location": "a modest private detective office in rainy industrial Birmingham in the 1920s",
+      "required": [
+        "exactly three distinct closed wax-sealed paper envelopes spread apart across the table",
+        "one decorated porcelain teacup on its saucer next to the envelopes",
+        "weathered railway sketches and ordinary papers partly beneath the envelopes"
+      ],
+      "background": "brass desk lamp, dark wooden surfaces, vintage leather document case, window showing wet brick factories and smoky chimneys",
+      "light": "warm amber desk lamp on paper and oak with cold blue-grey daylight through rain-streaked glass",
+      "npc": "an empty office with no character faces and no hands",
+      "knowledgeBoundary": "The three letters offer alternative tactics but do not establish any chosen path, confirmed evidence, deal or safety guarantee",
+      "avoid": [
+        "readable names, business names, dates, exact numbers or signatures on the envelopes",
+        "a chosen or completed investigation outcome",
+        "unapproved playable protagonist portrait",
+        "new evidence asserted as proven or witnesses already protected"
+      ]
+    }
+  ]
+}

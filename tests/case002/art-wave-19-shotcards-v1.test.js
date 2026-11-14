@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+"use strict";
+/* Chapter V production cards and SHA-locked candidate images; not game approvals. */
+const assert=require("node:assert/strict");
+const fs=require("node:fs"), path=require("node:path"), crypto=require("node:crypto");
+const builder=require("../../docs/case002/art-wave-prompt-builder-v1.js");
+const {dimensions}=require("../../tools/case002/art-audit-v1.js");
+const board=require("../../docs/case002/case002-art-storyboard-v1.json");
+const {manifest}=require("../../src/case002/approved-art-v1.js");
+const root=path.resolve(__dirname,"../..");
+const cards=builder.validateBatch(JSON.parse(fs.readFileSync(path.join(root,"docs/case002/art-wave-19-chapter-v-shotcards-v1.json"),"utf8")));
+const chapter=board.sceneAssets.filter(x=>x.chapter==="V");
+assert.equal(chapter.length,15,"Chapter V must preserve the exact 15-scene storyboard");
+assert(cards.length>=1&&cards.length<=chapter.length);
+assert.deepEqual(cards.map(c=>c.id),chapter.slice(0,cards.length).map(c=>c.id),
+ "Each new shotcard must follow original Chapter V story order");
+for(const c of cards){
+ const p=builder.promptFor(c),r=builder.reviewFor(c);
+ assert(p.includes(c.focus)&&p.includes(c.location)&&p.includes(c.camera));
+ assert(!p.includes(c.knowledgeBoundary)&&!p.includes(c.id));
+ for(const v of c.avoid)assert(!p.includes(v));
+ assert.equal(r.automationDoesNotApprove,true);
+ assert.equal(r.requiresHumanArtReview,true);
+}
+const staged=[["E01","d51e1cc93da287449afdc05ef3d24831cf43bd01f223136a13f294854ac39820"]];
+for(const [id,sha] of staged){
+ assert(cards.some(c=>c.id===id),"Candidate missing shotcard: "+id);
+ const f=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");
+ assert(fs.existsSync(f),"Candidate image missing: "+id);
+ const bytes=fs.readFileSync(f);
+ assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),sha);
+ assert.deepEqual([dimensions(bytes).width,dimensions(bytes).height],[720,900]);
+ assert(!manifest.sceneImages.some(x=>x.sceneId===id&&x.review==="approved"),
+    "Chapter V candidate must not be installed before full chapter art review: "+id);
+}
+console.log("PASS: chapter V card isolation and first E01 staged candidate");
