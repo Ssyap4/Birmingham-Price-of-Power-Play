@@ -46,7 +46,8 @@ if (!installedIds.has("D01") && !installedIds.has("D02")){
  ["D07","b58ecdba1310d800609bdb41512d9e1466cf7caf4cbb75926ba639a8067a645e"],
  ["D08","a1cd6f58fb7c29e6975ed8a2e0136f98c751476e0547ec37443c8c72ffaa1f9d"],
  ["D09","605381467e9c899c397415d15fe478a9d4aa6426c716312e883393fe8a424a72"],
- ["D10","8bbc19a1736a2bf0b1d549466f439c2dc1ead0d93ff8304f314cae7441c64c43"]
+ ["D10","8bbc19a1736a2bf0b1d549466f439c2dc1ead0d93ff8304f314cae7441c64c43"],
+ ["D11","571a0a32083063747945ee8f95780459486f34643e445a401c2e2ce70be9b415"]
  ];
  for (const [id,hash] of candidates){
   const file=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");

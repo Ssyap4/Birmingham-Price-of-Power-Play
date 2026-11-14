@@ -199,6 +199,16 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Three unmarked pinned slips on notice board, pencil, map fragments; status and witness names reserved for dynamic UI. No people, confirmed outcomes or readable witness statuses."
+    },
+    {
+      "scene": "D11",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Mabel shown from rear/side holding twine-bound family appeals in rainy detective-office doorway. No hero face, premature conclusion or legible victim names."
     }
   ]
 }
