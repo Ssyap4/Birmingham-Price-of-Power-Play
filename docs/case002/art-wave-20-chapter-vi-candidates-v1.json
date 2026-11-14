@@ -124,22 +124,31 @@
     {
       "sceneId": "F08",
       "variantKey": "default",
-      "candidateFile": "case002-f08-scene--mobile.webp",
-      "sha256": "555beadcb5c17fb05780c051b90c7893b85999a505fc431d7d5aaabbb29f2fe4",
-      "gitBlobSha1": "33cb0da1b9adfd3b2488f23b36b3d45b700a77fd",
-      "bytes": 106420,
+      "candidateFile": "case002-f08-scene--revised--mobile.webp",
+      "sha256": "e4b5c0eb67b050516a656d233fe8d496d1e2c413829cd573a2bfb4354da1dbeb",
+      "gitBlobSha1": "5505f3bf7e391ea1ad5a3112322e066fc4e6b2c2",
+      "bytes": 144068,
       "dimensions": [
         720,
         900
       ],
-      "status": "art-review-hold-not-installed",
+      "status": "staged-candidate-not-installed",
       "renderCountInArtworkTurn": 1,
-      "acceptedRendering": 0,
-      "visualReview": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob",
-      "knowledgeBoundary": "The candidate has never been installed; it is retained for traceability but must not be integrated. Redraw or a separately justified replacement is required for the F08 scene. Mabel remains canonically angular, stern and resolute; account ownership remains controlled by story flags.",
+      "acceptedRendering": 1,
+      "visualReview": "ACCEPTED revised F08 after canonical Mabel visual comparison: stern angular face, strong squared shoulders, crossed arms, short dark chestnut bob, severe grey coat, woman facing anonymous detective; closed neutral folder, no other witness or resolved account custody.",
+      "knowledgeBoundary": "A conversation before final decision: closed neutral folder cannot establish who possesses the factory accounts, whether workers received copies, Tommy's whereabouts, or the final verdict. These states remain controlled by the game.",
       "initialReview": "accepted before exact canonical portrait comparison; superseded by the 2026-11-14 follow-up review",
       "canonicalReference": "assets/case002/portraits/case002-mabel-portrait.webp",
-      "needsReplacement": true
+      "needsReplacement": false,
+      "previousRejectedCandidate": {
+        "candidateFile": "case002-f08-scene--mobile.webp",
+        "sha256": "555beadcb5c17fb05780c051b90c7893b85999a505fc431d7d5aaabbb29f2fe4",
+        "gitBlobSha1": "33cb0da1b9adfd3b2488f23b36b3d45b700a77fd",
+        "bytes": 106420,
+        "status": "art-review-hold-not-installed",
+        "review": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob"
+      },
+      "replacedAfterCanonicalReview": true
     }
   ]
 }

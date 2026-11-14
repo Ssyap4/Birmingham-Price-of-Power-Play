@@ -22,18 +22,21 @@ assert.equal(metadata.candidates.length,batch.length);
 for(const [idx,card] of batch.entries()){
  const m=metadata.candidates[idx];
  assert.equal(m.sceneId,card.id);
- if(card.id==="F08"){
-   assert.equal(m.status,"art-review-hold-not-installed");
-   assert.equal(m.acceptedRendering,0);
-   assert.equal(m.needsReplacement,true);
-   assert.equal(m.canonicalReference,"assets/case002/portraits/case002-mabel-portrait.webp");
- }else{
-   assert.equal(m.status,"staged-candidate-not-installed");
-   assert.equal(m.acceptedRendering,1);
- }
+ assert.equal(m.status,"staged-candidate-not-installed");
+ assert.equal(m.acceptedRendering,1);
  assert.equal(m.renderCountInArtworkTurn,1);
+ if(card.id==="F08"){
+   assert.equal(m.candidateFile,"case002-f08-scene--revised--mobile.webp");
+   assert.equal(m.needsReplacement,false);
+   assert.equal(m.replacedAfterCanonicalReview,true);
+   assert.equal(m.canonicalReference,"assets/case002/portraits/case002-mabel-portrait.webp");
+   assert.equal(m.previousRejectedCandidate?.status,"art-review-hold-not-installed");
+   const rejected=fs.readFileSync(path.join(root,"assets/case002/candidates",m.previousRejectedCandidate.candidateFile));
+   assert.equal(crypto.createHash("sha256").update(rejected).digest("hex"),m.previousRejectedCandidate.sha256);
+   assert.notEqual(m.previousRejectedCandidate.sha256,m.sha256);
+ }
  assert.equal(m.variantKey,"default");
- assert.equal(m.candidateFile,"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
+ assert.equal(m.candidateFile,card.id==="F08"?"case002-f08-scene--revised--mobile.webp":"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
  assert.equal(card.sceneKind,card.id==="F06"?"environment":["F07","F08"].includes(card.id)?"dialogue":"evidence");
  const p=builder.promptFor(card),r=builder.reviewFor(card);
  assert(p.includes(card.focus)&&p.includes(card.location)&&p.includes(card.camera));
@@ -101,10 +104,11 @@ for(const [idx,card] of batch.entries()){
  else if(card.id==="F08"){
    assert(card.knowledgeBoundary.includes("accountsGivenToWorkers"));
    assert(card.knowledgeBoundary.includes("brackettAccountsHeld"));
-   assert(card.required.some(x=>/closed brown leather folder/.test(x)));
-   assert(card.required.some(x=>/railway woman/.test(x)));
-   assert(card.avoid.some(x=>/Tommy or any other possibly absent witness/.test(x)));
-   assert(card.avoid.some(x=>/opened legible ledger/.test(x)));
+   assert(card.required.some(x=>/closed brown leather document folder/.test(x)));
+   assert(card.required.some(x=>/angular-faced woman/.test(x)));
+   assert(card.required.some(x=>/squared shoulders, crossed arms/.test(x)));
+   assert(card.avoid.some(x=>/Tommy, other conditional witnesses/.test(x)));
+   assert(card.avoid.some(x=>/opened, legible or transferred factory account book/.test(x)));
  }
 
 }

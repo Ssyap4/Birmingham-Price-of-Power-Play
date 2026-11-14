@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay and canonical storyboard; F01 through F08 independently rendered in one author turn each",
+  "source": "Chapter VI screenplay and canonical storyboard; F08 revised in a separate one-render turn after portrait review.",
   "scenes": [
     {
       "id": "F01",
@@ -167,23 +167,23 @@
     {
       "id": "F08",
       "sceneKind": "dialogue",
-      "focus": "an anonymous detective closes a plain worn leather document folder with both black-gloved hands, while a railway woman in a modest grey coat with short dark chestnut bob stands at the rainlit office threshold during a grave conversation before the final decision",
-      "camera": "medium cinematic three-quarter view from behind the seated detective toward a half-open doorway, the closed folder in the foreground and the railway woman's back and side silhouette in the midground, with no discernible faces",
+      "focus": "a stern railway worker in a severe grey wool coat and short dark chestnut bob stands square-shouldered with arms crossed at an open industrial office doorway, facing the unseen investigator who rests two black-gloved hands on a closed plain brown leather folder before a difficult final decision",
+      "camera": "medium three-quarter view from behind the detective's gloved hands and closed folder, looking toward the resolute railway woman whose angular face and unwavering gaze are visible beside the doorway",
       "location": "a modest detective office overlooking factory streets in industrial Birmingham in the 1920s",
       "required": [
-        "one ordinary closed brown leather folder lying flat on a wooden desk, with two black-gloved investigator hands resting on its cover",
-        "one solitary railway woman wearing a belted grey wool coat and short dark bob, seen from behind at the open office doorway, her face obscured",
-        "the warm brass desk lamp in the left foreground against a cool rainy industrial street visible beyond the doorway"
+        "one ordinary closed brown leather document folder on a scratched oak desk under two black leather-gloved investigator hands, without visible contents",
+        "one determined angular-faced woman with a short dark chestnut bob, squared shoulders, crossed arms and a heavy tailored grey coat standing upright in the doorway",
+        "one strong amber desk lamp in the foreground contrasting with a cold rain-soaked industrial street beyond the open door"
       ],
       "background": "rough brick office interior, scratched oak table, old dark coat on a hook, a rain-streaked warehouse window and distant smoke-stacked factory buildings",
       "light": "amber table-lamp glow across the closed folder and gloves, deep blue-grey rain twilight filling the doorway behind the woman",
-      "npc": "one railway woman with an indistinct face viewed from behind in a grey coat and short dark bob; anonymous playable hero shown only as cropped black-gloved hands and shoulder",
+      "npc": "a singular resolute railway woman with strong facial structure and a short dark chestnut bob, in a severe grey wool coat; the playable detective is anonymous black-gloved hands and partial sleeves only",
       "knowledgeBoundary": "The scene is a conversation before the final decision. The closed folder is neutral and does not show original factory accounts, imply accountsGivenToWorkers or brackettAccountsHeld, or reveal Tommy's status. Which records are held or transferred and who can speak remain determined only by the narrative flags.",
       "avoid": [
-        "a visible handover of accounts, an opened legible ledger, or any document proving who holds the factory books",
-        "Tommy or any other possibly absent witness physically present beside the woman",
-        "recognizable full faces or invented appearances of the playable detective or the established railway woman",
-        "an already signed verdict, newspaper publication, guaranteed survival or decided ending"
+        "an opened, legible or transferred factory account book; any visual claim about ledger ownership",
+        "Tommy, other conditional witnesses or a crowd beside the woman",
+        "a timid, slight or passive posture for the railway woman or a fully visible selectable detective face",
+        "a signed verdict, celebratory ending, protected witness status or published charges"
       ],
       "intendedVariant": "neutral-conversation-all-three-account-states"
     }
