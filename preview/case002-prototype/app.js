@@ -113,7 +113,11 @@ function init(){
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
  $("backToLaunch").addEventListener("click",()=>{
-   hideNotice();$("game").hidden=true;$("launch").hidden=false;window.scrollTo(0,0);
+   hideNotice();$("game").hidden=true;$("launch").hidden=false;
+   // The first attempt may have created a save after resume was last disabled.
+   // Re-read the current hero's save when returning to the launch screen.
+   refreshResume();
+   window.scrollTo(0,0);
  });
  $("noticeDismiss").addEventListener("click",hideNotice);
  $("noticeJump").addEventListener("click",()=>{
