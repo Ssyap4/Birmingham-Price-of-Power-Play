@@ -139,6 +139,13 @@
       "previous": "Earlier conversational context sometimes caused image requests for a future scene to reproduce previous scene's location and props.",
       "remedy": "Single-shot per user turn with preflight checking of D05 narrative focus and strict REVIEW before staging. First D05 request depicted the correct industrial service gate with guard, shift relief worker and driver; no second image requested in that turn.",
       "outcome": "first-shot-candidate-pass"
+    },
+    {
+      "scene": "HF03",
+      "category": "workflow_cadence_violation",
+      "previous": "Two image generation calls were made in one user-response cycle, despite ART-ONE-IMAGE-CADENCE.md allowing exactly one.",
+      "remedy": "A hard one-call stop after first returned image: perform REVIEW, then either stage it or reject it; no regeneration until a new user message.",
+      "outcome": "logged; enforce in following turns"
     }
   ],
   "observedSuccess": {
@@ -219,6 +226,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Jack shown rear/side with one protective arm at guarded Aston factory gate; Tommy bandaged and still under watchman's control. No freed/protected state or substituted playable-hero portrait."
+    },
+    {
+      "scene": "HF03",
+      "attempt": 2,
+      "generatedThisTurn": 2,
+      "cadenceCompliant": false,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Two image generation calls occurred for the same scene in one user turn; first not staged; only second preserved. Final image shows gloved hands, opening Mercer safe, intact family photo, anonymous playable hero, no protected sworn statement."
     }
   ]
 }
