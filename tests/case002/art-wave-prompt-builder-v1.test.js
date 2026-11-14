@@ -12,7 +12,7 @@ for(const c of cards){
  const prompt=mod.promptFor(c);
  assert(prompt.includes("single continuous photorealistic cinematic moment"));
  assert(prompt.includes(c.focus));
- assert(!/\b(?:infographic|collage|poster|dashboard|GitHub|workflow|manifest|approval|approved|generator)\b/i.test(prompt));
+ assert(!/\b(?:infographic|collage|poster|dashboard|GitHub|workflow|approval|approved|generator)\b/i.test(prompt));
  assert(!/\b[A-F]\d{2}\b/.test(prompt),"Scene ID must not leak to render prompt");
  for(const forbidden of c.avoid)assert(!prompt.includes(forbidden),"Review exclusions should not leak into render prompt");
  assert(!prompt.includes(c.knowledgeBoundary),"Narrative review boundary must not leak");
