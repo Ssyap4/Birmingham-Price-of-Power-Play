@@ -165,6 +165,20 @@ def main():
                             "Unapproved Mabel portrait must not be substituted"
                         )
                     assert page.locator("#saveStatus").inner_text().startswith("Автосохранение")
+                    # Starting a new attempt creates a save during play, but the
+                    # launch screen's initial resume button was disabled. Going
+                    # back must refresh it without reloading Safari or changing
+                    # the current scene/progress.
+                    page.locator("#backToLaunch").click()
+                    assert page.locator("#launch").is_visible()
+                    assert page.locator("#game").is_hidden()
+                    assert page.locator("#resume").is_enabled(), (
+                        f"{browser_name}: resume must activate on returning to hero selection"
+                    )
+                    page.locator("#resume").click()
+                    assert page.locator("#sceneId").inner_text().startswith("P02"), (
+                        "Returning to hero selection must not discard the last scene"
+                    )
                     page.reload(wait_until="load")
                     assert page.locator("#resume").is_enabled()
                     page.locator("#resume").click()
