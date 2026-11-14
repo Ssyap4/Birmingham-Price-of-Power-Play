@@ -405,6 +405,10 @@ def main():
                         return document.documentElement.style.getPropertyValue('--case002-safe-top');
                     }""")
                     assert updated_top == "96px", f"{browser_name}: safe-area event is stale"
+                    new_padding = tg_page.locator(".app-shell").evaluate(
+                        "(el) => parseFloat(getComputedStyle(el).paddingTop)"
+                    )
+                    assert new_padding >= 96, f"{browser_name}: safe-area change did not reach rendered layout"
                     tg_context.close()
                     assert not failures, f"{browser_name} console errors: {failures}"
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")

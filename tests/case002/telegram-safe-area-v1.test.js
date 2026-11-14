@@ -32,24 +32,45 @@ const element={style,
  setAttribute:(name,value)=>attributes.set(name,value),
  removeAttribute:name=>attributes.delete(name)
 };
-const unbind=bind({document:{documentElement:element},Telegram:{WebApp:app}});
+const node=()=>{
+ const values=new Map();
+ return {values,style:{
+   setProperty:(name,value)=>values.set(name,value),
+   getPropertyValue:name=>values.get(name)||"",
+   removeProperty:name=>values.delete(name)
+ }};
+};
+const elements={".app-shell":node(),"#game":node(),".case-quick-nav":node()};
+const unbind=bind({innerWidth:390,
+ document:{documentElement:element,querySelector:selector=>elements[selector]},
+ Telegram:{WebApp:app}});
+
 assert.equal(attributes.get("data-case002-telegram"),"true");
 assert.equal(values.get("--case002-safe-top"),"68px");
 assert.equal(values.get("--case002-safe-bottom"),"34px");
 assert.equal(handlers.size,3);
+assert.equal(elements[".app-shell"].values.get("padding-top"),"68px");
+assert.equal(elements[".app-shell"].values.get("padding-bottom"),"58px");
+assert.equal(elements[".case-quick-nav"].values.get("padding-bottom"),"42px");
+assert.equal(elements["#game"].values.get("padding-bottom"),"126px");
+
 app.contentSafeAreaInset.top=72;
 handlers.get("contentSafeAreaChanged")();
 assert.equal(values.get("--case002-safe-top"),"92px");
+assert.equal(elements[".app-shell"].values.get("padding-top"),"92px");
 app.safeAreaInset.left=10;
 handlers.get("safeAreaChanged")();
 assert.equal(values.get("--case002-safe-left"),"10px");
 app.safeAreaInset.bottom=0;
 handlers.get("viewportChanged")();
 assert.equal(values.get("--case002-safe-bottom"),"0px");
+assert.equal(elements[".case-quick-nav"].values.get("padding-bottom"),"8px");
 unbind();
 assert.equal(values.size,0);
 assert.equal(handlers.size,0);
 assert.equal(attributes.size,0,"Telegram-only CSS override must be removed");
+for(const entry of Object.values(elements))
+ assert.equal(entry.values.size,0,"CSS fallback must be removed on cleanup");
 unbind();
 assert.equal(typeof bind(null),"function");
 console.log("PASS Case002 Telegram safe area: offline fallback, combined insets, events, cleanup and clamped values.");

@@ -1,5 +1,6 @@
 name: Case 002 scoped mobile smoke (draft only)
-# A scene-installation change now triggers full WebKit + Chromium; candidate art stays quick.
+# A scene-installation or browser-adapter validation change triggers full WebKit + Chromium; candidate art stays quick.
+# This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
 on:
   push:
     branches: [feat/case002-story-bible-v1]
