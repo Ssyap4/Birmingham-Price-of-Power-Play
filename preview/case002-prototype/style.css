@@ -231,3 +231,24 @@ html[data-case002-telegram="true"] .notice{
 .notice-actions{position:sticky;bottom:-12px;padding:10px 0 3px;
  background:linear-gradient(0deg,#241a12 65%,#241a1200)}
 .notice-expand{background:#2c2419;color:#f3cd94;border-color:#ba8d55}
+
+/* Case 002 iPhone legibility: previous clamp() resolved to 9–10px on
+ * common phone widths. Preserve large touch targets and permit wrapping. */
+.case-quick-nav button{font-size:clamp(.70rem,3vw,.78rem);line-height:1.2}
+.tool-tab{font-size:clamp(.70rem,3vw,.79rem);line-height:1.2}
+@media(max-width:359px){
+ .case-quick-nav button{font-size:.72rem;white-space:normal;
+  overflow-wrap:anywhere;letter-spacing:0;line-height:1.15}
+}
+/* Real scroll anchors must remain below the Safari/Telegram top inset. */
+#storyPanel,#choicesPanel,#caseTools,#chapterIntertitle,#sceneText,.evidence-card{
+ scroll-margin-top:calc(18px + env(safe-area-inset-top,0px))
+}
+html[data-case002-telegram="true"] #storyPanel,
+html[data-case002-telegram="true"] #choicesPanel,
+html[data-case002-telegram="true"] #caseTools,
+html[data-case002-telegram="true"] #chapterIntertitle,
+html[data-case002-telegram="true"] #sceneText,
+html[data-case002-telegram="true"] .evidence-card{
+ scroll-margin-top:calc(18px + var(--case002-safe-top))
+}
