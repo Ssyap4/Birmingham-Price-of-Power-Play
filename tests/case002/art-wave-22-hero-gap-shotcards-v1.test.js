@@ -65,7 +65,7 @@ for(const [index,card] of cards.entries()){
  assert.equal(sh,candidate.sha256);
  assert(!hashes.has(sh),"Hero-specific frames must have different photographic content");
  hashes.add(sh);
- const git=crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+data.length+"\\0"),data])).digest("hex");
+ const git=crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+data.length+"\0"),data])).digest("hex");
  assert.equal(git,candidate.gitBlobSha1);
  assert.equal(fs.existsSync(path.join(root,"assets/case002/scenes",candidate.candidateFile)),
    false,"Candidate installed early without review");
