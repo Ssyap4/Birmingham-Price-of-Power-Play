@@ -8,10 +8,18 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
 "use strict";
 const witnesses={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
+// Keep spoken consequence notices consistent with the canonical narrative.
+// In particular, detention by private guards is not witness protection.
 const statuses={
- missing:"местонахождение неизвестно",located:"найден, но не под защитой",
- detained:"под охраной",protected:"под защитой",evacuated:"вывезен из города",deceased:"погиб"
+ missing:"местонахождение неизвестно",located:"найден, но не защищён",
+ detained:"задержан частной охраной",protected:"под защитой",
+ evacuated:"вывезен из города",deceased:"погиб"
 };
+const adaStatuses={
+ located:"найдена, но не защищена",detained:"задержана частной охраной",
+ evacuated:"вывезена из города",deceased:"погибла"
+};
+const witnessStatus=(id,status)=>(id==="ada"&&adaStatuses[status])||statuses[status]||status;
 const knownFlags={
  publicContactSecured:"Нора Келл проверила независимые доказательства. Публикация ещё не вышла.",
  workersCleared:"Рабочие выведены с опасного пути. Остановка стрелки теперь не угрожает смене.",
@@ -35,9 +43,10 @@ function receipts(before,after,action,describeEvidence){
    add("custody","Копия счетов передана рабочим. Знание осталось, но личная концовка власти теперь закрыта.");
  for(const [id,status] of Object.entries(after.witnesses||{})){
    if(status!==before.witnesses?.[id]){
-     let msg=witnesses[id]+": "+(statuses[status]||status)+".";
+     let msg=witnesses[id]+": "+witnessStatus(id,status)+".";
      if(status==="protected")msg+=" Это ещё не означает эвакуацию.";
-     if(status==="detained"&&before.witnesses[id]!=="detained")msg+=" Освободить свидетеля в прежнем укрытии нельзя.";
+     if(id==="ada"&&status==="detained"&&before.witnesses[id]!=="detained")
+       msg+=" В прежнем укрытии Аду уже не найти.";
      add("witness",msg);
    }
  }
