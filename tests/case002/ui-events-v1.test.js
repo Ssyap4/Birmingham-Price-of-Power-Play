@@ -26,6 +26,8 @@ const s=()=>({evidence:[],witnesses:{ada:"missing",tommy:"detained",mercer:"miss
  assert.equal(p.kind,"danger");
  assert.equal(p.focus.tab,"journal");
  assert(p.message.startsWith("Убежище Ады раскрыто"));
+ assert(p.message.includes("Ада Уэбб: задержана частной охраной"));
+ assert(!p.message.includes("под охраной"),"private detention is not protection");
 }
 {
  const b=s(),a={...b,flags:{accountsGivenToWorkers:true}};
