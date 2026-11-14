@@ -80,3 +80,8 @@ C08: первый кинокадр с передачей телеграммы с
 ## Проверка истинного портрета C07 (последняя сверка)
 
 Эталон `assets/case002/portraits/case002-signalman-portrait.webp` теперь можно проверять read-only workflow `.github/workflows/case002-cast-reference-qa.yml`, запрос в `tools/case002/cast-reference-request.txt`; workflow считывает файл из репозитория и сверяет SHA-256 с `approved-art-v1.js`. Эталон стрелочника — седые усы, фирменная служебная кепка, жилет; SHA-256 `946a6d9f6173e5a68be6ee537b37ad49537680e51a535350bd5215fead7e27f8`. Предыдущий кандидат C07 **окончательно отклонён из-за несходства лица**. Повторный рисунок под виадуком также не соответствует сцене. Следующая генерация должна учитывать именно утверждённый портрет, а не случайного пожилого мужчину. C08 с выдуманным номером `4738` отклонён; C10 с передачей конверта отклонён. Все эти решения в [art-wave-17-chapter-iii-c06-c10-v1.md](art-wave-17-chapter-iii-c06-c10-v1.md).
+
+
+## Current physical staging checkpoint: C10
+
+C10 is now a visually reviewed CANDIDATE staged in GitHub at assets/case002/candidates/case002-c10-scene--mobile.webp; SHA-256 e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707. It is NOT installed in gameplay. C06-C09 still need compliant art. Exact updated state and failed compositions are in docs/case002/art-wave-17-status-v1.json and art-wave-17-chapter-iii-c06-c10-v1.md. Do not overwrite the current C10 image or call the full wave complete.

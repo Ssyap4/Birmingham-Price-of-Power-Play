@@ -25,6 +25,7 @@ function category(file){
  if(p.startsWith("docs/case002/"))return "docs";
  // Real approved scene/portrait WebP assets are visual changes, not game rules.
  // Unknown extensions and paths still fail closed to the full safety gate.
+ if(/^assets\/case002\/candidates\/case002-[a-z0-9-]+\.webp$/.test(p))return "art";
  if(/^assets\/case002\/(?:scenes|portraits)\/case002-[a-z0-9-]+\.webp$/.test(p))
    return "art";
  if(p==="src/case002/engine-v3.js")return "deep";

@@ -42,9 +42,14 @@
     },
     {
       "id": "C10",
-      "state": "rejected",
-      "reason": "Generated men exchanging envelope instead of train-wagon reconstruction",
-      "next": "overhead isolated table drawing with separated loose wagon silhouette"
+      "state": "candidate",
+      "reason": "Visually accepted overhead wagon reconstruction; technical QA passed; NOT installed pending complete wave",
+      "next": "keep staged until independent C06-C09 art is reviewed and entire wave installed",
+      "candidateAsset": "assets/case002/candidates/case002-c10-scene--mobile.webp",
+      "candidateSha256": "e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707",
+      "candidateBytes": 133382,
+      "width": 720,
+      "height": 900
     }
   ]
 }
