@@ -173,6 +173,19 @@ assert(asHero(male,"F02").includes("произнёс сыщик"));
 assert(asHero(heroine,"E10").includes("представитель рабочих")===false ||
  !asHero(heroine,"E10").includes("сказала Элеонора"),
  "Do not feminize male NPC voices");
+
+assert(asHero(heroine,"D09").includes("сама не обнаружила"));
+assert(asHero(heroine,"E08").includes("Элеонора должна отдельно решить"));
+assert(asHero(heroine,"E09",{state:{flags:{...heroine.state.flags,accountsGivenToWorkers:true}}})
+ .includes("Элеонора сохранила записанные сведения"));
+assert(asHero(heroine,"E09").includes("Элеонора не может распорядиться"));
+assert(asHero(heroine,"E10",{state:{flags:{...heroine.state.flags,accountsGivenToWorkers:true}}})
+ .includes("Элеонора осталась со знанием"));
+assert(asHero(heroine,"F08",{state:{flags:{...heroine.state.flags,brackettAccountsHeld:true}}})
+ .includes("Ей предстоит решить"));
+assert(asHero(heroine,"Z04").includes("Элеонора уже сумела"));
+assert(asHero(heroine,"Z06").includes("Она не опубликовала их и не передала"));
+assert(asHero(heroine,"Z06").includes("Элеонора действительно сумела"));
 const fs=require("node:fs");
 const preview=fs.readFileSync(require("node:path").join(__dirname,"../../preview/case002-prototype/app.js"),"utf8");
 assert(preview.includes("BirminghamCase002Narrative.witnessStatus(id,status)"),
