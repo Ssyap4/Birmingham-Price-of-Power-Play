@@ -54,4 +54,13 @@ for(const [i,card] of batch.entries()){
  assert(card.required.some(v=>/two separate dense columns/.test(v)));
  assert(card.avoid.some(v=>/identifying signatures/.test(v)));
 }
-console.log("PASS: Ending Z01 single-shot candidate SHA/WEBP/canon verified; not yet installed.");
+const rejectedZ02=metadata.rejectedGenerations?.find(x=>x.sceneId==="Z02"&&x.reasonCode==="playable-hero-gender-presumption");
+assert(rejectedZ02,"Gender-assumptive Z02 must remain rejected pending a new author turn");
+assert.equal(rejectedZ02.attemptedGenerations,1);
+assert.equal(rejectedZ02.imageApproved,false);
+assert.equal(rejectedZ02.installed,false);
+assert.equal(rejectedZ02.candidateFile,null);
+assert(!metadata.candidates.some(x=>x.sceneId==="Z02"),"Never stage the rejected male-silhouette ending");
+assert(!spec.scenes.some(x=>x.id==="Z02"),"Unaccepted ending must not be counted in visual coverage");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="Z02").length,0);
+console.log("PASS: Ending Z01 accepted; Z02 gender-assumptive attempt rejected and uninstalled.");

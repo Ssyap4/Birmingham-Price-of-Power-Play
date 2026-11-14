@@ -19,5 +19,22 @@
       "visualReview": "Accepted: morning industrial newsroom; dark-haired Nora seen from behind inspecting a single two-column printed broadsheet beside the letterpress; no readable witness details, visible selectable hero or premature punishment of Vale.",
       "knowledgeBoundary": "Publication is the specific Z01 outcome, not proof of legal conviction; witness protection status and Mercer's testimony are supplied by game data and HTML, not this photograph."
     }
+  ],
+  "rejectedGenerations": [
+    {
+      "sceneId": "Z02",
+      "sceneTitle": "Люди без прошлого",
+      "variantKey": "evacuated-none",
+      "date": "2026-11-14",
+      "attemptedGenerations": 1,
+      "imageApproved": false,
+      "status": "rejected-not-staged",
+      "generatorImageId": "d9636f25-0663-4380-bca6-c6aca17fe21e",
+      "reasonCode": "playable-hero-gender-presumption",
+      "reason": "The artwork depicts a visibly male-presenting detective in a flat cap and fitted overcoat boarding the train, even though the five selectable playable heroes include women. The ending has a single art slot and must remain usable by any hero.",
+      "candidateFile": null,
+      "installed": false,
+      "nextStep": "One fresh image only on the next explicit author request: a gender-neutral close-up of a closed document folio and an anonymous gloved hand beside an empty rain-wet morning train doorway, with no full figure, head, face, or body silhouette. This variant may depict zero evacuees; evacuations of one to three named witnesses require separate state-appropriate art or strictly verified neutral treatment."
+    }
   ]
 }
