@@ -122,6 +122,7 @@ function init(){
    window.scrollTo(0,0);
  });
  $("noticeDismiss").addEventListener("click",hideNotice);
+ $("readScene").addEventListener("click",()=>jumpTo("reading"));
  $("noticeJump").addEventListener("click",()=>{
    if(activeNoticeFocus)jumpTo(activeNoticeFocus.tab,activeNoticeFocus.id);
  });
@@ -170,8 +171,14 @@ function showGame(){
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();evidenceFocus=null;
  render();
- $("storyPanel").focus({preventScroll:true});
- window.scrollTo(0,0);
+ showCurrentScene();
+}
+// Preserve chapter titles on their first scene, then enter directly at the
+// next illustrated scene instead of resetting the viewport to the masthead.
+function showCurrentScene(){
+ const story=$("storyPanel"),chapter=$("chapterIntertitle");
+ story.focus({preventScroll:true});
+ (chapter.hidden?story:chapter).scrollIntoView({block:"start",behavior:"auto"});
 }
 function setText(element,value){element.textContent=String(value);}
 function make(tag,text,cls){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
@@ -201,6 +208,7 @@ function jumpTo(where,evidenceId=null){
  let target;
  if(where==="scene")target=$("storyPanel");
  else if(where==="choices")target=$("choicesPanel");
+ else if(where==="reading")target=$("sceneText");
  else if(["evidence","deductions","witnesses","journal"].includes(where)){
    tab=where;
    evidenceFocus=where==="evidence"?evidenceId:null;
@@ -533,10 +541,9 @@ function select(choice){
   evidenceFocus=null;
   render();
   showNotice(event.message,event.focus);
-  // The old clicked choice has been discarded. Keep keyboard and VoiceOver
-  // oriented on the new story landmark without forcing an extra scroll.
-  $("storyPanel").focus({preventScroll:true});
-  window.scrollTo(0,0);
+  // The old clicked choice no longer exists. Give the next scene focus and
+  // scroll to its opening, including a new chapter intertitle when present.
+  showCurrentScene();
  }catch(e){
   showNotice("Действие не применено: "+e.message);
   console.warn("[Case002] transition rejected",e);
