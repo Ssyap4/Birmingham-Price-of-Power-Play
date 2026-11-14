@@ -113,6 +113,29 @@
         "recognizable playable protagonist's face or new named witness",
         "success celebration or proof that a safe plan has been carried out"
       ]
+    },
+    {
+      "id": "E06",
+      "sceneKind": "dialogue",
+      "focus": "an influential older industrial owner with a short silver beard sits tensely in a deep leather armchair with his fingers resting against his mouth, refusing to answer a difficult question from an unseen visitor across the desk",
+      "camera": "low cinematic over-the-shoulder three-quarter portrait of the seated silver-bearded proprietor, half his face in shadow and the visitor only a dark cropped shoulder in foreground",
+      "location": "a wealthy 1920s Birmingham industrial proprietor's private wood-panelled factory office",
+      "required": [
+        "a broad-shouldered older proprietor in a heavy dark wool suit and dark waistcoat with silver hair and short silver beard",
+        "a large oil portrait of the factory's founder in an ornate period frame hanging behind the chair",
+        "a polished desk with ordinary papers and an amber-shaded lamp separating the silent proprietor from the unseen visitor"
+      ],
+      "background": "dark leather armchair, lacquered wood panels, burgundy drapes and a tall rain-streaked window overlooking smoky factory chimneys",
+      "light": "warm brass-lamp amber across polished wood contrasted with cold rain-blue daylight; the owner's face is half shaded",
+      "npc": "one silver-bearded factory proprietor seated sideways without a frontal mugshot and an anonymous visitor visible only as a cropped dark silhouette",
+      "knowledgeBoundary": "This tense conversation opens contact with the industrial owner but does not establish confession, innocence, restitution, signed protection or permission for wrongdoing",
+      "avoid": [
+        "a signed agreement or formal guarantee",
+        "a full written confession or celebratory exoneration",
+        "a new identifiable playable investigator face",
+        "readable accusations, names, or invented dates and numbers",
+        "a replacement photograph of the established proprietor presented as canonical"
+      ]
     }
   ]
 }

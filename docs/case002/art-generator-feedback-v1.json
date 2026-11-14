@@ -323,6 +323,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Watchman at industrial gate and two laborers discuss ledger/shift pay in cold rain; no confirmed evacuation of all tracks, worker clearance flag, sabotage or identifiable playable-hero face. Variant safety to be audited before installation."
+    },
+    {
+      "scene": "E06",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Silver-bearded industrial proprietor in dark wool suit seen in chiaroscuro beside founder portrait and rainlit factory window. No admissions or signed guarantee; exact facial continuity with approved Vale portrait must be checked prior to final batch installation."
     }
   ]
 }
