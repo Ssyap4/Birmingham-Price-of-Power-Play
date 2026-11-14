@@ -378,6 +378,63 @@ def main():
                         for selector in (".choice:not([disabled])", ".tool-tab"):
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
+                    # A stale, detached choice dispatched twice cannot advance
+                    # a story twice or replace the first valid action's notice.
+                    double_ctx = browser.new_context(
+                        viewport={"width":390,"height":844},
+                        device_scale_factor=3,is_mobile=True,has_touch=True
+                    )
+                    double_page = double_ctx.new_page()
+                    double_page.goto(address, wait_until="load")
+                    double_page.locator("#begin").click()
+                    double_page.locator('button.choice[data-to="P02"]').evaluate(
+                        "(el) => {el.click();el.click();}"
+                    )
+                    assert double_page.locator("#sceneId").inner_text().startswith("P02")
+                    assert double_page.evaluate("""() => JSON.parse(localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                    )).history.length""") == 1, (
+                        f"{browser_name}: repeated old button spent two transitions"
+                    )
+                    assert "Действие не применено" not in (
+                        double_page.locator("#notice").inner_text()
+                    ), f"{browser_name}: duplicate click produced a false error"
+                    double_ctx.close()
+                    # Two Safari tabs sharing a hero: the older tab must not
+                    # overwrite the newer tab's primary storage slot.
+                    tabs_ctx = browser.new_context(
+                        viewport={"width":390,"height":844},
+                        device_scale_factor=3,is_mobile=True,has_touch=True
+                    )
+                    first_tab = tabs_ctx.new_page()
+                    first_tab.goto(address, wait_until="load")
+                    first_tab.locator("#begin").click()
+                    first_tab.locator('button.choice[data-to="P02"]').click()
+                    second_tab = tabs_ctx.new_page()
+                    second_tab.goto(address, wait_until="load")
+                    second_tab.locator("#resume").click()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("P02")
+                    first_tab.locator('button.choice[data-to="A01"]').click()
+                    live_save = first_tab.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                    )""")
+                    assert json.loads(live_save)["node"] == "A01"
+                    second_tab.locator('button.choice[data-to="A01"]').click()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("P02"), (
+                        f"{browser_name}: stale Safari tab incorrectly advanced"
+                    )
+                    assert "обновилось в другой вкладке" in (
+                        second_tab.locator("#notice").inner_text()
+                    ), f"{browser_name}: stale tab did not explain the conflict"
+                    assert second_tab.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                    )""") == live_save, f"{browser_name}: stale tab overwrote new progress"
+                    second_tab.locator("#backToLaunch").click()
+                    second_tab.locator("#resume").click()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("A01"), (
+                        f"{browser_name}: stale tab cannot reopen latest saved scene"
+                    )
+                    tabs_ctx.close()
                     # Mock multiple post-choice receipts in a separate tab only.
                     # This tests the notice UI without forging any game outcome.
                     receipt_ctx = browser.new_context(
