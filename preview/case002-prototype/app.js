@@ -80,7 +80,6 @@ const actionLabels={
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
-let activeArtStage=null,artPhoneIsNarrow=window.matchMedia("(max-width: 680px)").matches;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -149,16 +148,6 @@ function init(){
   tab=button.dataset.tab;evidenceFocus=null;renderTools();
  });
  $("hero").addEventListener("change",refreshResume);
- // Seventeen approved scenes have distinct landscape/portrait masters.
- // A rotation must re-verify the correct crop without replaying any choice.
- // Ordinary Safari and the Telegram webview both dispatch viewport resize.
- window.addEventListener("resize",()=>{
-  const narrow=window.matchMedia("(max-width: 680px)").matches;
-  if(narrow===artPhoneIsNarrow)return;
-  artPhoneIsNarrow=narrow;
-  if(engine&&!$("game").hidden&&activeArtStage)
-   renderApprovedSceneArt(activeArtStage);
- });
  refreshResume();
 }
 function refreshResume(){
@@ -296,65 +285,33 @@ function translateReason(choice,view){
 }
 let artRenderSerial=0;
 function renderApprovedSceneArt(stage){
- const root=$("sceneArtwork"),img=$("sceneArtworkImage"),
-       mobile=$("sceneArtworkMobile"),host=$("game");
+ const root=$("sceneArtwork"),img=$("sceneArtworkImage"),host=$("game");
  const serial=++artRenderSerial;
  root.hidden=true;
- root.dataset.portrait="false";
+ root.dataset.portrait="true";
  host.dataset.artVerified="false";
  host.dataset.artFallback="false";
  img.onload=null;
  img.onerror=null;
- // Remove both old sources before resolving a new scene; old async images
- // must never flash over the next scene or leak a previous witness.
- mobile.removeAttribute("srcset");
+ // Game art is portrait-only. No landscape source or landscape fallback.
+ // Cancel the previous request before asking for this scene's approved WebP.
  img.removeAttribute("src");
  const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
- if(!approved)return;
+ if(!approved||!approved.mobileSrc)return;
  img.alt=approved.alt;
- const phone=window.matchMedia("(max-width: 680px)").matches;
- const mobileOnly=approved.mobileOnly===true;
- const hasMobile=phone&&Boolean(approved.mobileSrc);
- let fellBack=false;
- function landscapeFallback(){
-   if(mobileOnly||!hasMobile||fellBack)return false;
-   fellBack=true;
-   // A bad portrait should never erase a valid approved landscape image.
-   mobile.removeAttribute("srcset");
-   root.dataset.portrait="false";
-   host.dataset.artFallback="true";
-   img.removeAttribute("src");
-   img.src=approved.src;
-   return true;
- }
- if(approved.mobileSrc){
-   root.dataset.portrait=mobileOnly||phone?"true":"false";
-   mobile.srcset=approved.mobileSrc;
- }
  img.onload=()=>{
-   if(serial!==artRenderSerial||host.dataset.artScene!==stage.sceneId||
-      host.dataset.artVariant!==stage.variantKey)return;
-   const mobileSelected=mobileOnly||(hasMobile&&!fellBack&&
-     img.currentSrc.includes("--mobile.webp"));
-   const valid=mobileSelected?
-     img.naturalWidth>=500&&img.naturalHeight>=700:
-     img.naturalWidth>=800&&img.naturalHeight>=450;
-   if(!valid&&landscapeFallback())return;
-   if(valid){
-     root.hidden=false;
-     host.dataset.artVerified="true";
-   }else{
-     root.hidden=true;
-     host.dataset.artVerified="false";
-   }
+  if(serial!==artRenderSerial||host.dataset.artScene!==stage.sceneId||
+     host.dataset.artVariant!==stage.variantKey)return;
+  const valid=img.naturalWidth>=500&&img.naturalHeight>=700;
+  root.hidden=!valid;
+  host.dataset.artVerified=String(valid);
  };
  img.onerror=()=>{
-   if(serial!==artRenderSerial)return;
-   if(landscapeFallback())return;
-   root.hidden=true;
-   host.dataset.artVerified="false";
+  if(serial!==artRenderSerial)return;
+  root.hidden=true;
+  host.dataset.artVerified="false";
  };
- img.src=approved.src;
+ img.src=approved.mobileSrc;
 }
 function renderSceneCast(stage,state){
  const root=$("sceneCast");
@@ -402,7 +359,6 @@ function render(){
  // Future artwork is selected by game state, but never displayed until a
  // verified asset exists. Stage metadata is useful for browser QA now.
  const stage=window.BirminghamCase002ArtDirector.select(data.storyboard,v);
- activeArtStage=stage;
  const host=$("game");
  host.dataset.artScene=stage.sceneId;
  host.dataset.artVariant=stage.variantKey;
