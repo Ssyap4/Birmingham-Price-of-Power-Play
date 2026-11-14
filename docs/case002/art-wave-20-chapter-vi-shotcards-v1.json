@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay + canonical storyboard; F01 and F02 separate single-image author turns",
+  "source": "Chapter VI screenplay and storyboard; F01, F02, F03 are independent one-image artistic turns",
   "scenes": [
     {
       "id": "F01",
@@ -48,6 +48,29 @@
         "recognizable face or altered canonical appearance of any selectable investigator"
       ],
       "intendedVariant": "neutral-review-before-verification"
+    },
+    {
+      "id": "F03",
+      "sceneKind": "evidence",
+      "focus": "the black-gloved hand of an investigator uses metal tweezers to examine a ragged dark wool coat fiber over a shallow evidence tray, beside an old police accident report and two separate telegram and witness-account papers",
+      "camera": "tight angled close-up from desk height, cropped to the hand, frayed textile fragment, evidence tray and old documents, with all human faces out of frame",
+      "location": "a small police evidence and records desk beside the railway district in 1920s industrial Birmingham",
+      "required": [
+        "a single frayed dark wool fabric fragment gently gripped in narrow metal tweezers above a worn metal evidence tray",
+        "one aged police accident report on a leather writing board physically separate from the evidence tray",
+        "one folded telegram form beside another handwritten account sheet, both illegible, on scratched oak"
+      ],
+      "background": "a dark wooden police records counter with old filing cabinets, a closed ledger and the edge of a heavy shaded lamp",
+      "light": "warm amber lamplight emphasizing torn fabric strands and paper edges, with cooler rainy urban light beyond the desk",
+      "npc": "only one black-gloved investigator's hand and part of a dark wool coat are visible, without any identifiable face",
+      "knowledgeBoundary": "The scene juxtaposes conflicting clues about Hale's death; the police accident report remains an earlier claim. The image cannot independently set provedHaleMurder, establish a suspect, or decide whether the death was criminal.",
+      "avoid": [
+        "depicting Hale alive, a body, a reenacted attack, a murderer, or a decisive confession",
+        "an official proven-homicide ruling, a named suspect or concluded investigation",
+        "readable witness names, telegram destinations, detailed fabricated forensic findings, or signatures",
+        "an identifiable selectable hero's face or an unauthorized replacement portrait"
+      ],
+      "intendedVariant": "neutral-accident-report-and-counterevidence"
     }
   ]
 }

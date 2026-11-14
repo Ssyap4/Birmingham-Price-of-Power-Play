@@ -54,6 +54,13 @@ for(const [idx,card] of batch.entries()){
    assert(card.required.some(x=>/right-hand train arrival ledger/.test(x)));
    assert(card.required.some(x=>/left-hand freight paper/.test(x)));
  }
+ else if(card.id==="F03"){
+   assert(card.knowledgeBoundary.includes("provedHaleMurder"));
+   assert(card.required.some(x=>/wool fabric fragment/.test(x)));
+   assert(card.required.some(x=>/police accident report/.test(x)));
+   assert(card.required.some(x=>/folded telegram/.test(x)));
+   assert(card.avoid.some(x=>/Hale alive/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -64,4 +71,8 @@ assert.equal(director.variant(view(false,false)),"incomplete");
 assert.equal(director.variant(view(true,false)),"incomplete");
 assert.equal(director.variant(view(false,true)),"incomplete");
 assert.equal(director.variant(view(true,true)),"both-proven");
-console.log("PASS: Chapter VI candidate scenes F01–F02 physically verified and uninstalled.");
+const rowanState=bool=>({scene:{id:"F03"},state:{flags:{},witnesses:{}},facts:{provedHaleMurder:bool}});
+assert.equal(director.variant(rowanState(false)),"hale-unproven");
+assert.equal(director.variant(rowanState(true)),"hale-proven");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F03").length,0);
+console.log("PASS: Chapter VI candidate scenes F01–F03 physically verified and uninstalled.");

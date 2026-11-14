@@ -35,6 +35,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted: two physically distinct record sheets, different handwritten layouts, separate stamps and gloved investigator hands; no confirmed forgery or revealed identity",
       "knowledgeBoundary": "The game determines incomplete versus both-proven status from the evidence flags; image remains deliberately neutral and does not establish the actual provenance of either document."
+    },
+    {
+      "sceneId": "F03",
+      "variantKey": "default",
+      "candidateFile": "case002-f03-scene--mobile.webp",
+      "sha256": "50dbe293ee05e4acb718625f4f266287300a45818c1e399bf2a95362672a5e25",
+      "gitBlobSha1": "1cdf20dd22f7b2809af768da25f0c8c97b476b2a",
+      "bytes": 128148,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted after a single mobile crop excluding the generated detective face: tweezers examine dark wool cloth over an evidence tray, while the earlier police protocol, telegram and witness notes remain separate and unreadable",
+      "knowledgeBoundary": "An evidence comparison does not independently confirm murder, name a culprit or set provedHaleMurder."
     }
   ]
 }
