@@ -23,13 +23,14 @@ assert.equal(metadata.candidates.length,batch.length);
 for(const [i,card] of batch.entries()){
  const candidate=metadata.candidates[i];
  assert.equal(candidate.sceneId,card.id);
- assert.equal(candidate.variantKey,card.id==="Z02"?"evacuated-none":card.id==="Z04"?"guarantee-signed":"default");
+ assert.equal(candidate.variantKey,card.id==="Z02"?"evacuated-none":card.id==="Z04"?"guarantee-signed":card.id==="Z05"?"empty-safe-siding":"default");
  assert.equal(candidate.status,"staged-candidate-not-installed");
  assert.equal(candidate.renderCountInArtworkTurn,1);
  assert.equal(candidate.acceptedRendering,1);
  assert.equal(candidate.candidateFile,card.id==="Z02"
   ?"case002-z02-scene--evacuated-none--mobile.webp"
   :card.id==="Z04"?"case002-z04-scene--guarantee-signed--mobile.webp"
+  :card.id==="Z05"?"case002-z05-scene--empty-safe-siding--mobile.webp"
   :"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
  const render=builder.promptFor(card),review=builder.reviewFor(card);
  assert(render.includes(card.focus)&&render.includes(card.camera));
@@ -50,7 +51,7 @@ for(const [i,card] of batch.entries()){
    "Ending candidate must not be installed before full ending review");
  const stage={sceneId:card.id,variantKey:candidate.variantKey,visibleCast:["hero"],
     desiredAsset:"case002-"+card.id.toLowerCase()+"-scene"+
-       (card.id==="Z02"?"--evacuated-none":card.id==="Z04"?"--guarantee-signed":"")+".webp"};
+       (card.id==="Z02"?"--evacuated-none":card.id==="Z04"?"--guarantee-signed":card.id==="Z05"?"--empty-safe-siding":"")+".webp"};
  assert.equal(resolveScene(stage),null);
  if(card.id==="Z01"){
    assert.equal(director.variant({scene:{id:card.id},state:{flags:{},witnesses:{}},facts:{}}),"default");
@@ -96,6 +97,18 @@ for(const [i,card] of batch.entries()){
    assert.equal(director.variant({scene:{id:"Z04"},state:{flags:{valeGuarantee:true},
       witnesses:{ada:"protected",tommy:"detained",mercer:"missing"}},facts:{}}),"guarantee-signed");
    assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z04").length,0);
+ }else if(card.id==="Z05"){
+   assert.equal(card.sceneKind,"aftermath");
+   assert.equal(card.intendedVariant,"empty-safe-siding");
+   assert(card.knowledgeBoundary.includes("workersCleared"));
+   assert(card.required.some(v=>/hand-operated railway switch/.test(v)));
+   assert(card.required.some(v=>/padlocked/.test(v)));
+   assert(card.required.some(v=>/unmarked folded paper envelope/.test(v)));
+   assert(card.avoid.some(v=>/injured people/.test(v)));
+   assert(card.avoid.some(v=>/readable wage amounts/.test(v)));
+   assert.equal(director.variant({scene:{id:"Z05"},state:{flags:{workersCleared:true},
+      witnesses:{ada:"missing",tommy:"detained",mercer:"protected"}},facts:{}}),"empty-safe-siding");
+   assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z05").length,0);
  }
 
 }
@@ -165,4 +178,4 @@ for(const subset of permittedSubsets){
    "A proposed neutral shot must not silently install for any unreviewed combination");
 }
 
-console.log("PASS: Ending candidates Z01–Z04, Z02 neutral witness variants and archive exclusions verified; no ending art installed.");
+console.log("PASS: Ending candidates Z01–Z05, Z02 neutral witness variants and archive exclusions verified; no ending art installed.");

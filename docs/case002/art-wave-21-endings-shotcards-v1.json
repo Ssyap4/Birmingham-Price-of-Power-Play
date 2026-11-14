@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "Original Case002 screenplay and canonical storyboard; Z01 through Z04 independently generated and reviewed per author turn, including Z02's alternate shot.",
+  "source": "Original Case002 ending screenplay and storyboard; Z01–Z05 are separate accepted candidate image turns, with an extra Z02 neutral state.",
   "scenes": [
     {
       "id": "Z01",
@@ -94,6 +94,29 @@
         "a courtroom verdict, newly signed contract by the hero or a public announcement ending the investigation"
       ],
       "intendedVariant": "guarantee-signed"
+    },
+    {
+      "id": "Z05",
+      "sceneKind": "aftermath",
+      "focus": "an old mechanical railway switch stands still in the foreground of a rain-soaked freight siding, while a few exhausted factory workers wait silently away from the tracks beyond a locked crossing gate, one holding an unmarked folded wage envelope",
+      "camera": "low vertical view along the empty rain-glossed rails and rusted switch lever toward the closed iron crossing gate and small distant group of workers, without a close recognizable face",
+      "location": "a closed private factory railway siding at dawn in industrial Birmingham in the 1920s",
+      "required": [
+        "one motionless old hand-operated railway switch with intact rails and wet sleepers in the clear unoccupied foreground",
+        "one chained and padlocked weathered red-and-cream railway crossing gate cutting off access to the siding",
+        "several weary anonymous workers standing together well clear of the tracks, one holding an unmarked folded paper envelope"
+      ],
+      "background": "a stationary dark goods wagon, smoke-dark brick factories, rain-slick stone pavement, a warm gas lantern and distant chimney smoke in the grey morning",
+      "light": "cold misty dawn and hard rain over wet iron rails, with warm amber lantern and scattered factory-window reflections",
+      "npc": "anonymous factory shift workers seen mostly from behind behind the boundary gate, no faces of selectable investigators, no injuries or missing witnesses pictured",
+      "knowledgeBoundary": "This is the aftermath of a halted private railway branch once workersCleared is true. The image must not imply harm to innocent workers, a train crash, a blast, proof that anyone remains on the track, or a financial resolution. The workers' delayed pay and loss of employment opportunity are shown by posture and context; no exact wages or headcount are established.",
+      "avoid": [
+        "injured people, bodies, burning freight cars, exploded tracks or active sabotage",
+        "workers standing in the train's path, a moving locomotive or a fatal accident",
+        "readable wage amounts, invented employer notices, names or a guarantee of future compensation",
+        "a recognizable playable hero or previously established witness appearing without story permission"
+      ],
+      "intendedVariant": "empty-safe-siding"
     }
   ]
 }

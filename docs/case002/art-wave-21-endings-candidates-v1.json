@@ -70,6 +70,23 @@
       "acceptedRendering": 1,
       "visualReview": "ACCEPTED: one wax-sealed signed guarantee and fountain pen beneath Vale's anonymous elderly signet-ring hand; factory smoke through rainy office window; neither selectable hero nor protected witnesses shown, writing not legible.",
       "knowledgeBoundary": "The artwork shows that Vale signed a guarantee in this ending, not who is listed as protected or whether all witnesses survived. Individual statuses remain governed by case002 witness state."
+    },
+    {
+      "sceneId": "Z05",
+      "variantKey": "empty-safe-siding",
+      "candidateFile": "case002-z05-scene--empty-safe-siding--mobile.webp",
+      "sha256": "a083adbcd3bd71c363a08ed457bb48f4676f557a08e490bfd922e3f7a46fa608",
+      "gitBlobSha1": "e0235dc2430d297670aea39ecc31e9f8802ab452",
+      "bytes": 161568,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "Accepted: empty railway rails and immobile hand switch; padlocked crossing gate and a handful of weary workers outside the track corridor, one holding an unreadable folded envelope; no injured people, accident or gender-defined player hero.",
+      "knowledgeBoundary": "Workers were cleared before the siding was stopped. The image reflects delayed wages and a closed workplace without claiming an exact pay amount, new casualty, sabotage mechanism or continued employment."
     }
   ],
   "rejectedGenerations": [
