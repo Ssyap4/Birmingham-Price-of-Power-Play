@@ -6,7 +6,7 @@
 const assert=require("node:assert/strict");
 const {graph,contract,narration}=require("../../src/case002/browser-data-v3.js");
 const {createEngine}=require("../../src/case002/engine-v3.js");
-const {render,witnessStatus,witnessName}=require("../../src/case002/story-variants-v4.js");
+const {render,witnessStatus,witnessName,personalizeEleanor,eleanorEdits}=require("../../src/case002/story-variants-v4.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 const data={graph,contract,narration};
 const make=hero=>createEngine({graph,contract,hero,attemptId:"dialogue-"+hero,now:()=>1700000000000});
@@ -129,7 +129,59 @@ for(const status of witnessStates)for(const id of witnessIds){
 assert(mut("D06",()=>{}).includes("Томми Кросс — задержан частной охраной."),
  "Detained Tommy should never be mistaken for protected Tommy");
 
+
+/* Gender-safe editorial replay: common scenes must identify Eleanor naturally,
+ * while NPC dialogue, other playable heroes and evidence outcomes remain intact. */
+const heroine=make("eleanor").view();
+const male=make("jack").view();
+const commonNode=id=>graph.nodes.find(x=>x.id===id);
+const asHero=(heroView,id,options={})=>render(data,{
+ ...heroView,scene:commonNode(id),
+ state:{...heroView.state,...(options.state||{})},
+ facts:{...heroView.facts,...(options.facts||{})}
+});
+for(const [id,replacements] of Object.entries(eleanorEdits)){
+ assert(commonNode(id),"editorial mapping must refer to an authored scene: "+id);
+ assert(!commonNode(id).hero,"personal hero scenes must remain authored: "+id);
+ for(const [original,revised] of replacements){
+   assert.equal(personalizeEleanor(id,original),revised,id+" editorial text replacement");
+   assert(!personalizeEleanor(id,original).includes(original),id+" retains male hero phrase");
+ }
+ const femaleText=asHero(heroine,id);
+ for(const [original] of replacements)
+   assert(!femaleText.includes(original),id+" retains an inappropriate masculine expression");
+}
+for(const id of ["A01","A08","B01","B02","B11","C08","D02","D10","F02","F07","F09","Z02"]){
+ assert.notEqual(asHero(heroine,id),asHero(male,id),id+" must differ by protagonist");
+}
+assert(asHero(heroine,"A01").includes("спросила она"));
+assert(asHero(heroine,"B02").includes("Тогда сначала проверьте"));
+assert(!asHero(heroine,"B02").includes("сэр"));
+assert(asHero(heroine,"D02").includes("Разве человек Вейла"));
+assert(asHero(heroine,"D10").includes("Элеонора записала"));
+assert(asHero(heroine,"F02").includes("произнесла Элеонора"));
+assert(asHero(heroine,"F02",{facts:{provedFirstForgery:true,provedSecondForgery:true}})
+ .includes("сказала Элеонора"));
+assert(asHero(heroine,"C10",{facts:{provedFirstForgery:true,provedWagonDiversion:true}})
+ .includes("сказала Элеонора"));
+assert(asHero(heroine,"E07",{state:{flags:{...heroine.state.flags,valeGuarantee:true}}})
+ .includes("отвечает Элеонора"));
+assert(asHero(heroine,"Z02").includes("Элеонора оставила расследование"));
+assert(asHero(male,"D02").includes("Если бы я был от него"));
+assert(asHero(male,"B02").includes("сэр"));
+assert(asHero(male,"F02").includes("произнёс сыщик"));
+assert(asHero(heroine,"E10").includes("представитель рабочих")===false ||
+ !asHero(heroine,"E10").includes("сказала Элеонора"),
+ "Do not feminize male NPC voices");
+const fs=require("node:fs");
+const preview=fs.readFileSync(require("node:path").join(__dirname,"../../preview/case002-prototype/app.js"),"utf8");
+assert(preview.includes("BirminghamCase002Narrative.witnessStatus(id,status)"),
+ "mobile witness labels must reuse canonical gender-sensitive statuses");
+assert(!preview.includes("const witnessLabels="),
+ "old ambiguous mobile labels must not diverge from narration");
+
 assert.equal(Object.keys(narration).length,89);
 console.log("PASS Case002 narrative variants: "+tested+" real-scene renders in 35 paths; "+
   scenes.size+" fixture scenes, "+terminal+" full epilogues, 89 authored nodes and "+
-  "26 contradiction-focused variants and 216 witness-status recap cases.");
+  "26 contradiction-focused variants, 216 witness-status recaps and "+
+  Object.keys(eleanorEdits).length+" heroine scene edit groups.");
