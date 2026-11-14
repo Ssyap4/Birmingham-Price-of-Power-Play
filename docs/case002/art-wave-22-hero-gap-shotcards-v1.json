@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Original HJ01 hero scene in docs/case002/case002-hero-scenes-v2.md and the 89-scene canonical storyboard; one distinct dialogue image accepted, six remaining hero gaps not yet generated.",
+  "source": "Original personal hero scenes and canonical Case002 art storyboard: HJ01 and HF01 accepted as separate one-image-per-turn hero-gap candidates; five personal illustrations still pending.",
   "scenes": [
     {
       "id": "HJ01",
@@ -23,6 +23,29 @@
         "the watchman pointing, firing or swinging the rifle at anyone, a fight or visible injury",
         "an open unlocked gate, the detective already granted passage or a written guard confession",
         "readable railway timetable, fabricated stamped evidence or an anachronistic modern security booth"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HF01",
+      "sceneKind": "transition",
+      "focus": "an observant man in a heavy rain-dark wool coat and tweed cap pauses on a steep narrow exterior iron staircase, his face concealed as he looks through an open freight-office window at shipping documents illuminated by a desk lamp",
+      "camera": "vertical close-medium composition from behind the detective at stair level, a diagonal iron railing in the foreground and an open wooden-paned window leading the eye into the desk inside",
+      "location": "the second-storey back wall of a late-night 1920s Birmingham private railway freight office beside a dark industrial siding",
+      "required": [
+        "one man in a dark wool coat and flat cap with only the back of his head and hand on a wet iron railing visible",
+        "one open weathered wooden window above the narrow outdoor metal steps, with raindrops catching the light",
+        "one period office desk inside with a closed leather ledger, a single loose shipping paper, an inkstand and pigeonhole files"
+      ],
+      "background": "damp brickwork, black wrought-iron stairs, old railway wagons and wet tracks receding toward factory smokestacks under a smoky night sky",
+      "light": "a warm desk lamp inside the office contrasts with cold blue-grey rain and a few distant amber railway lamps",
+      "npc": "only the anonymous rear-view detective on the stairs; no other person is identifiable",
+      "knowledgeBoundary": "Finn is using an opportunistic open window and exterior stairs to learn where a clean copy of the shipping ledger may be found. He is not shown stealing it, entering by force, opening any safe, acquiring the original document or proving which clerk forged it. The selected hero's approved facial appearance must not be invented.",
+      "avoid": [
+        "Finn's identifiable face, a substituted player portrait, a uniformed second person at the window",
+        "bent safe door, picklock, broken window, forced entry or destroyed office furniture",
+        "shipping papers with readable false names, invented dates, forged signatures or a completed proof of guilt",
+        "an original ledger already in Finn's possession, a heroic getaway or discovered alarm"
       ],
       "intendedVariant": "default"
     }

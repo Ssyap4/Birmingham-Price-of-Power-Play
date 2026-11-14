@@ -20,6 +20,24 @@
       "generatorImageId": "6fe5f683-67e0-4dfe-b9c1-3bdbe3e6bda7",
       "visualReview": "ACCEPTED: Jack's broad dark coat and flat cap seen entirely from the back; an isolated armed railway guard lowers his eyes by a warm lantern at the canal-lock siding, while cold rain and mist surround the gates. One confrontation, no fight, gunfire, unlocked passage, named evidence or visible Jack face.",
       "knowledgeBoundary": "The player may still choose intimidation or a factual appeal about Hale; the still image implies neither choice has already succeeded. A dropped guard gaze is fear, not a completed bargain or confirmed testimony."
+    },
+    {
+      "sceneId": "HF01",
+      "variantKey": "default",
+      "candidateFile": "case002-hf01-scene--mobile.webp",
+      "sha256": "1b08c9b8357df7d79e1c53d6741836e17d1c1fccbc79aa55560a7b76ca5ca83b",
+      "gitBlobSha1": "2acbf9b03e78d52655ff75b8f4d919e490981a63",
+      "bytes": 118254,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "06265cd1-3716-4968-a626-86cda7211693",
+      "visualReview": "ACCEPTED: Finn appears from behind on a narrow rain-soaked exterior iron staircase, holding the handrail; a truly open second-storey freight office window reveals warm-lit paper, desk ledger and files. The small office papers have no readable evidentiary claim; no face, theft, safe breach or additional person is shown. A single coherent scene, original composition.",
+      "knowledgeBoundary": "This image shows an opportunity to look into the freight office, not acquisition of the original ledger, identification of a forger or independent corroboration. All those consequences remain conditional in gameplay."
     }
   ]
 }
