@@ -61,6 +61,13 @@ for(const [idx,card] of batch.entries()){
    assert(card.required.some(x=>/folded telegram/.test(x)));
    assert(card.avoid.some(x=>/Hale alive/.test(x)));
  }
+ else if(card.id==="F04"){
+   assert(card.knowledgeBoundary.includes("provedFactoryCoverup"));
+   assert(card.required.some(x=>/only two handwritten numbered entries/.test(x)));
+   assert(card.required.some(x=>/precisely six individually numbered entries/.test(x)));
+   assert(card.required.some(x=>/lowest sixth ledger line/.test(x)));
+   assert(card.avoid.some(x=>/legible or invented surnames/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -75,4 +82,8 @@ const rowanState=bool=>({scene:{id:"F03"},state:{flags:{},witnesses:{}},facts:{p
 assert.equal(director.variant(rowanState(false)),"hale-unproven");
 assert.equal(director.variant(rowanState(true)),"hale-proven");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F03").length,0);
-console.log("PASS: Chapter VI candidate scenes F01–F03 physically verified and uninstalled.");
+const factoryView=bool=>({scene:{id:"F04"},state:{flags:{},witnesses:{}},facts:{provedFactoryCoverup:bool}});
+assert.equal(director.variant(factoryView(false)),"factory-unproven");
+assert.equal(director.variant(factoryView(true)),"factory-proven");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F04").length,0);
+console.log("PASS: Chapter VI candidate scenes F01–F04 physically verified and uninstalled.");

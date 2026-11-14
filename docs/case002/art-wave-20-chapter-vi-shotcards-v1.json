@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay and storyboard; F01, F02, F03 are independent one-image artistic turns",
+  "source": "Chapter VI screenplay and canonical storyboard; F01 through F04 each generated and reviewed in a separate author turn",
   "scenes": [
     {
       "id": "F01",
@@ -71,6 +71,29 @@
         "an identifiable selectable hero's face or an unauthorized replacement portrait"
       ],
       "intendedVariant": "neutral-accident-report-and-counterevidence"
+    },
+    {
+      "id": "F04",
+      "sceneKind": "evidence",
+      "focus": "a detective's black-gloved index finger pauses beside the sixth entry in a battered factory ledger, comparing its six separate numbered lines with a distinct official registry sheet bearing only two numbered handwritten entries",
+      "camera": "moderately elevated three-quarter close shot diagonally across the factory archive desk, emphasizing the distinct two-line official paper on the left and the longer six-line open ledger on the right",
+      "location": "a dusty factory record-keeping room in Birmingham in the 1920s",
+      "required": [
+        "one small aged official-looking sheet with only two handwritten numbered entries and an old ink seal, resting by itself to the left",
+        "one open thick worn bound factory register displaying precisely six individually numbered entries in one column",
+        "one anonymous investigator's black leather gloved forefinger indicating the lowest sixth ledger line while keeping all character faces outside the frame"
+      ],
+      "background": "weathered factory filing cabinets, tied paper bundles, an old clerk's ink-stamp press, a scratched dark oak table and a large window overlooking smoking industrial chimneys",
+      "light": "dry soft grey industrial daylight across the two lists with a restrained warm reflection off faded brown paper and dark polished wood",
+      "npc": "only the unseen investigator's hand and dark wool sleeve enter the frame; no visible faces or other people",
+      "knowledgeBoundary": "The discrepancy between two official entries and six factory ledger entries is only a comparison. The image does not establish provedFactoryCoverup, verified wrongdoing, a court judgment, or a legally confirmed list of implicated people.",
+      "avoid": [
+        "legible or invented surnames, dates, addresses, witness identities, or additional names",
+        "a seventh person, extra numbered ledger entry, or more than two entries on the official notice",
+        "a guilty verdict, signed confession, celebratory discovery, or certified conclusion",
+        "an identifiable selectable hero's face or a replacement portrait of a known character"
+      ],
+      "intendedVariant": "neutral-document-comparison"
     }
   ]
 }

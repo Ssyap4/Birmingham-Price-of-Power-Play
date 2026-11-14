@@ -52,6 +52,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted after a single mobile crop excluding the generated detective face: tweezers examine dark wool cloth over an evidence tray, while the earlier police protocol, telegram and witness notes remain separate and unreadable",
       "knowledgeBoundary": "An evidence comparison does not independently confirm murder, name a culprit or set provedHaleMurder."
+    },
+    {
+      "sceneId": "F04",
+      "variantKey": "default",
+      "candidateFile": "case002-f04-scene--mobile.webp",
+      "sha256": "a9a99d31c1a219c94859d0f277df003132ce1b35b69e6b745e1218d6002568fa",
+      "gitBlobSha1": "9a3a2146e74ff7f2703e7c8b393cba4adb9dea6c",
+      "bytes": 114252,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: a visually separate two-line official sheet versus six numbered ledger entries, with the investigator's hand at entry six; no invented legible names or court verdict",
+      "knowledgeBoundary": "No graphic establishes guilt or the provedFactoryCoverup game fact; both legal and evidentiary conclusions remain driven by the narrative state."
     }
   ]
 }
