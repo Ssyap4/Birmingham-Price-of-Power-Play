@@ -277,6 +277,30 @@
         "legible invented name or dates on the memorial photograph"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "HE03",
+      "sceneKind": "action",
+      "focus": "a dark-coated gloved woman gently stops a newspaper editor by resting her black-gloved hand on the editor's upper arm while the editor is still holding a metal letterpress composing stick full of type, before an unverified headline can be printed",
+      "camera": "medium-close intimate rear three-quarter view of the two women beside the typesetting table, both faces concealed; focus on the gloved hand and unfinished line of metal type",
+      "location": "the cramped Birmingham newspaper typesetting office during a rainstorm in the 1920s",
+      "required": [
+        "a female editor in a worn light work blouse, with dark hair pinned back and a pencil tucked through it, holding an unfinished composing stick of movable metal type",
+        "a second woman in dark tailored wool with a black glove resting a cautioning hand on the editor's upper arm, without force or violence",
+        "a worn open shift ledger and two separate leather-bound folders resting on the table, with no readable identity or signed approval"
+      ],
+      "background": "antique iron letterpress and its large wheel, wooden type trays, brass work lamp, rain-streaked panes and distant industrial chimneys",
+      "light": "warm amber desk-lamp glow across metal type and aged paper contrasted with cold blue rainy light through the editorial window",
+      "npc": "two adult women viewed from behind or rear-side only; the editor has pinned dark hair, the investigator has short chestnut hair and dark gloves; neither face is exposed or replaced",
+      "knowledgeBoundary": "The women interrupt printing to cross-check alleged signatures and dates against a separate shift ledger. Nothing proves two independent chains were verified or that a public investigation, publication, or witness protection was secured.",
+      "avoid": [
+        "completed published headline with a proven death toll or guilt allegation",
+        "readable private witness names, addresses, signatures or dates",
+        "a clear new replacement face for the established editor or playable investigator",
+        "a celebratory publication or confirmed publicContactSecured status",
+        "violence, arrests, or automatic evidence certification from this gesture"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }

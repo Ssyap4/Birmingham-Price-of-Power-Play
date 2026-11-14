@@ -407,6 +407,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Jack rear view with open hand flat on desk, handgun still in leather hip holster; Brackett opposite in shade; mourning portrait of a soldier. No shooting, confession, ledger transfer or automatic intermediary. Check partially visible Brackett face against canonical portrait before final install."
+    },
+    {
+      "scene": "HE03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Eleanor from rear with a dark glove gently stops Nora's upper arm while Nora holds unfinished metal type; both faces hidden, shift ledger and folders on desk, no headline, no proof of dual independent origin or publicContactSecured. dHash from E02 and E03 each 27/64."
     }
   ]
 }
