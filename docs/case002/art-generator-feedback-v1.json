@@ -179,6 +179,16 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "One image generated this turn: earlier factory inspection form, a generic family photograph and hesitant inspector hand. No protected sworn testimony depicted."
+    },
+    {
+      "scene": "D09",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Inspector seen from back, sealed letter on table, silhouette of messenger beyond rainy boarding-house window. An unresolved choice, no revealed hiding address."
     }
   ]
 }
