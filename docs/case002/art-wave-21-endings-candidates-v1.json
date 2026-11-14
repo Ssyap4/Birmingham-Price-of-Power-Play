@@ -18,6 +18,24 @@
       "acceptedRendering": 1,
       "visualReview": "Accepted: morning industrial newsroom; dark-haired Nora seen from behind inspecting a single two-column printed broadsheet beside the letterpress; no readable witness details, visible selectable hero or premature punishment of Vale.",
       "knowledgeBoundary": "Publication is the specific Z01 outcome, not proof of legal conviction; witness protection status and Mercer's testimony are supplied by game data and HTML, not this photograph."
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-none",
+      "candidateFile": "case002-z02-scene--evacuated-none--mobile.webp",
+      "sha256": "94242a297c0bef84bfcad18ee960c9c2e93a119ab16616afb2dcee518137f2cf",
+      "gitBlobSha1": "a1e2f96711be118a13a1b1bbf6a1777808047a7f",
+      "bytes": 137846,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "Accepted as the zero-evacuee variant: an empty wet dawn platform, open old carriage door, and only a cropped black glove holding a closed leather folio; no identifiable or gendered hero and no witness visible.",
+      "knowledgeBoundary": "This image cannot imply that anyone other than the hero traveled; protected/evacuated statuses are exclusively scenario data. Other evacuation variants have no accepted artwork yet.",
+      "previousRejectedGeneratorImageId": "d9636f25-0663-4380-bca6-c6aca17fe21e"
     }
   ],
   "rejectedGenerations": [

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "case002-screenplay-acts-4-6-and-endings-v2.md; case002-art-storyboard-v1.json; ending Z01",
+  "source": "Case002 original screenplay and storyboard; Z02 zero-evacuee replacement, one new rendering in a separate author turn after rejecting gender-assumptive Z02.",
   "scenes": [
     {
       "id": "Z01",
@@ -25,6 +25,29 @@
         "recognizable faces of the five selectable heroes or a substitute canonical face for Nora"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "Z02",
+      "sceneKind": "transition",
+      "focus": "a solitary black leather-gloved hand in the close foreground holds one closed worn brown document folio near the open doorway of an empty dark red passenger train at dawn, while the deserted rain-soaked platform stretches toward Birmingham's smoke stacks",
+      "camera": "first-person close view angled toward the carriage's empty entrance and iron step, with only the lower edge of one black glove and the plain folio in the foreground, no visible body or face",
+      "location": "a rain-wet railway platform outside industrial Birmingham in the 1920s",
+      "required": [
+        "one black leather-gloved hand alone at the bottom of the scene holding one fully closed weathered brown document folio with a brass clasp",
+        "a stationary old dark burgundy riveted railway carriage with open doorway, empty amber-lit compartment and wet iron boarding step",
+        "a deserted stone platform with empty benches, vintage station lanterns and distant smoky factory chimneys in pale morning light"
+      ],
+      "background": "a cast-iron platform canopy, reflective puddles on old stone pavement, dark brick railway buildings and smoke-dimmed industrial rooftops",
+      "light": "soft grey-orange dawn behind the chimneys and amber gas-lamp glow inside the empty carriage reflecting across the wet platform",
+      "npc": "only a small cropped anonymous gloved hand is present; no full silhouette, head, face, body or other person appears",
+      "knowledgeBoundary": "Only the zero-evacuee ending state is represented: the investigator departs with the closed folio but no witness is shown or implied to have been evacuated. The hand does not identify any playable hero by gender, appearance or body shape. Routes with evacuated witnesses require their own state-appropriate artwork or separately verified neutral coverage.",
+      "avoid": [
+        "a visible male or female protagonist, full body, shoulders, face, cap or recognizable hero silhouette",
+        "any protected or evacuated witness waiting on the platform or inside the carriage",
+        "a visible new identity, readable document, name, station label or confirmed outcome for absent witnesses",
+        "a crowd, safe-house arrival, triumphant rescue or guarantee that all witnesses are protected"
+      ],
+      "intendedVariant": "evacuated-none"
     }
   ]
 }
