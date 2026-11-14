@@ -74,6 +74,7 @@ jobs:
           node tests/case002/identity-and-portrait-brief-v1.test.js
           node tests/case002/scene-cast-v1.test.js
           node tests/case002/approved-art-v1.test.js
+          node tests/case002/art-wave-prompt-builder-v1.test.js
           node tools/case002/art-audit-v1.js
           node tests/case002/art-audit-v1.test.js
           node tests/case002/scene-art-v1.test.js

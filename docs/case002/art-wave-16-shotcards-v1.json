@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "source": "docs/case002/art-wave-16-chapter-iii-c01-c05-v1.md",
+  "scenes": [
+    {
+      "id": "C01",
+      "focus": "the intact rear of a departing freight train with two red tail lamps",
+      "camera": "vertical low-angle wide view from wet station platform",
+      "location": "1920s freight yard at night in the rain",
+      "required": [
+        "two glowing red tail lamps",
+        "an antique hanging mechanical clock",
+        "wet rails reflecting warm station lamps"
+      ],
+      "background": "old brick factories, viaduct and smoke softened by mist",
+      "light": "amber lanterns against blue stormy night",
+      "npc": "no people",
+      "knowledgeBoundary": "the train departed whole, but interception is not proven",
+      "avoid": [
+        "detached freight car",
+        "dead body",
+        "identifiable killer",
+        "invented wagon numbers"
+      ]
+    },
+    {
+      "id": "C02",
+      "focus": "a weathered railway-switch drawing on a desk, showing both straight and curved sidings",
+      "camera": "tight three-quarter overhead view; drawing fills most of frame",
+      "location": "manual signal cabin at night",
+      "required": [
+        "a rough finger points toward the curved side track",
+        "a drop of dark oil on the schematic",
+        "mechanical levers behind the table"
+      ],
+      "background": "old gears, wet window",
+      "light": "warm oil lantern and muted cold rain",
+      "npc": "only signalman's hand; no identifiable face",
+      "knowledgeBoundary": "the second line is possible, without assigning blame",
+      "avoid": [
+        "levers without track drawing",
+        "readable invented station names",
+        "villain portrait"
+      ]
+    },
+    {
+      "id": "C03",
+      "focus": "a rusted steel wagon coupling hook with a fresh silver abrasion",
+      "camera": "very low detailed close-up; coupling fills foreground",
+      "location": "private railway siding in heavy night rain",
+      "required": [
+        "bright scraped contact mark on steel",
+        "wet rails divide towards a side track",
+        "small distant amber lantern"
+      ],
+      "background": "deserted industrial signal post and fog",
+      "light": "cold steel with selective warm reflections",
+      "npc": "no people",
+      "knowledgeBoundary": "mechanical trace suggests detachment, not death or identity",
+      "avoid": [
+        "main subject as wide station platform",
+        "dead person",
+        "invented carriage markings"
+      ]
+    },
+    {
+      "id": "C04",
+      "focus": "Mabel Cross's tightly clasped hands beside an open cargo manifest",
+      "camera": "intimate vertical close-up; hands and paper fill most of frame",
+      "location": "dark freight office during a rainy night",
+      "required": [
+        "clasped hands showing tension",
+        "opened cargo ledger with ruled paper",
+        "single warm desk lamp"
+      ],
+      "background": "old folders and rain-covered industrial window out of focus",
+      "light": "one amber lamp against dark cold room",
+      "npc": "Mabel only as hands and obscured silhouette; no identifiable face",
+      "knowledgeBoundary": "her anxiety is visible, but confession is not independently established",
+      "avoid": [
+        "readable witness names",
+        "details of hidden witnesses",
+        "written proven confession",
+        "playable protagonist"
+      ]
+    },
+    {
+      "id": "C05",
+      "focus": "a station arrival register with one later-added line in visibly darker ink",
+      "camera": "tight diagonal macro shot of the paper register",
+      "location": "station arrival office, 1920s",
+      "required": [
+        "one overwritten or heavier-ink line",
+        "a distinct security-office stamp impression",
+        "period fountain pen and inkwell"
+      ],
+      "background": "few dark books and rainy industrial window out of focus",
+      "light": "side lighting from an oil lantern on paper fibers",
+      "npc": "no people",
+      "knowledgeBoundary": "alteration is apparent, but identity and guilt remain unproven",
+      "avoid": [
+        "readable fictional names or sums",
+        "proven criminal confession",
+        "villain portrait",
+        "crime conspiracy diagram"
+      ]
+    }
+  ]
+}
