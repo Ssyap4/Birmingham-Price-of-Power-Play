@@ -111,6 +111,13 @@
       "previous": "A later new-scene render attempt also produced a decorative agreement-status page rather than the detained worker at a guarded factory gate. Three off-story posters across two scene targets confirmed persistent visual-context drift.",
       "remedy": "Do not accept images because of attractive typography or matching project title; pause image production entirely in this conversation and move to clean separate scene-only visual requests with direct image QA before continuing. Rendering a project-update poster is not an art asset.",
       "outcome": "unresolved-global-render-blocker"
+    },
+    {
+      "scene": "D03",
+      "category": "wrong_scene",
+      "previous": "On resuming the prior per-wave user confirmation cadence, two image-generation handoffs requested the pressure-register moment but the actual generation inputs were railway-yard scenes, producing off-story railway artwork. Both rejected.",
+      "remedy": "Distinguish image model mistakes from upstream orchestration mistakes. Inspect the actual scene description sent to the image tool; it must say boiler-house workbench, hands of Ada, original pressure log, pressure gauge and period factory pipes. If the image tool inferred unrelated railway characters/yard, stop after two errors. Preserve the canonical isolated scene request and seek a fresh image-intent message/context before trying again.",
+      "outcome": "unresolved-context-stopped"
     }
   ],
   "observedSuccess": {
