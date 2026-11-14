@@ -78,6 +78,7 @@ jobs:
           node tests/case002/art-wave-17-shotcards-v1.test.js
           node tests/case002/art-wave-17-status-v1.test.js
           node tests/case002/art-wave-18-shotcards-v1.test.js
+          node tests/case002/art-wave-19-shotcards-v1.test.js
           node tests/case002/art-feedback-v1.test.js
           node tests/case002/art-shot-types-v2.test.js
           node tests/case002/art-binary-bridge-v1.test.js

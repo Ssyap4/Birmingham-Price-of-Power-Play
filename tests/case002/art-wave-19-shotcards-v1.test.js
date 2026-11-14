@@ -30,7 +30,10 @@ for(const [id,sha] of staged){
  const bytes=fs.readFileSync(f);
  assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),sha);
  assert.deepEqual([dimensions(bytes).width,dimensions(bytes).height],[720,900]);
- assert(!manifest.sceneImages.some(x=>x.sceneId===id&&x.review==="approved"),
-    "Chapter V candidate must not be installed before full chapter art review: "+id);
+ // The candidate stays in the archive after a later separately reviewed batch install.
+ const installed=manifest.sceneImages.filter(x=>x.sceneId===id&&x.review==="approved");
+ assert(installed.length<=1,"Duplicate Chapter V installed scene: "+id);
+ if(installed.length)assert.equal(installed[0].mobileSha256,sha,
+   "Installed asset must remain byte-identical to reviewed candidate: "+id);
 }
 console.log("PASS: chapter V card isolation and first E01 staged candidate");
