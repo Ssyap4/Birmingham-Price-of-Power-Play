@@ -214,3 +214,13 @@ html[data-case002-telegram="true"] .notice{
   padding-right:calc(4px + var(--case002-safe-right));
  }
 }
+
+/* Long illustrated chapters on iPhone: a real, touch-sized reading shortcut.
+ * The art remains untouched; the jump targets only earned current narration. */
+.story-read-action{display:flex;justify-content:flex-end;margin:-2px 0 7px}
+.story-read-button{min-height:44px;padding:9px 5px;border:0;background:transparent;
+ color:#e8c48b;font:700 .72rem/1.35 system-ui,sans-serif;
+ letter-spacing:.07em;text-decoration:underline;text-underline-offset:4px}
+.story-read-button:focus-visible{outline:2px solid #f7d4a0;outline-offset:3px}
+#chapterIntertitle,#sceneText{scroll-margin-top:18px}
+#sceneText:focus-visible{outline:2px solid #d8af6b;outline-offset:5px}
