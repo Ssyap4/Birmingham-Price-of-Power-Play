@@ -3,14 +3,14 @@
  * Older draft saves may contain action history without a "changes" field.
  */
 (function(root,factory){
- if(typeof module==="object"&&module.exports)module.exports=factory();
- else root.BirminghamCase002Journal=factory();
-})(typeof globalThis!=="undefined"?globalThis:this,function(){
+ if(typeof module==="object"&&module.exports)
+   module.exports=factory(require("./story-variants-v4.js"));
+ else root.BirminghamCase002Journal=factory(root.BirminghamCase002Narrative);
+})(typeof globalThis!=="undefined"?globalThis:this,function(narrative){
 "use strict";
+if(!narrative||typeof narrative.witnessStatus!=="function")
+ throw Error("Case 002 canonical witness statuses required");
 const people={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
-const statuses={missing:"не найден",located:"найден, но не защищён",
- detained:"под охраной",protected:"под защитой",evacuated:"эвакуирован",
- deceased:"погиб"};
 const flags={
  mabelTrustWary:"Мэйбл насторожилась после угроз Джека",
  mercerWilling:"Мерсер согласился на защищённые показания",
@@ -59,7 +59,7 @@ function entries(snapshot,labelEvidence){
    const notes=[];
    if(delta){
      for(const [id,change] of Object.entries(delta.witnesses||{}))
-       notes.push((people[id]||id)+": "+(statuses[change.to]||change.to)+
+       notes.push((people[id]||id)+": "+narrative.witnessStatus(id,change.to)+
          (change.to==="protected"?" (ещё не эвакуирован)":""));
      for(const id of delta.evidence||[])notes.push("Улика: "+label(id));
      for(const [id,change] of Object.entries(delta.custody||{}))
