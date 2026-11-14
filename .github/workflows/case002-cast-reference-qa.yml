@@ -28,7 +28,12 @@ jobs:
             raise SystemExit("Invalid reference image")
           print(f"REFERENCE_PORTRAIT_NAME={name}")
           print(f"REFERENCE_PORTRAIT_BYTES={len(data)}")
-          print(f"REFERENCE_PORTRAIT_SHA256={hashlib.sha256(data).hexdigest()}")
+          manifest=Path("src/case002/approved-art-v1.js").read_text()
+          match=re.search(r'Object\\.freeze\\(\\{id:"'+re.escape(name)+r'",review:"approved",file:"case002-'+re.escape(name)+r'-portrait\\.webp",width:\\d+,height:\\d+,sha256:"([0-9a-f]{64})"\\}\\)',manifest)
+          if not match: raise SystemExit("Canonical portrait not approved in manifest")
+          digest=hashlib.sha256(data).hexdigest()
+          if digest!=match.group(1): raise SystemExit("Reference portrait SHA differs from approved manifest")
+          print(f"REFERENCE_PORTRAIT_SHA256={digest}")
           encoded=base64.b64encode(data).decode("ascii")
           print(f"REFERENCE_PART_COUNT={(len(encoded)+1999)//2000}")
           for i in range(0,len(encoded),2000):
