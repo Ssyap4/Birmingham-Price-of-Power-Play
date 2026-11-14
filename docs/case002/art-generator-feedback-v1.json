@@ -419,6 +419,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Eleanor from rear with a dark glove gently stops Nora's upper arm while Nora holds unfinished metal type; both faces hidden, shift ledger and folders on desk, no headline, no proof of dual independent origin or publicContactSecured. dHash from E02 and E03 each 27/64."
+    },
+    {
+      "scene": "HV03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Victor seen strictly from behind pointing to blank contract signature line, Vale silver-bearded and shadowed, unused pen; no signature, proven safe witness custody or valeGuarantee. Verify Vale partial facial continuity before batch install."
     }
   ]
 }

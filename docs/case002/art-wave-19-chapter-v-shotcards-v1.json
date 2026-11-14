@@ -301,6 +301,30 @@
         "violence, arrests, or automatic evidence certification from this gesture"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "HV03",
+      "sceneKind": "dialogue",
+      "focus": "a poised younger gentleman in a dark tailored period coat leans over a wide polished desk and points with his black-gloved finger at the empty signature line of a single aged contract while an older silver-bearded industrial owner hesitates in a leather armchair",
+      "camera": "medium-wide cinematic three-quarter view from behind the standing gentleman, focusing on the clear signature-line gesture and the seated industrial owner's restrained posture while concealing both faces",
+      "location": "an opulent but oppressive factory owner's private office in industrial Birmingham during the 1920s",
+      "required": [
+        "a well-dressed younger male visitor standing, seen strictly from the back, with his gloved forefinger held to the empty signature line of a yellowed ornate contract",
+        "an older silver-bearded proprietor sitting across the broad desk in a heavy dark wool suit and waistcoat, his facial features mostly masked by shadow",
+        "a still-unused fountain pen beside the older man's open hand and a plain wax seal resting near the edge of the table"
+      ],
+      "background": "dark carved wooden office panels, scuffed leather armchair, framed founder portrait, burgundy curtains, brass desk lamp and rain-streaked window overlooking smoking factory chimneys",
+      "light": "low warm amber brass lamplight across the desk and paper contrasted with cool blue rainy industrial daylight, strong but natural chiaroscuro",
+      "npc": "two male figures only; the standing well-tailored younger gentleman is seen from behind and the silver-bearded older factory owner remains seated in deep facial shadow",
+      "knowledgeBoundary": "Victor demands verifiable and enforceable protection, but no one has yet signed a credible guarantee or established safe witness custody. The painting cannot set valeGuarantee, prove a confession, or decide later bargaining outcomes.",
+      "avoid": [
+        "a visible completed contract signature or certified guarantee",
+        "a jubilant handshake, protection convoy, liberated witness or proven confession",
+        "readable legal names, terms, dates or invented evidence in the document",
+        "a front-facing newly invented Victor portrait or a replacement for established Vale likeness",
+        "a firearm, injuries or coerced signing"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }
