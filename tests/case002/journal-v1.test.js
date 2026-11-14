@@ -7,6 +7,7 @@ const assert=require("node:assert/strict");
 const {createEngine}=require("../../src/case002/engine-v3.js");
 const {graph,contract}=require("../../src/case002/browser-data-v3.js");
 const journal=require("../../src/case002/journal-v1.js");
+const {witnessStatus}=require("../../src/case002/story-variants-v4.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 const make=(hero="jack",store=null)=>createEngine({
  graph,contract,hero,store,attemptId:"journal-"+hero,now:()=>1700000000000
@@ -71,7 +72,7 @@ for(const hero of contract.heroes){
  for(const to of ["D01","D07","D08","D09"])game.choose(to);
  game.choose("D10","betrayAda");
  const item=journal.entries(game.snapshot(),label)[0];
- assert(item.notes.some(s=>s.includes("Ада Уэбб: под охраной")));
+ assert(item.notes.some(s=>s.includes("Ада Уэбб: задержана частной охраной")));
  assert(item.notes.some(s=>s.includes("Укрытие Ады раскрыто")));
  assert(!item.notes.some(s=>s.includes("эвакуирован")));
 }
@@ -91,6 +92,23 @@ for(const hero of contract.heroes){
    "old journal must not invent retrospective pickups");
  reopened.choose("A07");
  assert(Array.isArray(journal.entries(reopened.snapshot(),label)));
+}
+// The journal and cinematic recap must agree across all witness statuses.
+{
+ const people={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
+ const statuses=["missing","located","detained","protected","evacuated","deceased"];
+ let checked=0;
+ for(const [id,name] of Object.entries(people))for(const status of statuses){
+  const before=status==="missing"?"located":"missing";
+  const snapshot={finished:false,history:[{from:"P01",to:"D01",action:"continue",
+   changes:{witnesses:{[id]:{from:before,to:status}},evidence:[],flags:[],custody:{}}}]};
+  const note=journal.entries(snapshot)[0].notes[0];
+  assert(note.includes(name+": "+witnessStatus(id,status)),
+   "Journal witness vocabulary differs from narrative: "+id+"/"+status);
+  assert(!note.includes("под охраной"),"Private detention must not imply safety");
+  checked++;
+ }
+ assert.equal(checked,18);
 }
 console.log("PASS Case002 persistent journal: "+visits+" verified transitions in "+
  contract.heroes.length*contract.endings.length+" paths, "+lines+
