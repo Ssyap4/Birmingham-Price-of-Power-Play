@@ -371,6 +371,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Night-shift worker at the rainy Aston factory gate pleads over wages with both soot-darkened open hands. Worn factory notice unreadable; no pension payout, stopped factory, ledger transfer, obtained evidence or revealed detective identity. Only accounts-brackett variant safe."
+    },
+    {
+      "scene": "E10",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Anonymous gloved detective compares two archival factory sheets, clipped index cards, ledgers and magnifier; no identifiable witness statuses, rescue, completed outcome, mediator or accounts transfer. Staged for default audit variant only."
     }
   ]
 }

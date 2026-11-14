@@ -206,6 +206,30 @@
         "recognized player character portrait, local intermediary agreement or verified rescue"
       ],
       "intendedVariant": "accounts-brackett"
+    },
+    {
+      "id": "E10",
+      "sceneKind": "evidence",
+      "focus": "a gloved anonymous investigator carefully compares two separate weathered industrial archive sheets on a crowded oak desk, holding one sheet in each hand above an open ledger with three small clipped blank index cards awaiting verification",
+      "camera": "intimate high three-quarter view over the detective's shoulder, emphasizing the two separate sheets and three loose index cards, with the investigator's face entirely beyond the frame",
+      "location": "a modest private detective's office in rainy 1920s industrial Birmingham",
+      "required": [
+        "two distinct aged archive sheets depicting indistinct factory silhouettes held apart in black leather gloved hands",
+        "three separate small clipped index cards with no readable identities or verdicts",
+        "an open archival ledger, loose folders and a magnifying glass spread over a scarred dark oak desk"
+      ],
+      "background": "a brass desk lamp, battered drawers, leather-bound files, smoky industrial rooftops and chimneys seen through wet window panes",
+      "light": "amber lamp on old paper against cold blue rainlight coming through a tall window",
+      "npc": "only the dark coat sleeve, black gloves and indistinct shoulder of an anonymous detective, no identifiable face or other people",
+      "knowledgeBoundary": "This is a factual checkpoint, not a successful completed investigation. Witness conditions and the fate of the accounts must remain dynamic in game text; no proof of a local intermediary or transferred accounts is shown",
+      "avoid": [
+        "readable witness names, statuses marked rescued, protected or deceased",
+        "a finished investigation report, trophy, success stamp or solved-case announcement",
+        "evidence or accounts shown as formally transferred to workers",
+        "a visible new canonical detective face or invented victim portrait",
+        "completed witness guarantee or a signed company confession"
+      ],
+      "intendedVariant": "audit"
     }
   ]
 }
