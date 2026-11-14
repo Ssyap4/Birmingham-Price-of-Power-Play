@@ -70,6 +70,34 @@ for(const node of graph.nodes){
    attemptId:"art-gate-node-"+node.id});
  check({...e.view(),scene:node});
 }
+// Model the permitted Chapter V conditional flags directly in an isolated
+// read-only view. Golden routes do not necessarily exercise every optional
+// negotiation state, but every installed variant must still be resolvable.
+const chapterVVariantViews=[
+ ["E03","verified-not-published",{publicContactSecured:true}],
+ ["E05","cleared",{workersCleared:true}],
+ ["E07","signed",{valeGuarantee:true}],
+ ["E09","accounts-hero",{brackettAccountsHeld:true}],
+ ["E09","accounts-workers",{brackettAccountsHeld:true,accountsGivenToWorkers:true}],
+ ["E10","intermediary",{localIntermediary:true}],
+ ["E10","accounts-workers",{localIntermediary:true,accountsGivenToWorkers:true}]
+];
+const chapterVProbe=createEngine({
+ graph,contract,hero:"jack",attemptId:"chapterV-art-state-qa"
+});
+for(const [id,variant,flags] of chapterVVariantViews){
+ const scene=graph.nodes.find(x=>x.id===id);
+ assert(scene,"Missing Chapter V scene in canonical graph: "+id);
+ const view=chapterVProbe.view();
+ const candidate={
+  ...view,scene,
+  state:{...view.state,flags:{...(view.state.flags||{}),...flags}}
+ };
+ assert.equal(director.variant(candidate),variant,
+   "Conditional art key does not match the existing game flag contract: "+id);
+ check(candidate);
+}
+
 const sampleStage=director.select(storyboard,createEngine({
  graph,contract,hero:"jack",attemptId:"art-gate-fixture"}).view());
 const file=sampleStage.desiredAsset;
