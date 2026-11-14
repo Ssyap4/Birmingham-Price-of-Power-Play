@@ -365,6 +365,44 @@ def main():
                         for selector in (".choice:not([disabled])", ".tool-tab"):
                             minimum = page.locator(selector).first.bounding_box()["height"]
                             assert minimum >= 44, f"{browser_name} {width}: {selector} too short"
+                    # Mock multiple post-choice receipts in a separate tab only.
+                    # This tests the notice UI without forging any game outcome.
+                    receipt_ctx = browser.new_context(
+                        viewport={"width": 390, "height": 844},
+                        device_scale_factor=3, is_mobile=True, has_touch=True
+                    )
+                    receipt_page = receipt_ctx.new_page()
+                    receipt_page.goto(address, wait_until="load")
+                    receipt_page.evaluate("""() => {
+                        window.BirminghamCase002Consequences.receipts = () => [
+                            {kind:'witness',text:'Ада Уэбб: под защитой.'},
+                            {kind:'evidence',text:'Новая улика: журнал стрелочника.'},
+                            {kind:'consequence',text:'Проверена схема частного отвода.'},
+                            {kind:'final',text:'Сохранена запись о принятом решении.'}
+                        ];
+                    }""")
+                    receipt_page.locator("#begin").click()
+                    receipt_page.locator('button.choice[data-to="P02"]').click()
+                    assert receipt_page.locator("#noticeExpand").is_visible(), (
+                        f"{browser_name}: four consequences need an expand control"
+                    )
+                    assert receipt_page.locator("#noticeExpand").get_attribute("aria-expanded") == "false"
+                    assert "Откройте подробности" in receipt_page.locator("#noticeContent").inner_text()
+                    receipt_page.locator("#noticeExpand").click()
+                    assert receipt_page.locator("#noticeExpand").get_attribute("aria-expanded") == "true"
+                    for phrase in (
+                        "Ада Уэбб", "журнал стрелочника",
+                        "схема частного отвода", "принятом решении"
+                    ):
+                        assert phrase in receipt_page.locator("#noticeContent").inner_text(), (
+                            f"{browser_name}: expanded notice lost consequence {phrase}"
+                        )
+                    receipt_page.locator("#noticeExpand").click()
+                    assert receipt_page.locator("#noticeExpand").get_attribute("aria-expanded") == "false"
+                    assert "Откройте подробности" in receipt_page.locator("#noticeContent").inner_text()
+                    receipt_page.locator("#noticeDismiss").click()
+                    assert receipt_page.locator("#notice").is_hidden()
+                    receipt_ctx.close()
                     # Simulate a reviewed landscape scene and a missing
                     # mobile-specific crop. The production manifest remains
                     # untouched: this mock is strictly inside the browser QA.
