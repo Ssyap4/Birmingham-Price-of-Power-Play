@@ -92,6 +92,24 @@
       "generatorImageId": "2aaa1a9a-c44f-4bd2-819d-7118df3cb86f",
       "visualReview": "ACCEPTED: close single view of an old rusted railway coupling examined by anonymous leather-gloved hands, one finger following a narrow dark oily streak and adjacent paler lubricant/scrape mark. Warm oil lantern isolates the iron detail against cold wet rails, canal-side factories and smoke. No face of Samuel, suspect, police sergeant, accident or fabricated proof visible.",
       "knowledgeBoundary": "The grease and tool trace warrant mechanical suspicion of workshop tampering but do not prove the saboteur or confer independent sworn evidence. Technical analysis remains a choice in the playable story."
+    },
+    {
+      "sceneId": "HF02",
+      "variantKey": "default",
+      "candidateFile": "case002-hf02-scene--mobile.webp",
+      "sha256": "e77f6769bf37cda0e9f2259fd4537277aae2bb45589528d90b84c220d3282852",
+      "gitBlobSha1": "202b903eead780ed366096f6a0aabce87a909fe4",
+      "bytes": 121910,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "e0370ec5-e4e8-44d6-9742-1b9d2beb45d6",
+      "visualReview": "ACCEPTED: Finn is framed from behind at the signal box threshold, graphite pencil in one gloved hand and paper pressed to an old wooden shift plaque with the other. The plaque remains attached to the door; point levers, warm oil lantern and wet tracks establish place. No visible face, stolen marker, forged legible time, revealed culprit or proof of guilt.",
+      "knowledgeBoundary": "The graphite rubbing is an alternate way to preserve the shift-marker information without stealing it, not a substitute for independently verified railway movement records or the signalman's signed testimony."
     }
   ]
 }

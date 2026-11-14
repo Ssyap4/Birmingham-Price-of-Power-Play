@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Canonical five-hero personal scenes and 89-scene art storyboard; five independently accepted end-of-production hero candidates HJ01, HF01, HE01, HV01, HS01. Two more standalone scenes are unrendered.",
+  "source": "Original Case002 hero-specific narrative and 89-node storyboard; six distinct accepted hero-gap illustration candidates HJ01, HF01, HE01, HV01, HS01, HF02; HS02 remains unrendered.",
   "scenes": [
     {
       "id": "HJ01",
@@ -116,6 +116,29 @@
         "readable factory labels, fabricated signed confession, numbered weapon or clear perpetrator identity",
         "an uncoupled train rolling away, a deliberate crash, explosion or already arrested saboteur",
         "modern locomotive mechanisms, contemporary instruments or shiny unused industrial machinery"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HF02",
+      "sceneKind": "evidence",
+      "focus": "a resourceful investigator in a 1920s tweed coat and cap carefully holds a thin sheet of paper against a fixed wooden shift marker on the old signal box door, rubbing graphite across it with a small pencil to transfer the relief without removing the marker",
+      "camera": "intimate vertical over-the-shoulder view from behind the detective at the signal box threshold, with two gloved hands, the graphite rubbing and the weathered mounted timber marker in crisp foreground focus",
+      "location": "the wooden door frame of a rain-damp industrial railway signal box in Birmingham during the 1920s",
+      "required": [
+        "one old carved wooden shift marker firmly screwed to a dark rain-wet signal box doorframe",
+        "one thin cream paper held flat against the marker by the detective's left leather-gloved hand, with a pencil in the right hand shading a faint pattern",
+        "a row of heavy mechanical railway point levers, a burning old oil lantern and a rain-streaked window looking onto converging railway tracks"
+      ],
+      "background": "aged varnished timber, brass fittings and metal switch handles inside the signal cabin; smoky factory chimneys and wet railway junction outside",
+      "light": "focused warm kerosene lamplight on the graphite rubbing and coarse wood grain, with cold blue-grey rainy industrial twilight beyond the panes",
+      "npc": "one covert investigator seen only from behind in thick period gloves and dark wool coat, his face concealed, with no other character visible",
+      "knowledgeBoundary": "Finn leaves the original shift marker screwed in place and copies its raised marking with a graphite rubbing. The scene does not imply theft or destruction of the original, a forged timetable, confirmed culprit, already signed witness statement or independent confirmation of the complete points log. The copy is a potential lead whose provenance and meaning remain in the interactive text and later deductions.",
+      "avoid": [
+        "the wooden marker detached from its post, stolen, snapped or hidden in someone's pocket",
+        "identifiable playable hero face or a different character in police uniform",
+        "readable invented shift dates or names, signed confession, proven guilty official or finished case",
+        "modern station control computer, contemporary photography or automatic electronic signalling"
       ],
       "intendedVariant": "default"
     }

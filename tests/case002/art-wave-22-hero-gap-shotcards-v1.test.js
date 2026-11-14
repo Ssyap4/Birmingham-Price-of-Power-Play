@@ -15,8 +15,8 @@ const cards=builder.validateBatch(spec);
 assert.equal(spec.chapter,"HERO-GAPS");
 assert.equal(metadata.chapter,"HERO-GAPS");
 assert.equal(metadata.status,"hero-gap-art-production-in-progress");
-assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01","HV01","HS01"]);
-assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01","HV01","HS01"]);
+assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01","HV01","HS01","HF02"]);
+assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01","HV01","HS01","HF02"]);
 const expected={
  HJ01:{chapter:"II",cast:["jack","guard"],kind:"dialogue",
   filename:"case002-hj01-scene--mobile.webp",
@@ -37,7 +37,11 @@ const expected={
  HS01:{chapter:"II",cast:["samuel"],kind:"evidence",
   filename:"case002-hs01-scene--mobile.webp",
   sha:"7c04a95024f22506d450a0991103a5160aaf0dd6009050ae7fd6dfbbdbfd73c9",
-  bytes:115446,required:/railway coupling/,avoid:/police uniform/}
+  bytes:115446,required:/railway coupling/,avoid:/police uniform/},
+ HF02:{chapter:"III",cast:["finn"],kind:"evidence",
+  filename:"case002-hf02-scene--mobile.webp",
+  sha:"e77f6769bf37cda0e9f2259fd4537277aae2bb45589528d90b84c220d3282852",
+  bytes:121910,required:/wooden shift marker/,avoid:/marker detached/}
 };
 const hashes=new Set();
 for(const [index,card] of cards.entries()){
@@ -91,5 +95,5 @@ for(const id of pending){
   desiredAsset:"case002-"+id.toLowerCase()+"-scene.webp"
  }),null);
 }
-assert.equal(hashes.size,5);
-console.log("PASS Case002 hero-gap art: HJ01, HF01, HE01, HV01, HS01 independently accepted; 5 separate 720x900 WebP hashes, 2 scenes remaining, no early manifest installation.");
+assert.equal(hashes.size,6);
+console.log("PASS Case002 hero-gap art: HJ01, HF01, HE01, HV01, HS01, HF02 independently accepted; 6 separate 720x900 WebP hashes, 1 scene remaining, no early manifest installation.");
