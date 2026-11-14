@@ -253,6 +253,30 @@
         "new frontal portraits for the established woman or any selectable hero",
         "a final branching choice visibly made or the office already abandoned"
       ]
+    },
+    {
+      "id": "HJ03",
+      "sceneKind": "emotion",
+      "focus": "a broad-shouldered man in dark period wool coat, seen only from the rear, leaves his open ungloved hand flat on a battered wooden desk well away from an undrawn revolver in its leather hip holster, choosing restraint during a tense conversation with a formidable security supervisor opposite",
+      "camera": "close-medium low over-the-shoulder composition from behind the restrained man; his open hand and holstered weapon must remain visible while the supervisor sits opposite in shadow",
+      "location": "a narrow dark wood-panelled private security office at a 1920s Birmingham factory",
+      "required": [
+        "one open hand resting still on the tabletop, with the revolver remaining in a closed leather hip holster below and to the side",
+        "a stern dark-haired factory security chief across the desk, partly in shadow, observing the gesture without acknowledging defeat",
+        "a small framed memorial portrait of a fallen young uniformed soldier with a black mourning ribbon on the rear wall"
+      ],
+      "background": "battered desk, scuffed leather chairs, brass desk lamp, heavy books and ledgers, rain-streaked window overlooking smoky industrial brick chimneys",
+      "light": "warm tungsten-colored brass-lamp glow on tabletop and hands, with cold rainy blue-gray exterior daylight and deep restrained shadows",
+      "npc": "one male protagonist seen only from behind, facial identity concealed; one dark-haired middle-aged factory security chief seated opposite with much of his face in shadow",
+      "knowledgeBoundary": "Jack resists drawing a firearm. No shot, injury, voluntary Brackett cooperation, evidence transfer, guaranteed safe outcome or automatically obtained intermediary is established by the painting.",
+      "avoid": [
+        "a pistol drawn, pointed, fired or placed on the desk",
+        "dead or wounded bystanders, blood, violence aftermath or a completed victory",
+        "Brackett surrendering the ledger, making a confession or consenting to cooperate",
+        "a front-facing new identifiable portrait for the playable hero",
+        "legible invented name or dates on the memorial photograph"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }
