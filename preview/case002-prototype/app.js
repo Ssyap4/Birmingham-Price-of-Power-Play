@@ -117,6 +117,8 @@ function init(){
    // The first attempt may have created a save after resume was last disabled.
    // Re-read the current hero's save when returning to the launch screen.
    refreshResume();
+   // Returning from a hidden game must not strand keyboard/VoiceOver focus.
+   $("hero").focus({preventScroll:true});
    window.scrollTo(0,0);
  });
  $("noticeDismiss").addEventListener("click",hideNotice);
@@ -167,7 +169,9 @@ function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();evidenceFocus=null;
- render();window.scrollTo(0,0);
+ render();
+ $("storyPanel").focus({preventScroll:true});
+ window.scrollTo(0,0);
 }
 function setText(element,value){element.textContent=String(value);}
 function make(tag,text,cls){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
@@ -529,6 +533,9 @@ function select(choice){
   evidenceFocus=null;
   render();
   showNotice(event.message,event.focus);
+  // The old clicked choice has been discarded. Keep keyboard and VoiceOver
+  // oriented on the new story landmark without forcing an extra scroll.
+  $("storyPanel").focus({preventScroll:true});
   window.scrollTo(0,0);
  }catch(e){
   showNotice("Действие не применено: "+e.message);
