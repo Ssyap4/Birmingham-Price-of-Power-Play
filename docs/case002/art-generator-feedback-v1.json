@@ -286,6 +286,31 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Nora from behind, inked hand pushes away newspaper proof, press wheel, typesetting tray and visiting detective cropped; never depicts verified publication, protected witnesses or canonical face replacement."
+    },
+    {
+      "scene": "E03",
+      "attempt": 1,
+      "generatedThisTurn": 0,
+      "renderedPreviousUserTurn": true,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Previously rendered newsroom papers and Nora's privacy-sheet gesture; image saved without regeneration on next user turn. dHash distance from E02 = 12/64, additional art comparison required before batch install."
+    },
+    {
+      "scene": "E04",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Low angle intact iron railway switch, split rail line, operating crew by crates and misty locomotive; no derailment, evacuated workers, completed sabotage or impossible actor portrait."
     }
   ]
 }

@@ -22,7 +22,7 @@ for(const c of cards){
  assert.equal(r.automationDoesNotApprove,true);
  assert.equal(r.requiresHumanArtReview,true);
 }
-const staged=[["E01","d51e1cc93da287449afdc05ef3d24831cf43bd01f223136a13f294854ac39820"],["E02","bf70a47b8de22da12e67d1a7a9a8cff3011f3a83db0d80df2e6a16e4aeeeca96"]];
+const staged=[["E01","d51e1cc93da287449afdc05ef3d24831cf43bd01f223136a13f294854ac39820"],["E02","bf70a47b8de22da12e67d1a7a9a8cff3011f3a83db0d80df2e6a16e4aeeeca96"],["E03","2f38e6f629766003d082ed99f788a9acd65ffb2c5a834d0102718c2d99b576a6"],["E04","96201947a7cf6ac64d0f3eaf25c9c9b33420d3a961c8f14289970797397bd1a1"]];
 for(const [id,sha] of staged){
  assert(cards.some(c=>c.id===id),"Candidate missing shotcard: "+id);
  const f=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");

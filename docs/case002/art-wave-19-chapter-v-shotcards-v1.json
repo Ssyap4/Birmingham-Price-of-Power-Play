@@ -45,6 +45,51 @@
         "a new face for the established editor or the playable detective",
         "a completed public investigation or triumphant publication"
       ]
+    },
+    {
+      "id": "E03",
+      "sceneKind": "evidence",
+      "focus": "a newspaper editor in a dark wool dress carefully lays a plain unprinted privacy sheet over the signatures on two separate stacks of verification documents spread on a working typesetter's desk",
+      "camera": "close three-quarter angle from slightly above the editorial desk, centering the shielding sheet and two independent paper stacks; the editor seen mostly from back",
+      "location": "the same cramped 1920s Birmingham newspaper office beside an old cast-iron press",
+      "required": [
+        "two separate thick folders of old documents placed side by side for independent comparison",
+        "one plain unprinted cover sheet concealing identifying signatures on a document",
+        "ink-speckled female editor hands arranging the files and protective sheet"
+      ],
+      "background": "working metal type tray, dark cast iron printing press, dark wood, loose proof sheets and a rain-beaded industrial window",
+      "light": "close warm brass lamp highlights on archival paper against cold blue daylight through a rainy window",
+      "npc": "a female editor with dark hair pinned back, seen from behind or rear three-quarter with face concealed, and cropped visitor sleeve only",
+      "knowledgeBoundary": "Nora is screening two possible chains and concealing witness identities; contact and paper handling do not prove independent evidence was verified, published, or that witnesses are protected",
+      "avoid": [
+        "legible witness names or addresses",
+        "an already published front page or proven death count",
+        "one document claimed to certify both independent chains",
+        "a new unapproved protagonist or editor face",
+        "a triumphant completed investigation"
+      ]
+    },
+    {
+      "id": "E04",
+      "sceneKind": "environment",
+      "focus": "an intact hand-operated iron railway switch lever dominates the foreground of a damp private industrial siding, where wet rails fork toward a train while factory laborers continue carrying wooden crates behind a low fence",
+      "camera": "low three-quarter trackside view emphasizing the bolted switch stand in the near foreground and branching rails that recede toward a misty steam locomotive",
+      "location": "the private freight railway siding beside red-brick factories in 1920s Birmingham",
+      "required": [
+        "heavy undamaged iron switch lever mechanically connected to diverging damp rails",
+        "two railway workers handling timber crates beyond a short fence beside the tracks",
+        "a steam locomotive and freight wagons receding in the mist near a soot-stained brick warehouse"
+      ],
+      "background": "wet gravel and wooden sleepers, barrels, pale gray steam, aging industrial buildings, chimneys and metal yard gantries",
+      "light": "cold blue-gray fog at early morning with scattered amber industrial lanterns reflected in wet iron",
+      "npc": "two anonymous factory laborers wearing period flat caps and dark work coats, seen from behind or at a distance, no identifiable detective face",
+      "knowledgeBoundary": "This is a reconnaissance of the switch and ongoing work shift; the track remains intact, the workers are not confirmed evacuated, and access to the sabotage plan is not a completed action",
+      "avoid": [
+        "a damaged switch or derailment",
+        "empty evacuated work zone or protected crew",
+        "identifiable protagonist face",
+        "readable train identification number or unverified secret plan"
+      ]
     }
   ]
 }
