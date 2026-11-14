@@ -1,0 +1,36 @@
+name: Case 002 read-only portrait reference QA
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - 'tools/case002/cast-reference-request.txt'
+      - '.github/workflows/case002-cast-reference-qa.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Emit exact preapproved canonical portrait bytes for artistic review
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, re
+          name=Path("tools/case002/cast-reference-request.txt").read_text().strip()
+          if not re.fullmatch(r'[a-z][a-z0-9-]{0,27}',name):
+            raise SystemExit("Invalid cast ID")
+          p=Path("assets/case002/portraits")/f"case002-{name}-portrait.webp"
+          if not p.is_file(): raise SystemExit("Canon portrait absent")
+          data=p.read_bytes()
+          if data[:4]!=b"RIFF" or data[8:12]!=b"WEBP" or not (15000<len(data)<300000):
+            raise SystemExit("Invalid reference image")
+          print(f"REFERENCE_PORTRAIT_NAME={name}")
+          print(f"REFERENCE_PORTRAIT_BYTES={len(data)}")
+          print(f"REFERENCE_PORTRAIT_SHA256={hashlib.sha256(data).hexdigest()}")
+          encoded=base64.b64encode(data).decode("ascii")
+          print(f"REFERENCE_PART_COUNT={(len(encoded)+1999)//2000}")
+          for i in range(0,len(encoded),2000):
+            print("REFCHUNK="+encoded[i:i+2000])
+          PY
