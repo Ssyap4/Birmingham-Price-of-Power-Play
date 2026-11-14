@@ -181,7 +181,18 @@ function resume(){
   engine=beginGame(true);
   engine.load();
   showGame();
- }catch(e){appError("Не удалось открыть сохранение: "+e.message);}
+ }catch(e){
+  // load() validates/restores the primary save before retrying the separate
+  // completion archive. If only that second phase fails, show the real
+  // finished scene rather than denying access to a valid saved attempt.
+  if(engine&&engine.snapshot().finished){
+   showGame();
+   showNotice("Расследование восстановлено из сохранения, но архив итогов или наград не обновлён: "+
+    e.message+". Не начинайте новую попытку до восстановления архива.",
+    {tab:"journal",id:null});
+   console.warn("[Case002] completion archive recovery failed after valid load",e);
+  }else appError("Не удалось открыть сохранение: "+e.message);
+ }
 }
 function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
