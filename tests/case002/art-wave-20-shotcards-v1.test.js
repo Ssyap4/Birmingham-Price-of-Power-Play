@@ -27,7 +27,7 @@ for(const [idx,card] of batch.entries()){
  assert.equal(m.acceptedRendering,1);
  assert.equal(m.variantKey,"default");
  assert.equal(m.candidateFile,"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
- assert.equal(card.sceneKind,card.id==="F06"?"environment":card.id==="F07"?"dialogue":"evidence");
+ assert.equal(card.sceneKind,card.id==="F06"?"environment":["F07","F08"].includes(card.id)?"dialogue":"evidence");
  const p=builder.promptFor(card),r=builder.reviewFor(card);
  assert(p.includes(card.focus)&&p.includes(card.location)&&p.includes(card.camera));
  assert(!p.includes(card.id)&&!p.includes(card.knowledgeBoundary));
@@ -91,6 +91,14 @@ for(const [idx,card] of batch.entries()){
    assert(card.required.some(x=>/open side archway/.test(x)));
    assert(card.avoid.some(x=>/dead or wounded person/.test(x)));
  }
+ else if(card.id==="F08"){
+   assert(card.knowledgeBoundary.includes("accountsGivenToWorkers"));
+   assert(card.knowledgeBoundary.includes("brackettAccountsHeld"));
+   assert(card.required.some(x=>/closed brown leather folder/.test(x)));
+   assert(card.required.some(x=>/railway woman/.test(x)));
+   assert(card.avoid.some(x=>/Tommy or any other possibly absent witness/.test(x)));
+   assert(card.avoid.some(x=>/opened legible ledger/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -127,4 +135,10 @@ const guardsView={scene:{id:"F07"},state:{flags:{},witnesses:{}},facts:{}};
 assert.equal(director.variant(guardsView),"default",
  "An illustrated guard warning cannot infer the hero's subsequent risk choice or death");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F07").length,0);
-console.log("PASS: Chapter VI candidates F01–F07 physically verified and uninstalled.");
+const preVerdictFlags=(held,given)=>({scene:{id:"F08"},state:{flags:{brackettAccountsHeld:held,accountsGivenToWorkers:given},witnesses:{}}});
+assert.equal(director.variant(preVerdictFlags(false,false)),"accounts-not-held");
+assert.equal(director.variant(preVerdictFlags(true,false)),"accounts-hero");
+assert.equal(director.variant(preVerdictFlags(true,true)),"accounts-workers");
+assert.equal(director.variant(preVerdictFlags(false,true)),"accounts-workers");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F08").length,0);
+console.log("PASS: Chapter VI candidates F01–F08 physically verified and uninstalled.");

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI original screenplay and storyboard; F01–F07 each independently rendered and reviewed after a separate author message",
+  "source": "Chapter VI screenplay and canonical storyboard; F01 through F08 independently rendered in one author turn each",
   "scenes": [
     {
       "id": "F01",
@@ -163,6 +163,29 @@
         "modern security equipment, modern cars, tactical armor or fabricated visible dialogue text"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "F08",
+      "sceneKind": "dialogue",
+      "focus": "an anonymous detective closes a plain worn leather document folder with both black-gloved hands, while a railway woman in a modest grey coat with short dark chestnut bob stands at the rainlit office threshold during a grave conversation before the final decision",
+      "camera": "medium cinematic three-quarter view from behind the seated detective toward a half-open doorway, the closed folder in the foreground and the railway woman's back and side silhouette in the midground, with no discernible faces",
+      "location": "a modest detective office overlooking factory streets in industrial Birmingham in the 1920s",
+      "required": [
+        "one ordinary closed brown leather folder lying flat on a wooden desk, with two black-gloved investigator hands resting on its cover",
+        "one solitary railway woman wearing a belted grey wool coat and short dark bob, seen from behind at the open office doorway, her face obscured",
+        "the warm brass desk lamp in the left foreground against a cool rainy industrial street visible beyond the doorway"
+      ],
+      "background": "rough brick office interior, scratched oak table, old dark coat on a hook, a rain-streaked warehouse window and distant smoke-stacked factory buildings",
+      "light": "amber table-lamp glow across the closed folder and gloves, deep blue-grey rain twilight filling the doorway behind the woman",
+      "npc": "one railway woman with an indistinct face viewed from behind in a grey coat and short dark bob; anonymous playable hero shown only as cropped black-gloved hands and shoulder",
+      "knowledgeBoundary": "The scene is a conversation before the final decision. The closed folder is neutral and does not show original factory accounts, imply accountsGivenToWorkers or brackettAccountsHeld, or reveal Tommy's status. Which records are held or transferred and who can speak remain determined only by the narrative flags.",
+      "avoid": [
+        "a visible handover of accounts, an opened legible ledger, or any document proving who holds the factory books",
+        "Tommy or any other possibly absent witness physically present beside the woman",
+        "recognizable full faces or invented appearances of the playable detective or the established railway woman",
+        "an already signed verdict, newspaper publication, guaranteed survival or decided ending"
+      ],
+      "intendedVariant": "neutral-conversation-all-three-account-states"
     }
   ]
 }
