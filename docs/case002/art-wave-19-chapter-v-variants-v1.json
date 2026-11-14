@@ -101,6 +101,39 @@
           "a recognizable playable detective, hero victory or violent act"
         ]
       }
+    },
+    {
+      "sceneId": "E09",
+      "variantKey": "accounts-hero",
+      "candidateFile": "case002-e09-scene--accounts-hero--mobile.webp",
+      "sha256": "2c2fefc3e326f4e8344e2dcacd95552566c1e9ecafb0106b4a0852acf94eac95",
+      "gitBlobSha1": "d7f73e0898768394d0c5ca0e55cdc4db942a412b",
+      "bytes": 147544,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E09",
+        "sceneKind": "evidence",
+        "focus": "a dark leather account ledger is being placed safely inside the satchel of an anonymous investigator in black gloves, at a rainy iron factory gate, while a distant worker remains empty handed",
+        "camera": "low medium-close three-quarter view from behind the investigator's left shoulder, sharply framing gloved hands, cracked ledger cover and open leather case while the factory worker remains across the gate in the soft-focus distance",
+        "location": "outside a soot-darkened red brick factory entrance in rainy 1920s Aston, Birmingham",
+        "required": [
+          "one single battered leather-bound financial ledger with old ruled accounting pages, held and lowered by the investigator's gloved hands",
+          "one open deep brown weathered leather satchel receiving the ledger with brass buckle visible",
+          "one ordinary factory worker in a flat cap positioned behind the wrought iron gate with hands away from the ledger"
+        ],
+        "background": "wet industrial brick gate pillar, spiked iron railings, rain-dappled cobblestones, gas lantern and distant smoke-filled factory buildings",
+        "light": "a warm amber factory gaslight lighting the wet leather and cracked ledger binding, with cold blue-gray rain and smoke in the background",
+        "npc": "no face visible on the investigator, only cropped gloved hands and rain-dark wool sleeve; a single anonymous worker seen at distance behind the gate",
+        "knowledgeBoundary": "Use only when flags.brackettAccountsHeld is true and flags.accountsGivenToWorkers is false. The investigator holds the account book; the worker has not been given records. This visual cannot establish independent verification, a paid pension, worker safety or a protected intermediary.",
+        "avoid": [
+          "a worker taking the ledger or a completed hand-to-hand transfer",
+          "specific legible accounting numbers, witness names, claims of a widow's pension payment or fabricated legal text",
+          "a visible identifiable playable character face or replacement portrait of an established character",
+          "celebration, confirmed closure of the factory or a settled union agreement"
+        ]
+      }
     }
   ]
 }

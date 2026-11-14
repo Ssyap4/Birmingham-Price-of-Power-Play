@@ -173,4 +173,12 @@ assert.equal(director.variant({scene:{id:"E05"},state:{flags:{workersCleared:fal
 assert.equal(director.variant({scene:{id:"E05"},state:{flags:{workersCleared:true},witnesses:{}}}),"cleared");
 assert(newCleared.shotCard.knowledgeBoundary.includes("workersCleared"),"Only narrative state can mark workers as cleared");
 
+
+const e09Hero=variantsSpec.variants.find(x=>x.sceneId==="E09"&&x.variantKey==="accounts-hero");
+assert(e09Hero,"Investigator-held account book must have its own physical Chapter V variant");
+assert.notEqual(e09Hero.sha256,staged.find(x=>x[0]==="E09")[1],"Untransferred gate conversation cannot be the investigator-held ledger image");
+assert.equal(director.variant({scene:{id:"E09"},state:{flags:{brackettAccountsHeld:true,accountsGivenToWorkers:false},witnesses:{}}}),"accounts-hero");
+assert.equal(director.variant({scene:{id:"E09"},state:{flags:{brackettAccountsHeld:true,accountsGivenToWorkers:true},witnesses:{}}}),"accounts-workers");
+assert(e09Hero.shotCard.knowledgeBoundary.includes("accountsGivenToWorkers"),"Do not imply worker transfer from possession");
+
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));
