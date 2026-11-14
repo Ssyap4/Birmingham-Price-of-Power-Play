@@ -77,6 +77,9 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
                     assert page.locator("#chapterIntertitle").is_visible()
+                    assert page.locator("#chapterIntertitle").evaluate(
+                        "(el) => 0 <= el.getBoundingClientRect().top < 170"
+                    ), f"{browser_name}: start must show the opening chapter, not the distant masthead"
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "P"
                     assert "Ночь, когда" in page.locator("#intertitleLine").inner_text()
                     assert page.locator("#quickNav button").count() == 5
@@ -126,6 +129,9 @@ def main():
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: a decision must transfer focus to the next scene"
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => 0 <= el.getBoundingClientRect().top < 170"
+                    ), f"{browser_name}: after a decision the next scene must be on screen"
                     assert page.locator("#chapterIntertitle").is_hidden(), (
                         "Intertitle must not repeat on every scene of the chapter"
                     )
@@ -147,6 +153,15 @@ def main():
                     assert "Мэйбл Кросс" in page.locator("#sceneCast").inner_text()
                     assert page.locator("#sceneText .scene-spoken-line").count() >= 3, (
                         "P02 must visually distinguish direct dialogue from narration"
+                    )
+                    assert page.locator("#readScene").bounding_box()["height"] >= 44
+                    page.locator("#readScene").click()
+                    assert page.locator("#sceneText").evaluate(
+                        "(el) => document.activeElement === el && "
+                        "0 <= el.getBoundingClientRect().top < 170"
+                    ), f"{browser_name}: reading shortcut must focus the actual text"
+                    assert page.locator("#sceneId").inner_text().startswith("P02"), (
+                        "Reading shortcut must not spend a story choice"
                     )
                     assert "К моему брату. Томми больше нет дома." in page.locator(
                         "#sceneText"
@@ -212,6 +227,9 @@ def main():
                         "(el) => el.currentSrc.endsWith('/case002-a01-scene--mobile.webp')"
                     ), "Wrong A01 mobile image"
                     assert page.locator("#chapterIntertitle").is_visible()
+                    assert page.locator("#chapterIntertitle").evaluate(
+                        "(el) => 0 <= el.getBoundingClientRect().top < 170"
+                    ), f"{browser_name}: act transition must preserve chapter intertitle"
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "I"
                     assert "ВИАДУКА" in page.locator("#intertitleLine").inner_text().upper()
                     # Verify the optional A02 -> A04 route independently:
