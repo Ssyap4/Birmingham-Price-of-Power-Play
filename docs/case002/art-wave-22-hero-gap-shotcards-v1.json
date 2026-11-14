@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "One-image-per-user-art-turn production of all seven missing hero-specific scenes; HS02 render was shown the previous turn, this handoff turn completes review and archives its approved WebP. All seven image candidates staged, no installation in the game manifest.",
+  "source": "Seven independently reviewed personal scene images HJ01, HF01, HE01, HV01, HS01, HF02, HS02 are installed as exact mobile-only art entries in the Case002 feature branch; runtime visual and story checks are separately required before release acceptance.",
   "scenes": [
     {
       "id": "HJ01",

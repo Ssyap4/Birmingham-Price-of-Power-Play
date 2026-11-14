@@ -47,8 +47,9 @@ def main():
 
                     if not quick:
                         outcomes = page.evaluate("""async () => {
+                            const personal = new Set(["HJ01","HF01","HE01","HV01","HS01","HF02","HS02"]);
                             const entries = window.BirminghamCase002ApprovedArt.manifest.sceneImages
-                                .filter(e => /^Z0[1-7]$/.test(e.sceneId));
+                                .filter(e => /^Z0[1-7]$/.test(e.sceneId) || personal.has(e.sceneId));
                             return Promise.all(entries.map(e => new Promise(resolve => {
                                 const img = new Image();
                                 img.onload = () => resolve({id:e.sceneId,ok:true,
@@ -58,10 +59,16 @@ def main():
                                     e.mobileFile, window.location.href).href;
                             })));
                         }""")
-                        assert len(outcomes) == 14 and all(
+                        assert len(outcomes) == 21, (
+                            f"{browser_name}: expected 14 ending states + 7 distinct hero portraits, got {outcomes}"
+                        )
+                        assert {x["id"] for x in outcomes if x["id"].startswith("H")} == {
+                            "HJ01", "HF01", "HE01", "HV01", "HS01", "HF02", "HS02"
+                        }, f"{browser_name}: wrong hero-specific art registry"
+                        assert all(
                             x["ok"] and x["width"] == 720 and x["height"] == 900
                             for x in outcomes
-                        ), f"{browser_name}: ending mobile assets unavailable: {outcomes}"
+                        ), f"{browser_name}: ending or personal scene WebP unavailable: {outcomes}"
                     assert page.locator("#begin").bounding_box()["height"] >= 44
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")

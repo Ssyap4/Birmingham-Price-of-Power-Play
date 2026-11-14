@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "chapter": "HERO-GAPS",
-  "status": "hero-gap-art-candidates-complete-awaiting-batch-integration",
+  "status": "hero-gap-art-installed-feature-branch-awaiting-full-QA",
   "candidates": [
     {
       "sceneId": "HJ01",
@@ -14,12 +14,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "6fe5f683-67e0-4dfe-b9c1-3bdbe3e6bda7",
       "visualReview": "ACCEPTED: Jack's broad dark coat and flat cap seen entirely from the back; an isolated armed railway guard lowers his eyes by a warm lantern at the canal-lock siding, while cold rain and mist surround the gates. One confrontation, no fight, gunfire, unlocked passage, named evidence or visible Jack face.",
-      "knowledgeBoundary": "The player may still choose intimidation or a factual appeal about Hale; the still image implies neither choice has already succeeded. A dropped guard gaze is fear, not a completed bargain or confirmed testimony."
+      "knowledgeBoundary": "The player may still choose intimidation or a factual appeal about Hale; the still image implies neither choice has already succeeded. A dropped guard gaze is fear, not a completed bargain or confirmed testimony.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hj01-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HF01",
@@ -32,12 +39,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "06265cd1-3716-4968-a626-86cda7211693",
       "visualReview": "ACCEPTED: Finn appears from behind on a narrow rain-soaked exterior iron staircase, holding the handrail; a truly open second-storey freight office window reveals warm-lit paper, desk ledger and files. The small office papers have no readable evidentiary claim; no face, theft, safe breach or additional person is shown. A single coherent scene, original composition.",
-      "knowledgeBoundary": "This image shows an opportunity to look into the freight office, not acquisition of the original ledger, identification of a forger or independent corroboration. All those consequences remain conditional in gameplay."
+      "knowledgeBoundary": "This image shows an opportunity to look into the freight office, not acquisition of the original ledger, identification of a forger or independent corroboration. All those consequences remain conditional in gameplay.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hf01-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HE01",
@@ -50,12 +64,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "89dbcf5e-85ce-4d9c-8304-f01b3276e05a",
       "visualReview": "ACCEPTED: a single worn paper held in anonymous gloved hands is illuminated from the side by a period desk lamp; faint relief from older erased writing is visible while a folding bellows plate camera waits on the wooden table. No exposed Eleanor face, readable suspect names or established second source. One coherent discovery moment before the document photograph.",
-      "knowledgeBoundary": "Angled light reveals physical alteration on the reverse; the ready camera and closed notebook support provenance, not already completed external verification or an independent second primary record."
+      "knowledgeBoundary": "Angled light reveals physical alteration on the reverse; the ready camera and closed notebook support provenance, not already completed external verification or an independent second primary record.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-he01-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HV01",
@@ -68,12 +89,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "24e4cc53-2bde-414c-9b36-14d202c74558",
       "visualReview": "ACCEPTED: quiet tea-table negotiation with broad-shouldered silver-bearded Gideon Vale in heavy dark suit, hands resting near one non-readable inspection paper, his safe in sight and wet industrial windows behind him. Viktor is visible only from behind, with no invented player face. No signed deal, bribery payoff, confession or open safe implied. Dramatic, coherent 1920s noir interior.",
-      "knowledgeBoundary": "The inspector's copy is present on the tea table during the negotiation; this portrait cannot confirm that Viktor has acquired the original, obtained free proof of guilt, secured a Vale guarantee or paid a story price. Conditional outcomes remain in game state and dialogue."
+      "knowledgeBoundary": "The inspector's copy is present on the tea table during the negotiation; this portrait cannot confirm that Viktor has acquired the original, obtained free proof of guilt, secured a Vale guarantee or paid a story price. Conditional outcomes remain in game state and dialogue.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hv01-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HS01",
@@ -86,12 +114,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "2aaa1a9a-c44f-4bd2-819d-7118df3cb86f",
       "visualReview": "ACCEPTED: close single view of an old rusted railway coupling examined by anonymous leather-gloved hands, one finger following a narrow dark oily streak and adjacent paler lubricant/scrape mark. Warm oil lantern isolates the iron detail against cold wet rails, canal-side factories and smoke. No face of Samuel, suspect, police sergeant, accident or fabricated proof visible.",
-      "knowledgeBoundary": "The grease and tool trace warrant mechanical suspicion of workshop tampering but do not prove the saboteur or confer independent sworn evidence. Technical analysis remains a choice in the playable story."
+      "knowledgeBoundary": "The grease and tool trace warrant mechanical suspicion of workshop tampering but do not prove the saboteur or confer independent sworn evidence. Technical analysis remains a choice in the playable story.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hs01-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HF02",
@@ -104,12 +139,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "e0370ec5-e4e8-44d6-9742-1b9d2beb45d6",
       "visualReview": "ACCEPTED: Finn is framed from behind at the signal box threshold, graphite pencil in one gloved hand and paper pressed to an old wooden shift plaque with the other. The plaque remains attached to the door; point levers, warm oil lantern and wet tracks establish place. No visible face, stolen marker, forged legible time, revealed culprit or proof of guilt.",
-      "knowledgeBoundary": "The graphite rubbing is an alternate way to preserve the shift-marker information without stealing it, not a substitute for independently verified railway movement records or the signalman's signed testimony."
+      "knowledgeBoundary": "The graphite rubbing is an alternate way to preserve the shift-marker information without stealing it, not a substitute for independently verified railway movement records or the signalman's signed testimony.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hf02-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     },
     {
       "sceneId": "HS02",
@@ -122,12 +164,19 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "c63d19a3-31be-468c-86b6-d5d78abca068",
       "visualReview": "ACCEPTED: a gloved rear-view Samuel sketches the connecting section on a period railway plan at a signal-box desk; an elderly mustached railway signalman considers the plan, his pen not yet leaving a signature. Antique levers, lantern, wet rails and factory smoke establish the setting. No recognizable Samuel face, signed testimony, confirmed culprit or railway collision.",
-      "knowledgeBoundary": "The pen in the signalman's hand is poised beside the penciled diagram, not a completed signature. Samuel has only a mechanical hypothesis: proof of actual movements and the responsible person still requires source verification."
+      "knowledgeBoundary": "The pen in the signalman's hand is poised beside the penciled diagram, not a completed signature. Samuel has only a mechanical hypothesis: proof of actual movements and the responsible person still requires source verification.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-hs02-scene--mobile.webp"
+      ],
+      "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     }
   ]
 }

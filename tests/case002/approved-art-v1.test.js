@@ -129,6 +129,27 @@ for(const [id,variant,flags,facts,witnesses] of chapterVIStateFixtures){
 }
 
 
+
+const fullHeroArt=require("../../docs/case002/art-wave-22-hero-gap-candidates-v1.json");
+const heroSceneIds=["HJ01","HF01","HE01","HV01","HS01","HF02","HS02"];
+assert.deepEqual(fullHeroArt.candidates.map(x=>x.sceneId),heroSceneIds);
+for(const candidate of fullHeroArt.candidates){
+ const node=graph.nodes.find(x=>x.id===candidate.sceneId);
+ assert(node,"Missing narrative node "+candidate.sceneId);
+ const engine=createEngine({graph,contract,hero:node.hero||"jack",
+  attemptId:"hero-scene-art-"+candidate.sceneId});
+ const view={...engine.view(),scene:node};
+ const stage=director.select(storyboard,view);
+ assert.equal(stage.variantKey,"default");
+ const art=resolveScene(stage);
+ assert(art&&art.src.endsWith("/"+candidate.candidateFile),
+  "The actual scene-art selector must resolve the hero's artwork");
+ assert.equal(art.mobileOnly,true);
+}
+const allSceneIds=[...new Set(manifest.sceneImages.map(x=>x.sceneId))].sort();
+assert.deepEqual(allSceneIds,storyboard.sceneAssets.map(x=>x.id).sort());
+assert.equal(allSceneIds.length,89,"All 89 scripted scenes have a reviewed primary image");
+
 const endingPlan=require("../../docs/case002/art-wave-21-endings-install-plan-v1.json");
 assert.equal(endingPlan.entries.length,14);
 const endingProbe=createEngine({graph,contract,hero:"eleanor",attemptId:"endings-art-state-audit"});

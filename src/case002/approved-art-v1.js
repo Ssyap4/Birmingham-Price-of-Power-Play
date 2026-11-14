@@ -14,6 +14,48 @@ const manifest=Object.freeze({
  // Reuse of the independently accepted neutral Z02 image is restricted by the art binary audit.
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"HJ01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hj01-scene.webp",cast:["guard"],
+   mobileFile:"case002-hj01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"b3a1fb848a308c7e63f0245b08d1a58c46eef1049cc1af5a1130a16da85c1567"
+  }),
+  Object.freeze({
+   sceneId:"HF01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hf01-scene.webp",cast:[],
+   mobileFile:"case002-hf01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"1b08c9b8357df7d79e1c53d6741836e17d1c1fccbc79aa55560a7b76ca5ca83b"
+  }),
+  Object.freeze({
+   sceneId:"HE01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-he01-scene.webp",cast:[],
+   mobileFile:"case002-he01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"8385375c533fecebb7a6dc2cd57e507dd1d4120e2ba8c856daf98840db076c4f"
+  }),
+  Object.freeze({
+   sceneId:"HV01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hv01-scene.webp",cast:["vale"],
+   mobileFile:"case002-hv01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"11a39e3c9af87662c9c33f7c83084a8b2a5e16497f926135bd9e7061a7e78208"
+  }),
+  Object.freeze({
+   sceneId:"HS01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hs01-scene.webp",cast:[],
+   mobileFile:"case002-hs01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"7c04a95024f22506d450a0991103a5160aaf0dd6009050ae7fd6dfbbdbfd73c9"
+  }),
+  Object.freeze({
+   sceneId:"HF02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hf02-scene.webp",cast:[],
+   mobileFile:"case002-hf02-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"e77f6769bf37cda0e9f2259fd4537277aae2bb45589528d90b84c220d3282852"
+  }),
+  Object.freeze({
+   sceneId:"HS02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hs02-scene.webp",cast:["signalman"],
+   mobileFile:"case002-hs02-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"e622a45a43c652d289a9ac92d8bbcb28c499b75cfc2c97e1cf220a6c19b0220c"
+  }),
+  Object.freeze({
    sceneId:"Z01",variantKey:"default",review:"approved",mobileOnly:true,
    file:"case002-z01-scene.webp",cast:["nora"],
    mobileFile:"case002-z01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
