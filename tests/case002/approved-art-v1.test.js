@@ -23,7 +23,8 @@ const check=view=>{
  // Only explicitly approved art may be exposed. An absent file remains null.
  const actual=resolveScene(stage);
  const matching=manifest.sceneImages.filter(e=>e.sceneId===stage.sceneId&&
-   e.variantKey===stage.variantKey);
+   (e.variantKey===stage.variantKey||
+    (Array.isArray(e.applicableVariants)&&e.applicableVariants.includes(stage.variantKey))));
  if(matching.length){
    assert.equal(matching.length,1,"duplicate art registration");
    assert.equal(matching[0].review,"approved","unreviewed scene exposed");
@@ -119,6 +120,24 @@ assert.throws(()=>resolveScene(sampleStage,{...fake,sceneImages:[{
  ...fake.sceneImages[0],width:0}]}),/conflicts/);
 assert.equal(resolveScene({...sampleStage,variantKey:"workers-on-rails"},fake),null);
 assert.equal(resolveScene({...sampleStage,sceneId:"D06"},fake),null);
+// A neutral reviewed image can serve only explicit, story-safe witness variants.
+function staged(id,variant,visibleCast){
+ return {sceneId:id,variantKey:variant,visibleCast,
+   desiredAsset:"case002-"+id.toLowerCase()+"-scene--"+variant+".webp"};
+}
+for(const v of ["ada-located","ada-protected"]){
+ assert(resolveScene(staged("D02",v,["hero","ada"]))?.src.endsWith("/case002-d02-scene--mobile.webp"));
+ assert(resolveScene(staged("HE02",v,["eleanor","ada"]))?.src.endsWith("/case002-he02-scene--mobile.webp"));
+}
+assert.equal(resolveScene(staged("D02","ada-absent",["hero"])),null,
+ "Captured Ada must not appear in boiler-house picture");
+assert.equal(resolveScene(staged("HE02","ada-absent",["eleanor"])),null,
+ "Captured Ada must not appear in Eleanor encounter picture");
+for(const v of ["tommy-detained","tommy-protected","tommy-evacuated","tommy-unknown"])
+ assert(resolveScene(staged("D06",v,["mabel","hero"]))?.src.endsWith("/case002-d06-scene--mobile.webp"));
+for(const v of ["ada-unknown","ada-known","ada-captured"])
+ assert(resolveScene(staged("D09",v,["mercer","messenger"]))?.src.endsWith("/case002-d09-scene--mobile.webp"));
+assert.equal(resolveScene(staged("D09","inappropriate",["mercer","messenger"])),null);
 const npc={id:"mabel",name:"Мэйбл Кросс"};
 const pretend={schemaVersion:1,sceneImages:[],npcPortraits:[{
  id:"mabel",review:"approved",file:"case002-mabel-portrait.webp",width:800,height:1000
@@ -141,7 +160,8 @@ const approvedFingerprints=new Map();
 const evelynFingerprint=digest(fs.readFileSync(
  path.join(base,"assets/case-scenes/evelyn.webp")));
 for(const e of manifest.sceneImages){
- assert(visibleKeys.has(e.sceneId+":"+e.variantKey),
+ assert(visibleKeys.has(e.sceneId+":"+e.variantKey)||
+   (Array.isArray(e.applicableVariants)&&e.applicableVariants.some(v=>visibleKeys.has(e.sceneId+":"+v))),
    "Registered art has no verified reachable scene state: "+e.sceneId+
    ":"+e.variantKey);
  assert.equal(e.review,"approved","Only reviewed scene files may be registered");

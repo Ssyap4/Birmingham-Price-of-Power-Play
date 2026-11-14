@@ -83,7 +83,10 @@ for (const [id,hash] of heroCandidateHashes){
  assert.equal(bytes.subarray(8,12).toString("ascii"),"WEBP");
  assert.equal(bytes.readUInt32LE(4)+8,bytes.length,"RIFF file length mismatch");
 }
+assert.equal(new Set(heroCandidateHashes.map(x=>x[0])).size,4,"All four unique hero candidates required");
 const allIds=new Set([...storyboardIds,...heroStory.map(x=>x.id)]);
 const installed=manifest.sceneImages.filter(x=>allIds.has(x.sceneId)&&x.review==="approved");
 assert(installed.every(x=>allIds.has(x.sceneId)));
+assert.equal(installed.length,15,"All 15 Chapter IV scenes must be installed once");
+for(const id of allIds)assert(installed.some(x=>x.sceneId===id),"Missing Chapter IV approved shot "+id);
 console.log("PASS: Chapter IV 11 core + 4 hero shots isolated, staged candidates and canonical NPCs");

@@ -8,7 +8,7 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const path=require("node:path");
 const {createHash}=require("node:crypto");
-const {manifest}=require("../../src/case002/approved-art-v1.js");
+const {manifest,permittedVariantReuse}=require("../../src/case002/approved-art-v1.js");
 const ROOT=path.resolve(__dirname,"../..");
 const MAX_BYTES={desktop:1300000,mobile:900000,portrait:800000};
 function dimensions(bytes){
@@ -78,6 +78,18 @@ function audit({root=ROOT,source=manifest}={}){
    const key=scene.sceneId+"/"+scene.variantKey;
    assert(!keys.has(key),"Duplicate approved scene in manifest: "+key);
    keys.add(key);
+   if(scene.applicableVariants!==undefined){
+     assert(scene.variantKey==="default"&&Array.isArray(scene.applicableVariants)&&
+       scene.applicableVariants.length>0&&
+       new Set(scene.applicableVariants).size===scene.applicableVariants.length&&
+       scene.applicableVariants.every(v=>permittedVariantReuse(scene,v)),
+       "Unsafe approved-art variant reuse: "+key);
+     for(const v of scene.applicableVariants){
+       const aliasKey=scene.sceneId+"/"+v;
+       assert(!keys.has(aliasKey),"Duplicate approved scene variant: "+aliasKey);
+       keys.add(aliasKey);
+     }
+   }
    assert(scene.review==="approved","Unreviewed scene cannot enter production: "+key);
    assert(scene.file==="case002-"+scene.sceneId.toLowerCase()+"-scene"+
      (scene.variantKey==="default"?"":"--"+scene.variantKey)+".webp",

@@ -12,6 +12,116 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"D01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d01-scene.webp",cast:[],
+   mobileFile:"case002-d01-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"dd5a2469746898d6564f02a862944ebb81347c81b5937e0c867bc3ae9bc97206"
+  }),
+  Object.freeze({
+   sceneId:"D02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d02-scene.webp",cast:["ada"],
+   applicableVariants:Object.freeze(["ada-located","ada-protected"]),
+   mobileFile:"case002-d02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"1f6378d43e65772f29abd841ec3bf840a3b0478d9b106259e460abee7ffeaa32"
+  }),
+  Object.freeze({
+   sceneId:"D03",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d03-scene.webp",cast:["ada"],
+   applicableVariants:Object.freeze(["ada-located","ada-protected"]),
+   mobileFile:"case002-d03-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"5a59485966557a647b0642375430b73d19db1e31b11e5b7d82cbbc8445337c5b"
+  }),
+  Object.freeze({
+   sceneId:"D04",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d04-scene.webp",cast:["tommy"],
+   mobileFile:"case002-d04-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"8cfa3ab645487888da098e9af627ba29887d5134e36a893ea32f1433b76ca6ed"
+  }),
+  Object.freeze({
+   sceneId:"D05",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d05-scene.webp",cast:[],
+   mobileFile:"case002-d05-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"a0d32d35b64ab1124eef109aaa04c24a57903c1c0bac5e05348788195db236fb"
+  }),
+  Object.freeze({
+   sceneId:"D06",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d06-scene.webp",cast:["mabel"],
+   applicableVariants:Object.freeze(["tommy-detained","tommy-protected","tommy-evacuated","tommy-unknown"]),
+   mobileFile:"case002-d06-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"1449e53d7e9dcfb862c8b9bf46e298fa5132c31691c5fb074d0f55d16cfc0ec8"
+  }),
+  Object.freeze({
+   sceneId:"D07",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d07-scene.webp",cast:["mercer"],
+   mobileFile:"case002-d07-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"b58ecdba1310d800609bdb41512d9e1466cf7caf4cbb75926ba639a8067a645e"
+  }),
+  Object.freeze({
+   sceneId:"D08",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d08-scene.webp",cast:["mercer"],
+   mobileFile:"case002-d08-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"a1cd6f58fb7c29e6975ed8a2e0136f98c751476e0547ec37443c8c72ffaa1f9d"
+  }),
+  Object.freeze({
+   sceneId:"D09",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d09-scene.webp",cast:["mercer"],
+   applicableVariants:Object.freeze(["ada-unknown","ada-known","ada-captured"]),
+   mobileFile:"case002-d09-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"605381467e9c899c397415d15fe478a9d4aa6426c716312e883393fe8a424a72"
+  }),
+  Object.freeze({
+   sceneId:"D10",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d10-scene.webp",cast:[],
+   mobileFile:"case002-d10-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"8bbc19a1736a2bf0b1d549466f439c2dc1ead0d93ff8304f314cae7441c64c43"
+  }),
+  Object.freeze({
+   sceneId:"D11",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-d11-scene.webp",cast:["mabel"],
+   mobileFile:"case002-d11-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"571a0a32083063747945ee8f95780459486f34643e445a401c2e2ce70be9b415"
+  }),
+  Object.freeze({
+   sceneId:"HJ02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hj02-scene.webp",cast:["tommy"],
+   mobileFile:"case002-hj02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"ef5d10ff4a2571a4b3b655817260bd0590760cd6ab95c93dfc638509585a523a"
+  }),
+  Object.freeze({
+   sceneId:"HF03",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hf03-scene.webp",cast:[],
+   mobileFile:"case002-hf03-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"96ed4db0f1c5d4d7bbcdf8bcfb080c499bb9b5c37ac3440bd3c58cdd9fb57419"
+  }),
+  Object.freeze({
+   sceneId:"HE02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-he02-scene.webp",cast:["ada"],
+   applicableVariants:Object.freeze(["ada-located","ada-protected"]),
+   mobileFile:"case002-he02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"439dc7f0234a9984d9ceb49b33c8594f1cd7a80e11a80ddccda4998467038001"
+  }),
+  Object.freeze({
+   sceneId:"HV02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-hv02-scene.webp",cast:["mabel"],
+   mobileFile:"case002-hv02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"9e900f043f09706ef837914a2fe7ea01cadb596ce88ebfa29e06b40c599fbaa3"
+  }),
+  Object.freeze({
    sceneId:"C06",variantKey:"default",review:"approved",mobileOnly:true,
    file:"case002-c06-scene.webp",cast:[],
    mobileFile:"case002-c06-scene--mobile.webp",
@@ -311,6 +421,21 @@ const manifest=Object.freeze({
   Object.freeze({id:"ada",review:"approved",file:"case002-ada-portrait.webp",width:640,height:800,sha256:"c6d43de26733e10c7489920f850e21e9adab0e47640b0e60288088e15224f63c"})
  ])
 });
+// Audited Chapter IV portraits used across explicitly safe witness states.
+// One physical WebP per shot; no automatic fallback into absent-witness states.
+const neutralSceneVariants=Object.freeze({
+ D02:Object.freeze(["ada-located","ada-protected"]),
+ D03:Object.freeze(["ada-located","ada-protected"]),
+ HE02:Object.freeze(["ada-located","ada-protected"]),
+ D06:Object.freeze(["tommy-detained","tommy-protected","tommy-evacuated","tommy-unknown"]),
+ D09:Object.freeze(["ada-unknown","ada-known","ada-captured"])
+});
+function permittedVariantReuse(entry,variant){
+ const permitted=neutralSceneVariants[entry.sceneId];
+ return entry.variantKey==="default"&&Array.isArray(entry.applicableVariants)&&
+   Array.isArray(permitted)&&permitted.includes(variant)&&
+   entry.applicableVariants.includes(variant);
+}
 const safeId=id=>typeof id==="string"&&/^[A-Z]{1,2}\d{2}$/.test(id);
 const safeVariant=id=>typeof id==="string"&&/^[a-z][a-z0-9-]*$/.test(id);
 const safeNpc=id=>typeof id==="string"&&/^[a-z]+$/.test(id);
@@ -321,17 +446,20 @@ function resolveScene(stage,source=manifest){
  if(!source||source.schemaVersion!==1||!Array.isArray(source.sceneImages))
     throw Error("Invalid approved art manifest");
  const entries=source.sceneImages.filter(x=>x.sceneId===stage.sceneId&&
-   x.variantKey===stage.variantKey&&x.review==="approved");
+   x.review==="approved"&&
+   (x.variantKey===stage.variantKey||permittedVariantReuse(x,stage.variantKey)));
  if(entries.length>1)throw Error("Duplicate Case 002 approved scene art");
  if(!entries.length)return null;
  const e=entries[0];
  // Stage names are deterministic from the screenplay, not URLs in user data.
- const name="case002-"+stage.sceneId.toLowerCase()+"-scene"+
+ const stageName="case002-"+stage.sceneId.toLowerCase()+"-scene"+
    (stage.variantKey==="default"?"":"--"+stage.variantKey)+".webp";
+ const name="case002-"+e.sceneId.toLowerCase()+"-scene"+
+   (e.variantKey==="default"?"":"--"+e.variantKey)+".webp";
  // Existing art retains wide+mobile pairs; later waves can be portrait-only.
  const mobileOnly=e.mobileOnly===true;
  if(e.mobileOnly!==undefined&&!mobileOnly)throw Error("Invalid mobile-only art flag");
- if(stage.desiredAsset!==name||e.file!==name||
+ if(stage.desiredAsset!==stageName||e.file!==name||
    !Array.isArray(e.cast)||!e.cast.every(x=>stage.visibleCast.includes(x))||
    (!mobileOnly&&(!Number.isInteger(e.width)||e.width<800||
                  !Number.isInteger(e.height)||e.height<450))||
@@ -369,5 +497,5 @@ function resolveNpc(person,source=manifest){
  return {src:"../../assets/case002/portraits/"+e.file,
    alt:"Портрет: "+person.name};
 }
-return {manifest,resolveScene,resolveNpc};
+return {manifest,resolveScene,resolveNpc,permittedVariantReuse};
 });
