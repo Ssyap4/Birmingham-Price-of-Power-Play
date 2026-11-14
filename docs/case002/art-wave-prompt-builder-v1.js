@@ -15,7 +15,7 @@ const SHOT_KINDS=Object.freeze({
  transition:"Show the change of place or situation through a readable cinematic event and environmental context.",
  aftermath:"Show what remains after an event, allowing absence and physical surroundings to carry the drama."
 });
-const UNSAFE_RENDER=/\b(?:infographic|collage|poster|dashboard|GitHub|workflow|CI|approval|approved|manifest|generator|prompt|checklist|roadmap|case002|art wave)\b/i;
+const UNSAFE_RENDER=/\b(?:infographic|collage|poster|dashboard|GitHub|workflow|CI|approval|approved|generator|prompt|checklist|roadmap|case002|art wave)\b/i;
 function requiredString(v,name,max=500){
  if(typeof v!=="string"||!v.trim()||v.length>max)throw Error("Invalid "+name);
  return v.trim();
