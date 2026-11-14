@@ -429,7 +429,13 @@ def main():
                     assert second_tab.evaluate("""() => localStorage.getItem(
                       window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
                     )""") == live_save, f"{browser_name}: stale tab overwrote new progress"
-                    second_tab.locator("#backToLaunch").click()
+                    assert second_tab.locator("#noticeExit").is_visible(), (
+                        f"{browser_name}: stale-save conflict needs a visible exit above fixed panels"
+                    )
+                    assert second_tab.locator("#noticeExit").bounding_box()["height"] >= 44
+                    second_tab.locator("#noticeExit").click()
+                    assert second_tab.locator("#notice").is_hidden()
+                    assert second_tab.locator("#launch").is_visible()
                     second_tab.locator("#resume").click()
                     assert second_tab.locator("#sceneId").inner_text().startswith("A01"), (
                         f"{browser_name}: stale tab cannot reopen latest saved scene"
