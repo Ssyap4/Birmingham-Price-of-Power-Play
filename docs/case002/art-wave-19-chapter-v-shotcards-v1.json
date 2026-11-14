@@ -23,6 +23,28 @@
         "unapproved playable protagonist portrait",
         "new evidence asserted as proven or witnesses already protected"
       ]
+    },
+    {
+      "id": "E02",
+      "sceneKind": "dialogue",
+      "focus": "a resolute woman newspaper editor seen from behind presses her ink-marked palm firmly on a newspaper proof and pushes the sheet away from a visitor holding papers",
+      "camera": "intimate medium low three-quarter view over the woman's shoulder at the same editorial worktable; the visitor is a cropped dark coat and hand at frame edge",
+      "location": "a cramped 1920s Birmingham newspaper editorial room with an antique printing press",
+      "required": [
+        "female editor's ink-smudged hand planted on a partially curled proof sheet, pushing it away",
+        "heavy old iron letterpress with a large turning wheel and a wooden tray of metal type",
+        "visitor's dark coat sleeve and a small stack of ordinary papers in the near foreground"
+      ],
+      "background": "worn wooden editorial desk, cast iron ink roller, stacks of loose unprinted papers, teacup, rain-streaked window overlooking brick industrial buildings",
+      "light": "amber oil lamp over the desk with cool rainy light through a high window",
+      "npc": "one woman with her dark hair pinned back, seen from behind with face concealed, and one visitor whose face remains out of frame",
+      "knowledgeBoundary": "This editorial refusal establishes a conversation, not a published report, an independently verified evidence chain or protected witnesses",
+      "avoid": [
+        "a readable headline declaring a casualty count",
+        "published allegations or identifiable witness names",
+        "a new face for the established editor or the playable detective",
+        "a completed public investigation or triumphant publication"
+      ]
     }
   ]
 }

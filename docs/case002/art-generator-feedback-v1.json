@@ -274,6 +274,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Three separately sealed envelopes, tea, railway sketch and rainy detective office; no protagonist portrait, legible identifiers, chosen tactic, guarantee or premature publication."
+    },
+    {
+      "scene": "E02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Nora from behind, inked hand pushes away newspaper proof, press wheel, typesetting tray and visiting detective cropped; never depicts verified publication, protected witnesses or canonical face replacement."
     }
   ]
 }

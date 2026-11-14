@@ -22,7 +22,7 @@ for(const c of cards){
  assert.equal(r.automationDoesNotApprove,true);
  assert.equal(r.requiresHumanArtReview,true);
 }
-const staged=[["E01","d51e1cc93da287449afdc05ef3d24831cf43bd01f223136a13f294854ac39820"]];
+const staged=[["E01","d51e1cc93da287449afdc05ef3d24831cf43bd01f223136a13f294854ac39820"],["E02","bf70a47b8de22da12e67d1a7a9a8cff3011f3a83db0d80df2e6a16e4aeeeca96"]];
 for(const [id,sha] of staged){
  assert(cards.some(c=>c.id===id),"Candidate missing shotcard: "+id);
  const f=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");
@@ -36,4 +36,4 @@ for(const [id,sha] of staged){
  if(installed.length)assert.equal(installed[0].mobileSha256,sha,
    "Installed asset must remain byte-identical to reviewed candidate: "+id);
 }
-console.log("PASS: chapter V card isolation and first E01 staged candidate");
+console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));
