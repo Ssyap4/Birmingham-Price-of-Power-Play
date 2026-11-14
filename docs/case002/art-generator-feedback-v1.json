@@ -148,5 +148,17 @@
     "visualStrategy": "Foreground muddy tyre ruts plus boot-print chains spreading left, centre and right",
     "referenceBrief": "docs/case002/isolated-render-c09-v1.txt",
     "caveat": "Observed successful result; cannot guarantee future image generation accuracy or erase conversation context."
-  }
+  },
+  "observedSingleShotTrials": [
+    {
+      "scene": "D06",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Rear view of Mabel awaiting alone, folded note and wet factory alley; no reunion invented."
+    }
+  ]
 }
