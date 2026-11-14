@@ -136,6 +136,29 @@
         "readable accusations, names, or invented dates and numbers",
         "a replacement photograph of the established proprietor presented as canonical"
       ]
+    },
+    {
+      "id": "E07",
+      "sceneKind": "evidence",
+      "focus": "a yellowed factory protection-terms paper with an empty signature area rests between the hands of a powerful older proprietor and a cautious anonymous visitor; an uncapped fountain pen lies untouched beside the paper",
+      "camera": "tight low three-quarter tabletop view, with the unsigned paper centered and no human face visible; the older man's hand with an understated gold signet ring enters from the left and a visitor's cuff from the lower right",
+      "location": "a wealthy factory owner's dark wood-panelled private office in 1920s Birmingham",
+      "required": [
+        "a single aged terms-of-protection document with an unmistakably empty signature area and no readable party names",
+        "an older man's bare hand and dark wool cuff with a modest signet ring resting alongside the page",
+        "a fountain pen set down off the document, and a visitor's cropped hand across the desk"
+      ],
+      "background": "aged polished desk, dark leather document folio, old brass desk lamp, burgundy drapes, rain-streaked window overlooking industrial factory chimneys",
+      "light": "warm amber desk lamp illuminating the blank part of the paper against cold blue-grey rainlight through a window",
+      "npc": "only cropped sleeves and hands of two people, no distinct hero face, no replacement for the already established factory owner portrait",
+      "knowledgeBoundary": "This is the pre-signature or unverified bargaining state. It does not constitute a guaranteed safe location, a verifiable pledge, a signed deal, or automatic valeGuarantee, and must not be reused as a signed-scene variant.",
+      "avoid": [
+        "a completed signature or verified legal guarantee on the sheet",
+        "readable personal names or fabricated legal clauses",
+        "a restored witness, any visible protected witness, or a triumphant transaction",
+        "a new front-facing canonical protagonist or factory-owner portrait"
+      ],
+      "intendedVariant": "unsigned"
     }
   ]
 }
