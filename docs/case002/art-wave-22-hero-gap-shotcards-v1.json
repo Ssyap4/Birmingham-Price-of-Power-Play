@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Original Case002 hero-specific narrative and 89-node storyboard; six distinct accepted hero-gap illustration candidates HJ01, HF01, HE01, HV01, HS01, HF02; HS02 remains unrendered.",
+  "source": "One-image-per-user-art-turn production of all seven missing hero-specific scenes; HS02 render was shown the previous turn, this handoff turn completes review and archives its approved WebP. All seven image candidates staged, no installation in the game manifest.",
   "scenes": [
     {
       "id": "HJ01",
@@ -139,6 +139,29 @@
         "identifiable playable hero face or a different character in police uniform",
         "readable invented shift dates or names, signed confession, proven guilty official or finished case",
         "modern station control computer, contemporary photography or automatic electronic signalling"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HS02",
+      "sceneKind": "evidence",
+      "focus": "a railway mechanic in old gloves at a wooden signal-box desk traces an unmarked connecting section between rail lines on a weathered paper junction diagram with a graphite pencil while an elderly mustached signalman in period cap holds a fountain pen poised above the same page, considering the request",
+      "camera": "vertical over-the-shoulder view from behind the mechanic at left and close medium three-quarter view of the older signalman at right, the paper route diagram dominates the foreground between their gloved and bare hands",
+      "location": "a cramped 1920s Birmingham railway signal box beside a rain-wet junction overlooking industrial warehouses",
+      "required": [
+        "a single large aged paper rail junction diagram with branching tracks and one fresh pencil connecting stroke being added by a gloved working hand",
+        "an elderly signalman with a brown waistcoat, old railway service cap and lined mustached face, fountain pen hovering over a blank part of the paper",
+        "a row of heavy iron mechanical signal levers and one warm kerosene lantern near the desk with a rainy junction visible through the panes"
+      ],
+      "background": "scarred wooden tabletop, ink bottle, metal signal levers, rain-beaded window, converging rail lines outside and distant soot-dark factory chimneys",
+      "light": "amber oil-lamp light across pencil marks, hands and old paper with cold blue-grey wet industrial night through the signal-box window",
+      "npc": "the mechanic shown only from behind with dark gloves and wool sleeves; the signalman is an older non-playable railway worker with visible weathered face and cap, not a detective or a policeman",
+      "knowledgeBoundary": "Samuel's mechanical reasoning has revealed a possible bypass connection on the map, but the railway signalman has not signed or authenticated it; the actual switch operator's identity and any connection to Brackett remain unproven. Drawing the missing line does not by itself establish criminal culpability, actual train movement or a verified source. No playable hero face may be invented.",
+      "avoid": [
+        "a signed verified witness statement, signed map, proven culprit or completed case resolution",
+        "an identifiable face of the selectable mechanic, police uniform or a character borrowed from another case",
+        "an already diverted train, collision, fire or a mechanical alteration underway outside",
+        "readable invented personal names or fabricated dates, digital controllers or modern railway electronics"
       ],
       "intendedVariant": "default"
     }

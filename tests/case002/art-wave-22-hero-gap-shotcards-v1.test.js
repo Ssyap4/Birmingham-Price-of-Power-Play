@@ -14,9 +14,9 @@ const metadata=require("../../docs/case002/art-wave-22-hero-gap-candidates-v1.js
 const cards=builder.validateBatch(spec);
 assert.equal(spec.chapter,"HERO-GAPS");
 assert.equal(metadata.chapter,"HERO-GAPS");
-assert.equal(metadata.status,"hero-gap-art-production-in-progress");
-assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01","HV01","HS01","HF02"]);
-assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01","HV01","HS01","HF02"]);
+assert.equal(metadata.status,"hero-gap-art-candidates-complete-awaiting-batch-integration");
+assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01","HV01","HS01","HF02","HS02"]);
+assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01","HV01","HS01","HF02","HS02"]);
 const expected={
  HJ01:{chapter:"II",cast:["jack","guard"],kind:"dialogue",
   filename:"case002-hj01-scene--mobile.webp",
@@ -41,7 +41,11 @@ const expected={
  HF02:{chapter:"III",cast:["finn"],kind:"evidence",
   filename:"case002-hf02-scene--mobile.webp",
   sha:"e77f6769bf37cda0e9f2259fd4537277aae2bb45589528d90b84c220d3282852",
-  bytes:121910,required:/wooden shift marker/,avoid:/marker detached/}
+  bytes:121910,required:/wooden shift marker/,avoid:/marker detached/},
+ HS02:{chapter:"III",cast:["samuel","signalman"],kind:"evidence",
+  filename:"case002-hs02-scene--mobile.webp",
+  sha:"e622a45a43c652d289a9ac92d8bbcb28c499b75cfc2c97e1cf220a6c19b0220c",
+  bytes:139404,required:/paper rail junction diagram/,avoid:/signed map/}
 };
 const hashes=new Set();
 for(const [index,card] of cards.entries()){
@@ -95,5 +99,5 @@ for(const id of pending){
   desiredAsset:"case002-"+id.toLowerCase()+"-scene.webp"
  }),null);
 }
-assert.equal(hashes.size,6);
-console.log("PASS Case002 hero-gap art: HJ01, HF01, HE01, HV01, HS01, HF02 independently accepted; 6 separate 720x900 WebP hashes, 1 scene remaining, no early manifest installation.");
+assert.equal(hashes.size,7);
+console.log("PASS Case002 hero-gap art: all seven missing hero-scene artworks reviewed and staged; 7 independent 720x900 WebP hashes, awaiting batch integration, no early manifest installation.");

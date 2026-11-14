@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "chapter": "HERO-GAPS",
-  "status": "hero-gap-art-production-in-progress",
+  "status": "hero-gap-art-candidates-complete-awaiting-batch-integration",
   "candidates": [
     {
       "sceneId": "HJ01",
@@ -110,6 +110,24 @@
       "generatorImageId": "e0370ec5-e4e8-44d6-9742-1b9d2beb45d6",
       "visualReview": "ACCEPTED: Finn is framed from behind at the signal box threshold, graphite pencil in one gloved hand and paper pressed to an old wooden shift plaque with the other. The plaque remains attached to the door; point levers, warm oil lantern and wet tracks establish place. No visible face, stolen marker, forged legible time, revealed culprit or proof of guilt.",
       "knowledgeBoundary": "The graphite rubbing is an alternate way to preserve the shift-marker information without stealing it, not a substitute for independently verified railway movement records or the signalman's signed testimony."
+    },
+    {
+      "sceneId": "HS02",
+      "variantKey": "default",
+      "candidateFile": "case002-hs02-scene--mobile.webp",
+      "sha256": "e622a45a43c652d289a9ac92d8bbcb28c499b75cfc2c97e1cf220a6c19b0220c",
+      "gitBlobSha1": "8ea70e0afdfc5c77b5a836c7959cfa1693046c2b",
+      "bytes": 139404,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "c63d19a3-31be-468c-86b6-d5d78abca068",
+      "visualReview": "ACCEPTED: a gloved rear-view Samuel sketches the connecting section on a period railway plan at a signal-box desk; an elderly mustached railway signalman considers the plan, his pen not yet leaving a signature. Antique levers, lantern, wet rails and factory smoke establish the setting. No recognizable Samuel face, signed testimony, confirmed culprit or railway collision.",
+      "knowledgeBoundary": "The pen in the signalman's hand is poised beside the penciled diagram, not a completed signature. Samuel has only a mechanical hypothesis: proof of actual movements and the responsible person still requires source verification."
     }
   ]
 }
