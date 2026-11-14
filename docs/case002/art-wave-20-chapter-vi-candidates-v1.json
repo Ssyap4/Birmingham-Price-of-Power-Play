@@ -132,11 +132,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "art-review-hold-not-installed",
       "renderCountInArtworkTurn": 1,
-      "acceptedRendering": 1,
-      "visualReview": "accepted: investigator closes a single ordinary leather folder, Mabel stands with back turned at wet office doorway, no other person, recognized faces, open accounts or supposed handover",
-      "knowledgeBoundary": "This neutral closed-folder moment does not establish factory ledger custody or Tommy's fate, and requires an explicit later integration review before reuse for account-state variants."
+      "acceptedRendering": 0,
+      "visualReview": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob",
+      "knowledgeBoundary": "The candidate has never been installed; it is retained for traceability but must not be integrated. Redraw or a separately justified replacement is required for the F08 scene. Mabel remains canonically angular, stern and resolute; account ownership remains controlled by story flags.",
+      "initialReview": "accepted before exact canonical portrait comparison; superseded by the 2026-11-14 follow-up review",
+      "canonicalReference": "assets/case002/portraits/case002-mabel-portrait.webp",
+      "needsReplacement": true
     }
   ]
 }

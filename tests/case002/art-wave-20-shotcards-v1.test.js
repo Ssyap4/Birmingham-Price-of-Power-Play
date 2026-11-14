@@ -22,9 +22,16 @@ assert.equal(metadata.candidates.length,batch.length);
 for(const [idx,card] of batch.entries()){
  const m=metadata.candidates[idx];
  assert.equal(m.sceneId,card.id);
- assert.equal(m.status,"staged-candidate-not-installed");
+ if(card.id==="F08"){
+   assert.equal(m.status,"art-review-hold-not-installed");
+   assert.equal(m.acceptedRendering,0);
+   assert.equal(m.needsReplacement,true);
+   assert.equal(m.canonicalReference,"assets/case002/portraits/case002-mabel-portrait.webp");
+ }else{
+   assert.equal(m.status,"staged-candidate-not-installed");
+   assert.equal(m.acceptedRendering,1);
+ }
  assert.equal(m.renderCountInArtworkTurn,1);
- assert.equal(m.acceptedRendering,1);
  assert.equal(m.variantKey,"default");
  assert.equal(m.candidateFile,"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
  assert.equal(card.sceneKind,card.id==="F06"?"environment":["F07","F08"].includes(card.id)?"dialogue":"evidence");
