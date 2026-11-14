@@ -347,6 +347,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Close-up unverified protection terms, no legible signature or enforceable guarantee, proprietor's signet-ring hand and cropped visitor; intended for E07 variant 'unsigned' only. Signed state requires separate reviewed art."
+    },
+    {
+      "scene": "E08",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Brackett from rear/side guards a thick closed accounts ledger beneath his hand; visitor cropped, boot partly visible but heel-chip evidence not proven, no readable entries, custody transfer, confession or automatic evidence flag."
     }
   ]
 }

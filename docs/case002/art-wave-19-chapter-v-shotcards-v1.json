@@ -159,6 +159,30 @@
         "a new front-facing canonical protagonist or factory-owner portrait"
       ],
       "intendedVariant": "unsigned"
+    },
+    {
+      "id": "E08",
+      "sceneKind": "dialogue",
+      "focus": "a dangerous factory security chief seen from a rear three-quarter angle presses his bare hand decisively over a thick closed leather-bound accounts ledger on his own desk, withholding it from a dark-clothed visitor seated opposite",
+      "camera": "cinematic low three-quarter view from just behind the security chief, keeping his palm and substantial worn ledger sharp and the visitor only a cropped shadowed shoulder at the frame edge",
+      "location": "a cramped private security supervisor's office in industrial Birmingham in the 1920s",
+      "required": [
+        "a thick, visibly closed, dark worn leather accounts ledger beneath the security supervisor's flat restraining palm",
+        "one broad-shouldered man with neatly combed dark hair and a dark tailored wool suit seen mostly from behind",
+        "the heavy leather chair, shadowy desk and visitor's cropped shoulder establishing a guarded face-to-face bargaining moment"
+      ],
+      "background": "dark timber, battered filing cabinets, amber brass lamp, glass of whiskey, rain-beaded high window overlooking brick factories and smoke stacks",
+      "light": "warm amber desk light on leather and fingers against cold rainy blue window light",
+      "npc": "one intimidating middle-aged male security chief largely from the back, with no invented full-face portrait, and one blurred anonymous visitor barely visible",
+      "knowledgeBoundary": "The supervisor keeps his account book in his own possession; this is bargaining, not evidence custody transfer, confession, bribery agreement or proof that the photographed heel connects him to the bridge.",
+      "avoid": [
+        "an open ledger showing readable secret names, amounts or incriminating entries",
+        "a document or photograph already transferred to the investigator",
+        "a voluntary confession, arrest or acknowledgement of murder",
+        "a clearly visible new replacement face for the canonical security chief or protagonist",
+        "injury, gunfire or a completed verdict"
+      ],
+      "intendedVariant": "brackett-book-on-desk"
     }
   ]
 }
