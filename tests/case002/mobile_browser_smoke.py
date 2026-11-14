@@ -44,6 +44,24 @@ def main():
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#begin").is_visible()
+
+                    if not quick:
+                        outcomes = page.evaluate("""async () => {
+                            const entries = window.BirminghamCase002ApprovedArt.manifest.sceneImages
+                                .filter(e => /^Z0[1-7]$/.test(e.sceneId));
+                            return Promise.all(entries.map(e => new Promise(resolve => {
+                                const img = new Image();
+                                img.onload = () => resolve({id:e.sceneId,ok:true,
+                                    width:img.naturalWidth,height:img.naturalHeight});
+                                img.onerror = () => resolve({id:e.sceneId,ok:false});
+                                img.src = new URL("../../assets/case002/scenes/" +
+                                    e.mobileFile, window.location.href).href;
+                            })));
+                        }""")
+                        assert len(outcomes) == 14 and all(
+                            x["ok"] and x["width"] == 720 and x["height"] == 900
+                            for x in outcomes
+                        ), f"{browser_name}: ending mobile assets unavailable: {outcomes}"
                     assert page.locator("#begin").bounding_box()["height"] >= 44
                     page.locator("#begin").click()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
@@ -441,6 +459,29 @@ def main():
                         assert focused.count() == 1 and "is-focused" in (
                             focused.get_attribute("class") or ""
                         ), "Deduction link must jump to acquired supporting evidence"
+
+                        source, target, action = route[-1]
+                        assert source == "F09" and target == "Z02"
+                        last_choice = full_page.locator(
+                            f'button.choice[data-to="{target}"][data-action="{action}"]'
+                        )
+                        assert last_choice.count() == 1 and last_choice.is_enabled()
+                        last_choice.click()
+                        assert full_page.locator("#sceneId").inner_text().startswith("Z02")
+                        full_page.wait_for_function(
+                            "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                            timeout=8000,
+                        )
+                        variant = full_page.locator("#game").get_attribute("data-art-variant")
+                        assert variant.startswith("evacuated-")
+                        assert full_page.locator("#sceneArtwork").is_visible()
+                        assert full_page.locator("#sceneArtworkImage").evaluate(
+                            "(img) => img.naturalWidth === 720 && img.naturalHeight === 900"
+                        )
+                        assert full_page.locator("#sceneArtworkImage").evaluate(
+                            "(img, v) => img.currentSrc.endsWith('case002-z02-scene--' + v + '--mobile.webp')",
+                            variant,
+                        ), f"Wrong ending art for Z02: {variant}"
                         assert not errors, f"Full-route browser errors: {errors}"
                         print(
                             "PASS chromium: full Case 002 mobile route, earned-only endings, "

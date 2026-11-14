@@ -13,11 +13,17 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "Accepted: morning industrial newsroom; dark-haired Nora seen from behind inspecting a single two-column printed broadsheet beside the letterpress; no readable witness details, visible selectable hero or premature punishment of Vale.",
-      "knowledgeBoundary": "Publication is the specific Z01 outcome, not proof of legal conviction; witness protection status and Mercer's testimony are supplied by game data and HTML, not this photograph."
+      "knowledgeBoundary": "Publication is the specific Z01 outcome, not proof of legal conviction; witness protection status and Mercer's testimony are supplied by game data and HTML, not this photograph.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-z01-scene--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z02",
@@ -30,12 +36,18 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "Accepted as the zero-evacuee variant: an empty wet dawn platform, open old carriage door, and only a cropped black glove holding a closed leather folio; no identifiable or gendered hero and no witness visible.",
       "knowledgeBoundary": "This image cannot imply that anyone other than the hero traveled; protected/evacuated statuses are exclusively scenario data. Other evacuation variants have no accepted artwork yet.",
-      "previousRejectedGeneratorImageId": "d9636f25-0663-4380-bca6-c6aca17fe21e"
+      "previousRejectedGeneratorImageId": "d9636f25-0663-4380-bca6-c6aca17fe21e",
+      "installedVariants": [
+        "evacuated-none"
+      ],
+      "installedMobileFiles": [
+        "case002-z02-scene--evacuated-none--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z03",
@@ -48,11 +60,17 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "ACCEPTED: Brackett sits in dark coat at police record table with carefully combed hair, viewed from behind; Rowan in period uniform stands watch to the right. No playable hero face, judgment, accused factory manager or published casualties.",
-      "knowledgeBoundary": "The scene conveys partial accountability for Hale's proven death and does not claim prosecution of Vale or factory leadership, publication of a casualty list, or any witness's actual safety."
+      "knowledgeBoundary": "The scene conveys partial accountability for Hale's proven death and does not claim prosecution of Vale or factory leadership, publication of a casualty list, or any witness's actual safety.",
+      "installedVariants": [
+        "default"
+      ],
+      "installedMobileFiles": [
+        "case002-z03-scene--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z04",
@@ -65,11 +83,17 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "ACCEPTED: one wax-sealed signed guarantee and fountain pen beneath Vale's anonymous elderly signet-ring hand; factory smoke through rainy office window; neither selectable hero nor protected witnesses shown, writing not legible.",
-      "knowledgeBoundary": "The artwork shows that Vale signed a guarantee in this ending, not who is listed as protected or whether all witnesses survived. Individual statuses remain governed by case002 witness state."
+      "knowledgeBoundary": "The artwork shows that Vale signed a guarantee in this ending, not who is listed as protected or whether all witnesses survived. Individual statuses remain governed by case002 witness state.",
+      "installedVariants": [
+        "guarantee-signed"
+      ],
+      "installedMobileFiles": [
+        "case002-z04-scene--guarantee-signed--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z05",
@@ -82,11 +106,17 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "Accepted: empty railway rails and immobile hand switch; padlocked crossing gate and a handful of weary workers outside the track corridor, one holding an unreadable folded envelope; no injured people, accident or gender-defined player hero.",
-      "knowledgeBoundary": "Workers were cleared before the siding was stopped. The image reflects delayed wages and a closed workplace without claiming an exact pay amount, new casualty, sabotage mechanism or continued employment."
+      "knowledgeBoundary": "Workers were cleared before the siding was stopped. The image reflects delayed wages and a closed workplace without claiming an exact pay amount, new casualty, sabotage mechanism or continued employment.",
+      "installedVariants": [
+        "empty-safe-siding"
+      ],
+      "installedMobileFiles": [
+        "case002-z05-scene--empty-safe-siding--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z06",
@@ -99,12 +129,18 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "cd636e61-36d3-4222-93d8-8e91ecd45936",
       "visualReview": "Accepted: genuine loose account copies are physically held by an anonymous single black-gloved hand on the desk, dark open door and rainy industrial night beyond. No playable face or body, no courtroom, publication, celebration or declared witness fate.",
-      "knowledgeBoundary": "The player possesses true copies of Brackett's accounts when brackettAccountsHeld is true; private leverage is obtained but justice is deliberately delayed. Illegible account columns are cinematic texture, not new canonical debts, names or sums."
+      "knowledgeBoundary": "The player possesses true copies of Brackett's accounts when brackettAccountsHeld is true; private leverage is obtained but justice is deliberately delayed. Illegible account columns are cinematic texture, not new canonical debts, names or sums.",
+      "installedVariants": [
+        "accounts-hero"
+      ],
+      "installedMobileFiles": [
+        "case002-z06-scene--accounts-hero--mobile.webp"
+      ]
     },
     {
       "sceneId": "Z07",
@@ -117,12 +153,18 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "generatorImageId": "0b385c51-1a5f-4a6e-9025-8953929c82f5",
       "visualReview": "ACCEPTED: unlit storm lantern beside one closed weathered leather note case on the wet canal-lock edge at grey dawn; empty lock gate and factories recede in the rain. No body, violence, gendered hero or identifiable witnesses.",
-      "knowledgeBoundary": "A terminal health <= 0 action causes Z07; the narrative confirms death, whereas this still frame shows only objects left by the deserted lock. It does not reveal the future unknown retriever of the case or independently settle any witness's survival."
+      "knowledgeBoundary": "A terminal health <= 0 action causes Z07; the narrative confirms death, whereas this still frame shows only objects left by the deserted lock. It does not reveal the future unknown retriever of the case or independently settle any witness's survival.",
+      "installedVariants": [
+        "after-danger"
+      ],
+      "installedMobileFiles": [
+        "case002-z07-scene--after-danger--mobile.webp"
+      ]
     }
   ],
   "rejectedGenerations": [
@@ -154,7 +196,7 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-feature-branch-source-retained",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "Accepted: inside vintage train compartment a conductor examines one anonymous gloved passenger's train pass; no passenger face or full figure, no witness identity, no specific passenger count or guaranteed protection. Distinct from the empty-platform zero-evacuee shot.",
@@ -168,7 +210,25 @@
         "evacuated-tommy-mercer",
         "evacuated-ada-tommy-mercer"
       ],
-      "reuseIsApprovedInGame": false
+      "reuseIsApprovedInGame": true,
+      "installedVariants": [
+        "evacuated-ada",
+        "evacuated-ada-mercer",
+        "evacuated-ada-tommy",
+        "evacuated-ada-tommy-mercer",
+        "evacuated-mercer",
+        "evacuated-tommy",
+        "evacuated-tommy-mercer"
+      ],
+      "installedMobileFiles": [
+        "case002-z02-scene--evacuated-ada--mobile.webp",
+        "case002-z02-scene--evacuated-ada-mercer--mobile.webp",
+        "case002-z02-scene--evacuated-ada-tommy--mobile.webp",
+        "case002-z02-scene--evacuated-ada-tommy-mercer--mobile.webp",
+        "case002-z02-scene--evacuated-mercer--mobile.webp",
+        "case002-z02-scene--evacuated-tommy--mobile.webp",
+        "case002-z02-scene--evacuated-tommy-mercer--mobile.webp"
+      ]
     }
   ]
 }

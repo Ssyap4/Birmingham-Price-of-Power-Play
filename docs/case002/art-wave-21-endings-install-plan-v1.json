@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "chapter": "END",
-  "status": "audited-installation-plan-not-installed",
+  "status": "installed-feature-branch-awaiting-final-ci",
   "sourceHead": "55d2c89758ab415360654d8451dbe7b6c8a2400e",
-  "summary": "7 main endings, 8 Z02 witness-state variants, 14 physical destination paths, 8 original accepted image candidates. No main-branch or gameplay manifest mutation.",
+  "summary": "Seven distinct ending scenes; eight separately accepted artwork sources; 14 exact mobile-only runtime mappings, including eight Z02 evacuations. Main and gameplay untouched.",
   "rules": {
     "heroNeutral": "Five selectable heroes; no approved end-card may add a visible sex-specific or identifiable player portrait.",
     "witnessNeutral": "Only the zero-evacuee Z02 art depicts an empty platform. The seven nonzero Z02 states reuse a separate conductor/pass inspection frame without depicting any identifiable witness.",
     "narrativeOverlay": "Witness counts, identities, protections and results remain in story-variants-v4.js; no illustrations may imply universal rescue or convictions.",
     "reuseMechanics": "Current art gate requires exact variant suffix and real matching file for each registered Z02 entry; install seven separate byte-identical copies of the neutral candidate with verified per-target SHA256, not an unapproved wildcard or resolver rewrite.",
-    "installation": "Draft only. First materialize assets/case002/scenes/ for all 14 explicit target paths, then register exact mobile-only entries in approved-art-v1.js in one reviewed feature-branch commit and run full art and mobile CI.",
+    "installation": "Installed in feature-branch with 14 exact canonical paths and explicit manifest entries. Require full visual CI and Chromium/WebKit mobile smoke.",
     "mainSafety": "No merge to main; no changes to Case001, engine, story flags, rewards, save records or profiles."
   },
   "entries": [
@@ -209,5 +209,6 @@
       "requiresRuntimeText": true,
       "sourceVariantKey": "after-danger"
     }
-  ]
+  ],
+  "installedFromHead": "2ebc73b70f735c0ea8d4d29fd012b7ca6af2aa87"
 }

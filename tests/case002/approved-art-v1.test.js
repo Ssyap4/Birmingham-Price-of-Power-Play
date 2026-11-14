@@ -128,6 +128,29 @@ for(const [id,variant,flags,facts,witnesses] of chapterVIStateFixtures){
  check(candidate);
 }
 
+
+const endingPlan=require("../../docs/case002/art-wave-21-endings-install-plan-v1.json");
+assert.equal(endingPlan.entries.length,14);
+const endingProbe=createEngine({graph,contract,hero:"eleanor",attemptId:"endings-art-state-audit"});
+const endingBase=endingProbe.view();
+for(const entry of endingPlan.entries){
+ const scene=graph.nodes.find(x=>x.id===entry.sceneId);
+ assert(scene,"Missing ending node "+entry.sceneId);
+ const witnesses={...endingBase.state.witnesses};
+ for(const id of ["ada","tommy","mercer"])
+  witnesses[id]=entry.visibleEvacuatedWitnesses.includes(id)?"evacuated":"missing";
+ const v={...endingBase,scene,state:{...endingBase.state,witnesses,
+  flags:{...endingBase.state.flags,valeGuarantee:true,workersCleared:true,brackettAccountsHeld:true},
+  health:entry.sceneId==="Z07"?0:endingBase.state.health}};
+ assert.equal(director.variant(v),entry.variantKey);
+ check(v);
+ const approved=manifest.sceneImages.filter(x=>x.sceneId===entry.sceneId&&x.variantKey===entry.variantKey);
+ assert.equal(approved.length,1);
+ assert.equal(approved[0].mobileSha256,entry.sha256);
+ assert.deepEqual(approved[0].cast,entry.cast);
+}
+assert.equal(manifest.sceneImages.filter(x=>/^Z0[1-7]$/.test(x.sceneId)).length,14);
+
 const sampleStage=director.select(storyboard,createEngine({
  graph,contract,hero:"jack",attemptId:"art-gate-fixture"}).view());
 const file=sampleStage.desiredAsset;
