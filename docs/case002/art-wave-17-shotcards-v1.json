@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "source": "docs/case002/case002-screenplay-acts-1-3-v2.md",
+  "scenes": [
+    {
+      "id": "C06",
+      "focus": "a damp service time report beside an open pocket watch reading eleven forty-seven at night",
+      "camera": "low three-quarter close-up from stone parapet",
+      "location": "empty brick railway viaduct during heavy rain",
+      "required": [
+        "open analog watch with hands correctly set to 11:47",
+        "unreadable shift report stained by rain",
+        "deserted dark archway"
+      ],
+      "background": "industrial skyline and mist beyond railway bridge",
+      "light": "one amber wall lantern against blue rain",
+      "npc": "no people",
+      "knowledgeBoundary": "Hale died later than the uncoupling; identity of the killer remains unknown",
+      "avoid": [
+        "watch with inaccurate hands",
+        "body",
+        "blood",
+        "killer",
+        "invented names"
+      ]
+    },
+    {
+      "id": "C07",
+      "focus": "an elderly railway signalman speaking beneath a hanging oil lantern",
+      "camera": "intimate vertical side view showing weathered hands, face hidden in shadow",
+      "location": "old manual railway signal box",
+      "required": [
+        "lined hands resting on old shift book",
+        "oil lantern directly over the table",
+        "rain-blurred rails seen through window"
+      ],
+      "background": "manual levers and damp wooden frames",
+      "light": "warm amber lamp, blue-gray rain",
+      "npc": "only the established signalman with face obscured",
+      "knowledgeBoundary": "his witness account is not proof of murder",
+      "avoid": [
+        "invented recognizable portrait",
+        "person playing the hero",
+        "guard physically in the signal box",
+        "solved murderer"
+      ]
+    },
+    {
+      "id": "C08",
+      "focus": "a messenger's gloved hand offering a folded security telegram",
+      "camera": "tight close-up at tabletop level, no face",
+      "location": "1920s freight railway office",
+      "required": [
+        "one folded official telegram",
+        "finger covering small registration field",
+        "ink bottle and period stationery"
+      ],
+      "background": "wooden drawer and rain-streaked glass",
+      "light": "one narrow amber desk light",
+      "npc": "only messenger hand, no player character",
+      "knowledgeBoundary": "the message needs registration and signature comparison",
+      "avoid": [
+        "invented readable IDs",
+        "premature guilt",
+        "villain portrait",
+        "dramatic arrest"
+      ]
+    },
+    {
+      "id": "C09",
+      "focus": "deep heavy lorry tyre tracks through wet mud alongside a private goods railway siding",
+      "camera": "ground-level view with tyre ruts in foreground",
+      "location": "industrial railway branch beside a warehouse",
+      "required": [
+        "two parallel heavy tyre ruts",
+        "three sets of human footprints splitting away",
+        "unused dark rail tracks"
+      ],
+      "background": "old brick storage building and low fence in mist",
+      "light": "a single distant amber yard lantern",
+      "npc": "no people",
+      "knowledgeBoundary": "three people left the wagon, but their identity and destination are unknown",
+      "avoid": [
+        "identified witnesses",
+        "lorry driver",
+        "body",
+        "accusing text"
+      ]
+    },
+    {
+      "id": "C10",
+      "focus": "tabletop investigation arrangement depicting a freight train and one separated wagon",
+      "camera": "direct vertical top-down close-up of papers and evidence",
+      "location": "detective's old industrial workroom",
+      "required": [
+        "simple train-and-wagon sketch",
+        "two separate stacks of cargo documents",
+        "unfilled blank spaces suggesting missing independent proof"
+      ],
+      "background": "dark wood table, leather folder, window fog",
+      "light": "warm kerosene lamp",
+      "npc": "no people and no playable hero",
+      "knowledgeBoundary": "the reconstruction is conditional on independent clues and must not imply proved guilt",
+      "avoid": [
+        "identified culprit",
+        "final criminal confession",
+        "readable invented names",
+        "complete incriminating diagram"
+      ]
+    }
+  ]
+}
