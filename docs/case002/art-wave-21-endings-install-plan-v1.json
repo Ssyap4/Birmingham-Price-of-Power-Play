@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "chapter": "END",
-  "status": "installed-feature-branch-awaiting-final-ci",
+  "status": "installed-feature-branch-ci-verified",
   "sourceHead": "55d2c89758ab415360654d8451dbe7b6c8a2400e",
   "summary": "Seven distinct ending scenes; eight separately accepted artwork sources; 14 exact mobile-only runtime mappings, including eight Z02 evacuations. Main and gameplay untouched.",
   "rules": {
@@ -210,5 +210,27 @@
       "sourceVariantKey": "after-danger"
     }
   ],
-  "installedFromHead": "2ebc73b70f735c0ea8d4d29fd012b7ca6af2aa87"
+  "installedFromHead": "2ebc73b70f735c0ea8d4d29fd012b7ca6af2aa87",
+  "validation": {
+    "checkedCommit": "925edaa64da294c4f85641a3e87b30e7f3844d3b",
+    "artCI": {
+      "runId": 43641619721,
+      "conclusion": "success"
+    },
+    "mobileCI": {
+      "runId": 43641619715,
+      "conclusion": "success",
+      "browsers": [
+        "chromium",
+        "webkit"
+      ]
+    },
+    "checks": [
+      "14 exact ending-state manifest registrations",
+      "7 distinct main-ending artworks; 8 unique approved source WebPs",
+      "WebP 720x900 full decoding",
+      "Z02 safe variants and one real mobile ending route",
+      "Telegram safe-area 64px and responsive inset events"
+    ]
+  }
 }
