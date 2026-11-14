@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "chapter": "END",
+  "candidates": [
+    {
+      "sceneId": "Z01",
+      "variantKey": "default",
+      "candidateFile": "case002-z01-scene--mobile.webp",
+      "sha256": "9f334ef145ec231b15c23fbcf3017035e41d83aac55f5993003c9ddf926bd606",
+      "gitBlobSha1": "c3311091f2213cac1cc18a860e3d6b214ff20557",
+      "bytes": 99830,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "Accepted: morning industrial newsroom; dark-haired Nora seen from behind inspecting a single two-column printed broadsheet beside the letterpress; no readable witness details, visible selectable hero or premature punishment of Vale.",
+      "knowledgeBoundary": "Publication is the specific Z01 outcome, not proof of legal conviction; witness protection status and Mercer's testimony are supplied by game data and HTML, not this photograph."
+    }
+  ]
+}

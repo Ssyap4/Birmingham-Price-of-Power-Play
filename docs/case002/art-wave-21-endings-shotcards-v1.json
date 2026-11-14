@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "chapter": "END",
+  "source": "case002-screenplay-acts-4-6-and-endings-v2.md; case002-art-storyboard-v1.json; ending Z01",
+  "scenes": [
+    {
+      "id": "Z01",
+      "sceneKind": "action",
+      "focus": "a serious dark-haired woman newspaper editor inspects a newly printed broadsheet with two distinct columns of dense newspaper type, standing close beside an old heavy printing press during the first daylight hours",
+      "camera": "intimate medium vertical view from behind and slightly over the editor's shoulder, emphasizing the single printed page in both hands, the cast-iron press, and her pinned-up dark hair; no full face or other character visible",
+      "location": "a compact soot-stained Birmingham newspaper printing room in the 1920s",
+      "required": [
+        "one woman newspaper editor with dark hair pinned up, rolled cream blouse sleeves and dark period waistcoat holding a fresh broadsheet in both hands",
+        "one full broadsheet displaying two separate dense columns of small indistinct period newspaper print, without a legible personal name or headline",
+        "one large worn cast-iron newspaper letterpress with ink-dark rollers and stacked news sheets on a wooden bench"
+      ],
+      "background": "letterpress type racks, inking pot and rags, soot-dark old brick walls, rain-dimmed tall workshop window and industrial chimney silhouettes beyond",
+      "light": "early cool grey daylight through the printing-room window with a warm amber gas lamp grazing the press metal and paper fibers",
+      "npc": "Nora, the serious dark-haired newspaper editor, seen from the back or hidden three-quarter profile; no visible witness faces, no identifiable playable detective",
+      "knowledgeBoundary": "The finished printed page may represent publication of two independently checked chains of evidence in this particular ending. No real witness names, home addresses or a child's identity may be read. The image does not specify which two or three witnesses are protected and does not imply that Vale has been convicted, that Mercer testified, or that justice is complete. Those details belong to the actual story state and narrative overlay.",
+      "avoid": [
+        "real or invented legible witness names, identifying signatures, private addresses, child's details or sensational accusation headline",
+        "Vale in custody, a police verdict, courtroom conviction, or a crowd celebrating a completed prosecution",
+        "three people shown as universally rescued when their individual witness statuses can vary",
+        "recognizable faces of the five selectable heroes or a substitute canonical face for Nora"
+      ],
+      "intendedVariant": "default"
+    }
+  ]
+}
