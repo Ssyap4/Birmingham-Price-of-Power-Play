@@ -74,6 +74,24 @@
       "generatorImageId": "24e4cc53-2bde-414c-9b36-14d202c74558",
       "visualReview": "ACCEPTED: quiet tea-table negotiation with broad-shouldered silver-bearded Gideon Vale in heavy dark suit, hands resting near one non-readable inspection paper, his safe in sight and wet industrial windows behind him. Viktor is visible only from behind, with no invented player face. No signed deal, bribery payoff, confession or open safe implied. Dramatic, coherent 1920s noir interior.",
       "knowledgeBoundary": "The inspector's copy is present on the tea table during the negotiation; this portrait cannot confirm that Viktor has acquired the original, obtained free proof of guilt, secured a Vale guarantee or paid a story price. Conditional outcomes remain in game state and dialogue."
+    },
+    {
+      "sceneId": "HS01",
+      "variantKey": "default",
+      "candidateFile": "case002-hs01-scene--mobile.webp",
+      "sha256": "7c04a95024f22506d450a0991103a5160aaf0dd6009050ae7fd6dfbbdbfd73c9",
+      "gitBlobSha1": "09044a14f972a17d2d2311e518339b136522a929",
+      "bytes": 115446,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "2aaa1a9a-c44f-4bd2-819d-7118df3cb86f",
+      "visualReview": "ACCEPTED: close single view of an old rusted railway coupling examined by anonymous leather-gloved hands, one finger following a narrow dark oily streak and adjacent paler lubricant/scrape mark. Warm oil lantern isolates the iron detail against cold wet rails, canal-side factories and smoke. No face of Samuel, suspect, police sergeant, accident or fabricated proof visible.",
+      "knowledgeBoundary": "The grease and tool trace warrant mechanical suspicion of workshop tampering but do not prove the saboteur or confer independent sworn evidence. Technical analysis remains a choice in the playable story."
     }
   ]
 }

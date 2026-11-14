@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Original Case002 15 hero scenes and canonical 89-node storyboard; four independently approved hero-gap image candidates HJ01, HF01, HE01 and HV01, with three final hero artworks pending.",
+  "source": "Canonical five-hero personal scenes and 89-scene art storyboard; five independently accepted end-of-production hero candidates HJ01, HF01, HE01, HV01, HS01. Two more standalone scenes are unrendered.",
   "scenes": [
     {
       "id": "HJ01",
@@ -93,6 +93,29 @@
         "a signed confession, guarantee of witness safety, contract, handcuffs or explicit victory gesture",
         "readable charges, fabricated signatures, dates or evidence in the paper",
         "an opened or emptied safe, stolen original records or a visible threat with a weapon"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HS01",
+      "sceneKind": "evidence",
+      "focus": "a railway mechanic wearing old black leather working gloves examines a massive rain-wet carriage coupling, one gloved fingertip pointing at a narrow scuffed tool impression beside two differently toned traces of black tar grease and pale yellow factory oil on the iron",
+      "camera": "vertical close-up from the side of the coupling at the mechanic's shoulder height, two working hands and a single rail coupling filling the foreground, the lockside freight yard disappearing into cold mist behind",
+      "location": "a weathered goods wagon coupling on a canal-side industrial railway siding in 1920s Birmingham",
+      "required": [
+        "one heavy worn early-20th-century railway coupling with a large iron hook and linked shackles, rivets and rusted bolts",
+        "two different visible lubricant traces along the same coupling: glossy dark grease and a narrow dull-yellow oily smear beside a short fresh scraping mark",
+        "only the mechanic's thick old leather gloves and wool working sleeves, one fingertip carefully touching the greasy trace, a brass oil lantern beside the coupling"
+      ],
+      "background": "wet railway tracks fading toward a narrow canal basin, old brick factories, distant industrial cranes, smoke plumes and rain-dimmed freight wagons",
+      "light": "warm focused kerosene lantern light grazes the fresh scratch and oil smears while cool grey-blue drizzle and smoke envelop the rails and industrial skyline",
+      "npc": "an anonymous mechanic's gloved hands and cropped working sleeves only; no visible protagonist face or other identifiable person",
+      "knowledgeBoundary": "This scene visualizes Samuel spotting nonstandard factory workshop lubrication and a tool impression on the old coupling. The pictured traces do not establish which person interfered, that guilt has been proven or that the mechanic has acquired a new signed witness statement. Samuel is the game's mechanic, distinct from any police sergeant who shares his surname in the earlier case.",
+      "avoid": [
+        "identifiable male face or a portrait assigned to the selectable mechanic, a police uniform or detective badge",
+        "readable factory labels, fabricated signed confession, numbered weapon or clear perpetrator identity",
+        "an uncoupled train rolling away, a deliberate crash, explosion or already arrested saboteur",
+        "modern locomotive mechanisms, contemporary instruments or shiny unused industrial machinery"
       ],
       "intendedVariant": "default"
     }
