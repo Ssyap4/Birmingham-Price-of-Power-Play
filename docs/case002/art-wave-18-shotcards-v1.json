@@ -113,6 +113,139 @@
         "rescued witness already outside the compound",
         "readable invented official documents or watch time"
       ]
+    },
+    {
+      "id": "D06",
+      "sceneKind": "emotion",
+      "focus": "a worried young woman in a plain wool coat holds a crumpled handwritten note while waiting under the eaves of a wet factory-side brick alley",
+      "camera": "intimate medium three-quarter view from behind the woman's shoulder toward the long empty alley",
+      "location": "a quiet wet alley alongside an Aston factory wall",
+      "required": [
+        "one woman waiting beside a damp old red-brick wall",
+        "a folded paper gripped tightly between anxious hands",
+        "a narrow passage receding to an unoccupied misty street"
+      ],
+      "background": "rain gutter, old drainpipe and distant industrial chimneys",
+      "light": "dim dusk-blue skylight with a single lantern reflecting in pooled rainwater",
+      "npc": "one young adult woman seen from behind with her face outside the frame",
+      "knowledgeBoundary": "The witness may still be detained; this neutral waiting moment does not confirm his release, reunion or protection",
+      "avoid": [
+        "Tommy already reunited with his sister",
+        "hero with identified facial features",
+        "readable family names or witness statuses",
+        "a physical rescue or freed prisoner"
+      ]
+    },
+    {
+      "id": "D07",
+      "sceneKind": "dialogue",
+      "focus": "an exhausted middle-aged lodger opens his boarding-house door only a few inches against its sliding chain, a tightly clenched hand showing his dread",
+      "camera": "close eye-level view from the dim hallway over the visitor's shoulder edge, concentrating on the chain and the resident's hands",
+      "location": "a shabby boarding-house corridor beyond railway tracks",
+      "required": [
+        "a partly open wooden door secured by an iron sliding safety chain",
+        "one tense man's worn hand holding the door",
+        "a weakly lit narrow hallway with peeling period wallpaper"
+      ],
+      "background": "dark wooden stairs and a faint strip of light under another locked door",
+      "light": "low yellow room light leaking through the narrow gap, dark cold blue hallway",
+      "npc": "one middle-aged man whose face is concealed in deep shadow behind the door, no visible visitor face",
+      "knowledgeBoundary": "Mercer has not yet handed over his signed statement and his family's threat remains a claim, not verified proof",
+      "avoid": [
+        "a signed confession openly transferred",
+        "recognisable fictional actor replacing established Mercer identity",
+        "police arrest or protection",
+        "visible playable hero"
+      ]
+    },
+    {
+      "id": "D08",
+      "sceneKind": "evidence",
+      "focus": "a man's trembling hand hesitates above an aged factory inspection form resting beside a small, framed family photograph on a cluttered boarding-room table",
+      "camera": "close diagonal tabletop shot, showing the man's forearm at the edge without his face",
+      "location": "a dimly lit rented boarding-house room",
+      "required": [
+        "one aged industrial inspection document lying flat, with indistinct handwriting",
+        "a small period family photograph in a simple frame",
+        "several untouched blank sheets scattered alongside a wooden fountain pen",
+        "a tense hand hovering over the old form"
+      ],
+      "background": "bare plaster wall, worn chair and a tall curtain across a rainy window",
+      "light": "single desk lamp creating amber pools against a cold window glow",
+      "npc": "only hands and rolled-up sleeves of a male industrial inspector, his face out of frame",
+      "knowledgeBoundary": "No signed protected testimony is yet proven; the picture may depict the earlier official form only, never the transfer of a new confession",
+      "avoid": [
+        "legible false official values or family names",
+        "newly signed statement offered to a visible investigator",
+        "court judgment or confirmed witness safety",
+        "unverified detailed identities of family members"
+      ]
+    },
+    {
+      "id": "D09",
+      "sceneKind": "emotion",
+      "focus": "a worried inspector sits still with a sealed envelope under his fingertips while the silhouette of a messenger passes outside the rain-streaked boarding-house window",
+      "camera": "room-side medium view from behind the inspector, window and faceless messenger silhouette beyond",
+      "location": "a modest rented boarding-house room next to the railway",
+      "required": [
+        "a sealed, unaddressed envelope on the table beneath one hand",
+        "one male silhouette visible only through wet frosted window glass",
+        "a seated figure turned away from both window and camera"
+      ],
+      "background": "rough wooden furniture, a dark suitcase and railway smoke beyond wet glass",
+      "light": "cold window daylight outlining the threatening silhouette and a warm low table light",
+      "npc": "middle-aged male inspector seen from behind; messenger remains a faceless silhouette beyond the window",
+      "knowledgeBoundary": "Whether Mercer betrays Ada is still undecided; her hiding address is not disclosed and no protective status may be assumed",
+      "avoid": [
+        "a readable address or visible woman at that address",
+        "exchange of the sealed letter with the messenger",
+        "completed betrayal or retaliation",
+        "approved NPC face altered"
+      ]
+    },
+    {
+      "id": "D10",
+      "sceneKind": "evidence",
+      "focus": "three identical blank handwritten-status slips pinned side by side to an old cork board, awaiting individual updates that have not been written yet",
+      "camera": "straight-on close shot of an aged notice board in a dim detective office",
+      "location": "a small 1920s Birmingham detective office",
+      "required": [
+        "exactly three physically separate blank pinned paper slips",
+        "visible pencil lying on narrow board shelf beneath them",
+        "a few string and map fragments at the edges of the wooden board"
+      ],
+      "background": "shadowed filing cabinet and dark office plaster with dim lamplight",
+      "light": "warm narrow beam across aged paper with subdued smoky shadows",
+      "npc": "no people visible",
+      "knowledgeBoundary": "Actual witness names, found or protected statuses and future outcomes must be displayed by deterministic game UI, not baked into the image",
+      "avoid": [
+        "readable names, protected stamps or statuses",
+        "one shared confirmed rescue outcome",
+        "all witnesses appearing in person",
+        "numeric reward counters"
+      ]
+    },
+    {
+      "id": "D11",
+      "sceneKind": "action",
+      "focus": "a young woman in a rain-damp wool coat arrives at the detective office threshold holding a thick bound bundle of household letters and pleas for an investigation",
+      "camera": "from inside the office toward the half-open doorway, a low close three-quarter view of the bundle in the woman's hands",
+      "location": "the entrance of a small detective office on a stormy Birmingham evening",
+      "required": [
+        "thick bundle of separate worn family petitions tied with dark twine",
+        "one woman standing just across the threshold in an unassuming coat",
+        "an empty wooden chair across a desk still awaiting the next decision"
+      ],
+      "background": "oil lamp, filing shelves and night rain beyond the open doorway",
+      "light": "warm amber study lamplight across the bundled pages against cold outdoor rain",
+      "npc": "one young woman in a plain coat, photographed from a rear-side angle with her face not readable",
+      "knowledgeBoundary": "She has delivered family appeals but no justice has yet been achieved; witness statuses and availability of final choices remain dynamic",
+      "avoid": [
+        "legible invented list of the dead",
+        "victorious celebration or successful public indictment",
+        "identified player character",
+        "all witnesses shown protected"
+      ]
     }
   ]
 }

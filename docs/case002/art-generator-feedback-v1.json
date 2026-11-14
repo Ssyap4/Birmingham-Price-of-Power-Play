@@ -90,6 +90,20 @@
       "previous": "An off-scene railway image introduced an unsolicited train number and a clock time not in this scene.",
       "remedy": "Exclude all readable dates, vehicle codes and timed railway paperwork from the boiler-house visual request; keep canonical facts in authored game text.",
       "outcome": "rejected-and-recorded"
+    },
+    {
+      "scene": "D03",
+      "category": "panel_contamination",
+      "previous": "After producing an on-story D02 boiler-house candidate, the next attempted illustration twice produced decorative Russian-language process-acknowledgment posters instead of a pressure-register tabletop frame.",
+      "remedy": "Quarantine both generated posters and never use them as game imagery. Halt that visual context after two misses; in a clean isolated session run only the scene-specific RENDER with no development-status or conversational acknowledgments.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D03",
+      "category": "wrong_scene",
+      "previous": "The generated output followed the user's workflow/cadence discussion rather than the scheduled pressure-register moment; exact scene intent was lost.",
+      "remedy": "Confirm the generator's actual rendering request describes hands, logbook and boiler room before submitting; current internal prompt-builder cannot guarantee isolation of image generation context.",
+      "outcome": "unresolved-context-stopped"
     }
   ],
   "observedSuccess": {
