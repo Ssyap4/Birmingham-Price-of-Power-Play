@@ -56,6 +56,24 @@
       "generatorImageId": "89dbcf5e-85ce-4d9c-8304-f01b3276e05a",
       "visualReview": "ACCEPTED: a single worn paper held in anonymous gloved hands is illuminated from the side by a period desk lamp; faint relief from older erased writing is visible while a folding bellows plate camera waits on the wooden table. No exposed Eleanor face, readable suspect names or established second source. One coherent discovery moment before the document photograph.",
       "knowledgeBoundary": "Angled light reveals physical alteration on the reverse; the ready camera and closed notebook support provenance, not already completed external verification or an independent second primary record."
+    },
+    {
+      "sceneId": "HV01",
+      "variantKey": "default",
+      "candidateFile": "case002-hv01-scene--mobile.webp",
+      "sha256": "11a39e3c9af87662c9c33f7c83084a8b2a5e16497f926135bd9e7061a7e78208",
+      "gitBlobSha1": "035c2b0c728770ccdc954d3a074208beab61a361",
+      "bytes": 82992,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "24e4cc53-2bde-414c-9b36-14d202c74558",
+      "visualReview": "ACCEPTED: quiet tea-table negotiation with broad-shouldered silver-bearded Gideon Vale in heavy dark suit, hands resting near one non-readable inspection paper, his safe in sight and wet industrial windows behind him. Viktor is visible only from behind, with no invented player face. No signed deal, bribery payoff, confession or open safe implied. Dramatic, coherent 1920s noir interior.",
+      "knowledgeBoundary": "The inspector's copy is present on the tea table during the negotiation; this portrait cannot confirm that Viktor has acquired the original, obtained free proof of guilt, secured a Vale guarantee or paid a story price. Conditional outcomes remain in game state and dialogue."
     }
   ]
 }

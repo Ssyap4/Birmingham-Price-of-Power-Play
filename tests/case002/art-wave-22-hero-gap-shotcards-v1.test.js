@@ -15,8 +15,8 @@ const cards=builder.validateBatch(spec);
 assert.equal(spec.chapter,"HERO-GAPS");
 assert.equal(metadata.chapter,"HERO-GAPS");
 assert.equal(metadata.status,"hero-gap-art-production-in-progress");
-assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01"]);
-assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01"]);
+assert.deepEqual(cards.map(c=>c.id),["HJ01","HF01","HE01","HV01"]);
+assert.deepEqual(metadata.candidates.map(c=>c.sceneId),["HJ01","HF01","HE01","HV01"]);
 const expected={
  HJ01:{chapter:"II",cast:["jack","guard"],kind:"dialogue",
   filename:"case002-hj01-scene--mobile.webp",
@@ -29,7 +29,11 @@ const expected={
  HE01:{chapter:"II",cast:["eleanor"],kind:"evidence",
   filename:"case002-he01-scene--mobile.webp",
   sha:"8385375c533fecebb7a6dc2cd57e507dd1d4120e2ba8c856daf98840db076c4f",
-  bytes:117714,required:/brass articulated period desk lamp/,avoid:/legible accusation/}
+  bytes:117714,required:/brass articulated period desk lamp/,avoid:/legible accusation/},
+ HV01:{chapter:"II",cast:["victor","vale"],kind:"dialogue",
+  filename:"case002-hv01-scene--mobile.webp",
+  sha:"11a39e3c9af87662c9c33f7c83084a8b2a5e16497f926135bd9e7061a7e78208",
+  bytes:82992,required:/heavy vintage iron safe/,avoid:/signed confession/}
 };
 const hashes=new Set();
 for(const [index,card] of cards.entries()){
@@ -83,5 +87,5 @@ for(const id of pending){
   desiredAsset:"case002-"+id.toLowerCase()+"-scene.webp"
  }),null);
 }
-assert.equal(hashes.size,3);
-console.log("PASS Case002 hero-gap art: HJ01, HF01, HE01 independently accepted; 3 separate 720x900 WebP hashes, 4 scenes remaining, no early manifest installation.");
+assert.equal(hashes.size,4);
+console.log("PASS Case002 hero-gap art: HJ01, HF01, HE01, HV01 independently accepted; 4 separate 720x900 WebP hashes, 3 scenes remaining, no early manifest installation.");

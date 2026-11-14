@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Original Case002 hero-specific scenes and canonical 89-scene storyboard. Three independently accepted hero-gap illustrations: HJ01, HF01, HE01; four next scenes are not yet rendered.",
+  "source": "Original Case002 15 hero scenes and canonical 89-node storyboard; four independently approved hero-gap image candidates HJ01, HF01, HE01 and HV01, with three final hero artworks pending.",
   "scenes": [
     {
       "id": "HJ01",
@@ -69,6 +69,30 @@
         "an identifiable heroine face, full portrait or newly established costume identity",
         "two independent original documents or a second confession, solved corruption or arrested suspect",
         "a completed passport, modern digital camera or modern office electronics"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HV01",
+      "sceneKind": "dialogue",
+      "focus": "a quiet negotiation across a carved wooden tea table between a reserved industrial proprietor with short carefully groomed silver beard and a dark-clad visiting gentleman seen only from behind; the proprietor has laid one unmarked folded inspector's report on the table without overtly handing it across",
+      "camera": "intimate vertical medium interior view from just behind the visiting gentleman's left shoulder; the powerful older proprietor sits facing him, a document between porcelain teacups in the foreground, a heavy iron safe and rain-streaked factory windows beyond",
+      "location": "a prosperous but soot-dark 1920s Birmingham factory manager's private office overlooking the industrial rail yard",
+      "required": [
+        "one prosperous industrial proprietor of about fifty-five, broad-shouldered with carefully trimmed silver beard, heavy charcoal wool suit and dark waistcoat, seated with restrained expression",
+        "one visiting man in a dark elegant 1920s coat visible only from behind across an intimate tea table, his face and distinguishing features concealed",
+        "one unobtrusive folded inspector's report with indistinct printing resting beside an ornate china tea set on the polished wooden table",
+        "one heavy vintage iron safe in the background, framed by a wet multi-paned window and industrial smokestacks"
+      ],
+      "background": "wood-panelled office, carved leather chairs, old filing cabinets, framed factory painting, coal hearth and a misty railway-side factory yard beyond the glass",
+      "light": "restrained warm fire and oil-lamp illumination grazes the report and the older man's silver beard while cool rain-dark daylight pours through the industrial office window",
+      "npc": "one older silver-bearded factory proprietor and one visiting investigator seen strictly from behind; no distinguishable secretary or other person",
+      "knowledgeBoundary": "This scene shows diplomatic access and a copy of an inspection document left on the manager's table, not a signed bargain, unearned independent evidence, a confirmed admission, or a completed retrieval. The cost of negotiations is resolved only in player actions and story state. The five selectable protagonists retain their independent identities.",
+      "avoid": [
+        "an identifiable close-up face of the visitor or an invented permanent portrait of the selectable hero",
+        "a signed confession, guarantee of witness safety, contract, handcuffs or explicit victory gesture",
+        "readable charges, fabricated signatures, dates or evidence in the paper",
+        "an opened or emptied safe, stolen original records or a visible threat with a weapon"
       ],
       "intendedVariant": "default"
     }
