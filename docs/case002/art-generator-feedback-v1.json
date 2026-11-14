@@ -383,6 +383,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Anonymous gloved detective compares two archival factory sheets, clipped index cards, ledgers and magnifier; no identifiable witness statuses, rescue, completed outcome, mediator or accounts transfer. Staged for default audit variant only."
+    },
+    {
+      "scene": "E11",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Mabel pauses at half-open rainy office door, photographed from back in dark grey coat and short chestnut bob, detective blurred from behind; no confirmed departure, chosen outcome or witness rescue."
     }
   ]
 }

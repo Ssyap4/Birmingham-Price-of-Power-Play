@@ -230,6 +230,29 @@
         "completed witness guarantee or a signed company confession"
       ],
       "intendedVariant": "audit"
+    },
+    {
+      "id": "E11",
+      "sceneKind": "emotion",
+      "focus": "an anxious young railway woman in a belted gray wool coat and short dark chestnut bob pauses at the open door of a detective office, her hand resting lightly against the door frame, while a silent detective watches from deep inside",
+      "camera": "cinematic medium view from behind an out-of-focus investigator's shoulder toward the doorway, showing the woman in rear three-quarter view with her face hidden, frozen at the threshold",
+      "location": "a modest private investigator's wood-paneled Birmingham office opening onto a rainy 1920s industrial street",
+      "required": [
+        "one young woman with short dark chestnut bob and serious dark gray wool coat, seen from the back at the half-open doorway",
+        "the woman's hand resting on the damp wooden glass-paneled door rather than stepping away",
+        "the investigator is only a blurred dark shoulder in the foreground, with a brass desk lamp and closed evidence folio at the edge of the table"
+      ],
+      "background": "coat rack, dark old wood, rain-streaked window and door glazing, warm gas lamps on wet cobblestones outside and smoky factory chimneys beyond",
+      "light": "strong warm amber desk lamp light inside the office contrasted with cold rain-blue industrial evening outside",
+      "npc": "the railway woman shown from behind or rear three-quarter, never as a replacement canonical face, and a single investigator whose identifiable features are cropped or blurred",
+      "knowledgeBoundary": "The conversation is a pause before the choice to leave or continue. Nobody has chosen a final path, no witness is confirmed saved, no campaign ending has occurred, and the woman herself has not left yet.",
+      "avoid": [
+        "a visibly resolved departure or celebratory rescue",
+        "three witnesses gathered as if all successfully saved",
+        "a readable finished-case report, medal, award, signed verdict, or ending slate",
+        "new frontal portraits for the established woman or any selectable hero",
+        "a final branching choice visibly made or the office already abandoned"
+      ]
     }
   ]
 }
