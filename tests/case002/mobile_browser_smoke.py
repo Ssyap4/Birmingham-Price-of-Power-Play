@@ -679,6 +679,10 @@ def main():
                             f'button.choice[data-to="{target}"][data-action="{action}"]'
                         )
                         assert last_choice.count() == 1 and last_choice.is_enabled()
+                        saved_f09 = full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX + 'jack'
+                        )""")
+                        assert saved_f09 and json.loads(saved_f09)["node"] == "F09"
                         last_choice.click()
                         assert full_page.locator("#sceneId").inner_text().startswith("Z02")
                         full_page.wait_for_function(
@@ -695,7 +699,65 @@ def main():
                             "(img, v) => img.currentSrc.endsWith('case002-z02-scene--' + v + '--mobile.webp')",
                             variant,
                         ), f"Wrong ending art for Z02: {variant}"
+                        assert "зарегистрированы в черновом архиве" in full_page.locator(
+                            "#choiceList"
+                        ).inner_text(), "Normal completion must verify actual archived outcome"
                         assert not errors, f"Full-route browser errors: {errors}"
+                        # A damaged completion archive is not a rejected choice:
+                        # the engine has already committed the final node first.
+                        damaged_ctx = browser.new_context(
+                            viewport={"width":390,"height":844},
+                            device_scale_factor=3,is_mobile=True,has_touch=True
+                        )
+                        damaged_page = damaged_ctx.new_page()
+                        damaged_page.goto(address, wait_until="load")
+                        damaged_page.evaluate("""saved => {
+                          const api=window.BirminghamCase002Engine;
+                          localStorage.setItem(api.SAVE_PREFIX+'jack',saved);
+                          localStorage.setItem(api.RECORD_KEY,'{damaged-json');
+                        }""",saved_f09)
+                        damaged_page.reload(wait_until="load")
+                        damaged_page.locator("#resume").click()
+                        damaged_page.locator('button.choice[data-to="Z02"]').click()
+                        assert damaged_page.locator("#sceneId").inner_text().startswith("Z02"), (
+                            "A post-commit archive error must not strand player on F09"
+                        )
+                        assert "Решение принято" in damaged_page.locator("#notice").inner_text()
+                        assert "Архив итогов или наград повреждён" in damaged_page.locator(
+                            "#choiceList"
+                        ).inner_text(), "Corrupt archive must not claim reward was granted"
+                        assert json.loads(damaged_page.evaluate("""() => localStorage.getItem(
+                          window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                        )"""))["node"] == "Z02", "Terminal scene must remain in primary save"
+                        damaged_ctx.close()
+                        # Safari privacy mode can deny localStorage entirely.
+                        # A complete offline playthrough must not claim rewards.
+                        private_ctx = browser.new_context(
+                            viewport={"width":390,"height":844},
+                            device_scale_factor=3,is_mobile=True,has_touch=True
+                        )
+                        private_page = private_ctx.new_page()
+                        private_page.add_init_script("""(() => {
+                          Object.defineProperty(window,'localStorage',{
+                            configurable:true,
+                            get(){throw new Error('Privacy storage unavailable');}
+                          });
+                        })();""")
+                        private_page.goto(address, wait_until="load")
+                        private_page.locator("#begin").click()
+                        for src,to,act in route:
+                            target_choice = private_page.locator(
+                                f'button.choice[data-to="{to}"][data-action="{act}"]'
+                            )
+                            assert target_choice.count() == 1 and target_choice.is_enabled(), (
+                                f"Private mode route unexpectedly blocked: {src} -> {to}"
+                            )
+                            target_choice.click()
+                        assert private_page.locator("#sceneId").inner_text().startswith("Z02")
+                        assert "Хранилище недоступно: итог и награда не записаны" in (
+                            private_page.locator("#choiceList").inner_text()
+                        ), "Private mode must not promise a persisted completion"
+                        private_ctx.close()
                         print(
                             "PASS chromium: full Case 002 mobile route, earned-only endings, "
                             "saved story consequences and restoration"
