@@ -114,15 +114,9 @@ function init(){
  }catch(e){console.warn("[Case 002] Old archive is unreadable; neutral start available",e);}
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
- $("backToLaunch").addEventListener("click",()=>{
-   hideNotice();$("game").hidden=true;$("launch").hidden=false;
-   // The first attempt may have created a save after resume was last disabled.
-   // Re-read the current hero's save when returning to the launch screen.
-   refreshResume();
-   // Returning from a hidden game must not strand keyboard/VoiceOver focus.
-   $("hero").focus({preventScroll:true});
-   window.scrollTo(0,0);
- });
+ $("backToLaunch").addEventListener("click",returnToLaunch);
+ // The stale-save receipt must offer an exit above the fixed mobile dock.
+ $("noticeExit").addEventListener("click",returnToLaunch);
  $("noticeDismiss").addEventListener("click",()=>{
   hideNotice();
   // The button is now inside a hidden panel: restore a live focus target.
@@ -155,6 +149,12 @@ function init(){
  });
  $("hero").addEventListener("change",refreshResume);
  refreshResume();
+}
+function returnToLaunch(){
+ hideNotice();$("game").hidden=true;$("launch").hidden=false;
+ refreshResume();
+ $("hero").focus({preventScroll:true});
+ window.scrollTo(0,0);
 }
 function refreshResume(){
  const hero=$("hero").value;
@@ -245,6 +245,7 @@ function hideNotice(){
  $("notice").hidden=true;
  $("noticeJump").hidden=true;
  $("noticeExpand").hidden=true;
+ $("noticeExit").hidden=true;
  activeNoticeFocus=null;
  activeNoticeDetails=null;
  activeNoticeSummary="";
@@ -252,6 +253,7 @@ function hideNotice(){
 function showNotice(text,focus=null,details=null){
  const notice=$("notice");
  activeNoticeSummary=String(text||"");
+ $("noticeExit").hidden=!activeNoticeSummary.includes("Сохранение обновилось в другой вкладке");
  activeNoticeDetails=Array.isArray(details)&&details.length>2?details.slice():null;
  setText($("noticeContent"),activeNoticeSummary);
  notice.hidden=!text;
