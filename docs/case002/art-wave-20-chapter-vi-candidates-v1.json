@@ -150,5 +150,21 @@
       },
       "replacedAfterCanonicalReview": true
     }
+  ],
+  "rejectedGenerations": [
+    {
+      "sceneId": "F09",
+      "sceneTitle": "Цена власти",
+      "date": "2026-11-14",
+      "attemptedGenerations": 1,
+      "imageApproved": false,
+      "status": "rejected-not-staged",
+      "generatorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46",
+      "reasonCode": "wrong-case-number",
+      "reason": "On the document cover the generated artwork explicitly says 'ДЕЛО №001' and misspells the title, while F09 belongs to Case №002. A sealed, stamped cover also risks signaling an already finalized outcome.",
+      "candidateFile": null,
+      "installed": false,
+      "nextStep": "Render one newly composed F09 moment in the next separate author turn: before the final choice, anonymous detective at a modest dawn office desk; plain unlettered folder and unsigned paper, one open question rather than an announced resolution."
+    }
   ]
 }

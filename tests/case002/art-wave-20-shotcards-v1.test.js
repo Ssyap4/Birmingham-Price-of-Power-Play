@@ -152,4 +152,16 @@ assert.equal(director.variant(preVerdictFlags(true,false)),"accounts-hero");
 assert.equal(director.variant(preVerdictFlags(true,true)),"accounts-workers");
 assert.equal(director.variant(preVerdictFlags(false,true)),"accounts-workers");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F08").length,0);
-console.log("PASS: Chapter VI candidates F01–F08 physically verified and uninstalled.");
+const rejectedF09=metadata.rejectedGenerations?.find(x=>x.sceneId==="F09"&&x.reasonCode==="wrong-case-number");
+assert(rejectedF09,"Unacceptable wrong-case-number artwork must be explicitly recorded");
+assert.equal(rejectedF09.attemptedGenerations,1);
+assert.equal(rejectedF09.imageApproved,false);
+assert.equal(rejectedF09.installed,false);
+assert.equal(rejectedF09.candidateFile,null);
+assert(!metadata.candidates.some(x=>x.sceneId==="F09"),
+ "A rejected rendering must not be passed off as an accepted candidate");
+assert(!spec.scenes.some(x=>x.id==="F09"),
+ "Rejected artwork must not silently be counted as a finished Chapter VI shot");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F09").length,0,
+ "A rejected image must never be installed in the playable scene manifest");
+console.log("PASS: Chapter VI F01–F08 accepted, F09 rejected and blocked pending one future render.");
