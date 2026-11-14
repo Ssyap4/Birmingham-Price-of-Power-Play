@@ -80,6 +80,7 @@ const actionLabels={
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
+let activeArtStage=null,artPhoneIsNarrow=window.matchMedia("(max-width: 680px)").matches;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -148,6 +149,16 @@ function init(){
   tab=button.dataset.tab;evidenceFocus=null;renderTools();
  });
  $("hero").addEventListener("change",refreshResume);
+ // Seventeen approved scenes have distinct landscape/portrait masters.
+ // A rotation must re-verify the correct crop without replaying any choice.
+ // Ordinary Safari and the Telegram webview both dispatch viewport resize.
+ window.addEventListener("resize",()=>{
+  const narrow=window.matchMedia("(max-width: 680px)").matches;
+  if(narrow===artPhoneIsNarrow)return;
+  artPhoneIsNarrow=narrow;
+  if(engine&&!$("game").hidden&&activeArtStage)
+   renderApprovedSceneArt(activeArtStage);
+ });
  refreshResume();
 }
 function refreshResume(){
@@ -391,6 +402,7 @@ function render(){
  // Future artwork is selected by game state, but never displayed until a
  // verified asset exists. Stage metadata is useful for browser QA now.
  const stage=window.BirminghamCase002ArtDirector.select(data.storyboard,v);
+ activeArtStage=stage;
  const host=$("game");
  host.dataset.artScene=stage.sceneId;
  host.dataset.artVariant=stage.variantKey;
