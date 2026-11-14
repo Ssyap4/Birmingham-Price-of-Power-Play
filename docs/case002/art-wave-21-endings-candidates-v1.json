@@ -54,5 +54,34 @@
       "installed": false,
       "nextStep": "One fresh image only on the next explicit author request: a gender-neutral close-up of a closed document folio and an anonymous gloved hand beside an empty rain-wet morning train doorway, with no full figure, head, face, or body silhouette. This variant may depict zero evacuees; evacuations of one to three named witnesses require separate state-appropriate art or strictly verified neutral treatment."
     }
+  ],
+  "variants": [
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-present-neutral",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "gitBlobSha1": "4e9ac01396ced55fb357f3eefda0f5ef3ea579c2",
+      "bytes": 109012,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "Accepted: inside vintage train compartment a conductor examines one anonymous gloved passenger's train pass; no passenger face or full figure, no witness identity, no specific passenger count or guaranteed protection. Distinct from the empty-platform zero-evacuee shot.",
+      "knowledgeBoundary": "This is a neutral ticket check suitable for separate review across nonzero evacuated-witness states; the visible hand does not identify whose passage it is or prove any individual's safe arrival.",
+      "applicableVariantKeysPendingIntegrationReview": [
+        "evacuated-ada",
+        "evacuated-tommy",
+        "evacuated-mercer",
+        "evacuated-ada-tommy",
+        "evacuated-ada-mercer",
+        "evacuated-tommy-mercer",
+        "evacuated-ada-tommy-mercer"
+      ],
+      "reuseIsApprovedInGame": false
+    }
   ]
 }
