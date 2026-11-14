@@ -125,6 +125,13 @@
       "previous": "Two consecutive attempts to generate D04 'Tommy behind the factory gate' actually sent the image system scene descriptions about Ada's boiler-house pressure ledger. It faithfully rendered those wrong descriptions, including invented readable dates and values. Both images rejected.",
       "remedy": "Before invoking image generation, verify the ACTUAL image request payload corresponds to D04: detained young man, barred gatehouse, bandaged forearm, watchman, no journal or boiler. Stop if the payload mentions pressure log, Ada or a boiler room. Do not attribute prompt handoff mismatch to image-model quality; stop after two context misses.",
       "outcome": "unresolved-visual-handoff-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "wrong_scene",
+      "previous": "Earlier D04 attempts sent D03 boiler-house descriptions and produced wrong art. On the next fresh D04 scene request, its first image correctly showed Tommy detained at the barred factory guardhouse, bandaged arm and watchman.",
+      "remedy": "Try one scene per user turn and inspect the actual rendering request for scene-specific cast/location/props. Crop away an invented factory sign while retaining clear detained status. Keep RENDER/REVIEW separate; do not promise a statistically proven first-shot success rate.",
+      "outcome": "resolved-for-D04-one-shot-trial"
     }
   ],
   "observedSuccess": {
