@@ -1,4 +1,5 @@
 name: Case 002 scoped mobile smoke (draft only)
+# A scene-installation change now triggers full WebKit + Chromium; candidate art stays quick.
 on:
   push:
     branches: [feat/case002-story-bible-v1]

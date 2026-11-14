@@ -49,15 +49,25 @@ for(const artistic of [
  assert(scope.run_art&&scope.run_browser&&!scope.run_full&&!scope.browser_full,
    "Batch art must never trigger full gameplay QA by default: "+artistic);
 }
-for(const approvedAsset of [
+for(const installedScene of [
  "assets/case002/scenes/case002-p01-scene.webp",
  "assets/case002/scenes/case002-p01-scene--mobile.webp",
+ "src/case002/approved-art-v1.js"
+]){
+ const result=one(installedScene);
+ assert(result.run_art&&result.run_browser&&result.browser_full&&!result.run_full,
+   "Installing reviewed scene art must run full browser QA, not 400 simulation routes: "+installedScene);
+}
+for(const candidate of [
+ "assets/case002/candidates/case002-f09-scene--mobile.webp",
  "assets/case002/portraits/case002-mabel-portrait.webp"
 ]){
- const result=one(approvedAsset);
+ const result=one(candidate);
  assert(result.run_art&&result.run_browser&&!result.run_full&&!result.browser_full,
-   "Adding images must use scoped art/mobile QA, not all 400 routes: "+approvedAsset);
+   "Candidate art and portraits should use quick visual QA: "+candidate);
 }
+assert(one(".github/workflows/case002-mobile-smoke.yml").browser_full,
+ "The mobile QA workflow should self-test its full WebKit and Chromium route");
 assert(one("assets/case002/scenes/unknown-binary.exe").run_full,
   "Unknown media types must still fail closed");
 const portraits=one("src/case002/cast-registry-v1.js");

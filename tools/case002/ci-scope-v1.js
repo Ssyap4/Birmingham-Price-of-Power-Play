@@ -6,7 +6,7 @@
  */
 const fs=require("node:fs");
 const {execFileSync}=require("node:child_process");
-const CATEGORIES=["deep","story","art","evidence","reporting","ui","visual","docs","ci"];
+const CATEGORIES=["deep","story","art","art-installed","evidence","reporting","ui","visual","docs","ci"];
 function category(file){
  const p=String(file||"").replace(/\\/g,"/");
  if(p==="ARCHITECTURE.md"||p==="Architecture.md"||p==="CHANGELOG.md"||p.startsWith("docs/decisions/"))
@@ -27,8 +27,13 @@ function category(file){
  // Real approved scene/portrait WebP assets are visual changes, not game rules.
  // Unknown extensions and paths still fail closed to the full safety gate.
  if(/^assets\/case002\/candidates\/case002-[a-z0-9-]+\.webp$/.test(p))return "art";
- if(/^assets\/case002\/(?:scenes|portraits)\/case002-[a-z0-9-]+\.webp$/.test(p))
+ // Installing scene bytes requires actual WebKit/Chromium route QA; merely
+ // staging art candidates stays on the fast, isolated graphics gate.
+ if(/^assets\/case002\/scenes\/case002-[a-z0-9-]+\.webp$/.test(p))
+   return "art-installed";
+ if(/^assets\/case002\/portraits\/case002-[a-z0-9-]+\.webp$/.test(p))
    return "art";
+ if(p==="src/case002/approved-art-v1.js")return "art-installed";
  if(p==="src/case002/engine-v3.js")return "deep";
  // The browser bundle is reproducibly rebuilt from screenplay + graph sources.
  // Treat the generated blob as story: --check rejects any unsupported graph edit.
@@ -51,7 +56,7 @@ function category(file){
    return "art";
  }
  if(p===".github/workflows/case002-story-qa.yml")return "ci";
- if(p===".github/workflows/case002-mobile-smoke.yml")return "ui";
+ if(p===".github/workflows/case002-mobile-smoke.yml")return "art-installed";
  // Unknown files may change a live dependency. They get the complete gate.
  return "deep";
 }
@@ -63,14 +68,14 @@ function classify(files,{manual=false}={}){
  const outputs={
    run_full:full,
    run_story:full||has("story"),
-   run_art:full||has("art"),
+   run_art:full||has("art")||has("art-installed"),
    run_evidence:full||has("evidence"),
    run_reporting:full||has("reporting"),
    run_ui:full||has("ui")||has("visual"),
-   run_bundle:full||has("story")||has("art"),
-   run_browser:full||has("story")||has("art")||has("evidence")||
+   run_bundle:full||has("story")||has("art")||has("art-installed"),
+   run_browser:full||has("story")||has("art")||has("art-installed")||has("evidence")||
      has("reporting")||has("ui")||has("visual"),
-   browser_full:full,
+   browser_full:full||has("art-installed"),
    scope_label:full?"full":CATEGORIES.filter(k=>known.has(k)).join("+")||"docs"
  };
  return outputs;
