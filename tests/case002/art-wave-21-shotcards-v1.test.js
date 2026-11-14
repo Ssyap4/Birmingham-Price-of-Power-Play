@@ -225,7 +225,7 @@ const exampleState={flags:{valeGuarantee:true,workersCleared:true,brackettAccoun
  witnesses:{ada:"missing",tommy:"detained",mercer:"located"},health:0};
 const testManifest={schemaVersion:1,npcPortraits:[],sceneImages:installPlan.entries.map(e=>({
  sceneId:e.sceneId,variantKey:e.variantKey,review:"approved",
- file:e.targetMobileFile.replace(/--mobile\\.webp$/,".webp"),
+ file:e.targetMobileFile.replace("--mobile.webp",".webp"),
  mobileOnly:true,cast:e.cast,
  mobileFile:e.targetMobileFile,mobileWidth:720,mobileHeight:900,mobileSha256:e.sha256
 }))};
