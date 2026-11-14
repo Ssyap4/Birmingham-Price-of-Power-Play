@@ -132,6 +132,13 @@
       "previous": "Earlier D04 attempts sent D03 boiler-house descriptions and produced wrong art. On the next fresh D04 scene request, its first image correctly showed Tommy detained at the barred factory guardhouse, bandaged arm and watchman.",
       "remedy": "Try one scene per user turn and inspect the actual rendering request for scene-specific cast/location/props. Crop away an invented factory sign while retaining clear detained status. Keep RENDER/REVIEW separate; do not promise a statistically proven first-shot success rate.",
       "outcome": "resolved-for-D04-one-shot-trial"
+    },
+    {
+      "scene": "D05",
+      "category": "wrong_scene",
+      "previous": "Earlier conversational context sometimes caused image requests for a future scene to reproduce previous scene's location and props.",
+      "remedy": "Single-shot per user turn with preflight checking of D05 narrative focus and strict REVIEW before staging. First D05 request depicted the correct industrial service gate with guard, shift relief worker and driver; no second image requested in that turn.",
+      "outcome": "first-shot-candidate-pass"
     }
   ],
   "observedSuccess": {
