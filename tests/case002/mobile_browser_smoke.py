@@ -729,6 +729,15 @@ def main():
                         assert json.loads(damaged_page.evaluate("""() => localStorage.getItem(
                           window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
                         )"""))["node"] == "Z02", "Terminal scene must remain in primary save"
+                        damaged_page.reload(wait_until="load")
+                        damaged_page.locator("#resume").click()
+                        assert damaged_page.locator("#sceneId").inner_text().startswith("Z02"), (
+                            "Archive corruption must not prevent reopening a valid finished save"
+                        )
+                        assert "Расследование восстановлено из сохранения" in (
+                            damaged_page.locator("#notice").inner_text()
+                        ), "Recovered completed attempt must report unarchived result"
+                        assert "повреждён" in damaged_page.locator("#choiceList").inner_text()
                         damaged_ctx.close()
                         # Safari privacy mode can deny localStorage entirely.
                         # A complete offline playthrough must not claim rewards.
