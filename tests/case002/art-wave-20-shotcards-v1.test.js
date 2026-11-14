@@ -27,7 +27,7 @@ for(const [idx,card] of batch.entries()){
  assert.equal(m.acceptedRendering,1);
  assert.equal(m.variantKey,"default");
  assert.equal(m.candidateFile,"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
- assert.equal(card.sceneKind,card.id==="F06"?"environment":"evidence");
+ assert.equal(card.sceneKind,card.id==="F06"?"environment":card.id==="F07"?"dialogue":"evidence");
  const p=builder.promptFor(card),r=builder.reviewFor(card);
  assert(p.includes(card.focus)&&p.includes(card.location)&&p.includes(card.camera));
  assert(!p.includes(card.id)&&!p.includes(card.knowledgeBoundary));
@@ -83,6 +83,14 @@ for(const [idx,card] of batch.entries()){
    assert(card.required.some(x=>/brass cartridge/.test(x)));
    assert(card.avoid.some(x=>/wounded, killed, captured/.test(x)));
  }
+ else if(card.id==="F07"){
+   assert(card.knowledgeBoundary.includes("trainDeath"));
+   assert(card.focus.includes("raises one open hand"));
+   assert(card.required.some(x=>/empty open palm/.test(x)));
+   assert(card.required.some(x=>/second private guard/.test(x)));
+   assert(card.required.some(x=>/open side archway/.test(x)));
+   assert(card.avoid.some(x=>/dead or wounded person/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -115,4 +123,8 @@ const threatView={scene:{id:"F06"},state:{flags:{},witnesses:{}},facts:{}};
 assert.equal(director.variant(threatView),"default",
  "The choice of guarded or safe route must be a player decision, never a photograph-triggered state");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F06").length,0);
-console.log("PASS: Chapter VI candidates F01–F06 physically verified and uninstalled.");
+const guardsView={scene:{id:"F07"},state:{flags:{},witnesses:{}},facts:{}};
+assert.equal(director.variant(guardsView),"default",
+ "An illustrated guard warning cannot infer the hero's subsequent risk choice or death");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F07").length,0);
+console.log("PASS: Chapter VI candidates F01–F07 physically verified and uninstalled.");

@@ -103,6 +103,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted: clearly separate open left bypass and guarded narrow railway passage on the right, a lone brass cartridge case near foreground, no face, violence or decided fate",
       "knowledgeBoundary": "The illustration depicts the pending choice, not any risky action, death, forced confrontation or guaranteed safe outcome."
+    },
+    {
+      "sceneId": "F07",
+      "variantKey": "default",
+      "candidateFile": "case002-f07-scene--mobile.webp",
+      "sha256": "82ce110782312f6ad8c13965f5a386460183fb2db028a682ae80c26ce124cc9d",
+      "gitBlobSha1": "52ce8bd14044c7eae29e3bbcf22e98514cde4ae5",
+      "bytes": 128704,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: one guard raises empty open palm as a final warning, second guard waits beside rain-wet railway, anonymous protagonist seen only from behind, side passage remains open; no injury or decided outcome",
+      "knowledgeBoundary": "The drawing depicts the confrontation before a further player choice; neither death nor survival follows from the image alone."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI original screenplay and canonical storyboard; F01 through F06 each separately rendered in one author turn",
+  "source": "Chapter VI original screenplay and storyboard; F01–F07 each independently rendered and reviewed after a separate author message",
   "scenes": [
     {
       "id": "F01",
@@ -138,6 +138,29 @@
         "the dangerous guarded passage shown as the only possible route",
         "a recognizable playable hero face or a forged named witness appearance",
         "a written final outcome, completed escape or declaration of investigative victory"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "F07",
+      "sceneKind": "dialogue",
+      "focus": "a rain-soaked factory guard steps into the narrow railway service passage and raises one open hand in a final warning to an unseen detective, while a second guard waits behind him and a nearby side opening remains unblocked",
+      "camera": "tight three-quarter eye-level view from just behind the detective's shoulder toward the two guards, closer than the earlier wide railway junction, with the first guard's raised stopping hand clearly framed",
+      "location": "the narrow service passage between a soot-dark brick warehouse and a railway freight siding in industrial Birmingham in the 1920s",
+      "required": [
+        "one stern middle-aged private factory guard in a period dark uniform and peaked cap raising an empty open palm at shoulder height as a warning",
+        "a second private guard in matching weathered coat standing slightly back by wet railway tracks, with a holstered pistol at the first guard's belt",
+        "an open side archway leading away beside the brick wall, visible behind the cropped dark shoulder of the unidentifiable investigator"
+      ],
+      "background": "tall soot-stained warehouse walls, slick paving stones, freight wagons and crates beside the railway, iron bridge gantries and distant smoking factory chimneys",
+      "light": "strong amber gas lamps casting long reflections in rain on dark brick and stone, with cold blue-grey smoke and night sky beyond the yard",
+      "npc": "two anonymous factory security men in period peaked caps; the playable detective is visible from behind only as a near-foreground dark coat shoulder and silhouette without identifiable facial features",
+      "knowledgeBoundary": "The guards are issuing a final warning before the player chooses what to do. Weapons may be holstered; no shot is fired, no injury or death is established, and the open side way is still an available possibility. The image cannot grant trainDeath or determine whether the detective survives.",
+      "avoid": [
+        "a shot being fired, a dead or wounded person, blood, a completed defeat or a foretold fatal ending",
+        "a guard physically holding the detective captive or an already blocked side exit",
+        "an invented recognizable protagonist face or a named witness present in this confrontation",
+        "modern security equipment, modern cars, tactical armor or fabricated visible dialogue text"
       ],
       "intendedVariant": "default"
     }
