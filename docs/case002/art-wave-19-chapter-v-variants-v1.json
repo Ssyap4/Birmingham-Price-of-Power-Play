@@ -168,6 +168,39 @@
           "celebration, completed pension compensation, official verdict or protected worker status"
         ]
       }
+    },
+    {
+      "sceneId": "E10",
+      "variantKey": "intermediary",
+      "candidateFile": "case002-e10-scene--intermediary--mobile.webp",
+      "sha256": "6bffb76ffeaf2c00c52531d826ee7b4e544c8e1296722f70383fffd233c3beaf",
+      "gitBlobSha1": "c1b0b3af0001e41c75f680b73f861742d90ec7fe",
+      "bytes": 90030,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E10",
+        "sceneKind": "dialogue",
+        "focus": "an ordinary local industrial intermediary cautiously reviews a plain accounting extract at a cramped wooden table while an unseen investigator in a black glove indicates a separate tied bundle of copies",
+        "camera": "intimate low medium three-quarter side view from the cropped investigator's elbow toward the intermediary's careful hands and the papers on the table",
+        "location": "a modest private records room near Birmingham factory yards in the 1920s",
+        "required": [
+          "one wary middle-aged local worker in worn period flat cap and dark wool coat reading a single aged report in both hands",
+          "one black leather-gloved anonymous investigator hand indicating a twine-bound stack of old papers on the tabletop",
+          "a dark wooden table with loose unreadable accounting sheets and an amber metal lampshade overhead"
+        ],
+        "background": "wet factory brickwork and smoky chimneys glimpsed through a rain-streaked doorway, plain shelves and old crates in shadow",
+        "light": "warm focused amber pendant lamp on the documents and hands against blue-gray rainy industrial daylight at the open doorway",
+        "npc": "one unnamed working-class local man looking downward; investigator shown only as a black-gloved hand and shoulder with no identifiable playable character face",
+        "knowledgeBoundary": "This image may represent the intermediary scene variant only when the game has independently set localIntermediary. It does not itself verify any financial records, guarantee witness protection or wages, prove accountsGivenToWorkers, or announce an investigation success.",
+        "avoid": [
+          "legible witness names, monetary figures, official certification or detailed accusations",
+          "a handshake, completed contract, celebratory agreement or public publication",
+          "visible face of a selectable player hero or a replacement canonical named character",
+          "a completed payment, proven factory guilt, or witnesses visibly rescued"
+        ]
+      }
     }
   ]
 }

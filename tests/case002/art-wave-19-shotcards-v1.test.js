@@ -195,4 +195,17 @@ assert(e09WorkerTransfer.shotCard.knowledgeBoundary.includes("accountsGivenToWor
 assert(e09WorkerTransfer.shotCard.required.some(x=>/worker's bare soot-stained hands/.test(x)),
  "Receipt by worker must be physically visible");
 
+
+const e10Local=variantsSpec.variants.find(x=>x.sceneId==="E10"&&x.variantKey==="intermediary");
+assert(e10Local,"Local intermediary reporting state needs its own distinct candidate");
+assert.notEqual(e10Local.sha256,staged.find(x=>x[0]==="E10")[1],
+ "Intermediary dialogue may not reuse the neutral report image");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{localIntermediary:true,accountsGivenToWorkers:false},witnesses:{}}}),"intermediary");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{localIntermediary:false,accountsGivenToWorkers:false},witnesses:{}}}),"audit");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{localIntermediary:true,accountsGivenToWorkers:true},witnesses:{}}}),"accounts-workers");
+assert(e10Local.shotCard.knowledgeBoundary.includes("localIntermediary"),
+ "Intermediary artwork must depend on game state, not assert a new flag");
+assert(e10Local.shotCard.avoid.some(x=>/legible witness names/.test(x)),
+ "Never put unverified witness identities on the archival sheet");
+
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));
