@@ -238,6 +238,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Two image generation calls occurred for the same scene in one user turn; first not staged; only second preserved. Final image shows gloved hands, opening Mercer safe, intact family photo, anonymous playable hero, no protected sworn statement."
+    },
+    {
+      "scene": "HE02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Eleanor's gloved hand rests by a closed face-down leather notebook on the grimy boiler-house workbench; Ada's soot-marked hand and wrench nearby. No canonical faces, pressure log transfer, formal witness statement, or protected status depicted."
     }
   ]
 }
