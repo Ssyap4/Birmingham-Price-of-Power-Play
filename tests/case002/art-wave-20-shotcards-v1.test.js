@@ -47,6 +47,21 @@ for(const [idx,card] of batch.entries()){
    "A chapter VI candidate cannot be prematurely installed");
  assert.equal(resolveScene({sceneId:card.id,variantKey:"default",visibleCast:["hero"],desiredAsset:"case002-"+card.id.toLowerCase()+"-scene.webp"}),null);
  assert.equal(card.required.length,3);
- assert(card.knowledgeBoundary.includes("Only one wagon"));
+ if(card.id==="F01"){
+   assert(card.knowledgeBoundary.includes("Only one wagon"));
+ }else if(card.id==="F02"){
+   assert(card.knowledgeBoundary.includes("two independent suspected falsifications"));
+   assert(card.required.some(x=>/right-hand train arrival ledger/.test(x)));
+   assert(card.required.some(x=>/left-hand freight paper/.test(x)));
+ }
+
 }
-console.log("PASS: Chapter VI opening F01 reviewed as one physically verified candidate (uninstalled).");
+// chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
+const director=require("../../src/case002/scene-art-v1.js");
+const view=(a,b)=>({scene:{id:"F02"},state:{flags:{},witnesses:{}},
+ facts:{provedFirstForgery:a,provedSecondForgery:b}});
+assert.equal(director.variant(view(false,false)),"incomplete");
+assert.equal(director.variant(view(true,false)),"incomplete");
+assert.equal(director.variant(view(false,true)),"incomplete");
+assert.equal(director.variant(view(true,true)),"both-proven");
+console.log("PASS: Chapter VI candidate scenes F01–F02 physically verified and uninstalled.");

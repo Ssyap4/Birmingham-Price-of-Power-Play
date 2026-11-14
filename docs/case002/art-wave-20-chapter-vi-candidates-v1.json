@@ -18,6 +18,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted: one gloved investigator, one miniature freight wagon and three stop marks on a rainlit railway drawing; no evidence of disappearance or final destination",
       "knowledgeBoundary": "This is a conjecture/observation board, not proof of the actual wagon route or of witness safety."
+    },
+    {
+      "sceneId": "F02",
+      "variantKey": "default",
+      "candidateFile": "case002-f02-scene--mobile.webp",
+      "sha256": "6a364b1db449ab5716f16b16d4e458442a9613e8bf4cf0bb32b1b160bcb6995b",
+      "gitBlobSha1": "6df5f42f10edce32c9484079e1ac813472800966",
+      "bytes": 136574,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: two physically distinct record sheets, different handwritten layouts, separate stamps and gloved investigator hands; no confirmed forgery or revealed identity",
+      "knowledgeBoundary": "The game determines incomplete versus both-proven status from the evidence flags; image remains deliberately neutral and does not establish the actual provenance of either document."
     }
   ]
 }

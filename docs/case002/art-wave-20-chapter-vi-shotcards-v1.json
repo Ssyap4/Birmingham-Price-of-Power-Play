@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "case002-screenplay-acts-4-6-and-endings-v2.md; case002-art-storyboard-v1.json; scene F01; one new original image per user turn",
+  "source": "Chapter VI screenplay + canonical storyboard; F01 and F02 separate single-image author turns",
   "scenes": [
     {
       "id": "F01",
@@ -25,6 +25,29 @@
         "readable invented station names, routes, times, or new witness addresses"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "F02",
+      "sceneKind": "evidence",
+      "focus": "an anonymous gloved investigator compares two separate old freight documents, one with flowing cursive and a light seal, the other with a tightly ruled arrival ledger and a different official seal, without joining the pages together",
+      "camera": "an oblique close overhead view across a dark desk, both weathered sheets held separately in each gloved hand with the center gap clearly visible, face of the investigator fully out of frame",
+      "location": "the rain-facing worktable of a modest railway investigator in industrial Birmingham during the 1920s",
+      "required": [
+        "one aged left-hand freight paper dominated by flowing cursive pen strokes and a low round stamp",
+        "one separate right-hand train arrival ledger sheet dominated by tight ruled columns, a different script and its own stamp impression",
+        "two black-gloved hands keeping both paper sheets physically separate above a scratched oak table"
+      ],
+      "background": "a heavy brass oil desk lamp, old ink bottle, magnifying glass, closed railway ledger and a rain-wet window overlooking smoke-belching brick factories",
+      "light": "an intense warm amber desk lamp across the two independent papers, contrasting with the cold blue industrial rain beyond the window",
+      "npc": "only the investigator's black leather gloves and dark sleeves appear; no identifiable face or other human figures",
+      "knowledgeBoundary": "These are two independent suspected falsifications, not one merged forged document. The image does not prove either account false, confirm a second forgery, establish which witness signed, reveal the whereabouts of the wagon, or identify a culprit.",
+      "avoid": [
+        "readable invented signatures, witness names, fabricated station names, amounts or dates",
+        "one single joint forged sheet replacing the two materially distinct documents",
+        "an official verdict, celebratory conclusion, verified guilty party or definitive forensic proof",
+        "recognizable face or altered canonical appearance of any selectable investigator"
+      ],
+      "intendedVariant": "neutral-review-before-verification"
     }
   ]
 }
