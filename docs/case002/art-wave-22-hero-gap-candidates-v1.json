@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "chapter": "HERO-GAPS",
-  "status": "hero-gap-art-installed-feature-branch-awaiting-full-QA",
+  "status": "hero-gap-art-installed-feature-branch-verified",
   "candidates": [
     {
       "sceneId": "HJ01",
@@ -178,5 +178,31 @@
       ],
       "installationReview": "approved exact 720x900 candidate bytes registered under canonical scene ID"
     }
-  ]
+  ],
+  "validation": {
+    "verifiedCommit": "117ba32a08bca54064e43b39e433cf77d002c4c0",
+    "artCI": {
+      "runId": 43646393362,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "mobileCI": {
+      "runId": 43646393372,
+      "status": "completed",
+      "conclusion": "success",
+      "browsers": [
+        "chromium",
+        "webkit"
+      ],
+      "expectedDecodedVariants": 21
+    },
+    "coverage": {
+      "storyboardSceneIds": 89,
+      "registeredUniqueIds": 89,
+      "manifestEntries": 102,
+      "heroScenes": 7
+    },
+    "integration": "approved mobile-only original bytes identical to 7 reviewed archived candidates; main and Case001 unchanged",
+    "release": "NOT accepted for final author review; narrative and aesthetic release QA remain"
+  }
 }
