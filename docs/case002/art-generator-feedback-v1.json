@@ -359,6 +359,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Brackett from rear/side guards a thick closed accounts ledger beneath his hand; visitor cropped, boot partly visible but heel-chip evidence not proven, no readable entries, custody transfer, confession or automatic evidence flag."
+    },
+    {
+      "scene": "E09",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Night-shift worker at the rainy Aston factory gate pleads over wages with both soot-darkened open hands. Worn factory notice unreadable; no pension payout, stopped factory, ledger transfer, obtained evidence or revealed detective identity. Only accounts-brackett variant safe."
     }
   ]
 }

@@ -183,6 +183,29 @@
         "injury, gunfire or a completed verdict"
       ],
       "intendedVariant": "brackett-book-on-desk"
+    },
+    {
+      "id": "E09",
+      "sceneKind": "dialogue",
+      "focus": "an exhausted night-shift factory laborer in a worn flat cap pleads earnestly with an unseen visitor at the wet iron gate, holding out both blackened open palms as he worries about his family's lost wages",
+      "camera": "intimate low medium shot emphasizing the laborer's expressive soot-and-ink-darkened open hands, anxious weathered face, and an unreadable old notice nailed to a nearby brick gatepost; the visitor is only a cropped silhouette",
+      "location": "the red-brick factory entrance gate in rainy 1920s Aston, Birmingham",
+      "required": [
+        "a tired anonymous manual laborer wearing a worn flat cap, dark rain-soaked wool coat and stained apron, gesturing with two ink-darkened palms",
+        "an old weather-worn unsigned factory welfare notice pinned to the brick gate pillar without legible names or monetary amounts",
+        "other ordinary laborers still near the factory, behind heavy wrought-iron gates under smoke-choked industrial chimneys"
+      ],
+      "background": "soaked red brick, riveted wrought iron factory gate, factory windows lit in the distance, gas wall lantern and rain-darkened cobblestones",
+      "light": "cold blue-grey overcast rain light with a warm amber factory lantern brushing the laborer's face and worn hands",
+      "npc": "one anonymous male factory laborer in the foreground, the visitor seen only as a cropped unidentifiable shoulder, and indistinct workers further inside the yard",
+      "knowledgeBoundary": "The conversation establishes fear over wages and an unresolved widow pension; it does not establish the factory closing, the pension being paid, evidence being handed to workers or creation of a protected local intermediary",
+      "avoid": [
+        "accounts ledger or certified evidence copy inside the worker's coat",
+        "legible fabricated pension details, widow identity or payment record",
+        "completed factory shutdown, celebrated strike or cleared empty industrial yard",
+        "recognized player character portrait, local intermediary agreement or verified rescue"
+      ],
+      "intendedVariant": "accounts-brackett"
     }
   ]
 }
