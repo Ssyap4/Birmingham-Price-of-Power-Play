@@ -17,8 +17,11 @@ function plan(before,after,action,receipts,describeEvidence){
  const main=changes.slice(0,2);
  const extra=changes.length-main.length;
  const message=main.map(x=>x.text).join(" ")+
-   (extra?" Ещё "+extra+" "+(extra===1?"изменение":"изменения")+" — в ходе дела.":"");
- if(!changes.length)return {message:"",kind:null,focus:null,count:0};
+   (extra?" Ещё "+extra+" "+(extra===1?"изменение":"изменения")+". Откройте подробности уведомления.":"");
+ if(!changes.length)return {message:"",kind:null,focus:null,count:0,details:null};
+ // All receipts are derived from the committed transition. Never silently
+ // hide the third consequence behind a journal that may not record every flag.
+ const details=extra?changes.map(x=>x.text):null;
  const primary=changes[0];
  const added=after.evidence.filter(id=>!before.evidence.includes(id));
  const focus=primary.kind==="evidence"&&added.length?
@@ -26,7 +29,7 @@ function plan(before,after,action,receipts,describeEvidence){
    primary.kind==="witness"?{tab:"witnesses",id:null}:
    primary.kind==="custody"?{tab:"evidence",id:"brackett_accounts"}:
    {tab:"journal",id:null};
- return {message,kind:primary.kind,focus,count:changes.length};
+ return {message,kind:primary.kind,focus,count:changes.length,details};
 }
 return {plan};
 });
