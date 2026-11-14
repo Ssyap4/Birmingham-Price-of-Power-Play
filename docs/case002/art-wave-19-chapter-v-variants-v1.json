@@ -37,6 +37,70 @@
           "a face replacing the established proprietor or the playable investigator"
         ]
       }
+    },
+    {
+      "sceneId": "E03",
+      "variantKey": "still-unverified",
+      "candidateFile": "case002-e03-scene--archive--mobile.webp",
+      "sha256": "ca73a2e402558e7cd2229a8e37679ea1e1ab42af26ddac373745911f70ce294e",
+      "gitBlobSha1": "d8cd5856df95e673f06986448f6084ca03994fb3",
+      "bytes": 73582,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "shotCard": {
+        "id": "E03",
+        "sceneKind": "evidence",
+        "focus": "a dark-haired newspaper editor uses an unmarked cover sheet to hide identifying signatures while checking two physically separate archives of documents on a narrow oak sorting table",
+        "camera": "near-vertical overhead view, hands and back of pinned hair coming in from the lower edge, diagonal arrangement of documents on a dark sorting counter",
+        "location": "a secluded records alcove behind a Birmingham newspaper office in the 1920s",
+        "required": [
+          "one stack of twine-tied handwritten letters and folded envelopes at the left side",
+          "one independent stack of typed factory extracts and ledger leaves at the right side",
+          "a completely plain protective paper sheet sliding over the signatures between the editor's ink-smudged hands"
+        ],
+        "background": "aged wooden pigeonhole shelves and drawers, bundles of old paper, polished dark wood and a large overhead enamel-shaded reading lamp",
+        "light": "warm focused lamp on archive papers with the surrounding pigeonholes receding into shadow",
+        "npc": "one dark-haired woman editor seen only from above and behind, no visible face and no other figures",
+        "knowledgeBoundary": "This image shows confidentiality screening before independent-source verification and no publication. It cannot by itself establish independent corroboration or participant protection.",
+        "avoid": [
+          "readable witness names, addresses, identities or child data",
+          "a completed public newspaper headline, published page or certified independent provenance",
+          "recognizable invented detective or alternate editor face",
+          "a factory printing machine, low shoulder-height desk tableau, or celebratory investigative conclusion"
+        ]
+      }
+    },
+    {
+      "sceneId": "E05",
+      "variantKey": "cleared",
+      "candidateFile": "case002-e05-scene--cleared--mobile.webp",
+      "sha256": "d1a42ae6dbf288112b6d79cbd241bd2fcd4290a637eb8df941d03a9dd4330d7f",
+      "gitBlobSha1": "764d0168fda05e0085f63e9bd31254534622e5da",
+      "bytes": 111852,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "shotCard": {
+        "id": "E05",
+        "sceneKind": "aftermath",
+        "focus": "wet empty industrial siding rails lead toward a closed iron yard gate, with a group of factory laborers standing together on the far side while a shift watchman checks his ledger by lamplight",
+        "camera": "low railway-track-level wide depth view along the free foreground rails toward the iron gate and the watchman at the right edge",
+        "location": "a private rail freight siding at brick factories in rainy Birmingham in the 1920s",
+        "required": [
+          "unoccupied intact wet railway rails and an iron hand-operated switch in the foreground",
+          "multiple anonymous mill laborers safely gathered beyond an iron gate and fence, seen from the track side",
+          "a middle-aged shift watchman beside the barrier holding a plain shift ledger under a hanging oil lantern"
+        ],
+        "background": "old soot-blackened red-brick mill buildings, heavy chimneys, mist and narrow high factory windows",
+        "light": "cold blue early-morning rain haze and small amber lamps reflected in rail steel and wet cobblestones",
+        "npc": "anonymous tired workers in period caps behind the fence, with a watchman in a rolled-sleeved waistcoat; no identified playable hero",
+        "knowledgeBoundary": "The cleared view is only valid when scenario state workersCleared is already true. Visible empty rails do not alone certify every worker's safety, paid wages, safeSidingAccess, or completed sabotage.",
+        "avoid": [
+          "people working on or standing in the foreground rail corridor",
+          "broken switch, derailment or emergency accident",
+          "a legible formal clearance order, payments or signatures",
+          "a recognizable playable detective, hero victory or violent act"
+        ]
+      }
     }
   ]
 }

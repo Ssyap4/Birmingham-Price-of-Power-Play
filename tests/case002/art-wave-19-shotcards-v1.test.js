@@ -159,4 +159,18 @@ assert(signed,"Signed Vale guarantee version must be staged separately from unsi
 assert.notEqual(signed.sha256,staged.find(x=>x[0]==="E07")[1]);
 assert.equal(director.variant({scene:{id:"E07"},state:{flags:{valeGuarantee:true},witnesses:{}}}),"signed");
 assert.equal(director.variant({scene:{id:"E07"},state:{flags:{},witnesses:{}}}),"unsigned");
+
+const newArchive=variantsSpec.variants.find(x=>x.sceneId==="E03"&&x.variantKey==="still-unverified");
+assert(newArchive,"Independently staged archive edit must be bound to the unverified public-contact state");
+assert.notEqual(newArchive.sha256,staged.find(x=>x[0]==="E03")[1],"New archive shot must not duplicate the old editorial art");
+assert.equal(director.variant({scene:{id:"E03"},state:{flags:{publicContactSecured:false},witnesses:{}}}),"still-unverified");
+assert.equal(director.variant({scene:{id:"E03"},state:{flags:{publicContactSecured:true},witnesses:{}}}),"verified-not-published");
+assert(newArchive.shotCard.knowledgeBoundary.includes("no publication"),"Archive art must remain unpublished");
+const newCleared=variantsSpec.variants.find(x=>x.sceneId==="E05"&&x.variantKey==="cleared");
+assert(newCleared,"Cleared siding must be a separate physically verified variant");
+assert.notEqual(newCleared.sha256,staged.find(x=>x[0]==="E05")[1],"Old on-rails artwork cannot be reused for cleared siding");
+assert.equal(director.variant({scene:{id:"E05"},state:{flags:{workersCleared:false},witnesses:{}}}),"workers-on-rails");
+assert.equal(director.variant({scene:{id:"E05"},state:{flags:{workersCleared:true},witnesses:{}}}),"cleared");
+assert(newCleared.shotCard.knowledgeBoundary.includes("workersCleared"),"Only narrative state can mark workers as cleared");
+
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));
