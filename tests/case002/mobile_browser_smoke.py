@@ -344,7 +344,7 @@ def main():
                     assert "Сцена A05" in page.locator("#toolContent").inner_text(), (
                         "Chronicle entries must survive Safari/Chromium reloads"
                     )
-                    for width in (360, 390, 430):
+                    for width in (320, 360, 390, 430):
                         page.set_viewport_size({"width": width, "height": 790})
                         nav = page.locator("#quickNav").bounding_box()
                         assert nav and nav["width"] <= width + 1
@@ -353,6 +353,16 @@ def main():
                         )
                         for navbutton in page.locator("#quickNav button").all():
                             assert navbutton.bounding_box()["height"] >= 44
+                            font_size = navbutton.evaluate(
+                                "(el) => parseFloat(getComputedStyle(el).fontSize)"
+                            )
+                            assert font_size >= 11.15, (
+                                f"{browser_name}: {width}px quick navigation text too small ({font_size})"
+                            )
+                        for tabbutton in page.locator(".tool-tab").all():
+                            assert tabbutton.evaluate(
+                                "(el) => parseFloat(getComputedStyle(el).fontSize)"
+                            ) >= 11.15, f"{browser_name}: {width}px dossier tabs unreadable"
                         overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1")
                         assert not overflow, f"{browser_name}: horizontal overflow at {width}"
                         icons = page.locator(".evidence-card svg.evidence-symbol")
@@ -509,6 +519,18 @@ def main():
                     })""")
                     assert shell_top >= 64, f"{browser_name}: Telegram header overlaps case: {css_diag}"
                     assert nav_bottom_padding >= 34, f"{browser_name}: Telegram home bar overlaps commands"
+                    for selector in ("#storyPanel","#choicesPanel","#caseTools",
+                                     "#chapterIntertitle","#sceneText"):
+                        margin = tg_page.locator(selector).evaluate(
+                            "(el) => parseFloat(getComputedStyle(el).scrollMarginTop)"
+                        )
+                        assert margin >= 82, (
+                            f"{browser_name}: Telegram top inset omitted from {selector}: {margin}"
+                        )
+                    tg_page.locator("#readScene").click()
+                    assert tg_page.locator("#sceneText").evaluate(
+                        "(el) => el.getBoundingClientRect().top >= 70"
+                    ), f"{browser_name}: reading jump hides text under Telegram top chrome"
                     updated_top = tg_page.evaluate("""() => {
                         window.Telegram.WebApp.contentSafeAreaInset.top = 72;
                         window.__case002TelegramHandlers.contentSafeAreaChanged();
@@ -519,6 +541,16 @@ def main():
                         "(el) => parseFloat(getComputedStyle(el).paddingTop)"
                     )
                     assert new_padding >= 96, f"{browser_name}: safe-area change did not reach rendered layout"
+                    new_margin = tg_page.locator("#sceneText").evaluate(
+                        "(el) => parseFloat(getComputedStyle(el).scrollMarginTop)"
+                    )
+                    assert new_margin >= 114, (
+                        f"{browser_name}: reading jump not updated after Telegram header grew"
+                    )
+                    tg_page.locator("#readScene").click()
+                    assert tg_page.locator("#sceneText").evaluate(
+                        "(el) => el.getBoundingClientRect().top >= 106"
+                    ), f"{browser_name}: dynamically larger Telegram header clips scene text"
                     tg_context.close()
                     assert not failures, f"{browser_name} console errors: {failures}"
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
