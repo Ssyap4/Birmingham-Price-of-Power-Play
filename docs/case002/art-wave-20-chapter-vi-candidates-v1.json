@@ -149,6 +149,24 @@
         "review": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob"
       },
       "replacedAfterCanonicalReview": true
+    },
+    {
+      "sceneId": "F09",
+      "variantKey": "default",
+      "candidateFile": "case002-f09-scene--mobile.webp",
+      "sha256": "dce1030fa1ddf854635ea0c0c276b3fce13868d82657efd0b15a866003ce37b9",
+      "gitBlobSha1": "86d7d685a687c9ee6ccf4e4d48d3513a2600b598",
+      "bytes": 98288,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: detective seen indistinctly from behind at rainy industrial dawn, pen suspended over wholly blank page, entirely unlettered closed leather folder, no case number, no seal, no selected ending or invented evidence",
+      "knowledgeBoundary": "Neutral decision moment, future options and consequences determined only from available ending state, never implied by the artwork.",
+      "previousRejectedGeneratorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46"
     }
   ],
   "rejectedGenerations": [

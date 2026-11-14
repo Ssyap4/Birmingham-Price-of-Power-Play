@@ -110,6 +110,14 @@ for(const [idx,card] of batch.entries()){
    assert(card.avoid.some(x=>/Tommy, other conditional witnesses/.test(x)));
    assert(card.avoid.some(x=>/opened, legible or transferred factory account book/.test(x)));
  }
+ else if(card.id==="F09"){
+   assert(card.knowledgeBoundary.includes("endingAvailable"));
+   assert(card.knowledgeBoundary.includes("blank"));
+   assert(card.required.some(x=>/completely blank unsigned sheet/.test(x)));
+   assert(card.required.some(x=>/unlettered brown leather folder/.test(x)));
+   assert(card.avoid.some(x=>/printed case number/.test(x)));
+   assert(card.avoid.some(x=>/all seven endings/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -158,10 +166,13 @@ assert.equal(rejectedF09.attemptedGenerations,1);
 assert.equal(rejectedF09.imageApproved,false);
 assert.equal(rejectedF09.installed,false);
 assert.equal(rejectedF09.candidateFile,null);
-assert(!metadata.candidates.some(x=>x.sceneId==="F09"),
- "A rejected rendering must not be passed off as an accepted candidate");
-assert(!spec.scenes.some(x=>x.id==="F09"),
- "Rejected artwork must not silently be counted as a finished Chapter VI shot");
+assert.equal(metadata.candidates.filter(x=>x.sceneId==="F09").length,1,
+ "The newly accepted F09 must be distinct from the rejected wrong-number rendering");
+assert.equal(spec.scenes.filter(x=>x.id==="F09").length,1);
+assert.equal(metadata.candidates.find(x=>x.sceneId==="F09").status,"staged-candidate-not-installed");
+const f09View={scene:{id:"F09"},state:{flags:{},witnesses:{}},facts:{}};
+assert.equal(director.variant(f09View),"available-options-in-html",
+ "Choices are derived from game logic rather than the pictured document");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F09").length,0,
- "A rejected image must never be installed in the playable scene manifest");
-console.log("PASS: Chapter VI F01–F08 accepted, F09 rejected and blocked pending one future render.");
+ "F09 must remain uninstalled until the Chapter VI integration");
+console.log("PASS: Chapter VI F01–F09 candidates verified, rejected F09 predecessor preserved.");

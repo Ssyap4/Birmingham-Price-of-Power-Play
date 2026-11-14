@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay and canonical storyboard; F08 revised in a separate one-render turn after portrait review.",
+  "source": "Chapter VI screenplay and canonical storyboard, F01–F09; F09 re-rendered one time in a new author turn after the earlier rejected wrong-number artwork.",
   "scenes": [
     {
       "id": "F01",
@@ -186,6 +186,29 @@
         "a signed verdict, celebratory ending, protected witness status or published charges"
       ],
       "intendedVariant": "neutral-conversation-all-three-account-states"
+    },
+    {
+      "id": "F09",
+      "sceneKind": "evidence",
+      "focus": "an anonymous detective, seen from behind at an old industrial office desk at early dawn, pauses with a fountain pen held over a completely blank unsigned sheet next to one plain unmarked closed brown leather folder, hesitating before a consequential decision",
+      "camera": "intimate oblique over-the-shoulder close shot from behind the solitary detective, with pen tip suspended over a blank loose sheet in sharp focus, simple closed folder to the left and rainwashed dawn industrial skyline beyond the window",
+      "location": "a modest early-morning railway investigation office overlooking smoky red brick Birmingham factories in the 1920s",
+      "required": [
+        "one completely blank unsigned sheet of aged paper in the foreground beneath a hovering black-gloved fountain-pen hand",
+        "one plain closed unlettered brown leather folder resting apart from the blank sheet on a scratched dark oak desk",
+        "one rain-streaked factory office window showing smoke-stack silhouettes in pale blue-pink early dawn, with an amber old-fashioned shaded desk lamp"
+      ],
+      "background": "old brass lamp, dark books, plain timber desk and rain-speckled multi-pane factory window overlooking soot-blackened mill buildings",
+      "light": "soft pale industrial dawn through rain-streaked windows balanced by an amber desk lamp, casting contemplative low-contrast shadows on the unwritten page",
+      "npc": "a single anonymous playable investigator seen only from behind and in black-gloved hands, no recognizable features or other people",
+      "knowledgeBoundary": "The sheet remains blank and unsigned. This is a pause before deciding, not an accusation, a signed agreement, evidence of a specific ending, public publication, a transfer of factory accounts, or a guarantee that every ending is available. Only the scenario's endingAvailable conditions determine subsequent options.",
+      "avoid": [
+        "any printed case number, case title, names, legal verdict or readable writing on the blank sheet or folder",
+        "a signed agreement, seal attesting completion, public newspaper exposé or an already-chosen final outcome",
+        "a display or symbol catalog of all seven endings or implied access to unavailable decisions",
+        "an identifiable face of a selectable detective or a dramatic action already deciding the outcome"
+      ],
+      "intendedVariant": "available-options-in-html"
     }
   ]
 }
