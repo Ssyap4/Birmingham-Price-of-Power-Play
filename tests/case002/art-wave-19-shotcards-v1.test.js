@@ -208,4 +208,21 @@ assert(e10Local.shotCard.knowledgeBoundary.includes("localIntermediary"),
 assert(e10Local.shotCard.avoid.some(x=>/legible witness names/.test(x)),
  "Never put unverified witness identities on the archival sheet");
 
+
+const e10Workers=variantsSpec.variants.find(x=>x.sceneId==="E10"&&x.variantKey==="accounts-workers");
+assert(e10Workers,"Workers-held accounts must have a separate intermediary-report illustration");
+assert.notEqual(e10Workers.sha256,staged.find(x=>x[0]==="E10")[1],
+ "Neutral E10 interim audit cannot depict workers holding verified accounts");
+assert.notEqual(e10Workers.sha256,e10Local.sha256,
+ "Local intermediary discussion cannot be reused for workers-held accounts");
+assert.notEqual(e10Workers.sha256,e09WorkerTransfer.sha256,
+ "Report after transfer must not reuse the factory-gate handover");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{accountsGivenToWorkers:true,localIntermediary:false},witnesses:{}}}),"accounts-workers");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{accountsGivenToWorkers:true,localIntermediary:true},witnesses:{}}}),"accounts-workers");
+assert.equal(director.variant({scene:{id:"E10"},state:{flags:{accountsGivenToWorkers:false,localIntermediary:true},witnesses:{}}}),"intermediary");
+assert(e10Workers.shotCard.knowledgeBoundary.includes("accountsGivenToWorkers"),
+ "The image does not grant the accountsGivenToWorkers flag");
+assert(e10Workers.shotCard.required.some(x=>/his own hands/.test(x)),
+ "Worker document possession must be visible, not merely implied");
+
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));

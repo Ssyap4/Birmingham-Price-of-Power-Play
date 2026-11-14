@@ -201,6 +201,39 @@
           "a completed payment, proven factory guilt, or witnesses visibly rescued"
         ]
       }
+    },
+    {
+      "sceneId": "E10",
+      "variantKey": "accounts-workers",
+      "candidateFile": "case002-e10-scene--accounts-workers--mobile.webp",
+      "sha256": "1d023b24931b86a039bff04c6ce6194d1f79c41ae1247b3cfb781673900ea309",
+      "gitBlobSha1": "54ed5de7e4b7ca422ba519baf9e6a7d7b024f4ab",
+      "bytes": 105586,
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E10",
+        "sceneKind": "evidence",
+        "focus": "an investigator in black gloves makes a restrained update in a private leather-bound interim report while a factory worker seated across the table studies the separately delivered bundle of accounting papers in his own hands",
+        "camera": "oblique elevated side view down a long wooden records table: a gloved pen and open report in the near foreground, the worker with his own twine-bound bundle behind it, no recognizable investigator face",
+        "location": "a modest industrial records room overlooking a rainy brick factory yard in 1920s Birmingham",
+        "required": [
+          "an anonymous weary worker in a worn period flat cap and rain-darkened coat holding a tied bundle of accounting-copy pages entirely in his own hands",
+          "a separate open, undecorated investigator's interim-report notebook in the foreground as black-gloved hands write on one page",
+          "a warm oil lamp, old timber table, and second indistinct laborer observing from further back without touching the documents"
+        ],
+        "background": "wooden shelves with worn ledgers, rain-streaked factory window, smoking chimney silhouettes and old industrial brickwork",
+        "light": "warm amber oil-lamp glow on the owned copy and report, cold blue-gray rainy daylight behind the worker",
+        "npc": "the document-holding worker is an anonymous factory laborer; optional shadowed anonymous companion; only the gloved hands and dark sleeve of the playable detective are visible",
+        "knowledgeBoundary": "Only show this scene when the story has already set accountsGivenToWorkers=true. A worker reviewing his own document copies does not establish correctness of all accounting entries, protected witnesses, a paid widow's pension, published proof, or success of the investigation.",
+        "avoid": [
+          "the detective still possessing the only copy or handing the entire bundle again as in the earlier gate scene",
+          "a readable financial conclusion, recognizable witness, exact wage sum or fabricated official clearance",
+          "an identifiable face of any of the five playable heroes, a signing official or celebrated victory",
+          "any proof of witness safety, factory closure, paid compensation or conclusive court decision"
+        ]
+      }
     }
   ]
 }
