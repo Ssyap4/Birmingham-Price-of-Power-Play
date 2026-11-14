@@ -71,6 +71,18 @@ for (const c of heroes){
  for(const forbidden of c.avoid)assert(!render.includes(forbidden));
  assert.equal(review.automationDoesNotApprove,true);
 }
+// Physically staged hero-specific candidates are not installed scene approvals.
+const heroCandidateHashes=[["HJ02","ef5d10ff4a2571a4b3b655817260bd0590760cd6ab95c93dfc638509585a523a"]];
+for (const [id,hash] of heroCandidateHashes){
+ assert(heroStory.some(x=>x.id===id),"Staged hero candidate absent from storyboard: "+id);
+ const file=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");
+ assert(fs.existsSync(file),"Staged hero candidate missing: "+id);
+ const bytes=fs.readFileSync(file);
+ assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),hash,"Hero candidate bytes changed without review");
+ assert.equal(bytes.subarray(0,4).toString("ascii"),"RIFF");
+ assert.equal(bytes.subarray(8,12).toString("ascii"),"WEBP");
+ assert.equal(bytes.readUInt32LE(4)+8,bytes.length,"RIFF file length mismatch");
+}
 const allIds=new Set([...storyboardIds,...heroStory.map(x=>x.id)]);
 const installed=manifest.sceneImages.filter(x=>allIds.has(x.sceneId)&&x.review==="approved");
 assert(installed.every(x=>allIds.has(x.sceneId)));

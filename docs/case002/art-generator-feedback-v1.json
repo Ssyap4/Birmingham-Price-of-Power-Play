@@ -209,6 +209,16 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Mabel shown from rear/side holding twine-bound family appeals in rainy detective-office doorway. No hero face, premature conclusion or legible victim names."
+    },
+    {
+      "scene": "HJ02",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Jack shown rear/side with one protective arm at guarded Aston factory gate; Tommy bandaged and still under watchman's control. No freed/protected state or substituted playable-hero portrait."
     }
   ]
 }
