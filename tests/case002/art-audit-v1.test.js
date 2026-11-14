@@ -62,6 +62,37 @@ try{
 }finally{
  fs.rmSync(tmp,{recursive:true,force:true});
 }
+
+/* Identical Z02 neutral art may cover seven witness subsets,
+ * but never a second ending ID. */
+const z02=manifest.sceneImages.filter(x=>x.sceneId==="Z02"&&
+ x.variantKey!=="evacuated-none");
+assert.equal(z02.length,7);
+assert.equal(new Set(z02.map(x=>x.mobileSha256)).size,1);
+const neutralOriginal=path.join(root,"assets/case002/scenes",z02[0].mobileFile);
+const foreignFilename="case002-z03-scene--mobile.webp";
+const tmpReuse=fs.mkdtempSync(path.join(os.tmpdir(),"case002-z02-neutral-reuse-"));
+try{
+ const folder=path.join(tmpReuse,"assets/case002/scenes");
+ fs.mkdirSync(folder,{recursive:true});
+ for(const file of [z02[0].mobileFile,z02[1].mobileFile,foreignFilename])
+  fs.copyFileSync(neutralOriginal,path.join(folder,file));
+ const asMobile=e=>({
+  sceneId:e.sceneId,variantKey:e.variantKey,review:"approved",mobileOnly:true,
+  file:e.file,cast:[],mobileFile:e.mobileFile,mobileWidth:720,mobileHeight:900,
+  mobileSha256:e.mobileSha256
+ });
+ const caseScope={schemaVersion:1,npcPortraits:[],sceneImages:[asMobile(z02[0]),asMobile(z02[1])]};
+ assert.equal(audit({root:tmpReuse,source:caseScope}).sceneCount,2);
+ caseScope.sceneImages.push({
+  sceneId:"Z03",variantKey:"default",review:"approved",mobileOnly:true,
+  file:"case002-z03-scene.webp",cast:[],mobileFile:foreignFilename,
+  mobileWidth:720,mobileHeight:900,mobileSha256:z02[0].mobileSha256
+ });
+ assert.throws(()=>audit({root:tmpReuse,source:caseScope}),
+  /Duplicate art file reused/);
+}finally{fs.rmSync(tmpReuse,{recursive:true,force:true});}
+
 function synthetic(format,width,height){
  const bytes=Buffer.alloc(36);
  bytes.write("RIFF",0,"ascii");bytes.writeUInt32LE(bytes.length-8,4);

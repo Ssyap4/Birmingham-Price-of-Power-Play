@@ -9,6 +9,21 @@ const fs=require("node:fs");
 const path=require("node:path");
 const {createHash}=require("node:crypto");
 const {manifest,permittedVariantReuse}=require("../../src/case002/approved-art-v1.js");
+const endingCandidates=require("../../docs/case002/art-wave-21-endings-candidates-v1.json");
+const evacuatedZ02Aliases=new Set([
+ "evacuated-ada","evacuated-tommy","evacuated-mercer",
+ "evacuated-ada-tommy","evacuated-ada-mercer",
+ "evacuated-tommy-mercer","evacuated-ada-tommy-mercer"
+].map(variant=>"case002-z02-scene--"+variant+"--mobile.webp"));
+function isReviewedNeutralZ02Reuse(prior,folder,file,label,hash){
+ const accepted=endingCandidates.variants.find(x=>x.sceneId==="Z02"&&
+   x.variantKey==="evacuated-present-neutral"&&x.reuseIsApprovedInGame===true);
+ return Boolean(accepted && accepted.sha256===hash &&
+  Array.isArray(accepted.installedMobileFiles)&&accepted.installedMobileFiles.length===7 &&
+  folder==="scenes"&&label==="mobile"&&prior.folder==="scenes"&&prior.label==="mobile"&&
+  evacuatedZ02Aliases.has(prior.file)&&evacuatedZ02Aliases.has(file)&&
+  accepted.installedMobileFiles.includes(prior.file)&&accepted.installedMobileFiles.includes(file));
+}
 const ROOT=path.resolve(__dirname,"../..");
 const MAX_BYTES={desktop:1300000,mobile:900000,portrait:800000};
 function dimensions(bytes){
@@ -56,8 +71,12 @@ function inspect(root,folder,file,expected,label,maxBytes,seen){
    "Missing immutable review SHA-256 for "+file);
  const hash=createHash("sha256").update(raw).digest("hex");
  assert.equal(hash,expected.sha256,"Approved art changed without review: "+file);
- assert(!seen.has(hash),"Duplicate art file reused for different IDs: "+file);
- seen.add(hash);
+ const prior=seen.get(hash);
+ // An already approved neutral Z02 image can repeat ONLY across its seven
+ // explicitly mapped evacuated-witness states; unrelated art remains unique.
+ assert(!prior||isReviewedNeutralZ02Reuse(prior,folder,file,label,hash),
+  "Duplicate art file reused for different IDs: "+file);
+ if(!prior)seen.set(hash,{folder,file,label});
  if(label==="desktop")
    assert(actual.width/actual.height>1.6&&actual.width/actual.height<1.95,
      "Landscape scene must retain cinematic frame: "+file);
@@ -72,7 +91,7 @@ function audit({root=ROOT,source=manifest}={}){
  assert(source&&source.schemaVersion===1&&
    Array.isArray(source.sceneImages)&&Array.isArray(source.npcPortraits),
    "Invalid approved art manifest");
- const seen=new Set(),out=[];
+ const seen=new Map(),out=[];
  const keys=new Set();
  for(const scene of source.sceneImages){
    const key=scene.sceneId+"/"+scene.variantKey;
