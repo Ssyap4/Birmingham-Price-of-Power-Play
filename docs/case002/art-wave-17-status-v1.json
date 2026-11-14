@@ -14,10 +14,14 @@
   "items": [
     {
       "id": "C06",
-      "state": "rejected",
-      "reason": "Inaccurate clock on prior image; corrected positive scene card omits exact-time pixels",
-      "candidateSha256": "a733abf18c56b830df9760a421825f06e962c37a70c5536db68b003271da8f73",
-      "next": "new standalone shot under viaduct with report only"
+      "state": "candidate",
+      "reason": "Single uninterrupted rainy viaduct scene: damp unreadable official report on stone parapet, empty rail arch, no characters or incorrect visible time. Art and WebP checks passed; NOT installed until full C06-C10 batch is ready",
+      "candidateSha256": "3d839286c4b5b24876c0b8931229f5f1b4421cd85c9868fd3eb9c343ff686b63",
+      "next": "hold in candidates, exact canonical 23:47 remains authored prose; await C07 and C09",
+      "candidateAsset": "assets/case002/candidates/case002-c06-scene--mobile.webp",
+      "candidateBytes": 140690,
+      "width": 720,
+      "height": 900
     },
     {
       "id": "C07",
@@ -25,7 +29,7 @@
       "reason": "Dialog shot shows noncanonical face; exact approved signalman reference reviewed",
       "candidateSha256": "398b8f9fbb9ebf35267b2350b566beb32c65781182bb3442a247f162926f789a",
       "canonPortraitSha256": "946a6d9f6173e5a68be6ee537b37ad49537680e51a535350bd5215fead7e27f8",
-      "next": "match canonical 640x800 approved portrait or obscure face completely"
+      "next": "An attempted no-face signal-box prompt generated C09-type exterior tire tracks instead; stop mixed-context attempts and use isolated single dialogue shot with canonical portrait hidden"
     },
     {
       "id": "C08",
@@ -43,7 +47,7 @@
       "state": "rejected",
       "reason": "Lorry remains visibly in supposed deserted trace scene and three paths not sufficiently clear",
       "candidateSha256": "9bc8e6deb5c53bd7787f9230b7baffc785648b03d078050770a82b64e217a068",
-      "next": "vacant yard with twin ruts and three divergently tracked footpaths"
+      "next": "Recent low-angle goods yard attempt showed only tire tracks, not three independently discernible boot-print paths; follow-up produced unrelated exterior; stop and re-isolate source image prompt"
     },
     {
       "id": "C10",

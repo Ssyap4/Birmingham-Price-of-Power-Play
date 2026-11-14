@@ -24,7 +24,7 @@ for(const scene of o.items){
   assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),scene.candidateSha256);
  }
 }
-assert.equal(o.items.filter(x=>x.state==="rejected").length,3);
+assert.equal(o.items.filter(x=>x.state==="rejected").length,2);
 assert.equal(o.items.find(x=>x.id==="C07").canonPortraitSha256.length,64);
-assert.equal(o.items.filter(x=>x.state==="candidate").length,2);
+assert.equal(o.items.filter(x=>x.state==="candidate").length,3);
 console.log("PASS Case002 wave 17: no rejected scene registered in game manifest");
