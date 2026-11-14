@@ -146,6 +146,13 @@
       "previous": "Two image generation calls were made in one user-response cycle, despite ART-ONE-IMAGE-CADENCE.md allowing exactly one.",
       "remedy": "A hard one-call stop after first returned image: perform REVIEW, then either stage it or reject it; no regeneration until a new user message.",
       "outcome": "logged; enforce in following turns"
+    },
+    {
+      "scene": "E07:signed",
+      "category": "workflow_cadence_violation",
+      "previous": "Generator invoked twice within one user turn despite accepted first output.",
+      "remedy": "Hard STOP immediately after the first successful image; do not retry, improve or generate another until a new user message; stage the first if acceptable or mark rejected.",
+      "outcome": "one chosen candidate staged; two-call violation recorded"
     }
   ],
   "observedSuccess": {
@@ -443,6 +450,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Samuel from behind guides three workers out through gate before using intact switch; stationary freight wagons; no verified full clearance, safeSidingAccess, thrown switch or sabotage."
+    },
+    {
+      "scene": "E07:signed",
+      "attempt": 2,
+      "generatedThisTurn": 2,
+      "cadenceCompliant": false,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Two successful image-generation calls occurred in one reply, violating single-call cadence. Only second selected: sealed signed paper (not personally signed by Vale) checked against separate ledger, no rescued witnesses, fake identifiable names or automatic valeGuarantee. Old unsigned image retained for other route."
     }
   ]
 }

@@ -121,4 +121,42 @@ assert(samuel.required.some(x=>/no person touching it/.test(x)),
  "Samuel must not touch the switch before worker evacuation");
 assert(samuel.knowledgeBoundary.includes("every worker was cleared"));
 assert(samuel.avoid.some(x=>/switch already thrown/.test(x)));
+// Dynamic chapter V variants are produced one per user turn, independently of primary IDs.
+const variantsSpec=JSON.parse(fs.readFileSync(path.join(root,"docs/case002/art-wave-19-chapter-v-variants-v1.json"),"utf8"));
+assert.equal(variantsSpec.schemaVersion,1);
+assert.equal(variantsSpec.chapter,"V");
+assert(Array.isArray(variantsSpec.variants)&&variantsSpec.variants.length>=1);
+const variantKeys=new Set();
+for(const row of variantsSpec.variants){
+ assert(board.sceneAssets.some(s=>s.chapter==="V"&&s.id===row.sceneId));
+ assert(/^[a-z][a-z0-9-]*$/.test(row.variantKey));
+ const key=row.sceneId+":"+row.variantKey;
+ assert(!variantKeys.has(key),"Duplicate staged cinematic route: "+key);
+ variantKeys.add(key);
+ const card=builder.validateCard(row.shotCard,{requiresKind:true});
+ assert.equal(card.id,row.sceneId);
+ const p=builder.promptFor(card);
+ assert(p.includes(card.focus)&&p.includes(card.location));
+ assert(!p.includes(card.knowledgeBoundary));
+ assert.equal(builder.reviewFor(card).requiresHumanArtReview,true);
+ const file="case002-"+row.sceneId.toLowerCase()+"-scene--"+row.variantKey+"--mobile.webp";
+ assert.equal(row.candidateFile,file);
+ assert.equal(row.status,"staged-candidate-not-installed");
+ const actual=fs.readFileSync(path.join(root,"assets/case002/candidates",file));
+ assert.equal(actual.subarray(0,4).toString("ascii"),"RIFF");
+ assert.equal(actual.subarray(8,12).toString("ascii"),"WEBP");
+ assert.equal(actual.readUInt32LE(4)+8,actual.length);
+ assert.deepEqual([dimensions(actual).width,dimensions(actual).height],[720,900]);
+ assert.equal(actual.length,row.bytes);
+ assert.equal(crypto.createHash("sha256").update(actual).digest("hex"),row.sha256);
+ assert.equal(crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+actual.length+"\\0"),actual])).digest("hex"),row.gitBlobSha1);
+ const copies=manifest.sceneImages.filter(e=>e.sceneId===row.sceneId&&e.variantKey===row.variantKey);
+ assert(copies.length<=1,"Installed variant must be unique: "+key);
+ if(copies.length)assert.equal(copies[0].mobileSha256,row.sha256,"Installed variant changed without review: "+key);
+}
+const signed=variantsSpec.variants.find(x=>x.sceneId==="E07"&&x.variantKey==="signed");
+assert(signed,"Signed Vale guarantee version must be staged separately from unsigned");
+assert.notEqual(signed.sha256,staged.find(x=>x[0]==="E07")[1]);
+assert.equal(director.variant({scene:{id:"E07"},state:{flags:{valeGuarantee:true},witnesses:{}}}),"signed");
+assert.equal(director.variant({scene:{id:"E07"},state:{flags:{},witnesses:{}}}),"unsigned");
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));

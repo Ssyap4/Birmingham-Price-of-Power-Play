@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "chapter": "V",
+  "purpose": "Additional one-at-a-time cinematic state-specific candidates, kept separate from the fifteen primary scene cards",
+  "variants": [
+    {
+      "sceneId": "E07",
+      "variantKey": "signed",
+      "candidateFile": "case002-e07-scene--signed--mobile.webp",
+      "sha256": "6a5bbae1c2795701ce4a9bb9b5061e02f64121a23bd7442edb4944e2848f782b",
+      "gitBlobSha1": "eab338c8c49e4debec77c65972e503aa9c5d39ae",
+      "bytes": 79680,
+      "status": "staged-candidate-not-installed",
+      "renderCountInThisTurn": 2,
+      "acceptedRendering": 2,
+      "firstRenderingNotStaged": true,
+      "shotCard": {
+        "id": "E07",
+        "sceneKind": "evidence",
+        "focus": "a single aged industrial protection-terms letter bearing an illegible ink signature and dark red wax seal is lifted by an investigator wearing black leather gloves directly above a separate open factory verification ledger, while an older proprietor's signet-ringed hand rests nearby without a pen",
+        "camera": "low medium-close three-quarter viewpoint centered on the signed paper suspended in gloved hands above the thick verification register, with both people's faces outside the frame",
+        "location": "a wealthy factory owner's dark wood-paneled private office in industrial Birmingham during the 1920s",
+        "required": [
+          "one weathered formal paper held up in dark leather gloves, visibly bearing a single flowing illegible ink signature and a small red wax seal near its lower edge",
+          "a separate open bound register flat on the wooden table with another decorative red wax impression and neat archival lines",
+          "a mature bare hand with a gold signet ring resting away from the paper on the opposite side of the desk"
+        ],
+        "background": "worn dark oak table, brass lamp, tall rain-streaked window with smoking brick factory chimneys beyond, burgundy curtains and an old leather chair",
+        "light": "warm amber brass-lamp light on yellowed paper and wax against cool blue rain-lit industrial skyline",
+        "npc": "only the investigator's black-gloved hands and the older industrial owner's hand; no new visible facial likeness",
+        "knowledgeBoundary": "This image is for the signed scene state only after the scenario has separately verified backing of a pledge and a safe place for at least one witness. A signed paper does not itself prove all witnesses rescued, the owner personally signed it, or guilt admitted.",
+        "avoid": [
+          "any readable signature identifying a real person or invented witness address",
+          "the seated proprietor holding the pen or personally signing the paper",
+          "a signed confession of murder, court verdict or triumphant handshake",
+          "witnesses shown rescued or protected simply because a page has a wax seal",
+          "a face replacing the established proprietor or the playable investigator"
+        ]
+      }
+    }
+  ]
+}
