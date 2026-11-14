@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "source": "docs/case002/case002-screenplay-acts-4-6-and-endings-v2.md",
+  "scenes": [
+    {
+      "id": "D01",
+      "sceneKind": "transition",
+      "focus": "three folded address cards laid across a rain-darkened oak detective desk: a disused boiler house, a guarded factory gate, and a boarding house behind railway tracks",
+      "camera": "high three-quarter angle close to the desktop with three separate paper cards forming a loose triangle, no identified investigator face",
+      "location": "a modest detective office in Birmingham on a rainy evening",
+      "required": [
+        "three physically separate unlabelled address cards with different buildings sketched on each",
+        "a folded old city street map partly beneath the cards",
+        "one brass oil lamp casting warm reflections across wet window glass"
+      ],
+      "background": "dark cabinets and a rain-streaked window with distant smokestacks",
+      "light": "warm amber oil lamp against cold blue rain beyond the window",
+      "npc": "no identifiable person; at most an anonymous sleeve at the edge of the frame",
+      "knowledgeBoundary": "The three addresses offer possible leads, not evidence that any witness has been found or secured",
+      "avoid": [
+        "named portraits or playable protagonist faces",
+        "legible witness names or witness-status markers",
+        "resolved witness outcomes",
+        "triptych of separate scenes"
+      ]
+    },
+    {
+      "id": "D02",
+      "sceneKind": "dialogue",
+      "focus": "one wary female industrial worker in a dark headscarf and worn factory clothes grips a heavy wrench defensively beside a cold iron boiler grate",
+      "camera": "medium shot from behind the woman's shoulder toward the half-open boiler-house door; her face stays mostly in shadow",
+      "location": "a deserted, cold brick boiler house of an old Birmingham factory",
+      "required": [
+        "a heavy spanner clasped tightly in the woman's right hand",
+        "a blackened furnace grate with no active flames",
+        "a just-closed tin tool box next to damp brickwork"
+      ],
+      "background": "pipes, rusted valves, ash on the floor and narrow high factory windows",
+      "light": "dusty pale shafts of morning light crossing shadowy cast-iron machinery",
+      "npc": "one adult female factory mechanic viewed from rear three-quarter angle, with facial detail intentionally obscured",
+      "knowledgeBoundary": "The woman has not yet entrusted the investigator with her pressure journal; her willingness to testify is undecided",
+      "avoid": [
+        "railway freight yard or parked trains",
+        "any definite playable hero",
+        "papers already exchanged or accepted",
+        "a new facial identity inconsistent with the established character portrait"
+      ]
+    },
+    {
+      "id": "D03",
+      "sceneKind": "evidence",
+      "focus": "weathered female worker's hands cautiously opening a worn pressure logbook on a wooden workbench beside industrial valve fittings",
+      "camera": "intimate angled close-up of hands, edge of rough sleeve and open register, with a cold boiler blurred behind",
+      "location": "the wooden maintenance bench inside the old factory boiler house",
+      "required": [
+        "an original thick industrial logbook with worn binding",
+        "six short handwritten entries rendered as indistinct pencil strokes",
+        "one hand resting protectively on the original page",
+        "an old brass pressure gauge and oil-stained rag nearby"
+      ],
+      "background": "steel pipes, soot-stained masonry and a dark decommissioned furnace",
+      "light": "thin diagonal daylight cutting through settling dust and a faint amber lantern edge",
+      "npc": "only the same female mechanic's hands and sleeves are shown, no face",
+      "knowledgeBoundary": "The original pressure register remains with its owner; only an authenticated copy may later enter the investigator's evidence inventory",
+      "avoid": [
+        "readable invented worker names, dates or exact pressure values",
+        "original logbook visibly transferred to unseen investigator",
+        "facial character mismatch",
+        "proof of witness rescue"
+      ]
+    },
+    {
+      "id": "D04",
+      "sceneKind": "dialogue",
+      "focus": "a young detained factory worker stands just inside a barred gatehouse window, his bandaged forearm visible beneath a frayed coat sleeve",
+      "camera": "eye-level close view across wet iron bars from outside the factory gate, catching worker side silhouette and guard beyond",
+      "location": "the guarded night entrance to a Birmingham industrial factory",
+      "required": [
+        "young workman's pale hospital bandage visible under one coat sleeve",
+        "solid barred gatehouse window and firmly latched door",
+        "a watchful uniformed guard in the background"
+      ],
+      "background": "brick factory office, iron fencing and a yard under damp industrial haze",
+      "light": "cold exterior twilight and a small yellow gatehouse bulb lighting the bandage",
+      "npc": "one detained young male worker viewed mostly in side-back shadow with identity-neutral face, one guard behind him",
+      "knowledgeBoundary": "The worker is still detained; no successful release, protected status or escape has happened",
+      "avoid": [
+        "open gates implying freedom",
+        "handshake or rescue",
+        "unknown facial portrait replacing the approved character",
+        "identified playable protagonist"
+      ]
+    },
+    {
+      "id": "D05",
+      "sceneKind": "action",
+      "focus": "at a narrow factory warehouse exit, a stern guard extends his palm asking for documents while a tired shift relief worker waits and a driver glances at his pocket watch",
+      "camera": "medium wide low three-quarter view of the single service exit and three men in one continuous moment, from the unseen visitor's side",
+      "location": "a wet industrial warehouse exit at a guarded factory in Birmingham",
+      "required": [
+        "stern guard at a half-closed iron service gate",
+        "exhausted shift worker leaning against a brick post",
+        "driver near a modest period delivery vehicle checking a pocket watch",
+        "an unoccupied narrow side passage receding into darkness"
+      ],
+      "background": "sodden cobblestones, warehouse doors, stacked crates and distant chimney smoke",
+      "light": "unsteady gatehouse amber lanterns against smoky cold rain",
+      "npc": "only the guard, tired replacement worker and delivery driver; no identifiable hero",
+      "knowledgeBoundary": "No access tactic has yet been chosen or completed; the witness remains in custody and no one is protected",
+      "avoid": [
+        "three separate panels showing alternative outcomes",
+        "gun battle or defeated guards",
+        "rescued witness already outside the compound",
+        "readable invented official documents or watch time"
+      ]
+    }
+  ]
+}

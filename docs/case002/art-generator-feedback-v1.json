@@ -76,6 +76,20 @@
       "previous": "Four-panel collage replaced single illustration",
       "remedy": "One physical moment only, no scene labels or production descriptions in render input",
       "outcome": "resolved"
+    },
+    {
+      "scene": "D02",
+      "category": "wrong_scene",
+      "previous": "Two attempted visual handoffs intended for the old boiler-house meeting produced a railway schedule confrontation and then a freight-wagon inspection; both images rejected.",
+      "remedy": "Before any tool call, compare the actual single-scene image request against the prepared render card. If its place, character or focus drifts into an unrelated railway scene, do not send it. Stop after two misses; change to a clean, independent scene-only context rather than repeat.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D02",
+      "category": "invented_readable_fact",
+      "previous": "An off-scene railway image introduced an unsolicited train number and a clock time not in this scene.",
+      "remedy": "Exclude all readable dates, vehicle codes and timed railway paperwork from the boiler-house visual request; keep canonical facts in authored game text.",
+      "outcome": "rejected-and-recorded"
     }
   ],
   "observedSuccess": {
