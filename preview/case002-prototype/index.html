@@ -63,10 +63,7 @@
       <div id="sceneLocation" class="scene-location"></div>
       <div class="story-read-action"><button id="readScene" class="story-read-button" type="button">К ТЕКСТУ СЦЕНЫ ↓</button></div>
       <figure id="sceneArtwork" class="scene-artwork" hidden>
-        <picture>
-          <source id="sceneArtworkMobile" media="(max-width: 680px)" type="image/webp">
-          <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
-        </picture>
+        <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
       </figure>
       <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
       <div class="story-content" id="sceneText" role="region" aria-label="Текст текущей сцены" tabindex="-1"></div>
@@ -96,6 +93,15 @@
       <button id="backToLaunch" type="button" class="text-button">К ВЫБОРУ ГЕРОЯ</button>
     </div>
   </main>
+</div>
+<!-- Browsers cannot lock physical rotation consistently. A landscape phone
+     shows this pause screen; the running game and saved choices are untouched. -->
+<div id="portraitGate" class="portrait-gate" role="status" aria-live="polite">
+  <div class="portrait-gate-content">
+    <span class="portrait-gate-mark" aria-hidden="true">◈</span>
+    <strong>Верните телефон в вертикальное положение</strong>
+    <p>Расследование создано для вертикального экрана. Ваш прогресс сохранён.</p>
+  </div>
 </div>
 <script src="../../src/case002/browser-data-v3.js"></script>
 <script src="../../src/case002/engine-v3.js"></script>
