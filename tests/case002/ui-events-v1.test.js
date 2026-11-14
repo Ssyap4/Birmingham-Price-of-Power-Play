@@ -11,6 +11,7 @@ const s=()=>({evidence:[],witnesses:{ada:"missing",tommy:"detained",mercer:"miss
  assert.equal(p.focus.id,"old_excursion_ticket");
  assert(p.message.includes("Старинный билет"));
  assert.equal(p.count,1);
+ assert.equal(p.details,null);
 }
 {
  const b=s(),a={...b,witnesses:{...b.witnesses,ada:"protected"}};
@@ -42,13 +43,19 @@ const s=()=>({evidence:[],witnesses:{ada:"missing",tommy:"detained",mercer:"miss
  const p=plan(b,a,"continue",receipts);
  assert(p.count>2);
  assert(p.message.includes("Ещё "));
+ assert(p.message.includes("Откройте подробности уведомления"));
  assert.equal(p.focus.tab,"witnesses");
+ assert.equal(p.details.length,p.count);
+ assert(p.details.some(x=>x.includes("Ада Уэбб")&&x.includes("под защитой")));
+ for(const id of a.evidence)assert(p.details.some(x=>x.includes(id)),
+  "Every newly acquired clue must remain visible in expanded notice");
 }
 {
  const b=s();
  const p=plan(b,b,"continue",receipts);
  assert.equal(p.message,"");
  assert.equal(p.focus,null);
+ assert.equal(p.details,null);
 }
 assert.throws(()=>plan(s(),s(),"continue",{}),/processor/);
 console.log("PASS Case002 mobile events: 7 focused cases covering new clue, witness, betrayal, custody, multiple changes and no-op.");
