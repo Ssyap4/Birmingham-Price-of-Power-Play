@@ -535,6 +535,22 @@ def main():
                       window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == failed_save, (
                         f"{browser_name}: art retry changed the game save"
                     )
+                    # A new scene and a resumed save must clear the old error:
+                    # a failure in P01 must not appear over approved P02 art.
+                    art_page.locator('button.choice[data-to="P02"]').click()
+                    assert art_page.locator("#sceneId").inner_text().startswith("P02")
+                    assert art_page.locator("#artRecovery").is_hidden(), (
+                        f"{browser_name}: prior scene art error leaked into P02"
+                    )
+                    art_page.wait_for_function("""() =>
+                        document.querySelector('#game').dataset.artVerified === 'true'
+                    """, timeout=8000)
+                    art_page.reload(wait_until="load")
+                    art_page.locator("#resume").click()
+                    assert art_page.locator("#sceneId").inner_text().startswith("P02")
+                    assert art_page.locator("#artRecovery").is_hidden(), (
+                        f"{browser_name}: prior scene art error survived save reload"
+                    )
                     art_ctx.close()
                     # A single transient image failure should recover using
                     # the SAME approved portrait, not a landscape replacement.
