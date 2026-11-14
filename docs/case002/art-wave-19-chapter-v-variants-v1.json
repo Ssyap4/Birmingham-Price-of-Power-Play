@@ -41,7 +41,7 @@
     {
       "sceneId": "E03",
       "variantKey": "still-unverified",
-      "candidateFile": "case002-e03-scene--archive--mobile.webp",
+      "candidateFile": "case002-e03-scene--still-unverified--mobile.webp",
       "sha256": "ca73a2e402558e7cd2229a8e37679ea1e1ab42af26ddac373745911f70ce294e",
       "gitBlobSha1": "d8cd5856df95e673f06986448f6084ca03994fb3",
       "bytes": 73582,
