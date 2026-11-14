@@ -68,6 +68,14 @@ for(const [idx,card] of batch.entries()){
    assert(card.required.some(x=>/lowest sixth ledger line/.test(x)));
    assert(card.avoid.some(x=>/legible or invented surnames/.test(x)));
  }
+ else if(card.id==="F05"){
+   assert(card.knowledgeBoundary.includes("witnesses.ada"));
+   assert(card.knowledgeBoundary.includes("witnesses.tommy"));
+   assert(card.knowledgeBoundary.includes("witnesses.mercer"));
+   assert(card.required.some(x=>/exactly three separate aged witness cards/.test(x)));
+   assert(card.avoid.some(x=>/rescued\/protected\/dead label/.test(x)));
+   assert(card.avoid.some(x=>/recognizable witness portrait/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -86,4 +94,14 @@ const factoryView=bool=>({scene:{id:"F04"},state:{flags:{},witnesses:{}},facts:{
 assert.equal(director.variant(factoryView(false)),"factory-unproven");
 assert.equal(director.variant(factoryView(true)),"factory-proven");
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F04").length,0);
-console.log("PASS: Chapter VI candidate scenes F01–F04 physically verified and uninstalled.");
+const witnessView=w=>({scene:{id:"F05"},state:{flags:{},witnesses:w},facts:{}});
+for(const witnesses of [
+  {ada:"missing",tommy:"detained",mercer:"missing"},
+  {ada:"protected",tommy:"evacuated",mercer:"deceased"},
+  {ada:"evacuated",tommy:"evacuated",mercer:"evacuated"}
+]){
+  assert.equal(director.variant(witnessView(witnesses)),"statuses-in-html",
+    "The image cannot silently declare witness fate for a particular route");
+}
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F05").length,0);
+console.log("PASS: Chapter VI candidates F01–F05 verified, with independent witness fate states uninstalled.");

@@ -69,6 +69,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted: a visually separate two-line official sheet versus six numbered ledger entries, with the investigator's hand at entry six; no invented legible names or court verdict",
       "knowledgeBoundary": "No graphic establishes guilt or the provedFactoryCoverup game fact; both legal and evidentiary conclusions remain driven by the narrative state."
+    },
+    {
+      "sceneId": "F05",
+      "variantKey": "default",
+      "candidateFile": "case002-f05-scene--mobile.webp",
+      "sha256": "692ec595e6f5639da1d1f1a993127a147d0b8973452a6485bc32f9cc223834c4",
+      "gitBlobSha1": "bb3dfae49e216c8af5a8a8256659786b94eee845",
+      "bytes": 114910,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: three distinct paper files in one leather folio, with deliberately indistinct cameo silhouettes and no legible names, safety labels or implied collective rescue; investigator's face not visible",
+      "knowledgeBoundary": "Three visual records alone cannot confirm any witness's fate. Ada, Tommy and Daniel Mercer keep independently determined HTML state labels."
     }
   ]
 }

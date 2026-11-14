@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay and canonical storyboard; F01 through F04 each generated and reviewed in a separate author turn",
+  "source": "Chapter VI screenplay and canonical storyboard; F01 through F05 created in separate single-image author turns",
   "scenes": [
     {
       "id": "F01",
@@ -94,6 +94,29 @@
         "an identifiable selectable hero's face or a replacement portrait of a known character"
       ],
       "intendedVariant": "neutral-document-comparison"
+    },
+    {
+      "id": "F05",
+      "sceneKind": "evidence",
+      "focus": "one black-gloved detective opens a worn leather folio containing exactly three separate clipped witness dossiers, pausing the pen beside the last as if checking each person's unresolved circumstances rather than declaring a rescue",
+      "camera": "a three-quarter close overhead view focused on the three parallel dossier slots in the leather folio and the gloved hands, no readable faces",
+      "location": "a private detective's modest rain-darkened office in 1920s industrial Birmingham",
+      "required": [
+        "exactly three separate aged witness cards held in adjacent compartments of an open brown leather folio",
+        "an intentionally indistinct silhouette cameo clipped to each card, without recognizable likeness, beneath each a few unreadable handwritten lines",
+        "one black-gloved hand holding a pencil near the rightmost dossier while another steadies the folio"
+      ],
+      "background": "weathered oak desk, old closed ledgers and an ink bottle, an overhanging shaded brass lamp and rainy window overlooking smoking brick factory stacks",
+      "light": "warm lamplight falling on the leather folio and three paper records, contrasting with cold blue-gray rain through the window",
+      "npc": "only the investigator's gloved hands and dark wool sleeves are shown; the three cameo silhouettes contain no identifiable individual or visible person in the room",
+      "knowledgeBoundary": "The three dossier records correspond to the three witnesses whose individual story states must be checked separately. The illustration does not show anyone rescued, evacuated, dead, under protection or safe. Real statuses remain dynamic HTML-driven facts from witnesses.ada, witnesses.tommy and witnesses.mercer.",
+      "avoid": [
+        "three real recognizable witness portrait faces presented together or fabricated identities",
+        "a legible name, fabricated address, explicit rescued/protected/dead label, or assigned outcome",
+        "an achievement, final witness count or assurance that every person survived",
+        "a selectable detective's visible face or an invented canonical portrait"
+      ],
+      "intendedVariant": "statuses-in-html"
     }
   ]
 }
