@@ -79,6 +79,7 @@ const actionLabels={
  "E11:F01:continue":"Идти к финалу без плана эвакуации"
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
+let activeNoticeSummary="",activeNoticeDetails=null;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -122,6 +123,14 @@ function init(){
    window.scrollTo(0,0);
  });
  $("noticeDismiss").addEventListener("click",hideNotice);
+ $("noticeExpand").addEventListener("click",()=>{
+  if(!activeNoticeDetails)return;
+  const button=$("noticeExpand"),expanded=button.getAttribute("aria-expanded")==="true";
+  setText($("noticeContent"),expanded?activeNoticeSummary:
+    activeNoticeDetails.map(item=>"• "+item).join("\n"));
+  button.setAttribute("aria-expanded",String(!expanded));
+  setText(button,expanded?"ВСЕ ИЗМЕНЕНИЯ ("+activeNoticeDetails.length+")":"СВЕРНУТЬ");
+ });
  $("readScene").addEventListener("click",()=>jumpTo("reading"));
  $("noticeJump").addEventListener("click",()=>{
    if(activeNoticeFocus)jumpTo(activeNoticeFocus.tab,activeNoticeFocus.id);
@@ -188,12 +197,21 @@ function sceneNarration(view){
 function hideNotice(){
  $("notice").hidden=true;
  $("noticeJump").hidden=true;
+ $("noticeExpand").hidden=true;
  activeNoticeFocus=null;
+ activeNoticeDetails=null;
+ activeNoticeSummary="";
 }
-function showNotice(text,focus=null){
+function showNotice(text,focus=null,details=null){
  const notice=$("notice");
- setText($("noticeContent"),text);
+ activeNoticeSummary=String(text||"");
+ activeNoticeDetails=Array.isArray(details)&&details.length>2?details.slice():null;
+ setText($("noticeContent"),activeNoticeSummary);
  notice.hidden=!text;
+ const expand=$("noticeExpand");
+ expand.hidden=!activeNoticeDetails;
+ expand.setAttribute("aria-expanded","false");
+ if(activeNoticeDetails)setText(expand,"ВСЕ ИЗМЕНЕНИЯ ("+activeNoticeDetails.length+")");
  activeNoticeFocus=text&&focus?focus:null;
  const jump=$("noticeJump");
  jump.hidden=!activeNoticeFocus;
@@ -540,7 +558,7 @@ function select(choice){
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
   evidenceFocus=null;
   render();
-  showNotice(event.message,event.focus);
+  showNotice(event.message,event.focus,event.details);
   // The old clicked choice no longer exists. Give the next scene focus and
   // scroll to its opening, including a new chapter intertitle when present.
   showCurrentScene();
