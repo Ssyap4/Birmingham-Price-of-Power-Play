@@ -67,6 +67,11 @@ function bind(host){
    pixel(nav,"padding-bottom",8+edges.bottom);
    pixel(nav,"padding-left",navSide+edges.left);
    pixel(nav,"padding-right",navSide+edges.right);
+   // Some WKWebView builds ignore CSS var() in scroll-margin-top. Give
+   // real in-page anchors a measured pixel offset and restore on disconnect.
+   for(const selector of [
+     "#storyPanel","#choicesPanel","#caseTools","#chapterIntertitle","#sceneText"
+   ])pixel(query(selector),"scroll-margin-top",18+edges.top);
  };
  update();
  if(typeof app.onEvent==="function"){
