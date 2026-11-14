@@ -17,6 +17,7 @@ function category(file){
  if(p==="tools/case002/export-art-binary-bridge-v1.py")return "art";
  if(p==="tools/case002/build-art-production-pack-v1.js")return "art";
  if(p==="tools/case002/art-audit-v1.js")return "art";
+ if(p==="tools/case002/art-feedback-v1.js")return "art";
  if(p==="docs/case002/README.md"||p==="docs/case002/case002-first-portrait-production-brief-v1.md")
    return "docs";
  if(/^docs\/case002\/.*(?:art-storyboard|art-wave|art-production-pack|visual-bible)/.test(p))return "art";
