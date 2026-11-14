@@ -431,6 +431,54 @@ def main():
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: manual dossier switch must preserve tab focus"
                     receipt_ctx.close()
+                    # Rotating a phone across the artwork media threshold
+                    # must switch to the independently approved landscape
+                    # master, then restore the vertical WebP without advancing.
+                    rotate_ctx = browser.new_context(
+                        viewport={"width": 390, "height": 844},
+                        device_scale_factor=3, is_mobile=True, has_touch=True
+                    )
+                    rotate_page = rotate_ctx.new_page()
+                    rotate_errors = []
+                    rotate_page.on("pageerror", lambda err: rotate_errors.append(str(err)))
+                    rotate_page.goto(address, wait_until="load")
+                    rotate_page.locator("#begin").click()
+                    rotate_page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert rotate_page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
+                    ), f"{browser_name}: portrait P01 failed before rotation"
+                    initial_scene = rotate_page.locator("#sceneId").inner_text()
+                    initial_choices = rotate_page.locator("button.choice").count()
+                    rotate_page.set_viewport_size({"width": 800, "height": 760})
+                    rotate_page.wait_for_function("""() => {
+                      const img=document.querySelector('#sceneArtworkImage');
+                      return document.querySelector('#game').dataset.artVerified === 'true'
+                        && img.currentSrc.endsWith('/case002-p01-scene.webp');
+                    }""", timeout=8000)
+                    assert rotate_page.locator("#sceneArtwork").get_attribute(
+                        "data-portrait"
+                    ) == "false", f"{browser_name}: desktop P01 crop stayed portrait"
+                    assert rotate_page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.naturalWidth >= 800 && img.naturalHeight >= 450"
+                    ), f"{browser_name}: wrong desktop P01 image dimensions"
+                    rotate_page.set_viewport_size({"width": 390, "height": 844})
+                    rotate_page.wait_for_function("""() => {
+                      const img=document.querySelector('#sceneArtworkImage');
+                      return document.querySelector('#game').dataset.artVerified === 'true'
+                        && img.currentSrc.endsWith('/case002-p01-scene--mobile.webp');
+                    }""", timeout=8000)
+                    assert rotate_page.locator("#sceneArtwork").get_attribute(
+                        "data-portrait"
+                    ) == "true", f"{browser_name}: P01 crop did not return to phone master"
+                    assert rotate_page.locator("#sceneId").inner_text() == initial_scene
+                    assert rotate_page.locator("button.choice").count() == initial_choices
+                    assert not rotate_errors, (
+                        f"{browser_name}: rotation introduced JavaScript errors: {rotate_errors}"
+                    )
+                    rotate_ctx.close()
                     # Simulate a reviewed landscape scene and a missing
                     # mobile-specific crop. The production manifest remains
                     # untouched: this mock is strictly inside the browser QA.
