@@ -104,6 +104,13 @@
       "previous": "The generated output followed the user's workflow/cadence discussion rather than the scheduled pressure-register moment; exact scene intent was lost.",
       "remedy": "Confirm the generator's actual rendering request describes hands, logbook and boiler room before submitting; current internal prompt-builder cannot guarantee isolation of image generation context.",
       "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "panel_contamination",
+      "previous": "A later new-scene render attempt also produced a decorative agreement-status page rather than the detained worker at a guarded factory gate. Three off-story posters across two scene targets confirmed persistent visual-context drift.",
+      "remedy": "Do not accept images because of attractive typography or matching project title; pause image production entirely in this conversation and move to clean separate scene-only visual requests with direct image QA before continuing. Rendering a project-update poster is not an art asset.",
+      "outcome": "unresolved-global-render-blocker"
     }
   ],
   "observedSuccess": {
