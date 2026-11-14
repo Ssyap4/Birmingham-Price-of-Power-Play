@@ -1,0 +1,42 @@
+name: Case 002 scene and portrait reference review
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - '.github/workflows/case002-visual-reference-review.yml'
+      - 'tools/case002/visual-review-request-v1.txt'
+permissions:
+  contents: read
+jobs:
+  visual-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Emit exact read-only candidate and canonical portrait bytes for art review
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, re
+          lines=Path("tools/case002/visual-review-request-v1.txt").read_text().splitlines()
+          paths=[s.strip() for s in lines if s.strip() and not s.lstrip().startswith("#")]
+          if not 1<=len(paths)<=8 or len(paths)!=len(set(paths)):
+            raise SystemExit("Require one to eight unique review paths")
+          for name in paths:
+            if not re.fullmatch(r'assets/case002/(?:portraits|candidates)/case002-[a-z0-9-]+(?:--[a-z0-9-]+)?(?:--mobile)?\.webp',name):
+              raise SystemExit("Unsafe review path: "+name)
+            p=Path(name)
+            if not p.is_file(): raise SystemExit("Image absent: "+name)
+            data=p.read_bytes()
+            if not (data[:4]==b"RIFF" and data[8:12]==b"WEBP" and len(data)>10000 and len(data)<500000):
+              raise SystemExit("Not a supported candidate: "+name)
+            print("ART_START="+name, flush=True)
+            print("ART_BYTES="+str(len(data)), flush=True)
+            print("ART_SHA256="+hashlib.sha256(data).hexdigest(), flush=True)
+            enc=base64.b64encode(data).decode("ascii")
+            print("ART_PART_COUNT="+str((len(enc)+1999)//2000), flush=True)
+            for i in range(0,len(enc),2000):
+              print("ART_CHUNK="+enc[i:i+2000], flush=True)
+            print("ART_END="+name, flush=True)
+          PY

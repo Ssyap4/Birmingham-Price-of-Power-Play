@@ -1,0 +1,9 @@
+# Exact image bytes only; this workflow never changes the game manifest.
+assets/case002/candidates/case002-e02-scene--mobile.webp
+assets/case002/candidates/case002-e03-scene--still-unverified--mobile.webp
+assets/case002/candidates/case002-e06-scene--mobile.webp
+assets/case002/candidates/case002-hv03-scene--mobile.webp
+assets/case002/candidates/case002-hj03-scene--mobile.webp
+assets/case002/portraits/case002-vale-portrait.webp
+assets/case002/portraits/case002-brackett-portrait.webp
+assets/case002/portraits/case002-nora-portrait.webp
