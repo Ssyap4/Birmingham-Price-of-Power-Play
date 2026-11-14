@@ -34,8 +34,7 @@ const sceneLocations={
  "brackett-office":"Кабинет Брэкетта",
  "railway-platform":"Железнодорожная платформа"
 };
-const witnessNames={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
-const witnessLabels={missing:"местонахождение неизвестно",located:"найден",detained:"под охраной",protected:"под защитой",evacuated:"эвакуирован",deceased:"погиб"};
+const witnessLabel=(id,status)=>window.BirminghamCase002Narrative.witnessStatus(id,status);
 const evidenceLabels={
  dispatch_manifest:"Грузовая ведомость отправления",arrival_manifest:"Подложная ведомость прибытия",
  points_log:"Журнал стрелочного поста",seal_scrap:"Обрывок пломбы вагона",
@@ -338,7 +337,7 @@ function renderSceneCast(stage,state){
    const desc=make("div",undefined,"scene-participant-description");
    desc.append(make("strong",person.name));
    desc.append(make("span",person.role,"scene-participant-role"));
-   if(person.status)desc.append(make("small",witnessLabels[person.status]||person.status,
+   if(person.status)desc.append(make("small",witnessLabel(person.id,person.status),
      "scene-participant-status"));
    card.append(desc);root.append(card);
  }
@@ -506,7 +505,7 @@ function renderTools(){
       const copy=make("div",undefined,"person-copy");
       copy.append(make("strong",person.name));
       copy.append(make("span",person.role,"person-role"));
-      if(person.status)copy.append(make("span",witnessLabels[person.status]||person.status,"person-status"));
+      if(person.status)copy.append(make("span",witnessLabel(person.id,person.status),"person-status"));
       personRow.append(monogram,copy);root.append(personRow);
     }
     if(!contacts.length)root.append(make("p","Знакомства появятся по мере расследования. Чужие личности заранее не раскрываются.","empty"));
