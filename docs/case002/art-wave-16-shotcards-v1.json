@@ -1,9 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "docs/case002/art-wave-16-chapter-iii-c01-c05-v1.md",
   "scenes": [
     {
       "id": "C01",
+      "sceneKind": "transition",
       "focus": "the intact rear of a departing freight train with two red tail lamps",
       "camera": "vertical low-angle wide view from wet station platform",
       "location": "1920s freight yard at night in the rain",
@@ -25,6 +26,7 @@
     },
     {
       "id": "C02",
+      "sceneKind": "evidence",
       "focus": "a weathered railway-switch drawing on a desk, showing both straight and curved sidings",
       "camera": "tight three-quarter overhead view; drawing fills most of frame",
       "location": "manual signal cabin at night",
@@ -45,6 +47,7 @@
     },
     {
       "id": "C03",
+      "sceneKind": "evidence",
       "focus": "a rusted steel wagon coupling hook with a fresh silver abrasion",
       "camera": "very low detailed close-up; coupling fills foreground",
       "location": "private railway siding in heavy night rain",
@@ -65,6 +68,7 @@
     },
     {
       "id": "C04",
+      "sceneKind": "emotion",
       "focus": "Mabel Cross's tightly clasped hands beside an open cargo manifest",
       "camera": "intimate vertical close-up; hands and paper fill most of frame",
       "location": "dark freight office during a rainy night",
@@ -86,6 +90,7 @@
     },
     {
       "id": "C05",
+      "sceneKind": "evidence",
       "focus": "a station arrival register with one later-added line in visibly darker ink",
       "camera": "tight diagonal macro shot of the paper register",
       "location": "station arrival office, 1920s",

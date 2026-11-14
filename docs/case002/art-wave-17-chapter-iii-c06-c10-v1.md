@@ -2,7 +2,7 @@
 
 **Дата:** 2026-11-14. **Статус: IN PRODUCTION.** Это сценарная подготовка; **ни один C06–C10 не зарегистрирован** как approved в игровом манифесте.
 
-Применяется существующая система «один кадр — одна улика» из [art-generator-protocol-v1.md](art-generator-protocol-v1.md) и [ART-CONTINUATION.md](ART-CONTINUATION.md). Не заменять её новой методикой. Все кадры — самостоятельные 4:5, оптимизированные WebP 720×900, mobileOnly:true; без коллажей, надписей и фиксированного игрового героя. Для каждой сцены собирать **отдельный** промпт из [art-wave-17-shotcards-v1.json](art-wave-17-shotcards-v1.json):
+Применяется существующая система «один кадр — один сюжетный момент» из [art-generator-protocol-v1.md](art-generator-protocol-v1.md) и [ART-CONTINUATION.md](ART-CONTINUATION.md). Не заменять её новой методикой. Все кадры — самостоятельные 4:5, оптимизированные WebP 720×900, mobileOnly:true; без коллажей, надписей и фиксированного игрового героя. Для каждой сцены собирать **отдельный** промпт из [art-wave-17-shotcards-v1.json](art-wave-17-shotcards-v1.json):
 
 `node docs/case002/art-wave-prompt-builder-v1.js --cards docs/case002/art-wave-17-shotcards-v1.json --id C07`
 
