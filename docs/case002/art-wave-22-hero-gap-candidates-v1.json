@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "chapter": "HERO-GAPS",
+  "status": "hero-gap-art-production-in-progress",
+  "candidates": [
+    {
+      "sceneId": "HJ01",
+      "variantKey": "default",
+      "candidateFile": "case002-hj01-scene--mobile.webp",
+      "sha256": "b3a1fb848a308c7e63f0245b08d1a58c46eef1049cc1af5a1130a16da85c1567",
+      "gitBlobSha1": "f1d2c034efe02a1083f936438f08d4d04b5d3d29",
+      "bytes": 76750,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "6fe5f683-67e0-4dfe-b9c1-3bdbe3e6bda7",
+      "visualReview": "ACCEPTED: Jack's broad dark coat and flat cap seen entirely from the back; an isolated armed railway guard lowers his eyes by a warm lantern at the canal-lock siding, while cold rain and mist surround the gates. One confrontation, no fight, gunfire, unlocked passage, named evidence or visible Jack face.",
+      "knowledgeBoundary": "The player may still choose intimidation or a factual appeal about Hale; the still image implies neither choice has already succeeded. A dropped guard gaze is fear, not a completed bargain or confirmed testimony."
+    }
+  ]
+}

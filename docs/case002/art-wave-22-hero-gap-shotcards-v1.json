@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "chapter": "HERO-GAPS",
+  "source": "Original HJ01 hero scene in docs/case002/case002-hero-scenes-v2.md and the 89-scene canonical storyboard; one distinct dialogue image accepted, six remaining hero gaps not yet generated.",
+  "scenes": [
+    {
+      "id": "HJ01",
+      "sceneKind": "dialogue",
+      "focus": "a broad-shouldered private detective in a rain-dark overcoat stands with his back to the viewer in a tense quiet exchange with a weary mustached private railway watchman who lowers his eyes instead of challenging him",
+      "camera": "intimate vertical over-the-shoulder view from behind the detective on the right; watchman under the oil lantern on the left and the wet rail siding and lock gate receding in the fog",
+      "location": "an old canal lock beside the private industrial railway siding and a timber guard booth in Birmingham in the 1920s",
+      "required": [
+        "one silent broad-shouldered detective in a dark soaked overcoat and flat cap viewed from behind, no identifiable facial features",
+        "one weary mustached railway watchman in a period uniform coat and service cap looking down, his rifle safely slung across the shoulder",
+        "one illuminated old wooden guard booth, wet rail siding, cold canal water and a weathered timber lock gate in one continuous space"
+      ],
+      "background": "wet cobbles and railway rails curving past the guard booth, a canal-lock wheel and gate, soot-dark factories and smoking chimneys fading into industrial mist",
+      "light": "warm lantern light on the watchman's downturned face and damp wooden booth, contrasting with cold blue-grey night fog on the canal and rails",
+      "npc": "Jack is visible only from behind and cannot be mistaken for a new protagonist; the unnamed railway guard is seen in guarded three-quarter view, no additional participants",
+      "knowledgeBoundary": "This character-specific confrontation occurs before the outcome of the player's decision. Neither a threat nor Jack's reference to Hale has necessarily gained the passage. Guard's averted gaze is hesitation, not a signed confession, a completed bribe, a physical attack or an earned witness statement. Jack's face remains unestablished and his chosen identity is preserved.",
+      "avoid": [
+        "identifiable portrait of Jack or invented close-up face, additional civilian or Tommy appearing at the gate",
+        "the watchman pointing, firing or swinging the rifle at anyone, a fight or visible injury",
+        "an open unlocked gate, the detective already granted passage or a written guard confession",
+        "readable railway timetable, fabricated stamped evidence or an anachronistic modern security booth"
+      ],
+      "intendedVariant": "default"
+    }
+  ]
+}
