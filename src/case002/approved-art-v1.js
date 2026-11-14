@@ -10,6 +10,8 @@
 "use strict";
 const manifest=Object.freeze({
  schemaVersion:1,
+ // Ending wave: seven distinct final scenes, with Z02 explicitly keyed by eight witness states.
+ // Reuse of the independently accepted neutral Z02 image is restricted by the art binary audit.
  sceneImages:Object.freeze([
   Object.freeze({
    sceneId:"Z01",variantKey:"default",review:"approved",mobileOnly:true,
