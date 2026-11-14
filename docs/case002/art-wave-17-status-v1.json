@@ -3,7 +3,7 @@
   "caseId": "002",
   "waveId": 17,
   "updatedAt": "2026-11-14",
-  "scope": "feature-branch-candidate-only",
+  "scope": "feature-branch-installed-wave",
   "sceneIds": [
     "C06",
     "C07",
@@ -14,56 +14,87 @@
   "items": [
     {
       "id": "C06",
-      "state": "candidate",
-      "reason": "Single uninterrupted rainy viaduct scene: damp unreadable official report on stone parapet, empty rail arch, no characters or incorrect visible time. Art and WebP checks passed; NOT installed until full C06-C10 batch is ready",
+      "state": "approved",
+      "reason": "Reviewed scene installed as exact mobile WebP in one feature-branch commit",
       "candidateSha256": "3d839286c4b5b24876c0b8931229f5f1b4421cd85c9868fd3eb9c343ff686b63",
-      "next": "hold in candidates, exact canonical 23:47 remains authored prose; await C07 and C09",
+      "next": "Installed. Keep original SHA unchanged unless a newly reviewed replacement is explicitly approved.",
       "candidateAsset": "assets/case002/candidates/case002-c06-scene--mobile.webp",
       "candidateBytes": 140690,
       "width": 720,
-      "height": 900
+      "height": 900,
+      "installed": true,
+      "installedAsset": "assets/case002/scenes/case002-c06-scene--mobile.webp",
+      "installedSha256": "3d839286c4b5b24876c0b8931229f5f1b4421cd85c9868fd3eb9c343ff686b63",
+      "installedBytes": 140690
     },
     {
       "id": "C07",
-      "state": "candidate",
-      "reason": "Correct independent cinematic signal-box scene from behind: elderly witness's hands rest on shift log beneath oil lamp, manual levers and rainy tracks visible. No identifiable face, no fixed player hero. Quality and file checks passed; costume/headwear nuance retained for final artistic review. NOT installed pending C09.",
+      "state": "approved",
+      "reason": "Reviewed scene installed as exact mobile WebP in one feature-branch commit",
       "candidateSha256": "9268e78a5b78340f55cc77f912341e14f21dc4003be6f316b306980a33cb2f50",
       "canonPortraitSha256": "946a6d9f6173e5a68be6ee537b37ad49537680e51a535350bd5215fead7e27f8",
-      "next": "Hold for complete wave; optional final consistency check on signalman cap shape, but face is hidden. Do not register in game until C09 is complete.",
+      "next": "Installed. Keep original SHA unchanged unless a newly reviewed replacement is explicitly approved.",
       "previousRejectedSha256": "398b8f9fbb9ebf35267b2350b566beb32c65781182bb3442a247f162926f789a",
       "candidateAsset": "assets/case002/candidates/case002-c07-scene--mobile.webp",
       "candidateBytes": 114912,
       "width": 720,
-      "height": 900
+      "height": 900,
+      "installed": true,
+      "installedAsset": "assets/case002/scenes/case002-c07-scene--mobile.webp",
+      "installedSha256": "9268e78a5b78340f55cc77f912341e14f21dc4003be6f316b306980a33cb2f50",
+      "installedBytes": 114912
     },
     {
       "id": "C08",
-      "state": "candidate",
-      "reason": "New standalone rear-facing sealed telegram handoff frame has no invented registration number, no identified characters, photorealistic mobile composition; not installed until full wave approval",
-      "next": "hold as approved visual candidate pending C06,C07,C09 and full wave install",
+      "state": "approved",
+      "reason": "Reviewed scene installed as exact mobile WebP in one feature-branch commit",
+      "next": "Installed. Keep original SHA unchanged unless a newly reviewed replacement is explicitly approved.",
       "candidateAsset": "assets/case002/candidates/case002-c08-scene--mobile.webp",
       "candidateSha256": "f322dfbc9eac008acfbb94997c88a7bf1f74ef4c57e6d0aeec78aaede0806b98",
       "candidateBytes": 98014,
       "width": 720,
-      "height": 900
+      "height": 900,
+      "installed": true,
+      "installedAsset": "assets/case002/scenes/case002-c08-scene--mobile.webp",
+      "installedSha256": "f322dfbc9eac008acfbb94997c88a7bf1f74ef4c57e6d0aeec78aaede0806b98",
+      "installedBytes": 98014
     },
     {
       "id": "C09",
-      "state": "rejected",
-      "reason": "Lorry remains visibly in supposed deserted trace scene and three paths not sufficiently clear",
-      "candidateSha256": "9bc8e6deb5c53bd7787f9230b7baffc785648b03d078050770a82b64e217a068",
-      "next": "Recent low-angle goods yard attempt showed only tire tracks, not three independently discernible boot-print paths; follow-up produced unrelated exterior; stop and re-isolate source image prompt"
+      "state": "approved",
+      "reason": "Reviewed scene installed as exact mobile WebP in one feature-branch commit",
+      "candidateSha256": "6d43714b19d674780b528f84495e1de56e05aa45817ea3eff38a4a0c4e5dbbf8",
+      "next": "Installed. Keep original SHA unchanged unless a newly reviewed replacement is explicitly approved.",
+      "previousRejectedSha256": "9bc8e6deb5c53bd7787f9230b7baffc785648b03d078050770a82b64e217a068",
+      "candidateBytes": 190342,
+      "manualReview": {
+        "oneContinuousShot": true,
+        "tyreRutsVisible": true,
+        "threeBranchingBootTrailsVisible": true,
+        "noPeople": true,
+        "noInventedFacts": true
+      },
+      "installed": true,
+      "installedAsset": "assets/case002/scenes/case002-c09-scene--mobile.webp",
+      "installedSha256": "6d43714b19d674780b528f84495e1de56e05aa45817ea3eff38a4a0c4e5dbbf8",
+      "installedBytes": 190342,
+      "width": 720,
+      "height": 900
     },
     {
       "id": "C10",
-      "state": "candidate",
-      "reason": "Visually accepted overhead wagon reconstruction; technical QA passed; NOT installed pending complete wave",
-      "next": "keep staged until independent C06-C09 art is reviewed and entire wave installed",
+      "state": "approved",
+      "reason": "Reviewed scene installed as exact mobile WebP in one feature-branch commit",
+      "next": "Installed. Keep original SHA unchanged unless a newly reviewed replacement is explicitly approved.",
       "candidateAsset": "assets/case002/candidates/case002-c10-scene--mobile.webp",
       "candidateSha256": "e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707",
       "candidateBytes": 133382,
       "width": 720,
-      "height": 900
+      "height": 900,
+      "installed": true,
+      "installedAsset": "assets/case002/scenes/case002-c10-scene--mobile.webp",
+      "installedSha256": "e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707",
+      "installedBytes": 133382
     }
   ]
 }
