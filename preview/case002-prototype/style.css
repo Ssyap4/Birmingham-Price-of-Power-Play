@@ -224,3 +224,10 @@ html[data-case002-telegram="true"] .notice{
 .story-read-button:focus-visible{outline:2px solid #f7d4a0;outline-offset:3px}
 #chapterIntertitle,#sceneText{scroll-margin-top:18px}
 #sceneText:focus-visible{outline:2px solid #d8af6b;outline-offset:5px}
+
+/* Decision receipt overflow: every committed consequence stays readable.
+   Compact notices remain small; expanded notices scroll without hiding actions. */
+.notice-content{white-space:pre-line}
+.notice-actions{position:sticky;bottom:-12px;padding:10px 0 3px;
+ background:linear-gradient(0deg,#241a12 65%,#241a1200)}
+.notice-expand{background:#2c2419;color:#f3cd94;border-color:#ba8d55}
