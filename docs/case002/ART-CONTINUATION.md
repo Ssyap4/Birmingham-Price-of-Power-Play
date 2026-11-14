@@ -85,3 +85,8 @@ C08: первый кинокадр с передачей телеграммы с
 ## Current physical staging checkpoint: C10
 
 C10 is now a visually reviewed CANDIDATE staged in GitHub at assets/case002/candidates/case002-c10-scene--mobile.webp; SHA-256 e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707. It is NOT installed in gameplay. C06-C09 still need compliant art. Exact updated state and failed compositions are in docs/case002/art-wave-17-status-v1.json and art-wave-17-chapter-iii-c06-c10-v1.md. Do not overwrite the current C10 image or call the full wave complete.
+
+
+## Кандидат C08 физически сохранён
+
+В рабочей ветке теперь **два настоящих художественных кандидата**: `assets/case002/candidates/case002-c08-scene--mobile.webp` (SHA-256 f322dfbc9eac008acfbb94997c88a7bf1f74ef4c57e6d0aeec78aaede0806b98) и сохранённый ранее C10. C08 — передача закрытого послания без выдуманных чисел, 720×900, прошёл декодирование и dHash. Весь пакет C06–C10 **не установлен**: C06, C07, C09 ещё отсутствуют; коллаж C06–C09 отклонён. Сверяй официальный статус в [art-wave-17-status-v1.json](art-wave-17-status-v1.json) и не создавай новый протокол генерации.

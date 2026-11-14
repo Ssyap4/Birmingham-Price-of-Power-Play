@@ -62,3 +62,10 @@ C08: кадр передачи телеграммы содержит выдум�
 ## C10 staged independently, without game approval (2026-11-14)
 
 A correct photorealistic top-down investigation-table composition was created and manually reviewed: linked freight wagons sketched on aged paper, one separate wagon cutout, two tied document piles, lamp and ruler. The image has no named villain or false final proof. Staged file: assets/case002/candidates/case002-c10-scene--mobile.webp; 720x900 genuine WebP, 133382 bytes, SHA-256 e165a0657abeafa836f1d0025ad793fcb62a8e349e2053dd560144a3d21af707; Git blob 8c992ec34d48020ab299f16f48049c96480e1195. Candidate only: it is NOT included in src/case002/approved-art-v1.js. dHash distance to prior C01-C05 ranges from 29 to 36 (no near-duplicates). Remaining C06-C09 lack accepted images, so no full wave install.
+
+
+## C08 — новый самостоятельный кандидат (14 ноября 2026)
+
+Повторная генерация **C08 «Чужое предложение»** в отдельном предметном ракурсе дала настоящую сцену передачи закрытого сложенного служебного послания: кожаная перчатка, восковая печать, железнодорожная контора под дождём, лампа, чернильница и перо; только обратная сторона послания, **нет читаемых имён и регистрационных номеров**. Сохранена как физический неигровой кандидат `assets/case002/candidates/case002-c08-scene--mobile.webp`, **720×900, 98014 байт, SHA-256 `f322dfbc9eac008acfbb94997c88a7bf1f74ef4c57e6d0aeec78aaede0806b98`**, Git blob SHA-1 `49fc75ddfc079ad7aa7a37ad27d3904fb4937171`. Художественно соответствует моменту передачи и не содержит прежнего ложного номера `4738`. Проверка дубликатов по dHash относительно C01–C05 и C10: расстояние от 28 до 42, совпадений нет. **Не регистрировать как installed в игровом манифесте** до завершения партии C06–C10.
+
+Следующая генерация C06 вместо одного кадра выдала четырёхчастный плакат C06–C09 — **отклонён** и не обрезается на игровые изображения. Продолжать с отдельными короткими визуальными заданиями, не передавать генератору партийные документы и статусы. C06, C07, C09 остаются без принятых иллюстраций.

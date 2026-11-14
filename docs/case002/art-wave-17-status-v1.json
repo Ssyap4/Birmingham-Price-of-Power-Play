@@ -29,9 +29,14 @@
     },
     {
       "id": "C08",
-      "state": "rejected",
-      "reason": "Readable fictional registration number 4738 invented by generator; unrelated alley on edit",
-      "next": "folded backside of sealed message, registration obscured"
+      "state": "candidate",
+      "reason": "New standalone rear-facing sealed telegram handoff frame has no invented registration number, no identified characters, photorealistic mobile composition; not installed until full wave approval",
+      "next": "hold as approved visual candidate pending C06,C07,C09 and full wave install",
+      "candidateAsset": "assets/case002/candidates/case002-c08-scene--mobile.webp",
+      "candidateSha256": "f322dfbc9eac008acfbb94997c88a7bf1f74ef4c57e6d0aeec78aaede0806b98",
+      "candidateBytes": 98014,
+      "width": 720,
+      "height": 900
     },
     {
       "id": "C09",
