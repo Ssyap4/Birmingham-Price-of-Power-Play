@@ -431,9 +431,8 @@ def main():
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: manual dossier switch must preserve tab focus"
                     receipt_ctx.close()
-                    # Rotating a phone across the artwork media threshold
-                    # must switch to the independently approved landscape
-                    # master, then restore the vertical WebP without advancing.
+                    # Portrait-only rule: a rotated phone shows a pause screen,
+                    # never horizontal artwork or playable landscape controls.
                     rotate_ctx = browser.new_context(
                         viewport={"width": 390, "height": 844},
                         device_scale_factor=3, is_mobile=True, has_touch=True
@@ -449,78 +448,87 @@ def main():
                     )
                     assert rotate_page.locator("#sceneArtworkImage").evaluate(
                         "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
-                    ), f"{browser_name}: portrait P01 failed before rotation"
+                    ), f"{browser_name}: P01 must use the vertical master"
                     initial_scene = rotate_page.locator("#sceneId").inner_text()
                     initial_choices = rotate_page.locator("button.choice").count()
-                    rotate_page.set_viewport_size({"width": 800, "height": 760})
-                    rotate_page.wait_for_function("""() => {
-                      const img=document.querySelector('#sceneArtworkImage');
-                      return document.querySelector('#game').dataset.artVerified === 'true'
-                        && img.currentSrc.endsWith('/case002-p01-scene.webp');
-                    }""", timeout=8000)
-                    assert rotate_page.locator("#sceneArtwork").get_attribute(
-                        "data-portrait"
-                    ) == "false", f"{browser_name}: desktop P01 crop stayed portrait"
+                    rotate_page.set_viewport_size({"width": 844, "height": 390})
+                    assert rotate_page.locator("#portraitGate").is_visible(), (
+                        f"{browser_name}: phone landscape must show the portrait-only gate"
+                    )
+                    assert rotate_page.locator("#app").evaluate(
+                        "(el) => getComputedStyle(el).visibility === 'hidden'"
+                    ), f"{browser_name}: game is still playable in landscape"
+                    assert "вертикальное положение" in rotate_page.locator(
+                        "#portraitGate"
+                    ).inner_text()
                     assert rotate_page.locator("#sceneArtworkImage").evaluate(
-                        "(img) => img.naturalWidth >= 800 && img.naturalHeight >= 450"
-                    ), f"{browser_name}: wrong desktop P01 image dimensions"
+                        "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
+                    ), f"{browser_name}: rotating must not load retired horizontal artwork"
                     rotate_page.set_viewport_size({"width": 390, "height": 844})
-                    rotate_page.wait_for_function("""() => {
-                      const img=document.querySelector('#sceneArtworkImage');
-                      return document.querySelector('#game').dataset.artVerified === 'true'
-                        && img.currentSrc.endsWith('/case002-p01-scene--mobile.webp');
-                    }""", timeout=8000)
-                    assert rotate_page.locator("#sceneArtwork").get_attribute(
-                        "data-portrait"
-                    ) == "true", f"{browser_name}: P01 crop did not return to phone master"
+                    assert rotate_page.locator("#portraitGate").is_hidden(), (
+                        f"{browser_name}: portrait gate must dismiss on returning upright"
+                    )
+                    assert rotate_page.locator("#storyPanel").is_visible()
                     assert rotate_page.locator("#sceneId").inner_text() == initial_scene
                     assert rotate_page.locator("button.choice").count() == initial_choices
+                    assert rotate_page.locator("#sceneArtwork").get_attribute(
+                        "data-portrait"
+                    ) == "true"
+                    assert rotate_page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
+                    )
                     assert not rotate_errors, (
-                        f"{browser_name}: rotation introduced JavaScript errors: {rotate_errors}"
+                        f"{browser_name}: orientation gate caused JS errors: {rotate_errors}"
                     )
                     rotate_ctx.close()
-                    # Simulate a reviewed landscape scene and a missing
-                    # mobile-specific crop. The production manifest remains
-                    # untouched: this mock is strictly inside the browser QA.
-                    art_context = browser.new_context(
+                    # Even when an old landscape master exists, a broken portrait
+                    # must fail closed rather than silently substitute wide art.
+                    art_ctx = browser.new_context(
                         viewport={"width": 390, "height": 844},
                         device_scale_factor=3, is_mobile=True, has_touch=True
                     )
-                    art_page = art_context.new_page()
-                    svg_landscape = (
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900">'
-                        '<rect width="1600" height="900" fill="#252525"/></svg>'
-                    )
-                    art_page.route("**/assets/case002/scenes/mobile-test-landscape.webp",
-                        lambda route: route.fulfill(
-                            status=200, content_type="image/svg+xml", body=svg_landscape
-                        )
-                    )
+                    art_page = art_ctx.new_page()
                     art_page.goto(address, wait_until="load")
                     art_page.evaluate("""() => {
                         const gate = window.BirminghamCase002ApprovedArt;
-                        const original = gate.resolveScene;
+                        const old = gate.resolveScene;
                         gate.resolveScene = stage => stage.sceneId === 'P01' ? {
                           sceneId: 'P01', variantKey: 'default',
-                          src: '../../assets/case002/scenes/mobile-test-landscape.webp',
-                          mobileSrc: '../../assets/case002/scenes/mobile-test-missing--mobile.webp',
-                          alt: 'Проверка резервного кадра'
-                        } : original(stage);
+                          src: '../../assets/case002/scenes/case002-p01-scene.webp',
+                          mobileSrc: '../../assets/case002/scenes/portrait-policy-test-missing.webp',
+                          alt: 'Проверка политики портретного арта'
+                        } : old(stage);
                     }""")
                     art_page.locator("#begin").click()
-                    art_page.wait_for_function(
-                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
-                        timeout=6000
+                    art_page.wait_for_function("""() =>
+                        document.querySelector('#sceneArtworkImage').complete
+                    """, timeout=6000)
+                    assert art_page.locator("#sceneArtwork").is_hidden(), (
+                        f"{browser_name}: missing portrait wrongly displayed landscape"
                     )
-                    assert art_page.locator("#game").get_attribute("data-art-fallback") == "true", (
-                        f"{browser_name}: missing phone WebP did not fall back to approved landscape"
-                    )
-                    assert art_page.locator("#sceneArtwork").is_visible()
-                    assert art_page.locator("#sceneArtwork").get_attribute("data-portrait") == "false"
-                    assert art_page.locator("#sceneArtworkImage").evaluate(
-                        "(el) => el.naturalWidth === 1600 && el.naturalHeight === 900"
-                    ), f"{browser_name}: scene fallback geometry invalid"
-                    art_context.close()
+                    assert art_page.locator("#game").get_attribute(
+                        "data-art-fallback"
+                    ) == "false", f"{browser_name}: retired landscape fallback is active"
+                    assert art_page.locator("#sceneArtworkImage").get_attribute(
+                        "src"
+                    ).endswith('/portrait-policy-test-missing.webp')
+                    art_ctx.close()
+                    # Desktop preview stays vertical, without forcing desktop
+                    # reviewers into the phone-orientation gate.
+                    desk_ctx = browser.new_context(viewport={"width":1024,"height":768})
+                    desk = desk_ctx.new_page()
+                    desk.goto(address, wait_until="load")
+                    desk.locator("#begin").click()
+                    desk.wait_for_function("""() =>
+                        document.querySelector('#game').dataset.artVerified === 'true'
+                    """, timeout=8000)
+                    assert desk.locator("#portraitGate").is_hidden()
+                    assert desk.locator("#sceneArtwork").get_attribute("data-portrait") == "true"
+                    assert desk.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
+                    ), f"{browser_name}: desktop preview must retain portrait scene artwork"
+                    assert desk.locator(".app-shell").bounding_box()["width"] <= 521
+                    desk_ctx.close()
                     # In a real Telegram webview the native and Telegram UI
                     # safe areas must stack, without requiring network SDK
                     # access when opened as plain Safari/Chromium HTML.
