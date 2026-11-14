@@ -122,7 +122,11 @@ function init(){
    $("hero").focus({preventScroll:true});
    window.scrollTo(0,0);
  });
- $("noticeDismiss").addEventListener("click",hideNotice);
+ $("noticeDismiss").addEventListener("click",()=>{
+  hideNotice();
+  // The button is now inside a hidden panel: restore a live focus target.
+  $("storyPanel").focus({preventScroll:true});
+ });
  $("noticeExpand").addEventListener("click",()=>{
   if(!activeNoticeDetails)return;
   const button=$("noticeExpand"),expanded=button.getAttribute("aria-expanded")==="true";
@@ -138,7 +142,11 @@ function init(){
  for(const button of document.querySelectorAll("#quickNav [data-go]")){
    button.addEventListener("click",()=>jumpTo(button.dataset.go));
  }
- for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{tab=button.dataset.tab;evidenceFocus=null;renderTools();});
+ for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{
+  // A deliberate dossier switch supersedes any floating old receipt.
+  hideNotice();
+  tab=button.dataset.tab;evidenceFocus=null;renderTools();
+ });
  $("hero").addEventListener("change",refreshResume);
  refreshResume();
 }
@@ -178,7 +186,7 @@ function resume(){
 function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
- hideNotice();evidenceFocus=null;
+ hideNotice();tab="evidence";evidenceFocus=null;
  render();
  showCurrentScene();
 }
@@ -222,7 +230,6 @@ function showNotice(text,focus=null,details=null){
 }
 function jumpTo(where,evidenceId=null){
  if(!engine)return;
- const view=engine.view();
  let target;
  if(where==="scene")target=$("storyPanel");
  else if(where==="choices")target=$("choicesPanel");
