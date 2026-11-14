@@ -108,8 +108,8 @@
     },
     {
       "sceneId": "Z07",
-      "variantKey": "default",
-      "candidateFile": "case002-z07-scene--mobile.webp",
+      "variantKey": "after-danger",
+      "candidateFile": "case002-z07-scene--after-danger--mobile.webp",
       "sha256": "e57c4b9228c957483166a843c513aa8794dc8541d4eef9b885c28c1082e09064",
       "gitBlobSha1": "f15bed00ddcf9dc73f4fce6927815c0d26a6b4a9",
       "bytes": 92030,

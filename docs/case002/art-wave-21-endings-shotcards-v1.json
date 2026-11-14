@@ -162,7 +162,7 @@
         "readable notes, victim identification, police report, named witness, identifying case inscription or opened papers",
         "a rescuer or thief taking the case, police arriving at the lock, new witness outcomes or celebratory resolution"
       ],
-      "intendedVariant": "default"
+      "intendedVariant": "after-danger"
     }
   ]
 }
