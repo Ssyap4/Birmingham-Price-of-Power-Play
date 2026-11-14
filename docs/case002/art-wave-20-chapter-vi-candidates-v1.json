@@ -86,6 +86,23 @@
       "acceptedRendering": 1,
       "visualReview": "accepted: three distinct paper files in one leather folio, with deliberately indistinct cameo silhouettes and no legible names, safety labels or implied collective rescue; investigator's face not visible",
       "knowledgeBoundary": "Three visual records alone cannot confirm any witness's fate. Ada, Tommy and Daniel Mercer keep independently determined HTML state labels."
+    },
+    {
+      "sceneId": "F06",
+      "variantKey": "default",
+      "candidateFile": "case002-f06-scene--mobile.webp",
+      "sha256": "90d26046c10b6266c994ba3c2ea66fc480e9947511f195787c7ad26fba7a49b5",
+      "gitBlobSha1": "ac39046d5cefcc3448caae50fd4cc24ecd644316",
+      "bytes": 135438,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: clearly separate open left bypass and guarded narrow railway passage on the right, a lone brass cartridge case near foreground, no face, violence or decided fate",
+      "knowledgeBoundary": "The illustration depicts the pending choice, not any risky action, death, forced confrontation or guaranteed safe outcome."
     }
   ]
 }

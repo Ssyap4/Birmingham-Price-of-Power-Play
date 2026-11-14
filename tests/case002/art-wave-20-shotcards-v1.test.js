@@ -27,7 +27,7 @@ for(const [idx,card] of batch.entries()){
  assert.equal(m.acceptedRendering,1);
  assert.equal(m.variantKey,"default");
  assert.equal(m.candidateFile,"case002-"+card.id.toLowerCase()+"-scene--mobile.webp");
- assert.equal(card.sceneKind,"evidence");
+ assert.equal(card.sceneKind,card.id==="F06"?"environment":"evidence");
  const p=builder.promptFor(card),r=builder.reviewFor(card);
  assert(p.includes(card.focus)&&p.includes(card.location)&&p.includes(card.camera));
  assert(!p.includes(card.id)&&!p.includes(card.knowledgeBoundary));
@@ -76,6 +76,13 @@ for(const [idx,card] of batch.entries()){
    assert(card.avoid.some(x=>/rescued\/protected\/dead label/.test(x)));
    assert(card.avoid.some(x=>/recognizable witness portrait/.test(x)));
  }
+ else if(card.id==="F06"){
+   assert(card.knowledgeBoundary.includes("explicit choice"));
+   assert(card.required.some(x=>/pedestrian bypass curving left/.test(x)));
+   assert(card.required.some(x=>/two dark uniformed guards/.test(x)));
+   assert(card.required.some(x=>/brass cartridge/.test(x)));
+   assert(card.avoid.some(x=>/wounded, killed, captured/.test(x)));
+ }
 
 }
 // chapter VI two-document state fixture: artwork is neutral; proof must come from game facts.
@@ -104,4 +111,8 @@ for(const witnesses of [
     "The image cannot silently declare witness fate for a particular route");
 }
 assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F05").length,0);
-console.log("PASS: Chapter VI candidates F01–F05 verified, with independent witness fate states uninstalled.");
+const threatView={scene:{id:"F06"},state:{flags:{},witnesses:{}},facts:{}};
+assert.equal(director.variant(threatView),"default",
+ "The choice of guarded or safe route must be a player decision, never a photograph-triggered state");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F06").length,0);
+console.log("PASS: Chapter VI candidates F01–F06 physically verified and uninstalled.");

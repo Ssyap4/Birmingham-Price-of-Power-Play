@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "VI",
-  "source": "Chapter VI screenplay and canonical storyboard; F01 through F05 created in separate single-image author turns",
+  "source": "Chapter VI original screenplay and canonical storyboard; F01 through F06 each separately rendered in one author turn",
   "scenes": [
     {
       "id": "F01",
@@ -117,6 +117,29 @@
         "a selectable detective's visible face or an invented canonical portrait"
       ],
       "intendedVariant": "statuses-in-html"
+    },
+    {
+      "id": "F06",
+      "sceneKind": "environment",
+      "focus": "one narrow factory siding divides at a dark brick warehouse corner into two visibly distinct ways: an empty curved pedestrian lane to the left and a straight lamplit railway passage guarded by two distant men to the right, with a single spent cartridge on wet stones in the foreground",
+      "camera": "low three-quarter eye-level point of view from just behind the shoulder of an unidentifiable observer at the fork, both lanes fully visible and the brass cartridge in the near foreground",
+      "location": "a private rail siding and adjacent brick factory passages in rainy industrial Birmingham in the 1920s",
+      "required": [
+        "a clearly open pedestrian bypass curving left around crates and an iron gate, without any people blocking it",
+        "a narrow railway passage to the right between brick factory buildings with two dark uniformed guards visible at a distance under amber gas lanterns",
+        "one empty brass cartridge case lying on wet cobblestones near the rail track in the foreground"
+      ],
+      "background": "soot-dark red-brick industrial warehouse, wet cobblestone pavement and rails, wooden barrels, iron yard gate, tall chimneys and smoky rain-blue factory skyline",
+      "light": "warm amber old-fashioned gas lantern on the brick corner and guarded rail corridor with cold blue-gray rainfall over the open bypass",
+      "npc": "two indistinct anonymous distant factory guards at the rail passage; only an unidentified dark coat shoulder of the investigator in the near foreground without face",
+      "knowledgeBoundary": "This is an explicit choice between a safer bypass and a guarded dangerous passage, not the consequence of either choice. The spent casing does not confirm anyone has just been shot, harmed or killed. No playable character has taken a risky action yet.",
+      "avoid": [
+        "a person wounded, killed, captured or being fired upon, or any blood on stones",
+        "the dangerous guarded passage shown as the only possible route",
+        "a recognizable playable hero face or a forged named witness appearance",
+        "a written final outcome, completed escape or declaration of investigative victory"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }
