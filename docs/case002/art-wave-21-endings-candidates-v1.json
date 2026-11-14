@@ -36,6 +36,23 @@
       "visualReview": "Accepted as the zero-evacuee variant: an empty wet dawn platform, open old carriage door, and only a cropped black glove holding a closed leather folio; no identifiable or gendered hero and no witness visible.",
       "knowledgeBoundary": "This image cannot imply that anyone other than the hero traveled; protected/evacuated statuses are exclusively scenario data. Other evacuation variants have no accepted artwork yet.",
       "previousRejectedGeneratorImageId": "d9636f25-0663-4380-bca6-c6aca17fe21e"
+    },
+    {
+      "sceneId": "Z03",
+      "variantKey": "default",
+      "candidateFile": "case002-z03-scene--mobile.webp",
+      "sha256": "4f9d9a16c0ccaa422b5c75094f23b8827b4a58fae7c1c1ee9fbc06ab2bdf4816",
+      "gitBlobSha1": "824e22e39575cc5bbf9d5db14e0186517e63af0d",
+      "bytes": 87886,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "ACCEPTED: Brackett sits in dark coat at police record table with carefully combed hair, viewed from behind; Rowan in period uniform stands watch to the right. No playable hero face, judgment, accused factory manager or published casualties.",
+      "knowledgeBoundary": "The scene conveys partial accountability for Hale's proven death and does not claim prosecution of Vale or factory leadership, publication of a casualty list, or any witness's actual safety."
     }
   ],
   "rejectedGenerations": [

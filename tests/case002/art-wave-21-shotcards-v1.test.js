@@ -68,6 +68,21 @@ for(const [i,card] of batch.entries()){
    assert.equal(director.variant({scene:{id:"Z02"},state:{flags:{},
      witnesses:{ada:"evacuated",tommy:"detained",mercer:"protected"}},facts:{}}),"evacuated-ada");
    assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z02").length,0);
+ }else if(card.id==="Z03"){
+   assert.equal(card.sceneKind,"aftermath");
+   assert(card.knowledgeBoundary.includes("wider factory-management responsibility"));
+   assert(card.knowledgeBoundary.includes("conviction"));
+   assert(card.required.some(v=>/private factory security chief/.test(v)));
+   assert(card.required.some(v=>/young police constable/.test(v)));
+   assert(card.avoid.some(v=>/Vale or factory management behind bars/.test(v)));
+   const Z03Scene=chapter.find(x=>x.id==="Z03");
+   assert.deepEqual(director.visibleFrom(Z03Scene,{
+      scene:{id:"Z03"},state:{flags:{},
+        witnesses:{ada:"missing",tommy:"detained",mercer:"protected"}},facts:{provedHaleMurder:true}
+   }),["brackett","rowan"]);
+   assert.equal(director.variant({scene:{id:"Z03"},
+      state:{flags:{},witnesses:{}},facts:{provedHaleMurder:true}}),"default");
+   assert.equal(manifest.sceneImages.filter(e=>e.sceneId==="Z03").length,0);
  }
 
 }
@@ -137,4 +152,4 @@ for(const subset of permittedSubsets){
    "A proposed neutral shot must not silently install for any unreviewed combination");
 }
 
-console.log("PASS: Z01/Z02 candidates and nonzero evacuation neutral variant SHA verified; no endings installed.");
+console.log("PASS: Ending candidates Z01–Z03, Z02 neutral witness variants and archive exclusions verified; no ending art installed.");

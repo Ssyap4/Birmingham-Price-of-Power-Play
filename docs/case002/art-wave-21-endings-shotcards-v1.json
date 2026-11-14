@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "Case002 original screenplay and storyboard; Z02 zero-evacuee replacement, one new rendering in a separate author turn after rejecting gender-assumptive Z02.",
+  "source": "Original Case002 story and storyboard, endings Z01–Z03; each main art composition generated in an independent author turn; Z02 also has separate conditional variant card.",
   "scenes": [
     {
       "id": "Z01",
@@ -48,6 +48,29 @@
         "a crowd, safe-house arrival, triumphant rescue or guarantee that all witnesses are protected"
       ],
       "intendedVariant": "evacuated-none"
+    },
+    {
+      "id": "Z03",
+      "sceneKind": "aftermath",
+      "focus": "a defeated private factory security chief with carefully combed dark hair sits stiffly at an old police desk with hands held close together while a young uniformed constable watches attentively beside him, a somber moment of partial accountability",
+      "camera": "three-quarter medium interior view from behind the seated chief and slightly to his left, with the officer in dark uniform in partial profile at the right edge, avoiding an unverified full facial likeness",
+      "location": "a modest municipal police records office in industrial Birmingham in the 1920s",
+      "required": [
+        "one stockily built private factory security chief in a heavy dark wool overcoat, carefully slicked dark hair, seated at a wooden police desk and viewed mainly from behind",
+        "one young police constable in a period dark buttoned tunic and domed police helmet standing close to the table, his face in partial shadow and turned aside",
+        "one open handwritten police case ledger on the desk beneath a brass desk lamp, with no readable accusation or named factory manager"
+      ],
+      "background": "weathered brick police office, dark wooden filing cabinets, stacked plain archive folders, large rain-streaked window overlooking industrial chimneys",
+      "light": "warm amber brass desk lamp on the open register, cool wet blue-gray daylight through the high multi-pane window",
+      "npc": "Brackett is identifiable by role, stout coat and groomed dark hair, shown from behind without a decisive invented face; Rowan is a young constable shown in side profile and shadow, matching their period roles",
+      "knowledgeBoundary": "Brackett is under police attention for the proved death of Hale in a limited-accountability ending, but the image depicts neither a court conviction nor wider factory-management responsibility. It does not imply official publication of factory-death lists, legal guilt of Vale or any witness's fate. The scenario remains the sole source of evidentiary and legal states.",
+      "avoid": [
+        "a judge, jury, jail sentence, signed confession or legible guilt verdict",
+        "Vale or factory management behind bars, or an allegation that the factory directors were charged",
+        "readable witness identities, published casualty lists, invented named testimony or extra story evidence",
+        "recognizable face of a selectable hero, fabricated precise scar depiction or mismatched named character portrait"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }
