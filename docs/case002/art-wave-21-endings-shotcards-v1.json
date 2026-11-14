@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "Original Case002 story and storyboard, endings Z01–Z03; each main art composition generated in an independent author turn; Z02 also has separate conditional variant card.",
+  "source": "Original Case002 screenplay and canonical storyboard; Z01 through Z04 independently generated and reviewed per author turn, including Z02's alternate shot.",
   "scenes": [
     {
       "id": "Z01",
@@ -71,6 +71,29 @@
         "recognizable face of a selectable hero, fabricated precise scar depiction or mismatched named character portrait"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "Z04",
+      "sceneKind": "evidence",
+      "focus": "the older industrial factory owner's veined hand has just put down a black and gold fountain pen alongside one signed parchment agreement bearing a small red wax seal on a polished wooden office desk",
+      "camera": "intimate angled close-up across the paper, hand and fountain pen with the factory office window above, showing no face of the owner or the anonymous playable investigator",
+      "location": "the private office of an industrial factory owner overlooking Birmingham factories in the 1920s",
+      "required": [
+        "one weathered older man's hand with a gold signet ring and heavy dark wool suit cuff just releasing a fountain pen onto the desk",
+        "one aged signed agreement paper with a red wax seal, illegible cursive strokes and no readable witness names or listed beneficiaries",
+        "a warm brass desk lamp illuminating the document with rain-streaked window and smoking industrial chimneys beyond"
+      ],
+      "background": "dark timber desk, glass ink vessel, deep red curtains, rain-streaked multi-pane window, soot-covered brick factory buildings and working smokestacks",
+      "light": "warm amber desk lamp on wax seal and paper fibers against cold blue-gray rainy factory daylight",
+      "npc": "Vale's aged hand and tailored heavy suit cuff are shown in close-up only, without his face, and no visible selectable detective",
+      "knowledgeBoundary": "This signed guarantee is authentic only in the Z04 signed-agreement ending. It secures only the particular witnesses actually included in the deal, as determined by dynamic narrative flags; it cannot imply that all three witnesses were released or protected. The factory continues operating and the previously recorded two dead remain unremedied; no public prosecution or broader justice is announced.",
+      "avoid": [
+        "readable witness names, detailed protected-person lists, invented signatures or fabricated addresses",
+        "a group of rescued witnesses, a broad pardon, universal protection or a completed public conviction",
+        "a visible identifiable playable hero, an invented full face of Vale or a replacement canonical portrait",
+        "a courtroom verdict, newly signed contract by the hero or a public announcement ending the investigation"
+      ],
+      "intendedVariant": "guarantee-signed"
     }
   ]
 }

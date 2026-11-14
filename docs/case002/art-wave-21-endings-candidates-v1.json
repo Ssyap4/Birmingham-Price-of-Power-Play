@@ -53,6 +53,23 @@
       "acceptedRendering": 1,
       "visualReview": "ACCEPTED: Brackett sits in dark coat at police record table with carefully combed hair, viewed from behind; Rowan in period uniform stands watch to the right. No playable hero face, judgment, accused factory manager or published casualties.",
       "knowledgeBoundary": "The scene conveys partial accountability for Hale's proven death and does not claim prosecution of Vale or factory leadership, publication of a casualty list, or any witness's actual safety."
+    },
+    {
+      "sceneId": "Z04",
+      "variantKey": "guarantee-signed",
+      "candidateFile": "case002-z04-scene--guarantee-signed--mobile.webp",
+      "sha256": "9ade4ea113c8af2234cfde624c006ecd02025ffd3f3caf1abbf140b22c4a723a",
+      "gitBlobSha1": "d5e4d72ceb8100ca6c3ae9b856f8f583284b4674",
+      "bytes": 105296,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "ACCEPTED: one wax-sealed signed guarantee and fountain pen beneath Vale's anonymous elderly signet-ring hand; factory smoke through rainy office window; neither selectable hero nor protected witnesses shown, writing not legible.",
+      "knowledgeBoundary": "The artwork shows that Vale signed a guarantee in this ending, not who is listed as protected or whether all witnesses survived. Individual statuses remain governed by case002 witness state."
     }
   ],
   "rejectedGenerations": [
