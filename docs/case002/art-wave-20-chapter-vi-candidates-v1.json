@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "chapter": "VI",
+  "candidates": [
+    {
+      "sceneId": "F01",
+      "variantKey": "default",
+      "candidateFile": "case002-f01-scene--mobile.webp",
+      "sha256": "9f305f44e4500bfd657df31ddf806753210c95b380d0ecf36c9689a654fc4d82",
+      "gitBlobSha1": "4ff4d81a8d772828ad30ff1d47b49076b7bddd2e",
+      "bytes": 137224,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: one gloved investigator, one miniature freight wagon and three stop marks on a rainlit railway drawing; no evidence of disappearance or final destination",
+      "knowledgeBoundary": "This is a conjecture/observation board, not proof of the actual wagon route or of witness safety."
+    }
+  ]
+}

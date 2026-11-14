@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "chapter": "VI",
+  "source": "case002-screenplay-acts-4-6-and-endings-v2.md; case002-art-storyboard-v1.json; scene F01; one new original image per user turn",
+  "scenes": [
+    {
+      "id": "F01",
+      "sceneKind": "evidence",
+      "focus": "one miniature enclosed railway freight wagon is positioned by a dark-gloved investigator's hand on a weathered railway route drawing with three distinct marked locations, visually comparing known observations with an unresolved branch",
+      "camera": "tight angled overhead shot of the paper rail plan on a detective's wooden table, with the one wagon token and three marked locations in sharp focus, face of the investigator completely unseen",
+      "location": "a rain-shadowed private detective's office in industrial Birmingham in the 1920s",
+      "required": [
+        "exactly one small dark brass freight-wagon model held between gloved fingers on the paper route",
+        "a single hand-drawn rail map with three distinct circular stop marks connected by one branching railway line, two checked points and one uncertain mark",
+        "a metal engineer's ruler and a plain mechanical drafting pen near the bottom of the map"
+      ],
+      "background": "old wooden worktable, worn railway ledgers, cast-metal desk lamp and rain-streaked window with distant smoke-blackened brick mills",
+      "light": "focused warm amber desk-lamp illumination across aged paper and dark gloves against cool blue rainy industrial dusk",
+      "npc": "one anonymous investigator visible only by dark wool sleeves and black leather gloves, no face and no other people",
+      "knowledgeBoundary": "The map distinguishes recorded observations from assumptions. Only one wagon and one rail journey exist. The image never proves disappearance, witness movements, a final wagon location, or completion of the investigation.",
+      "avoid": [
+        "multiple wagons, a train arriving at a documented destination, or witnesses physically appearing on the map",
+        "a stamped official declaration that the wagon disappeared or reached a secret station",
+        "recognizable face or altered canonical appearance of any selectable hero",
+        "readable invented station names, routes, times, or new witness addresses"
+      ],
+      "intendedVariant": "default"
+    }
+  ]
+}
