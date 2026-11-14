@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "HERO-GAPS",
-  "source": "Original personal hero scenes and canonical Case002 art storyboard: HJ01 and HF01 accepted as separate one-image-per-turn hero-gap candidates; five personal illustrations still pending.",
+  "source": "Original Case002 hero-specific scenes and canonical 89-scene storyboard. Three independently accepted hero-gap illustrations: HJ01, HF01, HE01; four next scenes are not yet rendered.",
   "scenes": [
     {
       "id": "HJ01",
@@ -46,6 +46,29 @@
         "bent safe door, picklock, broken window, forced entry or destroyed office furniture",
         "shipping papers with readable false names, invented dates, forged signatures or a completed proof of guilt",
         "an original ledger already in Finn's possession, a heroic getaway or discovered alarm"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HE01",
+      "sceneKind": "evidence",
+      "focus": "a careful investigator in dark 1920s sleeves and black leather gloves holds the back of a worn archival freight-office document directly beneath an angled brass desk lamp, revealing faint shallow impressions from an earlier rubbed-out written entry, with a folding bellows camera ready on the desk to photograph the trace",
+      "camera": "vertical close over-the-shoulder view of hands supporting the single sheet near the foreground, raking lamplight brushing across embossed paper and a period folding bellows camera on the right; only a fragment of the observer's coat enters the frame",
+      "location": "a 1920s railway freight-office records room overlooking a rainy Birmingham industrial goods yard",
+      "required": [
+        "one large pale sheet held delicately in two black leather-gloved hands with subtle indentation traces visible as non-readable relief under raking light",
+        "one brass articulated period desk lamp pointed obliquely along the surface of the document",
+        "one vintage folding bellows plate camera on the desk prepared for a careful photographic record beside a closed leather notebook and inkstand"
+      ],
+      "background": "a scuffed wooden records table, timber pigeonhole shelves, a rain-streaked multi-paned window looking over freight wagons and smoking brick factory chimneys",
+      "light": "warm focused amber desk-lamp light revealing the paper texture against cool rainy industrial twilight through the window",
+      "npc": "the selected investigator's shoulder and both hands only; no exposed face or identifiable clerk or other witness",
+      "knowledgeBoundary": "The trace appears when the paper is viewed in side light and can later be photographed with documented provenance. This is the same physical document, not an independently corroborating second source. No fabricated readable confession, suspect, date, or clerk identity may be established by the art. The camera standing ready does not imply that the documentary photo has already been officially admitted as proof.",
+      "avoid": [
+        "a legible accusation or invented signature on the paper or an invented identifiable witness",
+        "an identifiable heroine face, full portrait or newly established costume identity",
+        "two independent original documents or a second confession, solved corruption or arrested suspect",
+        "a completed passport, modern digital camera or modern office electronics"
       ],
       "intendedVariant": "default"
     }
