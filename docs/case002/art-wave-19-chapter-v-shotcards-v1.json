@@ -49,24 +49,24 @@
     {
       "id": "E03",
       "sceneKind": "evidence",
-      "focus": "a newspaper editor in a dark wool dress carefully lays a plain unprinted privacy sheet over the signatures on two separate stacks of verification documents spread on a working typesetter's desk",
-      "camera": "close three-quarter angle from slightly above the editorial desk, centering the shielding sheet and two independent paper stacks; the editor seen mostly from back",
-      "location": "the same cramped 1920s Birmingham newspaper office beside an old cast-iron press",
+      "focus": "Nora Kell methodically compares two separate sources of documents on a narrow archive sorting table while sliding a clean unprinted sheet across identifying signatures",
+      "camera": "steep almost-vertical top-down close composition at an oblique diagonal to the table; only Nora's pinned-back dark hair, back of shoulders and ink-stained hands enter the upper edge, with open archival drawers at the lower edge",
+      "location": "a secluded rear records alcove of a 1920s Birmingham newspaper office, away from the editor's public worktable",
       "required": [
-        "two separate thick folders of old documents placed side by side for independent comparison",
-        "one plain unprinted cover sheet concealing identifying signatures on a document",
-        "ink-speckled female editor hands arranging the files and protective sheet"
+        "two clearly distinct parallel groups of aged papers with an empty gap between them: tied handwritten letters and envelopes at left, typed extracts and ledger leaves at right",
+        "one entirely blank privacy-cover sheet being drawn over handwritten signatures on a document",
+        "the editor's ink-smudged hands physically separating the two sets as she protects identifying details"
       ],
-      "background": "working metal type tray, dark cast iron printing press, dark wood, loose proof sheets and a rain-beaded industrial window",
-      "light": "close warm brass lamp highlights on archival paper against cold blue daylight through a rainy window",
-      "npc": "a female editor with dark hair pinned back, seen from behind or rear three-quarter with face concealed, and cropped visitor sleeve only",
-      "knowledgeBoundary": "Nora is screening two possible chains and concealing witness identities; contact and paper handling do not prove independent evidence was verified, published, or that witnesses are protected",
+      "background": "a deep wall of dusty wooden pigeonholes, partly open narrow filing drawers, paper bundles tied with twine, and a compact dark oak sorting counter",
+      "light": "focused warm cone of light from one overhead shaded lamp across the two groups of paper, fading to cool shadows within the archive shelves",
+      "npc": "the established female editor indicated by pinned dark hair and ink-stained hands, viewed from directly above and behind without a visible face; no other person shown",
+      "knowledgeBoundary": "Nora has not yet verified the independent origins or published anything. Two groups of documents are under review, and the covered writing cannot identify witnesses or establish their safety. The separate verified/unverified game states remain controlled only by scenario flags.",
       "avoid": [
-        "legible witness names or addresses",
-        "an already published front page or proven death count",
-        "one document claimed to certify both independent chains",
-        "a new unapproved protagonist or editor face",
-        "a triumphant completed investigation"
+        "readable names, addresses, witness signatures, information about a child, or invented evidence details",
+        "a printed headline, actual publication, or a document certifying both chains as independently verified",
+        "a low over-the-shoulder framing at the printing press or the rain-window desk reused in E02",
+        "an invented recognizable protagonist or replacement portrait for Nora",
+        "visual proof that witnesses are protected or the investigation has succeeded"
       ]
     },
     {
