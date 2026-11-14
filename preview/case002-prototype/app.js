@@ -351,6 +351,22 @@ function renderSceneCast(stage,state){
    card.append(desc);root.append(card);
  }
 }
+// The ending scene is durable before separate completion/reward archive writes.
+// Never promise an award without checking both archive records on disk.
+function completionMessage(state){
+ if(!store)return "Расследование завершено. Хранилище недоступно: итог и награда не записаны.";
+ try{
+  const records=JSON.parse(store.getItem(api.RECORD_KEY)||"null");
+  const rewards=JSON.parse(store.getItem(api.REWARD_KEY)||"null");
+  const archived=Array.isArray(records)&&records.some(record=>record&&
+   record.attemptId===state.attemptId&&record.heroId===state.hero&&record.ending===state.ending);
+  const awarded=Array.isArray(rewards)&&rewards.includes("002:"+state.hero+":"+state.ending);
+  if(archived&&awarded)return "Расследование завершено. Итог и уникальная награда зарегистрированы в черновом архиве.";
+  return "Расследование завершено. Текущая попытка сохранена, но запись итога или награды в архиве пока не подтверждена.";
+ }catch(_){
+  return "Расследование завершено. Архив итогов или наград повреждён. Запись достижения не подтверждена.";
+ }
+}
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
  setText($("pulseEvidence"),"Улик: "+s.evidence.length);
@@ -392,7 +408,7 @@ function render(){
  window.BirminghamCase002SceneProse.render(region,sceneNarration(v));
  const choices=$("choiceList");choices.replaceChildren();
  if(s.finished){
-   choices.append(make("p","Расследование завершено. Отчёт и уникальный исход сохранены в черновом архиве.","muted"));
+   choices.append(make("p",completionMessage(s),"muted"));
  }else{
    for(const c of v.choices){
     // Do not spoil undiscovered final endings with disabled grey buttons.
@@ -538,8 +554,20 @@ function select(choice){
   // scroll to its opening, including a new chapter intertitle when present.
   showCurrentScene();
  }catch(e){
-  showNotice("Действие не применено: "+e.message);
-  console.warn("[Case002] transition rejected",e);
+  // A terminal scene is persisted first, then the engine writes the separate
+  // records/rewards archives. If only that second phase fails, the decision
+  // DID happen. Show the actual reached ending, never stale choice buttons.
+  const committed=engine.snapshot().history.length>before.history.length;
+  if(committed){
+   render();
+   showCurrentScene();
+   showNotice("Решение принято и состояние расследования сохранено, но архив итогов или наград не обновлён: "+e.message+
+    ". Не начинайте новую попытку до восстановления архива.",{tab:"journal",id:null});
+   console.warn("[Case002] transition saved but completion archive failed",e);
+  }else{
+   showNotice("Действие не применено: "+e.message);
+   console.warn("[Case002] transition rejected",e);
+  }
  }
 }
 init();
