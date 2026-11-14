@@ -80,6 +80,7 @@ const actionLabels={
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
+let activeArtStage=null;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -136,6 +137,11 @@ function init(){
   setText(button,expanded?"ВСЕ ИЗМЕНЕНИЯ ("+activeNoticeDetails.length+")":"СВЕРНУТЬ");
  });
  $("readScene").addEventListener("click",()=>jumpTo("reading"));
+ $("artRetry").addEventListener("click",()=>{
+  // Retry the current approved portrait without advancing or saving the case.
+  if(engine&&!$("game").hidden&&activeArtStage)
+   renderApprovedSceneArt(activeArtStage);
+ });
  $("noticeJump").addEventListener("click",()=>{
    if(activeNoticeFocus)jumpTo(activeNoticeFocus.tab,activeNoticeFocus.id);
  });
@@ -297,31 +303,40 @@ function translateReason(choice,view){
 let artRenderSerial=0;
 function renderApprovedSceneArt(stage){
  const root=$("sceneArtwork"),img=$("sceneArtworkImage"),host=$("game");
+ const recovery=$("artRecovery");
  const serial=++artRenderSerial;
  root.hidden=true;
+ recovery.hidden=true;
  root.dataset.portrait="true";
  host.dataset.artVerified="false";
  host.dataset.artFallback="false";
  img.onload=null;
  img.onerror=null;
- // Game art is portrait-only. No landscape source or landscape fallback.
- // Cancel the previous request before asking for this scene's approved WebP.
+ // Game art is portrait-only. Clear the old source before requesting this
+ // scene's independently approved WebP. Never show an unverified old frame.
  img.removeAttribute("src");
  const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
- if(!approved||!approved.mobileSrc)return;
- img.alt=approved.alt;
- img.onload=()=>{
-  if(serial!==artRenderSerial||host.dataset.artScene!==stage.sceneId||
-     host.dataset.artVariant!==stage.variantKey)return;
-  const valid=img.naturalWidth>=500&&img.naturalHeight>=700;
-  root.hidden=!valid;
-  host.dataset.artVerified=String(valid);
- };
- img.onerror=()=>{
-  if(serial!==artRenderSerial)return;
+ const stillCurrent=()=>serial===artRenderSerial&&
+  host.dataset.artScene===stage.sceneId&&host.dataset.artVariant===stage.variantKey;
+ const failed=()=>{
+  if(!stillCurrent())return;
   root.hidden=true;
   host.dataset.artVerified="false";
+  recovery.hidden=false;
  };
+ if(!approved||!approved.mobileSrc){failed();return;}
+ img.alt=approved.alt;
+ img.onload=()=>{
+  if(!stillCurrent())return;
+  // Delayed load events from an old scene must never reveal the wrong face.
+  const valid=img.currentSrc===img.src&&
+   img.naturalWidth>=500&&img.naturalHeight>=700;
+  if(!valid){failed();return;}
+  root.hidden=false;
+  recovery.hidden=true;
+  host.dataset.artVerified="true";
+ };
+ img.onerror=failed;
  img.src=approved.mobileSrc;
 }
 function renderSceneCast(stage,state){
@@ -386,6 +401,7 @@ function render(){
  // Future artwork is selected by game state, but never displayed until a
  // verified asset exists. Stage metadata is useful for browser QA now.
  const stage=window.BirminghamCase002ArtDirector.select(data.storyboard,v);
+ activeArtStage=stage;
  const host=$("game");
  host.dataset.artScene=stage.sceneId;
  host.dataset.artVariant=stage.variantKey;
