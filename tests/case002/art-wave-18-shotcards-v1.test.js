@@ -8,7 +8,7 @@ const {manifest} = require("../../src/case002/approved-art-v1.js");
 const root = path.resolve(__dirname, "../..");
 const cards = builder.validateBatch(JSON.parse(fs.readFileSync(path.join(root,"docs/case002/art-wave-18-shotcards-v1.json"),"utf8")));
 const storyboard = JSON.parse(fs.readFileSync(path.join(root,"docs/case002/case002-art-storyboard-v1.json"),"utf8"));
-const storyboardIds = storyboard.sceneAssets.filter(x=>x.chapter==="IV").map(x=>x.id);
+const storyboardIds = storyboard.sceneAssets.filter(x=>/^D\d{2}$/.test(x.id)).map(x=>x.id);
 assert.deepEqual(cards.map(x=>x.id),storyboardIds,"Chapter IV storyboard/card sequence mismatch");
 assert.equal(cards.length,11);
 const stageArt = manifest.sceneImages.filter(x=>/^D\d{2}$/.test(x.sceneId)&&x.review==="approved");
