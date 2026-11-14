@@ -149,7 +149,7 @@ for(const row of variantsSpec.variants){
  assert.deepEqual([dimensions(actual).width,dimensions(actual).height],[720,900]);
  assert.equal(actual.length,row.bytes);
  assert.equal(crypto.createHash("sha256").update(actual).digest("hex"),row.sha256);
- assert.equal(crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+actual.length+"\\0"),actual])).digest("hex"),row.gitBlobSha1);
+ assert.equal(crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+actual.length),Buffer.from([0]),actual])).digest("hex"),row.gitBlobSha1);
  const copies=manifest.sceneImages.filter(e=>e.sceneId===row.sceneId&&e.variantKey===row.variantKey);
  assert(copies.length<=1,"Installed variant must be unique: "+key);
  if(copies.length)assert.equal(copies[0].mobileSha256,row.sha256,"Installed variant changed without review: "+key);
