@@ -325,6 +325,31 @@
         "a firearm, injuries or coerced signing"
       ],
       "intendedVariant": "default"
+    },
+    {
+      "id": "HS03",
+      "sceneKind": "action",
+      "focus": "a broad-shouldered railway mechanic seen from behind extends one open arm to guide a small group of soot-stained factory laborers away from the active private siding and through an iron gate, while an untouched manual railway switch lever stands to his other side",
+      "camera": "low cinematic three-quarter wide portrait view from behind the mechanic, making his guiding arm, workers heading through the gate and the intact untouched railway switch stand legible in one continuous industrial location",
+      "location": "a rain-soaked private freight railway siding beside brick factories in 1920s Birmingham",
+      "required": [
+        "a stocky railway mechanic in a worn dark work coat, flat cap and oil-smudged trousers, seen from the rear with an extended open arm guiding coworkers toward a gate",
+        "two or three weary factory workers moving through the open wrought-iron safety gate toward the separate pedestrian side of the tracks, not standing beside the freight wagons",
+        "an upright heavy black metal manual track-switch lever in the near right foreground with its linkage intact, with no person touching it",
+        "two stationary freight wagons on damp rails receding into steam and cold rain behind the workers"
+      ],
+      "background": "wet cobblestones, gravel sleepers and split railway rails, black wrought iron fencing, old red-brick factory walls, a warm gas lantern, drifting steam and smoky chimneys",
+      "light": "cold slate blue daylight and rain under industrial mist, with restrained amber gas lantern reflections on wet iron and stones",
+      "npc": "one mechanic shown only from behind and a small group of anonymous laborers heading to a pedestrian area behind a fence, all faces hidden or viewed from the rear",
+      "knowledgeBoundary": "This is the evacuation in progress, before the mechanic touches or moves the switch lever. The picture alone cannot establish that every worker was cleared, that the siding is safe, that rail cars were redirected, or that any sabotage was authorized.",
+      "avoid": [
+        "the switch already thrown, rail wagons derailed, collision, explosion or sabotage damage",
+        "workers harmed or exposed directly in front of moving wagons",
+        "a celebratory claim that the entire siding has been evacuated",
+        "a new visible playable hero portrait or a named new witness",
+        "an emergency clearance certificate or legible safety order"
+      ],
+      "intendedVariant": "default"
     }
   ]
 }

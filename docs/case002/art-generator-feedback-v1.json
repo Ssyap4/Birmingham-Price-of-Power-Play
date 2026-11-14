@@ -431,6 +431,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Victor seen strictly from behind pointing to blank contract signature line, Vale silver-bearded and shadowed, unused pen; no signature, proven safe witness custody or valeGuarantee. Verify Vale partial facial continuity before batch install."
+    },
+    {
+      "scene": "HS03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Samuel from behind guides three workers out through gate before using intact switch; stationary freight wagons; no verified full clearance, safeSidingAccess, thrown switch or sabotage."
     }
   ]
 }
