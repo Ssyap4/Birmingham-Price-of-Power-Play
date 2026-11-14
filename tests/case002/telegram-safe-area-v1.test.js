@@ -40,7 +40,9 @@ const node=()=>{
    removeProperty:name=>values.delete(name)
  }};
 };
-const elements={".app-shell":node(),"#game":node(),".case-quick-nav":node()};
+const elements={".app-shell":node(),"#game":node(),".case-quick-nav":node(),
+ "#storyPanel":node(),"#choicesPanel":node(),"#caseTools":node(),
+ "#chapterIntertitle":node(),"#sceneText":node()};
 const unbind=bind({innerWidth:390,
  document:{documentElement:element,querySelector:selector=>elements[selector]},
  Telegram:{WebApp:app}});
@@ -53,11 +55,17 @@ assert.equal(elements[".app-shell"].values.get("padding-top"),"68px");
 assert.equal(elements[".app-shell"].values.get("padding-bottom"),"58px");
 assert.equal(elements[".case-quick-nav"].values.get("padding-bottom"),"42px");
 assert.equal(elements["#game"].values.get("padding-bottom"),"126px");
+for(const id of ["#storyPanel","#choicesPanel","#caseTools","#chapterIntertitle","#sceneText"])
+ assert.equal(elements[id].values.get("scroll-margin-top"),"86px",
+  "A jump target must remain below the 68px Telegram header");
 
 app.contentSafeAreaInset.top=72;
 handlers.get("contentSafeAreaChanged")();
 assert.equal(values.get("--case002-safe-top"),"92px");
 assert.equal(elements[".app-shell"].values.get("padding-top"),"92px");
+for(const id of ["#storyPanel","#choicesPanel","#caseTools","#chapterIntertitle","#sceneText"])
+ assert.equal(elements[id].values.get("scroll-margin-top"),"110px",
+  "Navigation offset must react to a changed Telegram header");
 app.safeAreaInset.left=10;
 handlers.get("safeAreaChanged")();
 assert.equal(values.get("--case002-safe-left"),"10px");
@@ -73,4 +81,4 @@ for(const entry of Object.values(elements))
  assert.equal(entry.values.size,0,"CSS fallback must be removed on cleanup");
 unbind();
 assert.equal(typeof bind(null),"function");
-console.log("PASS Case002 Telegram safe area: offline fallback, combined insets, events, cleanup and clamped values.");
+console.log("PASS Case002 Telegram safe area: offline fallback, combined insets, scroll target offsets, events, cleanup and clamped values.");
