@@ -159,6 +159,26 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Rear view of Mabel awaiting alone, folded note and wet factory alley; no reunion invented."
+    },
+    {
+      "scene": "D07",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Prior user turn: boarding-house door held by iron safety chain and a concealed resident hand; scene staged in subsequent turn."
+    },
+    {
+      "scene": "D08",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "One image generated this turn: earlier factory inspection form, a generic family photograph and hesitant inspector hand. No protected sworn testimony depicted."
     }
   ]
 }
