@@ -11,9 +11,18 @@
 const witnessName={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
 const witnessState={
  missing:"местонахождение неизвестно",located:"найден, но не защищён",
- detained:"под охраной",protected:"под защитой",evacuated:"вывезен из города",
- deceased:"погиб"
+ detained:"задержан частной охраной",protected:"под защитой",
+ evacuated:"вывезен из города",deceased:"погиб"
 };
+// Show each witness's own outcome, with correct Russian grammatical gender.
+// Detention by private guards must never sound like actual protection.
+const adaStatus=Object.freeze({
+ located:"найдена, но не защищена",
+ detained:"задержана частной охраной",
+ evacuated:"вывезена из города",deceased:"погибла"
+});
+const witnessStatus=(id,status)=>
+ (id==="ada"&&adaStatus[status])||witnessState[status]||status;
 const factName={
  provedFirstForgery:"подлог отправления Мэйбл",
  provedWagonDiversion:"отцепка вагона F-4182",
@@ -31,7 +40,7 @@ const priorIntro={
  endingDeath:"Предыдущее расследование стоило одному сыщику жизни. За новую историю берётся другой человек."
 };
 const allWitnesses=s=>Object.entries(s.witnesses).map(([id,status])=>
- witnessName[id]+" — "+(witnessState[status]||status)).join("\n");
+ witnessName[id]+" — "+witnessStatus(id,status)).join("\n");
 const factList=f=>Object.entries(f).filter(([,v])=>v).map(([k])=>factName[k]||k);
 const safe=s=>Object.values(s.witnesses).filter(x=>x==="protected"||x==="evacuated").length;
 const namesOf=(s,status)=>Object.keys(s.witnesses).filter(id=>s.witnesses[id]===status)
@@ -53,7 +62,7 @@ function render(data,view){
    const confirmed=[];
    for(const id of ["ada","tommy","mercer"]){
      const current=s.witnesses[id];
-     confirmed.push(witnessName[id]+": "+witnessState[current]);
+     confirmed.push(witnessName[id]+": "+witnessStatus(id,current));
    }
    raw="У героя три направления расследования, но время не возвращается назад. Некоторые разговоры уже завершены, а некоторые ещё только предстоят.\n"+confirmed.join("\n")+
    "\n— Не все эти люди говорят одну и ту же правду, — заметил лодочник. — И каждому нужна разная помощь.";
@@ -68,7 +77,7 @@ function render(data,view){
    raw="Место, где лежал заводской журнал, пустует. Укрытие раскрыто, Ада задержана. Новых показаний здесь уже не получить.";
  if(n==="D06"){
    if(s.witnesses.tommy==="detained")
-     raw="Мэйбл ждёт у ворот. Томми не выходит: караул всё ещё удерживает его.\n— Значит, мы ещё не закончили, — говорит она.\nВ отчёте остаётся: Томми Кросс — под охраной.";
+     raw="Мэйбл ждёт у ворот. Томми не выходит: караул всё ещё удерживает его.\n— Значит, мы ещё не закончили, — говорит она.\nВ отчёте остаётся: Томми Кросс — "+witnessStatus("tommy","detained")+".";
    else if(s.witnesses.tommy==="protected")
      raw=base+"\n\nНа время Томми находится под защитой. Это ещё не означает, что он смог покинуть Бирмингем.";
  }
@@ -179,5 +188,5 @@ function render(data,view){
  }
  return raw;
 }
-return {render,witnessName,witnessState,factName,priorIntro};
+return {render,witnessName,witnessState,witnessStatus,factName,priorIntro};
 });

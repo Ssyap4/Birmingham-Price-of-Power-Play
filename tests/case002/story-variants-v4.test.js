@@ -6,7 +6,7 @@
 const assert=require("node:assert/strict");
 const {graph,contract,narration}=require("../../src/case002/browser-data-v3.js");
 const {createEngine}=require("../../src/case002/engine-v3.js");
-const {render}=require("../../src/case002/story-variants-v4.js");
+const {render,witnessStatus,witnessName}=require("../../src/case002/story-variants-v4.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 const data={graph,contract,narration};
 const make=hero=>createEngine({graph,contract,hero,attemptId:"dialogue-"+hero,now:()=>1700000000000});
@@ -70,7 +70,8 @@ const mut=(id,configure)=>{
 };
 assert(mut("D06",()=>{}).includes("не выходит"),"detained Tommy must not speak from freedom");
 assert(mut("D09",()=>{}).includes("не может выдать убежище"),"unknown Ada hideout cannot be betrayed");
-assert(mut("D01",()=>{}).includes("под охраной"),"witness list reflects detention");
+assert(mut("D01",()=>{}).includes("задержан частной охраной"),
+ "witness list distinguishes detention from protection");
 assert(mut("E03",()=>{}).includes("публичного разоблачения ещё нет"),"no automatic newspaper publication");
 assert(mut("E05",()=>{}).includes("Рабочие ещё находятся"),"sabotage not yet safe");
 assert(mut("E07",()=>{}).includes("нет проверенной гарантии"),"no automatic Vale deal");
@@ -97,7 +98,38 @@ assert(mut("F03",()=>{}).includes("пока недостаточно незав�
 assert(mut("F04",()=>{}).includes("ещё предстоит подтвердить"));
 assert(mut("P02",s=>{s.prior={ending:"endingDeath"}}).includes("другой человек"));
 assert(!mut("P02",()=>{}).includes("Предыдущее расследование стоило"));
+
+/* Grammatical and factual safety: 3 people x 6 statuses x 12 summaries,
+ * including every ending, must distinguish arrest, protection and departure. */
+const recaps=["D01","D10","D11","F05","F08",
+ "Z01","Z02","Z03","Z04","Z05","Z06","Z07"];
+const witnessIds=["ada","tommy","mercer"];
+const witnessStates=["missing","located","detained","protected","evacuated","deceased"];
+const feminineAda={
+ located:"найдена, но не защищена",
+ detained:"задержана частной охраной",
+ evacuated:"вывезена из города",deceased:"погибла"
+};
+for(const status of witnessStates)for(const id of witnessIds){
+ const label=witnessStatus(id,status);
+ if(id==="ada"&&feminineAda[status])
+   assert.equal(label,feminineAda[status],"Ada's status must use a feminine form");
+ if(id!=="ada"&&status==="located")assert.equal(label,"найден, но не защищён");
+ if(id!=="ada"&&status==="evacuated")assert.equal(label,"вывезен из города");
+ if(id!=="ada"&&status==="deceased")assert.equal(label,"погиб");
+ if(status==="protected")assert.equal(label,"под защитой");
+ if(status==="detained")assert(label.includes("частной охраной"));
+ for(const sceneId of recaps){
+   const copy=mut(sceneId,s=>{s.finished=true;s.witnesses[id]=status});
+   const prefix=witnessName[id]+(sceneId==="D01"?": ":" — ");
+   assert(copy.includes(prefix+label),
+     sceneId+"/"+id+"/"+status+": missing correct status in recap");
+ }
+}
+assert(mut("D06",()=>{}).includes("Томми Кросс — задержан частной охраной."),
+ "Detained Tommy should never be mistaken for protected Tommy");
+
 assert.equal(Object.keys(narration).length,89);
 console.log("PASS Case002 narrative variants: "+tested+" real-scene renders in 35 paths; "+
   scenes.size+" fixture scenes, "+terminal+" full epilogues, 89 authored nodes and "+
-  "26 contradiction-focused variants.");
+  "26 contradiction-focused variants and 216 witness-status recap cases.");
