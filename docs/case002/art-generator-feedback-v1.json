@@ -189,6 +189,16 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Inspector seen from back, sealed letter on table, silhouette of messenger beyond rainy boarding-house window. An unresolved choice, no revealed hiding address."
+    },
+    {
+      "scene": "D10",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Three unmarked pinned slips on notice board, pencil, map fragments; status and witness names reserved for dynamic UI. No people, confirmed outcomes or readable witness statuses."
     }
   ]
 }
