@@ -86,7 +86,7 @@
       "background": "dark timber desk, glass ink vessel, deep red curtains, rain-streaked multi-pane window, soot-covered brick factory buildings and working smokestacks",
       "light": "warm amber desk lamp on wax seal and paper fibers against cold blue-gray rainy factory daylight",
       "npc": "Vale's aged hand and tailored heavy suit cuff are shown in close-up only, without his face, and no visible selectable detective",
-      "knowledgeBoundary": "This signed guarantee is authentic only in the Z04 signed-agreement ending. It secures only the particular witnesses actually included in the deal, as determined by dynamic narrative flags; it cannot imply that all three witnesses were released or protected. The factory continues operating and the previously recorded two dead remain unremedied; no public prosecution or broader justice is announced.",
+      "knowledgeBoundary": "This signed guarantee is authentic only in the signed-agreement ending. It secures only the particular witnesses actually included in the deal, as determined by dynamic narrative flags; it cannot imply that all three witnesses were released or protected. The factory continues operating and the previously recorded two dead remain unremedied; no public prosecution or broader justice is announced.",
       "avoid": [
         "readable witness names, detailed protected-person lists, invented signatures or fabricated addresses",
         "a group of rescued witnesses, a broad pardon, universal protection or a completed public conviction",
