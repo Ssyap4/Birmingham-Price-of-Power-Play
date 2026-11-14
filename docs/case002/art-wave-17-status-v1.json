@@ -25,11 +25,16 @@
     },
     {
       "id": "C07",
-      "state": "rejected",
-      "reason": "Dialog shot shows noncanonical face; exact approved signalman reference reviewed",
-      "candidateSha256": "398b8f9fbb9ebf35267b2350b566beb32c65781182bb3442a247f162926f789a",
+      "state": "candidate",
+      "reason": "Correct independent cinematic signal-box scene from behind: elderly witness's hands rest on shift log beneath oil lamp, manual levers and rainy tracks visible. No identifiable face, no fixed player hero. Quality and file checks passed; costume/headwear nuance retained for final artistic review. NOT installed pending C09.",
+      "candidateSha256": "9268e78a5b78340f55cc77f912341e14f21dc4003be6f316b306980a33cb2f50",
       "canonPortraitSha256": "946a6d9f6173e5a68be6ee537b37ad49537680e51a535350bd5215fead7e27f8",
-      "next": "An attempted no-face signal-box prompt generated C09-type exterior tire tracks instead; stop mixed-context attempts and use isolated single dialogue shot with canonical portrait hidden"
+      "next": "Hold for complete wave; optional final consistency check on signalman cap shape, but face is hidden. Do not register in game until C09 is complete.",
+      "previousRejectedSha256": "398b8f9fbb9ebf35267b2350b566beb32c65781182bb3442a247f162926f789a",
+      "candidateAsset": "assets/case002/candidates/case002-c07-scene--mobile.webp",
+      "candidateBytes": 114912,
+      "width": 720,
+      "height": 900
     },
     {
       "id": "C08",

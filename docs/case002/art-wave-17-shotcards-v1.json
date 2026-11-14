@@ -29,17 +29,17 @@
     {
       "id": "C07",
       "sceneKind": "dialogue",
-      "focus": "an elderly railway signalman speaking beneath a hanging oil lantern",
-      "camera": "intimate vertical side view showing weathered hands, face hidden in shadow",
+      "focus": "an elderly railway signalman viewed from behind reviewing an open shift ledger beneath a hanging oil lantern in his signal box",
+      "camera": "over-the-shoulder portrait still from behind the seated elderly railway signalman at his desk, the back of his head and both hands visible, his face entirely outside the camera angle",
       "location": "old manual railway signal box",
       "required": [
-        "lined hands resting on old shift book",
-        "oil lantern directly over the table",
-        "rain-blurred rails seen through window"
+        "both weathered hands resting on opened ruled ledger pages without readable names",
+        "an illuminated antique hanging oil lantern centered above the desk",
+        "old mechanical signal levers next to rain-streaked windows with night rail lines beyond"
       ],
       "background": "manual levers and damp wooden frames",
       "light": "warm amber lamp, blue-gray rain",
-      "npc": "only the established signalman with face obscured",
+      "npc": "only one elderly seated signalman seen from behind, no face and no playable hero visible",
       "knowledgeBoundary": "his witness account is not proof of murder",
       "avoid": [
         "invented recognizable portrait",
