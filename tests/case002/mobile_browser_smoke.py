@@ -71,6 +71,9 @@ def main():
                         ), f"{browser_name}: ending or personal scene WebP unavailable: {outcomes}"
                     assert page.locator("#begin").bounding_box()["height"] >= 44
                     page.locator("#begin").click()
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: entering the case must focus its story landmark"
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
                     assert page.locator("#chapterIntertitle").is_visible()
@@ -119,6 +122,9 @@ def main():
                         "#sceneLocation"
                     ).text_content()
                     page.locator(".choice:not([disabled])").first.click()
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: a decision must transfer focus to the next scene"
                     assert page.locator("#sceneId").inner_text().startswith("P02")
                     assert page.locator("#chapterIntertitle").is_hidden(), (
                         "Intertitle must not repeat on every scene of the chapter"
@@ -172,10 +178,16 @@ def main():
                     page.locator("#backToLaunch").click()
                     assert page.locator("#launch").is_visible()
                     assert page.locator("#game").is_hidden()
+                    assert page.locator("#hero").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: returning to launch must focus the hero selector"
                     assert page.locator("#resume").is_enabled(), (
                         f"{browser_name}: resume must activate on returning to hero selection"
                     )
                     page.locator("#resume").click()
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: resuming a save must focus the story landmark"
                     assert page.locator("#sceneId").inner_text().startswith("P02"), (
                         "Returning to hero selection must not discard the last scene"
                     )
@@ -257,6 +269,9 @@ def main():
                         "el.currentSrc.endsWith('/case002-a05-scene--mobile.webp')"
                     ), f"{browser_name}: A05 old ticket must show its own approved phone artwork"
                     assert "Старинный билет Курзон-стрит" in page.locator("#notice").inner_text()
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: new evidence must not strand focus on a deleted choice"
                     assert page.locator("#noticeJump").is_visible()
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
