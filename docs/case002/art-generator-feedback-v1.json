@@ -118,6 +118,13 @@
       "previous": "On resuming the prior per-wave user confirmation cadence, two image-generation handoffs requested the pressure-register moment but the actual generation inputs were railway-yard scenes, producing off-story railway artwork. Both rejected.",
       "remedy": "Distinguish image model mistakes from upstream orchestration mistakes. Inspect the actual scene description sent to the image tool; it must say boiler-house workbench, hands of Ada, original pressure log, pressure gauge and period factory pipes. If the image tool inferred unrelated railway characters/yard, stop after two errors. Preserve the canonical isolated scene request and seek a fresh image-intent message/context before trying again.",
       "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "wrong_scene",
+      "previous": "Two consecutive attempts to generate D04 'Tommy behind the factory gate' actually sent the image system scene descriptions about Ada's boiler-house pressure ledger. It faithfully rendered those wrong descriptions, including invented readable dates and values. Both images rejected.",
+      "remedy": "Before invoking image generation, verify the ACTUAL image request payload corresponds to D04: detained young man, barred gatehouse, bandaged forearm, watchman, no journal or boiler. Stop if the payload mentions pressure log, Ada or a boiler room. Do not attribute prompt handoff mismatch to image-model quality; stop after two context misses.",
+      "outcome": "unresolved-visual-handoff-stopped"
     }
   ],
   "observedSuccess": {
