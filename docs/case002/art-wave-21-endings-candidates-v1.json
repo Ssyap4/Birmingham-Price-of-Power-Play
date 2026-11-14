@@ -87,6 +87,24 @@
       "acceptedRendering": 1,
       "visualReview": "Accepted: empty railway rails and immobile hand switch; padlocked crossing gate and a handful of weary workers outside the track corridor, one holding an unreadable folded envelope; no injured people, accident or gender-defined player hero.",
       "knowledgeBoundary": "Workers were cleared before the siding was stopped. The image reflects delayed wages and a closed workplace without claiming an exact pay amount, new casualty, sabotage mechanism or continued employment."
+    },
+    {
+      "sceneId": "Z06",
+      "variantKey": "accounts-hero",
+      "candidateFile": "case002-z06-scene--accounts-hero--mobile.webp",
+      "sha256": "3608cc5ba32e33f97b4ff96181f326c0f308bd445a88a9aa26aee87df5ce4b3b",
+      "gitBlobSha1": "ebb81a279aaeb710ca07efb4e367d31f0924a12d",
+      "bytes": 62096,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "staged-candidate-not-installed",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "generatorImageId": "cd636e61-36d3-4222-93d8-8e91ecd45936",
+      "visualReview": "Accepted: genuine loose account copies are physically held by an anonymous single black-gloved hand on the desk, dark open door and rainy industrial night beyond. No playable face or body, no courtroom, publication, celebration or declared witness fate.",
+      "knowledgeBoundary": "The player possesses true copies of Brackett's accounts when brackettAccountsHeld is true; private leverage is obtained but justice is deliberately delayed. Illegible account columns are cinematic texture, not new canonical debts, names or sums."
     }
   ],
   "rejectedGenerations": [

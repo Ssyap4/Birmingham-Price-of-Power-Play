@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "chapter": "END",
-  "source": "Original Case002 ending screenplay and storyboard; Z01–Z05 are separate accepted candidate image turns, with an extra Z02 neutral state.",
+  "source": "Original Case002 ending screenplay and storyboard; Z01–Z06 are separate accepted candidate image turns, with an extra Z02 neutral evacuated state.",
   "scenes": [
     {
       "id": "Z01",
@@ -117,6 +117,29 @@
         "a recognizable playable hero or previously established witness appearing without story permission"
       ],
       "intendedVariant": "empty-safe-siding"
+    },
+    {
+      "id": "Z06",
+      "sceneKind": "evidence",
+      "focus": "several real copied account sheets from a security chief's ledger lie under one anonymous black leather-gloved hand on an investigator's desk, while the door into the office remains dark",
+      "camera": "intimate vertical over-the-desk viewpoint, anonymous single gloved hand entering only from the bottom margin, duplicated accounting sheets dominating the foreground and the menacing empty doorway behind",
+      "location": "a private investigator's shadowy office in industrial Birmingham at night in the 1920s",
+      "required": [
+        "one anonymous leather-gloved hand with no visible face or body holding down loose separate copied accounting sheets",
+        "multiple physical duplicate account pages filled with indistinct handwritten columns, without legible names or meaningful figures",
+        "a heavy brass desk lamp over the papers and a half-open dark wooden door revealing only blue-black empty shadow"
+      ],
+      "background": "rain-streaked industrial window with smoking factory chimneys, dark brick, worn books, closed leather folder, and discreet desk clutter",
+      "light": "warm localized amber brass lamp against cold rainy slate-blue nighttime shadows, restrained smoke and deep chiaroscuro",
+      "npc": "only one anonymous neutral gloved hand in frame; no visible protagonist face or full silhouette and no other recognizable characters",
+      "knowledgeBoundary": "The real copies of Brackett's accounts belong physically to the playable hero only in the ending where flags.brackettAccountsHeld is true. Their control gives leverage but public justice is consciously postponed. There is no newspaper, trial, established conviction or confirmed outcome for Ada, Tommy, or Mercer; the art must not imply gender, age or appearance of any of the five selectable heroes.",
+      "avoid": [
+        "recognizable or full-body playable protagonist, masculine or feminine facial features, age or identifiable silhouette",
+        "a published newspaper, courtroom scene, police sentence, victory celebration or public revelation",
+        "readable names, detailed invented account figures, visible witness lists or proven witness outcomes",
+        "Brackett or Vale signing a confession, appearing as a new face or voluntarily handing over the ledger"
+      ],
+      "intendedVariant": "accounts-hero"
     }
   ]
 }
