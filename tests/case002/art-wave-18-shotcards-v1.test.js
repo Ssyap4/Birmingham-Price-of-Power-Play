@@ -72,7 +72,7 @@ for (const c of heroes){
  assert.equal(review.automationDoesNotApprove,true);
 }
 // Physically staged hero-specific candidates are not installed scene approvals.
-const heroCandidateHashes=[["HJ02","ef5d10ff4a2571a4b3b655817260bd0590760cd6ab95c93dfc638509585a523a"],["HF03","96ed4db0f1c5d4d7bbcdf8bcfb080c499bb9b5c37ac3440bd3c58cdd9fb57419"],["HE02","439dc7f0234a9984d9ceb49b33c8594f1cd7a80e11a80ddccda4998467038001"]];
+const heroCandidateHashes=[["HJ02","ef5d10ff4a2571a4b3b655817260bd0590760cd6ab95c93dfc638509585a523a"],["HF03","96ed4db0f1c5d4d7bbcdf8bcfb080c499bb9b5c37ac3440bd3c58cdd9fb57419"],["HE02","439dc7f0234a9984d9ceb49b33c8594f1cd7a80e11a80ddccda4998467038001"],["HV02","9e900f043f09706ef837914a2fe7ea01cadb596ce88ebfa29e06b40c599fbaa3"]];
 for (const [id,hash] of heroCandidateHashes){
  assert(heroStory.some(x=>x.id===id),"Staged hero candidate absent from storyboard: "+id);
  const file=path.join(root,"assets/case002/candidates/case002-"+id.toLowerCase()+"-scene--mobile.webp");

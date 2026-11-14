@@ -250,6 +250,18 @@
       "noInventedNarrativeStatus": true,
       "approvedInGame": false,
       "note": "Eleanor's gloved hand rests by a closed face-down leather notebook on the grimy boiler-house workbench; Ada's soot-marked hand and wrench nearby. No canonical faces, pressure log transfer, formal witness statement, or protected status depicted."
+    },
+    {
+      "scene": "HV02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "acceptedAs": "candidate",
+      "cadenceCompliant": true,
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Rendered in previous user turn; technical staging performed on user's next 'дальше'. Male hand hands a folded sealed paper to female receiver in a rainy Aston factory alley; faces cropped, no freed Tommy or guaranteed protection."
     }
   ]
 }
