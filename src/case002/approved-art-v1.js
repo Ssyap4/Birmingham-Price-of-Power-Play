@@ -12,6 +12,41 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"C01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-c01-scene.webp",cast:[],
+   mobileFile:"case002-c01-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"1133a4c5ce3a66620c143648513d1cc28b9ced14459b05567ddfc1c8fc399137"
+  }),
+  Object.freeze({
+   sceneId:"C02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-c02-scene.webp",cast:[],
+   mobileFile:"case002-c02-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"4d56c26a865fb3507ccd29cf8f3a4d094d24ebc2cc918510c4e9b0ca7d9946a4"
+  }),
+  Object.freeze({
+   sceneId:"C03",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-c03-scene.webp",cast:[],
+   mobileFile:"case002-c03-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"8c71f8242e10b1b5f8f4dfe2951479b99e4155edb8d10e4682b37e69d4c67569"
+  }),
+  Object.freeze({
+   sceneId:"C04",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-c04-scene.webp",cast:["mabel"],
+   mobileFile:"case002-c04-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"445d00cfc81736104d2d3f190cee87879d318d5d3ae5787c4c09fa0e0eb8e9b6"
+  }),
+  Object.freeze({
+   sceneId:"C05",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-c05-scene.webp",cast:[],
+   mobileFile:"case002-c05-scene--mobile.webp",
+   mobileWidth:720,mobileHeight:900,
+   mobileSha256:"fe05ef08354ae2133b550972d05b6c4dbdac702b4e5cd77ecf7e6f6e2394d7fb"
+  }),
+  Object.freeze({
    sceneId:"B11",variantKey:"default",review:"approved",mobileOnly:true,
    file:"case002-b11-scene.webp",cast:[],
    mobileFile:"case002-b11-scene--mobile.webp",
