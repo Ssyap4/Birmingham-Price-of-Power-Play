@@ -5,6 +5,7 @@ const assert=require("node:assert/strict");
 const {createEngine}=require("../../src/case002/engine-v3.js");
 const {graph,contract}=require("../../src/case002/browser-data-v3.js");
 const {receipts,primary}=require("../../src/case002/consequences-v1.js");
+const {witnessStatus}=require("../../src/case002/story-variants-v4.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 const make=hero=>createEngine({graph,contract,hero,attemptId:"receipt-"+hero});
 const labels=id=>({"old_excursion_ticket":"Старинный билет Курзон-стрит",
@@ -65,7 +66,7 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
  const before=g.snapshot(),after=g.choose("D10","betrayAda");
  const notice=primary(before,after,"betrayAda");
  assert(notice.startsWith("Убежище Ады раскрыто"));
- assert(notice.includes("Ада Уэбб: под охраной"));
+ assert(notice.includes("Ада Уэбб: задержана частной охраной"));
  assert(!notice.includes("под защитой"));
  rareEvents++;
 }
@@ -96,6 +97,29 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
  const notice=primary(before,after,"withdrawAda");
  assert(notice.includes("без показаний Ады")&&!notice.includes("под защитой"));
  rareEvents++;
+}
+
+/* Every state transition receipt uses the same gender and meaning as
+ * intermediate witness summaries, across three witnesses and six states. */
+{
+ const base={evidence:[],witnesses:{ada:"missing",tommy:"missing",mercer:"missing"},flags:{},finished:false};
+ const labels={ada:"Ада Уэбб",tommy:"Томми Кросс",mercer:"Дэниел Мерсер"};
+ const statuses=["missing","located","detained","protected","evacuated","deceased"];
+ let combos=0;
+ for(const id of Object.keys(labels))for(const status of statuses){
+  const before={...base,witnesses:{...base.witnesses,[id]:status==="missing"?"located":"missing"}};
+  const after={...base,witnesses:{...base.witnesses,[id]:status}};
+  const rows=receipts(before,after,"continue",labels);
+  const line=rows.find(item=>item.kind==="witness")?.text||"";
+  assert(line.includes(labels[id]+": "+witnessStatus(id,status)+"."),
+    "receipt and narrative witness status mismatch: "+id+"/"+status);
+  assert(!line.includes("под охраной"),"detention must never imply protection");
+  if(status==="detained"&&id!=="ada")
+   assert(!line.includes("прежнем укрытии"),
+    "Ada's compromised hideout must not be attributed to another witness");
+  combos++;
+ }
+ assert.equal(combos,18);
 }
 console.log("PASS Case002 decision receipts: "+decisions+
  " real decisions on 35 endings, "+stateChecks+
