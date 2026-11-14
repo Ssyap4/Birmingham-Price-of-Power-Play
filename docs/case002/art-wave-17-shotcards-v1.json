@@ -51,23 +51,23 @@
     {
       "id": "C08",
       "sceneKind": "action",
-      "focus": "a messenger's gloved hand offering a folded security telegram",
-      "camera": "tight close-up at tabletop level, no face",
+      "focus": "a messenger's weathered leather-gloved hand placing a narrow folded and sealed official telegram on a desk, with the back of the folded paper facing the camera",
+      "camera": "tight chest-height portrait still life of the hand and folded message, viewed from the receiver side of a wooden railway office desk",
       "location": "1920s freight railway office",
       "required": [
-        "one folded official telegram",
-        "finger covering small registration field",
-        "ink bottle and period stationery"
+        "one creased telegram folded shut so the written front faces down against the desk",
+        "the messenger's thumb resting over the closed flap and sealing mark",
+        "ink bottle, short fountain pen and a small stack of blank paper beside the gesture"
       ],
-      "background": "wooden drawer and rain-streaked glass",
-      "light": "one narrow amber desk light",
-      "npc": "only messenger hand, no player character",
-      "knowledgeBoundary": "the message needs registration and signature comparison",
+      "background": "rain beading on a dark office window, old brass cabinet handles softly blurred",
+      "light": "warm directional brass desk lamp illuminating the glove and paper against cold gray window reflections",
+      "npc": "only a gloved messenger's hand and jacket sleeve, the receiving person is outside the image",
+      "knowledgeBoundary": "the messenger has passed a suspicious official telegram, but registration identifier and authorship are not yet disclosed and cannot appear as readable image text",
       "avoid": [
-        "invented readable IDs",
-        "premature guilt",
-        "villain portrait",
-        "dramatic arrest"
+        "readable invented document numbers or initials",
+        "front face of a printed telegram with a visible code",
+        "guilty character shown",
+        "playable hero"
       ]
     },
     {
@@ -95,23 +95,23 @@
     {
       "id": "C10",
       "sceneKind": "evidence",
-      "focus": "tabletop investigation arrangement depicting a freight train and one separated wagon",
-      "camera": "direct vertical top-down close-up of papers and evidence",
+      "focus": "a worn oak investigation desk holding a crude hand-drawn diagram of several linked freight wagons beside one physically separate cut-out paper wagon",
+      "camera": "direct overhead close shot of the single desk, its railway drawing and two document piles, in a quiet empty room",
       "location": "detective's old industrial workroom",
       "required": [
-        "simple train-and-wagon sketch",
-        "two separate stacks of cargo documents",
-        "unfilled blank spaces suggesting missing independent proof"
+        "one central unlabelled pencil drawing of a line of linked rectangular rail wagons",
+        "one loose wagon-shaped paper cutout visibly set apart from the line",
+        "two nearby stacks of folded evidence papers with their text sides turned downward"
       ],
-      "background": "dark wood table, leather folder, window fog",
-      "light": "warm kerosene lamp",
-      "npc": "no people and no playable hero",
-      "knowledgeBoundary": "the reconstruction is conditional on independent clues and must not imply proved guilt",
+      "background": "weathered brown wood, a brass straightedge, an aged leather folder and softly blurred room edges",
+      "light": "one low amber desk lamp casting long subtle shadows over paper edges",
+      "npc": "nobody in the room and no human figures",
+      "knowledgeBoundary": "this reconstruction is only a working hypothesis; no proof of either forgery and no identified culprit is established",
       "avoid": [
-        "identified culprit",
-        "final criminal confession",
-        "readable invented names",
-        "complete incriminating diagram"
+        "a full solved evidence board with named suspect",
+        "readable fabricated culprit or numbers",
+        "people or silhouettes",
+        "telegram handoff"
       ]
     }
   ]
