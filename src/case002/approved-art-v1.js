@@ -12,6 +12,66 @@ const manifest=Object.freeze({
  schemaVersion:1,
  sceneImages:Object.freeze([
   Object.freeze({
+   sceneId:"F01",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f01-scene.webp",cast:[],
+   mobileFile:"case002-f01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"9f305f44e4500bfd657df31ddf806753210c95b380d0ecf36c9689a654fc4d82"
+  }),
+  Object.freeze({
+   sceneId:"F02",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f02-scene.webp",cast:[],
+   applicableVariants:Object.freeze(["incomplete","both-proven"]),
+   mobileFile:"case002-f02-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"6a364b1db449ab5716f16b16d4e458442a9613e8bf4cf0bb32b1b160bcb6995b"
+  }),
+  Object.freeze({
+   sceneId:"F03",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f03-scene.webp",cast:[],
+   applicableVariants:Object.freeze(["hale-unproven","hale-proven"]),
+   mobileFile:"case002-f03-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"50dbe293ee05e4acb718625f4f266287300a45818c1e399bf2a95362672a5e25"
+  }),
+  Object.freeze({
+   sceneId:"F04",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f04-scene.webp",cast:[],
+   applicableVariants:Object.freeze(["factory-unproven","factory-proven"]),
+   mobileFile:"case002-f04-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"a9a99d31c1a219c94859d0f277df003132ce1b35b69e6b745e1218d6002568fa"
+  }),
+  Object.freeze({
+   sceneId:"F05",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f05-scene.webp",cast:[],
+   applicableVariants:Object.freeze(["statuses-in-html"]),
+   mobileFile:"case002-f05-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"692ec595e6f5639da1d1f1a993127a147d0b8973452a6485bc32f9cc223834c4"
+  }),
+  Object.freeze({
+   sceneId:"F06",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f06-scene.webp",cast:[],
+   mobileFile:"case002-f06-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"90d26046c10b6266c994ba3c2ea66fc480e9947511f195787c7ad26fba7a49b5"
+  }),
+  Object.freeze({
+   sceneId:"F07",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f07-scene.webp",cast:["guards"],
+   mobileFile:"case002-f07-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"82ce110782312f6ad8c13965f5a386460183fb2db028a682ae80c26ce124cc9d"
+  }),
+  Object.freeze({
+   sceneId:"F08",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f08-scene.webp",cast:["mabel"],
+   applicableVariants:Object.freeze(["accounts-not-held","accounts-hero","accounts-workers"]),
+   mobileFile:"case002-f08-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"e4b5c0eb67b050516a656d233fe8d496d1e2c413829cd573a2bfb4354da1dbeb"
+  }),
+  Object.freeze({
+   sceneId:"F09",variantKey:"default",review:"approved",mobileOnly:true,
+   file:"case002-f09-scene.webp",cast:[],
+   applicableVariants:Object.freeze(["available-options-in-html"]),
+   mobileFile:"case002-f09-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
+   mobileSha256:"dce1030fa1ddf854635ea0c0c276b3fce13868d82657efd0b15a866003ce37b9"
+  }),
+  Object.freeze({
    sceneId:"E01",variantKey:"default",review:"approved",mobileOnly:true,
    file:"case002-e01-scene.webp",cast:[],
    mobileFile:"case002-e01-scene--mobile.webp",mobileWidth:720,mobileHeight:900,
@@ -556,6 +616,12 @@ const manifest=Object.freeze({
 // Audited Chapter IV portraits used across explicitly safe witness states.
 // One physical WebP per shot; no automatic fallback into absent-witness states.
 const neutralSceneVariants=Object.freeze({
+ F02:Object.freeze(["incomplete","both-proven"]),
+ F03:Object.freeze(["hale-unproven","hale-proven"]),
+ F04:Object.freeze(["factory-unproven","factory-proven"]),
+ F05:Object.freeze(["statuses-in-html"]),
+ F08:Object.freeze(["accounts-not-held","accounts-hero","accounts-workers"]),
+ F09:Object.freeze(["available-options-in-html"]),
  E03:Object.freeze(["still-unverified","verified-not-published"]),
  E05:Object.freeze(["workers-on-rails"]),
  E07:Object.freeze(["unsigned"]),

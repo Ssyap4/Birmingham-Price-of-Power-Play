@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 "use strict";
-/* Chapter VI: independent candidate must not silently become game approval. */
+/* Chapter VI: byte-identical reviewed candidates installed only with explicit neutral-state gates. */
 const assert=require("node:assert/strict");
 const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
 const builder=require("../../docs/case002/art-wave-prompt-builder-v1.js");
@@ -22,7 +22,8 @@ assert.equal(metadata.candidates.length,batch.length);
 for(const [idx,card] of batch.entries()){
  const m=metadata.candidates[idx];
  assert.equal(m.sceneId,card.id);
- assert.equal(m.status,"staged-candidate-not-installed");
+ assert.equal(m.status,"installed-approved-in-feature");
+ assert.equal(m.installedBytesIdentical,true);
  assert.equal(m.acceptedRendering,1);
  assert.equal(m.renderCountInArtworkTurn,1);
  if(card.id==="F08"){
@@ -53,9 +54,19 @@ for(const [idx,card] of batch.entries()){
  assert.equal(bytes.length,m.bytes);
  assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),m.sha256);
  assert.equal(crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+bytes.length),Buffer.from([0]),bytes])).digest("hex"),m.gitBlobSha1);
- assert.equal(manifest.sceneImages.filter(x=>x.sceneId===card.id).length,0,
-   "A chapter VI candidate cannot be prematurely installed");
- assert.equal(resolveScene({sceneId:card.id,variantKey:"default",visibleCast:["hero"],desiredAsset:"case002-"+card.id.toLowerCase()+"-scene.webp"}),null);
+ const canonical="case002-"+card.id.toLowerCase()+"-scene--mobile.webp";
+ assert.equal(m.installedFile,canonical);
+ const installed=manifest.sceneImages.filter(x=>x.sceneId===card.id);
+ assert.equal(installed.length,1,"Only one canonical Chapter VI scene approval permitted: "+card.id);
+ assert.equal(installed[0].variantKey,"default");
+ assert.equal(installed[0].mobileOnly,true);
+ assert.equal(installed[0].mobileFile,canonical);
+ assert.equal(installed[0].mobileSha256,m.sha256);
+ const installedBytes=fs.readFileSync(path.join(root,"assets/case002/scenes",canonical));
+ assert.equal(crypto.createHash("sha256").update(installedBytes).digest("hex"),m.sha256,
+   "Installed Chapter VI scene must match the reviewed WebP bytes");
+ assert.equal(installedBytes.equals(bytes),true,
+   "Do not modify the accepted art while copying it into the scene library");
  assert.equal(card.required.length,3);
  if(card.id==="F01"){
    assert(card.knowledgeBoundary.includes("Only one wagon"));
@@ -131,11 +142,11 @@ assert.equal(director.variant(view(true,true)),"both-proven");
 const rowanState=bool=>({scene:{id:"F03"},state:{flags:{},witnesses:{}},facts:{provedHaleMurder:bool}});
 assert.equal(director.variant(rowanState(false)),"hale-unproven");
 assert.equal(director.variant(rowanState(true)),"hale-proven");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F03").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F03").length,1);
 const factoryView=bool=>({scene:{id:"F04"},state:{flags:{},witnesses:{}},facts:{provedFactoryCoverup:bool}});
 assert.equal(director.variant(factoryView(false)),"factory-unproven");
 assert.equal(director.variant(factoryView(true)),"factory-proven");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F04").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F04").length,1);
 const witnessView=w=>({scene:{id:"F05"},state:{flags:{},witnesses:w},facts:{}});
 for(const witnesses of [
   {ada:"missing",tommy:"detained",mercer:"missing"},
@@ -145,21 +156,21 @@ for(const witnesses of [
   assert.equal(director.variant(witnessView(witnesses)),"statuses-in-html",
     "The image cannot silently declare witness fate for a particular route");
 }
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F05").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F05").length,1);
 const threatView={scene:{id:"F06"},state:{flags:{},witnesses:{}},facts:{}};
 assert.equal(director.variant(threatView),"default",
  "The choice of guarded or safe route must be a player decision, never a photograph-triggered state");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F06").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F06").length,1);
 const guardsView={scene:{id:"F07"},state:{flags:{},witnesses:{}},facts:{}};
 assert.equal(director.variant(guardsView),"default",
  "An illustrated guard warning cannot infer the hero's subsequent risk choice or death");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F07").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F07").length,1);
 const preVerdictFlags=(held,given)=>({scene:{id:"F08"},state:{flags:{brackettAccountsHeld:held,accountsGivenToWorkers:given},witnesses:{}}});
 assert.equal(director.variant(preVerdictFlags(false,false)),"accounts-not-held");
 assert.equal(director.variant(preVerdictFlags(true,false)),"accounts-hero");
 assert.equal(director.variant(preVerdictFlags(true,true)),"accounts-workers");
 assert.equal(director.variant(preVerdictFlags(false,true)),"accounts-workers");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F08").length,0);
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F08").length,1);
 const rejectedF09=metadata.rejectedGenerations?.find(x=>x.sceneId==="F09"&&x.reasonCode==="wrong-case-number");
 assert(rejectedF09,"Unacceptable wrong-case-number artwork must be explicitly recorded");
 assert.equal(rejectedF09.attemptedGenerations,1);
@@ -169,10 +180,36 @@ assert.equal(rejectedF09.candidateFile,null);
 assert.equal(metadata.candidates.filter(x=>x.sceneId==="F09").length,1,
  "The newly accepted F09 must be distinct from the rejected wrong-number rendering");
 assert.equal(spec.scenes.filter(x=>x.id==="F09").length,1);
-assert.equal(metadata.candidates.find(x=>x.sceneId==="F09").status,"staged-candidate-not-installed");
+assert.equal(metadata.candidates.find(x=>x.sceneId==="F09").status,"installed-approved-in-feature");
 const f09View={scene:{id:"F09"},state:{flags:{},witnesses:{}},facts:{}};
 assert.equal(director.variant(f09View),"available-options-in-html",
  "Choices are derived from game logic rather than the pictured document");
-assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F09").length,0,
- "F09 must remain uninstalled until the Chapter VI integration");
-console.log("PASS: Chapter VI F01–F09 candidates verified, rejected F09 predecessor preserved.");
+assert.equal(manifest.sceneImages.filter(x=>x.sceneId==="F09").length,1,
+ "Install exactly the accepted, unlettered F09 rather than the rejected wrong-number rendering");
+const fVariants={
+ F01:["default"],F02:["incomplete","both-proven"],F03:["hale-unproven","hale-proven"],
+ F04:["factory-unproven","factory-proven"],F05:["statuses-in-html"],
+ F06:["default"],F07:["default"],
+ F08:["accounts-not-held","accounts-hero","accounts-workers"],
+ F09:["available-options-in-html"]
+};
+const visible={F01:["hero"],F02:["hero"],F03:["hero","rowan"],F04:["hero"],F05:["hero"],
+ F06:["hero"],F07:["hero","guards"],F08:["hero","mabel"],F09:["hero"]};
+for(const [id,variants] of Object.entries(fVariants)){
+ const canonical="case002-"+id.toLowerCase()+"-scene--mobile.webp";
+ for(const variantKey of variants){
+  const suffix=variantKey==="default"?"":"--"+variantKey;
+  const stage={sceneId:id,variantKey,visibleCast:visible[id],
+    desiredAsset:"case002-"+id.toLowerCase()+"-scene"+suffix+".webp"};
+  assert(resolveScene(stage)?.src.endsWith("/"+canonical),
+    "Chapter VI reviewed neutral state must resolve to its single verified file: "+id+":"+variantKey);
+ }
+ const illegalVariant={sceneId:id,variantKey:"fabricated-ending",
+  visibleCast:visible[id],desiredAsset:"case002-"+id.toLowerCase()+"-scene--fabricated-ending.webp"};
+ assert.equal(resolveScene(illegalVariant),null,
+  "Unapproved Chapter VI state must never resolve to arbitrary art: "+id);
+}
+assert.notEqual(spec.scenes.find(x=>x.id==="F08"),undefined);
+assert.equal(manifest.sceneImages.find(x=>x.sceneId==="F08").mobileSha256,
+ "e4b5c0eb67b050516a656d233fe8d496d1e2c413829cd573a2bfb4354da1dbeb");
+console.log("PASS: Chapter VI F01–F09 installed; all neutral story states and F08/F09 rejected predecessors guarded.");

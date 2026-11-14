@@ -13,11 +13,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: one gloved investigator, one miniature freight wagon and three stop marks on a rainlit railway drawing; no evidence of disappearance or final destination",
-      "knowledgeBoundary": "This is a conjecture/observation board, not proof of the actual wagon route or of witness safety."
+      "knowledgeBoundary": "This is a conjecture/observation board, not proof of the actual wagon route or of witness safety.",
+      "installedFile": "case002-f01-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f01-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F02",
@@ -30,11 +33,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: two physically distinct record sheets, different handwritten layouts, separate stamps and gloved investigator hands; no confirmed forgery or revealed identity",
-      "knowledgeBoundary": "The game determines incomplete versus both-proven status from the evidence flags; image remains deliberately neutral and does not establish the actual provenance of either document."
+      "knowledgeBoundary": "The game determines incomplete versus both-proven status from the evidence flags; image remains deliberately neutral and does not establish the actual provenance of either document.",
+      "installedFile": "case002-f02-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f02-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F03",
@@ -47,11 +53,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted after a single mobile crop excluding the generated detective face: tweezers examine dark wool cloth over an evidence tray, while the earlier police protocol, telegram and witness notes remain separate and unreadable",
-      "knowledgeBoundary": "An evidence comparison does not independently confirm murder, name a culprit or set provedHaleMurder."
+      "knowledgeBoundary": "An evidence comparison does not independently confirm murder, name a culprit or set provedHaleMurder.",
+      "installedFile": "case002-f03-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f03-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F04",
@@ -64,11 +73,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: a visually separate two-line official sheet versus six numbered ledger entries, with the investigator's hand at entry six; no invented legible names or court verdict",
-      "knowledgeBoundary": "No graphic establishes guilt or the provedFactoryCoverup game fact; both legal and evidentiary conclusions remain driven by the narrative state."
+      "knowledgeBoundary": "No graphic establishes guilt or the provedFactoryCoverup game fact; both legal and evidentiary conclusions remain driven by the narrative state.",
+      "installedFile": "case002-f04-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f04-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F05",
@@ -81,11 +93,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: three distinct paper files in one leather folio, with deliberately indistinct cameo silhouettes and no legible names, safety labels or implied collective rescue; investigator's face not visible",
-      "knowledgeBoundary": "Three visual records alone cannot confirm any witness's fate. Ada, Tommy and Daniel Mercer keep independently determined HTML state labels."
+      "knowledgeBoundary": "Three visual records alone cannot confirm any witness's fate. Ada, Tommy and Daniel Mercer keep independently determined HTML state labels.",
+      "installedFile": "case002-f05-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f05-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F06",
@@ -98,11 +113,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: clearly separate open left bypass and guarded narrow railway passage on the right, a lone brass cartridge case near foreground, no face, violence or decided fate",
-      "knowledgeBoundary": "The illustration depicts the pending choice, not any risky action, death, forced confrontation or guaranteed safe outcome."
+      "knowledgeBoundary": "The illustration depicts the pending choice, not any risky action, death, forced confrontation or guaranteed safe outcome.",
+      "installedFile": "case002-f06-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f06-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F07",
@@ -115,11 +133,14 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: one guard raises empty open palm as a final warning, second guard waits beside rain-wet railway, anonymous protagonist seen only from behind, side passage remains open; no injury or decided outcome",
-      "knowledgeBoundary": "The drawing depicts the confrontation before a further player choice; neither death nor survival follows from the image alone."
+      "knowledgeBoundary": "The drawing depicts the confrontation before a further player choice; neither death nor survival follows from the image alone.",
+      "installedFile": "case002-f07-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f07-scene--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F08",
@@ -132,7 +153,7 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "ACCEPTED revised F08 after canonical Mabel visual comparison: stern angular face, strong squared shoulders, crossed arms, short dark chestnut bob, severe grey coat, woman facing anonymous detective; closed neutral folder, no other witness or resolved account custody.",
@@ -148,7 +169,10 @@
         "status": "art-review-hold-not-installed",
         "review": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob"
       },
-      "replacedAfterCanonicalReview": true
+      "replacedAfterCanonicalReview": true,
+      "installedFile": "case002-f08-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f08-scene--revised--mobile.webp",
+      "installedBytesIdentical": true
     },
     {
       "sceneId": "F09",
@@ -161,12 +185,15 @@
         720,
         900
       ],
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "visualReview": "accepted: detective seen indistinctly from behind at rainy industrial dawn, pen suspended over wholly blank page, entirely unlettered closed leather folder, no case number, no seal, no selected ending or invented evidence",
       "knowledgeBoundary": "Neutral decision moment, future options and consequences determined only from available ending state, never implied by the artwork.",
-      "previousRejectedGeneratorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46"
+      "previousRejectedGeneratorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46",
+      "installedFile": "case002-f09-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f09-scene--mobile.webp",
+      "installedBytesIdentical": true
     }
   ],
   "rejectedGenerations": [
@@ -184,5 +211,6 @@
       "installed": false,
       "nextStep": "Render one newly composed F09 moment in the next separate author turn: before the final choice, anonymous detective at a modest dawn office desk; plain unlettered folder and unsigned paper, one open question rather than an announced resolution."
     }
-  ]
+  ],
+  "purpose": "Chapter VI physically verified candidates installed in the Case002 feature branch; conditional text and facts remain driven by story state."
 }

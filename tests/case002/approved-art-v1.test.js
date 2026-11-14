@@ -98,6 +98,36 @@ for(const [id,variant,flags] of chapterVVariantViews){
  check(candidate);
 }
 
+// Chapter VI's neutral images are common across the exact, story-gated
+// variants. Their facts, witnesses, available endings and account custody
+// are NEVER inferred from imagery or rewritten by this test.
+const chapterVIStateFixtures=[
+ ["F02","incomplete",{}, {provedFirstForgery:true,provedSecondForgery:false},{}],
+ ["F02","both-proven",{}, {provedFirstForgery:true,provedSecondForgery:true},{}],
+ ["F03","hale-unproven",{}, {provedHaleMurder:false},{}],
+ ["F03","hale-proven",{}, {provedHaleMurder:true},{}],
+ ["F04","factory-unproven",{}, {provedFactoryCoverup:false},{}],
+ ["F04","factory-proven",{}, {provedFactoryCoverup:true},{}],
+ ["F05","statuses-in-html",{}, {},{ada:"missing",tommy:"detained",mercer:"deceased"}],
+ ["F05","statuses-in-html",{}, {},{ada:"protected",tommy:"evacuated",mercer:"missing"}],
+ ["F08","accounts-not-held",{brackettAccountsHeld:false,accountsGivenToWorkers:false},{},{}],
+ ["F08","accounts-hero",{brackettAccountsHeld:true,accountsGivenToWorkers:false},{},{}],
+ ["F08","accounts-workers",{brackettAccountsHeld:true,accountsGivenToWorkers:true},{},{}],
+ ["F09","available-options-in-html",{}, {},{}]
+];
+const chapterVIProbe=createEngine({graph,contract,hero:"jack",attemptId:"chapterVI-art-state-qa"});
+for(const [id,variant,flags,facts,witnesses] of chapterVIStateFixtures){
+ const scene=graph.nodes.find(x=>x.id===id);
+ assert(scene,"Canonical Chapter VI node missing: "+id);
+ const baseView=chapterVIProbe.view();
+ const candidate={...baseView,scene,
+  state:{...baseView.state,flags:{...baseView.state.flags,...flags},
+   witnesses:{...baseView.state.witnesses,...witnesses}},
+  facts:{...baseView.facts,...facts}};
+ assert.equal(director.variant(candidate),variant,"Chapter VI story contract changed: "+id);
+ check(candidate);
+}
+
 const sampleStage=director.select(storyboard,createEngine({
  graph,contract,hero:"jack",attemptId:"art-gate-fixture"}).view());
 const file=sampleStage.desiredAsset;
