@@ -335,6 +335,9 @@ def main():
                     page.locator('button[data-tab="journal"]').click()
                     assert "Сцена A05" in page.locator("#toolContent").inner_text()
                     assert "Старинный билет Курзон-стрит" in page.locator("#toolContent").inner_text()
+                    assert page.locator(".case-journal").evaluate(
+                        "(el) => getComputedStyle(el).overflowY === 'visible'"
+                    ), f"{browser_name}: case journal must use the page scroll, not a nested box"
                     page.reload(wait_until="load")
                     page.locator("#resume").click()
                     page.locator('button[data-tab="journal"]').click()
@@ -402,6 +405,21 @@ def main():
                     assert "Откройте подробности" in receipt_page.locator("#noticeContent").inner_text()
                     receipt_page.locator("#noticeDismiss").click()
                     assert receipt_page.locator("#notice").is_hidden()
+                    assert receipt_page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: dismissing a receipt must restore live focus"
+                    # A second choice creates a new receipt; manually switching
+                    # the dossier must dismiss it instead of obscuring the tab.
+                    receipt_page.locator('button.choice[data-to="A01"]').click()
+                    assert receipt_page.locator("#notice").is_visible()
+                    receipt_page.locator('button[data-tab="witnesses"]').click()
+                    assert receipt_page.locator("#notice").is_hidden()
+                    assert receipt_page.locator('button[data-tab="witnesses"]').get_attribute(
+                        "aria-pressed"
+                    ) == "true"
+                    assert receipt_page.locator('button[data-tab="witnesses"]').evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: manual dossier switch must preserve tab focus"
                     receipt_ctx.close()
                     # Simulate a reviewed landscape scene and a missing
                     # mobile-specific crop. The production manifest remains
@@ -542,6 +560,10 @@ def main():
                         assert final_choices.first.get_attribute("data-to") == "Z02"
                         full_page.locator('button[data-tab="journal"]').click()
                         assert full_page.locator(".case-journal > li").count() > 0
+                        assert full_page.locator(".case-journal").evaluate(
+                            "(el) => getComputedStyle(el).overflowY === 'visible' && "
+                            "el.scrollHeight <= el.clientHeight + 1"
+                        ), "A long journal must not trap iPhone scrolling inside a 360px box"
                         full_page.reload(wait_until="load")
                         full_page.locator("#resume").click()
                         assert full_page.locator("#sceneId").inner_text().startswith("F09")
