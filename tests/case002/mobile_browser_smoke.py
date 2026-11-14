@@ -503,8 +503,18 @@ def main():
                     art_page.wait_for_function("""() =>
                         document.querySelector('#sceneArtworkImage').complete
                     """, timeout=6000)
+                    art_page.wait_for_function(
+                        "() => !document.querySelector('#artRecovery').hidden",
+                        timeout=6000
+                    )
                     assert art_page.locator("#sceneArtwork").is_hidden(), (
                         f"{browser_name}: missing portrait wrongly displayed landscape"
+                    )
+                    assert art_page.locator("#artRetry").is_visible(), (
+                        f"{browser_name}: failed portrait must have a safe retry"
+                    )
+                    assert "Иллюстрация временно недоступна" in (
+                        art_page.locator("#artRecovery").inner_text()
                     )
                     assert art_page.locator("#game").get_attribute(
                         "data-art-fallback"
@@ -512,7 +522,57 @@ def main():
                     assert art_page.locator("#sceneArtworkImage").get_attribute(
                         "src"
                     ).endswith('/portrait-policy-test-missing.webp')
+                    failed_scene = art_page.locator("#sceneId").inner_text()
+                    failed_save = art_page.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    art_page.locator("#artRetry").click()
+                    art_page.wait_for_function(
+                        "() => !document.querySelector('#artRecovery').hidden",
+                        timeout=6000
+                    )
+                    assert art_page.locator("#sceneId").inner_text() == failed_scene
+                    assert art_page.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == failed_save, (
+                        f"{browser_name}: art retry changed the game save"
+                    )
                     art_ctx.close()
+                    # A single transient image failure should recover using
+                    # the SAME approved portrait, not a landscape replacement.
+                    retry_ctx = browser.new_context(
+                        viewport={"width":390,"height":844},
+                        device_scale_factor=3,is_mobile=True,has_touch=True
+                    )
+                    retry_page = retry_ctx.new_page()
+                    attempts = [0]
+                    def intercept_portrait(route):
+                        attempts[0] += 1
+                        if attempts[0] == 1:
+                            route.abort()
+                        else:
+                            route.continue_()
+                    retry_page.route("**/case002-p01-scene--mobile.webp", intercept_portrait)
+                    retry_page.goto(address,wait_until="load")
+                    retry_page.locator("#begin").click()
+                    retry_page.locator("#artRetry").wait_for(state="visible",timeout=8000)
+                    assert retry_page.locator("#sceneArtwork").is_hidden()
+                    retry_scene = retry_page.locator("#sceneId").inner_text()
+                    retry_save = retry_page.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    retry_page.locator("#artRetry").click()
+                    retry_page.wait_for_function(
+                        "() => document.querySelector('#game').dataset.artVerified === 'true'",
+                        timeout=8000
+                    )
+                    assert attempts[0] >= 2
+                    assert retry_page.locator("#sceneArtwork").is_visible()
+                    assert retry_page.locator("#artRecovery").is_hidden()
+                    assert retry_page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.currentSrc.endsWith('/case002-p01-scene--mobile.webp')"
+                    )
+                    assert retry_page.locator("#sceneId").inner_text() == retry_scene
+                    assert retry_page.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == retry_save
+                    retry_ctx.close()
                     # Desktop preview stays vertical, without forcing desktop
                     # reviewers into the phone-orientation gate.
                     desk_ctx = browser.new_context(viewport={"width":1024,"height":768})
