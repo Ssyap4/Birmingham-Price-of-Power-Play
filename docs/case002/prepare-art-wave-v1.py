@@ -104,7 +104,7 @@ def main() -> int:
     rows=["# Case 002 — image candidate audit", "", "> This report is **not** an art approval or manifest install.", "",
           "| Scene | Dimensions | Bytes | SHA-256 | Review |", "|---|---:|---:|---|---|"]
     for item in report:
-        rows.append(f'| {item["sceneId"]} | {item["width"]}×{item["height"]} | {item["bytes"]:,} | \`{item["sha256"]}\` | **pending install** |')
+        rows.append(f'| {item["sceneId"]} | {item["width"]}×{item["height"]} | {item["bytes"]:,} | `{item["sha256"]}` | **pending install** |')
     rows += ["",f'Near-duplicate warnings: **{len(duplicates)}**.',"", "Visual approval is mandatory before adding these images to approved-art-v1.js.",""]
     (args.output_dir / "candidate-report.md").write_text("\n".join(rows),encoding="utf-8")
     print(json.dumps({"stage":result["stage"],"images":len(report),"duplicateWarnings":duplicates,
