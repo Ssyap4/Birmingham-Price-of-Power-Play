@@ -390,7 +390,14 @@ def main():
                     nav_bottom_padding = tg_page.locator("#quickNav").evaluate(
                         "(el) => parseFloat(getComputedStyle(el).paddingBottom)"
                     )
-                    assert shell_top >= 64, f"{browser_name}: Telegram header overlaps case"
+                    css_diag = tg_page.evaluate("""() => ({
+                        tag:document.documentElement.getAttribute("data-case002-telegram"),
+                        inlineTop:document.documentElement.style.getPropertyValue("--case002-safe-top"),
+                        computedTop:getComputedStyle(document.documentElement).getPropertyValue("--case002-safe-top"),
+                        padding:getComputedStyle(document.querySelector(".app-shell")).paddingTop,
+                        width:innerWidth, viewport:document.querySelector('meta[name="viewport"]')?.content
+                    })""")
+                    assert shell_top >= 64, f"{browser_name}: Telegram header overlaps case: {css_diag}"
                     assert nav_bottom_padding >= 34, f"{browser_name}: Telegram home bar overlaps commands"
                     updated_top = tg_page.evaluate("""() => {
                         window.Telegram.WebApp.contentSafeAreaInset.top = 72;
