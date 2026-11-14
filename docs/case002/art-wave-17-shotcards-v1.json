@@ -5,24 +5,25 @@
     {
       "id": "C06",
       "sceneKind": "aftermath",
-      "focus": "a damp service time report beside an open pocket watch reading eleven forty-seven at night",
-      "camera": "low three-quarter close-up from stone parapet",
+      "focus": "a deserted rain-swept place beneath a massive brick railway viaduct with a folded damp service report left on a stone parapet",
+      "camera": "low three-quarter close-up of the abandoned damp paper with an empty railway arch in the middle distance",
       "location": "empty brick railway viaduct during heavy rain",
       "required": [
-        "open analog watch with hands correctly set to 11:47",
-        "unreadable shift report stained by rain",
-        "deserted dark archway"
+        "a damp official report with indistinct handwritten lines and no legible numerals",
+        "vacant dark railway arch beneath the viaduct",
+        "rain drops and warm lantern reflections on old brick and wet stone"
       ],
-      "background": "industrial skyline and mist beyond railway bridge",
-      "light": "one amber wall lantern against blue rain",
-      "npc": "no people",
-      "knowledgeBoundary": "Hale died later than the uncoupling; identity of the killer remains unknown",
+      "background": "empty winding rail tracks, smoke-laden night sky, industrial chimneys far away",
+      "light": "warm amber wall lantern against cold steel blue rain",
+      "npc": "a deserted place with no human figures",
+      "knowledgeBoundary": "The canonical time is 23:47 and is stated in authored scene text, not required as image pixels; Hale died after the 23:31 uncoupling, murderer unknown",
       "avoid": [
-        "watch with inaccurate hands",
-        "body",
+        "legible fake clock time",
+        "open watch with mismatched hands",
+        "invented text asserting an exact time",
+        "Hale's body",
         "blood",
-        "killer",
-        "invented names"
+        "killer"
       ]
     },
     {
@@ -72,23 +73,23 @@
     {
       "id": "C09",
       "sceneKind": "evidence",
-      "focus": "deep heavy lorry tyre tracks through wet mud alongside a private goods railway siding",
-      "camera": "ground-level view with tyre ruts in foreground",
+      "focus": "fresh twin tyre ruts cut into wet mud, with three distinct lines of human boot prints diverging outward across an otherwise deserted railway goods yard",
+      "camera": "close low angle from the middle of the empty yard, looking down and forward over wheel ruts and three separating footprint paths",
       "location": "industrial railway branch beside a warehouse",
       "required": [
-        "two parallel heavy tyre ruts",
-        "three sets of human footprints splitting away",
-        "unused dark rail tracks"
+        "two deep parallel wheel ruts that continue beyond the frame",
+        "three separately visible lines of muddy boot impressions spreading in different directions",
+        "old rain-soaked sidetrack rails across the upper background"
       ],
-      "background": "old brick storage building and low fence in mist",
-      "light": "a single distant amber yard lantern",
-      "npc": "no people",
-      "knowledgeBoundary": "three people left the wagon, but their identity and destination are unknown",
+      "background": "vacant brick warehouse frontage and a dark fence softened by industrial mist",
+      "light": "one distant amber oil lamp catching puddles and wet soil",
+      "npc": "an empty deserted yard, nobody present",
+      "knowledgeBoundary": "Only physical traces are present; the identity of three people and the lorry driver are unknown",
       "avoid": [
-        "identified witnesses",
-        "lorry driver",
+        "truck or lorry parked in the yard",
+        "driver or identified person",
         "body",
-        "accusing text"
+        "criminal accusation text"
       ]
     },
     {

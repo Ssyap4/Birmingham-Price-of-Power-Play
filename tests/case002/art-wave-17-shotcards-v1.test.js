@@ -15,9 +15,13 @@ for(const card of cards){
  assert(!/\b[A-F]\d{2}\b/.test(visual));
  assert.equal(review.knowledgeBoundary,card.knowledgeBoundary);
 }
-assert(promptFor(cards[0]).includes("eleven forty-seven"));
+assert(!promptFor(cards[0]).includes("23:47"));
+assert(!promptFor(cards[0]).includes("watch"));
+assert(reviewFor(cards[0]).knowledgeBoundary.includes("23:47"));
 assert(reviewFor(cards[1]).knowledgeBoundary.includes("not proof of murder"));
 assert(reviewFor(cards[2]).knowledgeBoundary.includes("registration and signature comparison"));
-assert(promptFor(cards[3]).includes("three sets of human footprints"));
+assert(promptFor(cards[3]).includes("three separately visible lines"));
+assert(!/\b(?:lorry|truck)\b/i.test(promptFor(cards[3])));
+assert(reviewFor(cards[3]).doNotDepict.some(x=>x.includes("truck")));
 assert(reviewFor(cards[4]).knowledgeBoundary.includes("conditional on independent clues"));
 console.log("PASS: five wave17 shot types and isolated render prompts");

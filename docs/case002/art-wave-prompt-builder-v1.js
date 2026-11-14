@@ -70,6 +70,7 @@ function promptFor(card){
  ].join("\n");
  if(UNSAFE_RENDER.test(p))throw Error(c.id+": production/status words contaminated render-only prompt");
  if(/\b[A-F]\d{2}\b/.test(p))throw Error(c.id+": scene ID contaminated render-only prompt");
+ if(/\b(?:[01]?\d|2[0-3]):[0-5]\d\b/.test(p))throw Error(c.id+": exact clock time belongs in game text, not generated pixels");
  return p;
 }
 function reviewFor(card){
