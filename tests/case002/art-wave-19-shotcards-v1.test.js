@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 "use strict";
-/* Chapter V production cards and SHA-locked candidate images; not game approvals. */
+/* Chapter V production cards and SHA-locked review candidates, plus installed scene approvals. */
 const assert=require("node:assert/strict");
 const fs=require("node:fs"), path=require("node:path"), crypto=require("node:crypto");
 const builder=require("../../docs/case002/art-wave-prompt-builder-v1.js");
@@ -31,10 +31,12 @@ for(const [id,sha] of staged){
  assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),sha);
  assert.deepEqual([dimensions(bytes).width,dimensions(bytes).height],[720,900]);
  // The candidate stays in the archive after a later separately reviewed batch install.
- const installed=manifest.sceneImages.filter(x=>x.sceneId===id&&x.review==="approved");
- assert(installed.length<=1,"Duplicate Chapter V installed scene: "+id);
- if(installed.length)assert.equal(installed[0].mobileSha256,sha,
-   "Installed asset must remain byte-identical to reviewed candidate: "+id);
+ const installed=manifest.sceneImages.filter(x=>x.sceneId===id&&x.review==="approved"&&x.variantKey==="default");
+ assert.equal(installed.length,1,"Each Chapter V storyboard ID needs one approved default scene: "+id);
+ const approvedSha=id==="E03"?
+    "ca73a2e402558e7cd2229a8e37679ea1e1ab42af26ddac373745911f70ce294e":sha;
+ assert.equal(installed[0].mobileSha256,approvedSha,
+   "Approved default asset differs from its specifically reviewed candidate: "+id);
 }
 // E07's physical candidate depicts no signed guarantee; do not bind its hash to the signed state.
 const e07=cards.find(c=>c.id==="E07");
@@ -141,7 +143,7 @@ for(const row of variantsSpec.variants){
  assert.equal(builder.reviewFor(card).requiresHumanArtReview,true);
  const file="case002-"+row.sceneId.toLowerCase()+"-scene--"+row.variantKey+"--mobile.webp";
  assert.equal(row.candidateFile,file);
- assert.equal(row.status,"staged-candidate-not-installed");
+ assert.equal(row.status,"installed-approved-in-feature");
  const actual=fs.readFileSync(path.join(root,"assets/case002/candidates",file));
  assert.equal(actual.subarray(0,4).toString("ascii"),"RIFF");
  assert.equal(actual.subarray(8,12).toString("ascii"),"WEBP");
@@ -151,8 +153,15 @@ for(const row of variantsSpec.variants){
  assert.equal(crypto.createHash("sha256").update(actual).digest("hex"),row.sha256);
  assert.equal(crypto.createHash("sha1").update(Buffer.concat([Buffer.from("blob "+actual.length),Buffer.from([0]),actual])).digest("hex"),row.gitBlobSha1);
  const copies=manifest.sceneImages.filter(e=>e.sceneId===row.sceneId&&e.variantKey===row.variantKey);
- assert(copies.length<=1,"Installed variant must be unique: "+key);
- if(copies.length)assert.equal(copies[0].mobileSha256,row.sha256,"Installed variant changed without review: "+key);
+ if(row.sceneId==="E03"){
+   assert.equal(copies.length,0,"E03 has one neutral reviewed default, no duplicated scene bytes");
+   const e03=manifest.sceneImages.find(e=>e.sceneId==="E03"&&e.variantKey==="default");
+   assert.equal(e03?.mobileSha256,row.sha256);
+   assert.deepEqual(e03.applicableVariants,["still-unverified","verified-not-published"]);
+ }else{
+   assert.equal(copies.length,1,"Every accepted state-specific variant is installed exactly once: "+key);
+   assert.equal(copies[0].mobileSha256,row.sha256,"Installed variant changed without review: "+key);
+ }
 }
 const signed=variantsSpec.variants.find(x=>x.sceneId==="E07"&&x.variantKey==="signed");
 assert(signed,"Signed Vale guarantee version must be staged separately from unsigned");
@@ -224,5 +233,37 @@ assert(e10Workers.shotCard.knowledgeBoundary.includes("accountsGivenToWorkers"),
  "The image does not grant the accountsGivenToWorkers flag");
 assert(e10Workers.shotCard.required.some(x=>/his own hands/.test(x)),
  "Worker document possession must be visible, not merely implied");
+
+
+const {resolveScene}=require("../../src/case002/approved-art-v1.js");
+const stagedView=(id,key,cast)=>({
+ sceneId:id,variantKey:key,visibleCast:cast,
+ desiredAsset:"case002-"+id.toLowerCase()+"-scene--"+key+".webp"
+});
+for(const key of ["still-unverified","verified-not-published"]){
+ const actual=resolveScene(stagedView("E03",key,["nora","hero"]));
+ assert(actual?.src.endsWith("/case002-e03-scene--mobile.webp"),
+  "Both privacy-safe editorial states must reuse the independently reviewed archive angle");
+}
+for(const [id,key,cast,ending] of [
+ ["E05","workers-on-rails",["worker","hero"],"case002-e05-scene--mobile.webp"],
+ ["E05","cleared",["worker","hero"],"case002-e05-scene--cleared--mobile.webp"],
+ ["E07","unsigned",["vale","hero"],"case002-e07-scene--mobile.webp"],
+ ["E07","signed",["vale","hero"],"case002-e07-scene--signed--mobile.webp"],
+ ["E08","brackett-book-on-desk",["brackett","hero"],"case002-e08-scene--mobile.webp"],
+ ["E09","accounts-brackett",["worker","hero"],"case002-e09-scene--mobile.webp"],
+ ["E09","accounts-hero",["worker","hero"],"case002-e09-scene--accounts-hero--mobile.webp"],
+ ["E09","accounts-workers",["worker","hero"],"case002-e09-scene--accounts-workers--mobile.webp"],
+ ["E10","audit",["hero"],"case002-e10-scene--mobile.webp"],
+ ["E10","intermediary",["hero"],"case002-e10-scene--intermediary--mobile.webp"],
+ ["E10","accounts-workers",["hero"],"case002-e10-scene--accounts-workers--mobile.webp"]
+]){
+ assert(resolveScene(stagedView(id,key,cast))?.src.endsWith("/"+ending),
+   "Chapter V state-specific manifest route must resolve to exact reviewed artwork "+id+":"+key);
+}
+for(const [id,cast] of [["E03",["nora","hero"]],["E05",["worker","hero"]],["E07",["vale","hero"]],["E09",["worker","hero"]],["E10",["hero"]]]){
+ assert.equal(resolveScene(stagedView(id,"unconfirmed-claim",cast)),null,
+   "Unapproved status must never be filled with a misleading image "+id);
+}
 
 console.log("PASS: chapter V isolated cards and SHA-locked candidates: "+staged.map(x=>x[0]).join(", "));

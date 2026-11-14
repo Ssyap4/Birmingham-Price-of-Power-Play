@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "chapter": "V",
-  "purpose": "Additional one-at-a-time cinematic state-specific candidates, kept separate from the fifteen primary scene cards",
+  "purpose": "Reviewed Chapter V state-specific art retained as candidates and installed by exact digest; E03 neutral archive visually covers both unpublished states.",
   "variants": [
     {
       "sceneId": "E07",
@@ -10,7 +10,7 @@
       "sha256": "6a5bbae1c2795701ce4a9bb9b5061e02f64121a23bd7442edb4944e2848f782b",
       "gitBlobSha1": "eab338c8c49e4debec77c65972e503aa9c5d39ae",
       "bytes": 79680,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInThisTurn": 2,
       "acceptedRendering": 2,
       "firstRenderingNotStaged": true,
@@ -45,7 +45,7 @@
       "sha256": "ca73a2e402558e7cd2229a8e37679ea1e1ab42af26ddac373745911f70ce294e",
       "gitBlobSha1": "d8cd5856df95e673f06986448f6084ca03994fb3",
       "bytes": 73582,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "shotCard": {
         "id": "E03",
@@ -77,7 +77,7 @@
       "sha256": "d1a42ae6dbf288112b6d79cbd241bd2fcd4290a637eb8df941d03a9dd4330d7f",
       "gitBlobSha1": "764d0168fda05e0085f63e9bd31254534622e5da",
       "bytes": 111852,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "shotCard": {
         "id": "E05",
@@ -109,7 +109,7 @@
       "sha256": "2c2fefc3e326f4e8344e2dcacd95552566c1e9ecafb0106b4a0852acf94eac95",
       "gitBlobSha1": "d7f73e0898768394d0c5ca0e55cdc4db942a412b",
       "bytes": 147544,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "shotCard": {
@@ -142,7 +142,7 @@
       "sha256": "08d41e5dd364e051352b21fc778ac1f88091a521a4cedd2dd3d3523488575492",
       "gitBlobSha1": "1b02127baacc17e1edca2592e7e2bd104f430745",
       "bytes": 119850,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "dhashDistanceVsAccountsHero": 30,
@@ -176,7 +176,7 @@
       "sha256": "6bffb76ffeaf2c00c52531d826ee7b4e544c8e1296722f70383fffd233c3beaf",
       "gitBlobSha1": "c1b0b3af0001e41c75f680b73f861742d90ec7fe",
       "bytes": 90030,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "shotCard": {
@@ -209,7 +209,7 @@
       "sha256": "1d023b24931b86a039bff04c6ce6194d1f79c41ae1247b3cfb781673900ea309",
       "gitBlobSha1": "54ed5de7e4b7ca422ba519baf9e6a7d7b024f4ab",
       "bytes": 105586,
-      "status": "staged-candidate-not-installed",
+      "status": "installed-approved-in-feature",
       "renderCountInArtworkTurn": 1,
       "acceptedRendering": 1,
       "shotCard": {
