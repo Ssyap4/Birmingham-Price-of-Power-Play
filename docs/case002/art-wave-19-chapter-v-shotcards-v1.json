@@ -90,6 +90,29 @@
         "identifiable protagonist face",
         "readable train identification number or unverified secret plan"
       ]
+    },
+    {
+      "id": "E05",
+      "sceneKind": "dialogue",
+      "focus": "a tired industrial gate watchman opens a worn work-shift ledger on his little wooden desk and gestures with his open palm to two worried factory laborers questioning the cost of losing a day's wages",
+      "camera": "waist-height medium three-quarter group view at a cramped brick railway-yard watch booth, with all three men's tense hands, faces and old work ledger visible in one continuous conversation",
+      "location": "a guarded private industrial railway siding checkpoint in 1920s Birmingham during wet cold weather",
+      "required": [
+        "an anxious watchman with a dark waistcoat and rolled sleeves explaining a shift record with his open hand",
+        "two weary anonymous laborers in worn period caps and dirty work coats listening closely near the gate",
+        "a single unmarked old ledger open on a wooden desk beside an oil lamp and metal mug"
+      ],
+      "background": "rain-streaked watch-booth panes, iron factory fence, wet cobblestones and hazy brick factories with smoke-choked chimneys",
+      "light": "warm oil-lamp amber on the watchman's hands and paper against pale blue wet industrial daylight",
+      "npc": "one anonymous middle-aged male watchman and two anonymous laborers; no identified playable hero portrait",
+      "knowledgeBoundary": "The watchman is debating the cost of a stopped shift; this image does not establish that workers have been evacuated, cleared from railway tracks, officially paid, or that sabotage is allowed",
+      "avoid": [
+        "visually confirmed worker evacuation or all-clear after the tracks have been emptied",
+        "broken railroad switch, destruction, accident or armed confrontation",
+        "printed legible worker names, wage amounts or completed official order",
+        "recognizable playable protagonist's face or new named witness",
+        "success celebration or proof that a safe plan has been carried out"
+      ]
     }
   ]
 }
