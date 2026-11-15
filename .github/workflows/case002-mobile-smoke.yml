@@ -3,6 +3,7 @@ name: Case 002 scoped mobile smoke (draft only)
 # This milestone also validates approved discovered-people portraits and the
 # persisted journal expansion in full iPhone WebKit and Chromium.
 # Ensure approved hidden portraits are decoded eagerly on WebKit.
+# Also verify receipt touch-through navigation and long journal expansion in WebKit.
 # This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
 on:
   push:
