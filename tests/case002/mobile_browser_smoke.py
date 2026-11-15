@@ -1520,6 +1520,54 @@ def main():
                             "Bidirectional dossier navigation must not write a save"
                         )
                         assert not link_errors, f"Dossier cross-link JS errors: {link_errors}"
+                        # Continue the same proven route into a REAL committed
+                        # Z02 ending, once in quick Chromium rather than a full
+                        # 400-route matrix. The display must read two archives.
+                        finale=link_page.locator('button.choice[data-to="Z02"]')
+                        assert finale.count() == 1 and finale.is_enabled()
+                        finale.click()
+                        assert link_page.locator("#sceneId").inner_text().startswith("Z02")
+                        report=link_page.locator("#finalePanel")
+                        assert report.is_visible()
+                        assert report.get_attribute("data-ending") == "trainEscape"
+                        assert "Принято решений:" in report.locator(
+                            ".finale-subtitle").inner_text()
+                        assert report.locator(".finale-metric").count() == 3
+                        assert report.locator(".finale-metric-note").count() == 1
+                        assert report.locator(".finale-witness-status").count() >= 1
+                        people=report.locator(".finale-people li")
+                        assert people.count() >= 1
+                        assert report.locator(".finale-person-open").count() == people.count()
+                        assert 1 <= report.locator(".finale-history-event").count() <= 3
+                        assert report.locator("#finaleArchive").get_attribute(
+                            "data-status") == "verified"
+                        assert report.locator(".finale-archive-check").count() == 2
+                        assert report.locator(
+                            '.finale-archive-check[data-verified="true"]').count() == 2
+                        assert "зарегистрированы" in report.locator(
+                            "#finaleArchive").inner_text()
+                        assert not link_page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth + 1"
+                        ), "Finale report overflows 320px portrait phone"
+                        after_finish=link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        person_id=report.locator(".finale-person-open").first.get_attribute(
+                            "data-person")
+                        report.locator(".finale-person-open").first.click()
+                        assert link_page.locator(
+                            f'.person-entry[data-person="{person_id}"]').evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Finale person link must focus an encountered witness"
+                        assert "К ИТОГУ" in link_page.locator("#dossierReturn").inner_text()
+                        link_page.locator("#dossierReturn").click()
+                        assert link_page.locator("#choicesPanel").evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Finale dossier return must restore the completed report"
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish, (
+                            "Reading the final character dossier rewrote game progress"
+                        )
+                        assert not link_errors, f"Finale report JS errors: {link_errors}"
                         link_ctx.close()
                         # Real story-model route to the risk checkpoint, one
                         # browser confirmation only. Cancelling must not commit.
@@ -1695,6 +1743,9 @@ def main():
                         assert full_page.locator(".finale-metric").count() == 3
                         assert full_page.locator(".finale-action").count() == 2
                         assert "СТАТУС АРХИВА" in full_page.locator("#finaleArchive").inner_text()
+                        assert full_page.locator("#finaleArchive").get_attribute(
+                            "data-status") == "verified"
+                        assert full_page.locator(".finale-archive-check").count() == 2
                         assert full_page.locator('#quickNav [data-go="choices"]').inner_text() == "ИТОГ"
                         assert full_page.locator("button.choice").count() == 0
                         full_page.wait_for_function(
@@ -1762,6 +1813,10 @@ def main():
                         assert damaged_page.locator("#finalePanel").is_visible()
                         assert "повреждён" in damaged_page.locator("#finaleArchive").inner_text()
                         assert "зарегистрированы" not in damaged_page.locator("#finaleArchive").inner_text()
+                        assert damaged_page.locator("#finaleArchive").get_attribute(
+                            "data-status") == "damaged"
+                        assert damaged_page.locator(
+                            '.finale-archive-check[data-verified="false"]').count() == 2
                         assert json.loads(damaged_page.evaluate("""() => localStorage.getItem(
                           window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
                         )"""))["node"] == "Z02", "Terminal scene must remain in primary save"
