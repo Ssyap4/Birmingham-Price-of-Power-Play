@@ -1920,8 +1920,10 @@ function renderTools(){
        dossierTrail={sceneId:engine.snapshot().node,
         fromSection:"evidence",recordId:item.id,label:evidenceName(item.id),
         targetSection:"deductions"};
-       tab="deductions";evidenceFocus=null;navSection="deductions";
-       renderTools();refreshNavigation();
+       // Use the same route as the thumb dock: acknowledge actually viewed
+       // deductions, dismiss any old notice, and preserve dossier bookmarks.
+       // Setting pairFirst first still places the tapped clue on the board.
+       jumpTo("deductions");
        const selected=root.querySelector('.pair-item[data-evidence-id="'+item.id+'"]');
        selected?.focus({preventScroll:true});
        selected?.scrollIntoView({block:"center",behavior:"auto"});

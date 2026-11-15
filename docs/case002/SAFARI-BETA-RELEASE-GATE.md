@@ -136,3 +136,16 @@ missing and corrupt saves from a real A01 decision, checks no progress write,
 and verifies recovery focus and reachable exit above the mobile dock.
 No storage schema, game rules, art, Case001, or main are changed. Safari/WebKit
 release acceptance remains a separate milestone.
+
+### Chat handoff is independent of Safari beta readiness (ADR-0006)
+
+The author's 15+1 rule is solely a context continuity mechanism: 15 useful
+development replies and a comprehensive handoff prompt on reply 16. It is not
+a release countdown, readiness gate, or scheduled Safari demonstration.
+Showcase the isolated beta only when its actual QA and verified HTTPS preview
+are ready, regardless of the reply number.
+
+The evidence-card "НА ДОСКУ" shortcut now enters deductions via the normal
+scoped navigation path, so actually viewed leads are acknowledged and the
+same clue can be reached again via its return bookmark. The phone regression
+uses a real F09 state; no engine, save schema or reward changes were made.

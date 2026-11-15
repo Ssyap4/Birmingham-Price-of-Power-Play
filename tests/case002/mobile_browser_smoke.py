@@ -1668,6 +1668,49 @@ def main():
                             "Closed final outcomes must not be counted or spoiled"
                         )
                         assert link_page.locator(".choice-locked-toggle").count() == 0
+                        # The evidence-card shortcut must share the normal
+                        # dossier navigation semantics, not bypass the unread
+                        # acknowledgement, active tab and return bookmark.
+                        unread_before=int(link_page.locator(
+                            '#quickNav button[data-go="deductions"]').get_attribute(
+                                "data-unread-count") or "0")
+                        assert unread_before > 0, (
+                            "Canonical F09 investigation should have genuinely discovered leads"
+                        )
+                        link_page.locator('#quickNav button[data-go="evidence"]').click()
+                        board_clue=link_page.locator(".evidence-card").first
+                        board_id=board_clue.get_attribute("data-evidence-id")
+                        board_save=link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        board_clue.locator(".evidence-to-board").click()
+                        assert link_page.locator(
+                            '#quickNav button[data-go="deductions"]').get_attribute(
+                                "aria-current") == "location"
+                        assert link_page.locator(
+                            '#quickNav button[data-go="deductions"]').get_attribute(
+                                "data-unread") == "false", (
+                            "Opening the deduction board through evidence must clear unread lead"
+                        )
+                        assert link_page.locator(
+                            'button[data-tab="deductions"]').get_attribute(
+                                "aria-pressed") == "true"
+                        selected_on_board=link_page.locator(
+                            f'.pair-item[data-evidence-id="{board_id}"]')
+                        assert selected_on_board.get_attribute("aria-pressed") == "true"
+                        assert selected_on_board.evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Evidence board link must focus exactly the chosen first clue"
+                        assert link_page.locator(".dossier-cross-return").get_attribute(
+                            "data-return-section") == "evidence"
+                        link_page.locator(".dossier-cross-return").click()
+                        assert link_page.locator(
+                            f'.evidence-card[data-evidence-id="{board_id}"]').evaluate(
+                                "(el) => document.activeElement === el"
+                        ), "Board back button must restore the original clue card"
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == board_save, (
+                            "Dossier board shortcut must not write an extra decision"
+                        )
                         link_page.locator('#quickNav button[data-go="deductions"]').click()
                         source_link = link_page.locator(".deduction-source").first
                         assert source_link.count() == 1 and source_link.is_enabled()
