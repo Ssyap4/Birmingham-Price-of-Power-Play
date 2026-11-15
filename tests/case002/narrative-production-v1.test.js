@@ -63,6 +63,10 @@ assert(closeout.includes("отказаться от дальнейшей бор�
 const twoForged=render({graph,contract,narration},{...example,scene:{...example.scene,id:"F02"}});
 assert(twoForged.includes("ещё не всё могу доказать"),
   "An unverified document must never become a definitive murder accusation");
+assert(!narration.F09.includes("На столе лежали бумаги"),
+ "The authored final scene must not repeat an adjacent opening phrase");
+assert(narration.F09.includes("За дверью уже ждали решения"),
+ "The last-choice dramatic beat must remain intact");
 assert(narration.C10.length<700,"C10 includes leaked editorial appendix");
 for(const id of ["HJ03","HF03","HV03","HS03"])
  assert(narration[id].length<600,"Hero-only scene includes next actor section: "+id);

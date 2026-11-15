@@ -30,6 +30,9 @@ for(const hero of contract.heroes){
      assert(text.includes("не выходит")&&!text.includes("меня спасли"),"no false Tommy rescue");
    if(v.scene.id==="F04"&&!v.facts.provedFactoryCoverup)
      assert(!text.includes("официально доказан"),"factory must not be declared proved");
+   if(v.scene.id==="F09")
+     assert(!text.includes("Оставались трудные пути") &&
+       !text.includes("публичное расследование;"),"Finale prose must not duplicate menu options");
    if(v.scene.id==="Z02"){
      const evacuated=Object.keys(v.state.witnesses).filter(x=>v.state.witnesses[x]==="evacuated");
      if(!evacuated.length)assert(text.includes("Никто из свидетелей не покинул город"),"no fictitious escape");
@@ -90,6 +93,12 @@ assert(mut("E09",s=>{s.flags.accountsGivenToWorkers=true}).includes("Предс�
 assert(mut("E09",()=>{}).includes("осталась у владельца"));
 assert(mut("E10",s=>{s.flags.localIntermediary=true}).includes("Посредник подтвердил"));
 assert(mut("F09",()=>{}).includes("отказаться от дальнейшей борьбы"));
+assert(mut("F09",()=>{}).includes("обещать кому-либо выезд из города пока было нельзя"),
+ "A protected witness alone must not be called evacuated");
+assert(mut("F09",s=>{s.witnesses.ada="evacuated"}).includes("кого уже удалось вывезти"),
+ "A recorded evacuation must remain visible without inventing other rescues");
+assert(!mut("F09",()=>{}).includes("Оставались трудные пути"),
+ "Final decision should not repeat the choice menu inside the story");
 assert(!mut("F09",()=>{}).includes("договор с Вейлом"),
  "Final shouldn't advertise an unearned deal");
 assert(mut("F09",s=>{s.flags.accountsGivenToWorkers=true}).includes("отказаться"));
