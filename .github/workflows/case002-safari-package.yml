@@ -30,14 +30,14 @@ jobs:
         run: node deployment/case002-safari-preview.js
       - name: Inspect isolated files (no legacy case)
         run: |
-          test -s .case002-preview-dist/index.html
-          test -s .case002-preview-dist/preview/case002-prototype/index.html
-          test -s .case002-preview-dist/assets/case002/scenes/case002-p01-scene--mobile.webp
-          test ! -e .case002-preview-dist/001.html
-          test ! -e .case002-preview-dist/assets/case002/scenes/case002-p01-scene.webp
+          test -s case002-preview-dist/index.html
+          test -s case002-preview-dist/preview/case002-prototype/index.html
+          test -s case002-preview-dist/assets/case002/scenes/case002-p01-scene--mobile.webp
+          test ! -e case002-preview-dist/001.html
+          test ! -e case002-preview-dist/assets/case002/scenes/case002-p01-scene.webp
       - uses: actions/upload-artifact@v4
         with:
           name: case002-safari-beta
-          path: .case002-preview-dist/
+          path: case002-preview-dist/
           if-no-files-found: error
           retention-days: 14
