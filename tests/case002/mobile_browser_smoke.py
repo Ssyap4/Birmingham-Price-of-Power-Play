@@ -1820,6 +1820,52 @@ def main():
                             assert link_page.locator("#launch").is_hidden()
                             assert link_page.evaluate("""() => localStorage.getItem(
                                 window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish
+                        # Regression: an abandoned attempt or bad load must not
+                        # break the finale-to-collection return.
+                        report.locator(
+                            '.finale-collection-open[data-collection="achievements"]').click()
+                        assert link_page.locator("#collectionReturnBar").is_visible()
+                        dialogs=[]
+                        def cancel_collection_restart(dialog):
+                            dialogs.append(dialog.type)
+                            dialog.dismiss()
+                        link_page.once("dialog",cancel_collection_restart)
+                        link_page.locator("#begin").click()
+                        assert dialogs == ["confirm"]
+                        assert link_page.locator("#game").is_hidden()
+                        assert link_page.locator("#collectionReturnBar").is_visible(), (
+                            "Cancelled restart must preserve the original finale bookmark"
+                        )
+                        assert link_page.locator(".collection-return-inline").is_visible()
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish
+                        # Attempt to load a genuinely invalid save of another
+                        # hero, without modifying the original finished slot.
+                        link_page.evaluate("""() => localStorage.setItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'finn','{broken-save')""")
+                        link_page.locator('.hero-card[data-hero="finn"]').click()
+                        assert link_page.locator("#resume").is_visible()
+                        link_page.locator("#resume").click()
+                        assert link_page.locator("#launchError").is_visible()
+                        assert "Не удалось открыть сохранение" in link_page.locator(
+                            "#launchError").inner_text()
+                        assert link_page.locator("#collectionReturnBar").is_visible(), (
+                            "Invalid resume must preserve the original finale bookmark"
+                        )
+                        link_page.evaluate("""() => localStorage.removeItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'finn')""")
+                        link_page.locator("#collectionReturnFromLaunch").click()
+                        assert link_page.locator("#finalePanel").get_attribute(
+                            "data-ending") == "trainEscape"
+                        assert link_page.locator("#finalePanel").evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Interrupted launch must restore focus to the original report"
+                        assert link_page.locator("#launchError").is_hidden()
+                        assert link_page.locator("#collectionReturnBar").is_hidden()
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish, (
+                            "Cancelled/invalid launch must not rewrite finished progress"
+                        )
                         # Returning to the selection reveals only genuinely
                         # stored keys. Reload and resume cannot replay a new
                         # reward announcement for an already earned outcome.

@@ -624,6 +624,8 @@ function returnFromCollection(){
  // Refuse an obsolete bookmark rather than open a different character's case.
  if(!s.finished||s.hero!==point.hero||s.attemptId!==point.attemptId||
     s.node!==point.node)return;
+ // Clear the failed selection-only validation error upon valid return.
+ $("launchError").hidden=true;
  $("launch").hidden=true;$("game").hidden=false;
  $("app").dataset.screen="game";
  navSection="choices";refreshNavigation();queueReadingProgress();
@@ -923,28 +925,42 @@ function beginGame(ignorePrior=false){
  const hero=$("hero").value,prior=ignorePrior?null:chosenPrior();
  return api.createEngine({graph:data.graph,contract:data.contract,hero,prior,store});
 }
+// Keep the completed finale and collection bookmark on a cancelled or
+// rejected launch. A candidate replaces the live run only once valid.
+function leaveCollectionAfterLaunch(){
+ collectionReturnPoint=null;
+ $("collectionReturnBar").hidden=true;
+}
 function start(){
  try{
-  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
   const hero=$("hero").value;
   if(store&&store.getItem(api.SAVE_PREFIX+hero)&&
      !window.confirm("Начать новую попытку? Текущее сохранение этого героя будет заменено, но история завершённых попыток останется."))return;
-  engine=beginGame();
-  engine.reset("002-"+Date.now()+"-"+Math.random().toString(36).slice(2,9));
+  const candidate=beginGame();
+  candidate.reset("002-"+Date.now()+"-"+Math.random().toString(36).slice(2,9));
+  engine=candidate;
+  leaveCollectionAfterLaunch();
   showGame();
  }catch(e){appError(e.message);}
 }
 function resume(){
+ let candidate=null;
  try{
-  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
-  engine=beginGame(true);
-  engine.load();
+  candidate=beginGame(true);
+  candidate.load();
+  engine=candidate;
+  leaveCollectionAfterLaunch();
   showGame();
  }catch(e){
-  // load() validates/restores the primary save before retrying the separate
-  // completion archive. If only that second phase fails, show the real
-  // finished scene rather than denying access to a valid saved attempt.
-  if(engine&&engine.snapshot().finished){
+  // A terminal primary save may load before independent archive recovery
+  // fails. Only that genuinely restored finished candidate supersedes the
+  // previous live finale; an invalid save leaves the old report accessible.
+  let validFinished=false;
+  try{validFinished=Boolean(candidate&&candidate.snapshot().finished);}
+  catch(_){validFinished=false;}
+  if(validFinished){
+   engine=candidate;
+   leaveCollectionAfterLaunch();
    showGame();
    showNotice("Расследование восстановлено из сохранения, но архив итогов или наград не обновлён: "+
     e.message+". Не начинайте новую попытку до восстановления архива.",

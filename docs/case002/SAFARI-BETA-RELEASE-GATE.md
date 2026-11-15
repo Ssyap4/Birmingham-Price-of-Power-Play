@@ -111,3 +111,14 @@ ADR-0005 classification explicitly recognizes exporter and package-test edits as
 check, without unrelated 400-route gameplay simulation or WebKit. Manual
 Safari distribution still requires a deliberate workflow_dispatch and the
 full separate browser/release gate; this update does not deploy anything.
+
+### New-cycle stage 2/15 — safe interruption of finale collection navigation
+
+A cancelled restart from an earned collection must retain the original live
+finale bookmark and return button. An invalid save for a different hero must
+not replace the old completed engine. Only a successfully reset or loaded
+candidate becomes the active game. If an actual terminal primary save loads
+before its separate archive recovery fails, the existing honest partial
+recovery warning remains in place. Targeted mobile Chromium now checks these
+paths against a genuinely completed Z02, including focus and save immutability.
+This is not yet the separate full WebKit/iPhone acceptance gate.
