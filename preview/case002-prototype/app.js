@@ -1103,7 +1103,7 @@ function renderTools(){
        btn.dataset.evidenceId=id;
        btn.setAttribute("aria-label","Открыть улику: "+evidenceName(id));
        btn.addEventListener("click",()=>{
-         tab="evidence";evidenceFocus=id;acknowledgeEvidence();navSection="evidence";
+         tab="evidence";evidenceFocus=id;acknowledgeSection("evidence");navSection="evidence";
          renderTools();refreshNavigation();
          const evidenceCard=[...root.querySelectorAll(".evidence-card")]
            .find(row=>row.dataset.evidenceId===id);

@@ -1163,6 +1163,59 @@ def main():
                             assert test_page.locator("#dossierReturn").is_hidden()
                             ctx.close()
                     assert not failures, f"{browser_name} console errors: {failures}"
+                    # Focused regression for deduction -> acquired evidence. A real
+                    # canonical route supplies the items; no forged proof or save.
+                    # This runs once in fast Chromium, not 400 seeded campaigns.
+                    if quick:
+                        route_source = (
+                            "const m=require('./tests/case002/simulate-story-model-v2.js');"
+                            "console.log(JSON.stringify(m.goodRoute('jack','trainEscape').actionLog));"
+                        )
+                        route = json.loads(subprocess.check_output(
+                            ["node", "-e", route_source], cwd=ROOT, text=True
+                        ).strip().splitlines()[-1])
+                        link_ctx = browser.new_context(
+                            viewport={"width":390,"height":844},
+                            device_scale_factor=3,is_mobile=True,has_touch=True
+                        )
+                        link_page = link_ctx.new_page()
+                        link_errors = []
+                        link_page.on("pageerror", lambda err: link_errors.append(str(err)))
+                        link_page.goto(address, wait_until="load")
+                        ensure_selection(link_page)
+                        link_page.locator("#begin").click()
+                        for source,to,action in route[:-1]:
+                            choice = link_page.locator(
+                                f'button.choice[data-to="{to}"][data-action="{action}"]'
+                            )
+                            assert choice.count() == 1 and choice.is_enabled(), (
+                                f"Deduction-link route blocked: {source}->{to}"
+                            )
+                            choice.click()
+                        assert link_page.locator("#sceneId").inner_text().startswith("F09")
+                        link_page.locator('#quickNav button[data-go="deductions"]').click()
+                        source_link = link_page.locator(".deduction-source").first
+                        assert source_link.count() == 1 and source_link.is_enabled()
+                        evidence_id = source_link.get_attribute("data-evidence-id")
+                        before_link = link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        source_link.click()
+                        assert link_page.locator('button[data-tab="evidence"]').get_attribute(
+                            "aria-pressed"
+                        ) == "true", "Deduction source must open the evidence tab"
+                        assert link_page.locator("#toolsSectionLabel").inner_text() == "УЛИКИ"
+                        focused_clue = link_page.locator(
+                            f'.evidence-card[data-evidence-id="{evidence_id}"]'
+                        )
+                        assert focused_clue.count() == 1 and "is-focused" in (
+                            focused_clue.get_attribute("class") or ""
+                        ), "Proof source must focus the actual acquired clue"
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_link, (
+                            "Deduction -> evidence navigation wrote a game save"
+                        )
+                        assert not link_errors, f"Deduction link JS errors: {link_errors}"
+                        link_ctx.close()
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()
                     if browser_name == "chromium" and not quick:
@@ -1251,6 +1304,11 @@ def main():
                         assert full_page.locator(
                             'button[data-tab="evidence"]'
                         ).get_attribute("aria-pressed") == "true"
+                        assert full_page.locator("#toolsSectionLabel").inner_text() == "УЛИКИ"
+                        assert full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == initial_save, (
+                            "Proof-source link must not rewrite game progress"
+                        )
                         focused = full_page.locator(
                             f'.evidence-card[data-evidence-id="{expected_id}"]'
                         )
