@@ -169,7 +169,7 @@ assert(asHero(heroine,"E07",{state:{flags:{...heroine.state.flags,valeGuarantee:
 assert(asHero(heroine,"Z02").includes("Элеонора оставила расследование"));
 assert(asHero(male,"D02").includes("Если бы я был от него"));
 assert(asHero(male,"B02").includes("сэр"));
-assert(asHero(male,"F02").includes("произнёс сыщик"));
+assert(asHero(male,"F02").includes("произнёс он"));
 assert(asHero(heroine,"E10").includes("представитель рабочих")===false ||
  !asHero(heroine,"E10").includes("сказала Элеонора"),
  "Do not feminize male NPC voices");
