@@ -705,3 +705,15 @@ html[data-case002-telegram="true"] .tool-tab{
  .case-quick-nav button{padding-inline:1px;font-size:.7rem}
  .hero-selection-status{font-size:.74rem;margin-bottom:12px}
 }
+
+/* At 320–359px, six equal thumb targets in a single row force Cyrillic
+   labels to break. A 3×2 deck keeps the same navigation with readable type.
+   Reserve corresponding space for iPhone Safari and Telegram safe areas. */
+@media(max-width:359px){
+ .case-quick-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .case-quick-nav button{min-height:48px}
+ #game{padding-bottom:calc(160px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ #notice{bottom:calc(138px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ html{scroll-padding-bottom:calc(180px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ .tool-tab,#backToLaunch{scroll-margin-bottom:calc(170px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+}

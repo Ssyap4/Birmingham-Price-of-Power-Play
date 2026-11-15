@@ -9,6 +9,7 @@ name: Case 002 scoped mobile smoke (draft only)
 # This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
 # Stage 8: final portrait acceptance checks saved-hero cues, unread evidence,
 # direct journal access and narrow phone safe areas in Chromium AND WebKit.
+# This version verifies that the six-action dock uses two readable rows on 320px phones.
 on:
   push:
     branches: [feat/case002-story-bible-v1]

@@ -455,6 +455,18 @@ def main():
                         assert nav["y"] + nav["height"] <= 791, (
                             f"{browser_name}: bottom navigation escapes phone viewport"
                         )
+                        expected_columns = 3 if width < 360 else 6
+                        columns = page.locator("#quickNav").evaluate(
+                            "el => getComputedStyle(el).gridTemplateColumns.split(' ').length"
+                        )
+                        assert columns == expected_columns, (
+                            f"{browser_name}: {width}px dock should have {expected_columns} columns, got {columns}"
+                        )
+                        assert page.locator("#notice").evaluate("""el => {
+                            const nav = document.querySelector('#quickNav');
+                            return parseFloat(getComputedStyle(el).bottom) >=
+                                   nav.getBoundingClientRect().height + 8;
+                        }"""), f"{browser_name}: {width}px receipt must clear mobile dock"
                         for navbutton in page.locator("#quickNav button").all():
                             assert navbutton.bounding_box()["height"] >= 44
                             font_size = navbutton.evaluate(
