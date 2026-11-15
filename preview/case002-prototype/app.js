@@ -219,7 +219,8 @@ function refreshNavigation(){
     (point.reading?"ТЕКСТ":"КАДР"):"СЦЕНА");
    button.dataset.returnPoint=String(Boolean(point));
    if(fromDossier)button.setAttribute("aria-label",point.section==="choices"?
-     "Вернуться к месту выбора":"Вернуться к месту чтения");
+     (engine?.snapshot().finished?"Вернуться к итогу расследования":
+      "Вернуться к месту выбора"):"Вернуться к месту чтения");
    else if(fromChoices)button.setAttribute("aria-label",point.reading?
      "Вернуться к месту чтения":"Вернуться к кадру сцены");
    else button.removeAttribute("aria-label");
@@ -523,7 +524,9 @@ function refreshDossierReturn(){
  const point=dossierReturnPoint;
  button.hidden=!point||!isDossierSection(navSection);
  if(!button.hidden){
-  const label=point.section==="choices"?"К МЕСТУ ВЫБОРА":"К МЕСТУ ЧТЕНИЯ";
+  const label=point.section==="choices"?
+   (engine?.snapshot().finished?"К ИТОГУ":"К МЕСТУ ВЫБОРА"):
+   "К МЕСТУ ЧТЕНИЯ";
   setText(button,"← "+label+" · СЦЕНА "+point.sceneId);
  }
 }
@@ -908,20 +911,31 @@ function renderSceneCast(stage,state){
 }
 // The ending scene is durable before separate completion/reward archive writes.
 // Never promise an award without checking both archive records on disk.
-function completionMessage(state){
- if(!store)return "Расследование завершено. Хранилище недоступно: итог и награда не записаны.";
+function completionArchiveStatus(state){
+ // Read both existing independent archives; a stored reward combination
+ // is not a new award for a repeated ending.
+ if(!store)return {status:"unavailable",recorded:false,reward:false,
+  message:"Расследование завершено. Хранилище недоступно: итог и награда не записаны."};
  try{
   const records=JSON.parse(store.getItem(api.RECORD_KEY)||"null");
   const rewards=JSON.parse(store.getItem(api.REWARD_KEY)||"null");
-  const archived=Array.isArray(records)&&records.some(record=>record&&
-   record.attemptId===state.attemptId&&record.heroId===state.hero&&record.ending===state.ending);
-  const awarded=Array.isArray(rewards)&&rewards.includes("002:"+state.hero+":"+state.ending);
-  if(archived&&awarded)return "Расследование завершено. Итог и уникальная награда зарегистрированы в черновом архиве.";
-  return "Расследование завершено. Текущая попытка сохранена, но запись итога или награды в архиве пока не подтверждена.";
+  const recorded=Array.isArray(records)&&records.some(record=>record&&
+   record.attemptId===state.attemptId&&record.heroId===state.hero&&
+   record.ending===state.ending);
+  const reward=Array.isArray(rewards)&&rewards.includes(
+   "002:"+state.hero+":"+state.ending);
+  const status=recorded&&reward?"verified":
+   recorded||reward?"partial":"unconfirmed";
+  const message=status==="verified"?
+   "Расследование завершено. Итог и уникальная награда зарегистрированы в черновом архиве.":
+   "Расследование завершено. Текущая попытка сохранена, но запись итога или награды в архиве пока не подтверждена.";
+  return {status,recorded,reward,message};
  }catch(_){
-  return "Расследование завершено. Архив итогов или наград повреждён. Запись достижения не подтверждена.";
+  return {status:"damaged",recorded:false,reward:false,
+   message:"Расследование завершено. Архив итогов или наград повреждён. Запись достижения не подтверждена."};
  }
 }
+
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
  $("game").dataset.completed=String(Boolean(s.finished));
@@ -1114,7 +1128,8 @@ function renderEndingRecap(target,view){
  panel.dataset.ending=recap.endingId;
  panel.append(make("p","БИРМИНГЕМ · ДЕЛО №002 ЗАКРЫТО","finale-eyebrow"));
  panel.append(make("h4",recap.title,"finale-title"));
- panel.append(make("p","История "+heroNames[recap.hero]+" · "+recap.sceneId,"finale-subtitle"));
+ panel.append(make("p","История "+heroNames[recap.hero]+" · "+recap.sceneId+
+  " · Принято решений: "+recap.decisionCount,"finale-subtitle"));
  const facts=make("div",undefined,"finale-metrics");
  for(const [name,value] of [
    ["Собрано улик",recap.evidenceCount],
@@ -1126,37 +1141,90 @@ function renderEndingRecap(target,view){
    facts.append(cell);
  }
  panel.append(facts);
+ panel.append(make("p","«В безопасности» — защищённые и эвакуированные. Защита не означает, что человека уже вывезли из города.","finale-metric-note"));
+ // A trip to an earned dossier starts from the report, not from the art.
+ const openFinaleSection=(section,id=null)=>{
+  navSection="choices";refreshNavigation();jumpTo(section,id);
+ };
  if(recap.people.length){
    const people=make("section",undefined,"finale-people");
    people.append(make("h5","Судьбы знакомых"));
+   people.append(make("p","Только свидетели, с которыми сыщик познакомился. Положение показано на момент развязки.","finale-people-note"));
+   const categories=[
+    ["evacuated","ВЫВЕЗЕНЫ ИЗ ГОРОДА"],["protected","ПОД ЗАЩИТОЙ"],
+    ["located","НАЙДЕНЫ, НЕ ЗАЩИЩЕНЫ"],["detained","ЗАДЕРЖАНЫ ОХРАНОЙ"],
+    ["deceased","ПОГИБЛИ"],["missing","МЕСТО НЕИЗВЕСТНО"]
+   ];
+   const chips=make("div",undefined,"finale-witness-statuses");
+   for(const [status,label] of categories){
+    const n=recap.people.filter(person=>person.status===status).length;
+    if(!n)continue;
+    const chip=make("span",n+" · "+label,"finale-witness-status");
+    chip.dataset.status=status;
+    chips.append(chip);
+   }
+   people.append(chips);
    const list=make("ul");
    for(const person of recap.people){
      const li=make("li");
-     li.append(make("strong",person.name),make("span",witnessLabel(person.id,person.status)));
-     li.dataset.status=person.status;
-     list.append(li);
+     li.dataset.person=person.id;li.dataset.status=person.status;
+     li.append(make("strong",person.name),
+      make("span",witnessLabel(person.id,person.status)));
+     const open=make("button","ОТКРЫТЬ ДОСЬЕ ↗","finale-person-open");
+     open.type="button";open.dataset.person=person.id;
+     open.setAttribute("aria-label","Открыть досье свидетеля: "+person.name);
+     open.addEventListener("click",()=>openFinaleSection("witnesses",person.id));
+     li.append(open);list.append(li);
    }
    people.append(list);panel.append(people);
  }
  const journal=window.BirminghamCase002Journal.entries(view.state,evidenceName);
- const recent=journal.flatMap(item=>item.notes).slice(0,3);
+ const recent=journal.slice(0,3);
  if(recent.length){
    const history=make("section",undefined,"finale-history");
-   history.append(make("h5","Что осталось в деле"));
+   history.append(make("h5","Последние события расследования"));
+   history.append(make("p","Выписка из уже принятых решений. Полная хронология — в журнале.","finale-history-note"));
    const list=make("ul");
-   for(const line of recent)list.append(make("li",line));
+   for(const entry of recent){
+    const li=make("li",undefined,"finale-history-event");
+    li.dataset.scene=entry.to;
+    const scene=data.graph.nodes.find(node=>node.id===entry.to);
+    li.append(make("small","СЦЕНА "+entry.to,"finale-history-scene"),
+     make("strong",scene?.title||"Запись дела","finale-history-name"),
+     make("span",entry.notes.slice(0,2).join(" · "),"finale-history-description"));
+    list.append(li);
+   }
    history.append(list);panel.append(history);
  }
- const archive=make("div",undefined,"finale-archive");
+ const archiveCheck=completionArchiveStatus(view.state);
+ const archive=make("section",undefined,"finale-archive");
  archive.id="finaleArchive";
+ archive.dataset.status=archiveCheck.status;
  archive.setAttribute("role","status");
  archive.append(make("span","СТАТУС АРХИВА","finale-archive-kicker"));
- archive.append(make("p",completionMessage(view.state)));
+ const statusText=archiveCheck.status==="verified"?"ОБЕ ЗАПИСИ ПОДТВЕРЖДЕНЫ":
+   archiveCheck.status==="damaged"?"АРХИВ ПОВРЕЖДЁН":
+   archiveCheck.status==="unavailable"?"ХРАНИЛИЩЕ НЕДОСТУПНО":
+   "ТРЕБУЕТ ПРОВЕРКИ";
+ archive.append(make("strong",statusText,"finale-archive-status"));
+ archive.append(make("p",archiveCheck.message));
+ const checks=make("div",undefined,"finale-archive-checks");
+ for(const [kind,label,ok] of [
+  ["result","ЗАПИСЬ ПРОХОЖДЕНИЯ",archiveCheck.recorded],
+  ["reward","КЛЮЧ УНИКАЛЬНОЙ НАГРАДЫ",archiveCheck.reward]
+ ]){
+  const entry=make("div",undefined,"finale-archive-check");
+  entry.dataset.kind=kind;entry.dataset.verified=String(Boolean(ok));
+  entry.append(make("span",label),make("strong",ok?"НАЙДЕНО":"НЕ ПОДТВЕРЖДЕНО"));
+  checks.append(entry);
+ }
+ archive.append(checks);
+ archive.append(make("small","Наличие ключа награды не означает повторную выдачу за уже полученную комбинацию «дело × герой × концовка».","finale-archive-note"));
  panel.append(archive);
  const actions=make("div",undefined,"finale-actions");
  const journalButton=make("button","ПРОСМОТРЕТЬ ХОД ДЕЛА","finale-action secondary");
  journalButton.type="button";
- journalButton.addEventListener("click",()=>jumpTo("journal"));
+ journalButton.addEventListener("click",()=>openFinaleSection("journal"));
  const back=make("button","К ВЫБОРУ СЫЩИКА","finale-action");
  back.type="button";back.addEventListener("click",returnToLaunch);
  actions.append(journalButton,back);
