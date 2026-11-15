@@ -385,7 +385,7 @@ def main():
                     assert page.locator(
                         '.evidence-card[data-evidence-id="old_excursion_ticket"]'
                     ).evaluate("(el) => document.activeElement === el"), (
-                        "New evidence must receive keyboard focus after jumping from notice"
+                        "New evidence must receive keyboard focus after using scene shortcut"
                     )
                     assert page.locator("#sceneId").inner_text().startswith("A05")
                     # A collected clue can be sent straight to the comparison wall.
@@ -395,9 +395,9 @@ def main():
                     assert "Старинный билет" in page.locator(".pair-connection").inner_text()
                     # Return to dossier without advancing the case.
                     page.locator('button[data-tab="evidence"]').click()
-                    assert page.locator("#toolContent").evaluate(
+                    assert page.locator('button[data-tab="evidence"]').evaluate(
                         "(el) => document.activeElement === el"
-                    ), f"{browser_name}: switching dossier tabs must focus refreshed content"
+                    ), f"{browser_name}: switching dossier tabs must retain focus on the selected tab"
                     assert page.locator("#caseTools").evaluate(
                         "(el) => el.getBoundingClientRect().top < 540"
                     ), f"{browser_name}: dossier tabs must return to top of the selected section"

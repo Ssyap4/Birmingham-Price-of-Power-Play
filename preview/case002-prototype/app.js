@@ -189,11 +189,8 @@ function init(){
   tab=button.dataset.tab;evidenceFocus=null;
   if(tab==="evidence")acknowledgeEvidence();
   navSection=tab;renderTools();refreshNavigation();
-  // Replacing a long journal/deduction panel otherwise leaves the reader
-  // stranded at the old scroll offset or with a detached focus target.
-  const content=$("toolContent");
-  content.tabIndex=-1;
-  content.focus({preventScroll:true});
+  // Keep focus on the selected tab (keyboard/VoiceOver convention), but
+  // return its newly rendered content to view after a long journal entry.
   $("caseTools").scrollIntoView({block:"start",behavior:"auto"});
  });
  for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
