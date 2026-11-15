@@ -57,6 +57,12 @@ def main():
                     assert page.locator(".masthead").is_hidden()
                     assert page.locator("#resume").is_hidden()
                     assert "виадука" in page.locator("#caseBriefing").inner_text().lower()
+                    assert page.locator("#caseBriefing").get_attribute("aria-describedby") == "briefPremise"
+                    page.locator(".briefing-visual img").evaluate("img => img.decode()")
+                    cta = page.locator("#briefContinue").bounding_box()
+                    assert cta and cta["y"] + cta["height"] <= 844, (
+                        f"{browser_name}: briefing enter button falls below the first iPhone screen"
+                    )
                     assert page.locator(".briefing-rule").count() == 3
                     assert "сохраняется" in page.locator("#caseBriefing").inner_text().lower()
                     visual_dir=ROOT/"case002-qa-screens"
