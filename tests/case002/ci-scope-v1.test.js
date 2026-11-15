@@ -23,6 +23,10 @@ assert(onboarding.run_browser&&onboarding.browser_full&&!onboarding.run_full,
  "New start screens must receive actual Chromium and Safari WebKit QA");
 const finale=one("src/case002/ending-recap-v1.js");
 assert(finale.run_ui&&finale.run_browser&&!finale.run_full);
+const milestones=one("src/case002/achievements-v1.js");
+assert(milestones.run_ui&&milestones.run_browser&&!milestones.run_full,
+  "A UI-only achievement observer must not trigger the entire 400-route suite");
+assert(one("tests/case002/achievements-v1.test.js").run_ui);
 assert(one("tests/case002/ending-recap-v1.test.js").run_ui);
 const mobile=one("preview/case002-prototype/app.js");
 assert(mobile.run_ui&&mobile.run_browser&&!mobile.run_full);

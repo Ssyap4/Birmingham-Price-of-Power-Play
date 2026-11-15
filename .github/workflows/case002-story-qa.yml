@@ -109,4 +109,5 @@ jobs:
           node tests/case002/scene-prose-v1.test.js
           node tests/case002/ui-events-v1.test.js
           node tests/case002/ending-recap-v1.test.js
+          node tests/case002/achievements-v1.test.js
           node tests/case002/telegram-safe-area-v1.test.js
