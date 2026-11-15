@@ -649,11 +649,23 @@ function render(){
  if(s.finished){
    renderEndingRecap(choices,v);
  }else{
+   // Keep available actions together, with unavailable routes opt-in below.
+   // This grouping does NOT alter the engine's choice ordering, conditions,
+   // or any saved state. F09 hidden ending routes remain undiscoverable.
+   const available=make("div",undefined,"choice-available");
+   available.setAttribute("role","group");
+   available.setAttribute("aria-label","Доступные действия");
+   const locked=make("div",undefined,"choice-locked");
+   locked.id="lockedChoices";
+   locked.hidden=true;
+   locked.setAttribute("role","group");
+   locked.setAttribute("aria-label","Пока недоступные действия и причины");
+   let allowed=0,blocked=0;
    for(const c of v.choices){
-    // Do not spoil undiscovered final endings with disabled grey buttons.
     if(s.node==="F09"&&!c.enabled)continue;
+    const visited=s.visited.includes(c.to);
     const btn=make("button",undefined,"choice"+(!c.enabled?" is-disabled":"")+
-      (c.confirm?" is-danger":"")+(s.visited.includes(c.to)?" is-visited":""));
+      (c.confirm?" is-danger":"")+(visited?" is-visited":""));
     btn.type="button";btn.disabled=!c.enabled;
     btn.dataset.to=c.to;btn.dataset.action=c.action;
     let title=actionLabels[s.node+":"+c.to+":"+c.action]||c.actionTitle;
@@ -661,9 +673,31 @@ function render(){
     btn.append(make("span",title,"choice-label"));
     if(c.action!=="continue")btn.append(make("span","Следующая сцена: "+c.title,"choice-detail"));
     if(!c.enabled)btn.append(make("span",translateReason(c,v),"choice-detail lock-reason"));
-    // A detached old button cannot repeat an already committed transition.
+    else if(c.confirm)btn.append(make("span","ОПАСНО · СМЕРТЕЛЬНЫЙ РИСК","choice-risk-note"));
+    else if(visited)btn.append(make("span","УЖЕ ПОСЕЩАЛИ","choice-visited-note"));
+    // Detached old buttons cannot repeat a committed transition.
     btn.addEventListener("click",()=>select(c,s.node));
-    choices.append(btn);
+    if(c.enabled){available.append(btn);allowed++;}
+    else{locked.append(btn);blocked++;}
+   }
+   const count=make("p",allowed===1?"1 доступное действие":
+     allowed>=2&&allowed<=4?allowed+" доступных действия":allowed+" доступных действий",
+     "choice-availability");
+   choices.append(count,available);
+   if(blocked){
+    const toggle=make("button","ПОКА ЗАКРЫТО: "+blocked+" · ПОКАЗАТЬ ПРИЧИНЫ",
+      "choice-locked-toggle");
+    toggle.type="button";
+    toggle.setAttribute("aria-controls","lockedChoices");
+    toggle.setAttribute("aria-expanded","false");
+    toggle.addEventListener("click",()=>{
+     const opening=locked.hidden;
+     locked.hidden=!opening;
+     toggle.setAttribute("aria-expanded",String(opening));
+     setText(toggle,opening?"СКРЫТЬ НЕДОСТУПНЫЕ ПУТИ ("+blocked+")":
+      "ПОКА ЗАКРЫТО: "+blocked+" · ПОКАЗАТЬ ПРИЧИНЫ");
+    });
+    choices.append(toggle,locked);
    }
  }
  renderTools();

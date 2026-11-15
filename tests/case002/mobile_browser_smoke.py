@@ -129,6 +129,12 @@ def main():
                     assert page.locator("#quickNav button").count() == 6
                     # Read-only handoff from the end of prose to choices and back.
                     assert page.locator("#readerBridge").count() == 1
+                    assert page.locator(".choice-available .choice:not([disabled])").count() >= 1
+                    assert page.locator(".choice-availability").count() == 1
+                    assert page.locator(".choice-locked .choice:not([disabled])").count() == 0
+                    assert page.locator(".choice-locked-toggle").count() == (
+                        1 if page.locator(".choice-locked .choice").count() else 0
+                    )
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
                     assert "доступн" in page.locator("#readerBridgeSummary").inner_text()
                     first_save=page.evaluate("""() => localStorage.getItem(
@@ -305,6 +311,25 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("P02"), "save didn't reload"
                     page.locator(".choice:not([disabled])").first.click()  # A01
                     assert page.locator("#sceneId").inner_text().startswith("A01")
+                    assert page.locator(".choice-available .choice:not([disabled])").count() >= 1
+                    # Show reasons only on request. Inspect visibility, touch
+                    # accessibility and save integrity without spending a choice.
+                    blocked=page.locator(".choice-locked .choice")
+                    if blocked.count():
+                        toggle=page.locator(".choice-locked-toggle")
+                        assert toggle.get_attribute("aria-expanded") == "false"
+                        assert page.locator("#lockedChoices").is_hidden()
+                        previous=page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        toggle.click()
+                        assert toggle.get_attribute("aria-expanded") == "true"
+                        assert page.locator("#lockedChoices").is_visible()
+                        assert blocked.first.is_disabled()
+                        assert blocked.first.locator(".lock-reason").count() == 1
+                        toggle.click()
+                        assert page.locator("#lockedChoices").is_hidden()
+                        assert page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == previous
                     page.wait_for_function(
                         "() => document.querySelector('#game').dataset.artVerified === 'true'",
                         timeout=8000
@@ -526,6 +551,8 @@ def main():
                             f"{browser_name}: reader next must be touch-sized at {width}px"
                         )
                         assert page.locator("#choicesBackToText").bounding_box()["height"] >= 44
+                        if page.locator(".choice-locked-toggle").count():
+                            assert page.locator(".choice-locked-toggle").bounding_box()["height"] >= 44
                         for tabbutton in page.locator(".tool-tab").all():
                             assert tabbutton.evaluate(
                                 "(el) => parseFloat(getComputedStyle(el).fontSize)"
