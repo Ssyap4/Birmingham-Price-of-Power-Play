@@ -29,8 +29,8 @@ function render(container,raw,doc=typeof document!=="undefined"?document:null,sc
  for(const entry of paragraphs){
    const p=doc.createElement("p");
    p.className="story-paragraph";
-   entry.lines.forEach((part,index)=>{
-     if(index)p.append(doc.createTextNode("\n"));
+   entry.lines.forEach((part,lineIndex)=>{
+     if(lineIndex)p.append(doc.createTextNode("\n"));
      const span=doc.createElement("span");
      span.className=part.spoken?"scene-spoken-line":"scene-prose-line";
      if(part.spoken){
