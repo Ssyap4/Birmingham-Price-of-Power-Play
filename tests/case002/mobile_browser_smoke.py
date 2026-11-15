@@ -457,7 +457,10 @@ def main():
                     assert page.locator("#lastDecisionReceipt").is_visible()
                     assert page.locator("#lastDecisionReceipt").get_attribute("data-scene-id") == "A05"
                     assert page.locator("#sceneUpdateGroup").is_visible()
-                    assert "НОВЫЕ УЛИКИ" in page.locator("#sceneUpdateSummary").inner_text()
+                    assert page.locator("#sceneUpdateToggle").get_attribute("aria-expanded") == "true"
+                    assert page.locator("#sceneUpdateContent").is_visible()
+                    assert "НОВЫЕ УЛИКИ (1)" in page.locator("#sceneUpdateSummary").inner_text()
+                    assert "ПОСЛЕДСТВИЯ РЕШЕНИЯ" in page.locator("#sceneUpdateSummary").inner_text()
                     assert page.locator("#sceneUpdateGroup").evaluate("""group => {
                         const art=document.querySelector('#sceneArtwork');
                         const cast=document.querySelector('#sceneCast');
@@ -471,6 +474,22 @@ def main():
                     clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
                     assert clue_jump.count() == 1 and clue_jump.is_visible()
                     assert "Старинный билет" in clue_jump.inner_text()
+                    # The player may reclaim vertical space, then reopen the
+                    # same earned evidence without modifying a saved decision.
+                    folded_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
+                    page.locator("#sceneUpdateToggle").click()
+                    assert page.locator("#sceneUpdateToggle").get_attribute("aria-expanded") == "false"
+                    assert page.locator("#sceneUpdateContent").is_hidden()
+                    assert not clue_jump.is_visible()
+                    assert page.locator("#sceneUpdateRead").is_visible()
+                    assert page.locator("#sceneUpdateRead").bounding_box()["height"] >= 44
+                    assert "НОВЫЕ УЛИКИ" in page.locator("#sceneUpdateSummary").inner_text()
+                    page.locator("#sceneUpdateToggle").click()
+                    assert page.locator("#sceneUpdateContent").is_visible()
+                    assert clue_jump.is_visible()
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == folded_save
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
                     assert page.locator("#sceneDossierUpdates").is_hidden(), (
                         "Ticket alone cannot disclose an unverified deduction or unknown witness"
@@ -767,6 +786,8 @@ def main():
                     assert "Откройте подробности" in receipt_page.locator("#noticeContent").inner_text()
                     receipt_page.locator("#noticeDismiss").click()
                     assert receipt_page.locator("#notice").is_hidden()
+                    assert receipt_page.locator("#sceneUpdateToggle").get_attribute("aria-expanded") == "true"
+                    assert "ПОСЛЕДСТВИЯ РЕШЕНИЯ (4)" in receipt_page.locator("#sceneUpdateSummary").inner_text()
                     assert receipt_page.locator("#storyPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: dismissing a receipt must restore live focus"
@@ -776,9 +797,14 @@ def main():
                         assert phrase in receipt_page.locator("#lastDecisionDetails").inner_text(), (
                             f"{browser_name}: dismissed toast must leave all four true consequences accessible"
                         )
+                    # Folding the old report must not carry into a new scene.
                     # A second choice creates a new receipt; manually switching
                     # the dossier must dismiss it instead of obscuring the tab.
+                    receipt_page.locator("#sceneUpdateToggle").click()
+                    assert receipt_page.locator("#sceneUpdateContent").is_hidden()
                     receipt_page.locator('button.choice[data-to="A01"]').click()
+                    assert receipt_page.locator("#sceneUpdateToggle").get_attribute("aria-expanded") == "true"
+                    assert receipt_page.locator("#sceneUpdateContent").is_visible()
                     assert receipt_page.locator("#notice").is_visible()
                     assert receipt_page.locator("#notice").evaluate(
                         "(el) => getComputedStyle(el).pointerEvents === 'none'"

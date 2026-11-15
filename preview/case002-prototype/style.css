@@ -902,3 +902,69 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .scene-reading-context{gap:2px 8px}
  #game .scene-context span:first-child{letter-spacing:.045em}
 }
+
+/* Cycle 1, stage 2: reader-first aftermath. All earned actions remain
+   available; players may fold the visually dense report without losing it.
+   The approved art and narrative ordering stay unchanged. */
+#game .scene-update-group{padding:7px 9px 9px;margin:12px 0 17px;
+ background:linear-gradient(145deg,#292017,#19140f 88%);border-color:#816447}
+#game .scene-update-group-head{display:block;margin:0;padding:0;border:0}
+#game .scene-update-group-toggle{display:grid;
+ grid-template-columns:minmax(0,1fr) auto;gap:4px 9px;align-items:center;
+ width:100%;min-width:0;min-height:51px;padding:9px 8px;
+ color:#f2d19c;background:transparent;border:0;border-radius:4px;
+ text-align:left;overflow-wrap:anywhere}
+#game .scene-update-group-toggle:focus-visible{outline:3px solid #f6d4a1;outline-offset:-2px}
+#game .scene-update-group-toggle[aria-expanded="false"]{background:#2d241b}
+#game .scene-update-group-kicker{grid-column:1;font-size:.66rem;
+ letter-spacing:.085em}
+#game .scene-update-group-summary{grid-column:1;font-size:.68rem;line-height:1.4;
+ color:#d4bb9d}
+#game .scene-update-group-state{grid-column:2;grid-row:1 / span 2;
+ align-self:center;white-space:nowrap;color:#e4bd87;
+ font:800 .64rem/1.4 system-ui,sans-serif;letter-spacing:.015em}
+#game .scene-update-group-content{gap:3px;padding:9px 0 2px;
+ border-top:1px solid #65503a}
+#game .scene-update-group-content[hidden]{display:none!important}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates{
+ margin:0;padding:8px 9px;border:0;border-left:2px solid #b38958;
+ border-radius:0;background:transparent;box-shadow:none}
+#game .scene-update-group-content>.scene-dossier-updates{
+ border-left-color:#9e8461}
+#game .scene-update-group-content>.last-decision-receipt{
+ margin:5px 0 1px;background:#221b15;border:1px solid #675038;
+ border-radius:4px}
+#game .scene-update-group-read{margin-top:5px;border-color:#886a47;
+ background:#322619;color:#e9cca3;min-height:45px}
+#game .scene-finds-title,#game .scene-dossier-updates-title{
+ font-size:.67rem;letter-spacing:.045em}
+#game .scene-finds-links,#game .scene-dossier-updates-links{gap:6px}
+
+/* Longer episodes are typeset as a story rather than a dense control grid.
+   Dialogue and choices keep their touch targets and high-contrast labels. */
+#game .story-content{line-height:1.69;letter-spacing:.002em}
+#game .story-content .story-paragraph{margin-bottom:17px;max-width:64ch}
+#game .story-content .scene-spoken-line[data-speaker]{
+ margin:12px 0 13px;padding:12px 12px 13px;line-height:1.65;
+ overflow-wrap:anywhere}
+#game .story-content .scene-spoken-line[data-speaker]:before{
+ margin-bottom:7px}
+#game .narrative-divider{margin-bottom:19px}
+#game .reader-bridge{margin-top:23px;padding:16px 13px}
+#game .choice{min-height:56px;row-gap:7px;padding:14px 11px}
+#game .choice-label{line-height:1.43}
+#game .choice-risk-note{font-size:.68rem;line-height:1.45}
+#game .choices-hint{margin-top:7px;line-height:1.5}
+@media(max-width:359px){
+ #game .scene-update-group{padding:6px 7px 8px}
+ #game .scene-update-group-toggle{padding:8px 6px;gap:3px 5px}
+ #game .scene-update-group-state{font-size:.61rem;letter-spacing:0}
+ #game .story-content{line-height:1.63}
+ #game .story-content .scene-spoken-line[data-speaker]{padding:10px 9px}
+ #game .reader-bridge{padding:13px 10px}
+ #game .choice{padding:12px 9px}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .scene-update-group-toggle{transition:none!important}
+}

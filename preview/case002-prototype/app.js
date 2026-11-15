@@ -277,10 +277,23 @@ function renderSceneUpdateGroup(){
   group.id="sceneUpdateGroup";
   group.setAttribute("aria-label","Изменения в текущей сцене");
   const head=make("div",undefined,"scene-update-group-head");
-  head.append(make("span","ПОСЛЕ ВАШЕГО РЕШЕНИЯ","scene-update-group-kicker"));
+  const toggle=make("button",undefined,"scene-update-group-toggle");
+  toggle.id="sceneUpdateToggle";toggle.type="button";
+  toggle.setAttribute("aria-controls","sceneUpdateContent");
+  toggle.setAttribute("aria-expanded","true");
+  toggle.append(make("span","ПОСЛЕ ВАШЕГО РЕШЕНИЯ","scene-update-group-kicker"));
   const info=make("span",undefined,"scene-update-group-summary");
   info.id="sceneUpdateSummary";
-  head.append(info);
+  toggle.append(info);
+  const action=make("span","СВЕРНУТЬ −","scene-update-group-state");
+  action.id="sceneUpdateAction";
+  toggle.append(action);
+  toggle.addEventListener("click",()=>{
+   toggle.setAttribute("aria-expanded",
+    String(toggle.getAttribute("aria-expanded")!=="true"));
+   refreshSceneUpdateGroup();
+  });
+  head.append(toggle);
   const content=make("div",undefined,"scene-update-group-content");
   content.id="sceneUpdateContent";
   const next=make("button","ПРОДОЛЖИТЬ ЧТЕНИЕ СЦЕНЫ ↓","scene-update-group-read");
@@ -295,19 +308,31 @@ function renderSceneUpdateGroup(){
   const element=$(id);
   if(element&&element.parentElement!==content)content.append(element);
  }
+ // A new, actually reached scene gets a fresh expanded report. Folding is
+ // temporary UI state, not an engine flag or a saved-game preference.
+ const sceneId=engine?.snapshot().node;
+ if(group.dataset.sceneId!==sceneId){
+  group.dataset.sceneId=sceneId;
+  $("sceneUpdateToggle").setAttribute("aria-expanded","true");
+ }
  refreshSceneUpdateGroup();
 }
 function refreshSceneUpdateGroup(){
  const group=$("sceneUpdateGroup");
  if(!group)return;
  const parts=[
-  ["sceneFinds","НОВЫЕ УЛИКИ"],
-  ["sceneDossierUpdates","ВЫВОДЫ И СВЕДЕНИЯ"],
-  ["lastDecisionReceipt","ПОСЛЕДСТВИЯ РЕШЕНИЯ"]
+  ["sceneFinds","НОВЫЕ УЛИКИ",pendingEvidence.length],
+  ["sceneDossierUpdates","ВЫВОДЫ И СВЕДЕНИЯ",
+   $("sceneDossierUpdates")?.querySelectorAll(".scene-dossier-update").length||0],
+  ["lastDecisionReceipt","ПОСЛЕДСТВИЯ РЕШЕНИЯ",lastDecisionReceipt?.count||0]
  ];
- const active=parts.filter(([id])=>$(id)&&!$(id).hidden).map(([,label])=>label);
+ const active=parts.filter(([id])=>$(id)&&!$(id).hidden);
  group.hidden=active.length===0;
- if(active.length)setText($("sceneUpdateSummary"),active.join(" · "));
+ const toggle=$("sceneUpdateToggle"),open=toggle.getAttribute("aria-expanded")==="true";
+ $("sceneUpdateContent").hidden=group.hidden||!open;
+ setText($("sceneUpdateAction"),open?"СВЕРНУТЬ −":"РАСКРЫТЬ +");
+ if(active.length)setText($("sceneUpdateSummary"),
+  active.map(([,label,count])=>label+" ("+count+")").join(" · "));
 }
 function renderNewFinds(){
  // A missed receipt is not a lost clue: all newly earned items remain
