@@ -43,6 +43,9 @@ function category(file){
  if(/^src\/case002\/(?:consequences|journal)/.test(p))return "reporting";
  if(/^src\/case002\/(?:scene-prose|scene-presentation|telegram-safe-area|ui-events)/.test(p))return "ui";
  if(p.startsWith("src/case002/"))return "art";
+ // A changed start screen or asset link must be exercised by real Safari WebKit,
+ // not only the faster Chromium smoke run.
+ if(p==="preview/case002-prototype/index.html")return "art-installed";
  if(p==="preview/case002-prototype/style.css")return "visual";
  if(p.startsWith("preview/case002-prototype/"))return "ui";
  if(p==="tools/case002/ci-scope-v1.js"||p==="tests/case002/ci-scope-v1.test.js")return "ci";

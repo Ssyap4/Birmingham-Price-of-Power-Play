@@ -18,6 +18,9 @@ for(const doc of ["ARCHITECTURE.md","Architecture.md","CHANGELOG.md",
 }
 const css=one("preview/case002-prototype/style.css");
 assert(css.run_ui&&css.run_browser&&!css.run_full&&!css.browser_full);
+const onboarding=one("preview/case002-prototype/index.html");
+assert(onboarding.run_browser&&onboarding.browser_full&&!onboarding.run_full,
+ "New start screens must receive actual Chromium and Safari WebKit QA");
 const mobile=one("preview/case002-prototype/app.js");
 assert(mobile.run_ui&&mobile.run_browser&&!mobile.run_full);
 const telegramSafe=one("src/case002/telegram-safe-area-v1.js");
