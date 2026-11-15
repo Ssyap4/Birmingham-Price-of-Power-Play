@@ -313,9 +313,9 @@ def main():
                     assert page.locator("#readerBridge").count() == 1
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P02")
                     assert page.locator("#readingProgress").count() == 1
-                    assert page.locator("#readingProgress").is_hidden(), (
-                        "The long-reading track must not overlay a freshly opened scene"
-                    )
+                    assert page.locator("#readingProgress").evaluate(
+                        "(el) => getComputedStyle(el).pointerEvents === 'none'"
+                    ), "The progress rail must never intercept thumb navigation"
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => 0 <= el.getBoundingClientRect().top < 170"
                     ), f"{browser_name}: after a decision the next scene must be on screen"
