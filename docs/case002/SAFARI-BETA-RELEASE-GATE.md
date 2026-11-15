@@ -179,3 +179,17 @@ Witness-history-to-journal visits likewise return to the original action
 inside the (still expanded) encountered witness timeline. Scoped Chromium
 covers an A05 evidence note and existing witness transitions. No plot, save,
 reward, main or Case001 changes.
+
+### Current branch deployment preflight (2026-11-15)
+
+A new independent Vercel preview from source commit
+`dff0726da1476f48bd96561af3eb713854cad67e` reached READY.
+Vercel build logs independently verified 89 scenes, 102 approved portrait
+WebPs, ten NPCs, five heroes and 136 output files (11.8 MiB). The published
+HTTPS landing page, game entry and first portrait returned HTTP 200. Its URL
+is a preview deployment; the older production alias remains untouched.
+This source/HTTP evidence alone is not real iPhone Safari/WebKit acceptance.
+
+For the next full mobile QA gate, the same workflow now assembles and verifies
+the standalone Safari package before running Chromium and WebKit. Routine
+quick UI pushes continue to skip this extra release work under ADR-0005.

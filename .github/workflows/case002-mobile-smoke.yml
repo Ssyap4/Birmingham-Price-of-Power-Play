@@ -57,6 +57,14 @@ jobs:
           else
             python -m playwright install --with-deps chromium
           fi
+      # A full release-class mobile gate must test not only the source UI
+      # but the exact independent portrait-only web package it distributes.
+      # Quick UI commits still skip this package and expensive WebKit.
+      - name: Verify isolated Safari package when full mobile QA is required
+        if: steps.scope.outputs.browser_full == 'true'
+        run: |
+          node deployment/case002-safari-preview.js
+          node tests/case002/safari-package-integrity.test.js
       - name: Fast local mobile QA of changed scene presentation
         if: steps.scope.outputs.run_browser == 'true' && steps.scope.outputs.browser_full != 'true'
         run: python tests/case002/mobile_browser_smoke.py --quick
