@@ -53,6 +53,8 @@ def main():
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#caseBriefing").is_visible()
+                    assert page.locator("#briefContinue").inner_text().startswith("ВЫБРАТЬ СВОЕГО")
+                    assert page.locator("#launchTitle").inner_text() == "Кому доверить дело?"
                     assert page.locator("#launch").is_hidden()
                     assert page.locator(".masthead").is_hidden()
                     assert page.locator("#resume").is_hidden()
@@ -272,7 +274,7 @@ def main():
                     assert page.locator("#storyPanel").is_visible()
                     assert page.locator("#heroPortrait").is_visible()
                     assert page.locator("#heroPortrait").get_attribute("alt").startswith(
-                        "Портрет сыщика:"
+                        "Портрет человека круга:"
                     )
                     assert page.locator("#heroPortrait").get_attribute("src").endswith("/assets/heroes/jack.webp")
                     page.locator("#heroPortrait").evaluate(
@@ -345,7 +347,7 @@ def main():
                         assert page.locator("#sceneArtwork").is_visible()
                     else:
                         assert page.locator("#sceneArtwork").is_hidden()
-                    assert "Контора сыщика" in page.locator("#sceneLocation").text_content()
+                    assert "Контора круга" in page.locator("#sceneLocation").text_content()
                     assert page.locator("#sceneCast").is_visible()
                     assert page.locator("#sceneCast").get_attribute("data-people") == "mabel"
                     assert "Мэйбл Кросс" in page.locator("#sceneCast").inner_text()

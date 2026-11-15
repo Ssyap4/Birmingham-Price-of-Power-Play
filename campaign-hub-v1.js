@@ -75,7 +75,7 @@ function renderDossiers(el,runs){
 /* Curated Case 001 achievements: no free entry or one-clue rewards.
    Unique hero × ending seals remain in their independent 30-item archive. */
 const ACH=[
- ['clue9','Внимательный сыщик','Собрать девять улик в одной попытке','Расследование',c=>c.maxClues>=9],
+ ['clue9','Острый взгляд','Собрать девять улик в одной попытке','Расследование',c=>c.maxClues>=9],
  ['clue11','Ни одна деталь','Собрать все 11 улик в одной попытке','Расследование',c=>c.maxClues>=11],
  ['deduce3','Три нити','Установить три доказательные связи в одной попытке','Дедукция',c=>c.maxLinks>=3],
  ['deduce6','Целая картина','Установить все шесть связей в одной попытке','Дедукция',c=>c.maxLinks>=6],

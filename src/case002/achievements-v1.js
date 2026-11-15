@@ -46,7 +46,7 @@ const catalog=Object.freeze([
  {id:"three-outcomes",name:"Три цены власти",description:"Завершить дело тремя разными концовками.",type:"mastery",
   done:(_view,records,contract)=>new Set(records.filter(r=>
    r.caseId==="002"&&contract.endings.some(e=>e.id===r.ending)).map(r=>r.ending)).size>=3},
- {id:"five-detectives",name:"Пять взглядов на город",description:"Завершить дело всеми пятью сыщиками.",type:"mastery",
+ {id:"five-detectives",name:"Пять взглядов на город",description:"Завершить дело за всех пятерых людей ближнего круга.",type:"mastery",
   done:(_view,records,contract)=>new Set(records.filter(r=>
    r.caseId==="002"&&contract.heroes.includes(r.heroId)&&
    contract.endings.some(e=>e.id===r.ending)).map(r=>r.heroId)).size>=5}

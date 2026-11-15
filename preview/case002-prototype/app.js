@@ -12,7 +12,7 @@ const approvedHeroPortraits={
 };
 const sceneLocations={
  "private-siding":"Частная железнодорожная ветка",
- "detective-office":"Контора сыщика",
+ "detective-office":"Контора круга",
  "bridge-viaduct":"Кирпичный виадук",
  "freight-office":"Грузовая контора",
  "police-desk":"Полицейский участок",
@@ -1349,7 +1349,7 @@ function render(){
  const portrait=$("heroPortrait");
  if(portrait.dataset.hero!==s.hero){
    portrait.dataset.hero=s.hero;
-   portrait.alt="Портрет сыщика: "+heroNames[s.hero];
+   portrait.alt="Портрет человека круга: "+heroNames[s.hero];
    portrait.src=approvedHeroPortraits[s.hero];
    portrait.hidden=false;
  }
@@ -1493,7 +1493,7 @@ function renderEndingRecap(target,view){
   const gain=make("section",undefined,"finale-new-reward");
   gain.setAttribute("role","status");
   gain.append(make("span","✦  ПОЛУЧЕНА НОВАЯ УНИКАЛЬНАЯ НАГРАДА","finale-new-reward-title"),
-   make("p","Ключ этого исхода впервые зарегистрирован в черновом архиве Дела №002. Жетон доступен в разделе наград при выборе сыщика."));
+   make("p","Ключ этого исхода впервые зарегистрирован в черновом архиве Дела №002. Жетон доступен в разделе наград при выборе своего."));
   panel.append(gain);
  }
  const facts=make("div",undefined,"finale-metrics");
@@ -1515,7 +1515,7 @@ function renderEndingRecap(target,view){
  if(recap.people.length){
    const people=make("section",undefined,"finale-people");
    people.append(make("h5","Судьбы знакомых"));
-   people.append(make("p","Только свидетели, с которыми сыщик познакомился. Положение показано на момент развязки.","finale-people-note"));
+   people.append(make("p","Только свидетели, с которыми вы встретились. Положение показано на момент развязки.","finale-people-note"));
    const categories=[
     ["evacuated","ВЫВЕЗЕНЫ ИЗ ГОРОДА"],["protected","ПОД ЗАЩИТОЙ"],
     ["located","НАЙДЕНЫ, НЕ ЗАЩИЩЕНЫ"],["detained","ЗАДЕРЖАНЫ ОХРАНОЙ"],
@@ -1623,7 +1623,7 @@ function renderEndingRecap(target,view){
  const journalButton=make("button","ПРОСМОТРЕТЬ ХОД ДЕЛА","finale-action secondary");
  journalButton.type="button";
  journalButton.addEventListener("click",()=>openFinaleSection("journal"));
- const back=make("button","К ВЫБОРУ СЫЩИКА","finale-action");
+ const back=make("button","К ВЫБОРУ СВОЕГО","finale-action");
  back.type="button";back.addEventListener("click",returnToLaunch);
  actions.append(journalButton,back);
  panel.append(actions);
