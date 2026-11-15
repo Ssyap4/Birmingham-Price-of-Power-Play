@@ -1482,6 +1482,21 @@ def main():
                                     assert "ОТКРЫТО" in toast.inner_text() or (
                                         "ДОСТИЖЕНИЯ" in toast.inner_text()
                                     )
+                                    link_page.set_viewport_size({"width":320,"height":790})
+                                    link_page.wait_for_function("""() => {
+                                      const t=document.querySelector('#caseUnlockToast');
+                                      if(!t||t.hidden)return false;
+                                      const b=t.getBoundingClientRect();
+                                      const n=document.querySelector('#quickNav').getBoundingClientRect();
+                                      return b.left>=-1 && b.right<=innerWidth+1 &&
+                                        b.top>=0 && b.bottom<n.top;
+                                    }""",timeout=2500)
+                                    assert toast.locator(
+                                        ".case-unlock-toast-details").bounding_box()["height"] >= 44
+                                    assert not link_page.evaluate(
+                                        "() => document.documentElement.scrollWidth > innerWidth + 1"
+                                    ), "Achievement flyout overflows 320px portrait phone"
+                                    link_page.set_viewport_size({"width":390,"height":844})
                                     before_flyout=link_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
                                     toast.locator(".case-unlock-toast-details").click()
