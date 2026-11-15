@@ -1722,8 +1722,10 @@ def main():
                           window.BirminghamCase002Engine.RECORD_KEY,
                           JSON.stringify([
                             {caseId:'002',heroId:'finn',attemptId:'qa-prior-finn',
+                             started:1700000000000,finished:1700000000010,
                              ending:'trainTruth'},
                             {caseId:'002',heroId:'samuel',attemptId:'qa-prior-samuel',
+                             started:1700000000100,finished:1700000000110,
                              ending:'trainDeal'}
                           ])
                         )""")
