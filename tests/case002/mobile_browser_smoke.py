@@ -88,8 +88,19 @@ def main():
                     assert campaign.locator("#launchFirstCase").is_visible()
                     assert campaign.locator("#launchSecondCase").is_hidden()
                     campaign.locator("#launchFirstCase").click()
+                    assert campaign.locator("#heroSelection").is_visible(), (
+                        "Case 001 must retain its native five-hero selection"
+                    )
+                    assert campaign.locator("#caseGame").is_hidden(), (
+                        "Case 001 must not bypass hero selection"
+                    )
+                    campaign.locator("#heroSelection .hero-begin").click()
+                    assert campaign.locator("#case001Briefing").is_visible(), (
+                        "Case 001 must keep its existing no-spoiler rules briefing"
+                    )
+                    campaign.locator("#case001Briefing .briefing-start").click()
                     assert campaign.locator("#caseGame").is_visible(), (
-                        "The existing Case 001 launch must still work"
+                        "The native Case 001 flow must reach the first scene"
                     )
                     assert campaign.evaluate("""() => localStorage.getItem(
                         "birmingham_campaign_unique_rewards_v1")""") == (
