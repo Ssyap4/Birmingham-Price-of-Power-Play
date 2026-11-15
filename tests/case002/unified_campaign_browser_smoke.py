@@ -184,7 +184,17 @@ def run():
                       ].map(k=>[k,localStorage.getItem(k)]))""")
                     page.locator("#storyStart").click()
                     archive=page.locator("#campaignSecondCaseAchievements")
-                    assert archive.is_visible()
+                    if not archive.is_visible():
+                        print("UNIFIED_ARCHIVE_DIAGNOSTIC",{
+                         "screen":page.locator("#campaignAchievements").is_visible(),
+                         "bridge":page.evaluate("() => typeof window.BirminghamCase002CampaignArchive"),
+                         "graph":page.evaluate("() => typeof window.BirminghamCase002Data"),
+                         "achievements":page.evaluate("() => typeof window.BirminghamCase002Achievements"),
+                         "sections":page.locator("#campaignAchievements .campaign-content").inner_text()[:650],
+                         "archive_count":archive.count(),
+                         "errors":errors,
+                        },flush=True)
+                    assert archive.is_visible(), "Case 002 common archive not visible"
                     assert archive.locator(".campaign-002-achievement").count()==18
                     assert archive.locator('.campaign-002-achievement[data-unlocked="true"]').count()==2
                     assert archive.locator(".campaign-002-reward-group").count()==5
