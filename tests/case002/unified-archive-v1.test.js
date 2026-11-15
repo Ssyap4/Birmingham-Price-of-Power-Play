@@ -65,6 +65,10 @@ const duplicate=bridge.snapshot(setup([...rows,repeat]),C,engine,A,data.graph);
 assert.equal(duplicate.completed.length,36);
 assert.equal(duplicate.combos.size,35);
 assert.equal(duplicate.confirmed.size,35);
+const conflict=bridge.snapshot(setup([...rows,{...rows[0],ending:"trainTruth"}]),C,engine,A,data.graph);
+assert.equal(conflict.records.status,"damaged",
+ "One immutable attempt cannot own two mutually exclusive finales");
+assert.equal(conflict.confirmed.size,0);
 const gaps=bridge.snapshot(setup(rows,keys.slice(1)),C,engine,A,data.graph);
 assert.equal(gaps.confirmed.size,34);
 assert.equal(gaps.withoutSeals,1,"Do not claim unrecorded reward keys");

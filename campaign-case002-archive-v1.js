@@ -54,7 +54,12 @@ function snapshot(store,contract,engine,achievements,graph){
   return {status:"unavailable",reason:"contract"};
  const nodes=new Set(graph.nodes.map(n=>n.id));
  const outcomes=new Map(contract.endings.map(e=>[e.id,e.title]));
- const records=readArray(store,engine.RECORD_KEY,r=>validRecord(r,contract));
+ let records=readArray(store,engine.RECORD_KEY,r=>validRecord(r,contract));
+ // Two different results cannot come from the same immutable attempt ID.
+ // Report this as a damaged archive rather than counting phantom outcomes.
+ if(records.status==="ready"&&
+    new Set(records.rows.map(r=>r.attemptId)).size!==records.rows.length)
+  records={status:"damaged",rows:[]};
  const validKeys=new Set(contract.heroes.flatMap(hero=>
   contract.endings.map(e=>"002:"+hero+":"+e.id)));
  const rewards=readArray(store,engine.REWARD_KEY,key=>
@@ -157,7 +162,7 @@ function renderDossiers(doc,box,archive,heroes){
  });
  showAlert(doc,box,archive);
 }
-function renderAchievements(doc,box,archive,oldAchievements){
+function renderAchievements(doc,box,archive,oldAchievements,heroes){
  const intro=box.querySelector(".campaign-intro");
  if(intro)intro.textContent="Достижения и знаки обоих дел учитываются отдельно. В этом архиве показаны только сохранённые записи; повторное прохождение не создаёт новый знак.";
  const oldCount=Array.isArray(oldAchievements)?
@@ -318,7 +323,7 @@ function append(id,box,oldRuns,root){
   CASE_NAME+". Два дела — один архив.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
  if(id==="campaignAchievements")renderAchievements(doc,box,archive,
-  [...box.querySelectorAll(".campaign-award")]);
+  [...box.querySelectorAll(".campaign-award")],heroes);
  if(id==="campaignHistory")renderHistory(doc,box,archive,
   Array.isArray(oldRuns)?oldRuns:[],heroes);
 }
