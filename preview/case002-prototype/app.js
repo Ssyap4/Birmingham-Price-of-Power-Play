@@ -110,6 +110,7 @@ let activeArtStage=null;
 let newRewardOnFinish=null; // First-ever earned key in this UI session only.
 let newAchievements=[]; // First-time persisted milestones of one committed action.
 let unlockToastDismissed=false; // Ephemeral notice only; never in game saves.
+let unlockDetailReturnPoint=null; // UI-only bookmark for a viewed award.
 let collectionReturnPoint=null; // In-memory completed-finale bookmark only.
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
@@ -608,6 +609,7 @@ function showSelection({focus=false}={}){
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
+ clearUnlockDetailReturn();
  hideNotice();dismissUnlockToast();
  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
  dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
@@ -615,6 +617,7 @@ function returnToLaunch(){
 }
 function openFinaleCollection(kind){
  if(!engine||!engine.snapshot().finished)return;
+ clearUnlockDetailReturn();
  const s=engine.snapshot();
  collectionReturnPoint={hero:s.hero,attemptId:s.attemptId,node:s.node,kind};
  hideNotice();dismissUnlockToast();
@@ -784,10 +787,7 @@ function renderAchievementReceipt(){
   rewardLink.addEventListener("click",()=>{
    const reward=document.querySelector("#finalePanel .finale-new-reward");
    if(!reward)return;
-   dismissUnlockToast();
-   reward.setAttribute("tabindex","-1");
-   reward.scrollIntoView({block:"center",behavior:"auto"});
-   reward.focus({preventScroll:true});
+   openUnlockDetail(reward,"choices");
   });
   root.append(rewardLink);
  }
@@ -796,7 +796,8 @@ function renderAchievementReceipt(){
  dismiss.addEventListener("click",()=>{
   newAchievements=[];root.hidden=true;root.replaceChildren();
   dismissUnlockToast();
-  $("storyPanel").focus({preventScroll:true});
+  if(unlockDetailReturnPoint)returnFromUnlockDetail();
+  else $("storyPanel").focus({preventScroll:true});
  });
  root.append(dismiss);
 }
@@ -804,6 +805,44 @@ function renderAchievementReceipt(){
  * The durable scene/finale receipt remains available after dismissal.
  * No engine or localStorage writes happen in these presentation functions.
  */
+/* When a top award is opened from the journal, the old implementation
+ * scrolled to the receipt but still marked JOURNAL as the current dock tab.
+ * This is an in-memory, scene-scoped reading bookmark, not a game save. */
+function clearUnlockDetailReturn(){
+ unlockDetailReturnPoint=null;
+ $("caseUnlockDetailReturn")?.remove();
+}
+function returnFromUnlockDetail(){
+ const bookmark=unlockDetailReturnPoint;
+ clearUnlockDetailReturn();
+ if(!engine||!bookmark||$("game").hidden||
+    engine.snapshot().node!==bookmark.sceneId)return;
+ tab=bookmark.tab;
+ navSection=bookmark.section;
+ refreshNavigation();
+ focusActiveGameLandmark();
+ window.scrollTo(0,bookmark.scrollY);
+ updateReadingProgress();
+}
+function openUnlockDetail(target,section){
+ if(!target||target.hidden||!engine)return;
+ clearUnlockDetailReturn();
+ unlockDetailReturnPoint={
+  sceneId:engine.snapshot().node,section:navSection,
+  tab,scrollY:window.scrollY
+ };
+ dismissUnlockToast(); // Does not dismiss the independent consequence receipt.
+ navSection=section;
+ refreshNavigation();
+ const back=make("button","← К ПРЕЖНЕМУ МЕСТУ","case-unlock-detail-return");
+ back.id="caseUnlockDetailReturn";back.type="button";
+ back.addEventListener("click",returnFromUnlockDetail);
+ target.append(back);
+ target.setAttribute("tabindex","-1");
+ target.scrollIntoView({block:"center",behavior:"auto"});
+ target.focus({preventScroll:true});
+ updateReadingProgress();
+}
 function dismissUnlockToast(){
  unlockToastDismissed=true;
  const toast=$("caseUnlockToast");
@@ -848,12 +887,7 @@ function renderUnlockToast(){
  details.addEventListener("click",()=>{
   const target=hasAchievement?$("caseAchievementReceipt"):
    document.querySelector("#finalePanel .finale-new-reward");
-  dismissUnlockToast();
-  if(target&&!target.hidden){
-   target.setAttribute("tabindex","-1");
-   target.scrollIntoView({block:"center",behavior:"auto"});
-   target.focus({preventScroll:true});
-  }
+  openUnlockDetail(target,hasAchievement?"scene":"choices");
  });
  const close=make("button","ПОНЯТНО","case-unlock-toast-close");
  close.type="button";
@@ -993,6 +1027,7 @@ function resume(){
  }
 }
 function showGame(){
+ clearUnlockDetailReturn();
  $("launch").hidden=true;$("game").hidden=false;
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
@@ -1014,6 +1049,7 @@ function showGame(){
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
 function showCurrentScene(){
+ clearUnlockDetailReturn();
  dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  navSection="scene";refreshNavigation();
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
@@ -1096,6 +1132,7 @@ function showNotice(text,focus=null,details=null,{saveGuard=false}={}){
 }
 function jumpTo(where,recordId=null){
  if(!engine)return;
+ clearUnlockDetailReturn(); // An explicit navigation replaces the receipt bookmark.
  if(where==="scene"&&dossierReturnPoint&&isDossierSection(navSection)){
   returnFromDossier();return;
  }

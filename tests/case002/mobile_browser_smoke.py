@@ -1649,6 +1649,7 @@ def main():
                         link_page.locator("#begin").click()
                         saw_earned_achievement=False
                         checked_flyout=False
+                        checked_detail_return=False
                         for source,to,action in route[:-1]:
                             choice = link_page.locator(
                                 f'button.choice[data-to="{to}"][data-action="{action}"]'
@@ -1756,7 +1757,59 @@ def main():
                                     assert link_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_flyout
                                     checked_flyout=True
+                                elif not checked_detail_return:
+                                    # A second *earned* achievement exercises the
+                                    # other flyout action: view from a long
+                                    # journal, then return without losing the
+                                    # dock selection, scroll or saved progress.
+                                    toast=link_page.locator("#caseUnlockToast")
+                                    if toast.is_visible():
+                                        link_page.locator(
+                                            '#quickNav button[data-go="journal"]').click()
+                                        journal_scroll=link_page.evaluate("() => scrollY")
+                                        saved_before_view=link_page.evaluate("""() =>
+                                            localStorage.getItem(
+                                              window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                                            )""")
+                                        notice_before_view=link_page.locator(
+                                            "#notice").is_visible()
+                                        toast.locator(".case-unlock-toast-details").click()
+                                        assert toast.is_hidden()
+                                        assert link_page.locator(
+                                            '#quickNav [data-go="scene"]').get_attribute(
+                                                "aria-current") == "location", (
+                                            "Award details must synchronize the dock with the scene"
+                                        )
+                                        assert link_page.locator(
+                                            "#caseAchievementReceipt").evaluate(
+                                                "(el) => document.activeElement === el"
+                                            ), "Viewing an award must focus its permanent receipt"
+                                        back_to_journal=link_page.locator(
+                                            "#caseUnlockDetailReturn")
+                                        assert back_to_journal.is_visible()
+                                        back_to_journal.click()
+                                        assert back_to_journal.count() == 0
+                                        assert link_page.locator(
+                                            '#quickNav [data-go="journal"]').get_attribute(
+                                                "aria-current") == "location"
+                                        assert link_page.locator("#caseTools").evaluate(
+                                            "(el) => document.activeElement === el"
+                                        ), "Return from reward must restore dossier focus"
+                                        assert abs(link_page.evaluate(
+                                            "() => scrollY")-journal_scroll) <= 6, (
+                                            "Return from reward must retain journal scroll position"
+                                        )
+                                        assert link_page.locator(
+                                            "#notice").is_visible() == notice_before_view
+                                        assert link_page.evaluate("""() =>
+                                            localStorage.getItem(
+                                              window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
+                                            )""") == saved_before_view, (
+                                            "Reward viewing must not write or replay a choice"
+                                        )
+                                        checked_detail_return=True
                         assert checked_flyout, "No first-time achievement flyout tested"
+                        assert checked_detail_return, "No second earned award was opened and returned"
                         assert saw_earned_achievement, (
                             "A real multi-route investigation never displayed a new milestone"
                         )

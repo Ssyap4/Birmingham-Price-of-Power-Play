@@ -1568,3 +1568,15 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(max-width:359px){
  #game .case-achievement-reward-link{font-size:.69rem}
 }
+
+/* Earned receipt navigation: returning to the source is optional, and does
+ * not alter a decision, archive record or achievement. */
+#game .case-unlock-detail-return{
+ display:block;width:100%;min-height:48px;margin-top:12px;
+ padding:10px 12px;border:1px solid #d3ae78;border-radius:5px;
+ background:#34271c;color:#ffdfaf;
+ font:800 .72rem/1.35 system-ui,sans-serif;
+}
+#game .case-unlock-detail-return:focus-visible{
+ outline:3px solid #ffdea8;outline-offset:2px;
+}
