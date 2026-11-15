@@ -1019,6 +1019,114 @@ def main():
                         "(el) => el.getBoundingClientRect().top >= 106"
                     ), f"{browser_name}: dynamically larger Telegram header clips scene text"
                     tg_context.close()
+                    # One real, selected transition for each earned update type.
+                    # Build the preceding state via the production engine rather
+                    # than walking all 35 complete routes in a presentation QA.
+                    if browser_name == "chromium":
+                        source = (
+                            "const m=require('./tests/case002/simulate-story-model-v2.js');"
+                            "console.log(JSON.stringify(m.goodRoute('jack','trainTruth').actionLog));"
+                        )
+                        scripted = json.loads(subprocess.check_output(
+                            ["node", "-e", source], cwd=ROOT, text=True
+                        ).strip().splitlines()[-1])
+                        probe_ctx = browser.new_context(
+                            viewport={"width":390,"height":844},
+                            device_scale_factor=3,is_mobile=True,has_touch=True
+                        )
+                        probe_page=probe_ctx.new_page()
+                        probe_page.goto(address,wait_until="load")
+                        transitions=probe_page.evaluate("""route => {
+                          const api=window.BirminghamCase002Engine;
+                          const data=window.BirminghamCase002Data;
+                          const cast=window.BirminghamCase002Cast;
+                          const e=api.createEngine({graph:data.graph,
+                            contract:data.contract,hero:'jack',store:null});
+                          e.reset('ci-unread-discovery');
+                          const chosen={};
+                          route.forEach(([source,target,action],index)=>{
+                            const before=e.snapshot(),after=e.choose(target,action);
+                            const prior=api.factsFor(data.contract,before.evidence);
+                            const fresh=api.factsFor(data.contract,after.evidence);
+                            const proof=Object.keys(fresh)
+                              .find(id=>fresh[id]&&!prior[id]);
+                            const known=new Set(cast.discovered(after).map(x=>x.id));
+                            const witness=Object.keys(after.witnesses)
+                              .find(id=>known.has(id)&&
+                                before.witnesses[id]!==after.witnesses[id]);
+                            if(proof&&!chosen.deductions)
+                              chosen.deductions={index,recordId:proof};
+                            if(witness&&!chosen.witnesses)
+                              chosen.witnesses={index,recordId:witness};
+                          });
+                          return chosen;
+                        }""",scripted)
+                        assert set(transitions) == {"deductions","witnesses"}, (
+                            f"Approved route lacks earned proof/witness transitions: {transitions}"
+                        )
+                        probe_ctx.close()
+                        for section,record in transitions.items():
+                            ctx=browser.new_context(
+                                viewport={"width":390,"height":844},
+                                device_scale_factor=3,is_mobile=True,has_touch=True
+                            )
+                            test_page=ctx.new_page()
+                            test_page.goto(address,wait_until="load")
+                            test_page.evaluate("""steps => {
+                              const api=window.BirminghamCase002Engine;
+                              const data=window.BirminghamCase002Data;
+                              const e=api.createEngine({graph:data.graph,
+                                contract:data.contract,hero:'jack',store:localStorage});
+                              e.reset('ci-earned-updates-'+steps.length);
+                              steps.forEach(([source,target,action])=>
+                                e.choose(target,action));
+                            }""",scripted[:record["index"]])
+                            test_page.reload(wait_until="load")
+                            ensure_selection(test_page)
+                            test_page.locator("#resume").click()
+                            from_scene,target,action=scripted[record["index"]]
+                            assert test_page.locator("#sceneId").inner_text().startswith(
+                                from_scene
+                            ), f"Wrong fixture before {section} status change"
+                            test_page.locator(
+                                f'button.choice[data-to="{target}"][data-action="{action}"]'
+                            ).click()
+                            expected=record["recordId"]
+                            badge=test_page.locator(f'#quickNav [data-go="{section}"]')
+                            assert badge.get_attribute("data-unread") == "true", (
+                                f"{section}: real earned update not marked unread"
+                            )
+                            marker=test_page.locator(
+                                f'#sceneDossierUpdates .scene-dossier-update'
+                                f'[data-section="{section}"][data-record-id="{expected}"]'
+                            )
+                            assert marker.count() == 1 and marker.is_visible(), (
+                                f"{section}: missing in-scene update {expected}"
+                            )
+                            saved=test_page.evaluate("""() => localStorage.getItem(
+                              window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                            marker.click()
+                            assert badge.get_attribute("data-unread") == "false"
+                            active=test_page.locator(
+                                f'button[data-tab="{section}"]'
+                            )
+                            assert active.get_attribute("aria-pressed") == "true"
+                            item_selector=(
+                                f'.deduction-card[data-deduction-id="{expected}"]'
+                                if section=="deductions" else
+                                f'.person-entry[data-person="{expected}"]'
+                            )
+                            assert test_page.locator(item_selector).evaluate(
+                                "(el) => document.activeElement === el"
+                            ), f"{section}: direct update link must focus correct dossier card"
+                            assert test_page.evaluate("""() => localStorage.getItem(
+                              window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == saved, (
+                                f"{section}: viewing a new dossier card rewrote progress"
+                            )
+                            assert test_page.locator("#dossierReturn").is_visible()
+                            test_page.locator("#dossierReturn").click()
+                            assert test_page.locator("#dossierReturn").is_hidden()
+                            ctx.close()
                     assert not failures, f"{browser_name} console errors: {failures}"
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()
