@@ -7,10 +7,10 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const path=require("node:path");
 const ROOT=path.resolve(__dirname,"../..");
-const heroes=["heroJack","heroFinn","heroEleanor","heroVictor","heroSamuel"];
+const heroes=["jack","finn","eleanor","victor","samuel"];
 let bytes=0;
 for(const hero of heroes){
- const pathname=path.join(ROOT,"assets/case-scenes",hero+".webp");
+ const pathname=path.join(ROOT,"assets/heroes",hero+".webp");
  assert(fs.existsSync(pathname),"Missing approved portrait: "+hero);
  const img=fs.readFileSync(pathname);
  assert(img.length>=2000,hero+" is empty or suspiciously small");
@@ -21,7 +21,7 @@ for(const hero of heroes){
 const html=fs.readFileSync(path.join(ROOT,"preview/case002-prototype/index.html"),"utf8");
 const app=fs.readFileSync(path.join(ROOT,"preview/case002-prototype/app.js"),"utf8");
 assert(html.includes('id="heroPortrait"'));
-for(const hero of heroes)assert(app.includes(hero+".webp"),
+for(const hero of heroes)assert(app.includes("../../assets/heroes/"+hero+".webp")&&html.includes("../../assets/heroes/"+hero+".webp"),
  "One of five hero portraits is not mapped in the mobile preview: "+hero);
 assert(!html.includes('src="case002-')&&!app.includes('src="case002-'),
  "Preview must not reference fictional, not-yet-generated Case 002 scene art");

@@ -15,8 +15,8 @@ Release gate:
 2. Build independent static package using
    node deployment/case002-safari-preview.js
    The builder checks SHA-256 of all 102 portrait originals, copies all
-   required Case002 JavaScript, 10 approved NPC portraits and five legacy
-   hero portrait files, without Case001 gameplay or landscape scene assets.
+   required Case002 JavaScript, 10 approved NPC portraits and five actual
+   protagonist portraits from assets/heroes/, without Case001 gameplay or landscape scene assets.
 3. Workflow case002-safari-package.yml builds an artifact on the feature
    branch. An artifact is not a public HTTPS website.
 4. vercel.json can deploy that package to Vercel, once a Vercel account is
@@ -37,3 +37,13 @@ Workflow 43656108077 verified all 102 SHA-256 portrait assets and created a 134-
 GitHub Actions run **43656197899** on commit `4d92449ca811e47851f3801f6906bba44c224ede` finished **success**. The portrait-only exporter verified and packaged all **89** illustrated scenes, **102** SHA-256-verified 720×900 WebPs, **10** NPC portraits and **five** hero portraits. Output: **134 files / 12.4 MiB**. Artifact: `case002-safari-beta`, ID `14138800019`, downloadable from the successful Actions run. The package deliberately excludes Case001 gameplay and landscape scene files.
 
 The previous failed package run `43656108077` was caused solely by a dot-prefixed output directory hidden from `actions/upload-artifact@v4`; it is resolved. This confirms a deployable ZIP **but not a live HTTPS URL**. The remaining milestone is an isolated host connection and live Safari validation. The Vercel connector was suggested but is not connected/installed yet; deployment must wait for explicit user action.
+
+### Standalone Safari UX milestone (development branch)
+
+The preview now uses the five actual portraits in assets/heroes/ instead of the
+legacy role illustrations from assets/case-scenes/hero*.webp. These role
+illustrations represented a crate, ledger or industrial doorway for some
+protagonists and were unsuitable for hero selection. The exporter still copies
+only five hero images, preserving the isolated package scope. Existing
+published HTTPS beta must not be treated as updated until a new Vercel deployment
+is explicitly checked and accepted.

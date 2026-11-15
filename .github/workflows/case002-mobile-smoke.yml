@@ -9,6 +9,7 @@ on:
       - 'src/case002/**'
       - 'assets/case002/scenes/**'
       - 'assets/case002/portraits/**'
+      - 'assets/heroes/*.webp'
       - 'tests/case002/mobile_browser_smoke.py'
       - '.github/workflows/case002-mobile-smoke.yml'
   workflow_dispatch:

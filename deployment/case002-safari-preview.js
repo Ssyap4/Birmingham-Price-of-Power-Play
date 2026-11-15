@@ -41,8 +41,8 @@ for(const p of manifest.npcPortraits){
  if(p.review!=="approved"||!p.sha256)throw Error("Unapproved NPC portrait");
  copy("assets/case002/portraits/"+p.file,p.sha256);
 }
-for(const id of ["heroJack","heroFinn","heroEleanor","heroVictor","heroSamuel"])
- copy("assets/case-scenes/"+id+".webp");
+for(const id of ["jack","finn","eleanor","victor","samuel"])
+ copy("assets/heroes/"+id+".webp");
 for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
 for(const name of ["index.html","app.js","style.css"])

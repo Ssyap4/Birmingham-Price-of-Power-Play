@@ -54,6 +54,8 @@ def main():
                     assert page.locator("#heroGallery .hero-card").count() == 5
                     assert page.locator(".launch-cinematic img").get_attribute("src").endswith("case002-mabel-portrait.webp")
                     assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
+                    for hero_id in ("jack","finn","eleanor","victor","samuel"):
+                        assert page.locator(f'.hero-card[data-hero="{hero_id}"] img').get_attribute("src").endswith(f"/assets/heroes/{hero_id}.webp")
 
                     if not quick:
                         outcomes = page.evaluate("""async () => {
@@ -106,6 +108,7 @@ def main():
                     assert page.locator("#heroPortrait").get_attribute("alt").startswith(
                         "Портрет сыщика:"
                     )
+                    assert page.locator("#heroPortrait").get_attribute("src").endswith("/assets/heroes/jack.webp")
                     page.locator("#heroPortrait").evaluate(
                         "img => img.decode().then(() => true)"
                     )

@@ -9,7 +9,7 @@ on:
       - 'src/case002/**'
       - 'assets/case002/scenes/**'
       - 'assets/case002/portraits/**'
-      - 'assets/case-scenes/hero*.webp'
+      - 'assets/heroes/*.webp'
       - '.github/workflows/case002-safari-package.yml'
   workflow_dispatch:
 permissions:
@@ -33,6 +33,10 @@ jobs:
           test -s case002-preview-dist/index.html
           test -s case002-preview-dist/preview/case002-prototype/index.html
           test -s case002-preview-dist/assets/case002/scenes/case002-p01-scene--mobile.webp
+          test -s case002-preview-dist/assets/heroes/finn.webp
+          test -s case002-preview-dist/assets/heroes/eleanor.webp
+          test -s case002-preview-dist/assets/heroes/samuel.webp
+          test ! -e case002-preview-dist/assets/case-scenes/heroFinn.webp
           test ! -e case002-preview-dist/001.html
           test ! -e case002-preview-dist/assets/case002/scenes/case002-p01-scene.webp
       - uses: actions/upload-artifact@v4

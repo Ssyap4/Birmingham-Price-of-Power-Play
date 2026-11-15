@@ -4,11 +4,11 @@ const data=window.BirminghamCase002Data,api=window.BirminghamCase002Engine;
 const $=id=>document.getElementById(id);
 const heroNames={jack:"Джек Харпер",finn:"Финн О’Коннор",eleanor:"Элеонора Блэквуд",victor:"Виктор Мэллоу",samuel:"Сэмюэл Рид"};
 const approvedHeroPortraits={
-  jack:"../../assets/case-scenes/heroJack.webp",
-  finn:"../../assets/case-scenes/heroFinn.webp",
-  eleanor:"../../assets/case-scenes/heroEleanor.webp",
-  victor:"../../assets/case-scenes/heroVictor.webp",
-  samuel:"../../assets/case-scenes/heroSamuel.webp"
+  jack:"../../assets/heroes/jack.webp",
+  finn:"../../assets/heroes/finn.webp",
+  eleanor:"../../assets/heroes/eleanor.webp",
+  victor:"../../assets/heroes/victor.webp",
+  samuel:"../../assets/heroes/samuel.webp"
 };
 const sceneLocations={
  "private-siding":"Частная железнодорожная ветка",
