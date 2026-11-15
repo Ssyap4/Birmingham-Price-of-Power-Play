@@ -159,3 +159,13 @@ cards before re-rendering the section; those disclosure states are cleared on
 new scenes and sessions and are never persisted in Case002/Case001 storage.
 Scoped Chromium covers Rowan's existing history at A03 and a proven source
 link at F09, including saved-progress immutability. No new plot or rewards.
+
+### Correct origin anchors for reversible mobile dossier navigation
+
+Scene/reading bookmarks track the narration, while bookmarks created at the
+decisions now track the choices panel itself. Both the dossier return button
+and the thumb dock restore the same source viewport even when the height of
+intermediate scene presentation changes while the dossier is open. Browser
+regression uses the real A05 decision and a temporary presentation-only
+height change, asserting exact viewport restoration, focus, and unchanged
+localStorage. No plot, save schema, reward or unrelated Case001/main edits.

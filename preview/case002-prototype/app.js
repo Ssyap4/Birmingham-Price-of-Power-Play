@@ -534,16 +534,20 @@ function renderDecisionReceipt(){
  panel.append(toggle,body);
  refreshSceneUpdateGroup();
 }
-/* Anchor to current narration, not absolute page position: when an earned
- * clue gets acknowledged, its vanished banner must not shift the bookmark. */
-function captureScenePoint(){
- const narrative=$("sceneText"),bounds=narrative.getBoundingClientRect();
+/* Remember the viewport-relative anchor of the ACTUAL source section.
+ * Scene bookmarks follow the narration; decision bookmarks follow the
+ * choices panel. If content above decisions changes height while in the
+ * dossier, restoring a text anchor would silently lose the decision place.
+ * This stays in memory only: no engine or save/award effects. */
+function captureScenePoint(section="scene"){
+ const anchor=section==="choices"?$("choicesPanel"):$("sceneText");
+ const bounds=anchor.getBoundingClientRect();
  const fromReaderButton=document.activeElement?.id==="readerToChoices";
  return {
   sceneId:engine.snapshot().node,
   anchorTop:bounds.top,
-  reading:fromReaderButton||
-    (bounds.top<window.innerHeight-105&&bounds.bottom>35)
+  reading:section==="scene"&&(fromReaderButton||
+    (bounds.top<window.innerHeight-105&&bounds.bottom>35))
  };
 }
 function restoreScenePoint(point,section="scene"){
@@ -552,9 +556,9 @@ function restoreScenePoint(point,section="scene"){
   point.reading?$("sceneText"):$("storyPanel");
  navSection=section;refreshNavigation();
  target.focus({preventScroll:true});
- const narrative=$("sceneText");
+ const anchor=section==="choices"?$("choicesPanel"):$("sceneText");
  window.scrollTo(0,Math.max(0,window.scrollY+
-  narrative.getBoundingClientRect().top-point.anchorTop));
+  anchor.getBoundingClientRect().top-point.anchorTop));
  updateReadingProgress(); // Reversible reading jump must be visually atomic.
  return true;
 }
@@ -1115,10 +1119,8 @@ function jumpTo(where,recordId=null){
  }
  const toDossier=isDossierSection(where);
  if(toDossier&&!isDossierSection(navSection)){
-  dossierReturnPoint={
-   ...captureScenePoint(),
-   section:navSection==="choices"?"choices":"scene"
-  };
+  const origin=navSection==="choices"?"choices":"scene";
+  dossierReturnPoint={...captureScenePoint(origin),section:origin};
  }else if(!toDossier){
   dossierReturnPoint=null;dossierTrail=null;
  }

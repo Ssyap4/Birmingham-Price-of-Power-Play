@@ -704,16 +704,58 @@ def main():
                     assert page.locator("#decisionCheckEvidence").is_visible()
                     before_preflight=page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    # The choices panel, not the distant narration, is the
+                    # correct return anchor. Simulate a taller reader bridge
+                    # *while the player is in the dossier*: the scene and
+                    # decision anchors then move by different amounts.
+                    page.locator("#decisionCheckEvidence").scroll_into_view_if_needed()
+                    decision_top=page.locator("#choicesPanel").evaluate(
+                        "(el) => el.getBoundingClientRect().top"
+                    )
                     page.locator("#decisionCheckEvidence").click()
                     assert page.locator('button[data-tab="deductions"]').get_attribute(
                         "aria-pressed") == "true"
                     assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
+                    page.locator("#readerBridge").evaluate(
+                        "(el) => {el.style.paddingBottom='220px'}"
+                    )
                     page.locator("#dossierReturn").click()
                     assert page.locator("#choicesPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), "Preflight dossier check must restore decision focus"
+                    assert abs(page.locator("#choicesPanel").evaluate(
+                        "(el) => el.getBoundingClientRect().top")-decision_top) <= 3, (
+                        "Return must restore the choices viewport even if the story layout grows"
+                    )
+                    page.locator("#readerBridge").evaluate(
+                        "(el) => {el.style.paddingBottom=''}"
+                    )
+                    # The fixed thumb dock uses the same return bookmark.
+                    # Its label and focus must agree with the dossier button.
+                    page.locator('#quickNav button[data-go="choices"]').click()
+                    thumb_decision_top=page.locator("#choicesPanel").evaluate(
+                        "(el) => el.getBoundingClientRect().top"
+                    )
+                    page.locator('#quickNav button[data-go="journal"]').click()
+                    assert page.locator('#quickNav button[data-go="scene"]').inner_text() == "НАЗАД"
+                    page.locator("#readerBridge").evaluate(
+                        "(el) => {el.style.paddingBottom='140px'}"
+                    )
+                    page.locator('#quickNav button[data-go="scene"]').click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Thumb dock must return to the actual decisions"
+                    assert abs(page.locator("#choicesPanel").evaluate(
+                        "(el) => el.getBoundingClientRect().top")-thumb_decision_top) <= 3, (
+                        "Thumb return must keep the decision bookmark after layout changes"
+                    )
+                    page.locator("#readerBridge").evaluate(
+                        "(el) => {el.style.paddingBottom=''}"
+                    )
                     assert page.evaluate("""() => localStorage.getItem(
-                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_preflight
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_preflight, (
+                        "Decision/dossier viewport recovery must never rewrite a save"
+                    )
                     page.locator('#quickNav button[data-go="evidence"]').click()
                     assert page.locator("#dossierReturn").is_visible()
                     # A collected clue can be sent straight to the comparison wall.
