@@ -71,3 +71,6 @@ jobs:
           retention-days: 7
 
 # Finale archive text is neutral on iOS privacy mode: never claim persistence without storage.
+
+# Successful terminal scene uses its dedicated outcome panel, not a blocking duplicate receipt;
+# a post-commit archive error must still display its warning toast.

@@ -954,6 +954,9 @@ def main():
                         last_choice.click()
                         assert full_page.locator("#sceneId").inner_text().startswith("Z02")
                         assert full_page.locator("#finalePanel").is_visible()
+                        assert full_page.locator("#notice").is_hidden(), (
+                            "Successful finale should not be obscured by a duplicate receipt"
+                        )
                         assert full_page.locator("#finalePanel").get_attribute("data-ending") == "trainEscape"
                         assert "Люди без прошлого" in full_page.locator(".finale-title").inner_text()
                         assert full_page.locator(".finale-metric").count() == 3
@@ -1018,6 +1021,7 @@ def main():
                         assert damaged_page.locator("#sceneId").inner_text().startswith("Z02"), (
                             "A post-commit archive error must not strand player on F09"
                         )
+                        assert damaged_page.locator("#notice").is_visible()
                         assert "Решение принято" in damaged_page.locator("#notice").inner_text()
                         assert "Архив итогов или наград повреждён" in damaged_page.locator(
                             "#choiceList"

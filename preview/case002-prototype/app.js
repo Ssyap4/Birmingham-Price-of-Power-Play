@@ -884,7 +884,10 @@ function select(choice,fromScene){
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
   evidenceFocus=null;pairFirst=null;pairFeedback=null;
   render();
-  showNotice(event.message,event.focus,event.details);
+  // A completed finale already contains the outcome. Do not cover it with a
+  // redundant floating receipt; exceptional archival failures still warn below.
+  if(next.finished)hideNotice();
+  else showNotice(event.message,event.focus,event.details);
   // The old clicked choice no longer exists. Give the next scene focus and
   // scroll to its opening, including a new chapter intertitle when present.
   showCurrentScene();
