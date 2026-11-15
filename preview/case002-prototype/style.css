@@ -701,7 +701,7 @@ html[data-case002-telegram="true"] .tool-tab{
  border:1px solid #3b2510;box-shadow:0 0 0 2px #292018}
 .tool-tab{position:relative}
 @media(max-width:359px){
- .case-quick-nav{gap:2px;padding-inline:4px}
+ .case-quick-nav{gap:2px}
  .case-quick-nav button{padding-inline:1px;font-size:.7rem}
  .hero-selection-status{font-size:.74rem;margin-bottom:12px}
 }

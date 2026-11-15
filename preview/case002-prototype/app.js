@@ -238,7 +238,7 @@ function refreshResume(){
    card.dataset.hasSave=String(hasSave);
    let badge=card.querySelector(".hero-save-badge");
    if(!badge){
-    badge=make("small","ЕСТЬ СОХРАНЕНИЕ","hero-save-badge");
+    badge=make("small","СОХРАНЕНО","hero-save-badge");
     card.querySelector("span")?.append(badge);
    }
    badge.hidden=!hasSave;
