@@ -558,6 +558,17 @@ def main():
                     assert rowan_history.locator('.person-history-entry[data-kind="introduction"]').count() == 1
                     rowan_history.locator("summary").click()
                     assert "ПЕРВОЕ ПОЯВЛЕНИЕ" in rowan_history.inner_text()
+                    assert rowan_history.get_attribute("open") is not None
+                    # A long dossier tab switch must not silently collapse an
+                    # expanded, already known witness chronology.
+                    page.locator('button[data-tab="evidence"]').click()
+                    page.locator('button[data-tab="witnesses"]').click()
+                    rowan_history=page.locator(
+                        '.person-entry[data-person="rowan"] .person-case-history')
+                    assert rowan_history.get_attribute("open") is not None, (
+                        "Returning from evidence must preserve the opened Rowan history"
+                    )
+                    assert "ПЕРВОЕ ПОЯВЛЕНИЕ" in rowan_history.inner_text()
                     assert page.locator('.person-entry[data-person="tommy"]').count() == 0, (
                         "Current scene dossier must not reveal a future character"
                     )
@@ -1780,6 +1791,15 @@ def main():
                         ).evaluate(
                             "(el) => document.activeElement === el"
                         ), "Return must focus the exact originating clue"
+                        assert link_page.locator(
+                            f'.evidence-card[data-evidence-id="{evidence_id}"] .evidence-connections'
+                        ).get_attribute("open") is not None, (
+                            "A known clue's expanded links must survive the deduction round trip"
+                        )
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_link, (
+                            "Remembering disclosure state must never write a story save"
+                        )
                         # The dense dossier must remain one phone column at
                         # 320px, and all new controls must be thumb-sized.
                         link_page.set_viewport_size({"width":320,"height":790})

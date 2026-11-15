@@ -101,6 +101,10 @@ const actionLabels={
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 let pairFirst=null,pairFeedback=null;
 let dossierTrail=null; // One-hop navigation between already earned dossier cards.
+// In-memory only. Keep opened earned card details when briefly switching
+// dossier tabs; do not store disclosures in an engine save or across scenes.
+let dossierDisclosureScene=null;
+const dossierDisclosures={evidence:new Set(),witnesses:new Set()};
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 let newRewardOnFinish=null; // First-ever earned key in this UI session only.
@@ -986,6 +990,8 @@ function showGame(){
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
+ dossierDisclosureScene=null;
+ dossierDisclosures.evidence.clear();dossierDisclosures.witnesses.clear();
  unseenEvidence=0;pendingEvidence=[];pendingWitnesses=[];pendingProofs=[];
  journalExpanded=false;navSection="scene";
  lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
@@ -1631,11 +1637,35 @@ function renderEndingRecap(target,view){
  panel.append(actions);
  target.append(panel);
 }
+// The dossier uses replaceChildren on each tab, which used to collapse
+// already-open evidence links and witness histories. Snapshot only real
+// expanded cards before replacing the DOM. Reset at the next story scene.
+function rememberDossierDisclosures(root,sceneId){
+ if(dossierDisclosureScene!==sceneId){
+  dossierDisclosureScene=sceneId;
+  dossierDisclosures.evidence.clear();
+  dossierDisclosures.witnesses.clear();
+  return;
+ }
+ const previous=root.dataset.renderedTab;
+ if(previous==="evidence"){
+  dossierDisclosures.evidence=new Set(
+   [...root.querySelectorAll(".evidence-card")].filter(card=>
+    card.querySelector("details.evidence-connections")?.open).map(card=>card.dataset.evidenceId));
+ }else if(previous==="witnesses"){
+  dossierDisclosures.witnesses=new Set(
+   [...root.querySelectorAll(".person-entry")].filter(card=>
+    card.querySelector("details.person-case-history")?.open).map(card=>card.dataset.person));
+ }
+}
 function renderTools(){
  const sectionLabels={evidence:"УЛИКИ",deductions:"ВЫВОДЫ",witnesses:"ЛЮДИ",journal:"ХОД ДЕЛА"};
  setText($("toolsSectionLabel"),sectionLabels[tab]||"МАТЕРИАЛЫ");
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
- const root=$("toolContent");root.replaceChildren();const v=engine.view();
+ const root=$("toolContent"),v=engine.view();
+ rememberDossierDisclosures(root,v.state.node);
+ root.dataset.renderedTab=tab;
+ root.replaceChildren();
  // A reversible dossier-to-dossier hop is useful when reading long evidence
  // cards. It is strictly ephemeral and never becomes a saved history item.
  if(dossierTrail&&(dossierTrail.targetSection!==tab||
@@ -1933,6 +1963,7 @@ function renderTools(){
        lead.knownEvidence.includes(item.id));
       if(known.length){
        const details=make("details",undefined,"evidence-connections");
+       details.open=dossierDisclosures.evidence.has(item.id);
        const summary=make("summary","СВЯЗИ В РАССЛЕДОВАНИИ · "+known.length,
         "evidence-connections-summary");
        details.append(summary);
@@ -2032,6 +2063,7 @@ function renderTools(){
       const identity=window.BirminghamCase002Cast.character(person.id);
       const intro=v.state.visited.find(id=>identity?.intro.includes(id));
       const timeline=make("details",undefined,"person-case-history");
+      timeline.open=dossierDisclosures.witnesses.has(person.id);
       const changes=(v.state.history||[]).filter(entry=>
        entry?.changes?.witnesses?.[person.id]&&
        typeof entry.changes.witnesses[person.id].to==="string");

@@ -149,3 +149,13 @@ The evidence-card "НА ДОСКУ" shortcut now enters deductions via the norma
 scoped navigation path, so actually viewed leads are acknowledged and the
 same clue can be reached again via its return bookmark. The phone regression
 uses a real F09 state; no engine, save schema or reward changes were made.
+
+### In-memory dossier disclosure continuity — next mobile polish
+
+When the player briefly switches dossier tabs, expanded evidence associations
+and encountered witness histories should remain open when they return within
+the current story scene. The UI now snapshots only genuine open <details>
+cards before re-rendering the section; those disclosure states are cleared on
+new scenes and sessions and are never persisted in Case002/Case001 storage.
+Scoped Chromium covers Rowan's existing history at A03 and a proven source
+link at F09, including saved-progress immutability. No new plot or rewards.
