@@ -387,6 +387,17 @@ def main():
                     assert "Мэйбл Кросс" in people
                     assert "Констебль Роуэн" in people
                     assert "Эдвард Хейл" in people
+                    assert page.locator(".people-dossier-gallery .person-entry").count() >= 3
+                    mabel_card=page.locator('.person-entry[data-person="mabel"]')
+                    assert mabel_card.count() == 1
+                    assert mabel_card.locator(".person-portrait").count() == 1
+                    mabel_card.locator(".person-portrait").evaluate("img => img.decode()")
+                    assert mabel_card.locator(".person-portrait").evaluate(
+                        "img => img.naturalWidth >= 500 && img.naturalHeight >= 600"
+                    ), f"{browser_name}: approved Mabel portrait missing from dossier"
+                    assert mabel_card.locator(".person-monogram").is_hidden()
+                    assert page.locator('.person-entry[data-person="tommy"]').count() == 0
+                    page.screenshot(path=str(visual_dir/f"{browser_name}-people.png"),full_page=True)
                     assert "Томми Кросс" not in people, (
                         "People dossier must not expose Tommy before his introduction"
                     )
@@ -402,6 +413,11 @@ def main():
                     page.locator('button[data-tab="journal"]').click()
                     assert "Сцена A05" in page.locator("#toolContent").inner_text()
                     assert "Старинный билет Курзон-стрит" in page.locator("#toolContent").inner_text()
+                    assert page.locator(".case-journal .journal-event").count() >= 1
+                    assert page.locator('.journal-event[data-scene="A05"]').count() == 1
+                    assert "Старинный билет" in page.locator('.journal-event[data-scene="A05"]').inner_text()
+                    assert page.locator(".journal-event-note[data-kind='evidence']").count() >= 1
+                    page.screenshot(path=str(visual_dir/f"{browser_name}-journal.png"),full_page=True)
                     assert page.locator(".case-journal").evaluate(
                         "(el) => getComputedStyle(el).overflowY === 'visible'"
                     ), f"{browser_name}: case journal must use the page scroll, not a nested box"
@@ -867,6 +883,15 @@ def main():
                         assert final_choices.first.get_attribute("data-to") == "Z02"
                         full_page.locator('button[data-tab="journal"]').click()
                         assert full_page.locator(".case-journal > li").count() > 0
+                        if full_page.locator(".journal-show-all").is_visible():
+                            older=full_page.locator(".journal-event[hidden]")
+                            assert older.count() > 0
+                            before_expand=older.count()
+                            full_page.locator(".journal-show-all").click()
+                            assert full_page.locator(".journal-show-all").is_hidden()
+                            assert full_page.locator(".journal-event[hidden]").count() == 0
+                            assert full_page.locator(".journal-event").count() >= before_expand + 6
+                            assert full_page.locator(".journal-event:focus").count() == 1
                         assert full_page.locator(".case-journal").evaluate(
                             "(el) => getComputedStyle(el).overflowY === 'visible' && "
                             "el.scrollHeight <= el.clientHeight + 1"

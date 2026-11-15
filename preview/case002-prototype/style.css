@@ -523,3 +523,91 @@ html[data-case002-telegram="true"] .evidence-card{
 @media(prefers-reduced-motion:reduce){
  .pair-item{transform:none!important}
 }
+
+/* Case002 dossiers: approved NPC portraits and card index. No unrevealed cast
+   is ever created; discovered() is the only source of visible people. */
+.people-dossier-header,.case-journal-heading{
+ margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #85603a}
+.people-dossier-kicker,.case-journal-eyebrow{
+ display:block;color:#d9b37e;font:700 .64rem/1.4 system-ui,sans-serif;
+ letter-spacing:.16em}
+.people-dossier-header h3,.case-journal-heading h3{
+ color:#f2d3a1;margin:6px 0 7px;font:700 1.25rem/1.25 Georgia,serif}
+.people-dossier-description,.case-journal-intro{
+ color:#cbb79a;margin:0!important;font:.81rem/1.5 system-ui,sans-serif}
+.people-dossier-gallery{display:grid;gap:10px}
+.people-dossier-gallery .person-entry{
+ display:flex;gap:12px;align-items:center;min-height:110px;
+ padding:10px;border:1px solid #80603d;border-radius:6px;
+ background:linear-gradient(115deg,#38291d,#17120f);
+ box-shadow:inset 0 1px 0 #e4bb7f20,0 5px 12px #0005}
+.person-avatar{position:relative;flex:0 0 76px;width:76px;height:94px;
+ overflow:hidden;background:linear-gradient(145deg,#4c3723,#16100d);
+ border:1px solid #b38a57;border-radius:4px;
+ box-shadow:0 3px 10px #0009}
+.person-avatar .person-monogram{width:100%;height:100%;border:0;
+ background:transparent;border-radius:0;display:grid;place-items:center;
+ font:700 1.35rem Georgia,serif;color:#ebc791}
+.person-avatar .person-portrait{position:absolute;inset:0;width:100%;height:100%;
+ object-fit:cover;object-position:center 25%;display:block}
+.person-avatar .person-portrait[hidden],.person-avatar .person-monogram[hidden]{display:none!important}
+.people-dossier-gallery .person-copy{flex:1;min-width:0;display:flex;flex-direction:column;
+ gap:5px;overflow-wrap:anywhere}
+.people-dossier-gallery .person-index{color:#ad906d;font:700 .59rem/1.2 system-ui,sans-serif;
+ letter-spacing:.13em}
+.people-dossier-gallery .person-copy strong{font:700 1.04rem/1.25 Georgia,serif;color:#f5d9ac}
+.people-dossier-gallery .person-role{color:#d4b99a;font:.77rem/1.4 system-ui,sans-serif}
+.people-dossier-gallery .person-status{color:#f5d7a7;
+ font:700 .72rem/1.4 system-ui,sans-serif}
+.person-status[data-status="detained"],.person-status[data-status="deceased"]{color:#ecaf9c}
+.person-status[data-status="protected"],.person-status[data-status="evacuated"]{color:#f0d5a4}
+@media(max-width:359px){
+ .person-avatar{flex-basis:60px;width:60px;height:80px}
+ .people-dossier-gallery .person-entry{gap:9px;padding:8px}
+ .people-dossier-gallery .person-copy strong{font-size:.94rem}
+}
+/* Journal film ledger: newest verified records first. No reconstructed or
+   future actions, and no nested scrolling. */
+.case-journal{padding:0 0 0 13px!important;margin:0;list-style:none;
+ border-left:2px solid #89633e;max-height:none;overflow:visible}
+.case-journal .journal-event{position:relative;margin:0 0 12px;
+ padding:12px 11px 12px 15px;border:1px solid #6d5134;
+ border-radius:0 6px 6px 0;background:linear-gradient(110deg,#2b2118,#17120f);
+ box-shadow:0 4px 11px #0005}
+.case-journal .journal-event:before{content:"";position:absolute;
+ top:17px;left:-21px;width:10px;height:10px;
+ border:2px solid #e5bd7d;border-radius:50%;background:#27180f}
+.journal-event[hidden]{display:none!important}
+.journal-event-header{display:flex;justify-content:space-between;flex-wrap:wrap;
+ gap:6px 12px;margin-bottom:8px}
+.journal-event-number{font:700 .66rem/1.35 system-ui,sans-serif;letter-spacing:.1em;
+ color:#dbb982}
+.journal-event-scene{font:600 .66rem/1.35 system-ui,sans-serif;color:#bba185}
+.journal-event-title{color:#efd2a5;margin:0 0 10px;font:700 .98rem/1.3 Georgia,serif}
+.journal-event-notes{list-style:none;padding:0!important;margin:0!important}
+.journal-event-note{position:relative;margin:0 0 5px!important;padding:0 0 0 12px;
+ color:#ded0bc;font:.81rem/1.48 system-ui,sans-serif}
+.journal-event-note:before{content:"";position:absolute;left:0;top:.53em;
+ width:5px;height:5px;border-radius:50%;background:#b88b50}
+.journal-event-note[data-kind="evidence"]{color:#f0d5a4}
+.journal-event-note[data-kind="witness"]{color:#ead0ad}
+.journal-event-note[data-kind="custody"]{color:#e8bc94}
+.journal-show-all{display:block;width:100%;margin:10px 0 2px;
+ min-height:48px;background:#322417;border-color:#b48a53;
+ color:#f3d2a2;font:700 .76rem/1.4 system-ui,sans-serif;letter-spacing:.03em}
+.journal-event:focus-visible{outline:3px solid #f3d4a6;outline-offset:3px}
+/* Consequence receipts remain above the fixed mobile dock and keep their
+   original complete text + accessible expandable details. */
+#notice{border-radius:8px;background:linear-gradient(140deg,#443020,#231a13);
+ box-shadow:0 8px 35px #000d,inset 0 1px 0 #f6d39330}
+#notice:before{content:"";position:absolute;top:0;left:15px;right:15px;height:2px;
+ background:linear-gradient(90deg,transparent,#e3b978,transparent)}
+#notice[data-section="witnesses"]{border-color:#b18d63}
+#notice[data-section="evidence"]{border-color:#d7b279}
+#notice .notice-kicker{color:#f0d2a2;font:800 .67rem/1.35 system-ui,sans-serif;
+ letter-spacing:.14em;padding-bottom:6px}
+#notice .notice-content{line-height:1.48;color:#f8e5ca}
+#notice .notice-actions{gap:8px}
+@media(prefers-reduced-motion:reduce){
+ .people-dossier-gallery .person-entry,.case-journal .journal-event{animation:none!important}
+}

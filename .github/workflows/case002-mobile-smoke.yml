@@ -1,5 +1,7 @@
 name: Case 002 scoped mobile smoke (draft only)
 # A scene-installation or browser-adapter validation change triggers full WebKit + Chromium; candidate art stays quick.
+# This milestone also validates approved discovered-people portraits and the
+# persisted journal expansion in full iPhone WebKit and Chromium.
 # This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
 on:
   push:

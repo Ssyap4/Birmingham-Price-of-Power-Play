@@ -304,7 +304,12 @@ function hideNotice(){
 }
 function showNotice(text,focus=null,details=null){
  const notice=$("notice");
+ // Receipt visuals are advisory only; the original verified text remains intact.
+ notice.dataset.section=focus?.tab||"general";
  activeNoticeSummary=String(text||"");
+ const kicker={evidence:"НОВЫЕ МАТЕРИАЛЫ",witnesses:"СВЕДЕНИЯ О ЛЮДЯХ",
+  deductions:"ХОД ДЕДУКЦИИ",journal:"АРХИВ РЕШЕНИЙ"};
+ setText($("noticeKicker"),kicker[notice.dataset.section]||"ИЗМЕНЕНИЯ В ДЕЛЕ");
  $("noticeExit").hidden=!activeNoticeSummary.includes("Сохранение обновилось в другой вкладке");
  activeNoticeDetails=Array.isArray(details)&&details.length>2?details.slice():null;
  setText($("noticeContent"),activeNoticeSummary);
@@ -648,19 +653,56 @@ function renderTools(){
  }
  if(tab==="journal"){
    const entries=window.BirminghamCase002Journal.entries(v.state,evidenceName);
+   const header=make("header",undefined,"case-journal-heading");
+   header.append(make("span","АРХИВ РАССЛЕДОВАНИЯ · ДЕЛО №002","case-journal-eyebrow"));
+   header.append(make("h3","Ход расследования"));
+   header.append(make("p",entries.length?
+     entries.length+" значимых записей. Новые события расположены первыми.":"Здесь будут только события, которые действительно произошли.","case-journal-intro"));
+   root.append(header);
    if(!entries.length){
      root.append(make("p","Важные решения появятся здесь после первого значимого поступка.","empty"));
      return;
    }
    const listing=make("ol",undefined,"case-journal");
-   for(const item of entries){
-     const li=make("li");
-     li.append(make("strong","Сцена "+item.to));
-     const ul=make("ul");
-     for(const entry of item.notes)ul.append(make("li",entry));
-     li.append(ul);listing.append(li);
+   listing.setAttribute("aria-label","История решений, новые события первыми");
+   const older=[];
+   for(const [index,item] of entries.entries()){
+     const li=make("li",undefined,"journal-event");
+     li.dataset.scene=item.to;
+     const number=entries.length-index;
+     const entryHeader=make("div",undefined,"journal-event-header");
+     entryHeader.append(make("span","ЗАПИСЬ "+String(number).padStart(2,"0"),"journal-event-number"));
+     entryHeader.append(make("span","Сцена "+item.to,"journal-event-scene"));
+     const scene=data.graph.nodes.find(node=>node.id===item.to);
+     li.append(entryHeader);
+     if(scene)li.append(make("h4",scene.title,"journal-event-title"));
+     const notes=make("ul",undefined,"journal-event-notes");
+     for(const line of item.notes){
+       const note=make("li",line,"journal-event-note");
+       note.dataset.kind=line.startsWith("Улика:")?"evidence":
+         line.startsWith("Передано:")?"custody":
+         /^(Ада Уэбб|Томми Кросс|Дэниел Мерсер):/.test(line)?"witness":"decision";
+       notes.append(note);
+     }
+     li.append(notes);
+     if(index>=6){li.hidden=true;older.push(li);}
+     listing.append(li);
    }
-   root.append(listing);return;
+   root.append(listing);
+   if(older.length){
+     const more=make("button","ПОКАЗАТЬ РАННИЕ ЗАПИСИ ("+older.length+")","journal-show-all");
+     more.type="button";
+     more.addEventListener("click",()=>{
+       for(const item of older)item.hidden=false;
+       more.hidden=true;
+       const first=older[0];
+       first.tabIndex=-1;
+       first.focus({preventScroll:true});
+       first.scrollIntoView({block:"nearest",behavior:"auto"});
+     });
+     root.append(more);
+   }
+   return;
  }
  let items=[];
  if(tab==="evidence"){
@@ -710,18 +752,49 @@ function renderTools(){
 
  if(tab==="witnesses"){
     const contacts=window.BirminghamCase002Cast.discovered(v.state);
-    const hd=make("p","Обнаруженные персонажи","people-heading");
+    const hd=make("header",undefined,"people-dossier-header");
+    hd.append(make("span","КАРТОТЕКА · ЛИЧНЫЕ ДЕЛА","people-dossier-kicker"));
+    hd.append(make("h3","Участники расследования"));
+    hd.append(make("p",contacts.length?
+      "В досье появляются только те, о ком вы уже узнали. Статусы отражают события текущей попытки.":
+      "Имена будут появляться по мере расследования.","people-dossier-description"));
     root.append(hd);
+    const gallery=make("div",undefined,"people-dossier-gallery");
     for(const person of contacts){
-      const personRow=make("div",undefined,"person-entry");
-      const monogram=make("span",person.name.split(" ").map(word=>word[0]).join("").slice(0,2),"person-monogram");
-      monogram.setAttribute("aria-hidden","true");
+      const personRow=make("article",undefined,"person-entry");
+      personRow.dataset.person=person.id;
+      const avatar=make("div",undefined,"person-avatar");
+      const mark=make("span",person.name.split(" ").map(word=>word[0]).join("").slice(0,2),"person-monogram");
+      mark.setAttribute("aria-hidden","true");
+      avatar.append(mark);
+      // Use only identity-bound, reviewed WebP. A missing image retains
+      // the monogram; never substitute an unknown or future character.
+      const approved=window.BirminghamCase002ApprovedArt.resolveNpc(person);
+      if(approved){
+        const photo=make("img",undefined,"person-portrait");
+        photo.alt=approved.alt;
+        photo.decoding="async";photo.loading="lazy";photo.hidden=true;
+        photo.onload=()=>{
+          if(photo.naturalWidth>=500&&photo.naturalHeight>=600){
+            photo.hidden=false;mark.hidden=true;
+          }
+        };
+        photo.onerror=()=>{photo.hidden=true;mark.hidden=false;};
+        photo.src=approved.src;
+        avatar.append(photo);
+      }
       const copy=make("div",undefined,"person-copy");
+      copy.append(make("span","ДОСЬЕ · "+person.id.toUpperCase(),"person-index"));
       copy.append(make("strong",person.name));
       copy.append(make("span",person.role,"person-role"));
-      if(person.status)copy.append(make("span",witnessLabel(person.id,person.status),"person-status"));
-      personRow.append(monogram,copy);root.append(personRow);
+      if(person.status){
+        const status=make("span",witnessLabel(person.id,person.status),"person-status");
+        status.dataset.status=person.status;
+        copy.append(status);
+      }
+      personRow.append(avatar,copy);gallery.append(personRow);
     }
+    root.append(gallery);
     if(!contacts.length)root.append(make("p","Знакомства появятся по мере расследования. Чужие личности заранее не раскрываются.","empty"));
     return;
   }

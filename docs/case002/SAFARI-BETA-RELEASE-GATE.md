@@ -56,3 +56,14 @@ optional two-clue deduction wall. Every evidence card can be sent to the wall.
 Hints appear when the first clue is selected, and comparisons do not mutate
 engine state, save records, rewards or story logic. The layout must be checked
 at mobile phone widths and with Chromium + WebKit before a later Safari release.
+
+### Cinematic dossier milestone (branch-only)
+
+The "Люди" dossier now uses only identity-bound reviewed NPC portraits from
+approved-art-v1.js for discovered characters, retaining a monogram when an
+image fails. Unintroduced people are never listed. "Ход дела" is a newest-first
+ledger of committed journal events, with scene titles drawn only from visited
+records; after the newest six, an optional button reveals older entries.
+Decision receipts keep their exact original content, while their film-style
+border and category label use the existing focus type. No save schema, script,
+ending predicates, or Case001 state is changed. Prior Safari URL is not republished.
