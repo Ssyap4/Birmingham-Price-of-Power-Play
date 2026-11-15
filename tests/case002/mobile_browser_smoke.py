@@ -1443,6 +1443,7 @@ def main():
                         ensure_selection(link_page)
                         link_page.locator("#begin").click()
                         saw_earned_achievement=False
+                        checked_flyout=False
                         for source,to,action in route[:-1]:
                             choice = link_page.locator(
                                 f'button.choice[data-to="{to}"][data-action="{action}"]'
@@ -1455,6 +1456,48 @@ def main():
                                 saw_earned_achievement=True
                                 assert link_page.locator(
                                     ".case-achievement-receipt-list li").count() >= 1
+                                if not checked_flyout:
+                                    toast=link_page.locator("#caseUnlockToast")
+                                    assert toast.is_visible(), (
+                                        "A real first-time achievement needs a visible flying receipt"
+                                    )
+                                    assert toast.get_attribute("role") == "status"
+                                    assert toast.evaluate(
+                                        "(el) => getComputedStyle(el).position === 'fixed'"
+                                    )
+                                    assert toast.evaluate(
+                                        "(el) => getComputedStyle(el).pointerEvents === 'none'"
+                                    ), "The toast itself must not block play beneath it"
+                                    assert toast.locator(
+                                        ".case-unlock-toast-details").bounding_box()["height"] >= 44
+                                    assert toast.locator(
+                                        ".case-unlock-toast-close").bounding_box()["height"] >= 44
+                                    link_page.wait_for_function("""() => {
+                                      const t=document.querySelector('#caseUnlockToast');
+                                      const nav=document.querySelector('#quickNav');
+                                      if(!t||t.hidden)return false;
+                                      const b=t.getBoundingClientRect();
+                                      return b.top>=0 && b.bottom < nav.getBoundingClientRect().top;
+                                    }""",timeout=2500)
+                                    assert "ОТКРЫТО" in toast.inner_text() or (
+                                        "ДОСТИЖЕНИЯ" in toast.inner_text()
+                                    )
+                                    before_flyout=link_page.evaluate("""() => localStorage.getItem(
+                                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                                    toast.locator(".case-unlock-toast-details").click()
+                                    assert toast.is_hidden(), (
+                                        "Opening details must dismiss only the floating receipt"
+                                    )
+                                    assert link_page.locator("#caseAchievementReceipt").evaluate(
+                                        "(el) => document.activeElement === el"
+                                    ), "Details must focus the actual durable scene receipt"
+                                    assert link_page.evaluate("""() => localStorage.getItem(
+                                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_flyout
+                                    link_page.locator(
+                                        ".case-achievement-receipt-dismiss").click()
+                                    assert link_page.locator("#caseAchievementReceipt").is_hidden()
+                                    checked_flyout=True
+                        assert checked_flyout, "No first-time achievement flyout tested"
                         assert saw_earned_achievement, (
                             "A real multi-route investigation never displayed a new milestone"
                         )
@@ -1559,6 +1602,16 @@ def main():
                         assert finale.count() == 1 and finale.is_enabled()
                         finale.click()
                         assert link_page.locator("#sceneId").inner_text().startswith("Z02")
+                        reward_toast=link_page.locator("#caseUnlockToast")
+                        assert reward_toast.is_visible(), (
+                            "A first-time unique ending reward needs a visible flying receipt"
+                        )
+                        assert "НАГРАДА" in reward_toast.inner_text()
+                        reward_toast.locator(".case-unlock-toast-details").click()
+                        assert reward_toast.is_hidden()
+                        assert link_page.locator(".finale-new-reward").evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Reward details must focus the new finale reward receipt"
                         report=link_page.locator("#finalePanel")
                         assert report.is_visible()
                         assert report.get_attribute("data-ending") == "trainEscape"
@@ -1631,6 +1684,9 @@ def main():
                         assert link_page.locator("#finalePanel").is_visible()
                         assert link_page.locator(".finale-new-reward").count() == 0, (
                             "Returning to an already-earned ending must not replay reward receipt"
+                        )
+                        assert link_page.locator("#caseUnlockToast").is_hidden(), (
+                            "Returning to an old save must not replay the flying notification"
                         )
                         assert link_page.locator("#caseAchievementReceipt").is_hidden(), (
                             "Returning to old completed save must not replay achievement notifications"
@@ -1711,6 +1767,7 @@ def main():
                         full_page.goto(address, wait_until="load")
                         ensure_selection(full_page)
                         full_page.locator("#begin").click()
+                        saw_flying_unlock=False
                         for source, target, action in route[:-1]:
                             assert full_page.locator("#sceneId").inner_text().startswith(source), (
                                 f"Full mobile route drifted at {source} -> {target}"
@@ -1722,6 +1779,35 @@ def main():
                                 f"Missing enabled choice {source} -> {target}/{action}"
                             )
                             choice.click()
+                            if not saw_flying_unlock and full_page.locator(
+                                "#caseAchievementReceipt").is_visible():
+                                flyout=full_page.locator("#caseUnlockToast")
+                                assert flyout.is_visible(), (
+                                    f"{browser_name}: a new earned achievement was not visible"
+                                )
+                                full_page.wait_for_function("""() => {
+                                  const t=document.querySelector('#caseUnlockToast');
+                                  if(!t||t.hidden)return false;
+                                  const rect=t.getBoundingClientRect();
+                                  const nav=document.querySelector('#quickNav').getBoundingClientRect();
+                                  return rect.top>=0 && rect.bottom < nav.top;
+                                }""",timeout=2500)
+                                full_page.screenshot(
+                                    path=str(visual_dir/f"{browser_name}-achievement-flyout.png"),
+                                    full_page=False)
+                                original=full_page.evaluate("""() => localStorage.getItem(
+                                    window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                                flyout.locator(".case-unlock-toast-close").click()
+                                assert flyout.is_hidden()
+                                assert full_page.locator("#caseAchievementReceipt").is_visible(), (
+                                    "Closing flying notice must preserve permanent earned card"
+                                )
+                                assert full_page.evaluate("""() => localStorage.getItem(
+                                    window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == original
+                                saw_flying_unlock=True
+                        assert saw_flying_unlock, (
+                            f"{browser_name}: no actual first-time flyout was exercised"
+                        )
                         assert full_page.locator("#sceneId").inner_text().startswith("F09")
                         final_choices = full_page.locator("button.choice")
                         assert final_choices.count() == 1, (
@@ -1803,6 +1889,15 @@ def main():
                         last_choice.click()
                         assert full_page.locator("#sceneId").inner_text().startswith("Z02")
                         assert full_page.locator("#finalePanel").is_visible()
+                        assert full_page.locator("#caseUnlockToast").is_visible(), (
+                            f"{browser_name}: new unique ending reward must fly into view"
+                        )
+                        assert "НАГРАДА" in full_page.locator("#caseUnlockToast").inner_text()
+                        full_page.locator("#caseUnlockToast .case-unlock-toast-details").click()
+                        assert full_page.locator("#caseUnlockToast").is_hidden()
+                        assert full_page.locator(".finale-new-reward").evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "The reward flyout must point to the durable final receipt"
                         assert full_page.locator("#readerBridge").get_attribute("data-finished") == "true"
                         assert "ПОСМОТРЕТЬ ИТОГ" in full_page.locator("#readerToChoices").inner_text()
                         assert full_page.locator("#notice").is_hidden(), (
