@@ -463,11 +463,18 @@ def main():
                             assert font_size >= 11.15, (
                                 f"{browser_name}: {width}px quick navigation text too small ({font_size})"
                             )
-                            assert navbutton.evaluate("""el => {
+                            label_metrics = navbutton.evaluate("""el => {
                                 const r = document.createRange();
                                 r.selectNodeContents(el);
-                                return r.getClientRects().length <= 1;
-                            }"""), f"{browser_name}: {width}px quick navigation label wrapped"
+                                return {label: el.innerText, count:r.getClientRects().length,
+                                  widths:[...r.getClientRects()].map(x => x.width),
+                                  buttonWidth:el.getBoundingClientRect().width};
+                            }""")
+                            if label_metrics["count"] > 1 and width == 320:
+                                page.screenshot(path=str(visual_dir/f"{browser_name}-dock-320.png"))
+                            assert label_metrics["count"] <= 1, (
+                                f"{browser_name}: {width}px quick navigation wrap: {label_metrics}"
+                            )
                         for tabbutton in page.locator(".tool-tab").all():
                             assert tabbutton.evaluate(
                                 "(el) => parseFloat(getComputedStyle(el).fontSize)"
