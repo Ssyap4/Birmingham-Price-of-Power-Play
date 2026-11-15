@@ -1065,7 +1065,13 @@ function render(){
      const check=make("button","СВЕРИТЬ УЛИКИ НА ДОСКЕ ↗","decision-check-evidence");
      check.id="decisionCheckEvidence";check.type="button";
      check.setAttribute("aria-label","Проверить найденные улики и выводы перед решением");
-     check.addEventListener("click",()=>jumpTo("deductions"));
+     check.addEventListener("click",()=>{
+       // This control physically lives at the decision threshold. A player
+       // may arrive by ordinary scrolling (navSection still reads "scene").
+       // Give the dossier the correct return origin before switching tabs.
+       navSection="choices";refreshNavigation();
+       jumpTo("deductions");
+     });
      preflight.append(check);
    }
    const count=make("p",allowed===1?"1 доступное действие":

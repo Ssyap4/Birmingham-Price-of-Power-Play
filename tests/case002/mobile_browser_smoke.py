@@ -1521,6 +1521,57 @@ def main():
                         )
                         assert not link_errors, f"Dossier cross-link JS errors: {link_errors}"
                         link_ctx.close()
+                        # Real story-model route to the risk checkpoint, one
+                        # browser confirmation only. Cancelling must not commit.
+                        danger_source = (
+                            "const m=require('./tests/case002/simulate-story-model-v2.js');"
+                            "console.log(JSON.stringify(m.goodRoute('jack','trainDeath').actionLog));"
+                        )
+                        danger_route = json.loads(subprocess.check_output(
+                            ["node", "-e", danger_source],cwd=ROOT,text=True
+                        ).strip().splitlines()[-1])
+                        assert danger_route[-1][0] == "F07"
+                        assert danger_route[-1][1] == "Z07"
+                        danger_ctx=browser.new_context(
+                            viewport={"width":390,"height":844},
+                            device_scale_factor=3,is_mobile=True,has_touch=True
+                        )
+                        danger_page=danger_ctx.new_page()
+                        danger_page.goto(address,wait_until="load")
+                        danger_page.evaluate("""steps => {
+                          const api=window.BirminghamCase002Engine;
+                          const data=window.BirminghamCase002Data;
+                          const e=api.createEngine({graph:data.graph,
+                            contract:data.contract,hero:'jack',store:localStorage});
+                          e.reset('ci-danger-preflight');
+                          steps.forEach(([source,target,action])=>
+                            e.choose(target,action));
+                        }""",danger_route[:-1])
+                        danger_page.reload(wait_until="load")
+                        ensure_selection(danger_page)
+                        danger_page.locator("#resume").click()
+                        assert danger_page.locator("#sceneId").inner_text().startswith("F07")
+                        risky=danger_page.locator('button.choice[data-to="Z07"]')
+                        assert risky.count()==1 and risky.is_enabled()
+                        assert risky.get_attribute("data-decision-state") == "danger"
+                        assert int(danger_page.locator("#decisionPreflight").get_attribute(
+                            "data-dangerous")) >= 1
+                        assert "подтверждение" in risky.inner_text().lower()
+                        saved_risk=danger_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        dialogs=[]
+                        def cancel_danger(dialog):
+                            dialogs.append(dialog.type)
+                            dialog.dismiss()
+                        danger_page.on("dialog",cancel_danger)
+                        risky.click()
+                        assert dialogs == ["confirm"], (
+                            "Deadly risk must demand exactly one explicit confirmation"
+                        )
+                        assert danger_page.locator("#sceneId").inner_text().startswith("F07")
+                        assert danger_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == saved_risk
+                        danger_ctx.close()
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()
                     if browser_name == "chromium" and not quick:
