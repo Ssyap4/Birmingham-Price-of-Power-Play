@@ -81,8 +81,16 @@ const chapterMood={
  III:"Поезд исчез не там, где его искали.",
  IV:"Найти свидетеля ещё не значит спасти его.",
  V:"Цена молчания написана чужой рукой.",
- VI:"Последний сигнал нельзя подать дважды.",
- END:"Теперь город узнает цену принятого решения."
+ VI:"Последний сигнал нельзя подать дважды."
+};
+const endingMood={
+ Z01:"Печатная краска сохнет быстрее, чем приходит справедливость.",
+ Z02:"Билет не отменяет чужих потерь.",
+ Z03:"Виновного назвали. Система осталась.",
+ Z04:"Подпись защищает лишь тех, чьи имена внесены в гарантию.",
+ Z05:"Ночные рельсы замолкли. Утром заговорят ведомости.",
+ Z06:"Чужие долги сменили хозяина.",
+ Z07:"Последний выстрел не закончил чужих историй."
 };
 const actionLabels={
  "D03:D10:continue":"Оставить убежище пока незащищённым",
@@ -1375,12 +1383,18 @@ function render(){
  renderApprovedSceneArt(stage);
  renderSceneCast(stage,s);
  const chapterCard=$("chapterIntertitle");
- const isFirst=scene.chapter==="END"||chapterOpenings[scene.chapter]===scene.id;
+ const isEpilogue=scene.chapter==="END"&&s.finished;
+ const isFirst=isEpilogue||chapterOpenings[scene.chapter]===scene.id;
  chapterCard.hidden=!isFirst;
  if(isFirst){
    chapterCard.dataset.chapter=scene.chapter;
-   setText($("intertitleName"),stageLabels[scene.chapter]||scene.chapter);
-   setText($("intertitleLine"),chapterMood[scene.chapter]||"Расследование продолжается.");
+   chapterCard.setAttribute("aria-label",isEpilogue?
+    "Эпилог завершённого расследования":"Начало главы");
+   setText($("intertitleName"),isEpilogue?
+    "ЭПИЛОГ · "+scene.title:stageLabels[scene.chapter]||scene.chapter);
+   setText($("intertitleLine"),isEpilogue?
+    endingMood[scene.id]||"История продолжается за пределами этого дела.":
+    chapterMood[scene.chapter]||"Расследование продолжается.");
  }
  setText($("chapterLabel"),stageLabels[scene.chapter]||scene.chapter);
  setText($("sceneId"),scene.id+" · "+heroNames[s.hero]);

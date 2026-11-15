@@ -51,4 +51,55 @@ for(const [id,prose] of Object.entries(narration)){
  verifiedScenes++;
 }
 assert.equal(verifiedScenes,73,"All 73 authored dialogue scenes must be covered");
-console.log("PASS Case002 local dialogue presentation: 13 structural assertions, source text preserved, no HTML or invented voices.");
+
+/* A genuine state-sensitive dialogue may have a different number of lines
+ * from the original script. Labels must remain exact and may never attribute
+ * Mabel's words to Tommy merely because a base scene lists Tommy first. */
+const dynamicNarrative=require("../../src/case002/story-variants-v4.js");
+const {graph,contract}=require("../../src/case002/browser-data-v3.js");
+const {createEngine}=require("../../src/case002/engine-v3.js");
+const baseline=createEngine({
+ graph,contract,hero:"jack",attemptId:"variant-speaker-labels"
+}).view();
+const dialogueCases=[
+ ["C04",{}, {},[],"Мэйбл Кросс"],
+ ["D06",{tommy:"detained"},{},[],"Мэйбл Кросс"],
+ ["D09",{ada:"missing"},{},[],"Дэниел Мерсер"],
+ ["D10",{}, {},[],"Хозяйка пансиона"],
+ ["E05",{}, {workersCleared:false},[],"Вы"],
+ ["E07",{}, {valeGuarantee:false},[],"Вы"],
+ ["E07",{}, {valeGuarantee:true},[],"Вы"],
+ ["E08",{}, {},[],"Льюис Брэкетт"],
+ ["F02",{}, {},[],"Вы"],
+ ["F02",{}, {},[], "Вы", {provedFirstForgery:true,provedSecondForgery:true}]
+];
+for(const [sceneId,witnesses,flags,evidence,expected,facts={}] of dialogueCases){
+ const scene=graph.nodes.find(x=>x.id===sceneId);
+ const view={
+  ...baseline,scene,
+  state:{...baseline.state,
+   evidence,witnesses:{...baseline.state.witnesses,...witnesses},
+   flags:{...baseline.state.flags,...flags}},
+  facts:{...baseline.facts,...facts}
+ };
+ const narrative=dynamicNarrative.render({graph,contract,narration},view);
+ render(target,narrative,doc,sceneId);
+ const spoken=target.children.flatMap(p=>p.children).filter(
+  x=>x.tag==="span"&&x.className==="scene-spoken-line");
+ assert.equal(spoken.length,1,"Expected one state-sensitive reply in "+sceneId);
+ assert.equal(spoken[0].attrs["data-speaker"],expected,
+  "Wrong named speaker in state-sensitive scene "+sceneId);
+ assert.equal(flatten(target.children[0]).startsWith(narrative.split("\n")[0]),true,
+  "Narration must remain exact after assigning a speaker label");
+}
+render(target,"— Эта реплика не принадлежит известному участнику.",doc,"E08");
+const unknown=target.children[0].children.find(x=>x.className==="scene-spoken-line");
+assert.equal(unknown.attrs["data-speaker"],undefined,
+ "An unknown variant reply must never receive a guessed identity");
+// Unchanged multi-line screenplay dialogue retains its authored order.
+render(target,narration.C04,doc,"C04");
+const authored=target.children.flatMap(p=>p.children).filter(x=>
+ x.className==="scene-spoken-line");
+assert.deepEqual(authored.map(x=>x.attrs["data-speaker"]),
+ ["Мэйбл Кросс","Вы","Мэйбл Кросс"]);
+console.log("PASS Case002 local dialogue presentation: 89 source scenes and 10 state-sensitive spoken lines attributed without guessing.");

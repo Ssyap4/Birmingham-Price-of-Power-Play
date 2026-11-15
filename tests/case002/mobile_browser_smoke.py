@@ -1966,6 +1966,18 @@ def main():
                         assert finale.count() == 1 and finale.is_enabled()
                         finale.click()
                         assert link_page.locator("#sceneId").inner_text().startswith("Z02")
+                        assert link_page.locator("#chapterIntertitle").is_visible()
+                        assert link_page.locator("#chapterIntertitle").get_attribute(
+                            "data-chapter") == "END"
+                        assert link_page.locator("#chapterIntertitle").get_attribute(
+                            "aria-label") == "Эпилог завершённого расследования"
+                        assert link_page.locator("#intertitleName").inner_text() == (
+                            "ЭПИЛОГ · Люди без прошлого"
+                        ), "Each completed ending needs its own honest epilogue heading"
+                        assert "Билет не отменяет" in link_page.locator(
+                            "#intertitleLine").inner_text(), (
+                            "A retreat cannot claim the city publicly learned the truth"
+                        )
                         reward_toast=link_page.locator("#caseUnlockToast")
                         assert reward_toast.is_visible(), (
                             "A first-time unique ending reward needs a visible flying receipt"
