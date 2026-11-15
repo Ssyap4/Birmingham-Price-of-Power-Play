@@ -19,10 +19,13 @@ function build(view,contract,discovered=[]){
  const people=discovered.filter(x=>x&&witnesses.has(x.id))
    .map(x=>({id:x.id,name:x.name,status:s.witnesses[x.id]}))
    .filter(x=>typeof x.name==="string"&&typeof x.status==="string");
+ // The report presents only conclusions actually proven in this finished
+ // attempt. Raw fact IDs are labels for the UI, not new reward/save keys.
+ const proofIds=Object.keys(view.facts||{}).filter(id=>view.facts[id]===true);
  return {
    hero:s.hero,sceneId:view.scene.id,endingId:s.ending,title:ending.title,
    evidenceCount:s.evidence.length,
-   proofCount:Object.values(view.facts||{}).filter(Boolean).length,
+   proofCount:proofIds.length,proofIds,
    safeCount:view.safeWitnessCount,
    decisionCount:s.history.length,
    people

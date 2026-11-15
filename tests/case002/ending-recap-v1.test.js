@@ -27,6 +27,11 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
  assert.equal(repeated.hero,hero);
  assert.equal(repeated.evidenceCount,s.evidence.length);
  assert.equal(repeated.proofCount,Object.values(v.facts).filter(Boolean).length);
+ assert.deepEqual(repeated.proofIds,
+   Object.keys(v.facts).filter(id=>v.facts[id]===true),
+   "The report must list exactly the demonstrated facts of this real ending");
+ assert.equal(repeated.proofIds.length,repeated.proofCount,
+   "Number and labels of verified facts must agree");
  assert.equal(repeated.safeCount,v.safeWitnessCount);
  assert.equal(repeated.decisionCount,s.history.length);
  assert(repeated.people.every(person=>contacts.some(c=>c.id===person.id)),
@@ -38,6 +43,17 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
  tested++;
 }
 assert.equal(tested,35);
+// Synthetic result state for an earned-only privacy boundary: a never-met
+// witness must not appear merely because its internal status is present.
+const sample=createEngine({graph,contract,hero:"jack",attemptId:"recap-visibility"}).view();
+const fakeView={...sample,scene:{id:"Z03"},facts:{
+  provedHaleMurder:true,provedFactoryCoverup:false
+},state:{...sample.state,finished:true,ending:"trainScapegoat"}};
+const visible=build(fakeView,contract,[{id:"tommy",name:"Томми Кросс"}]);
+assert.deepEqual(visible.proofIds,["provedHaleMurder"]);
+assert.deepEqual(visible.people.map(person=>person.id),["tommy"],
+ "Unencountered Ada and Mercer must stay off the finale report");
+assert.equal(visible.proofCount,1);
 assert.throws(()=>build({state:{finished:true,ending:"fake"},scene:{id:"Z02"}},
  contract,[]),/Unknown/);
 console.log("PASS Case002 ending recap: 35 verified hero × finale paths, truthful statuses, no spoilers or reward claims.");

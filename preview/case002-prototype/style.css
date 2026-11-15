@@ -1580,3 +1580,18 @@ html[data-case002-telegram="true"] .tool-tab{
 #game .case-unlock-detail-return:focus-visible{
  outline:3px solid #ffdea8;outline-offset:2px;
 }
+
+/* Stage III: proven findings belong to the earned report, not an appended
+   technical appendix at the end of every cinematic closing scene. */
+#game .finale-proved-summary{
+ display:grid;gap:5px;padding:10px 11px;margin:0 0 15px!important;
+ border-left:3px solid #b99560;background:#2b2118;
+ border-radius:0 5px 5px 0;overflow-wrap:anywhere;
+}
+#game .finale-proved-summary strong{
+ color:#edc58b;font:800 .66rem/1.35 system-ui,sans-serif;
+ letter-spacing:.08em;
+}
+#game .finale-proved-summary span{
+ color:#efdec5;font:.81rem/1.5 system-ui,sans-serif;
+}

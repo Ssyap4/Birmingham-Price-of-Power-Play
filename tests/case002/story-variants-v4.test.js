@@ -39,8 +39,8 @@ for(const hero of contract.heroes){
    }
    if(v.scene.chapter==="END"){
      terminal++;
-     for(const name of ["Ада Уэбб","Томми Кросс","Дэниел Мерсер"])
-       assert(text.includes(name),"ending must show real witness fates");
+     assert(!text.includes("Итоговая запись о свидетелях:") &&
+       !text.includes("\nДоказано:"),"The dramatic ending must not repeat an audit ledger");
    }
    tested++;
   };
@@ -108,10 +108,10 @@ assert(mut("F04",()=>{}).includes("ещё предстоит подтверди�
 assert(mut("P02",s=>{s.prior={ending:"endingDeath"}}).includes("другой человек"));
 assert(!mut("P02",()=>{}).includes("Предыдущее расследование стоило"));
 
-/* Grammatical and factual safety: 3 people x 6 statuses x 12 summaries,
- * including every ending, must distinguish arrest, protection and departure. */
-const recaps=["D01","D10","D11","F05","F08",
- "Z01","Z02","Z03","Z04","Z05","Z06","Z07"];
+/* Grammatical and factual safety: 3 people x 6 statuses x 5 in-world
+ * investigative summaries. The seven endings use the discovered-only
+ * report instead of repeating the complete witness ledger. */
+const recaps=["D01","D10","D11","F05","F08"];
 const witnessIds=["ada","tommy","mercer"];
 const witnessStates=["missing","located","detained","protected","evacuated","deceased"];
 const feminineAda={
@@ -205,5 +205,5 @@ assert(!preview.includes("const witnessLabels="),
 assert.equal(Object.keys(narration).length,89);
 console.log("PASS Case002 narrative variants: "+tested+" real-scene renders in 35 paths; "+
   scenes.size+" fixture scenes, "+terminal+" full epilogues, 89 authored nodes and "+
-  "26 contradiction-focused variants, 216 witness-status recaps and "+
+  "26 contradiction-focused variants, 90 witness-status recaps and "+
   Object.keys(eleanorEdits).length+" heroine scene edit groups.");

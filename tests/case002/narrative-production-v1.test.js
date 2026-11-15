@@ -67,6 +67,14 @@ assert(!narration.F09.includes("На столе лежали бумаги"),
  "The authored final scene must not repeat an adjacent opening phrase");
 assert(narration.F09.includes("За дверью уже ждали решения"),
  "The last-choice dramatic beat must remain intact");
+for(const id of ["Z01","Z02","Z03","Z04","Z05","Z06","Z07"]){
+ const view={...example,scene:{...example.scene,id},
+  state:{...example.state,finished:true}};
+ const story=render({graph,contract,narration},view);
+ assert(!story.includes("Итоговая запись о свидетелях:") &&
+   !story.includes("\nДоказано:"),
+   "The ending should not duplicate the verified report: "+id);
+}
 assert(narration.C10.length<700,"C10 includes leaked editorial appendix");
 for(const id of ["HJ03","HF03","HV03","HS03"])
  assert(narration[id].length<600,"Hero-only scene includes next actor section: "+id);

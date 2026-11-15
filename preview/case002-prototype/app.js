@@ -1548,6 +1548,16 @@ function renderEndingRecap(target,view){
  }
  panel.append(facts);
  panel.append(make("p","«В безопасности» — защищённые и эвакуированные. Защита не означает, что человека уже вывезли из города.","finale-metric-note"));
+ // The screenplay no longer repeats a computer-generated witness/fact ledger.
+ // Keep verified proofs readable here, next to their true count. Unknown
+ // identities remain excluded by EndingRecap's discovered-only people list.
+ if(recap.proofIds.length){
+  const proven=make("p",undefined,"finale-proved-summary");
+  proven.append(make("strong","ПОДТВЕРЖДЕНО УЛИКАМИ"),
+   make("span",recap.proofIds.map(id=>
+    window.BirminghamCase002Narrative.factName[id]||id).join(" · ")));
+  panel.append(proven);
+ }
  // A trip to an earned dossier starts from the report, not from the art.
  const openFinaleSection=(section,id=null)=>{
   navSection="choices";refreshNavigation();jumpTo(section,id);

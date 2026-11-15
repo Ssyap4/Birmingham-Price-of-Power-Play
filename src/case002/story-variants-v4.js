@@ -459,11 +459,10 @@ function render(data,view){
    raw="Вейл передал проверенную гарантию. Она закрепляет безопасность только тех свидетелей, кому герой уже сумел обеспечить защиту.\nУ ворот фабрики снова собирается смена. В публичной ведомости погибших по-прежнему значатся двое.\n— Я выполнил свою часть, — говорит Вейл.\n— А кто ответит за остальные жизни? — спрашивает герой.";
  if(n==="Z06")
    raw="У героя остались копии счетов Брэкетта и имена людей, связанных с тайными перевозками. Он не опубликовал их и не передал представителю рабочих.\nВейл больше не знает, кто теперь держит его за горло.\nНо защищены только те свидетели, которых герой действительно сумел уберечь. Остальным не стало безопаснее.";
- if(n.startsWith("Z")&&s.finished){
-   raw+="\n\nИтоговая запись о свидетелях:\n"+allWitnesses(s);
-   const verified=factList(f);
-   raw+="\nДоказано: "+(verified.length?verified.join("; "):"нет полного набора независимых доказательств")+".";
- }
+ // Do not append an audit transcript to the final cinematic moment.
+ // The verified finale report directly below already lists only encountered
+ // people and demonstrated proof. This also prevents unknown witness names
+ // from leaking into endings that were reached without meeting them.
  if(s.hero==="eleanor")raw=personalizeEleanor(n,raw);
  return raw;
 }
