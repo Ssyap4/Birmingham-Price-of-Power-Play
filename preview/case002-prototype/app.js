@@ -102,6 +102,8 @@ let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,act
 let pairFirst=null,pairFeedback=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
+// Presentation-only state: never written to the game engine or the awards archive.
+let unseenEvidence=0,journalExpanded=false,navSection="scene";
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -184,7 +186,9 @@ function init(){
  for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{
   // A deliberate dossier switch supersedes any floating old receipt.
   hideNotice();
-  tab=button.dataset.tab;evidenceFocus=null;renderTools();
+  tab=button.dataset.tab;evidenceFocus=null;
+  if(tab==="evidence")unseenEvidence=0;
+  navSection=tab;renderTools();refreshNavigation();
  });
  for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
   card.addEventListener("click",()=>{$("hero").value=card.dataset.hero;refreshResume();});
@@ -193,6 +197,23 @@ function init(){
 }
 function selectedHeroButton(){
  return document.querySelector('#heroGallery [data-hero="'+$("hero").value+'"]');
+}
+function refreshNavigation(){
+ const unread=unseenEvidence>0;
+ for(const button of document.querySelectorAll('#quickNav [data-go]')){
+  if(button.dataset.go===navSection)button.setAttribute("aria-current","location");
+  else button.removeAttribute("aria-current");
+ }
+ for(const button of document.querySelectorAll(
+  '#quickNav [data-go="evidence"],.tool-tab[data-tab="evidence"]')){
+  button.dataset.unread=String(unread);
+  if(unread)button.setAttribute("aria-label","УЛИКИ · "+unseenEvidence+" новых материалов");
+  else button.removeAttribute("aria-label");
+ }
+}
+function recordNewEvidence(before,after){
+ unseenEvidence+=(after.evidence||[]).filter(id=>!(before.evidence||[]).includes(id)).length;
+ refreshNavigation();
 }
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
@@ -208,15 +229,29 @@ function returnToLaunch(){
 }
 function refreshResume(){
  const hero=$("hero").value;
- for(const card of document.querySelectorAll("#heroGallery [data-hero]"))card.setAttribute("aria-pressed",String(card.dataset.hero===hero));
  let available=false;
- try{available=Boolean(store&&store.getItem(api.SAVE_PREFIX+hero));}
- catch(e){
+ try{
+  for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
+   const selected=card.dataset.hero===hero;
+   card.setAttribute("aria-pressed",String(selected));
+   const hasSave=Boolean(store&&store.getItem(api.SAVE_PREFIX+card.dataset.hero));
+   card.dataset.hasSave=String(hasSave);
+   let badge=card.querySelector(".hero-save-badge");
+   if(!badge){
+    badge=make("small","ЕСТЬ СОХРАНЕНИЕ","hero-save-badge");
+    card.querySelector("span")?.append(badge);
+   }
+   badge.hidden=!hasSave;
+   if(selected)available=hasSave;
+  }
+ }catch(e){
   appError("Не удалось прочитать сохранение. Проверьте доступность хранилища браузера.");
   console.warn("[Case002] save availability check failed",e);
  }
  $("resume").disabled=!available;
  $("resume").hidden=!available;
+ setText($("selectedHeroStatus"),"Выбран: "+heroNames[hero]+
+  (available?" · Можно продолжить сохранённое расследование":" · Готов к новому расследованию"));
 }
 // Guard against an older Safari/Telegram tab overwriting a newer saved run.
 // This compares existing slot data; the engine and save schema stay untouched.
@@ -279,12 +314,14 @@ function showGame(){
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
+ unseenEvidence=0;journalExpanded=false;navSection="scene";refreshNavigation();
  render();
  showCurrentScene();
 }
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
 function showCurrentScene(){
+ navSection="scene";refreshNavigation();
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
  (chapter.hidden?story:chapter).scrollIntoView({block:"start",behavior:"auto"});
@@ -338,10 +375,12 @@ function jumpTo(where,evidenceId=null){
  else if(["evidence","deductions","witnesses","journal"].includes(where)){
    tab=where;
    evidenceFocus=where==="evidence"?evidenceId:null;
+   if(where==="evidence")unseenEvidence=0;
    renderTools();
    target=$("caseTools");
  }else return;
  hideNotice();
+ navSection=where==="reading"?"scene":where;refreshNavigation();
  // Scroll to a real on-screen panel; never change story state or spend a choice.
  const row=evidenceId&&where==="evidence"?
    [...$("toolContent").querySelectorAll(".evidence-card")]
@@ -705,7 +744,8 @@ function renderTools(){
        btn.dataset.evidenceId=id;
        btn.setAttribute("aria-label","Открыть улику: "+evidenceName(id));
        btn.addEventListener("click",()=>{
-         tab="evidence";evidenceFocus=id;renderTools();
+         tab="evidence";evidenceFocus=id;unseenEvidence=0;navSection="evidence";
+         renderTools();refreshNavigation();
          const evidenceCard=[...root.querySelectorAll(".evidence-card")]
            .find(row=>row.dataset.evidenceId===id);
          if(evidenceCard){
@@ -754,14 +794,15 @@ function renderTools(){
        notes.append(note);
      }
      li.append(notes);
-     if(index>=6){li.hidden=true;older.push(li);}
+     if(index>=6){li.hidden=!journalExpanded;older.push(li);}
      listing.append(li);
    }
    root.append(listing);
-   if(older.length){
+   if(older.length&&!journalExpanded){
      const more=make("button","ПОКАЗАТЬ РАННИЕ ЗАПИСИ ("+older.length+")","journal-show-all");
      more.type="button";
      more.addEventListener("click",()=>{
+       journalExpanded=true;
        for(const item of older)item.hidden=false;
        more.hidden=true;
        const first=older[0];
@@ -806,8 +847,8 @@ function renderTools(){
       openPair.setAttribute("aria-label","Сопоставить улику: "+evidenceName(item.id));
       openPair.addEventListener("click",()=>{
        pairFirst=item.id;pairFeedback=null;
-       tab="deductions";evidenceFocus=null;
-       renderTools();
+       tab="deductions";evidenceFocus=null;navSection="deductions";
+       renderTools();refreshNavigation();
        const selected=root.querySelector('.pair-item[data-evidence-id="'+item.id+'"]');
        selected?.focus({preventScroll:true});
        selected?.scrollIntoView({block:"center",behavior:"auto"});
@@ -880,6 +921,7 @@ function select(choice,fromScene){
   assertCurrentSave();
   if(choice.confirm&&!window.confirm("Этот поступок может закончиться гибелью героя. Вы действительно принимаете смертельный риск?"))return;
   const next=engine.choose(choice.to,choice.action);
+  recordNewEvidence(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
   evidenceFocus=null;pairFirst=null;pairFeedback=null;
@@ -895,8 +937,10 @@ function select(choice,fromScene){
   // A terminal scene is persisted first, then the engine writes the separate
   // records/rewards archives. If only that second phase fails, the decision
   // DID happen. Show the actual reached ending, never stale choice buttons.
-  const committed=engine.snapshot().history.length>before.history.length;
+  const current=engine.snapshot();
+  const committed=current.history.length>before.history.length;
   if(committed){
+   recordNewEvidence(before,current);
    render();
    showCurrentScene();
    showNotice("Решение принято и состояние расследования сохранено, но архив итогов или наград не обновлён: "+e.message+

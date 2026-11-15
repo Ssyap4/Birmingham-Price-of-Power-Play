@@ -678,3 +678,30 @@ html[data-case002-telegram="true"] .tool-tab{
 #game[data-completed="true"] .choice-list{display:block}
 @media(max-width:359px){.finale-panel{padding:14px 9px 12px}
  .finale-metric span{font-size:.59rem}.finale-metric strong{font-size:1.45rem}}
+
+/* Stage 8: consistent brass-paper accents and readable thumb navigation.
+   Every indicator is transient; no plot, persistence or reward side effects. */
+.hero-selection-status{margin:-7px 0 16px;padding:10px 12px;border-left:3px solid #cda16a;
+ background:#241b14;color:#f0d4a9;font:600 .78rem/1.45 system-ui,sans-serif}
+.hero-card[data-has-save="true"]{border-color:#b99563}
+.hero-card .hero-save-badge{display:inline-block;margin-top:8px;padding:4px 6px;
+ border:1px solid #947144;border-radius:3px;background:#261b11;color:#f1ca91;
+ font:700 .59rem/1.3 system-ui,sans-serif;letter-spacing:.025em}
+.hero-card .hero-save-badge[hidden]{display:none!important}
+#app[data-screen="game"] .masthead p{display:none}
+.case-quick-nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+.case-quick-nav button{position:relative;white-space:normal;overflow-wrap:anywhere;
+ font-size:clamp(.7rem,2.55vw,.78rem);line-height:1.16;letter-spacing:0;padding-inline:2px}
+.case-quick-nav button[aria-current="location"]{border-color:#f3c78b;
+ background:linear-gradient(135deg,#edc993,#bd8f56);color:#23180e;
+ box-shadow:inset 0 0 0 1px #f9deac55}
+.case-quick-nav button[data-unread="true"]::after,
+.tool-tab[data-unread="true"]::after{content:"";position:absolute;top:4px;right:4px;
+ width:7px;height:7px;border-radius:50%;background:#ffd69a;
+ border:1px solid #3b2510;box-shadow:0 0 0 2px #292018}
+.tool-tab{position:relative}
+@media(max-width:359px){
+ .case-quick-nav{gap:2px;padding-inline:4px}
+ .case-quick-nav button{padding-inline:1px;font-size:.7rem}
+ .hero-selection-status{font-size:.74rem;margin-bottom:12px}
+}

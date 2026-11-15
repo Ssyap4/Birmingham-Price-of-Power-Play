@@ -78,6 +78,8 @@ def main():
                     )
                     page.screenshot(path=str(visual_dir/f"{browser_name}-launch.png"),full_page=True)
                     assert page.locator("#heroGallery .hero-card").count() == 5
+                    assert "Джек Харпер" in page.locator("#selectedHeroStatus").inner_text()
+                    assert page.locator(".hero-save-badge:visible").count() == 0
                     assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-mabel-portrait.webp")
                     assert page.locator("#hero").get_attribute("type") == "hidden"
                     assert page.locator("#priorDetails").is_hidden()
@@ -124,9 +126,13 @@ def main():
                     ), f"{browser_name}: start must show the opening chapter, not the distant masthead"
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "P"
                     assert "Ночь, когда" in page.locator("#intertitleLine").inner_text()
-                    assert page.locator("#quickNav button").count() == 5
+                    assert page.locator("#quickNav button").count() == 6
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 0"
                     assert page.locator("#pulseProof").inner_text() == "Выводов: 0"
+                    page.locator('#quickNav button[data-go="journal"]').click()
+                    assert page.locator('button[data-tab="journal"]').get_attribute("aria-pressed") == "true"
+                    assert page.locator('#quickNav [data-go="journal"]').get_attribute("aria-current") == "location"
+                    assert page.locator("#sceneId").inner_text().startswith("P01")
                     page.locator('#quickNav button[data-go="choices"]').click()
                     assert page.locator("#choicesPanel").is_visible()
                     assert page.locator("#sceneId").inner_text().startswith("P01"), (
@@ -256,6 +262,13 @@ def main():
                     assert page.locator("#resume").is_enabled(), (
                         f"{browser_name}: resume must activate on returning to hero selection"
                     )
+                    assert page.locator('.hero-card[data-hero="jack"] .hero-save-badge').is_visible()
+                    assert page.locator('.hero-card[data-hero="finn"] .hero-save-badge').is_hidden()
+                    page.locator('.hero-card[data-hero="finn"]').click()
+                    assert page.locator("#resume").is_hidden()
+                    assert "Финн О’Коннор" in page.locator("#selectedHeroStatus").inner_text()
+                    page.locator('.hero-card[data-hero="jack"]').click()
+                    assert page.locator("#resume").is_visible()
                     ensure_selection(page)
                     page.locator("#resume").click()
                     assert page.locator("#storyPanel").evaluate(
@@ -353,10 +366,14 @@ def main():
                     assert page.locator("#noticeJump").is_visible()
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
+                    assert "новых материалов" in page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-label")
                     assert page.locator("#toolContent li").count() >= 1
                     page.locator("#noticeJump").click()
                     assert page.locator("#notice").is_hidden()
                     assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "false"
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-current") == "location"
                     assert page.locator(
                         '.evidence-card[data-evidence-id="old_excursion_ticket"]'
                     ).evaluate("(el) => document.activeElement === el"), (
@@ -901,6 +918,12 @@ def main():
                             assert full_page.locator(".journal-event[hidden]").count() == 0
                             assert full_page.locator(".journal-event").count() >= before_expand + 6
                             assert full_page.locator(".journal-event:focus").count() == 1
+                            full_page.locator('button[data-tab="deductions"]').click()
+                            full_page.locator('#quickNav button[data-go="journal"]').click()
+                            assert full_page.locator(".journal-event[hidden]").count() == 0, (
+                                "Reopening the journal must preserve expanded earlier records"
+                            )
+                            assert full_page.locator(".journal-show-all").count() == 0
                         assert full_page.locator(".case-journal").evaluate(
                             "(el) => getComputedStyle(el).overflowY === 'visible' && "
                             "el.scrollHeight <= el.clientHeight + 1"

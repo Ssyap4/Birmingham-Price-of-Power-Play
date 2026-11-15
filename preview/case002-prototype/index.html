@@ -12,7 +12,7 @@
   <header class="masthead">
     <small>БИРМИНГЕМ • 1920</small>
     <h1>Последний поезд из Бирмингема</h1>
-    <p>Дело №002 · Кинематографическое расследование · Safari-бета</p>
+    <p>Дело №002 · Материалы частного расследования</p>
   </header>
   <section class="case002-briefing" id="caseBriefing" aria-labelledby="briefTitle" aria-describedby="briefPremise" tabindex="-1">
     <div class="briefing-visual">
@@ -30,7 +30,7 @@
         <div class="briefing-rule"><span aria-hidden="true">03</span><p>Прогресс сохраняется после решений, если браузер разрешает хранение. Продолжайте за того же сыщика.</p></div>
       </div>
       <button id="briefContinue" type="button" class="briefing-enter">ВЫБРАТЬ СЫЩИКА <span aria-hidden="true">→</span></button>
-      <p class="briefing-note">Самостоятельная Safari-бета Дела №002. Прогресс Дела №001 не изменяется.</p>
+      <p class="briefing-note">Самостоятельное расследование. История первого дела останется неизменной.</p>
     </div>
   </section>
   <section class="launch" id="launch" hidden aria-labelledby="launchTitle">
@@ -45,6 +45,7 @@
       <button type="button" class="hero-card" data-hero="samuel" aria-pressed="false"><img src="../../assets/heroes/samuel.webp" alt="" width="88" height="110"><span>Сэмюэл Рид<small>Механика</small></span></button>
     </div>
     <input id="hero" type="hidden" value="jack">
+    <p id="selectedHeroStatus" class="hero-selection-status" role="status" aria-live="polite"></p>
     <details id="priorDetails" class="prior-details" hidden>
       <summary>Связать с Делом №001 <span>необязательно</span></summary>
       <label for="prior">Сохранённый исход предыдущего дела</label>
@@ -121,6 +122,7 @@
       <button type="button" data-go="evidence">УЛИКИ</button>
       <button type="button" data-go="deductions">ВЫВОДЫ</button>
       <button type="button" data-go="witnesses">ЛЮДИ</button>
+      <button type="button" data-go="journal">ЖУРНАЛ</button>
     </nav>
     <div class="underbar">
       <span id="saveStatus">Автосохранение после каждого решения</span>
