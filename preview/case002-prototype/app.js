@@ -104,6 +104,7 @@ let dossierTrail=null; // One-hop navigation between already earned dossier card
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 let newRewardOnFinish=null; // First-ever earned key in this UI session only.
+let newAchievements=[]; // First-time persisted milestones of one committed action.
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
  journalExpanded=false,navSection="scene";
@@ -609,6 +610,73 @@ function renderRewardArchive(){
  }
  root.append(gallery);
 }
+/* Distinct from the 35 hero × ending seals. This archive only contains
+ * 18 actual verified milestones, never a projected future character or route.
+ * Display logic is read-only; unlock writes happen after engine.choose. */
+function renderAchievementArchive(){
+ const award=window.BirminghamCase002Achievements;
+ const snapshot=award.read(store),known=new Set(snapshot.items.map(a=>a.id));
+ const root=$("caseAchievementList");root.replaceChildren();
+ const count=known.size,archive=$("caseAchievementArchive");
+ setText($("caseAchievementCount"),count+" / "+award.catalog.length);
+ archive.dataset.status=snapshot.status;
+ root.append(make("p",snapshot.status==="damaged"?
+  "Архив достижений повреждён. Данные сохранения не изменены.":
+  snapshot.status==="unavailable"?
+  "Хранилище недоступно: достижения не могут быть зарегистрированы.":
+  "Достижения выдаются один раз за реальные поступки в Деле №002. Закрытые условия и незнакомые персонажи заранее не раскрываются.",
+  "case-achievement-note"));
+ const listing=make("div",undefined,"case-achievement-gallery");
+ for(const achievement of award.catalog){
+  const unlocked=known.has(achievement.id);
+  const card=make("article",undefined,"case-achievement-item");
+  card.dataset.achievementId=achievement.id;
+  card.dataset.unlocked=String(unlocked);
+  const sigil=make("span",unlocked?"✦":"◇","case-achievement-sigil");
+  sigil.setAttribute("aria-hidden","true");
+  const copy=make("div",undefined,"case-achievement-copy");
+  copy.append(make("strong",unlocked?achievement.name:"НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ"),
+   make("small",unlocked?achievement.description:"Закрыто · условие не раскрыто"));
+  card.append(sigil,copy);listing.append(card);
+ }
+ root.append(listing);
+}
+function renderAchievementReceipt(){
+ const root=$("caseAchievementReceipt");
+ root.replaceChildren();
+ root.hidden=!newAchievements.length;
+ if(root.hidden)return;
+ root.append(make("p","✦  ДОСТИЖЕНИЯ ОТКРЫТЫ · "+newAchievements.length,
+  "case-achievement-receipt-kicker"));
+ const list=make("ul",undefined,"case-achievement-receipt-list");
+ for(const milestone of newAchievements){
+  const li=make("li");
+  li.append(make("strong",milestone.name),make("span",milestone.description));
+  list.append(li);
+ }
+ root.append(list);
+ const dismiss=make("button","ПОНЯТНО","case-achievement-receipt-dismiss");
+ dismiss.type="button";
+ dismiss.addEventListener("click",()=>{
+  newAchievements=[];root.hidden=true;root.replaceChildren();
+  $("storyPanel").focus({preventScroll:true});
+ });
+ root.append(dismiss);
+}
+function grantCommittedAchievements(){
+ const award=window.BirminghamCase002Achievements;
+ if(!store)return [];
+ let records=[];
+ try{
+  const raw=JSON.parse(store.getItem(api.RECORD_KEY)||"[]");
+  if(!Array.isArray(raw))return [];
+  records=raw;
+ }catch(_){return [];}
+ const result=award.grant(store,engine.view(),data.contract,records);
+ if(result.status!=="ready")
+  console.warn("[Case002] achievements not persisted; collection unchanged",result.status);
+ return result.newly;
+}
 function refreshResume(){
  const hero=$("hero").value;
  let available=false;
@@ -635,6 +703,7 @@ function refreshResume(){
  setText($("selectedHeroStatus"),"Выбран: "+heroNames[hero]+
   (available?" · Можно продолжить сохранённое расследование":" · Готов к новому расследованию"));
  renderRewardArchive();
+ renderAchievementArchive();
 }
 // Guard against an older Safari/Telegram tab overwriting a newer saved run.
 // This compares existing slot data; the engine and save schema stay untouched.
@@ -701,6 +770,7 @@ function showGame(){
  journalExpanded=false;navSection="scene";
  lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  newRewardOnFinish=null; // Never replay a first-time reward upon resume/reload.
+ newAchievements=[]; // A loaded milestone is not a new pop-up.
  refreshNavigation();
  render();
  showCurrentScene();
@@ -1030,6 +1100,7 @@ function render(){
  const scenePlace=sceneLocations[stage.location]||"Место расследования";
  setText($("sceneLocation"),scenePlace);
  setText($("readingScenePlace"),scenePlace);
+ renderAchievementReceipt();
  renderNewFinds();
  renderSceneUpdates();
  setText($("sceneArtChapter"),"СЦЕНА "+scene.id+" · "+(stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ"));
@@ -1768,6 +1839,9 @@ function select(choice,fromScene){
       completionArchiveStatus(next).status==="verified")
      newRewardOnFinish=key;
   }
+  // The committed transition is the ONLY source of newly granted achievements.
+  // A storage failure cannot invalidate or replay the already saved action.
+  newAchievements=grantCommittedAchievements();
   recordNewDossierChanges(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
@@ -1790,7 +1864,7 @@ function select(choice,fromScene){
   const current=engine.snapshot();
   const committed=current.history.length>before.history.length;
   if(committed){
-   newRewardOnFinish=null; // Post-commit archive failure cannot earn a popup.
+   newRewardOnFinish=null;newAchievements=[]; // No false reward on archive errors.
    recordNewDossierChanges(before,current);
    lastDecisionReceipt=null;
    render();

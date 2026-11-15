@@ -84,6 +84,15 @@ def main():
                     assert page.locator("#caseRewardArchive").get_attribute(
                         "data-status") == "ready"
                     assert page.locator("#caseRewardCount").inner_text() == "0"
+                    assert page.locator("#caseAchievementCount").inner_text() == "0 / 18"
+                    page.locator("#caseAchievementArchive summary").click()
+                    assert page.locator(".case-achievement-item").count() == 18
+                    assert page.locator('.case-achievement-item[data-unlocked="true"]').count() == 0
+                    assert "Три цены власти" not in page.locator(
+                        "#caseAchievementList").inner_text(), (
+                        "Locked mastery achievement must not spoil future outcomes"
+                    )
+                    page.locator("#caseAchievementArchive summary").click()
                     page.locator("#caseRewardArchive summary").click()
                     assert "Закрытые концовки не раскрываются" in page.locator(
                         "#caseRewardList").inner_text()
@@ -1433,6 +1442,7 @@ def main():
                         link_page.goto(address, wait_until="load")
                         ensure_selection(link_page)
                         link_page.locator("#begin").click()
+                        saw_earned_achievement=False
                         for source,to,action in route[:-1]:
                             choice = link_page.locator(
                                 f'button.choice[data-to="{to}"][data-action="{action}"]'
@@ -1441,6 +1451,19 @@ def main():
                                 f"Deduction-link route blocked: {source}->{to}"
                             )
                             choice.click()
+                            if link_page.locator("#caseAchievementReceipt").is_visible():
+                                saw_earned_achievement=True
+                                assert link_page.locator(
+                                    ".case-achievement-receipt-list li").count() >= 1
+                        assert saw_earned_achievement, (
+                            "A real multi-route investigation never displayed a new milestone"
+                        )
+                        saved_achievements=link_page.evaluate("""() => JSON.parse(
+                            localStorage.getItem(window.BirminghamCase002Achievements.KEY)||'[]'
+                        )""")
+                        assert len(saved_achievements) >= 2
+                        assert len({item["id"] for item in saved_achievements}) == len(
+                            saved_achievements), "One unique milestone was awarded twice"
                         assert link_page.locator("#sceneId").inner_text().startswith("F09")
                         assert link_page.locator("#decisionPreflight").get_attribute(
                             "data-blocked") == "0", (
@@ -1585,6 +1608,14 @@ def main():
                         link_page.locator("#backToLaunch").click()
                         assert link_page.locator("#launch").is_visible()
                         assert link_page.locator("#caseRewardCount").inner_text() == "1"
+                        earned_count=int(link_page.locator(
+                            "#caseAchievementCount").inner_text().split("/")[0].strip())
+                        assert earned_count >= 2
+                        link_page.locator("#caseAchievementArchive summary").click()
+                        assert link_page.locator(
+                            '.case-achievement-item[data-unlocked="true"]').count() == earned_count
+                        assert link_page.locator(
+                            '.case-achievement-item[data-unlocked="false"]').count() == 18-earned_count
                         link_page.locator("#caseRewardArchive summary").click()
                         awarded=link_page.locator(".case-reward-entry")
                         assert awarded.count() == 1
@@ -1600,6 +1631,9 @@ def main():
                         assert link_page.locator("#finalePanel").is_visible()
                         assert link_page.locator(".finale-new-reward").count() == 0, (
                             "Returning to an already-earned ending must not replay reward receipt"
+                        )
+                        assert link_page.locator("#caseAchievementReceipt").is_hidden(), (
+                            "Returning to old completed save must not replay achievement notifications"
                         )
                         assert link_page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == shelf_save

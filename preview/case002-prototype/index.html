@@ -50,6 +50,10 @@
       <summary>НАГРАДЫ ДЕЛА №002 <span id="caseRewardCount">0</span></summary>
       <div id="caseRewardList" class="case-reward-list" aria-label="Уже полученные награды этого дела"></div>
     </details>
+    <details id="caseAchievementArchive" class="case-achievement-archive">
+      <summary>ДОСТИЖЕНИЯ ДЕЛА №002 <span id="caseAchievementCount">0 / 18</span></summary>
+      <div id="caseAchievementList" class="case-achievement-list" aria-label="Достижения расследования"></div>
+    </details>
     <details id="priorDetails" class="prior-details" hidden>
       <summary>Связать с Делом №001 <span>необязательно</span></summary>
       <label for="prior">Сохранённый исход предыдущего дела</label>
@@ -92,6 +96,8 @@
         <div class="scene-heading-title"><span class="portrait-label">ИСТОРИЯ ГЕРОЯ</span><h2 id="sceneTitle"></h2><span id="heroName" class="hero-name"></span></div>
       </div>
       <div id="sceneLocation" class="scene-location"></div>
+      <section id="caseAchievementReceipt" class="case-achievement-receipt"
+        aria-label="Новые достижения" aria-live="polite" hidden></section>
       <div class="story-read-action"><button id="readScene" class="story-read-button" type="button">К ТЕКСТУ СЦЕНЫ ↓</button></div>
       <figure id="sceneArtwork" class="scene-artwork" hidden>
         <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
@@ -167,6 +173,7 @@
 <script src="../../src/case002/scene-prose-v1.js"></script>
 <script src="../../src/case002/ui-events-v1.js"></script>
 <script src="../../src/case002/ending-recap-v1.js"></script>
+<script src="../../src/case002/achievements-v1.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
