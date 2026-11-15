@@ -463,6 +463,11 @@ def main():
                             assert font_size >= 11.15, (
                                 f"{browser_name}: {width}px quick navigation text too small ({font_size})"
                             )
+                            assert navbutton.evaluate("""el => {
+                                const r = document.createRange();
+                                r.selectNodeContents(el);
+                                return r.getClientRects().length <= 1;
+                            }"""), f"{browser_name}: {width}px quick navigation label wrapped"
                         for tabbutton in page.locator(".tool-tab").all():
                             assert tabbutton.evaluate(
                                 "(el) => parseFloat(getComputedStyle(el).fontSize)"

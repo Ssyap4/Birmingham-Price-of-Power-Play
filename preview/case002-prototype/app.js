@@ -527,7 +527,7 @@ function render(){
  setText($("choicesHeading"),s.finished?"Итог расследования":"Ваше решение");
  setText($("choicesHint"),s.finished?"Здесь показан исход этой попытки.":"Каждый выбор имеет последствия");
  const dockChoice=document.querySelector('#quickNav [data-go="choices"]');
- if(dockChoice)setText(dockChoice,s.finished?"ИТОГ":"РЕШЕНИЕ");
+ if(dockChoice)setText(dockChoice,s.finished?"ИТОГ":"ВЫБОР");
  setText($("pulseEvidence"),"Улик: "+s.evidence.length);
  setText($("pulseProof"),"Выводов: "+Object.values(v.facts).filter(Boolean).length);
  setText($("pulseSafe"),"В безопасности: "+v.safeWitnessCount);
