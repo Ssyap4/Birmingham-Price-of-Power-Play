@@ -3,5 +3,5 @@
  "version":2,
  "framework":null,
  "buildCommand":"node deployment/case002-safari-preview.js",
- "outputDirectory":".case002-preview-dist"
+ "outputDirectory":"case002-preview-dist"
 }
