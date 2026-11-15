@@ -27,3 +27,7 @@ Release gate:
 
 Unresolved: isolated site deployment and independent live Safari acceptance.
 No final live link should be claimed before the host confirms deployment.
+
+### Package CI correction
+
+Workflow 43656108077 verified all 102 SHA-256 portrait assets and created a 134-file, 12.4 MiB package successfully; only the upload step failed because `actions/upload-artifact@v4` excludes dot-prefixed directories by default. The staging output directory is now `case002-preview-dist` (without a leading dot) everywhere: in the builder, Vercel configuration and upload workflow. This is a packaging failure, not a game or image QA failure.
