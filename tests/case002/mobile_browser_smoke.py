@@ -120,6 +120,17 @@ def main():
                     assert page.locator(".masthead").is_visible()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
+                    # Scene context travels with the reader to distant sections.
+                    assert page.locator("#readingSceneMarker").inner_text().endswith("P01")
+                    assert page.locator("#decisionSceneMarker").inner_text().endswith("P01")
+                    assert "Ночной тормоз" in page.locator("#decisionSceneTitle").inner_text()
+                    assert page.locator("#toolsSceneMarker").inner_text().endswith("P01")
+                    assert page.locator("#toolsSectionLabel").inner_text() == "УЛИКИ"
+                    assert page.locator("#readingScenePlace").inner_text()
+                    assert "Каждый выбор имеет последствия" not in page.locator("#choicesHint").inner_text() or (
+                        page.locator(".choice-locked").count() == 0 and
+                        page.locator(".choice.is-danger").count() == 0
+                    )
                     assert page.locator("#chapterIntertitle").is_visible()
                     assert page.locator("#chapterIntertitle").evaluate(
                         "(el) => 0 <= el.getBoundingClientRect().top < 170"
@@ -239,6 +250,10 @@ def main():
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: a decision must transfer focus to the next scene"
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#readingSceneMarker").inner_text().endswith("P02")
+                    assert page.locator("#decisionSceneMarker").inner_text().endswith("P02")
+                    assert page.locator("#toolsSceneMarker").inner_text().endswith("P02")
+                    assert page.locator("#decisionSceneTitle").inner_text() == page.locator("#sceneTitle").inner_text()
                     assert page.locator("#readerBridge").count() == 1
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P02")
                     assert page.locator("#storyPanel").evaluate(
@@ -508,6 +523,7 @@ def main():
                     # A collected clue can be sent straight to the comparison wall.
                     page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"] .evidence-to-board').click()
                     assert page.locator('button[data-tab="deductions"]').get_attribute("aria-pressed") == "true"
+                    assert page.locator("#toolsSectionLabel").inner_text() == "ВЫВОДЫ"
                     assert page.locator('.pair-item[data-evidence-id="old_excursion_ticket"]').get_attribute("aria-pressed") == "true"
                     assert "Старинный билет" in page.locator(".pair-connection").inner_text()
                     # Return to dossier without advancing the case.

@@ -101,13 +101,22 @@
       </div>
       <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
       <div class="narrative-divider" aria-hidden="true"><span>✦</span> ДЕЛО №002 <span>✦</span></div>
+      <div class="scene-context scene-reading-context" aria-label="Место в расследовании">
+        <span id="readingSceneMarker"></span><span id="readingScenePlace"></span>
+      </div>
       <div class="story-content" id="sceneText" role="region" aria-label="Текст текущей сцены" tabindex="-1"></div>
     </article>
     <section class="choices" id="choicesPanel" aria-label="Действия" tabindex="-1">
+      <div class="scene-context scene-decision-context" aria-label="Сцена, для которой принимается решение">
+        <span id="decisionSceneMarker"></span><strong id="decisionSceneTitle"></strong>
+      </div>
       <h3><span id="choicesHeading">Ваше решение</span> <span class="choices-hint" id="choicesHint">Каждый выбор имеет последствия</span></h3>
       <div id="choiceList" class="choice-list"></div>
     </section>
     <section class="case-tools" id="caseTools" aria-label="Досье расследования" tabindex="-1">
+      <div class="scene-context scene-tools-context" aria-label="Текущая глава и раздел досье">
+        <span id="toolsSceneMarker"></span><strong id="toolsSectionLabel"></strong>
+      </div>
       <div class="tool-tabs" role="group" aria-label="Вспомогательные разделы">
         <button class="tool-tab" data-tab="evidence" aria-pressed="true">УЛИКИ</button>
         <button class="tool-tab" data-tab="deductions" aria-pressed="false">ВЫВОДЫ</button>

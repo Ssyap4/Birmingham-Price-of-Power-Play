@@ -823,7 +823,21 @@ function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
  $("game").dataset.completed=String(Boolean(s.finished));
  setText($("choicesHeading"),s.finished?"Итог расследования":"Ваше решение");
- setText($("choicesHint"),s.finished?"Здесь показан исход этой попытки.":"Каждый выбор имеет последствия");
+ // Local context is repeated only at the destinations of long mobile jumps.
+ // It describes the current earned scene, never a future branch or ending.
+ const chapterName=stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ";
+ const sceneMarker=chapterName+" · "+scene.id;
+ setText($("readingSceneMarker"),sceneMarker);
+ setText($("decisionSceneMarker"),sceneMarker);
+ setText($("toolsSceneMarker"),sceneMarker);
+ setText($("decisionSceneTitle"),scene.title);
+ const visibleChoices=s.finished?[]:v.choices.filter(choice=>s.node!=="F09"||choice.enabled);
+ const risky=visibleChoices.some(choice=>choice.enabled&&choice.confirm);
+ const unavailable=visibleChoices.some(choice=>!choice.enabled);
+ setText($("choicesHint"),s.finished?"Здесь показан исход этой попытки.":
+  risky?"Есть действие со смертельным риском. Оно выделено отдельно.":
+  unavailable?"Доступные действия — первыми. Причины закрытых путей можно раскрыть.":
+  "Доступные действия показаны ниже. Каждый выбор имеет последствия.");
  const dockChoice=document.querySelector('#quickNav [data-go="choices"]');
  if(dockChoice)setText(dockChoice,s.finished?"ИТОГ":"ВЫБОР");
  setText($("pulseEvidence"),"Улик: "+s.evidence.length);
@@ -840,6 +854,7 @@ function render(){
  host.dataset.artVerified="false";
  const scenePlace=sceneLocations[stage.location]||"Место расследования";
  setText($("sceneLocation"),scenePlace);
+ setText($("readingScenePlace"),scenePlace);
  renderNewFinds();
  renderSceneUpdates();
  setText($("sceneArtChapter"),"СЦЕНА "+scene.id+" · "+(stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ"));
@@ -991,6 +1006,8 @@ function renderEndingRecap(target,view){
  target.append(panel);
 }
 function renderTools(){
+ const sectionLabels={evidence:"УЛИКИ",deductions:"ВЫВОДЫ",witnesses:"ЛЮДИ",journal:"ХОД ДЕЛА"};
+ setText($("toolsSectionLabel"),sectionLabels[tab]||"МАТЕРИАЛЫ");
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
  if(tab==="deductions"){

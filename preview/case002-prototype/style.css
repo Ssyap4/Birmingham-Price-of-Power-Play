@@ -876,3 +876,29 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(max-width:359px){#game .scene-update-group{padding:9px}
  #game .scene-update-group-kicker{letter-spacing:.06em}
  #game .scene-update-group-read{font-size:.71rem;letter-spacing:0}}
+
+/* Cycle 1, stage 1: low-noise location cues after the portrait, at the
+   decision threshold, and inside the dossier. They share one visual rhythm
+   without inserting interactive controls or changing scroll bookmarks. */
+#game .scene-context{min-width:0;display:flex;align-items:baseline;
+ flex-wrap:wrap;gap:4px 11px;color:#c7b08f;font:600 .69rem/1.45 system-ui,sans-serif}
+#game .scene-context span,#game .scene-context strong{min-width:0;overflow-wrap:anywhere}
+#game .scene-context span:first-child{letter-spacing:.11em;color:#d3ad77;font-size:.66rem}
+#game .scene-reading-context{border-top:1px solid #5d472e;
+ margin:0 0 15px;padding:11px 2px 0;justify-content:space-between}
+#game .scene-reading-context span:last-child{font-weight:500;color:#bcaa91}
+#game .scene-decision-context{border-bottom:1px solid #674c31;
+ padding:0 1px 11px;margin:0 0 13px;display:grid;gap:4px}
+#game .scene-decision-context strong{color:#edd6b3;
+ font:600 clamp(.91rem,3.5vw,1.02rem)/1.35 Georgia,serif}
+#game .scene-tools-context{padding:11px 13px 10px;
+ justify-content:space-between;gap:5px 12px;
+ border-bottom:1px solid #4f3b29;background:#1c1612}
+#game .scene-tools-context strong{color:#eed3ab;
+ font:800 .68rem/1.4 system-ui,sans-serif;letter-spacing:.1em}
+#game .choices-hint{max-width:50ch;line-height:1.5;color:#c1a98a}
+@media(max-width:359px){
+ #game .scene-tools-context{padding:9px 10px}
+ #game .scene-reading-context{gap:2px 8px}
+ #game .scene-context span:first-child{letter-spacing:.045em}
+}
