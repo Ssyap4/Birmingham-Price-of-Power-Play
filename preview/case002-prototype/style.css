@@ -734,3 +734,27 @@ html[data-case002-telegram="true"] .tool-tab{
  overflow-wrap:anywhere}
 .scene-finds-link:focus-visible{outline:3px solid #f9ddae;outline-offset:2px}
 #toolContent:focus-visible{outline:2px solid #dbb47b;outline-offset:-4px}
+
+/* Stage 10: an unobtrusive reading-to-decision bridge, after the full prose.
+   Original art remains untouched and the controls never commit game choices. */
+.reader-bridge{display:grid;gap:9px;margin:19px 0 2px;padding:17px 13px 14px;
+ border-top:1px solid #8d6940;border-bottom:1px solid #644a32;
+ background:linear-gradient(145deg,#34261b,#211911 85%);border-radius:5px}
+.reader-bridge-marker{color:#deb989;font:800 .66rem/1.4 system-ui,sans-serif;
+ letter-spacing:.17em}
+.reader-bridge-summary{margin:0!important;color:#e9d3b5;
+ font:.84rem/1.5 system-ui,sans-serif}
+.reader-bridge-button{width:100%;min-height:51px;
+ background:linear-gradient(125deg,#d9b885,#9d713d);color:#24180e;
+ border:1px solid #f2d1a0;border-radius:5px;font:800 .79rem/1.35 system-ui,sans-serif;
+ letter-spacing:.04em;text-align:center}
+.reader-bridge-button:focus-visible,.reader-return:focus-visible{
+ outline:3px solid #ffe5b1;outline-offset:2px}
+#game .reader-return{width:100%;min-height:44px;display:block;margin:-1px 0 12px;
+ padding:8px 10px;background:#241b15;border:1px solid #6b533a;border-radius:5px;
+ color:#dec095;text-align:center;font:700 .73rem/1.35 system-ui,sans-serif;
+ letter-spacing:.035em}
+@media(max-width:359px){.reader-bridge{padding:13px 10px 12px}
+ .reader-bridge-button{font-size:.75rem;letter-spacing:.01em}}
+@media(prefers-reduced-motion:reduce){
+ .reader-bridge,.reader-bridge-button,.reader-return{animation:none!important;transition:none!important}}

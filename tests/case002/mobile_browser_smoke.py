@@ -127,6 +127,25 @@ def main():
                     assert page.locator("#chapterIntertitle").get_attribute("data-chapter") == "P"
                     assert "Ночь, когда" in page.locator("#intertitleLine").inner_text()
                     assert page.locator("#quickNav button").count() == 6
+                    # Read-only handoff from the end of prose to choices and back.
+                    assert page.locator("#readerBridge").count() == 1
+                    assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
+                    assert "доступн" in page.locator("#readerBridgeSummary").inner_text()
+                    first_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
+                    page.locator("#readerToChoices").click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: reader next must focus decisions"
+                    assert page.locator("#sceneId").inner_text().startswith("P01")
+                    page.locator("#choicesBackToText").click()
+                    assert page.locator("#sceneText").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: reader back must focus current narration"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == first_save, (
+                        "Reading controls must never rewrite a save or progress a scene"
+                    )
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 0"
                     assert page.locator("#pulseProof").inner_text() == "Выводов: 0"
                     page.locator('#quickNav button[data-go="journal"]').click()
@@ -186,6 +205,8 @@ def main():
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: a decision must transfer focus to the next scene"
                     assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.locator("#readerBridge").count() == 1
+                    assert page.locator("#readerBridgeMarker").inner_text().endswith("P02")
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => 0 <= el.getBoundingClientRect().top < 170"
                     ), f"{browser_name}: after a decision the next scene must be on screen"
@@ -501,6 +522,10 @@ def main():
                             assert label_metrics["count"] <= 1, (
                                 f"{browser_name}: {width}px quick navigation wrap: {label_metrics}"
                             )
+                        assert page.locator("#readerToChoices").bounding_box()["height"] >= 44, (
+                            f"{browser_name}: reader next must be touch-sized at {width}px"
+                        )
+                        assert page.locator("#choicesBackToText").bounding_box()["height"] >= 44
                         for tabbutton in page.locator(".tool-tab").all():
                             assert tabbutton.evaluate(
                                 "(el) => parseFloat(getComputedStyle(el).fontSize)"
@@ -1015,6 +1040,8 @@ def main():
                         last_choice.click()
                         assert full_page.locator("#sceneId").inner_text().startswith("Z02")
                         assert full_page.locator("#finalePanel").is_visible()
+                        assert full_page.locator("#readerBridge").get_attribute("data-finished") == "true"
+                        assert "ПОСМОТРЕТЬ ИТОГ" in full_page.locator("#readerToChoices").inner_text()
                         assert full_page.locator("#notice").is_hidden(), (
                             "Successful finale should not be obscured by a duplicate receipt"
                         )

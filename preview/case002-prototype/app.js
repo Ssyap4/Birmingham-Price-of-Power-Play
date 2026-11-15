@@ -372,6 +372,45 @@ function make(tag,text,cls){const e=document.createElement(tag);if(cls)e.classNa
 function sceneNarration(view){
  return window.BirminghamCase002Narrative.render(data,view);
 }
+/* Stage 10: reversible reading-to-decision navigation. UI state only.
+ * These controls never invoke engine choose/reset or modify saves/rewards. */
+function renderReadingBridge(view){
+ let footer=$("readerBridge");
+ if(!footer){
+  footer=make("div",undefined,"reader-bridge");
+  footer.id="readerBridge";
+  footer.setAttribute("aria-label","Переход от текста сцены к решениям");
+  const marker=make("span","КОНЕЦ СЦЕНЫ","reader-bridge-marker");
+  marker.id="readerBridgeMarker";
+  const summary=make("p",undefined,"reader-bridge-summary");
+  summary.id="readerBridgeSummary";
+  const button=make("button","К РЕШЕНИЮ ↓","reader-bridge-button");
+  button.id="readerToChoices";
+  button.type="button";
+  button.setAttribute("aria-controls","choicesPanel");
+  button.addEventListener("click",()=>jumpTo("choices"));
+  footer.append(marker,summary,button);
+  $("sceneText").insertAdjacentElement("afterend",footer);
+  const back=make("button","↑ ВЕРНУТЬСЯ К ТЕКСТУ СЦЕНЫ","reader-return");
+  back.id="choicesBackToText";
+  back.type="button";
+  back.setAttribute("aria-controls","sceneText");
+  back.addEventListener("click",()=>jumpTo("reading"));
+  $("choiceList").insertAdjacentElement("beforebegin",back);
+ }
+ const finished=Boolean(view.state.finished);
+ const available=[...$("choiceList").querySelectorAll("button.choice:not(:disabled)")].length;
+ setText($("readerBridgeMarker"),finished?"РАЗВЯЗКА ДЕЛА":"КОНЕЦ СЦЕНЫ · "+view.scene.id);
+ const count=available===1?"1 доступное действие":
+  available>=2&&available<=4?available+" доступных действия":
+  available+" доступных действий";
+ setText($("readerBridgeSummary"),finished?
+  "История завершена. Ниже — итог вашего расследования.":count+". Решения находятся сразу под сценой.");
+ setText($("readerToChoices"),finished?"ПОСМОТРЕТЬ ИТОГ ↓":"ПЕРЕЙТИ К РЕШЕНИЯМ ↓");
+ setText($("choicesBackToText"),finished?
+  "↑ ВЕРНУТЬСЯ К ЭПИЛОГУ":"↑ ВЕРНУТЬСЯ К ТЕКСТУ СЦЕНЫ");
+ footer.dataset.finished=String(finished);
+}
 function hideNotice(){
  $("notice").hidden=true;
  $("notice").classList.remove("is-expanded");
@@ -628,6 +667,7 @@ function render(){
    }
  }
  renderTools();
+ renderReadingBridge(v);
 }
 // The finale is a read-only view over the already committed Case 002 state.
 // It never unlocks a second ending, changes a saved slot, or awards a reward.
