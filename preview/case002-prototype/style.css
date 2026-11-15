@@ -363,3 +363,10 @@ html[data-case002-telegram="true"] .evidence-card{
 @media(prefers-reduced-motion:reduce){
  .case002-briefing,.briefing-visual,.briefing-enter{transition:none!important;animation:none!important}
 }
+
+/* The case title belongs to the illustrated briefing, not a repeated masthead. */
+.app-shell[data-screen="briefing"] .masthead,
+.app-shell[data-screen="selection"] .masthead{display:none}
+.case002-briefing{margin-top:6px}
+.briefing-visual{height:clamp(160px,43vw,220px)}
+.launch .launch-actions #resume[hidden]{display:none!important}

@@ -54,12 +54,16 @@ def main():
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#caseBriefing").is_visible()
                     assert page.locator("#launch").is_hidden()
+                    assert page.locator(".masthead").is_hidden()
+                    assert page.locator("#resume").is_hidden()
                     assert "виадука" in page.locator("#caseBriefing").inner_text().lower()
                     assert page.locator(".briefing-rule").count() == 3
                     assert "сохраняется" in page.locator("#caseBriefing").inner_text().lower()
                     visual_dir=ROOT/"case002-qa-screens"
                     page.screenshot(path=str(visual_dir/f"{browser_name}-briefing.png"),full_page=True)
                     ensure_selection(page)
+                    assert page.locator(".masthead").is_hidden()
+                    assert page.locator("#resume").is_hidden()
                     assert page.locator("#begin").is_visible()
                     visual_dir.mkdir(parents=True,exist_ok=True)
                     page.wait_for_function(
@@ -105,6 +109,7 @@ def main():
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: entering the case must focus its story landmark"
+                    assert page.locator(".masthead").is_visible()
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     assert "Ночной тормоз" in page.locator("#sceneTitle").inner_text()
                     assert page.locator("#chapterIntertitle").is_visible()

@@ -142,9 +142,11 @@ function init(){
  }catch(e){console.warn("[Case 002] Cannot inspect saved slots",e);}
  $("caseBriefing").hidden=hasSave;
  $("launch").hidden=!hasSave;
+ $("app").dataset.screen=hasSave?"selection":"briefing";
  $("briefContinue").addEventListener("click",()=>showSelection({focus:true}));
  $("backToBriefing").addEventListener("click",()=>{
   $("launch").hidden=true;$("caseBriefing").hidden=false;
+  $("app").dataset.screen="briefing";
   $("caseBriefing").focus({preventScroll:true});
   window.scrollTo(0,0);
  });
@@ -194,6 +196,7 @@ function selectedHeroButton(){
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
  $("launch").hidden=false;
+ $("app").dataset.screen="selection";
  refreshResume();
  if(focus)selectedHeroButton()?.focus({preventScroll:true});
  window.scrollTo(0,0);
@@ -212,6 +215,7 @@ function refreshResume(){
   console.warn("[Case002] save availability check failed",e);
  }
  $("resume").disabled=!available;
+ $("resume").hidden=!available;
 }
 // Guard against an older Safari/Telegram tab overwriting a newer saved run.
 // This compares existing slot data; the engine and save schema stay untouched.
@@ -271,6 +275,7 @@ function resume(){
 }
 function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
+ $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
  render();
