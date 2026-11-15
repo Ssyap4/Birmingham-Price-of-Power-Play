@@ -1702,6 +1702,10 @@ def main():
                                 "A long earned collection must offer one bottom return"
                             )
                             link_page.locator(".collection-return-inline").click()
+                            assert link_page.locator(f"#{archive_id}").get_attribute(
+                                "open") is None, (
+                                "Returning to finale must collapse a hidden archive for next visit"
+                            )
                             assert link_page.locator("#finalePanel").evaluate(
                                 "(el) => document.activeElement === el"
                             ), "Collection return must focus the real completed report"

@@ -579,6 +579,10 @@ function openFinaleCollection(kind){
 function returnFromCollection(){
  const point=collectionReturnPoint;
  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
+ // A hidden expanded <details> would make the next ordinary tap close the
+ // shelf instead of opening it. Always return with both shelves collapsed.
+ $("caseRewardArchive").open=false;
+ $("caseAchievementArchive").open=false;
  if(!point||!engine)return;
  const s=engine.snapshot();
  // Refuse an obsolete bookmark rather than open a different character's case.
