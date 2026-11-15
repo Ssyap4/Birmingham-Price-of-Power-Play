@@ -90,16 +90,20 @@
       <div class="story-read-action"><button id="readScene" class="story-read-button" type="button">К ТЕКСТУ СЦЕНЫ ↓</button></div>
       <figure id="sceneArtwork" class="scene-artwork" hidden>
         <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
+        <figcaption class="scene-art-caption" aria-label="Подпись кадра">
+          <span id="sceneArtChapter">КАДР</span><span id="sceneArtPlace">Место расследования</span>
+        </figcaption>
       </figure>
       <div id="artRecovery" class="art-recovery" role="status" hidden>
         <p>Иллюстрация временно недоступна. Текст и решения можно читать дальше.</p>
         <button id="artRetry" type="button" class="art-retry">ПОВТОРИТЬ ЗАГРУЗКУ</button>
       </div>
       <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
+      <div class="narrative-divider" aria-hidden="true"><span>✦</span> ДЕЛО №002 <span>✦</span></div>
       <div class="story-content" id="sceneText" role="region" aria-label="Текст текущей сцены" tabindex="-1"></div>
     </article>
     <section class="choices" id="choicesPanel" aria-label="Действия" tabindex="-1">
-      <h3>Ваше решение</h3>
+      <h3>Ваше решение <span class="choices-hint">Каждый выбор имеет последствия</span></h3>
       <div id="choiceList" class="choice-list"></div>
     </section>
     <section class="case-tools" id="caseTools" aria-label="Досье расследования" tabindex="-1">

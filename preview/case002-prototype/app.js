@@ -483,7 +483,10 @@ function render(){
  host.dataset.artVariant=stage.variantKey;
  host.dataset.artLocation=stage.location;
  host.dataset.artVerified="false";
- setText($("sceneLocation"),sceneLocations[stage.location]||"Место расследования");
+ const scenePlace=sceneLocations[stage.location]||"Место расследования";
+ setText($("sceneLocation"),scenePlace);
+ setText($("sceneArtChapter"),"СЦЕНА "+scene.id+" · "+(stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ"));
+ setText($("sceneArtPlace"),scenePlace);
  renderApprovedSceneArt(stage);
  renderSceneCast(stage,s);
  const chapterCard=$("chapterIntertitle");
@@ -537,35 +540,71 @@ function renderTools(){
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
  if(tab==="deductions"){
    const compare=window.BirminghamCase002DeductionBoard,held=v.state.evidence;
+   if(pairFirst&&!held.includes(pairFirst)){pairFirst=null;pairFeedback=null;}
    if(held.length){
     const panel=make("section",undefined,"pair-board");
     panel.setAttribute("aria-label","Доска сопоставления улик");
-    panel.append(make("h4","Доска расследования"));
-    panel.append(make("p","Коснитесь улики, прочитайте подсказку и выберите вторую. Ошибки не влияют на сюжет и сохранение."));
+    panel.append(make("p","ЛИЧНОЕ ДОСЬЕ · ДОСКА СВЯЗЕЙ","pair-kicker"));
+    const header=make("div",undefined,"pair-board-head");
+    header.append(make("h4","Найти связь"));
+    header.append(make("span",held.length+" "+(held.length===1?"улика":"улик")+" в деле","pair-total"));
+    panel.append(header);
+    panel.append(make("p","Выберите две находки. При первом касании появится подсказка. Ошибки не мешают расследованию.","pair-instruction"));
+    const wire=make("div",undefined,"pair-connection");
+    wire.setAttribute("aria-label",pairFirst?"Первая улика выбрана: "+evidenceName(pairFirst)+". Выберите вторую.":"Первая и вторая улики пока не выбраны");
+    const left=make("span",pairFirst?evidenceName(pairFirst):"ПЕРВАЯ УЛИКА","pair-connection-slot");
+    const join=make("span","◆","pair-connection-symbol");
+    join.setAttribute("aria-hidden","true");
+    const right=make("span",pairFirst?"ВЫБЕРИТЕ ВТОРУЮ":"ВТОРАЯ УЛИКА","pair-connection-slot");
+    if(pairFirst)left.classList.add("is-filled");
+    wire.append(left,join,right);
+    panel.append(wire);
     const gallery=make("div",undefined,"pair-items");
     for(const id of held){
      const btn=make("button",undefined,"pair-item");
      btn.type="button";btn.dataset.evidenceId=id;
      btn.setAttribute("aria-pressed",String(pairFirst===id));
+     btn.setAttribute("aria-label",evidenceName(id)+(pairFirst===id?", выбрана первая улика":""));
      const icon=window.BirminghamCase002EvidenceArt.create(id);
      icon.setAttribute("aria-hidden","true");
-     btn.append(icon,make("span",evidenceName(id)));
+     const copy=make("span",undefined,"pair-item-copy");
+     copy.append(make("strong",evidenceName(id)));
+     if(pairFirst===id)copy.append(make("small",evidenceHints[id]||"Сравните с независимым свидетельством.","pair-item-hint"));
+     btn.append(icon,copy);
      btn.addEventListener("click",()=>{
-      if(!pairFirst||pairFirst===id){
-       pairFirst=pairFirst===id?null:id;
-       pairFeedback=pairFirst?{title:evidenceName(id),message:evidenceHints[id]||"Сравните материал с независимыми свидетельствами."}:null;
+      const first=pairFirst;
+      if(!first||first===id){
+       pairFirst=first===id?null:id;
+       pairFeedback=null;
       }else{
-       pairFeedback=compare.comparePair(data.contract,engine.view().state.evidence,pairFirst,id);
+       pairFeedback=compare.comparePair(data.contract,engine.view().state.evidence,first,id);
+       pairFeedback.first=first;pairFeedback.second=id;
        pairFirst=null;
       }
       renderTools();
+      if(pairFirst){
+       const fresh=root.querySelector('.pair-item[data-evidence-id="'+pairFirst+'"]');
+       fresh?.focus({preventScroll:true});
+      }else if(pairFeedback){
+       const result=root.querySelector(".pair-result");
+       result?.focus({preventScroll:true});
+       result?.scrollIntoView({block:"nearest",behavior:"auto"});
+      }else{
+       root.querySelector('.pair-item[data-evidence-id="'+id+'"]')?.focus({preventScroll:true});
+      }
      });
      gallery.append(btn);
     }
     panel.append(gallery);
     if(pairFeedback){
      const result=make("div",undefined,"pair-result");
+     result.dataset.kind=pairFeedback.kind||"hint";
      result.setAttribute("role","status");result.setAttribute("aria-live","polite");
+     result.tabIndex=-1;
+     result.append(make("span",pairFeedback.kind==="match"?"СВЯЗЬ ПОДТВЕРЖДЕНА":
+       pairFeedback.kind==="unrelated"?"ЕСТЬ ДРУГОЙ ПУТЬ":"ПОДСКАЗКА","pair-result-status"));
+     if(pairFeedback.first&&pairFeedback.second)
+       result.append(make("div",evidenceName(pairFeedback.first)+" + "+evidenceName(pairFeedback.second),"pair-result-sources"));
      result.append(make("strong",pairFeedback.title),make("span",pairFeedback.message));
      panel.append(result);
     }
@@ -651,7 +690,18 @@ function renderTools(){
       if(source)description.append(make("small","Получено: "+source.title,"evidence-origin"));
       else if(item.source==="legacy-save")description.append(
         make("small","Перенесено из старого сохранения","evidence-origin"));
-      li.append(icon,description);
+      const openPair=make("button","НА ДОСКУ","evidence-to-board");
+      openPair.type="button";
+      openPair.setAttribute("aria-label","Сопоставить улику: "+evidenceName(item.id));
+      openPair.addEventListener("click",()=>{
+       pairFirst=item.id;pairFeedback=null;
+       tab="deductions";evidenceFocus=null;
+       renderTools();
+       const selected=root.querySelector('.pair-item[data-evidence-id="'+item.id+'"]');
+       selected?.focus({preventScroll:true});
+       selected?.scrollIntoView({block:"center",behavior:"auto"});
+      });
+      li.append(icon,description,openPair);
       list.append(li);
     }
     root.append(list);
@@ -688,7 +738,7 @@ function select(choice,fromScene){
   const next=engine.choose(choice.to,choice.action);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
-  evidenceFocus=null;
+  evidenceFocus=null;pairFirst=null;pairFeedback=null;
   render();
   showNotice(event.message,event.focus,event.details);
   // The old clicked choice no longer exists. Give the next scene focus and

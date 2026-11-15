@@ -47,3 +47,12 @@ protagonists and were unsuitable for hero selection. The exporter still copies
 only five hero images, preserving the isolated package scope. Existing
 published HTTPS beta must not be treated as updated until a new Vercel deployment
 is explicitly checked and accepted.
+
+### UI milestone: scene presentation and evidence wall
+
+Case 002 adds a scene-film caption below each independently approved 720×900
+image, character-specific dialogue treatments, numbered decision cards and an
+optional two-clue deduction wall. Every evidence card can be sent to the wall.
+Hints appear when the first clue is selected, and comparisons do not mutate
+engine state, save records, rewards or story logic. The layout must be checked
+at mobile phone widths and with Chromium + WebKit before a later Safari release.

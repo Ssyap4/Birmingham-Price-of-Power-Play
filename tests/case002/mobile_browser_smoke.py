@@ -164,6 +164,14 @@ def main():
                     assert page.locator("#sceneArtworkImage").evaluate(
                         "(img) => img.currentSrc.endsWith('case002-p01-scene--mobile.webp')"
                     )
+                    assert page.locator("#sceneArtChapter").inner_text().startswith("СЦЕНА P01")
+                    assert "Частная железнодорожная ветка" in page.locator("#sceneArtPlace").inner_text()
+                    assert page.locator("#sceneArtwork").evaluate(
+                        "(figure) => figure.querySelector('figcaption') !== null"
+                    )
+                    assert page.locator("#sceneArtworkImage").evaluate(
+                        "(img) => img.getBoundingClientRect().height / img.getBoundingClientRect().width > 1.20"
+                    ), "Portrait artwork must not be stretched or flattened"
                     assert "Частная железнодорожная ветка" in page.locator(
                         "#sceneLocation"
                     ).text_content()
@@ -199,6 +207,9 @@ def main():
                     )
                     assert page.locator("#sceneText .scene-spoken-line").nth(0).get_attribute("data-speaker") == "Мэйбл Кросс"
                     assert page.locator("#sceneText .scene-spoken-line").nth(1).get_attribute("data-speaker") == "Вы"
+                    assert page.locator(".narrative-divider").is_visible()
+                    assert page.locator(".choices-hint").count() == 1
+                    assert page.locator("#choicesPanel .choice:not([disabled])").first.bounding_box()["height"] >= 48
                     page.screenshot(path=str(visual_dir/f"{browser_name}-dialogue.png"),full_page=True)
                     assert page.locator("#readScene").bounding_box()["height"] >= 44
                     page.locator("#readScene").click()
@@ -352,6 +363,13 @@ def main():
                         "New evidence must receive keyboard focus after jumping from notice"
                     )
                     assert page.locator("#sceneId").inner_text().startswith("A05")
+                    # A collected clue can be sent straight to the comparison wall.
+                    page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"] .evidence-to-board').click()
+                    assert page.locator('button[data-tab="deductions"]').get_attribute("aria-pressed") == "true"
+                    assert page.locator('.pair-item[data-evidence-id="old_excursion_ticket"]').get_attribute("aria-pressed") == "true"
+                    assert "Старинный билет" in page.locator(".pair-connection").inner_text()
+                    # Return to dossier without advancing the case.
+                    page.locator('button[data-tab="evidence"]').click()
                     assert "сведения в досье" in page.locator("#toolContent").inner_text().lower(), (
                         "clue must show recorded-not-original custody on iPhone"
                     )
@@ -862,8 +880,18 @@ def main():
                         deductions = full_page.locator(".deduction-card")
                         assert deductions.count() >= 1, "Investigated case has no earned deductions"
                         assert full_page.locator(".pair-board .pair-item").count() >= 2
+                        initial_save=full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
                         full_page.locator(".pair-board .pair-item").first.click()
+                        assert full_page.locator('.pair-item[aria-pressed="true"]').count() == 1
+                        assert full_page.locator(".pair-item-hint").count() == 1
+                        assert full_page.locator(".pair-connection .is-filled").count() == 1
+                        full_page.locator('.pair-item[aria-pressed="false"]').first.click()
                         assert full_page.locator(".pair-result").is_visible()
+                        assert full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == initial_save, (
+                            "Evidence comparison must not modify the engine save"
+                        )
                         full_page.screenshot(path=str(visual_dir/"chromium-deduction.png"),full_page=True)
                         evidence_jump = full_page.locator(".deduction-source").first
                         assert evidence_jump.count() == 1 and evidence_jump.is_enabled()
