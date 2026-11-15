@@ -122,3 +122,17 @@ before its separate archive recovery fails, the existing honest partial
 recovery warning remains in place. Targeted mobile Chromium now checks these
 paths against a genuinely completed Z02, including focus and save immutability.
 This is not yet the separate full WebKit/iPhone acceptance gate.
+
+### New-cycle stage 3/15 — decision error recovery and focus
+
+The phone UI offers the explicit return-to-hero selection action for all
+actual primary save-guard failures (stale tab, missing save, unreadable
+storage or malformed slot) using an error property, not translated string
+matching. Ordinary decision-rule rejections do not enable that exit.
+Dismissing a fixed consequence/error notice restores keyboard focus to the
+current decision or dossier landmark instead of always moving focus back
+to the distant story opening. The scoped Chromium regression exercises
+missing and corrupt saves from a real A01 decision, checks no progress write,
+and verifies recovery focus and reachable exit above the mobile dock.
+No storage schema, game rules, art, Case001, or main are changed. Safari/WebKit
+release acceptance remains a separate milestone.

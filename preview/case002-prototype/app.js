@@ -202,8 +202,12 @@ function init(){
  $("noticeExit").addEventListener("click",returnToLaunch);
  $("noticeDismiss").addEventListener("click",()=>{
   hideNotice();
-  // The button is now inside a hidden panel: restore a live focus target.
-  $("storyPanel").focus({preventScroll:true});
+  // The fixed notice can be dismissed while the player is at decisions.
+  // Returning focus to a distant scene would confuse keyboard/VoiceOver
+  // users on a long phone page. Focus the active, still-visible landmark.
+  const landmark=navSection==="choices"?$("choicesPanel"):
+   isDossierSection(navSection)?$("caseTools"):$("storyPanel");
+  landmark?.focus({preventScroll:true});
  });
  $("noticeExpand").addEventListener("click",()=>{
   if(!activeNoticeDetails)return;
@@ -899,19 +903,27 @@ function refreshResume(){
 }
 // Guard against an older Safari/Telegram tab overwriting a newer saved run.
 // This compares existing slot data; the engine and save schema stay untouched.
+// Save-guard failures need a recovery exit regardless of the translated
+// message. A plot-eligibility error must never masquerade as a save conflict.
+function saveGuardError(message){
+ const error=new Error(message);
+ error.case002SaveGuard=true;
+ return error;
+}
 function assertCurrentSave(){
  if(!store)return;
  let raw;
  try{raw=store.getItem(engine.storageKey);}
- catch(_){throw Error("Хранилище временно недоступно. Решение не записано.");}
- if(raw===null)throw Error("Сохранение пропало из хранилища. Перезагрузите дело перед новым решением.");
+ catch(_){throw saveGuardError("Хранилище временно недоступно. Решение не записано.");}
+ if(raw===null)
+  throw saveGuardError("Сохранение пропало из хранилища. Перезагрузите дело перед новым решением.");
  let disk;
  try{disk=JSON.parse(raw);}
- catch(_){throw Error("Сохранение повреждено. Новые решения заблокированы до проверки архива.");}
+ catch(_){throw saveGuardError("Сохранение повреждено. Новые решения заблокированы до проверки архива.");}
  const active=engine.snapshot();
  if(!disk||disk.attemptId!==active.attemptId||disk.node!==active.node||
     JSON.stringify(disk.history)!==JSON.stringify(active.history))
-  throw Error("Сохранение обновилось в другой вкладке. Вернитесь к выбору героя и откройте актуальное прохождение.");
+  throw saveGuardError("Сохранение обновилось в другой вкладке. Вернитесь к выбору героя и откройте актуальное прохождение.");
 }
 function chosenPrior(){
  const index=$("prior").value;
@@ -1051,7 +1063,7 @@ function hideNotice(){
  activeNoticeDetails=null;
  activeNoticeSummary="";
 }
-function showNotice(text,focus=null,details=null){
+function showNotice(text,focus=null,details=null,{saveGuard=false}={}){
  const notice=$("notice");
  notice.classList.remove("is-expanded");
  // Receipt visuals are advisory only; the original verified text remains intact.
@@ -1060,7 +1072,9 @@ function showNotice(text,focus=null,details=null){
  const kicker={evidence:"НОВЫЕ МАТЕРИАЛЫ",witnesses:"СВЕДЕНИЯ О ЛЮДЯХ",
   deductions:"ХОД ДЕДУКЦИИ",journal:"АРХИВ РЕШЕНИЙ"};
  setText($("noticeKicker"),kicker[notice.dataset.section]||"ИЗМЕНЕНИЯ В ДЕЛЕ");
- $("noticeExit").hidden=!activeNoticeSummary.includes("Сохранение обновилось в другой вкладке");
+ // Recovery UI follows the actual save-guard failure, not a fragile match
+ // against Russian display text. Ordinary consequences never show this exit.
+ $("noticeExit").hidden=!saveGuard;
  activeNoticeDetails=Array.isArray(details)&&details.length>2?details.slice():null;
  setText($("noticeContent"),activeNoticeSummary);
  notice.hidden=!text;
@@ -2125,7 +2139,8 @@ function select(choice,fromScene){
   }else{
    lastDecisionReceipt=null;
    renderDecisionReceipt();
-   showNotice("Действие не применено: "+e.message);
+   showNotice("Действие не применено: "+e.message,null,null,
+    {saveGuard:e.case002SaveGuard===true});
    console.warn("[Case002] transition rejected",e);
   }
  }

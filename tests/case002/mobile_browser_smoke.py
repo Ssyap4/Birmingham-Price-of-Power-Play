@@ -950,6 +950,49 @@ def main():
                     assert second_tab.locator("#sceneId").inner_text().startswith("A01"), (
                         f"{browser_name}: stale tab cannot reopen latest saved scene"
                     )
+                    # An interrupted long investigation must offer the
+                    # same reachable recovery exit for a removed or damaged
+                    # local save, not only for an older-tab conflict.
+                    # These are real UI clicks, no invented ending or awards.
+                    second_tab.locator('#quickNav button[data-go="choices"]').click()
+                    assert second_tab.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Recovery scenario must start at the actual decision panel"
+                    second_tab.evaluate("""() => localStorage.removeItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    second_tab.locator('button.choice:not([disabled])').first.click()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("A01")
+                    assert "пропало из хранилища" in second_tab.locator(
+                        "#notice").inner_text()
+                    assert second_tab.locator("#noticeExit").is_visible(), (
+                        "Missing primary save must offer immediate recovery above dock"
+                    )
+                    assert second_tab.locator("#noticeExit").bounding_box()["height"] >= 44
+                    assert second_tab.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") is None
+                    second_tab.locator("#noticeDismiss").click()
+                    assert second_tab.locator("#notice").is_hidden()
+                    assert second_tab.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Dismissing a decision error must restore decision focus, not distant story"
+                    second_tab.evaluate("""() => localStorage.setItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack','{damaged-save')""")
+                    second_tab.locator('button.choice:not([disabled])').first.click()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("A01")
+                    assert "Сохранение повреждено" in second_tab.locator(
+                        "#notice").inner_text()
+                    assert second_tab.locator("#noticeExit").is_visible(), (
+                        "Corrupted primary save must offer the same immediate recovery"
+                    )
+                    assert second_tab.evaluate("""() => localStorage.getItem(
+                      window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == "{damaged-save"
+                    second_tab.locator("#noticeExit").click()
+                    assert second_tab.locator("#launch").is_visible()
+                    assert second_tab.locator("#notice").is_hidden()
+                    assert second_tab.locator("#caseUnlockToast").is_hidden()
+                    assert second_tab.locator("#sceneId").inner_text().startswith("A01"), (
+                        "Exit must not invent another investigation transition"
+                    )
                     tabs_ctx.close()
                     # Mock multiple post-choice receipts in a separate tab only.
                     # This tests the notice UI without forging any game outcome.
