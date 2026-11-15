@@ -80,6 +80,15 @@ def main():
                     assert page.locator("#heroGallery .hero-card").count() == 5
                     assert "Джек Харпер" in page.locator("#selectedHeroStatus").inner_text()
                     assert page.locator(".hero-save-badge:visible").count() == 0
+                    assert page.locator("#caseRewardArchive").count() == 1
+                    assert page.locator("#caseRewardArchive").get_attribute(
+                        "data-status") == "ready"
+                    assert page.locator("#caseRewardCount").inner_text() == "0"
+                    page.locator("#caseRewardArchive summary").click()
+                    assert "Закрытые концовки не раскрываются" in page.locator(
+                        "#caseRewardList").inner_text()
+                    assert page.locator(".case-reward-entry").count() == 0
+                    page.locator("#caseRewardArchive summary").click()
                     assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-mabel-portrait.webp")
                     assert page.locator("#hero").get_attribute("type") == "hidden"
                     assert page.locator("#priorDetails").is_hidden()
@@ -1533,6 +1542,9 @@ def main():
                         assert "Принято решений:" in report.locator(
                             ".finale-subtitle").inner_text()
                         assert report.locator(".finale-metric").count() == 3
+                        assert report.locator(".finale-new-reward").count() == 1, (
+                            "First real completion must show one earned reward receipt"
+                        )
                         assert report.locator(".finale-metric-note").count() == 1
                         assert report.locator(".finale-witness-status").count() >= 1
                         people=report.locator(".finale-people li")
@@ -1567,7 +1579,31 @@ def main():
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish, (
                             "Reading the final character dossier rewrote game progress"
                         )
-                        assert not link_errors, f"Finale report JS errors: {link_errors}"
+                        # Returning to the selection reveals only genuinely
+                        # stored keys. Reload and resume cannot replay a new
+                        # reward announcement for an already earned outcome.
+                        link_page.locator("#backToLaunch").click()
+                        assert link_page.locator("#launch").is_visible()
+                        assert link_page.locator("#caseRewardCount").inner_text() == "1"
+                        link_page.locator("#caseRewardArchive summary").click()
+                        awarded=link_page.locator(".case-reward-entry")
+                        assert awarded.count() == 1
+                        assert awarded.first.get_attribute("data-key") == "002:jack:trainEscape"
+                        assert awarded.first.get_attribute("data-verified") == "true"
+                        assert "Люди без прошлого" in awarded.first.inner_text()
+                        shelf_save=link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        link_page.reload(wait_until="load")
+                        ensure_selection(link_page)
+                        assert link_page.locator("#caseRewardCount").inner_text() == "1"
+                        link_page.locator("#resume").click()
+                        assert link_page.locator("#finalePanel").is_visible()
+                        assert link_page.locator(".finale-new-reward").count() == 0, (
+                            "Returning to an already-earned ending must not replay reward receipt"
+                        )
+                        assert link_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == shelf_save
+                        assert not link_errors, f"Reward shelf JS errors: {link_errors}"
                         link_ctx.close()
                         # Real story-model route to the risk checkpoint, one
                         # browser confirmation only. Cancelling must not commit.

@@ -1271,3 +1271,55 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .finale-archive-check span,#game .finale-archive-check strong{font-size:.62rem}
  #game .finale-person-open{font-size:.67rem}
 }
+
+/* Cycle 1, stage 10: read-only earned-only award shelf, no locked endings
+   or unverified achievement claims. The 001 gallery remains untouched. */
+#launch .case-reward-archive{margin:12px 0 15px;
+ border:1px solid #94734c;border-left:3px solid #dcb782;border-radius:6px;
+ background:linear-gradient(110deg,#34271c,#211911)}
+#launch .case-reward-archive>summary{min-height:49px;padding:13px 12px;
+ cursor:pointer;color:#f3d09b;font:800 .72rem/1.4 system-ui,sans-serif;
+ letter-spacing:.055em;list-style-position:inside;overflow-wrap:anywhere}
+#launch .case-reward-archive>summary span{display:inline-grid;
+ min-width:25px;min-height:22px;place-items:center;
+ margin-left:5px;padding:2px 5px;border:1px solid #c8a06a;border-radius:3px;
+ background:#4d3622;color:#ffe0a6;font:800 .73rem/1 system-ui,sans-serif}
+#launch .case-reward-archive>summary:focus-visible{
+ outline:3px solid #ffdeab;outline-offset:2px}
+#launch .case-reward-list{padding:0 12px 12px;border-top:1px solid #6b4f33}
+#launch .case-reward-note{margin:10px 0 9px!important;color:#d7bd9d;
+ font:.77rem/1.55 system-ui,sans-serif}
+#launch .case-reward-gallery{display:grid;gap:7px;list-style:none;
+ padding:0!important;margin:0!important}
+#launch .case-reward-entry{display:flex;gap:10px;align-items:center;
+ min-width:0;margin:0!important;padding:10px;border:1px solid #8c6b48;
+ border-radius:5px;background:#291f17}
+#launch .case-reward-seal{display:grid;flex:0 0 41px;place-items:center;
+ width:41px;height:41px;border-radius:50%;border:2px solid #cfa66b;
+ color:#ffe0a5;background:radial-gradient(circle,#76542e,#302217);
+ font:700 1.35rem/1 Georgia,serif}
+#launch .case-reward-description{min-width:0;display:grid;gap:5px;
+ overflow-wrap:anywhere}
+#launch .case-reward-description strong{color:#f6ddb1;
+ font:700 .95rem/1.3 Georgia,serif}
+#launch .case-reward-description span{color:#dabd99;
+ font:.77rem/1.3 system-ui,sans-serif}
+#launch .case-reward-description small{color:#d9b98c;
+ font:800 .63rem/1.35 system-ui,sans-serif;letter-spacing:.02em}
+#launch .case-reward-entry[data-verified="false"]{border-color:#a97966}
+#launch .case-reward-entry[data-verified="false"] small{color:#ffbfa8}
+#launch .case-reward-archive[data-status="damaged"]{border-left-color:#c37f6b}
+#game .finale-new-reward{margin:12px 0 16px;padding:13px 11px;
+ border:1px solid #d2ad73;border-left:4px solid #ffdc99;
+ border-radius:5px;background:linear-gradient(130deg,#493321,#2a2018)}
+#game .finale-new-reward-title{display:block;color:#ffe2ab;
+ font:800 .72rem/1.45 system-ui,sans-serif;letter-spacing:.06em}
+#game .finale-new-reward p{margin:8px 0 0!important;
+ color:#f2d8b5;font:.79rem/1.5 system-ui,sans-serif}
+@media(max-width:359px){
+ #launch .case-reward-archive>summary{padding:11px 9px;font-size:.68rem}
+ #launch .case-reward-list{padding-inline:9px}
+ #launch .case-reward-entry{padding:8px;gap:7px}
+ #launch .case-reward-seal{width:36px;height:36px;flex-basis:36px}
+ #game .finale-new-reward-title{font-size:.68rem}
+}

@@ -103,6 +103,7 @@ let pairFirst=null,pairFeedback=null;
 let dossierTrail=null; // One-hop navigation between already earned dossier cards.
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
+let newRewardOnFinish=null; // First-ever earned key in this UI session only.
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
  journalExpanded=false,navSection="scene";
@@ -553,6 +554,61 @@ function returnToLaunch(){
  hideNotice();dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  $("game").hidden=true;showSelection({focus:true});
 }
+/* Only actual draft keys are listed; no locked ending names, invented
+ * achievements, duplicate awards or writes into Case 001 storage. */
+function caseRewardArchiveSnapshot(){
+ if(!store)return {status:"unavailable",items:[]};
+ try{
+  const raw=JSON.parse(store.getItem(api.REWARD_KEY)||"[]");
+  const records=JSON.parse(store.getItem(api.RECORD_KEY)||"[]");
+  if(!Array.isArray(raw)||!Array.isArray(records))
+   throw Error("Invalid reward or completion archive");
+  const keys=new Set(raw.filter(x=>typeof x==="string"));
+  const items=[];
+  for(const hero of data.contract.heroes){
+   for(const ending of data.contract.endings){
+    const key="002:"+hero+":"+ending.id;
+    if(!keys.has(key))continue;
+    items.push({key,hero,ending:ending.id,title:ending.title,
+     verified:records.some(row=>row&&row.caseId==="002"&&
+      row.heroId===hero&&row.ending===ending.id)});
+   }
+  }
+  return {status:"ready",items};
+ }catch(_){return {status:"damaged",items:[]};}
+}
+function renderRewardArchive(){
+ const archive=$("caseRewardArchive");
+ if(!archive)return;
+ const snapshot=caseRewardArchiveSnapshot();
+ const items=snapshot.items,root=$("caseRewardList");
+ setText($("caseRewardCount"),String(items.length));
+ archive.dataset.status=snapshot.status;
+ root.replaceChildren();
+ const note=snapshot.status==="damaged"?
+  "Архив повреждён: проверенные награды нельзя перечислить. Сохранение игры не изменено.":
+  snapshot.status==="unavailable"?
+  "Хранилище недоступно. Полученные награды здесь не сохраняются.":
+  items.length?
+  "Только действительно записанные комбинации «герой × концовка». Награды Дела №001 хранятся отдельно; повторный исход не даёт второй жетон.":
+  "Здесь появятся уникальные награды после завершения Дела №002. Закрытые концовки не раскрываются.";
+ root.append(make("p",note,"case-reward-note"));
+ if(!items.length)return;
+ const gallery=make("ul",undefined,"case-reward-gallery");
+ for(const item of items){
+  const row=make("li",undefined,"case-reward-entry");
+  row.dataset.key=item.key;row.dataset.verified=String(item.verified);
+  const seal=make("span","✦","case-reward-seal");
+  seal.setAttribute("aria-hidden","true");
+  const copy=make("div",undefined,"case-reward-description");
+  copy.append(make("strong",item.title),
+   make("span",heroNames[item.hero]||item.hero),
+   make("small",item.verified?"ЗАПИСЬ ПРОХОЖДЕНИЯ НАЙДЕНА":
+    "КЛЮЧ ЕСТЬ · ПРОХОЖДЕНИЕ НЕ ПОДТВЕРЖДЕНО"));
+  row.append(seal,copy);gallery.append(row);
+ }
+ root.append(gallery);
+}
 function refreshResume(){
  const hero=$("hero").value;
  let available=false;
@@ -578,6 +634,7 @@ function refreshResume(){
  $("resume").hidden=!available;
  setText($("selectedHeroStatus"),"Выбран: "+heroNames[hero]+
   (available?" · Можно продолжить сохранённое расследование":" · Готов к новому расследованию"));
+ renderRewardArchive();
 }
 // Guard against an older Safari/Telegram tab overwriting a newer saved run.
 // This compares existing slot data; the engine and save schema stay untouched.
@@ -643,6 +700,7 @@ function showGame(){
  unseenEvidence=0;pendingEvidence=[];pendingWitnesses=[];pendingProofs=[];
  journalExpanded=false;navSection="scene";
  lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
+ newRewardOnFinish=null; // Never replay a first-time reward upon resume/reload.
  refreshNavigation();
  render();
  showCurrentScene();
@@ -1130,6 +1188,15 @@ function renderEndingRecap(target,view){
  panel.append(make("h4",recap.title,"finale-title"));
  panel.append(make("p","История "+heroNames[recap.hero]+" · "+recap.sceneId+
   " · Принято решений: "+recap.decisionCount,"finale-subtitle"));
+ const currentReward="002:"+recap.hero+":"+recap.endingId;
+ const achievementCheck=completionArchiveStatus(view.state);
+ if(newRewardOnFinish===currentReward&&achievementCheck.status==="verified"){
+  const gain=make("section",undefined,"finale-new-reward");
+  gain.setAttribute("role","status");
+  gain.append(make("span","✦  ПОЛУЧЕНА НОВАЯ УНИКАЛЬНАЯ НАГРАДА","finale-new-reward-title"),
+   make("p","Ключ этого исхода впервые зарегистрирован в черновом архиве Дела №002. Жетон доступен в разделе наград при выборе сыщика."));
+  panel.append(gain);
+ }
  const facts=make("div",undefined,"finale-metrics");
  for(const [name,value] of [
    ["Собрано улик",recap.evidenceCount],
@@ -1690,7 +1757,17 @@ function select(choice,fromScene){
   // Check the current save BEFORE asking confirmation for dangerous actions.
   assertCurrentSave();
   if(choice.confirm&&!window.confirm("Этот поступок может закончиться гибелью героя. Вы действительно принимаете смертельный риск?"))return;
+  const beforeKeys=caseRewardArchiveSnapshot();
   const next=engine.choose(choice.to,choice.action);
+  newRewardOnFinish=null;
+  if(next.finished&&beforeKeys.status==="ready"){
+   const key="002:"+next.hero+":"+next.ending;
+   const now=caseRewardArchiveSnapshot();
+   if(!beforeKeys.items.some(item=>item.key===key)&&
+      now.items.some(item=>item.key===key&&item.verified)&&
+      completionArchiveStatus(next).status==="verified")
+     newRewardOnFinish=key;
+  }
   recordNewDossierChanges(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
@@ -1713,6 +1790,7 @@ function select(choice,fromScene){
   const current=engine.snapshot();
   const committed=current.history.length>before.history.length;
   if(committed){
+   newRewardOnFinish=null; // Post-commit archive failure cannot earn a popup.
    recordNewDossierChanges(before,current);
    lastDecisionReceipt=null;
    render();
