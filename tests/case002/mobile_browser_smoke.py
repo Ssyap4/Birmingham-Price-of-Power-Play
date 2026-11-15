@@ -149,6 +149,8 @@ def main():
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
                     assert page.locator("#sceneDossierUpdates").is_hidden()
                     assert page.locator("#sceneUpdateGroup").is_hidden()
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute(
+                        "data-unread-count") == "0"
                     assert page.locator('#quickNav [data-go="deductions"]').get_attribute("data-unread") == "false"
                     assert page.locator('#quickNav [data-go="witnesses"]').get_attribute("data-unread") == "false"
                     assert page.locator("#lastDecisionReceipt").is_hidden()
@@ -494,6 +496,11 @@ def main():
                     assert page.locator("#sceneUpdateContent").is_visible()
                     assert "НОВЫЕ УЛИКИ (1)" in page.locator("#sceneUpdateSummary").inner_text()
                     assert "ПОСЛЕДСТВИЯ РЕШЕНИЯ" in page.locator("#sceneUpdateSummary").inner_text()
+                    assert "НЕ ПРОСМОТРЕНО · 1" in page.locator("#sceneUpdateUrgency").inner_text()
+                    assert page.locator("#sceneUpdateGroup").get_attribute(
+                        "data-needs-review") == "true"
+                    assert "1 непросмотренных изменений" in page.locator(
+                        "#sceneUpdateToggle").get_attribute("aria-label")
                     assert page.locator("#sceneUpdateGroup").evaluate("""group => {
                         const art=document.querySelector('#sceneArtwork');
                         const cast=document.querySelector('#sceneCast');
@@ -524,6 +531,10 @@ def main():
                     assert page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == folded_save
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute(
+                        "data-unread-count") == "1"
+                    assert page.locator('.tool-tab[data-tab="evidence"]').get_attribute(
+                        "data-unread-count") == "1"
                     assert page.locator("#sceneDossierUpdates").is_hidden(), (
                         "Ticket alone cannot disclose an unverified deduction or unknown witness"
                     )
@@ -560,6 +571,11 @@ def main():
                     assert "НОВЫЕ УЛИКИ" not in page.locator("#sceneUpdateSummary").inner_text()
                     assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "false"
+                    assert page.locator('#quickNav [data-go="evidence"]').get_attribute(
+                        "data-unread-count") == "0"
+                    assert page.locator("#sceneUpdateUrgency").is_hidden()
+                    assert page.locator("#sceneUpdateGroup").get_attribute(
+                        "data-needs-review") == "false"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-current") == "location"
                     assert page.locator(
                         '.evidence-card[data-evidence-id="old_excursion_ticket"]'
@@ -1193,6 +1209,10 @@ def main():
                             assert badge.get_attribute("data-unread") == "true", (
                                 f"{section}: real earned update not marked unread"
                             )
+                            assert int(badge.get_attribute("data-unread-count")) >= 1
+                            assert test_page.locator("#sceneUpdateUrgency").is_visible()
+                            assert test_page.locator("#sceneUpdateGroup").get_attribute(
+                                "data-needs-review") == "true"
                             marker=test_page.locator(
                                 f'#sceneDossierUpdates .scene-dossier-update'
                                 f'[data-section="{section}"][data-record-id="{expected}"]'
@@ -1200,10 +1220,28 @@ def main():
                             assert marker.count() == 1 and marker.is_visible(), (
                                 f"{section}: missing in-scene update {expected}"
                             )
+                            if section=="witnesses":
+                                status=test_page.evaluate("""id => {
+                                  const save=JSON.parse(localStorage.getItem(
+                                    window.BirminghamCase002Engine.SAVE_PREFIX+'jack'));
+                                  return {
+                                    code:save.witnesses[id],
+                                    label:window.BirminghamCase002Narrative.witnessStatus(
+                                      id,save.witnesses[id])
+                                  };
+                                }""",expected)
+                                assert marker.get_attribute("data-status") == status["code"]
+                                assert status["label"] in marker.inner_text(), (
+                                    "Witness update must identify the actual known status"
+                                )
+                            else:
+                                assert "ДОКАЗАНО" in marker.inner_text()
                             saved=test_page.evaluate("""() => localStorage.getItem(
                               window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
                             marker.click()
                             assert badge.get_attribute("data-unread") == "false"
+                            assert badge.get_attribute("data-unread-count") == "0"
+                            assert test_page.locator("#sceneUpdateUrgency").is_hidden()
                             active=test_page.locator(
                                 f'button[data-tab="{section}"]'
                             )

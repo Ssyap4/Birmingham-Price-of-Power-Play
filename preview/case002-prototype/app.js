@@ -245,6 +245,7 @@ function refreshNavigation(){
   for(const button of document.querySelectorAll(
    '#quickNav [data-go="'+section+'"],.tool-tab[data-tab="'+section+'"]')){
    button.dataset.unread=String(n>0);
+   button.dataset.unreadCount=String(n);
    if(n)button.setAttribute("aria-label",names[section]+" · "+n+" "+kind);
    else button.removeAttribute("aria-label");
   }
@@ -295,6 +296,13 @@ function renderSceneUpdateGroup(){
   const info=make("span",undefined,"scene-update-group-summary");
   info.id="sceneUpdateSummary";
   toggle.append(info);
+  // The same earned changes as the dock, summarized before long story text.
+  // No aria-live spam on re-render; the complete count is on the button.
+  const urgency=make("span",undefined,"scene-update-group-urgency");
+  urgency.id="sceneUpdateUrgency";
+  urgency.setAttribute("aria-hidden","true");
+  urgency.hidden=true;
+  toggle.append(urgency);
   const action=make("span","СВЕРНУТЬ −","scene-update-group-state");
   action.id="sceneUpdateAction";
   toggle.append(action);
@@ -341,8 +349,19 @@ function refreshSceneUpdateGroup(){
  const toggle=$("sceneUpdateToggle"),open=toggle.getAttribute("aria-expanded")==="true";
  $("sceneUpdateContent").hidden=group.hidden||!open;
  setText($("sceneUpdateAction"),open?"СВЕРНУТЬ −":"РАСКРЫТЬ +");
+ const visibleWitnesses=$("sceneDossierUpdates")?.querySelectorAll(
+  '.scene-dossier-update[data-section="witnesses"]').length||0;
+ const unread=pendingEvidence.length+pendingProofs.length+visibleWitnesses;
+ const urgency=$("sceneUpdateUrgency");
+ urgency.hidden=unread===0;
+ if(unread)setText(urgency,"НЕ ПРОСМОТРЕНО · "+unread);
+ group.dataset.needsReview=String(unread>0);
  if(active.length)setText($("sceneUpdateSummary"),
   active.map(([,label,count])=>label+" ("+count+")").join(" · "));
+ toggle.setAttribute("aria-label","Материалы расследования. "+
+  (unread?unread+" непросмотренных изменений. ":"Все новые материалы просмотрены. ")+
+  (active.length?active.map(([,label,count])=>label+": "+count).join(". ")+". ":"")+
+  (open?"Свернуть":"Раскрыть"));
 }
 function renderNewFinds(){
  // A missed receipt is not a lost clue: all newly earned items remain
@@ -389,19 +408,28 @@ function renderSceneUpdates(){
  panel.append(make("span","НОВОЕ В РАССЛЕДОВАНИИ · "+count,
   "scene-dossier-updates-title"));
  const links=make("div",undefined,"scene-dossier-updates-links");
+ if(pendingProofs.length)links.append(make("span",
+  "ПОДТВЕРЖДЁННЫЕ ВЫВОДЫ · "+pendingProofs.length,"scene-update-kind"));
  for(const id of pendingProofs){
   const name=proofLabels[id]||"Подтверждённая связь";
-  const button=make("button","ВЫВОД · "+name,"scene-dossier-update");
+  const button=make("button","ДОКАЗАНО · "+name,"scene-dossier-update");
   button.type="button";button.dataset.section="deductions";button.dataset.recordId=id;
   button.setAttribute("aria-label","Открыть новый доказанный вывод: "+name);
   button.addEventListener("click",()=>jumpTo("deductions",id));
   links.append(button);
  }
+ if(witnessed.length)links.append(make("span",
+  "ИЗМЕНЕНИЯ У СВИДЕТЕЛЕЙ · "+witnessed.length,"scene-update-kind"));
  for(const id of witnessed){
   const name=known.get(id).name;
-  const button=make("button","ЛЮДИ · "+name,"scene-dossier-update");
+  const status=engine.snapshot().witnesses?.[id];
+  const readable=status?witnessLabel(id,status):"изменены сведения";
+  const button=make("button",undefined,"scene-dossier-update scene-witness-update");
   button.type="button";button.dataset.section="witnesses";button.dataset.recordId=id;
-  button.setAttribute("aria-label","Открыть обновлённое досье: "+name);
+  button.dataset.status=status||"";
+  button.append(make("strong","ЛЮДИ · "+name,"scene-witness-name"),
+   make("span",readable,"scene-witness-status"));
+  button.setAttribute("aria-label","Открыть обновлённое досье: "+name+". "+readable);
   button.addEventListener("click",()=>jumpTo("witnesses",id));
   links.append(button);
  }

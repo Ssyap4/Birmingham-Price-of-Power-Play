@@ -1021,3 +1021,48 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .evidence-connections-summary{font-size:.67rem;letter-spacing:0}
  #game .evidence-linked-lead{padding:9px;font-size:.72rem}
 }
+
+/* Cycle 1, stage 5: earned-only attention hierarchy. No new overlay,
+   notification timer, gameplay telemetry or permanent read state. The dock
+   now displays real counts while the screen-reader label already names them. */
+#game .case-quick-nav button[data-unread="true"]::after,
+#game .tool-tab[data-unread="true"]::after{
+ content:attr(data-unread-count);display:grid;place-items:center;
+ width:19px;height:19px;top:2px;right:2px;
+ border-radius:50%;background:#f1c78b;color:#24180e;
+ font:900 10px/1 system-ui,sans-serif;letter-spacing:0;
+ border:1px solid #3d2a17;box-shadow:0 0 0 2px #22180f}
+#game .scene-update-group[data-needs-review="true"]{
+ border-top-color:#eac38c}
+#game .scene-update-group-urgency{
+ grid-column:1;display:inline-block;width:fit-content;
+ border:1px solid #ad8251;border-radius:3px;
+ padding:3px 7px;color:#ffe0ad;background:#51341e;
+ font:800 .65rem/1.4 system-ui,sans-serif;
+ letter-spacing:.025em}
+#game .scene-update-group-urgency[hidden]{display:none!important}
+#game .scene-update-group-state{grid-row:1 / span 3}
+#game .scene-update-kind{
+ display:block;margin:6px 0 1px;padding:0 1px;
+ color:#e1bd8b;font:800 .63rem/1.4 system-ui,sans-serif;
+ letter-spacing:.065em}
+#game .scene-witness-update{
+ display:grid;gap:4px;padding-block:10px;
+ border-left:3px solid #c49d6d}
+#game .scene-witness-name{
+ font:700 .77rem/1.35 Georgia,serif;color:#f4d9ae}
+#game .scene-witness-status{
+ display:block;color:#d9bda0;
+ font:600 .73rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .scene-witness-update[data-status="detained"] .scene-witness-status,
+#game .scene-witness-update[data-status="deceased"] .scene-witness-status{
+ color:#ffb5a6}
+#game .scene-witness-update[data-status="protected"] .scene-witness-status,
+#game .scene-witness-update[data-status="evacuated"] .scene-witness-status{
+ color:#ffe0a2}
+@media(max-width:359px){
+ #game .scene-update-group-urgency{font-size:.61rem;padding:3px 5px}
+ #game .scene-update-kind{font-size:.61rem;letter-spacing:.02em}
+ #game .case-quick-nav button[data-unread="true"]::after{
+  width:18px;height:18px;top:1px;right:2px;font-size:9px}
+}
