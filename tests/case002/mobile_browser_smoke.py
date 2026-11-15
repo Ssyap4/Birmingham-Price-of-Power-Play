@@ -367,7 +367,7 @@ def main():
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
-                    assert "новых материалов" in page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-label")
+                    assert "1 новая улика" in page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-label")
                     assert page.locator("#toolContent li").count() >= 1
                     page.locator("#noticeJump").click()
                     assert page.locator("#notice").is_hidden()

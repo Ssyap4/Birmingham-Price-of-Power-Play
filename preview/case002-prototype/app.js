@@ -207,7 +207,12 @@ function refreshNavigation(){
  for(const button of document.querySelectorAll(
   '#quickNav [data-go="evidence"],.tool-tab[data-tab="evidence"]')){
   button.dataset.unread=String(unread);
-  if(unread)button.setAttribute("aria-label","УЛИКИ · "+unseenEvidence+" новых материалов");
+  if(unread){
+   const n=unseenEvidence;
+   const plural=n%100>=11&&n%100<=14?"новых улик":
+    n%10===1?"новая улика":[2,3,4].includes(n%10)?"новые улики":"новых улик";
+   button.setAttribute("aria-label","УЛИКИ · "+n+" "+plural);
+  }
   else button.removeAttribute("aria-label");
  }
 }

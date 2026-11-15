@@ -7,6 +7,8 @@ name: Case 002 scoped mobile smoke (draft only)
 # Case 002 finale gate: browser test must follow committed Z02, read archive
 # truthfully, reopen terminal save and return to hero selection without writes.
 # This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
+# Stage 8: final portrait acceptance checks saved-hero cues, unread evidence,
+# direct journal access and narrow phone safe areas in Chromium AND WebKit.
 on:
   push:
     branches: [feat/case002-story-bible-v1]
