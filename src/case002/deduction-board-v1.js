@@ -47,5 +47,18 @@ function board(contract,evidence){
  }
  return result;
 }
-return {board,NAMES};
+
+function comparePair(contract,evidence,first,second){
+ const leads=board(contract,evidence),held=new Set(evidence);
+ if(!held.has(first)||!held.has(second))throw Error("Cannot compare uncollected evidence");
+ if(first===second)return {kind:"same",title:"Выберите другую улику",message:"Для проверки нужны два разных найденных материала."};
+ for(const lead of leads){
+  if(contract.deductionRules[lead.id].some(group=>group.includes(first)&&group.includes(second))){
+   return {kind:lead.verified?"match":"partial",title:lead.title,
+    message:lead.verified?"Связь подтверждена материалами расследования. Теперь понятно, почему эти документы важны вместе.":"Обнаружена общая зацепка. Продолжайте собирать независимые свидетельства."};
+  }
+ }
+ return {kind:"unrelated",title:"Попробуйте другую связку",message:"Эти две улики пока не подтверждают один вывод. Сопоставьте время, подписи или происхождение записей. Ошибка ни на что не влияет."};
+}
+return {board,NAMES,comparePair};
 });

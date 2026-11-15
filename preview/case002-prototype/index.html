@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e0b0a">
-<title>Дело №002 — сценарный прототип</title>
+<title>Дело №002 — Последний поезд из Бирмингема</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,11 +12,21 @@
   <header class="masthead">
     <small>БИРМИНГЕМ • 1920</small>
     <h1>Последний поезд из Бирмингема</h1>
-    <p>Дело №002 · Мобильный прототип с первыми утверждёнными кадрами</p>
+    <p>Дело №002 · Кинематографическое расследование · Safari-бета</p>
   </header>
   <section class="launch" id="launch">
-    <h2>Начать расследование</h2>
-    <label for="hero">Ваш сыщик</label>
+    <div class="launch-cinematic" aria-hidden="true"><img src="../../assets/case002/scenes/case002-p01-scene--mobile.webp" alt="" width="720" height="900"></div>
+    <p class="launch-eyebrow">ДЕЛО №002 · АРХИВ РАССЛЕДОВАНИЙ</p>
+    <h2>Выберите свою историю</h2>
+    <p class="launch-intro">Пять сыщиков. Одно исчезновение. Семь возможных исходов. Решение остаётся за вами.</p>
+    <div id="heroGallery" class="hero-gallery" role="group" aria-label="Выбор сыщика">
+      <button type="button" class="hero-card" data-hero="jack" aria-pressed="true"><img src="../../assets/case-scenes/heroJack.webp" alt="" width="88" height="110"><span>Джек Харпер<small>Сила</small></span></button>
+      <button type="button" class="hero-card" data-hero="finn" aria-pressed="false"><img src="../../assets/case-scenes/heroFinn.webp" alt="" width="88" height="110"><span>Финн О’Коннор<small>Скрытность</small></span></button>
+      <button type="button" class="hero-card" data-hero="eleanor" aria-pressed="false"><img src="../../assets/case-scenes/heroEleanor.webp" alt="" width="88" height="110"><span>Элеонора Блэквуд<small>Дедукция</small></span></button>
+      <button type="button" class="hero-card" data-hero="victor" aria-pressed="false"><img src="../../assets/case-scenes/heroVictor.webp" alt="" width="88" height="110"><span>Виктор Мэллоу<small>Переговоры</small></span></button>
+      <button type="button" class="hero-card" data-hero="samuel" aria-pressed="false"><img src="../../assets/case-scenes/heroSamuel.webp" alt="" width="88" height="110"><span>Сэмюэл Рид<small>Механика</small></span></button>
+    </div>
+    <label for="hero">Выбранный сыщик</label>
     <select id="hero">
       <option value="jack">Джек Харпер · Сила</option>
       <option value="finn">Финн О’Коннор · Скрытность</option>

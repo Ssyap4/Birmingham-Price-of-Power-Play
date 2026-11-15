@@ -6,7 +6,7 @@
 const assert=require("node:assert/strict");
 const {graph,contract}=require("../../src/case002/browser-data-v3.js");
 const {createEngine}=require("../../src/case002/engine-v3.js");
-const {board,NAMES}=require("../../src/case002/deduction-board-v1.js");
+const {board,NAMES,comparePair}=require("../../src/case002/deduction-board-v1.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 const expected=Object.keys(contract.deductionRules);
 assert.deepEqual(Object.keys(NAMES),expected);
@@ -71,6 +71,11 @@ for(const hero of contract.heroes)for(const ending of contract.endings){
 }
 assert.equal(touched.size,6,"All real conclusion types must be reachable");
 assert(checks>=1700);
+assert.equal(comparePair(contract,["hale_coat","brackett_wire"],"hale_coat","brackett_wire").kind,"match");
+assert.equal(comparePair(contract,["hale_coat","brackett_wire"],"hale_coat","brackett_wire").title,"Убийство Хейла Брэкеттом");
+assert.equal(comparePair(contract,["hale_coat","brackett_wire"],"hale_coat","hale_coat").kind,"same");
+assert.throws(()=>comparePair(contract,["hale_coat"],"hale_coat","brackett_wire"),/uncollected/);
+assert.equal(comparePair(contract,["hale_coat","dispatch_manifest"],"hale_coat","dispatch_manifest").kind,"unrelated");
 console.log("PASS Case002 spoiler-free deduction board: "+checks+
  " actual case states over 35 endings, "+proved+" proven and "+unproved+
  " partial observations, six genuine deduction groups, zero unearned suspect reveals.");

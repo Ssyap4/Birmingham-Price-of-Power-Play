@@ -44,6 +44,8 @@ def main():
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#begin").is_visible()
+                    assert page.locator("#heroGallery .hero-card").count() == 5
+                    assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
 
                     if not quick:
                         outcomes = page.evaluate("""async () => {
@@ -154,6 +156,8 @@ def main():
                     assert page.locator("#sceneText .scene-spoken-line").count() >= 3, (
                         "P02 must visually distinguish direct dialogue from narration"
                     )
+                    assert page.locator("#sceneText .scene-spoken-line").nth(0).get_attribute("data-speaker") == "Мэйбл Кросс"
+                    assert page.locator("#sceneText .scene-spoken-line").nth(1).get_attribute("data-speaker") == "Вы"
                     assert page.locator("#readScene").bounding_box()["height"] >= 44
                     page.locator("#readScene").click()
                     assert page.locator("#sceneText").evaluate(

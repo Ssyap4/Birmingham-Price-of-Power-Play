@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 const assert=require("node:assert/strict");
-const {parse,render}=require("../../src/case002/scene-prose-v1.js");
+const {parse,render,SPEAKER_LINES}=require("../../src/case002/scene-prose-v1.js");
 const t="Станция затихла.\n— Я видел вагон, — прошептал сторож.\nОн отвернулся от героя.\n— Уходите, пока не поздно.\n\nГерой посмотрел на часы.";
 const items=parse(t);
 assert.equal(items.length,2);
@@ -19,7 +19,8 @@ assert.equal(parse("—").flatMap(p=>p.lines)[0].spoken,false);
 assert.equal(parse("— ВЫБОР").flatMap(p=>p.lines)[0].spoken,true);
 assert.throws(()=>parse(null),/narration must be text/);
 function el(tag){
- return {tag,children:[],textContent:"",className:"",
+ return {tag,children:[],textContent:"",className:"",attrs:{},
+  setAttribute(k,v){this.attrs[k]=v;},
   append(...x){this.children.push(...x);},replaceChildren(){this.children=[];}};
 }
 const doc={createElement:el,createTextNode:x=>({textContent:x,tag:"#text"})};
@@ -35,4 +36,10 @@ render(target,malicious,doc);
 assert.equal(target.children[0].children.filter(x=>x.tag==="span").length,2);
 assert.equal(flatten(target.children[0]),malicious);
 assert.throws(()=>render(null,t,doc),/needs a document/);
+const mabel="В комнату вошла Мэйбл.\n— Вы пришли?\n— К вам?\n— Тогда говорите.\n— Я расскажу.";
+render(target,mabel,doc,"P02");
+const labels=target.children[0].children.filter(x=>x.tag==="span"&&x.className==="scene-spoken-line");
+assert.deepEqual(labels.map(x=>x.attrs["data-speaker"]),["Мэйбл Кросс","Вы","Мэйбл Кросс","Мэйбл Кросс"]);
+assert.equal(flatten(target.children[0]),mabel);
+assert.equal(SPEAKER_LINES.P02.length,4);
 console.log("PASS Case002 local dialogue presentation: 13 structural assertions, source text preserved, no HTML or invented voices.");

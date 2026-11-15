@@ -51,6 +51,26 @@ const evidenceLabels={
  mabel_confession:"Признание Мэйбл Кросс",clerk_witness:"Показания ночного клерка"
 };
 const evidenceName=id=>evidenceLabels[id]||id.replaceAll("_"," ");
+const evidenceHints={
+ dispatch_manifest:"Сравните строку отправления с показаниями того, кто её заполнял.",
+ mabel_confession:"Сопоставьте признание с документом отправления.",
+ clerk_witness:"Ищите запись, подтверждающую слова ночного служащего.",
+ arrival_manifest:"Сравните время прибытия с независимой записью движения вагона.",
+ points_log:"Проверьте, подтверждает ли другой след работу стрелки.",
+ seal_scrap:"Подумайте, какая запись фиксирует перемещение опломбированного вагона.",
+ guard_payment:"Ищите связь между платежом, грузом и денежными документами.",
+ freight_chalk:"Номер на грузе может объяснять движение денег и охраны.",
+ pressure_log:"Сравните журнал с другими сведениями о безопасности завода.",
+ valve_photo:"Ищите независимое свидетельство о состоянии клапана.",
+ inspection_copy:"Сопоставьте акт проверки с реальными показаниями завода.",
+ victim_register:"Сравните список погибших с техническими записями.",
+ hale_coat:"Вспомните документы, связывающие смерть Хейла с охраной.",
+ brackett_wire:"Сопоставьте сообщение со следами погибшего.",
+ bridge_witness:"Найдите материальный след, который подтвердит слова очевидца.",
+ brackett_boots:"Сравните след обуви с показаниями у моста.",
+ brackett_accounts:"Сверьте денежные записи с платежами или ведомостями."
+};
+
 const proofLabels={provedFirstForgery:"Подлог отправления Мэйбл",provedWagonDiversion:"Перехват вагона F-4182",provedSecondForgery:"Подложная запись о прибытии",provedFactoryCoverup:"Сокрытие заводской аварии",provedHaleMurder:"Убийство Хейла Брэкеттом",provedBrackettNetwork:"Счета преступной сети"};
 const stageLabels={P:"ПРОЛОГ",I:"ГЛАВА I · МЁРТВЫЙ ПАССАЖИР",II:"ГЛАВА II · ТРИ МАРШРУТА",III:"ГЛАВА III · НОЧНОЙ СТРЕЛОЧНИК",IV:"ГЛАВА IV · ТЕ, КТО НЕ ДОЛЖЕН ГОВОРИТЬ",V:"ГЛАВА V · ЦЕНА МОЛЧАНИЯ",VI:"ГЛАВА VI · ПОСЛЕДНИЙ СИГНАЛ",END:"ИСХОД РАССЛЕДОВАНИЯ"};
 const chapterOpenings={P:"P01",I:"A01",II:"B01",III:"C01",IV:"D01",V:"E01",VI:"F01"};
@@ -79,6 +99,7 @@ const actionLabels={
  "E11:F01:continue":"Идти к финалу без плана эвакуации"
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
+let pairFirst=null,pairFeedback=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
@@ -148,6 +169,9 @@ function init(){
   tab=button.dataset.tab;evidenceFocus=null;renderTools();
  });
  $("hero").addEventListener("change",refreshResume);
+ for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
+  card.addEventListener("click",()=>{$("hero").value=card.dataset.hero;refreshResume();});
+ }
  refreshResume();
 }
 function returnToLaunch(){
@@ -158,6 +182,7 @@ function returnToLaunch(){
 }
 function refreshResume(){
  const hero=$("hero").value;
+ for(const card of document.querySelectorAll("#heroGallery [data-hero]"))card.setAttribute("aria-pressed",String(card.dataset.hero===hero));
  let available=false;
  try{available=Boolean(store&&store.getItem(api.SAVE_PREFIX+hero));}
  catch(e){
@@ -225,7 +250,7 @@ function resume(){
 function showGame(){
  $("launch").hidden=true;$("game").hidden=false;
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
- hideNotice();tab="evidence";evidenceFocus=null;
+ hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
  render();
  showCurrentScene();
 }
@@ -456,7 +481,7 @@ function render(){
  portrait.onerror=()=>{portrait.hidden=true;};
  portrait.onload=()=>{portrait.hidden=false;};
  const region=$("sceneText");
- window.BirminghamCase002SceneProse.render(region,sceneNarration(v));
+ window.BirminghamCase002SceneProse.render(region,sceneNarration(v),document,scene.id);
  const choices=$("choiceList");choices.replaceChildren();
  if(s.finished){
    choices.append(make("p",completionMessage(s),"muted"));
@@ -484,7 +509,42 @@ function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
  if(tab==="deductions"){
-   const leads=window.BirminghamCase002DeductionBoard.board(data.contract,v.state.evidence);
+   const compare=window.BirminghamCase002DeductionBoard,held=v.state.evidence;
+   if(held.length){
+    const panel=make("section",undefined,"pair-board");
+    panel.setAttribute("aria-label","Доска сопоставления улик");
+    panel.append(make("h4","Доска расследования"));
+    panel.append(make("p","Коснитесь улики, прочитайте подсказку и выберите вторую. Ошибки не влияют на сюжет и сохранение."));
+    const gallery=make("div",undefined,"pair-items");
+    for(const id of held){
+     const btn=make("button",undefined,"pair-item");
+     btn.type="button";btn.dataset.evidenceId=id;
+     btn.setAttribute("aria-pressed",String(pairFirst===id));
+     const icon=window.BirminghamCase002EvidenceArt.create(id);
+     icon.setAttribute("aria-hidden","true");
+     btn.append(icon,make("span",evidenceName(id)));
+     btn.addEventListener("click",()=>{
+      if(!pairFirst||pairFirst===id){
+       pairFirst=pairFirst===id?null:id;
+       pairFeedback=pairFirst?{title:evidenceName(id),message:evidenceHints[id]||"Сравните материал с независимыми свидетельствами."}:null;
+      }else{
+       pairFeedback=compare.comparePair(data.contract,engine.view().state.evidence,pairFirst,id);
+       pairFirst=null;
+      }
+      renderTools();
+     });
+     gallery.append(btn);
+    }
+    panel.append(gallery);
+    if(pairFeedback){
+     const result=make("div",undefined,"pair-result");
+     result.setAttribute("role","status");result.setAttribute("aria-live","polite");
+     result.append(make("strong",pairFeedback.title),make("span",pairFeedback.message));
+     panel.append(result);
+    }
+    root.append(panel);
+   }
+   const leads=compare.board(data.contract,held);
    if(!leads.length){
      root.append(make("p","Пока нет подтверждённых выводов или зацепок. Продолжайте искать доказательства.","empty"));
      return;
