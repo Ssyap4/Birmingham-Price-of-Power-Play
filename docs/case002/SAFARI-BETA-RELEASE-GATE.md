@@ -95,3 +95,19 @@ verify its immutable WebP inventory and run the justified Chromium/WebKit
 acceptance gate, then deploy on an isolated host only when authorized.
 No link is declared live by this document. Preserve stable main,
 Case 001 and the existing save/archive schema.
+
+### New-cycle stage 1/15 — isolated package reliability
+
+The package exporter now fails if any directly referenced HTML script, stylesheet,
+initial image or CSS URL/import is missing, points outside the isolated output,
+or depends on an absolute website root or external host. Its landing page now
+uses a relative redirect and fallback link, allowing standalone subpath hosting.
+The post-build integrity test checks the actual staged dependency closure,
+102 approved 720×900 scenes, ten NPCs, all five heroes and exclusion of legacy
+Case 001 assets. This is package correctness, **not** live iPhone Safari acceptance.
+
+ADR-0005 classification explicitly recognizes exporter and package-test edits as
+`package`: their push CI performs the package build plus targeted integrity
+check, without unrelated 400-route gameplay simulation or WebKit. Manual
+Safari distribution still requires a deliberate workflow_dispatch and the
+full separate browser/release gate; this update does not deploy anything.

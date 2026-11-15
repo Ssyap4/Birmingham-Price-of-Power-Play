@@ -8,6 +8,7 @@ on:
       - 'CHANGELOG.md'
       - 'docs/decisions/**'
       - 'docs/case002/**'
+      - 'deployment/case002-safari-preview.js'
       - 'tests/case002/**'
       - 'src/case002/**'
       - 'assets/case002/scenes/**'
@@ -50,6 +51,12 @@ jobs:
       - name: Verify offline scene bundle only when its sources may have changed
         if: steps.scope.outputs.run_bundle == 'true'
         run: node tools/case002/build-browser-data.js --check
+      - name: Validate isolated Safari package only when exporter changes
+        if: steps.scope.outputs.run_package == 'true'
+        run: |
+          node --check deployment/case002-safari-preview.js
+          node deployment/case002-safari-preview.js
+          node tests/case002/safari-package-integrity.test.js
       - name: Deep contract, transitions, persistence and 400 seeded routes
         if: steps.scope.outputs.run_full == 'true'
         run: |

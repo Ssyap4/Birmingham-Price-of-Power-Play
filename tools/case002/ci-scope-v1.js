@@ -6,12 +6,14 @@
  */
 const fs=require("node:fs");
 const {execFileSync}=require("node:child_process");
-const CATEGORIES=["deep","story","art","art-installed","evidence","reporting","ui","visual","docs","ci"];
+const CATEGORIES=["deep","story","art","art-installed","evidence","reporting","ui","visual","docs","ci","package"];
 function category(file){
  const p=String(file||"").replace(/\\/g,"/");
  if(p==="ARCHITECTURE.md"||p==="Architecture.md"||p==="CHANGELOG.md"||p.startsWith("docs/decisions/"))
    return "docs";
  if(p==="tools/case002/docs-guard-v1.js")return "docs";
+ if(p==="deployment/case002-safari-preview.js"||
+    p==="tests/case002/safari-package-integrity.test.js")return "package";
  if(p==="tools/case002/validate-art-wave-v1.js")return "art";
  if(p==="tools/case002/install-art-wave-16.py")return "art";
  if(p==="tools/case002/export-art-binary-bridge-v1.py")return "art";
@@ -77,6 +79,7 @@ function classify(files,{manual=false}={}){
    run_reporting:full||has("reporting"),
    run_ui:full||has("ui")||has("visual"),
    run_bundle:full||has("story")||has("art")||has("art-installed"),
+   run_package:has("package"),
    run_browser:full||has("story")||has("art")||has("art-installed")||has("evidence")||
      has("reporting")||has("ui")||has("visual"),
    browser_full:full||has("art-installed"),

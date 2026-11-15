@@ -19,6 +19,8 @@ jobs:
           node-version: '24'
       - name: Build exact portrait-only preview
         run: node deployment/case002-safari-preview.js
+      - name: Validate standalone Safari entry and packaged references
+        run: node tests/case002/safari-package-integrity.test.js
       - name: Inspect isolated files (no legacy case)
         run: |
           test -s case002-preview-dist/index.html

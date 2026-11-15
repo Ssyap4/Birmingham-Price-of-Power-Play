@@ -47,19 +47,42 @@ for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
 for(const name of ["index.html","app.js","style.css"])
  copy("preview/case002-prototype/"+name);
-const entry="preview/case002-prototype/index.html";
-const html=fs.readFileSync(path.join(OUT,entry),"utf8");
-for(const match of html.matchAll(/<script\s+src="([^"]+)"/g)){
- const target=path.resolve(OUT,"preview/case002-prototype",match[1]);
- if(!target.startsWith(OUT+path.sep)||!fs.existsSync(target))
-   throw Error("Missing browser dependency: "+match[1]);
+// A successful copy count does not guarantee that Safari can load the entry.
+// Check actual staged script, stylesheet and image references before release.
+// Reject external or root-absolute links: this preview must stay portable.
+function assertStagedReference(from,raw){
+ const reference=String(raw||"").trim();
+ if(!reference||reference.startsWith("#")||/^(?:data:|blob:)/i.test(reference))
+  return;
+ if(reference.startsWith("/")||/^[a-z][a-z\d+.-]*:/i.test(reference))
+  throw Error("Non-portable Case002 asset reference: "+reference);
+ const relative=reference.split(/[?#]/,1)[0];
+ const target=path.resolve(path.dirname(from),decodeURIComponent(relative));
+ if(!target.startsWith(OUT+path.sep)||!fs.existsSync(target)||
+    !fs.statSync(target).isFile())
+  throw Error("Missing or escaped Safari preview asset: "+reference);
 }
+const entry="preview/case002-prototype/index.html";
+const stagedEntry=path.join(OUT,entry),html=fs.readFileSync(stagedEntry,"utf8");
+let references=0;
+for(const match of html.matchAll(/<(?:script|link|img|source)\b[^>]*?\b(?:src|href)\s*=\s*(["'])(.*?)\1/gi)){
+ assertStagedReference(stagedEntry,match[2]);references++;
+}
+const stagedCss=path.join(OUT,"preview/case002-prototype/style.css");
+const css=fs.readFileSync(stagedCss,"utf8");
+for(const match of css.matchAll(/url\(\s*(["']?)([^"'()]+)\1\s*\)/gi)){
+ assertStagedReference(stagedCss,match[2]);references++;
+}
+for(const match of css.matchAll(/@import\s+(?:url\(\s*)?(["'])([^"']+)\1/gi)){
+ assertStagedReference(stagedCss,match[2]);references++;
+}
+if(references<20)throw Error("Incomplete Case002 static resource scan: "+references);
 fs.writeFileSync(path.join(OUT,"index.html"),
  '<!doctype html><html lang="ru"><head><meta charset="utf-8">'+
  '<meta name="viewport" content="width=device-width,initial-scale=1">'+
- '<meta http-equiv="refresh" content="0;url=/'+entry+'">'+
+ '<meta http-equiv="refresh" content="0;url='+entry+'">'+
  '<title>Дело №002 — Бирмингем: Цена власти</title></head><body>'+
- '<a href="/'+entry+'">Открыть Дело №002</a></body></html>');
+ '<a href="'+entry+'">Открыть Дело №002</a></body></html>');
 if(bytes>75*1024*1024)throw Error("Preview files exceed 75 MiB");
 console.log("PASS isolated Safari beta: "+scenes.size+" scenes, "+shots.size+
  " approved portrait WebPs, "+manifest.npcPortraits.length+" NPCs, five heroes, "+

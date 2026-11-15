@@ -6,7 +6,7 @@ const one=(p)=>classify([p]);
 assert.equal(category("preview/case002-prototype/style.css"),"visual");
 assert.deepEqual(one("docs/case002/README.md"),{
  run_full:false,run_story:false,run_art:false,run_evidence:false,
- run_reporting:false,run_ui:false,run_bundle:false,run_browser:false,
+ run_reporting:false,run_ui:false,run_bundle:false,run_package:false,run_browser:false,
  browser_full:false,scope_label:"docs"
 });
 for(const doc of ["ARCHITECTURE.md","Architecture.md","CHANGELOG.md",
@@ -92,9 +92,20 @@ assert(one("docs/case002/case002-contract-v1.json").run_full);
 assert(one("tests/case002/explore-v3.test.js").run_full);
 assert(one("unknown-script-that-may-affect-the-build.js").run_full);
 assert(one(".github/workflows/case002-story-qa.yml").scope_label==="ci");
+const packager=one("deployment/case002-safari-preview.js");
+assert(packager.run_package&&!packager.run_full&&!packager.run_browser&&
+ !packager.run_story&&!packager.run_bundle,
+ "Only the isolated preview builder should be tested for export changes");
+assert(one("tests/case002/safari-package-integrity.test.js").run_package);
+assert(!one("preview/case002-prototype/app.js").run_package,
+ "Ordinary UI changes must not rebuild Safari package");
+assert(one("unknown-deployment-script.js").run_full,
+ "An unknown exporter name must still fail closed");
 const packageWorkflow=one(".github/workflows/case002-safari-package.yml");
 assert(packageWorkflow.scope_label==="ci"&&!packageWorkflow.run_full&&!packageWorkflow.run_browser,
   "Manual Safari package changes must not launch story routes or browsers");
+const packagingMixed=classify(["deployment/case002-safari-preview.js","CHANGELOG.md"]);
+assert(packagingMixed.run_package&&!packagingMixed.run_full&&!packagingMixed.run_browser);
 const mixed=classify(["docs/case002/README.md","preview/case002-prototype/style.css"]);
 assert(mixed.run_browser&&!mixed.run_full&&!mixed.run_story);
 const joined=classify(["preview/case002-prototype/app.js","src/case002/engine-v3.js"]);
@@ -103,4 +114,4 @@ assert(classify(["preview/case002-prototype/style.css"],{manual:true}).run_full)
 assert(classify([]).run_full,"Empty/unknown git diff must fail closed");
 assert.deepEqual(changedFiles({CASE002_CHANGED_FILES:"a\nb\n"}),["a","b"]);
 assert.deepEqual(changedFiles({BASE_SHA:"00000000000000",HEAD_SHA:"HEAD"}),["src/case002/engine-v3.js"]);
-console.log("PASS Case002 CI selection: 18 scenarios covering docs, visual, UI, evidence, art, narrative, gameplay and unknown files.");
+console.log("PASS Case002 CI selection: docs, visual, UI, packaging, evidence, art, narrative, gameplay and fail-closed unknown files.");
