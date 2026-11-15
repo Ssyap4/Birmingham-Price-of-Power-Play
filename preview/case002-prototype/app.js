@@ -547,6 +547,7 @@ function restoreScenePoint(point,section="scene"){
  const narrative=$("sceneText");
  window.scrollTo(0,Math.max(0,window.scrollY+
   narrative.getBoundingClientRect().top-point.anchorTop));
+ updateReadingProgress(); // Reversible reading jump must be visually atomic.
  return true;
 }
 function isDossierSection(section){
@@ -948,6 +949,7 @@ function showCurrentScene(){
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
  (chapter.hidden?story:chapter).scrollIntoView({block:"start",behavior:"auto"});
+ updateReadingProgress();
  queueReadingProgress();
 }
 function setText(element,value){element.textContent=String(value);}
@@ -1087,6 +1089,7 @@ function jumpTo(where,recordId=null){
  if(row)row.tabIndex=-1;
  focusTarget.focus({preventScroll:true});
  focusTarget.scrollIntoView({block:"start",behavior:"auto"});
+ updateReadingProgress(); // Do not leave a stale rail at a decision/dossier.
 }
 function translateReason(choice,view){
  const reason=choice.reason||"";

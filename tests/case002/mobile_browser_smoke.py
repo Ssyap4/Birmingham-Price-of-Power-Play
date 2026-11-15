@@ -386,6 +386,10 @@ def main():
                         "(el) => getComputedStyle(el).pointerEvents === 'none'"
                     )
                     page.locator("#quickNav button[data-go='choices']").click()
+                    page.wait_for_function("""() =>
+                       document.querySelector('#readingProgress').hidden &&
+                       document.querySelector('#quickNav').dataset.reading === 'false'
+                    """,timeout=2500)
                     assert page.locator("#readingProgress").is_hidden(), (
                         "Reading progress must disappear while making decisions"
                     )
