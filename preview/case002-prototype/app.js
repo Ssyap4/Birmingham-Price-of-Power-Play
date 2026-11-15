@@ -117,7 +117,7 @@ let readingProgressQueued=false; // One passive viewport update per animation fr
 function updateReadingProgress(){
  const game=$("game"),nav=$("quickNav"),track=$("readingProgress");
  const text=$("sceneText");
- if(!game||!nav||!track||!text||game.hidden||!engine){
+ if(!game||!nav||!track||!text||game.hidden||!engine||navSection!=="scene"){
   if(track)track.hidden=true;
   if(nav)nav.dataset.reading="false";
   return;
@@ -751,6 +751,28 @@ function renderAchievementReceipt(){
   list.append(li);
  }
  root.append(list);
+ // Sometimes a verified mastery achievement and a first-time ending seal
+ // arrive on the SAME committed choice. Link the two durable receipts:
+ // the floating "view" button otherwise points only to this first card.
+ const finished=engine?.snapshot();
+ if(finished?.finished&&
+    newRewardOnFinish==="002:"+finished.hero+":"+finished.ending&&
+    completionArchiveStatus(finished).status==="verified"){
+  const rewardLink=make("button","К НАГРАДЕ ЗА ЭТУ РАЗВЯЗКУ ↓",
+   "case-achievement-reward-link");
+  rewardLink.type="button";
+  rewardLink.setAttribute("aria-label",
+   "Посмотреть уникальную награду за эту же завершённую развязку");
+  rewardLink.addEventListener("click",()=>{
+   const reward=document.querySelector("#finalePanel .finale-new-reward");
+   if(!reward)return;
+   dismissUnlockToast();
+   reward.setAttribute("tabindex","-1");
+   reward.scrollIntoView({block:"center",behavior:"auto"});
+   reward.focus({preventScroll:true});
+  });
+  root.append(rewardLink);
+ }
  const dismiss=make("button","ПОНЯТНО","case-achievement-receipt-dismiss");
  dismiss.type="button";
  dismiss.addEventListener("click",()=>{
@@ -818,7 +840,14 @@ function renderUnlockToast(){
  const close=make("button","ПОНЯТНО","case-unlock-toast-close");
  close.type="button";
  close.setAttribute("aria-label","Закрыть уведомление, сохранив награду в коллекции");
- close.addEventListener("click",dismissUnlockToast);
+ close.addEventListener("click",()=>{
+  dismissUnlockToast();
+  // Closing a live button otherwise leaves keyboard/VoiceOver focus inside
+  // a hidden toast. Restore a real, still-visible game landmark without
+  // jumping the player's scroll position or committing a choice.
+  const landmark=s.finished?$("choicesPanel"):$("storyPanel");
+  landmark?.focus({preventScroll:true});
+ });
  controls.append(details,close);
  toast.append(seal,copy,controls);
  toast.dataset.token=token;

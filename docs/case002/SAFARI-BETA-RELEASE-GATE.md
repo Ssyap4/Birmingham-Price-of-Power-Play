@@ -77,3 +77,21 @@ completion archival status derived from existing storage records. Returning to
 hero selection or opening the journal does not mutate the save, award new
 rewards, or change any of the 35 tested endings. The end title is never shown
 before a committed Z01–Z07 scene. Publish only after browser and model QA.
+
+### Stage 15/15 mobile acceptance boundary — development branch, 2026-11-15
+
+The independent Case 002 preview now includes (on the feature branch)
+18 distinct once-per-case achievements, a separate 35-combination
+hero×ending reward shelf, visible earned-only unlock receipts, and
+reversible finale↔collection links. The final UI cycle also handles
+simultaneous milestone + reward unlocks, small-viewport notification
+stacking, keyboard focus after closing a toast, and an unobtrusive
+actual-scroll reading rail that is hidden outside the scene section.
+
+These are local preview features: the previous packaged artifact and
+any external Safari URL do NOT receive them automatically. The next
+major preview should manually rebuild the independent Safari package,
+verify its immutable WebP inventory and run the justified Chromium/WebKit
+acceptance gate, then deploy on an isolated host only when authorized.
+No link is declared live by this document. Preserve stable main,
+Case 001 and the existing save/archive schema.

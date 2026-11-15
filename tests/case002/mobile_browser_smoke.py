@@ -393,6 +393,16 @@ def main():
                     assert page.locator("#readingProgress").is_hidden(), (
                         "Reading progress must disappear while making decisions"
                     )
+                    # The document may remain scrolled into the previous
+                    # narration, but a current DECISION nav state must never
+                    # misleadingly advertise reading progress.
+                    page.locator("#sceneText").evaluate(
+                        "(el) => el.scrollIntoView({block:'start'})"
+                    )
+                    page.wait_for_timeout(100)
+                    assert page.locator("#readingProgress").is_hidden(), (
+                        "Leaving the reading section must hide its rail even if prose is on screen"
+                    )
                     assert page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == scroll_save, (
                         "Reading progress and shortcut must not write to the save"
@@ -1491,6 +1501,21 @@ def main():
                         link_page.on("pageerror", lambda err: link_errors.append(str(err)))
                         link_page.goto(address, wait_until="load")
                         ensure_selection(link_page)
+                        # Presentation fixture for a genuine *third* outcome:
+                        # two past archive rows, no other award keys or saves.
+                        # The following trainEscape route remains a real
+                        # model-verified sequence and earns its own first
+                        # seal; this fixture exercises the simultaneous
+                        # mastery-achievement + new-ending notification.
+                        link_page.evaluate("""() => localStorage.setItem(
+                          window.BirminghamCase002Engine.RECORD_KEY,
+                          JSON.stringify([
+                            {caseId:'002',heroId:'finn',attemptId:'qa-prior-finn',
+                             ending:'trainTruth'},
+                            {caseId:'002',heroId:'samuel',attemptId:'qa-prior-samuel',
+                             ending:'trainDeal'}
+                          ])
+                        )""")
                         link_page.locator("#begin").click()
                         saw_earned_achievement=False
                         checked_flyout=False
@@ -1546,6 +1571,28 @@ def main():
                                     assert not link_page.evaluate(
                                         "() => document.documentElement.scrollWidth > innerWidth + 1"
                                     ), "Achievement flyout overflows 320px portrait phone"
+                                    # Smallest supported portrait viewport:
+                                    # a bottom consequence receipt may coexist
+                                    # with the top award ceremony and 3×2 dock.
+                                    link_page.set_viewport_size({"width":320,"height":568})
+                                    link_page.wait_for_function("""() => {
+                                      const toast=document.querySelector('#caseUnlockToast');
+                                      const notice=document.querySelector('#notice');
+                                      const dock=document.querySelector('#quickNav');
+                                      if(toast.hidden)return false;
+                                      const t=toast.getBoundingClientRect();
+                                      const d=dock.getBoundingClientRect();
+                                      if(t.left < -1 || t.right > innerWidth+1 ||
+                                         t.top < -1 || t.bottom+6 > d.top)return false;
+                                      if(!notice.hidden){
+                                        const n=notice.getBoundingClientRect();
+                                        if(t.bottom+6>n.top || n.bottom+6>d.top)return false;
+                                      }
+                                      return true;
+                                    }""",timeout=2500)
+                                    assert not link_page.evaluate(
+                                        "() => document.documentElement.scrollWidth > innerWidth + 1"
+                                    ), "Unlock and dock must not overflow a 320x568 portrait phone"
                                     link_page.set_viewport_size({"width":390,"height":844})
                                     before_flyout=link_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
@@ -1671,12 +1718,23 @@ def main():
                         assert reward_toast.is_visible(), (
                             "A first-time unique ending reward needs a visible flying receipt"
                         )
-                        assert "НАГРАДА" in reward_toast.inner_text()
+                        assert "ДОСТИЖЕНИЯ И НАГРАДА" in reward_toast.inner_text(), (
+                            "A newly earned third outcome must announce BOTH genuine unlocks"
+                        )
                         reward_toast.locator(".case-unlock-toast-details").click()
                         assert reward_toast.is_hidden()
+                        assert link_page.locator("#caseAchievementReceipt").evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Combined flyout must focus its achievement receipt first"
+                        assert "Три цены власти" in link_page.locator(
+                            "#caseAchievementReceipt").inner_text()
+                        combined_link=link_page.locator(".case-achievement-reward-link")
+                        assert combined_link.count()==1 and combined_link.is_visible()
+                        assert combined_link.bounding_box()["height"]>=44
+                        combined_link.click()
                         assert link_page.locator(".finale-new-reward").evaluate(
                             "(el) => document.activeElement === el"
-                        ), "Reward details must focus the new finale reward receipt"
+                        ), "Second genuine new reward must be reachable from the same ceremony"
                         report=link_page.locator("#finalePanel")
                         assert report.is_visible()
                         assert report.get_attribute("data-ending") == "trainEscape"
@@ -1909,6 +1967,9 @@ def main():
                                     window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
                                 flyout.locator(".case-unlock-toast-close").click()
                                 assert flyout.is_hidden()
+                                assert full_page.locator("#storyPanel").evaluate(
+                                    "(el) => document.activeElement === el"
+                                ), "Closing a flying receipt must return keyboard focus to live game"
                                 assert full_page.locator("#caseAchievementReceipt").is_visible(), (
                                     "Closing flying notice must preserve permanent earned card"
                                 )

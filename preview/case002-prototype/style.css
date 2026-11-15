@@ -1561,3 +1561,17 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(prefers-reduced-motion:reduce){
  #game .case-reading-progress-fill{transition:none!important}
 }
+
+/* Cycle 1, stage 15: one accessible link between simultaneous earned
+   achievement and ending-reward receipts, with no extra overlay. */
+#game .case-achievement-reward-link{
+ display:block;width:100%;min-height:48px;margin:0 0 10px;
+ padding:10px 9px;border:1px solid #e1b883;border-radius:5px;
+ color:#ffe5b7;background:linear-gradient(130deg,#5f4428,#342519);
+ text-align:center;font:800 .72rem/1.4 system-ui,sans-serif;
+ overflow-wrap:anywhere}
+#game .case-achievement-reward-link:focus-visible{
+ outline:3px solid #ffe4b9;outline-offset:2px}
+@media(max-width:359px){
+ #game .case-achievement-reward-link{font-size:.69rem}
+}
