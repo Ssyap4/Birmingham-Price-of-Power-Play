@@ -829,3 +829,22 @@ html[data-case002-telegram="true"] .tool-tab{
 #game .dossier-return:focus-visible{outline:3px solid #ffe0b2;outline-offset:2px}
 @media(max-width:359px){#game .dossier-return{
  font-size:.70rem;letter-spacing:0;padding-inline:9px}}
+
+/* Stage 14: one calm earned-only update rail shared by witnesses and proofs.
+   Text is derived from the actual engine; it never advertises hidden cases. */
+.scene-dossier-updates{margin:9px 0 12px;padding:11px;
+ border:1px solid #8f7252;border-left:3px solid #d5b27b;border-radius:5px;
+ background:linear-gradient(135deg,#32271d,#211a14 85%)}
+.scene-dossier-updates[hidden]{display:none!important}
+.scene-dossier-updates-title{display:block;color:#efd2a6;margin-bottom:9px;
+ font:800 .66rem/1.4 system-ui,sans-serif;letter-spacing:.09em}
+.scene-dossier-updates-links{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+.scene-dossier-update{display:block;min-height:45px;width:100%;min-width:0;
+ text-align:left;padding:10px 11px;border-radius:4px;
+ border:1px solid #92734e;background:#241c15;color:#f5d9b1;
+ font:700 .77rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+.scene-dossier-update:focus-visible{outline:3px solid #f9d7a7;outline-offset:2px}
+#game .deduction-card:focus-visible,#game .person-entry:focus-visible{
+ outline:3px solid #f5cc8d;outline-offset:3px}
+@media(max-width:359px){.scene-dossier-updates{padding:9px}
+ .scene-dossier-update{padding-inline:8px;font-size:.74rem}}

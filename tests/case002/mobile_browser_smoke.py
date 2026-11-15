@@ -136,6 +136,9 @@ def main():
                         1 if page.locator(".choice-locked .choice").count() else 0
                     )
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
+                    assert page.locator("#sceneDossierUpdates").is_hidden()
+                    assert page.locator('#quickNav [data-go="deductions"]').get_attribute("data-unread") == "false"
+                    assert page.locator('#quickNav [data-go="witnesses"]').get_attribute("data-unread") == "false"
                     assert page.locator("#lastDecisionReceipt").is_hidden()
                     assert "доступн" in page.locator("#readerBridgeSummary").inner_text()
                     first_save=page.evaluate("""() => localStorage.getItem(
@@ -443,6 +446,11 @@ def main():
                     assert clue_jump.count() == 1 and clue_jump.is_visible()
                     assert "Старинный билет" in clue_jump.inner_text()
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
+                    assert page.locator("#sceneDossierUpdates").is_hidden(), (
+                        "Ticket alone cannot disclose an unverified deduction or unknown witness"
+                    )
+                    assert page.locator('#quickNav [data-go="deductions"]').get_attribute("data-unread") == "false"
+                    assert page.locator('#quickNav [data-go="witnesses"]').get_attribute("data-unread") == "false"
                     assert "1 новая улика" in page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-label")
                     assert page.locator("#toolContent li").count() >= 1
                     # Closing the floating receipt must not erase the persistent,

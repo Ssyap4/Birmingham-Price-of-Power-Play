@@ -103,7 +103,8 @@ let pairFirst=null,pairFeedback=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 // Presentation-only state: never written to the game engine or the awards archive.
-let unseenEvidence=0,pendingEvidence=[],journalExpanded=false,navSection="scene";
+let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
+ journalExpanded=false,navSection="scene";
 let lastDecisionReceipt=null; // Presentation only: latest committed choice.
 let dossierReturnPoint=null; // Temporary reading bookmark; never persisted.
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
@@ -189,7 +190,7 @@ function init(){
   // A deliberate dossier switch supersedes any floating old receipt.
   hideNotice();
   tab=button.dataset.tab;evidenceFocus=null;
-  if(tab==="evidence")acknowledgeEvidence();
+  acknowledgeSection(tab);
   navSection=tab;renderTools();refreshNavigation();
   // Keep focus on the selected tab (keyboard/VoiceOver convention), but
   // return its newly rendered content to view after a long journal entry.
@@ -204,40 +205,67 @@ function selectedHeroButton(){
  return document.querySelector('#heroGallery [data-hero="'+$("hero").value+'"]');
 }
 function refreshNavigation(){
- const unread=unseenEvidence>0;
  for(const button of document.querySelectorAll('#quickNav [data-go]')){
   if(button.dataset.go===navSection)button.setAttribute("aria-current","location");
   else button.removeAttribute("aria-current");
   if(button.dataset.go==="scene"){
    if(dossierReturnPoint&&isDossierSection(navSection))
-    button.setAttribute("aria-label","Вернуться к месту чтения");
+    button.setAttribute("aria-label",dossierReturnPoint.section==="choices"?
+      "Вернуться к месту выбора":"Вернуться к месту чтения");
    else button.removeAttribute("aria-label");
   }
  }
  refreshDossierReturn();
- for(const button of document.querySelectorAll(
-  '#quickNav [data-go="evidence"],.tool-tab[data-tab="evidence"]')){
-  button.dataset.unread=String(unread);
-  if(unread){
-   const n=unseenEvidence;
-   const plural=n%100>=11&&n%100<=14?"новых улик":
-    n%10===1?"новая улика":[2,3,4].includes(n%10)?"новые улики":"новых улик";
-   button.setAttribute("aria-label","УЛИКИ · "+n+" "+plural);
+ // Unread marks must reflect genuine state transitions, not a speculative
+ // scene or unearned ending. These dots are transient and never persisted.
+ const counts={evidence:unseenEvidence,deductions:pendingProofs.length,
+  witnesses:pendingWitnesses.length};
+ const grammar=(n,one,few,many)=>{
+  const last=n%10,tail=n%100;
+  return tail>=11&&tail<=14?many:
+   last===1?one:[2,3,4].includes(last)?few:many;
+ };
+ const names={evidence:"УЛИКИ",deductions:"ВЫВОДЫ",witnesses:"ЛЮДИ"};
+ for(const [section,n] of Object.entries(counts)){
+  const kind=section==="evidence"?
+   grammar(n,"новая улика","новые улики","новых улик"):
+   section==="deductions"?
+    grammar(n,"новый вывод","новых вывода","новых выводов"):
+    grammar(n,"новое сведение","новых сведения","новых сведений");
+  for(const button of document.querySelectorAll(
+   '#quickNav [data-go="'+section+'"],.tool-tab[data-tab="'+section+'"]')){
+   button.dataset.unread=String(n>0);
+   if(n)button.setAttribute("aria-label",names[section]+" · "+n+" "+kind);
+   else button.removeAttribute("aria-label");
   }
-  else button.removeAttribute("aria-label");
  }
 }
-function recordNewEvidence(before,after){
+function recordNewDossierChanges(before,after){
  for(const id of (after.evidence||[])){
   if(!(before.evidence||[]).includes(id)&&!pendingEvidence.includes(id))
    pendingEvidence.push(id);
  }
+ // Proofs are verified only through already held evidence and the contract.
+ const oldFacts=api.factsFor(data.contract,before.evidence||[]);
+ const newFacts=api.factsFor(data.contract,after.evidence||[]);
+ for(const [id,verified] of Object.entries(newFacts)){
+  if(verified&&!oldFacts[id]&&!pendingProofs.includes(id))pendingProofs.push(id);
+ }
+ // A status change is announced only if this character has been encountered.
+ const known=new Set(window.BirminghamCase002Cast.discovered(after).map(x=>x.id));
+ for(const [id,status] of Object.entries(after.witnesses||{})){
+  if(known.has(id)&&before.witnesses?.[id]!==status&&!pendingWitnesses.includes(id))
+   pendingWitnesses.push(id);
+ }
  unseenEvidence=pendingEvidence.length;
  refreshNavigation();
 }
-function acknowledgeEvidence(){
- pendingEvidence=[];unseenEvidence=0;
- renderNewFinds();
+function acknowledgeSection(section){
+ if(section==="evidence"){
+  pendingEvidence=[];unseenEvidence=0;renderNewFinds();
+ }else if(section==="witnesses")pendingWitnesses=[];
+ else if(section==="deductions")pendingProofs=[];
+ renderSceneUpdates();
 }
 function renderNewFinds(){
  // A missed receipt is not a lost clue: all newly earned items remain
@@ -263,6 +291,44 @@ function renderNewFinds(){
   links.append(link);
  }
  tray.append(links);
+}
+/* In-scene shortcuts only for verified deductions and encountered witnesses.
+ * This never shows future leads or unknown NPC identities. */
+function renderSceneUpdates(){
+ let panel=$("sceneDossierUpdates");
+ if(!panel){
+  panel=make("section",undefined,"scene-dossier-updates");
+  panel.id="sceneDossierUpdates";
+  panel.setAttribute("aria-label","Новые подтверждённые материалы");
+  $("sceneFinds").insertAdjacentElement("afterend",panel);
+ }
+ panel.replaceChildren();
+ const known=new Map(engine?
+  window.BirminghamCase002Cast.discovered(engine.snapshot()).map(x=>[x.id,x]):[]);
+ const witnessed=pendingWitnesses.filter(id=>known.has(id));
+ const count=pendingProofs.length+witnessed.length;
+ panel.hidden=count===0;
+ if(panel.hidden)return;
+ panel.append(make("span","НОВОЕ В РАССЛЕДОВАНИИ · "+count,
+  "scene-dossier-updates-title"));
+ const links=make("div",undefined,"scene-dossier-updates-links");
+ for(const id of pendingProofs){
+  const name=proofLabels[id]||"Подтверждённая связь";
+  const button=make("button","ВЫВОД · "+name,"scene-dossier-update");
+  button.type="button";button.dataset.section="deductions";button.dataset.recordId=id;
+  button.setAttribute("aria-label","Открыть новый доказанный вывод: "+name);
+  button.addEventListener("click",()=>jumpTo("deductions",id));
+  links.append(button);
+ }
+ for(const id of witnessed){
+  const name=known.get(id).name;
+  const button=make("button","ЛЮДИ · "+name,"scene-dossier-update");
+  button.type="button";button.dataset.section="witnesses";button.dataset.recordId=id;
+  button.setAttribute("aria-label","Открыть обновлённое досье: "+name);
+  button.addEventListener("click",()=>jumpTo("witnesses",id));
+  links.append(button);
+ }
+ panel.append(links);
 }
 /* Keep only the real committed choice's consequences within the new scene.
  * The floating receipt can close without losing the third or fourth event. */
@@ -450,8 +516,9 @@ function showGame(){
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
- unseenEvidence=0;pendingEvidence=[];journalExpanded=false;navSection="scene";
-  lastDecisionReceipt=null;dossierReturnPoint=null;refreshNavigation();
+ unseenEvidence=0;pendingEvidence=[];pendingWitnesses=[];pendingProofs=[];
+ journalExpanded=false;navSection="scene";
+ lastDecisionReceipt=null;dossierReturnPoint=null;refreshNavigation();
  render();
  showCurrentScene();
 }
@@ -543,7 +610,7 @@ function showNotice(text,focus=null,details=null){
    setText(jump,"ОТКРЫТЬ: "+(names[activeNoticeFocus.tab]||"ДОСЬЕ"));
  }
 }
-function jumpTo(where,evidenceId=null){
+function jumpTo(where,recordId=null){
  if(!engine)return;
  if(where==="scene"&&dossierReturnPoint&&isDossierSection(navSection)){
   returnFromDossier();return;
@@ -562,17 +629,22 @@ function jumpTo(where,evidenceId=null){
  else if(where==="reading")target=$("sceneText");
  else if(["evidence","deductions","witnesses","journal"].includes(where)){
    tab=where;
-   evidenceFocus=where==="evidence"?evidenceId:null;
-   if(where==="evidence")acknowledgeEvidence();
+   evidenceFocus=where==="evidence"?recordId:null;
+   acknowledgeSection(where);
    renderTools();
    target=$("caseTools");
  }else return;
  hideNotice();
  navSection=where==="reading"?"scene":where;refreshNavigation();
  // Scroll to a real on-screen panel; never change story state or spend a choice.
- const row=evidenceId&&where==="evidence"?
-   [...$("toolContent").querySelectorAll(".evidence-card")]
-      .find(item=>item.dataset.evidenceId===evidenceId):null;
+ const selector=where==="evidence"?".evidence-card":
+  where==="deductions"?".deduction-card":
+  where==="witnesses"?".person-entry":null;
+ const field=where==="evidence"?"evidenceId":
+  where==="deductions"?"deductionId":"person";
+ const row=recordId&&selector?
+  [...$("toolContent").querySelectorAll(selector)]
+   .find(item=>item.dataset[field]===recordId):null;
  const focusTarget=row||target;
  if(row)row.tabIndex=-1;
  focusTarget.focus({preventScroll:true});
@@ -726,6 +798,7 @@ function render(){
  const scenePlace=sceneLocations[stage.location]||"Место расследования";
  setText($("sceneLocation"),scenePlace);
  renderNewFinds();
+ renderSceneUpdates();
  setText($("sceneArtChapter"),"СЦЕНА "+scene.id+" · "+(stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ"));
  setText($("sceneArtPlace"),scenePlace);
  renderApprovedSceneArt(stage);
@@ -1146,7 +1219,7 @@ function select(choice,fromScene){
   assertCurrentSave();
   if(choice.confirm&&!window.confirm("Этот поступок может закончиться гибелью героя. Вы действительно принимаете смертельный риск?"))return;
   const next=engine.choose(choice.to,choice.action);
-  recordNewEvidence(before,next);
+  recordNewDossierChanges(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
   evidenceFocus=null;pairFirst=null;pairFeedback=null;
@@ -1168,7 +1241,7 @@ function select(choice,fromScene){
   const current=engine.snapshot();
   const committed=current.history.length>before.history.length;
   if(committed){
-   recordNewEvidence(before,current);
+   recordNewDossierChanges(before,current);
    lastDecisionReceipt=null;
    render();
    showCurrentScene();
