@@ -655,6 +655,35 @@ def main():
                     assert page.locator('.journal-event[data-scene="A05"]').count() == 1
                     assert "Старинный билет" in page.locator('.journal-event[data-scene="A05"]').inner_text()
                     assert page.locator(".journal-event-note[data-kind='evidence']").count() >= 1
+                    assert page.locator(".journal-compass").is_visible()
+                    assert page.locator(".journal-compass-stat").count() == 3
+                    assert page.locator(".journal-compass-stat").first.locator(
+                        "strong").inner_text() == "1"
+                    assert page.locator('.journal-compass-action[data-go="choices"]').is_visible()
+                    assert page.locator(".journal-source[data-source-kind='witness']").count() == 0, (
+                        "Journal must not invent witness links without known status"
+                    )
+                    history_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    historical=page.locator('.journal-event[data-scene="A05"]')
+                    history_link=historical.locator(
+                        '.journal-source[data-source-kind="evidence"]')
+                    assert history_link.count() == 1
+                    assert history_link.get_attribute("data-record-id") == "old_excursion_ticket"
+                    history_link.click()
+                    assert page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"]').evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Historical clue link must focus the acquired evidence"
+                    assert page.locator(".dossier-cross-return").get_attribute(
+                        "data-return-section") == "journal"
+                    page.locator(".dossier-cross-return").click()
+                    assert page.locator('.journal-event[data-scene="A05"]').evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Journal return must focus the exact historic entry"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == history_save, (
+                        "Journal/evidence navigation unexpectedly modified game save"
+                    )
                     page.screenshot(path=str(visual_dir/f"{browser_name}-journal.png"),full_page=True)
                     assert page.locator(".case-journal").evaluate(
                         "(el) => getComputedStyle(el).overflowY === 'visible'"
@@ -1271,6 +1300,23 @@ def main():
                                 f"{section}: viewing a new dossier card rewrote progress"
                             )
                             assert test_page.locator("#dossierReturn").is_visible()
+                            if section=="witnesses":
+                                test_page.locator('#quickNav [data-go="journal"]').click()
+                                witness_link=test_page.locator(
+                                    f'.journal-source[data-source-kind="witness"]'
+                                    f'[data-record-id="{expected}"]').first
+                                assert witness_link.count() == 1, (
+                                    "Earned witness change needs a journal-to-person link"
+                                )
+                                witness_link.click()
+                                assert test_page.locator(
+                                    f'.person-entry[data-person="{expected}"]').evaluate(
+                                    "(el) => document.activeElement === el"
+                                )
+                                test_page.locator(".dossier-cross-return").click()
+                                assert test_page.locator(".journal-event:focus").count() == 1, (
+                                    "Witness dossier return must focus its historical record"
+                                )
                             test_page.locator("#dossierReturn").click()
                             assert test_page.locator("#dossierReturn").is_hidden()
                             ctx.close()

@@ -766,6 +766,9 @@ function jumpTo(where,recordId=null){
  else if(["evidence","deductions","witnesses","journal"].includes(where)){
    tab=where;
    evidenceFocus=where==="evidence"?recordId:null;
+   // A direct return to a historic note must disclose a collapsed row first.
+   if(where==="journal"&&recordId!==null&&Number(recordId)>=6)
+    journalExpanded=true;
    acknowledgeSection(where);
    renderTools();
    target=$("caseTools");
@@ -775,9 +778,11 @@ function jumpTo(where,recordId=null){
  // Scroll to a real on-screen panel; never change story state or spend a choice.
  const selector=where==="evidence"?".evidence-card":
   where==="deductions"?".deduction-card":
-  where==="witnesses"?".person-entry":null;
+  where==="witnesses"?".person-entry":
+  where==="journal"?".journal-event":null;
  const field=where==="evidence"?"evidenceId":
-  where==="deductions"?"deductionId":"person";
+  where==="deductions"?"deductionId":
+  where==="journal"?"journalIndex":"person";
  const row=recordId&&selector?
   [...$("toolContent").querySelectorAll(selector)]
    .find(item=>item.dataset[field]===recordId):null;
@@ -1109,7 +1114,7 @@ function renderTools(){
     dossierTrail.sceneId!==v.state.node))dossierTrail=null;
  if(dossierTrail){
    const back=dossierTrail;
-   const names={evidence:"К УЛИКЕ",deductions:"К ВЫВОДУ"};
+   const names={evidence:"К УЛИКЕ",deductions:"К ВЫВОДУ",journal:"К ЗАПИСИ"};
    const button=make("button","← "+(names[back.fromSection]||"НАЗАД")+
     " · "+back.label,"dossier-cross-return");
    button.type="button";
@@ -1242,16 +1247,52 @@ function renderTools(){
    header.append(make("p",entries.length?
      entries.length+" значимых записей. Новые события расположены первыми.":"Здесь будут только события, которые действительно произошли.","case-journal-intro"));
    root.append(header);
+   // Present-tense case state, derived from the live attempt, never a hint
+   // about a future ending or an unearned witness.
+   const held=v.state.evidence||[];
+   const knownPeople=window.BirminghamCase002Cast.discovered(v.state);
+   const verified=Object.values(v.facts).filter(Boolean).length;
+   const compass=make("section",undefined,"journal-compass");
+   compass.setAttribute("aria-label","Состояние расследования сейчас");
+   compass.append(make("span","НА ТЕКУЩИЙ МОМЕНТ · "+v.scene.id,"journal-compass-kicker"));
+   const figures=make("div",undefined,"journal-compass-stats");
+   for(const [number,title] of [
+    [held.length,"Улик в деле"],[verified,"Доказанных выводов"],
+    [knownPeople.length,"Известных людей"]
+   ]){
+    const cell=make("div",undefined,"journal-compass-stat");
+    cell.append(make("strong",number),make("span",title));figures.append(cell);
+   }
+   compass.append(figures);
+   const links=make("div",undefined,"journal-compass-actions");
+   for(const [section,title,enabled] of [
+    ["evidence","К УЛИКАМ",held.length>0],
+    ["deductions","К ВЫВОДАМ",held.length>0],
+    ["witnesses","К ЛЮДЯМ",knownPeople.length>0],
+    ["choices",v.state.finished?"К ИТОГУ":"К ТЕКУЩЕМУ ВЫБОРУ",true]
+   ]){
+    if(!enabled)continue;
+    const action=make("button",title,"journal-compass-action");
+    action.type="button";action.dataset.go=section;
+    action.addEventListener("click",()=>jumpTo(section));
+    links.append(action);
+   }
+   compass.append(links);
+   compass.append(make("p","Ниже — уже совершённые действия. Старые записи можно открыть для справки, но повторить их из журнала нельзя.","journal-compass-note"));
+   root.append(compass);
    if(!entries.length){
      root.append(make("p","Важные решения появятся здесь после первого значимого поступка.","empty"));
      return;
    }
    const listing=make("ol",undefined,"case-journal");
    listing.setAttribute("aria-label","История решений, новые события первыми");
+   const owned=new Map(held.map(id=>[evidenceName(id),id]));
+   const byName=new Map(knownPeople.map(person=>[person.name,person.id]));
    const older=[];
    for(const [index,item] of entries.entries()){
      const li=make("li",undefined,"journal-event");
      li.dataset.scene=item.to;
+     li.dataset.journalIndex=String(index);
      const number=entries.length-index;
      const entryHeader=make("div",undefined,"journal-event-header");
      entryHeader.append(make("span","ЗАПИСЬ "+String(number).padStart(2,"0"),"journal-event-number"));
@@ -1265,6 +1306,29 @@ function renderTools(){
        note.dataset.kind=line.startsWith("Улика:")?"evidence":
          line.startsWith("Передано:")?"custody":
          /^(Ада Уэбб|Томми Кросс|Дэниел Мерсер):/.test(line)?"witness":"decision";
+       // Keep historic text intact. Navigation must be grounded in currently
+       // held evidence and actually discovered people, not guessed flag names.
+       const clue=line.startsWith("Улика: ")?owned.get(line.slice(7)):null;
+       const personName=note.dataset.kind==="witness"?line.split(":")[0]:null;
+       const witness=personName?byName.get(personName):null;
+       if(clue||witness){
+        const destination=clue?"evidence":"witnesses";
+        const record=clue||witness;
+        const link=make("button",clue?"ОТКРЫТЬ УЛИКУ ↗":"ОТКРЫТЬ ДОСЬЕ ↗",
+         "journal-source");
+        link.type="button";link.dataset.sourceKind=clue?"evidence":"witness";
+        link.dataset.recordId=record;
+        link.setAttribute("aria-label","Открыть "+(clue?"улику: "+evidenceName(clue):
+         "сведения о свидетеле: "+personName));
+        link.addEventListener("click",()=>{
+         dossierTrail={sceneId:engine.snapshot().node,
+          fromSection:"journal",recordId:String(index),
+          label:"запись "+String(entries.length-index).padStart(2,"0"),
+          targetSection:destination};
+         jumpTo(destination,record);
+        });
+        note.append(link);
+       }
        notes.append(note);
      }
      li.append(notes);
