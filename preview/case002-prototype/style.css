@@ -818,3 +818,14 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(prefers-reduced-motion:reduce){
  .last-decision-receipt,.last-decision-toggle{animation:none!important;transition:none!important}
 }
+
+/* Stage 13: direct, read-only return to the previous reading location. */
+#game .dossier-return{display:block;width:100%;min-height:46px;margin:0 0 12px;
+ padding:10px 11px;background:linear-gradient(115deg,#493320,#291f17);
+ border:1px solid #b68b56;border-left:3px solid #e0ba83;border-radius:5px;
+ color:#f3d6ae;text-align:left;font:800 .73rem/1.35 system-ui,sans-serif;
+ letter-spacing:.035em;overflow-wrap:anywhere}
+#game .dossier-return[hidden]{display:none!important}
+#game .dossier-return:focus-visible{outline:3px solid #ffe0b2;outline-offset:2px}
+@media(max-width:359px){#game .dossier-return{
+ font-size:.70rem;letter-spacing:0;padding-inline:9px}}

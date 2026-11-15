@@ -144,6 +144,12 @@ def main():
                     assert page.locator("#choicesPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: reader next must focus decisions"
+                    page.locator('#quickNav button[data-go="evidence"]').click()
+                    assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
+                    page.locator("#dossierReturn").click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: dossier return must restore choices focus"
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     page.locator("#choicesBackToText").click()
                     assert page.locator("#sceneText").evaluate(
@@ -155,9 +161,26 @@ def main():
                     )
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 0"
                     assert page.locator("#pulseProof").inner_text() == "Выводов: 0"
+                    page.evaluate("""() => window.scrollTo(0,
+                        document.querySelector('#sceneText').getBoundingClientRect().top
+                        + window.scrollY + 40)""")
+                    before_dossier=page.evaluate("() => window.scrollY")
+                    assert before_dossier > 0
                     page.locator('#quickNav button[data-go="journal"]').click()
+                    assert page.locator("#dossierReturn").is_visible()
+                    assert "P01" in page.locator("#dossierReturn").inner_text()
                     assert page.locator('button[data-tab="journal"]').get_attribute("aria-pressed") == "true"
                     assert page.locator('#quickNav [data-go="journal"]').get_attribute("aria-current") == "location"
+                    page.locator('button[data-tab="deductions"]').click()
+                    assert page.locator("#dossierReturn").is_visible()
+                    assert page.locator('#quickNav [data-go="scene"]').get_attribute(
+                        "aria-label"
+                    ) == "Вернуться к месту чтения"
+                    page.locator('#quickNav button[data-go="scene"]').click()
+                    assert page.locator("#dossierReturn").is_hidden()
+                    assert abs(page.evaluate("() => window.scrollY")-before_dossier) <= 4, (
+                        f"{browser_name}: returning from dossier must restore reading offset"
+                    )
                     assert page.locator("#sceneId").inner_text().startswith("P01")
                     page.locator('#quickNav button[data-go="choices"]').click()
                     assert page.locator("#choicesPanel").is_visible()
@@ -439,6 +462,7 @@ def main():
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == previous_save
                     assert clue_jump.is_visible()
                     clue_jump.click()
+                    assert page.locator("#dossierReturn").is_visible()
                     assert page.locator("#sceneFinds").is_hidden()
                     assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "false"
@@ -449,6 +473,11 @@ def main():
                         "New evidence must receive keyboard focus after using scene shortcut"
                     )
                     assert page.locator("#sceneId").inner_text().startswith("A05")
+                    page.locator("#dossierReturn").click()
+                    assert page.locator("#dossierReturn").is_hidden()
+                    assert page.locator("#sceneId").inner_text().startswith("A05")
+                    page.locator('#quickNav button[data-go="evidence"]').click()
+                    assert page.locator("#dossierReturn").is_visible()
                     # A collected clue can be sent straight to the comparison wall.
                     page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"] .evidence-to-board').click()
                     assert page.locator('button[data-tab="deductions"]').get_attribute("aria-pressed") == "true"

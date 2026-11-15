@@ -105,6 +105,7 @@ let activeArtStage=null;
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],journalExpanded=false,navSection="scene";
 let lastDecisionReceipt=null; // Presentation only: latest committed choice.
+let dossierReturnPoint=null; // Temporary reading bookmark; never persisted.
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -207,7 +208,13 @@ function refreshNavigation(){
  for(const button of document.querySelectorAll('#quickNav [data-go]')){
   if(button.dataset.go===navSection)button.setAttribute("aria-current","location");
   else button.removeAttribute("aria-current");
+  if(button.dataset.go==="scene"){
+   if(dossierReturnPoint&&isDossierSection(navSection))
+    button.setAttribute("aria-label","Вернуться к месту чтения");
+   else button.removeAttribute("aria-label");
+  }
  }
+ refreshDossierReturn();
  for(const button of document.querySelectorAll(
   '#quickNav [data-go="evidence"],.tool-tab[data-tab="evidence"]')){
   button.dataset.unread=String(unread);
@@ -306,6 +313,44 @@ function renderDecisionReceipt(){
  });
  panel.append(toggle,body);
 }
+/* Remember the original reading viewport, not merely the scene's opening.
+ * Using a stable text landmark compensates for disappearing clue banners. */
+function isDossierSection(section){
+ return ["evidence","deductions","witnesses","journal"].includes(section);
+}
+function refreshDossierReturn(){
+ const panel=$("caseTools");
+ let button=$("dossierReturn");
+ if(!button){
+  button=make("button","← К МЕСТУ ЧТЕНИЯ","dossier-return");
+  button.id="dossierReturn";button.type="button";
+  button.addEventListener("click",returnFromDossier);
+  panel.insertBefore(button,panel.querySelector(".tool-tabs"));
+ }
+ const point=dossierReturnPoint;
+ button.hidden=!point||!isDossierSection(navSection);
+ if(!button.hidden){
+  const label=point.section==="choices"?"К МЕСТУ ВЫБОРА":"К МЕСТУ ЧТЕНИЯ";
+  setText(button,"← "+label+" · СЦЕНА "+point.sceneId);
+ }
+}
+function returnFromDossier(){
+ const point=dossierReturnPoint;
+ if(!engine||!point||engine.snapshot().node!==point.sceneId){
+  dossierReturnPoint=null;
+  jumpTo("scene");return;
+ }
+ dossierReturnPoint=null;
+ hideNotice();
+ navSection=point.section;refreshNavigation();
+ const target=point.section==="choices"?$("choicesPanel"):$("storyPanel");
+ target.focus({preventScroll:true});
+ // Narrative anchor stays in the DOM while evidence, journal or deduction
+ // content changes. Its viewport delta restores the same reading position.
+ const narrative=$("sceneText");
+ const newTop=window.scrollY+narrative.getBoundingClientRect().top-point.anchorTop;
+ window.scrollTo(0,Math.max(0,newTop));
+}
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
  $("launch").hidden=false;
@@ -315,7 +360,7 @@ function showSelection({focus=false}={}){
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
- hideNotice();$("game").hidden=true;
+ hideNotice();dossierReturnPoint=null;$("game").hidden=true;
  showSelection({focus:true});
 }
 function refreshResume(){
@@ -406,13 +451,14 @@ function showGame(){
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
  unseenEvidence=0;pendingEvidence=[];journalExpanded=false;navSection="scene";
-  lastDecisionReceipt=null;refreshNavigation();
+  lastDecisionReceipt=null;dossierReturnPoint=null;refreshNavigation();
  render();
  showCurrentScene();
 }
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
 function showCurrentScene(){
+ dossierReturnPoint=null;
  navSection="scene";refreshNavigation();
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
@@ -499,6 +545,17 @@ function showNotice(text,focus=null,details=null){
 }
 function jumpTo(where,evidenceId=null){
  if(!engine)return;
+ if(where==="scene"&&dossierReturnPoint&&isDossierSection(navSection)){
+  returnFromDossier();return;
+ }
+ const toDossier=isDossierSection(where);
+ if(toDossier&&!isDossierSection(navSection)){
+  dossierReturnPoint={
+   sceneId:engine.snapshot().node,
+   section:navSection==="choices"?"choices":"scene",
+   anchorTop:$("sceneText").getBoundingClientRect().top
+  };
+ }else if(!toDossier)dossierReturnPoint=null;
  let target;
  if(where==="scene")target=$("storyPanel");
  else if(where==="choices")target=$("choicesPanel");
