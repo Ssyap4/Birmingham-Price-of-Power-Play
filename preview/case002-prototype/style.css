@@ -787,3 +787,34 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .choice-locked-toggle{font-size:.69rem;letter-spacing:0}
  #game .choice-availability{font-size:.69rem}
 }
+
+/* Stage 12: a read-only event receipt attached to a scene rather than
+   another floating panel. Last verified consequences remain accessible. */
+.last-decision-receipt{margin:9px 0 12px;border:1px solid #866644;
+ border-radius:5px;background:linear-gradient(120deg,#332619,#211912);
+ box-shadow:inset 0 1px 0 #ecc69616;overflow:hidden}
+.last-decision-receipt[hidden],.last-decision-body[hidden]{display:none!important}
+.last-decision-toggle{display:flex;flex-wrap:wrap;align-items:center;
+ justify-content:space-between;gap:4px 9px;width:100%;min-height:46px;
+ padding:9px 12px;background:transparent;border:0;color:#f2d5ab;
+ text-align:left;cursor:pointer}
+.last-decision-toggle[aria-expanded="true"]{background:#403020}
+.last-decision-label{font:800 .64rem/1.4 system-ui,sans-serif;letter-spacing:.09em}
+.last-decision-count{font:600 .69rem/1.3 system-ui,sans-serif;color:#e8c590}
+.last-decision-body{padding:4px 11px 12px;border-top:1px solid #705535}
+.last-decision-list{margin:6px 0 10px;padding:0 0 0 21px;
+ color:#f1dfc6;font:.82rem/1.48 system-ui,sans-serif}
+.last-decision-list li{margin:7px 0;overflow-wrap:anywhere}
+.last-decision-list li::marker{color:#cc9d62}
+.last-decision-open{width:100%;min-height:44px;padding:8px 11px;
+ color:#f3d6af;background:#35291d;border:1px solid #ab875d;
+ font:800 .71rem/1.3 system-ui,sans-serif;letter-spacing:.025em}
+.last-decision-toggle:focus-visible,.last-decision-open:focus-visible{
+ outline:3px solid #f7d5a4;outline-offset:-3px}
+@media(max-width:359px){
+ .last-decision-toggle{padding-inline:8px}
+ .last-decision-label{letter-spacing:.035em}
+}
+@media(prefers-reduced-motion:reduce){
+ .last-decision-receipt,.last-decision-toggle{animation:none!important;transition:none!important}
+}

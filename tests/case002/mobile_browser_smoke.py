@@ -136,6 +136,7 @@ def main():
                         1 if page.locator(".choice-locked .choice").count() else 0
                     )
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
+                    assert page.locator("#lastDecisionReceipt").is_hidden()
                     assert "доступн" in page.locator("#readerBridgeSummary").inner_text()
                     first_save=page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
@@ -411,6 +412,9 @@ def main():
                     ), f"{browser_name}: new evidence must not strand focus on a deleted choice"
                     assert page.locator("#noticeJump").is_visible()
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
+                    assert page.locator("#lastDecisionReceipt").is_visible()
+                    assert page.locator("#lastDecisionReceipt").get_attribute("data-scene-id") == "A05"
+                    assert page.locator("#lastDecisionToggle").get_attribute("aria-expanded") == "false"
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
                     clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
                     assert clue_jump.count() == 1 and clue_jump.is_visible()
@@ -422,6 +426,17 @@ def main():
                     # earned-only clue shortcut in the scene.
                     page.locator("#noticeDismiss").click()
                     assert page.locator("#notice").is_hidden()
+                    assert page.locator("#lastDecisionReceipt").is_visible()
+                    previous_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
+                    page.locator("#lastDecisionToggle").click()
+                    assert page.locator("#lastDecisionToggle").get_attribute("aria-expanded") == "true"
+                    assert "Старинный билет" in page.locator("#lastDecisionDetails").inner_text()
+                    assert page.locator("#lastDecisionDetails .last-decision-open").is_visible()
+                    page.locator("#lastDecisionToggle").click()
+                    assert page.locator("#lastDecisionDetails").is_hidden()
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == previous_save
                     assert clue_jump.is_visible()
                     clue_jump.click()
                     assert page.locator("#sceneFinds").is_hidden()
@@ -661,6 +676,9 @@ def main():
                     assert receipt_page.locator("#noticeExpand").is_visible(), (
                         f"{browser_name}: four consequences need an expand control"
                     )
+                    assert receipt_page.locator("#lastDecisionReceipt").is_visible()
+                    assert "4 изменения" in receipt_page.locator("#lastDecisionToggle").inner_text()
+                    assert receipt_page.locator("#lastDecisionDetails").is_hidden()
                     assert receipt_page.locator("#noticeExpand").get_attribute("aria-expanded") == "false"
                     assert "Откройте подробности" in receipt_page.locator("#noticeContent").inner_text()
                     receipt_page.locator("#noticeExpand").click()
@@ -680,6 +698,12 @@ def main():
                     assert receipt_page.locator("#storyPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: dismissing a receipt must restore live focus"
+                    receipt_page.locator("#lastDecisionToggle").click()
+                    for phrase in ("Ада Уэбб","журнал стрелочника",
+                                   "схема частного отвода","принятом решении"):
+                        assert phrase in receipt_page.locator("#lastDecisionDetails").inner_text(), (
+                            f"{browser_name}: dismissed toast must leave all four true consequences accessible"
+                        )
                     # A second choice creates a new receipt; manually switching
                     # the dossier must dismiss it instead of obscuring the tab.
                     receipt_page.locator('button.choice[data-to="A01"]').click()

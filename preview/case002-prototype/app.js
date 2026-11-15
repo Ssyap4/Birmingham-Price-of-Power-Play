@@ -104,6 +104,7 @@ let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],journalExpanded=false,navSection="scene";
+let lastDecisionReceipt=null; // Presentation only: latest committed choice.
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -256,6 +257,55 @@ function renderNewFinds(){
  }
  tray.append(links);
 }
+/* Keep only the real committed choice's consequences within the new scene.
+ * The floating receipt can close without losing the third or fourth event. */
+function renderDecisionReceipt(){
+ let panel=$("lastDecisionReceipt");
+ if(!panel){
+  panel=make("section",undefined,"last-decision-receipt");
+  panel.id="lastDecisionReceipt";
+  panel.setAttribute("aria-label","Последствия последнего решения");
+  $("sceneFinds").insertAdjacentElement("afterend",panel);
+ }
+ const record=lastDecisionReceipt;
+ panel.replaceChildren();
+ panel.hidden=!record||!record.count;
+ if(panel.hidden)return;
+ panel.dataset.sceneId=record.sceneId;
+ const lines=Array.isArray(record.details)&&record.details.length?
+  record.details:[record.message];
+ const count=record.count;
+ const countText=count===1?"1 изменение":
+  count%10>=2&&count%10<=4&&(count<12||count>14)?
+    count+" изменения":count+" изменений";
+ const toggle=make("button",undefined,"last-decision-toggle");
+ toggle.id="lastDecisionToggle";
+ toggle.type="button";
+ toggle.setAttribute("aria-expanded","false");
+ toggle.setAttribute("aria-controls","lastDecisionDetails");
+ toggle.append(make("span","ПОСЛЕДСТВИЯ РЕШЕНИЯ","last-decision-label"),
+   make("span",countText+" · РАСКРЫТЬ","last-decision-count"));
+ const body=make("div",undefined,"last-decision-body");
+ body.id="lastDecisionDetails";
+ body.hidden=true;
+ const list=make("ul",undefined,"last-decision-list");
+ for(const line of lines)list.append(make("li",line));
+ body.append(list);
+ if(record.focus){
+  const open=make("button","ОТКРЫТЬ В ДОСЬЕ ↗","last-decision-open");
+  open.type="button";
+  open.addEventListener("click",()=>jumpTo(record.focus.tab,record.focus.id));
+  body.append(open);
+ }
+ toggle.addEventListener("click",()=>{
+  const show=body.hidden;
+  body.hidden=!show;
+  toggle.setAttribute("aria-expanded",String(show));
+  setText(toggle.querySelector(".last-decision-count"),
+   countText+(show?" · СВЕРНУТЬ":" · РАСКРЫТЬ"));
+ });
+ panel.append(toggle,body);
+}
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
  $("launch").hidden=false;
@@ -355,7 +405,8 @@ function showGame(){
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
- unseenEvidence=0;pendingEvidence=[];journalExpanded=false;navSection="scene";refreshNavigation();
+ unseenEvidence=0;pendingEvidence=[];journalExpanded=false;navSection="scene";
+  lastDecisionReceipt=null;refreshNavigation();
  render();
  showCurrentScene();
 }
@@ -702,6 +753,7 @@ function render(){
  }
  renderTools();
  renderReadingBridge(v);
+ renderDecisionReceipt();
 }
 // The finale is a read-only view over the already committed Case 002 state.
 // It never unlocks a second ending, changes a saved slot, or awards a reward.
@@ -1041,6 +1093,9 @@ function select(choice,fromScene){
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
   evidenceFocus=null;pairFirst=null;pairFeedback=null;
+  lastDecisionReceipt=!next.finished&&event.count>0?
+   {sceneId:next.node,count:event.count,message:event.message,
+    details:event.details,focus:event.focus}:null;
   render();
   // A completed finale already contains the outcome. Do not cover it with a
   // redundant floating receipt; exceptional archival failures still warn below.
@@ -1057,12 +1112,15 @@ function select(choice,fromScene){
   const committed=current.history.length>before.history.length;
   if(committed){
    recordNewEvidence(before,current);
+   lastDecisionReceipt=null;
    render();
    showCurrentScene();
    showNotice("Решение принято и состояние расследования сохранено, но архив итогов или наград не обновлён: "+e.message+
     ". Не начинайте новую попытку до восстановления архива.",{tab:"journal",id:null});
    console.warn("[Case002] transition saved but completion archive failed",e);
   }else{
+   lastDecisionReceipt=null;
+   renderDecisionReceipt();
    showNotice("Действие не применено: "+e.message);
    console.warn("[Case002] transition rejected",e);
   }
