@@ -40,7 +40,7 @@ function render(container,raw,doc=typeof document!=="undefined"?document:null,sc
        if(speaker&&typeof span.setAttribute==="function"){
          span.setAttribute("data-speaker",speaker);
          span.setAttribute("role","group");
-         span.setAttribute("aria-label",speaker+": "+part.text.replace(/^\\s*[—–]\\s*/,""));
+         span.setAttribute("aria-label",speaker+": "+part.text.replace(/^\s*[—–]\s*/,""));
        }
      }
      span.textContent=part.text;
