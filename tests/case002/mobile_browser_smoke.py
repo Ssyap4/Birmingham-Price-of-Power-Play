@@ -953,6 +953,13 @@ def main():
                         assert saved_f09 and json.loads(saved_f09)["node"] == "F09"
                         last_choice.click()
                         assert full_page.locator("#sceneId").inner_text().startswith("Z02")
+                        assert full_page.locator("#finalePanel").is_visible()
+                        assert full_page.locator("#finalePanel").get_attribute("data-ending") == "trainEscape"
+                        assert "Люди без прошлого" in full_page.locator(".finale-title").inner_text()
+                        assert full_page.locator(".finale-metric").count() == 3
+                        assert full_page.locator(".finale-action").count() == 2
+                        assert full_page.locator('#quickNav [data-go="choices"]').inner_text() == "ИТОГ"
+                        assert full_page.locator("button.choice").count() == 0
                         full_page.wait_for_function(
                             "() => document.querySelector('#game').dataset.artVerified === 'true'",
                             timeout=8000,
@@ -968,9 +975,27 @@ def main():
                             variant,
                         ), f"Wrong ending art for Z02: {variant}"
                         assert "зарегистрированы в черновом архиве" in full_page.locator(
-                            "#choiceList"
+                            "#finaleArchive"
                         ).inner_text(), "Normal completion must verify actual archived outcome"
+                        assert "зарегистрированы" not in full_page.locator(".finale-eyebrow").inner_text()
+                        full_page.screenshot(path=str(visual_dir/"chromium-finale.png"),full_page=True)
+                        archived_before=full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                        full_page.locator(".finale-action.secondary").click()
+                        assert full_page.locator('button[data-tab="journal"]').get_attribute("aria-pressed") == "true"
+                        assert full_page.evaluate("""() => localStorage.getItem(
+                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == archived_before,
+                            "Finale journal navigation must not rewrite the ending"
                         assert not errors, f"Full-route browser errors: {errors}"
+                        # Leaving a terminal view returns to hero selection, keeping
+                        # the finished save and making resume possible.
+                        full_page.locator(".finale-action:not(.secondary)").click()
+                        assert full_page.locator("#launch").is_visible()
+                        assert full_page.locator("#resume").is_visible()
+                        assert full_page.locator("#game").is_hidden()
+                        full_page.locator("#resume").click()
+                        assert full_page.locator("#finalePanel").is_visible()
+                        assert full_page.locator("#sceneId").inner_text().startswith("Z02")
                         # A damaged completion archive is not a rejected choice:
                         # the engine has already committed the final node first.
                         damaged_ctx = browser.new_context(
@@ -995,6 +1020,9 @@ def main():
                         assert "Архив итогов или наград повреждён" in damaged_page.locator(
                             "#choiceList"
                         ).inner_text(), "Corrupt archive must not claim reward was granted"
+                        assert damaged_page.locator("#finalePanel").is_visible()
+                        assert "повреждён" in damaged_page.locator("#finaleArchive").inner_text()
+                        assert "зарегистрированы" not in damaged_page.locator("#finaleArchive").inner_text()
                         assert json.loads(damaged_page.evaluate("""() => localStorage.getItem(
                           window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
                         )"""))["node"] == "Z02", "Terminal scene must remain in primary save"
@@ -1007,7 +1035,7 @@ def main():
                         assert "Расследование восстановлено из сохранения" in (
                             damaged_page.locator("#notice").inner_text()
                         ), "Recovered completed attempt must report unarchived result"
-                        assert "повреждён" in damaged_page.locator("#choiceList").inner_text()
+                        assert "повреждён" in damaged_page.locator("#finaleArchive").inner_text()
                         damaged_ctx.close()
                         # Safari privacy mode can deny localStorage entirely.
                         # A complete offline playthrough must not claim rewards.
@@ -1035,8 +1063,9 @@ def main():
                             target_choice.click()
                         assert private_page.locator("#sceneId").inner_text().startswith("Z02")
                         assert "Хранилище недоступно: итог и награда не записаны" in (
-                            private_page.locator("#choiceList").inner_text()
+                            private_page.locator("#finaleArchive").inner_text()
                         ), "Private mode must not promise a persisted completion"
+                        assert private_page.locator("#finalePanel").is_visible()
                         private_ctx.close()
                         print(
                             "PASS chromium: full Case 002 mobile route, earned-only endings, "

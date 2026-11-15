@@ -41,7 +41,7 @@ function category(file){
  if(p==="src/case002/story-variants-v4.js")return "story";
  if(/^src\/case002\/(?:evidence-icons|deduction-board)/.test(p))return "evidence";
  if(/^src\/case002\/(?:consequences|journal)/.test(p))return "reporting";
- if(/^src\/case002\/(?:scene-prose|scene-presentation|telegram-safe-area|ui-events)/.test(p))return "ui";
+ if(/^src\/case002\/(?:scene-prose|scene-presentation|telegram-safe-area|ui-events|ending-recap)/.test(p))return "ui";
  if(p.startsWith("src/case002/"))return "art";
  // A changed start screen or asset link must be exercised by real Safari WebKit,
  // not only the faster Chromium smoke run.
@@ -55,7 +55,7 @@ function category(file){
    if(/(?:story-variants|hero-v3|narrative-production)/.test(p))return "story";
    if(/(?:deduction-board|evidence-icons)/.test(p))return "evidence";
    if(/(?:journal|consequences)/.test(p))return "reporting";
-   if(/(?:mobile_browser|scene-prose|scene-presentation|telegram-safe-area|ui-events)/.test(p))return "ui";
+   if(/(?:mobile_browser|scene-prose|scene-presentation|telegram-safe-area|ui-events|ending-recap)/.test(p))return "ui";
    return "art";
  }
  if(p===".github/workflows/case002-story-qa.yml")return "ci";

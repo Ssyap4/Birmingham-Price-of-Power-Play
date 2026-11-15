@@ -103,7 +103,7 @@
       <div class="story-content" id="sceneText" role="region" aria-label="Текст текущей сцены" tabindex="-1"></div>
     </article>
     <section class="choices" id="choicesPanel" aria-label="Действия" tabindex="-1">
-      <h3>Ваше решение <span class="choices-hint">Каждый выбор имеет последствия</span></h3>
+      <h3><span id="choicesHeading">Ваше решение</span> <span class="choices-hint" id="choicesHint">Каждый выбор имеет последствия</span></h3>
       <div id="choiceList" class="choice-list"></div>
     </section>
     <section class="case-tools" id="caseTools" aria-label="Досье расследования" tabindex="-1">
@@ -151,6 +151,7 @@
 <script src="../../src/case002/deduction-board-v1.js"></script>
 <script src="../../src/case002/scene-prose-v1.js"></script>
 <script src="../../src/case002/ui-events-v1.js"></script>
+<script src="../../src/case002/ending-recap-v1.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -67,3 +67,13 @@ records; after the newest six, an optional button reveals older entries.
 Decision receipts keep their exact original content, while their film-style
 border and category label use the existing focus type. No save schema, script,
 ending predicates, or Case001 state is changed. Prior Safari URL is not republished.
+
+### Finale presentation milestone — branch only
+
+The terminal scene now renders a spoiler-safe, read-only cinematic outcome dossier:
+real ending title, current hero, evidence/proof/safety counts, only discovered
+witness statuses, a few already-recorded journal notes, and a separate
+completion archival status derived from existing storage records. Returning to
+hero selection or opening the journal does not mutate the save, award new
+rewards, or change any of the 35 tested endings. The end title is never shown
+before a committed Z01–Z07 scene. Publish only after browser and model QA.

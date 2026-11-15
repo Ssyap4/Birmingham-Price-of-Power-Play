@@ -479,6 +479,11 @@ function completionMessage(state){
 }
 function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
+ $("game").dataset.completed=String(Boolean(s.finished));
+ setText($("choicesHeading"),s.finished?"Итог расследования":"Ваше решение");
+ setText($("choicesHint"),s.finished?"Ваше прохождение сохранено отдельно от других героев.":"Каждый выбор имеет последствия");
+ const dockChoice=document.querySelector('#quickNav [data-go="choices"]');
+ if(dockChoice)setText(dockChoice,s.finished?"ИТОГ":"РЕШЕНИЕ");
  setText($("pulseEvidence"),"Улик: "+s.evidence.length);
  setText($("pulseProof"),"Выводов: "+Object.values(v.facts).filter(Boolean).length);
  setText($("pulseSafe"),"В безопасности: "+v.safeWitnessCount);
@@ -522,7 +527,7 @@ function render(){
  window.BirminghamCase002SceneProse.render(region,sceneNarration(v),document,scene.id);
  const choices=$("choiceList");choices.replaceChildren();
  if(s.finished){
-   choices.append(make("p",completionMessage(s),"muted"));
+   renderEndingRecap(choices,v);
  }else{
    for(const c of v.choices){
     // Do not spoil undiscovered final endings with disabled grey buttons.
@@ -542,6 +547,67 @@ function render(){
    }
  }
  renderTools();
+}
+// The finale is a read-only view over the already committed Case 002 state.
+// It never unlocks a second ending, changes a saved slot, or awards a reward.
+function renderEndingRecap(target,view){
+ const recap=window.BirminghamCase002EndingRecap.build(
+   view,data.contract,window.BirminghamCase002Cast.discovered(view.state));
+ if(!recap)return;
+ const panel=make("section",undefined,"finale-panel");
+ panel.id="finalePanel";
+ panel.setAttribute("aria-label","Итог Дела №002");
+ panel.dataset.ending=recap.endingId;
+ panel.append(make("p","БИРМИНГЕМ · ДЕЛО №002 ЗАКРЫТО","finale-eyebrow"));
+ panel.append(make("h4",recap.title,"finale-title"));
+ panel.append(make("p","История "+heroNames[recap.hero]+" · "+recap.sceneId,"finale-subtitle"));
+ const facts=make("div",undefined,"finale-metrics");
+ for(const [name,value] of [
+   ["Собрано улик",recap.evidenceCount],
+   ["Доказано выводов",recap.proofCount],
+   ["В безопасности",recap.safeCount]
+ ]){
+   const cell=make("div",undefined,"finale-metric");
+   cell.append(make("strong",String(value)),make("span",name));
+   facts.append(cell);
+ }
+ panel.append(facts);
+ if(recap.people.length){
+   const people=make("section",undefined,"finale-people");
+   people.append(make("h5","Судьбы знакомых"));
+   const list=make("ul");
+   for(const person of recap.people){
+     const li=make("li");
+     li.append(make("strong",person.name),make("span",witnessLabel(person.id,person.status)));
+     li.dataset.status=person.status;
+     list.append(li);
+   }
+   people.append(list);panel.append(people);
+ }
+ const journal=window.BirminghamCase002Journal.entries(view.state,evidenceName);
+ const recent=journal.flatMap(item=>item.notes).slice(0,3);
+ if(recent.length){
+   const history=make("section",undefined,"finale-history");
+   history.append(make("h5","Что осталось в деле"));
+   const list=make("ul");
+   for(const line of recent)list.append(make("li",line));
+   history.append(list);panel.append(history);
+ }
+ const archive=make("div",undefined,"finale-archive");
+ archive.id="finaleArchive";
+ archive.setAttribute("role","status");
+ archive.append(make("span","ЗАПИСЬ В АРХИВЕ","finale-archive-kicker"));
+ archive.append(make("p",completionMessage(view.state)));
+ panel.append(archive);
+ const actions=make("div",undefined,"finale-actions");
+ const journalButton=make("button","ПРОСМОТРЕТЬ ХОД ДЕЛА","finale-action secondary");
+ journalButton.type="button";
+ journalButton.addEventListener("click",()=>jumpTo("journal"));
+ const back=make("button","К ВЫБОРУ СЫЩИКА","finale-action");
+ back.type="button";back.addEventListener("click",returnToLaunch);
+ actions.append(journalButton,back);
+ panel.append(actions);
+ target.append(panel);
 }
 function renderTools(){
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));

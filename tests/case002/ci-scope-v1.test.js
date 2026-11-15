@@ -21,6 +21,9 @@ assert(css.run_ui&&css.run_browser&&!css.run_full&&!css.browser_full);
 const onboarding=one("preview/case002-prototype/index.html");
 assert(onboarding.run_browser&&onboarding.browser_full&&!onboarding.run_full,
  "New start screens must receive actual Chromium and Safari WebKit QA");
+const finale=one("src/case002/ending-recap-v1.js");
+assert(finale.run_ui&&finale.run_browser&&!finale.run_full);
+assert(one("tests/case002/ending-recap-v1.test.js").run_ui);
 const mobile=one("preview/case002-prototype/app.js");
 assert(mobile.run_ui&&mobile.run_browser&&!mobile.run_full);
 const telegramSafe=one("src/case002/telegram-safe-area-v1.js");

@@ -627,3 +627,54 @@ html{scroll-padding-bottom:calc(125px + env(safe-area-inset-bottom,0px))}
 html[data-case002-telegram="true"] .tool-tab{
  scroll-margin-bottom:calc(145px + var(--case002-safe-bottom))
 }
+
+/* Case 002 terminal report, shown only after the engine has committed a
+   real Z01–Z07 ending. No independent progression, rewards or save writes. */
+#game[data-completed="true"] .choices{padding:13px 11px 15px}
+#game[data-completed="true"] .choices h3{margin-bottom:12px}
+.finale-panel{position:relative;isolation:isolate;overflow:hidden;
+ padding:17px 12px 14px;border:1px solid #b38a55;border-radius:8px;
+ background:repeating-linear-gradient(0deg,#caaa8310 0 1px,transparent 1px 7px),
+ linear-gradient(145deg,#38281b,#19130f 75%);
+ box-shadow:inset 0 0 0 2px #b3833f26,0 10px 24px #0008}
+.finale-panel:before{content:"";position:absolute;top:0;left:22px;right:22px;
+ height:2px;background:linear-gradient(90deg,transparent,#e5bc80,transparent)}
+.finale-eyebrow{margin:0 0 9px!important;color:#eac48e;
+ font:800 .67rem/1.4 system-ui,sans-serif;letter-spacing:.13em}
+.finale-title{font:700 clamp(1.5rem,5vw,1.9rem)/1.2 Georgia,serif;
+ color:#f3d9ac;margin:0 0 7px;text-wrap:balance}
+.finale-subtitle{color:#c9ad8a;font:.79rem/1.5 system-ui,sans-serif;margin:0 0 15px!important}
+.finale-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:6px;margin:13px 0 16px}
+.finale-metric{display:flex;flex-direction:column;gap:6px;align-items:center;
+ min-width:0;text-align:center;border:1px solid #977348;background:#23190fbd;
+ border-radius:6px;padding:11px 3px}
+.finale-metric strong{color:#f1d19b;font:700 1.6rem/1 Georgia,serif}
+.finale-metric span{color:#cdb596;font:600 .65rem/1.25 system-ui,sans-serif}
+.finale-people,.finale-history{border-top:1px solid #785b37;padding-top:11px;margin-top:11px}
+.finale-people h5,.finale-history h5{font:700 1rem/1.25 Georgia,serif;
+ margin:0 0 9px;color:#f0cd95}
+.finale-people ul,.finale-history ul{list-style:none;padding:0!important;margin:0!important}
+.finale-people li{display:flex;gap:8px;align-items:baseline;justify-content:space-between;
+ flex-wrap:wrap;padding:7px 0;border-bottom:1px solid #59432d}
+.finale-people li strong{font:.88rem Georgia,serif;color:#f0dac0}
+.finale-people li span{font:.76rem/1.4 system-ui,sans-serif;color:#ddbf98}
+.finale-people li[data-status="deceased"] span,
+.finale-people li[data-status="detained"] span{color:#e9a99d}
+.finale-history li{position:relative;padding:4px 0 7px 12px;
+ color:#d8c4a7;font:.79rem/1.45 system-ui,sans-serif}
+.finale-history li:before{content:"";position:absolute;left:0;top:12px;width:4px;
+ height:4px;border-radius:50%;background:#d3a66c}
+.finale-archive{margin-top:15px;padding:12px;background:#18120e;
+ border:1px solid #816343;border-radius:6px}
+.finale-archive-kicker{display:block;color:#eac38f;letter-spacing:.1em;
+ font:700 .66rem/1.3 system-ui,sans-serif;margin-bottom:5px}
+.finale-archive p{font:.81rem/1.55 system-ui,sans-serif;
+ color:#e3ceb0;margin:0!important}
+.finale-actions{display:grid;gap:9px;margin-top:14px}
+.finale-action{width:100%;min-height:50px;
+ border-color:#c89c66;font:700 .8rem/1.45 system-ui,sans-serif;letter-spacing:.03em}
+.finale-action.secondary{background:#211a14;color:#f1d2a7}
+#game[data-completed="true"] .choice-list{display:block}
+@media(max-width:359px){.finale-panel{padding:14px 9px 12px}
+ .finale-metric span{font-size:.59rem}.finale-metric strong{font-size:1.45rem}}
