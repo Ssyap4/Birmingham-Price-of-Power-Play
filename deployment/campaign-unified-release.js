@@ -51,7 +51,12 @@ function recurseAssets(relative){
 }
 function assertReference(from,ref){
  const raw=String(ref||"").trim();
- if(!raw||raw.startsWith("#")||/^(?:data:|blob:)/i.test(raw))return false;
+ let decoded="";
+ try{decoded=decodeURIComponent(raw)}catch{throw Error("Bad asset escape: "+raw);}
+ // CSS commonly encodes SVG paint/filter fragment references as url(%23n).
+ // These are in-document IDs, never missing disk files.
+ if(!raw||decoded.startsWith("#")||/^(?:data:|blob:)/i.test(decoded))
+  return false;
  if(/^https?:\/\//i.test(raw)){
   if(from==="index.html"&&raw==="https://telegram.org/js/telegram-web-app.js")
    return false; // optional Telegram bridge; game works without it.
