@@ -577,6 +577,12 @@ def main():
                     # the dossier must dismiss it instead of obscuring the tab.
                     receipt_page.locator('button.choice[data-to="A01"]').click()
                     assert receipt_page.locator("#notice").is_visible()
+                    assert receipt_page.locator("#notice").evaluate(
+                        "(el) => getComputedStyle(el).pointerEvents === 'none'"
+                    ), f"{browser_name}: floating decision receipt captures navigation taps"
+                    assert receipt_page.locator("#noticeDismiss").evaluate(
+                        "(el) => getComputedStyle(el).pointerEvents === 'auto'"
+                    ), f"{browser_name}: receipt dismissal must stay clickable"
                     receipt_page.locator('button[data-tab="witnesses"]').click()
                     assert receipt_page.locator("#notice").is_hidden()
                     assert receipt_page.locator('button[data-tab="witnesses"]').get_attribute(

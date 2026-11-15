@@ -611,3 +611,19 @@ html[data-case002-telegram="true"] .evidence-card{
 @media(prefers-reduced-motion:reduce){
  .people-dossier-gallery .person-entry,.case-journal .journal-event{animation:none!important}
 }
+
+/* Receipt interaction safety: toast overlays must not eat taps intended for
+   nearby dossier tabs. Only explicitly actionable receipt buttons capture
+   pointer input; expanded detail text can be scrolled separately. */
+#notice{pointer-events:none}
+#notice .notice-actions{pointer-events:none}
+#notice .notice-actions button{pointer-events:auto}
+#notice.is-expanded .notice-content{
+ pointer-events:auto;overflow-y:auto;overscroll-behavior:contain;
+ max-height:min(30dvh,230px)
+}
+html{scroll-padding-bottom:calc(125px + env(safe-area-inset-bottom,0px))}
+.tool-tab{scroll-margin-bottom:calc(145px + env(safe-area-inset-bottom,0px))}
+html[data-case002-telegram="true"] .tool-tab{
+ scroll-margin-bottom:calc(145px + var(--case002-safe-bottom))
+}

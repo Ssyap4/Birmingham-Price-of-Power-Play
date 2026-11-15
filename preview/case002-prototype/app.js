@@ -166,6 +166,7 @@ function init(){
   setText($("noticeContent"),expanded?activeNoticeSummary:
     activeNoticeDetails.map(item=>"• "+item).join("\n"));
   button.setAttribute("aria-expanded",String(!expanded));
+  $("notice").classList.toggle("is-expanded",!expanded);
   setText(button,expanded?"ВСЕ ИЗМЕНЕНИЯ ("+activeNoticeDetails.length+")":"СВЕРНУТЬ");
  });
  $("readScene").addEventListener("click",()=>jumpTo("reading"));
@@ -295,6 +296,7 @@ function sceneNarration(view){
 }
 function hideNotice(){
  $("notice").hidden=true;
+ $("notice").classList.remove("is-expanded");
  $("noticeJump").hidden=true;
  $("noticeExpand").hidden=true;
  $("noticeExit").hidden=true;
@@ -304,6 +306,7 @@ function hideNotice(){
 }
 function showNotice(text,focus=null,details=null){
  const notice=$("notice");
+ notice.classList.remove("is-expanded");
  // Receipt visuals are advisory only; the original verified text remains intact.
  notice.dataset.section=focus?.tab||"general";
  activeNoticeSummary=String(text||"");
