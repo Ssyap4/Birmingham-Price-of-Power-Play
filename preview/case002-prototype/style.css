@@ -717,3 +717,20 @@ html[data-case002-telegram="true"] .tool-tab{
  html{scroll-padding-bottom:calc(180px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
  .tool-tab,#backToLaunch{scroll-margin-bottom:calc(170px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
 }
+
+/* Stage 9: earned-only clue receipts remain in the scene even after the
+   transient notice is dismissed. Calm paper chips, never an art overlay. */
+.scene-finds{margin:8px 0 13px;padding:11px 11px 12px;
+ border:1px solid #997044;border-left:3px solid #e5b776;border-radius:5px;
+ background:linear-gradient(125deg,#38291b,#201811 85%);
+ box-shadow:inset 0 1px 0 #edc28b24}
+.scene-finds[hidden]{display:none!important}
+.scene-finds-title{display:block;margin:0 0 8px;color:#f1cb94;
+ font:800 .67rem/1.35 system-ui,sans-serif;letter-spacing:.065em}
+.scene-finds-links{display:flex;gap:7px;flex-wrap:wrap}
+.scene-finds-link{flex:1 1 140px;min-width:0;min-height:44px;
+ border:1px solid #aa8250;background:#292014;color:#f3dbc0;
+ text-align:left;padding:9px 10px;font:600 .79rem/1.3 system-ui,sans-serif;
+ overflow-wrap:anywhere}
+.scene-finds-link:focus-visible{outline:3px solid #f9ddae;outline-offset:2px}
+#toolContent:focus-visible{outline:2px solid #dbb47b;outline-offset:-4px}

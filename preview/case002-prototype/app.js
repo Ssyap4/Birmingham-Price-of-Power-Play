@@ -103,7 +103,7 @@ let pairFirst=null,pairFeedback=null;
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 // Presentation-only state: never written to the game engine or the awards archive.
-let unseenEvidence=0,journalExpanded=false,navSection="scene";
+let unseenEvidence=0,pendingEvidence=[],journalExpanded=false,navSection="scene";
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -187,8 +187,14 @@ function init(){
   // A deliberate dossier switch supersedes any floating old receipt.
   hideNotice();
   tab=button.dataset.tab;evidenceFocus=null;
-  if(tab==="evidence")unseenEvidence=0;
+  if(tab==="evidence")acknowledgeEvidence();
   navSection=tab;renderTools();refreshNavigation();
+  // Replacing a long journal/deduction panel otherwise leaves the reader
+  // stranded at the old scroll offset or with a detached focus target.
+  const content=$("toolContent");
+  content.tabIndex=-1;
+  content.focus({preventScroll:true});
+  $("caseTools").scrollIntoView({block:"start",behavior:"auto"});
  });
  for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
   card.addEventListener("click",()=>{$("hero").value=card.dataset.hero;refreshResume();});
@@ -217,8 +223,41 @@ function refreshNavigation(){
  }
 }
 function recordNewEvidence(before,after){
- unseenEvidence+=(after.evidence||[]).filter(id=>!(before.evidence||[]).includes(id)).length;
+ for(const id of (after.evidence||[])){
+  if(!(before.evidence||[]).includes(id)&&!pendingEvidence.includes(id))
+   pendingEvidence.push(id);
+ }
+ unseenEvidence=pendingEvidence.length;
  refreshNavigation();
+}
+function acknowledgeEvidence(){
+ pendingEvidence=[];unseenEvidence=0;
+ renderNewFinds();
+}
+function renderNewFinds(){
+ // A missed receipt is not a lost clue: all newly earned items remain
+ // reachable directly from the current scene until the player opens evidence.
+ let tray=$("sceneFinds");
+ if(!tray){
+  tray=make("section",undefined,"scene-finds");
+  tray.id="sceneFinds";
+  tray.setAttribute("aria-label","Новые материалы расследования");
+  $("sceneLocation").insertAdjacentElement("afterend",tray);
+ }
+ tray.replaceChildren();
+ tray.hidden=pendingEvidence.length===0;
+ if(tray.hidden)return;
+ tray.append(make("span","НОВЫЕ УЛИКИ · ОТКРЫТЬ В ДОСЬЕ","scene-finds-title"));
+ const links=make("div",undefined,"scene-finds-links");
+ for(const id of pendingEvidence){
+  const link=make("button",evidenceName(id),"scene-finds-link");
+  link.type="button";
+  link.dataset.evidenceId=id;
+  link.setAttribute("aria-label","Открыть новую улику: "+evidenceName(id));
+  link.addEventListener("click",()=>jumpTo("evidence",id));
+  links.append(link);
+ }
+ tray.append(links);
 }
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
@@ -319,7 +358,7 @@ function showGame(){
  $("app").dataset.screen="game";
  $("saveStatus").textContent=store?"Автосохранение после каждого решения":"Нет постоянного сохранения в этом браузере";
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
- unseenEvidence=0;journalExpanded=false;navSection="scene";refreshNavigation();
+ unseenEvidence=0;pendingEvidence=[];journalExpanded=false;navSection="scene";refreshNavigation();
  render();
  showCurrentScene();
 }
@@ -380,7 +419,7 @@ function jumpTo(where,evidenceId=null){
  else if(["evidence","deductions","witnesses","journal"].includes(where)){
    tab=where;
    evidenceFocus=where==="evidence"?evidenceId:null;
-   if(where==="evidence")unseenEvidence=0;
+   if(where==="evidence")acknowledgeEvidence();
    renderTools();
    target=$("caseTools");
  }else return;
@@ -542,6 +581,7 @@ function render(){
  host.dataset.artVerified="false";
  const scenePlace=sceneLocations[stage.location]||"Место расследования";
  setText($("sceneLocation"),scenePlace);
+ renderNewFinds();
  setText($("sceneArtChapter"),"СЦЕНА "+scene.id+" · "+(stageLabels[scene.chapter]||"РАССЛЕДОВАНИЕ"));
  setText($("sceneArtPlace"),scenePlace);
  renderApprovedSceneArt(stage);
@@ -749,7 +789,7 @@ function renderTools(){
        btn.dataset.evidenceId=id;
        btn.setAttribute("aria-label","Открыть улику: "+evidenceName(id));
        btn.addEventListener("click",()=>{
-         tab="evidence";evidenceFocus=id;unseenEvidence=0;navSection="evidence";
+         tab="evidence";evidenceFocus=id;acknowledgeEvidence();navSection="evidence";
          renderTools();refreshNavigation();
          const evidenceCard=[...root.querySelectorAll(".evidence-card")]
            .find(row=>row.dataset.evidenceId===id);

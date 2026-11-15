@@ -366,11 +366,19 @@ def main():
                     assert page.locator("#noticeJump").is_visible()
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
+                    clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
+                    assert clue_jump.count() == 1 and clue_jump.is_visible()
+                    assert "Старинный билет" in clue_jump.inner_text()
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "true"
                     assert "1 новая улика" in page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-label")
                     assert page.locator("#toolContent li").count() >= 1
-                    page.locator("#noticeJump").click()
+                    # Closing the floating receipt must not erase the persistent,
+                    # earned-only clue shortcut in the scene.
+                    page.locator("#noticeDismiss").click()
                     assert page.locator("#notice").is_hidden()
+                    assert clue_jump.is_visible()
+                    clue_jump.click()
+                    assert page.locator("#sceneFinds").is_hidden()
                     assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "false"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-current") == "location"
@@ -387,6 +395,12 @@ def main():
                     assert "Старинный билет" in page.locator(".pair-connection").inner_text()
                     # Return to dossier without advancing the case.
                     page.locator('button[data-tab="evidence"]').click()
+                    assert page.locator("#toolContent").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), f"{browser_name}: switching dossier tabs must focus refreshed content"
+                    assert page.locator("#caseTools").evaluate(
+                        "(el) => el.getBoundingClientRect().top < 540"
+                    ), f"{browser_name}: dossier tabs must return to top of the selected section"
                     assert "сведения в досье" in page.locator("#toolContent").inner_text().lower(), (
                         "clue must show recorded-not-original custody on iPhone"
                     )
