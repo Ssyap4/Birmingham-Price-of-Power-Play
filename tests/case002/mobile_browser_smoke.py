@@ -391,6 +391,9 @@ def main():
                     mabel_card=page.locator('.person-entry[data-person="mabel"]')
                     assert mabel_card.count() == 1
                     assert mabel_card.locator(".person-portrait").count() == 1
+                    assert mabel_card.locator(".person-portrait").get_attribute("loading") == "eager", (
+                        f"{browser_name}: a hidden lazy portrait cannot reliably appear on iPhone"
+                    )
                     mabel_card.locator(".person-portrait").evaluate("img => img.decode()")
                     assert mabel_card.locator(".person-portrait").evaluate(
                         "img => img.naturalWidth >= 500 && img.naturalHeight >= 600"
