@@ -167,6 +167,9 @@ function readStorage(){
  }catch(_){return null;}
 }
 function init(){
+ // Show map return only for a genuine campaign entry, not the isolated beta.
+ const mapNav=$("case002MapReturnBar");
+ if(mapNav)mapNav.hidden=new URLSearchParams(window.location.search).get("from")!=="map";
  // Works in ordinary Safari/file:// too; only reads the Telegram bridge if present.
  window.BirminghamCase002TelegramSafeArea?.bind(window);
  if(!data||!api||!data.narration||data.graph.nodes.length!==89){

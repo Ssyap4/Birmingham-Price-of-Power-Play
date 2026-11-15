@@ -50,8 +50,59 @@ def main():
                     page = context.new_page()
                     failures = []
                     page.on("pageerror", lambda err: failures.append(str(err)))
+                    # Full campaign cycle: menu -> Digbeth -> Case 002 -> same map.
+                    # The Case 001 entrance and stored unique rewards must survive.
+                    campaign=context.new_page()
+                    campaign.route("https://telegram.org/js/telegram-web-app.js",
+                                   lambda route: route.abort())
+                    campaign.goto(f"http://127.0.0.1:{server.server_port}/index.html",
+                                  wait_until="domcontentloaded")
+                    campaign.locator("#districtsCard").click()
+                    campaign.locator('.map-pin[data-district="digbeth"]').click()
+                    assert campaign.locator("#launchSecondCase").is_visible()
+                    assert campaign.locator("#launchFirstCase").is_hidden()
+                    assert campaign.locator(".district-locked").is_hidden()
+                    assert campaign.locator("#districtCase").inner_text() == (
+                        "Последний поезд из Бирмингема"
+                    )
+                    assert "Пропавший груз" in campaign.locator(
+                        ".campaign-case002-future").inner_text()
+                    campaign.evaluate("""() => localStorage.setItem(
+                        "birmingham_campaign_unique_rewards_v1",
+                        JSON.stringify({"001:jack:endingTruth":1700000000000}))""")
+                    campaign.locator("#launchSecondCase").click()
+                    campaign.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+                    assert campaign.locator("#case002MapReturnBar").is_visible()
+                    assert campaign.locator("#caseBriefing").is_visible()
+                    assert campaign.evaluate("""() => localStorage.getItem(
+                        "birmingham_campaign_unique_rewards_v1")""") == (
+                        '{"001:jack:endingTruth":1700000000000}'
+                    ), "Case 001 rewards must survive a same-origin Case 002 entry"
+                    campaign.locator("#case002MapReturn").click()
+                    campaign.wait_for_url("**/index.html#district-digbeth")
+                    assert campaign.locator("#districts").is_visible()
+                    assert campaign.locator('.map-pin[data-district="digbeth"]').get_attribute(
+                        "aria-pressed") == "true"
+                    assert campaign.locator("#launchSecondCase").is_visible()
+                    campaign.locator('.map-pin[data-district="small-heath"]').click()
+                    assert campaign.locator("#launchFirstCase").is_visible()
+                    assert campaign.locator("#launchSecondCase").is_hidden()
+                    campaign.locator("#launchFirstCase").click()
+                    assert campaign.locator("#caseGame").is_visible(), (
+                        "The existing Case 001 launch must still work"
+                    )
+                    assert campaign.evaluate("""() => localStorage.getItem(
+                        "birmingham_campaign_unique_rewards_v1")""") == (
+                        '{"001:jack:endingTruth":1700000000000}'
+                    ), "Case 001 archive changed during map navigation"
+                    campaign.evaluate("""() => localStorage.removeItem(
+                        "birmingham_campaign_unique_rewards_v1")""")
+                    campaign.close()
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
+                    assert page.locator("#case002MapReturnBar").is_hidden(), (
+                        "The standalone Safari test must not have an invalid map link"
+                    )
                     assert page.locator("#caseBriefing").is_visible()
                     assert page.locator("#briefContinue").inner_text().startswith("ВЫБРАТЬ СВОЕГО")
                     assert page.locator("#launchTitle").inner_text() == "Кому доверить дело?"
