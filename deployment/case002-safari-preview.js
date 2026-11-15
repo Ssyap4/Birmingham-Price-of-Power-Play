@@ -2,7 +2,7 @@
 "use strict";
 // Isolated Case 002 Safari preview. Never edits Case 001 or stable main.
 const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
-const ROOT=path.resolve(__dirname,".."),OUT=path.join(ROOT,".case002-preview-dist");
+const ROOT=path.resolve(__dirname,".."),OUT=path.join(ROOT,"case002-preview-dist");
 const manifest=require("../src/case002/approved-art-v1.js").manifest;
 function safe(rel){
  if(typeof rel!=="string"||rel.startsWith("/")||rel.split("/").includes(".."))
