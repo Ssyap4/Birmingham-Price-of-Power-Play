@@ -44,18 +44,25 @@ for(const [from,to,action] of goodRoute("jack","trainTruth").actionLog)mer.choos
 assert(achievements.eligible(mer.view(),contract).includes("two-safe"),
  "At least two actual protected witnesses unlock the protection milestone");
 const endings=contract.endings.slice(0,3).map((v,i)=>({
- caseId:"002",heroId:contract.heroes[i],ending:v.id
+ caseId:"002",heroId:contract.heroes[i],ending:v.id,
+ attemptId:"mastery-end-"+i,started:1000+i,finished:2000+i
 }));
 const milestone=achievements.grant(store,e.view(),contract,endings);
 assert(milestone.newly.some(x=>x.id==="three-outcomes"),
  "Three actual recorded different endings must count");
 assert(!milestone.newly.some(x=>x.id==="five-detectives"));
 const five=contract.heroes.map((heroId,i)=>({
- caseId:"002",heroId,ending:contract.endings[i%contract.endings.length].id
+ caseId:"002",heroId,ending:contract.endings[i%contract.endings.length].id,
+ attemptId:"mastery-hero-"+i,started:1000+i,finished:2000+i
 }));
 assert(achievements.grant(store,e.view(),contract,five).newly
  .some(x=>x.id==="five-detectives"));
 assert.equal(achievements.grant(store,e.view(),contract,five).newly.length,0);
+// Truncated or foreign completion records must not award mastery early.
+const brokenEndings=endings.map((r,i)=>i===1?{...r,attemptId:""}:i===2?{...r,finished:null}:r);
+assert(!achievements.eligible(e.view(),contract,brokenEndings).includes("three-outcomes"));
+const brokenHeroes=five.map((r,i)=>i===4?{...r,caseId:"001"}:r);
+assert(!achievements.eligible(e.view(),contract,brokenHeroes).includes("five-detectives"));
 const corrupt=fakeStore();corrupt.setItem(achievements.KEY,"{broken");
 const previous=corrupt.getItem(achievements.KEY);
 assert.equal(achievements.grant(corrupt,e.view(),contract,[]).status,"damaged");

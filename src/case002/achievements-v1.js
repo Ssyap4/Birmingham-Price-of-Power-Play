@@ -45,12 +45,17 @@ const catalog=Object.freeze([
   done:({state:s})=>Boolean(s.flags.publicContactSecured)},
  {id:"three-outcomes",name:"Три цены власти",description:"Завершить дело тремя разными концовками.",type:"mastery",
   done:(_view,records,contract)=>new Set(records.filter(r=>
-   r.caseId==="002"&&contract.endings.some(e=>e.id===r.ending)).map(r=>r.ending)).size>=3},
+   validCompletion(r,contract)).map(r=>r.ending)).size>=3},
  {id:"five-detectives",name:"Пять взглядов на город",description:"Завершить дело за всех пятерых людей ближнего круга.",type:"mastery",
   done:(_view,records,contract)=>new Set(records.filter(r=>
-   r.caseId==="002"&&contract.heroes.includes(r.heroId)&&
-   contract.endings.some(e=>e.id===r.ending)).map(r=>r.heroId)).size>=5}
+   validCompletion(r,contract)).map(r=>r.heroId)).size>=5}
 ]);
+// Mastery requires a committed completion, not a malformed archive row.
+const validCompletion=(r,contract)=>r&&r.caseId==="002"&&
+ contract.heroes.includes(r.heroId)&&contract.endings.some(e=>e.id===r.ending)&&
+ typeof r.attemptId==="string"&&r.attemptId.length>0&&
+ Number.isFinite(r.started)&&r.started>0&&
+ Number.isFinite(r.finished)&&r.finished>=r.started;
 const names=new Set(catalog.map(a=>a.id));
 if(names.size!==catalog.length)throw Error("Duplicate Case 002 achievement IDs");
 function eligible(view,contract,records=[]){
