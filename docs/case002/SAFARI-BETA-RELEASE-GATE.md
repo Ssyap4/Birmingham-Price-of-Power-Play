@@ -207,3 +207,15 @@ See [the accepted final polish plan](CASE002-FINAL-POLISH-PLAN.md).
 
 A pre-existing preview URL from an earlier commit will NOT have these changes
 until the distinct preview deployment is intentionally rebuilt and verified.
+
+### Mobile award toast dismissal: destination-aware focus (2026-11-15)
+
+Both the bottom consequence receipt and top achievement/reward toast now
+return keyboard/VoiceOver focus to the active game landmark (narration,
+decisions, or the dossier) without scrolling. This prevents dismissal of an
+earned award from unexpectedly sending a player reading a long journal back
+to the scene header. The top toast is independent of the bottom consequence
+notice and the durable achievement receipt. Scoped quick Chromium exercises
+a real earned milestone, opens the journal, closes the toast, verifies the
+remaining receipt/notice and unchanged localStorage. No plot, archive, save,
+main or Case001 changes.

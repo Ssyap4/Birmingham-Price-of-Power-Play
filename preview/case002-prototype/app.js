@@ -206,12 +206,9 @@ function init(){
  $("noticeExit").addEventListener("click",returnToLaunch);
  $("noticeDismiss").addEventListener("click",()=>{
   hideNotice();
-  // The fixed notice can be dismissed while the player is at decisions.
-  // Returning focus to a distant scene would confuse keyboard/VoiceOver
-  // users on a long phone page. Focus the active, still-visible landmark.
-  const landmark=navSection==="choices"?$("choicesPanel"):
-   isDossierSection(navSection)?$("caseTools"):$("storyPanel");
-  landmark?.focus({preventScroll:true});
+  // Both independent mobile notices return to the player's actual section.
+  // Focusing the story header from a long dossier silently loses context.
+  focusActiveGameLandmark();
  });
  $("noticeExpand").addEventListener("click",()=>{
   if(!activeNoticeDetails)return;
@@ -253,6 +250,13 @@ function init(){
 }
 function selectedHeroButton(){
  return document.querySelector('#heroGallery [data-hero="'+$("hero").value+'"]');
+}
+// Reusable focus target for the fixed consequence receipt and the top
+// achievement/reward ceremony. Never scroll, make a choice or write a save.
+function focusActiveGameLandmark(){
+ const landmark=navSection==="choices"?$("choicesPanel"):
+  isDossierSection(navSection)?$("caseTools"):$("storyPanel");
+ landmark?.focus({preventScroll:true});
 }
 function refreshNavigation(){
  for(const button of document.querySelectorAll('#quickNav [data-go]')){
@@ -856,11 +860,10 @@ function renderUnlockToast(){
  close.setAttribute("aria-label","Закрыть уведомление, сохранив награду в коллекции");
  close.addEventListener("click",()=>{
   dismissUnlockToast();
-  // Closing a live button otherwise leaves keyboard/VoiceOver focus inside
-  // a hidden toast. Restore a real, still-visible game landmark without
-  // jumping the player's scroll position or committing a choice.
-  const landmark=s.finished?$("choicesPanel"):$("storyPanel");
-  landmark?.focus({preventScroll:true});
+  // Closing a live button must never leave keyboard/VoiceOver focus in
+  // the now-hidden toast. Preserve the player's currently active section
+  // (scene, decisions, or dossier), just like the consequence receipt.
+  focusActiveGameLandmark();
  });
  controls.append(details,close);
  toast.append(seal,copy,controls);

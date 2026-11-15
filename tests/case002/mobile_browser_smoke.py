@@ -1726,18 +1726,35 @@ def main():
                                     link_page.set_viewport_size({"width":390,"height":844})
                                     before_flyout=link_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
-                                    toast.locator(".case-unlock-toast-details").click()
+                                    # A player can open a long journal while
+                                    # a genuine first-time award flyout remains.
+                                    # Closing the ceremony must retain that
+                                    # section and the independent consequence
+                                    # notice, without changing a saved decision.
+                                    link_page.locator(
+                                        '#quickNav button[data-go="journal"]').click()
+                                    consequence_before=link_page.locator("#notice").is_visible()
+                                    assert link_page.locator(
+                                        '#quickNav [data-go="journal"]').get_attribute(
+                                            "aria-current") == "location"
+                                    toast.locator(".case-unlock-toast-close").click()
                                     assert toast.is_hidden(), (
-                                        "Opening details must dismiss only the floating receipt"
+                                        "Dismissing award should hide its flyout"
                                     )
-                                    assert link_page.locator("#caseAchievementReceipt").evaluate(
+                                    assert link_page.locator("#caseTools").evaluate(
                                         "(el) => document.activeElement === el"
-                                    ), "Details must focus the actual durable scene receipt"
+                                    ), "Closing a reward while in journal must restore dossier focus"
+                                    assert link_page.locator(
+                                        '#quickNav [data-go="journal"]').get_attribute(
+                                            "aria-current") == "location"
+                                    assert link_page.locator("#notice").is_visible() == consequence_before, (
+                                        "Closing award must not discard independent consequence notice"
+                                    )
+                                    assert link_page.locator("#caseAchievementReceipt").is_visible(), (
+                                        "Dismissing ceremony cannot delete durable achievement details"
+                                    )
                                     assert link_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_flyout
-                                    link_page.locator(
-                                        ".case-achievement-receipt-dismiss").click()
-                                    assert link_page.locator("#caseAchievementReceipt").is_hidden()
                                     checked_flyout=True
                         assert checked_flyout, "No first-time achievement flyout tested"
                         assert saw_earned_achievement, (
