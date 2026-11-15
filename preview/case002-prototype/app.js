@@ -773,7 +773,9 @@ function renderTools(){
       if(approved){
         const photo=make("img",undefined,"person-portrait");
         photo.alt=approved.alt;
-        photo.decoding="async";photo.loading="lazy";photo.hidden=true;
+        // A hidden lazy <img> may never load in Safari; load the approved
+        // portrait eagerly, reveal it only after validating its dimensions.
+        photo.decoding="async";photo.loading="eager";photo.hidden=true;
         photo.onload=()=>{
           if(photo.naturalWidth>=500&&photo.naturalHeight>=600){
             photo.hidden=false;mark.hidden=true;
