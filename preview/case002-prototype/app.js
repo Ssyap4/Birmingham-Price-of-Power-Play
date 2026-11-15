@@ -1683,6 +1683,24 @@ function renderTools(){
    button.addEventListener("click",()=>{
     dossierTrail=null;
     jumpTo(back.fromSection,back.recordId);
+    // Within a long journal row return to the exact historic note link,
+    // not just to the top of its containing record. Returning from witness
+    // history likewise restores the original journal-jump button.
+    let origin=null;
+    if(back.fromSection==="journal"&&back.noteIndex!==undefined){
+     const entry=[...root.querySelectorAll(".journal-event")]
+      .find(item=>item.dataset.journalIndex===back.recordId);
+     origin=[...(entry?.querySelectorAll(".journal-source")||[])]
+      .find(item=>item.dataset.noteIndex===back.noteIndex)||null;
+    }else if(back.fromSection==="witnesses"&&back.fromControl==="history-journal"){
+     const person=[...root.querySelectorAll(".person-entry")]
+      .find(item=>item.dataset.person===back.recordId);
+     origin=person?.querySelector(".person-history-journal")||null;
+    }
+    if(origin&&!origin.closest("[hidden]")){
+     origin.focus({preventScroll:true});
+     origin.scrollIntoView({block:"nearest",behavior:"auto"});
+    }
    });
    root.append(button);
  }
@@ -1861,7 +1879,7 @@ function renderTools(){
      li.append(entryHeader);
      if(scene)li.append(make("h4",scene.title,"journal-event-title"));
      const notes=make("ul",undefined,"journal-event-notes");
-     for(const line of item.notes){
+     for(const [noteIndex,line] of item.notes.entries()){
        const note=make("li",line,"journal-event-note");
        note.dataset.kind=line.startsWith("Улика:")?"evidence":
          line.startsWith("Передано:")?"custody":
@@ -1878,11 +1896,13 @@ function renderTools(){
          "journal-source");
         link.type="button";link.dataset.sourceKind=clue?"evidence":"witness";
         link.dataset.recordId=record;
+        link.dataset.noteIndex=String(noteIndex);
         link.setAttribute("aria-label","Открыть "+(clue?"улику: "+evidenceName(clue):
          "сведения о свидетеле: "+personName));
         link.addEventListener("click",()=>{
          dossierTrail={sceneId:engine.snapshot().node,
           fromSection:"journal",recordId:String(index),
+          noteIndex:String(noteIndex),
           label:"запись "+String(entries.length-index).padStart(2,"0"),
           targetSection:destination};
          jumpTo(destination,record);
@@ -2103,7 +2123,7 @@ function renderTools(){
         jump.addEventListener("click",()=>{
          dossierTrail={sceneId:engine.snapshot().node,
           fromSection:"witnesses",recordId:person.id,label:person.name,
-          targetSection:"journal"};
+          fromControl:"history-journal",targetSection:"journal"};
          jumpTo("journal",String(journalIndex));
         });
         timeline.append(jump);

@@ -843,6 +843,8 @@ def main():
                         '.journal-source[data-source-kind="evidence"]')
                     assert history_link.count() == 1
                     assert history_link.get_attribute("data-record-id") == "old_excursion_ticket"
+                    history_note_index=history_link.get_attribute("data-note-index")
+                    assert history_note_index is not None
                     history_link.click()
                     assert page.locator('.evidence-card[data-evidence-id="old_excursion_ticket"]').evaluate(
                         "(el) => document.activeElement === el"
@@ -850,9 +852,15 @@ def main():
                     assert page.locator(".dossier-cross-return").get_attribute(
                         "data-return-section") == "journal"
                     page.locator(".dossier-cross-return").click()
-                    assert page.locator('.journal-event[data-scene="A05"]').evaluate(
+                    return_link=page.locator(
+                        f'.journal-event[data-scene="A05"] '
+                        f'.journal-source[data-note-index="{history_note_index}"]'
+                    )
+                    assert return_link.evaluate(
                         "(el) => document.activeElement === el"
-                    ), "Journal return must focus the exact historic entry"
+                    ), "Journal return must focus its original historic source button"
+                    assert return_link.is_visible()
+                    assert page.locator(".dossier-cross-return").count() == 0
                     assert page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == history_save, (
                         "Journal/evidence navigation unexpectedly modified game save"
@@ -1551,9 +1559,13 @@ def main():
                                         "data-return-section") == "witnesses"
                                     test_page.locator(".dossier-cross-return").click()
                                     assert test_page.locator(
-                                        f'.person-entry[data-person="{expected}"]').evaluate(
+                                        f'.person-entry[data-person="{expected}"] '
+                                        '.person-history-journal').evaluate(
                                             "(el) => document.activeElement === el"
-                                        ), "Return from journal must focus same witness dossier"
+                                        ), "Return from journal must focus its witness-history button"
+                                    assert test_page.locator(
+                                        f'.person-entry[data-person="{expected}"] '
+                                        '.person-case-history').get_attribute("open") is not None
                                     assert test_page.evaluate("""() => localStorage.getItem(
                                         window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_travel
                             if section=="witnesses":
@@ -1564,15 +1576,24 @@ def main():
                                 assert witness_link.count() == 1, (
                                     "Earned witness change needs a journal-to-person link"
                                 )
+                                note_index=witness_link.get_attribute("data-note-index")
+                                assert note_index is not None
+                                journal_index=witness_link.evaluate(
+                                    "(el) => el.closest('.journal-event').dataset.journalIndex"
+                                )
                                 witness_link.click()
                                 assert test_page.locator(
                                     f'.person-entry[data-person="{expected}"]').evaluate(
                                     "(el) => document.activeElement === el"
                                 )
                                 test_page.locator(".dossier-cross-return").click()
-                                assert test_page.locator(".journal-event:focus").count() == 1, (
-                                    "Witness dossier return must focus its historical record"
+                                witness_source=test_page.locator(
+                                    f'.journal-event[data-journal-index="{journal_index}"] '
+                                    f'.journal-source[data-note-index="{note_index}"]'
                                 )
+                                assert witness_source.evaluate(
+                                    "(el) => document.activeElement === el"
+                                ), "Witness return must restore its precise historic note link"
                             test_page.locator("#dossierReturn").click()
                             assert test_page.locator("#dossierReturn").is_hidden()
                             ctx.close()

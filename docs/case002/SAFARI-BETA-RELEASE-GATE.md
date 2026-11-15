@@ -169,3 +169,13 @@ intermediate scene presentation changes while the dossier is open. Browser
 regression uses the real A05 decision and a temporary presentation-only
 height change, asserting exact viewport restoration, focus, and unchanged
 localStorage. No plot, save schema, reward or unrelated Case001/main edits.
+
+### Exact journal note and witness history return targets
+
+An earned journal note's source link now includes its current note index as
+presentation-only metadata. A one-hop dossier visit returns focus to that
+exact source link, rather than to the top of a long historical row.
+Witness-history-to-journal visits likewise return to the original action
+inside the (still expanded) encountered witness timeline. Scoped Chromium
+covers an A05 evidence note and existing witness transitions. No plot, save,
+reward, main or Case001 changes.
