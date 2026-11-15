@@ -359,7 +359,7 @@ function refreshSceneUpdateGroup(){
  if(active.length)setText($("sceneUpdateSummary"),
   active.map(([,label,count])=>label+" ("+count+")").join(" · "));
  toggle.setAttribute("aria-label","Материалы расследования. "+
-  (unread?unread+" непросмотренных изменений. ":"Все новые материалы просмотрены. ")+
+  (unread?"Непросмотрено: "+unread+". ":"Все новые материалы просмотрены. ")+
   (active.length?active.map(([,label,count])=>label+": "+count).join(". ")+". ":"")+
   (open?"Свернуть":"Раскрыть"));
 }

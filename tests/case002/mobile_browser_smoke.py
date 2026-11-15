@@ -499,7 +499,7 @@ def main():
                     assert "НЕ ПРОСМОТРЕНО · 1" in page.locator("#sceneUpdateUrgency").inner_text()
                     assert page.locator("#sceneUpdateGroup").get_attribute(
                         "data-needs-review") == "true"
-                    assert "1 непросмотренных изменений" in page.locator(
+                    assert "Непросмотрено: 1" in page.locator(
                         "#sceneUpdateToggle").get_attribute("aria-label")
                     assert page.locator("#sceneUpdateGroup").evaluate("""group => {
                         const art=document.querySelector('#sceneArtwork');
@@ -1241,7 +1241,19 @@ def main():
                             marker.click()
                             assert badge.get_attribute("data-unread") == "false"
                             assert badge.get_attribute("data-unread-count") == "0"
-                            assert test_page.locator("#sceneUpdateUrgency").is_hidden()
+                            # One committed scene may grant BOTH a proof and
+                            # a changed witness status. Reading one category
+                            # must retain the other category's unseen marker.
+                            remaining=sum(int(test_page.locator(
+                                f'#quickNav [data-go="{kind}"]').get_attribute(
+                                    "data-unread-count"))
+                                for kind in ("evidence","deductions","witnesses"))
+                            urgency=test_page.locator("#sceneUpdateUrgency")
+                            assert urgency.is_hidden() == (remaining==0), (
+                                f"{section}: read receipt erased other unread material"
+                            )
+                            if remaining:
+                                assert f"НЕ ПРОСМОТРЕНО · {remaining}" in urgency.inner_text()
                             active=test_page.locator(
                                 f'button[data-tab="{section}"]'
                             )
