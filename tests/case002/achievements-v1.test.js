@@ -61,7 +61,71 @@ const previous=corrupt.getItem(achievements.KEY);
 assert.equal(achievements.grant(corrupt,e.view(),contract,[]).status,"damaged");
 assert.equal(corrupt.getItem(achievements.KEY),previous,
  "Never overwrite damaged archives with an empty collection");
+// Even a non-throwing storage write may be lost.
+const dropped=fakeStore();
+const silent={getItem:dropped.getItem,setItem:()=>{}};
+const rejected=achievements.grant(silent,e.view(),contract,[]);
+assert.equal(rejected.status,"unavailable");
+assert.deepEqual(rejected.newly,[],"Never announce a lost achievement");
+assert.equal(dropped.getItem(achievements.KEY),null);
+assert(achievements.grant(dropped,e.view(),contract,[]).newly.length>0,
+ "The achievement must remain earnable after storage recovers");
+assert.deepEqual(achievements.grant(dropped,e.view(),contract,[]).newly,[]);
+const staleReads=fakeStore();let reads=0;
+const stale={getItem:k=>++reads===2?null:staleReads.getItem(k),
+ setItem:(k,v)=>staleReads.setItem(k,v)};
+assert.deepEqual(achievements.grant(stale,e.view(),contract,[]).newly,[],
+ "An unconfirmed read-back cannot trigger a popup");
+assert.equal(achievements.read(staleReads).status,"ready");
+
+// 35 real completed routes sharing one durable archive: five protagonists,
+// seven endings, idempotent mastery and reward replay across hero saves.
+const shared=fakeStore(),seen=new Set();let transitions=0;
+for(const hero of contract.heroes)for(const ending of contract.endings){
+ const g=engine.createEngine({graph,contract,hero,store:shared,
+  attemptId:"ledger-"+hero+"-"+ending.id,now:()=>1700000000000});
+ for(const [from,to,action] of goodRoute(hero,ending.id).actionLog){
+  assert.equal(g.snapshot().node,from);
+  g.choose(to,action);
+  const complete=JSON.parse(shared.getItem(engine.RECORD_KEY)||"[]");
+  const receipt=achievements.grant(shared,g.view(),contract,complete);
+  assert.equal(receipt.status,"ready",hero+"/"+ending.id);
+  for(const milestone of receipt.newly){
+   assert(!seen.has(milestone.id),"Duplicate milestone "+milestone.id);
+   seen.add(milestone.id);
+  }
+  transitions++;
+ }
+ assert(g.snapshot().finished);
+ assert.equal(g.snapshot().ending,ending.id);
+}
+const sharedRecords=JSON.parse(shared.getItem(engine.RECORD_KEY));
+const sharedRewards=JSON.parse(shared.getItem(engine.REWARD_KEY));
+const milestoneArchive=achievements.read(shared);
+assert.equal(sharedRecords.length,35);
+assert.equal(new Set(sharedRecords.map(x=>x.attemptId)).size,35);
+assert.equal(sharedRewards.length,35);
+assert.equal(new Set(sharedRewards).size,35);
+assert.equal(milestoneArchive.status,"ready");
+assert.equal(milestoneArchive.items.length,seen.size);
+assert(seen.has("three-outcomes")&&seen.has("five-detectives"));
+const repeat=engine.createEngine({graph,contract,hero:"jack",store:shared,
+ attemptId:"ledger-replay-jack"});
+for(const [from,to,action] of goodRoute("jack","trainEscape").actionLog){
+ assert.equal(repeat.snapshot().node,from);repeat.choose(to,action);
+ const complete=JSON.parse(shared.getItem(engine.RECORD_KEY)||"[]");
+ assert.deepEqual(achievements.grant(shared,repeat.view(),contract,complete).newly,[]);
+}
+assert.equal(JSON.parse(shared.getItem(engine.RECORD_KEY)).length,36,
+ "Repeated completed attempts remain in history");
+assert.equal(JSON.parse(shared.getItem(engine.REWARD_KEY)).length,35,
+ "Repeated outcome must never create a second unique seal");
+const resumed=engine.createEngine({graph,contract,hero:"jack",store:shared});
+resumed.load();resumed.flushCompletion();
+assert.equal(JSON.parse(shared.getItem(engine.RECORD_KEY)).length,36);
+assert.equal(JSON.parse(shared.getItem(engine.REWARD_KEY)).length,35);
 const denied={getItem:()=>null,setItem:()=>{throw Error("Denied")}};
 assert.equal(achievements.grant(denied,e.view(),contract,[]).newly.length,0);
 assert.equal(achievements.read(null).status,"unavailable");
-console.log("PASS 18 Case002 achievements: actual routes, proof, witnesses, 3 endings/5 heroes, no duplicates, read-only gallery and damaged-storage safety.");
+console.log("PASS 18 Case002 achievements: "+transitions+
+ " persisted transitions, 35 distinct hero/outcome keys, replay and resume idempotence, storage read-back safety.");

@@ -86,7 +86,16 @@ function grant(store,view,contract,completedRecords=[]){
   scene:s.node,unlockedAt:s.finished?s.completedAt||null:null}));
  try{
   store.setItem(KEY,JSON.stringify([...archive.rows,...created]));
-  return {...read(store),newly:catalog.filter(a=>fresh.includes(a.id))};
+  // An acknowledged write may still be discarded by some browser storage.
+  // Only the exact saved entry can justify a new achievement notification.
+  const verified=read(store);
+  if(verified.status!=="ready"||created.some(row=>
+    !verified.rows.some(saved=>saved.id===row.id&&
+      saved.hero===row.hero&&saved.attemptId===row.attemptId&&
+      saved.scene===row.scene)))
+    return {status:verified.status==="ready"?"unavailable":verified.status,
+      items:archive.items,rows:archive.rows,newly:[]};
+  return {...verified,newly:catalog.filter(a=>fresh.includes(a.id))};
  }catch(_){
   return {status:"unavailable",items:archive.items,rows:archive.rows,newly:[]};
  }

@@ -672,7 +672,12 @@ function caseRewardArchiveSnapshot(){
   const records=JSON.parse(store.getItem(api.RECORD_KEY)||"[]");
   if(!Array.isArray(raw)||!Array.isArray(records))
    throw Error("Invalid reward or completion archive");
-  const keys=new Set(raw.filter(x=>typeof x==="string"));
+  const validKeys=new Set(data.contract.heroes.flatMap(hero=>
+   data.contract.endings.map(ending=>"002:"+hero+":"+ending.id)));
+  if(raw.some(key=>typeof key!=="string"||!validKeys.has(key))||
+     new Set(raw).size!==raw.length)
+   throw Error("Invalid or duplicate Case 002 reward key");
+  const keys=new Set(raw);
   const items=[];
   for(const hero of data.contract.heroes){
    for(const ending of data.contract.endings){
@@ -680,7 +685,8 @@ function caseRewardArchiveSnapshot(){
     if(!keys.has(key))continue;
     items.push({key,hero,ending:ending.id,title:ending.title,
      verified:records.some(row=>row&&row.caseId==="002"&&
-      row.heroId===hero&&row.ending===ending.id)});
+      row.heroId===hero&&row.ending===ending.id&&
+      typeof row.attemptId==="string"&&row.attemptId.length>0)});
    }
   }
   return {status:"ready",items};
@@ -691,15 +697,20 @@ function renderRewardArchive(){
  if(!archive)return;
  const snapshot=caseRewardArchiveSnapshot();
  const items=snapshot.items,root=$("caseRewardList");
- setText($("caseRewardCount"),String(items.length));
+ const confirmed=items.filter(item=>item.verified).length;
+ const unconfirmed=items.length-confirmed;
+ setText($("caseRewardCount"),String(confirmed));
  archive.dataset.status=snapshot.status;
+ archive.dataset.unconfirmed=String(unconfirmed);
  root.replaceChildren();
  const note=snapshot.status==="damaged"?
   "Архив повреждён: проверенные награды нельзя перечислить. Сохранение игры не изменено.":
   snapshot.status==="unavailable"?
   "Хранилище недоступно. Полученные награды здесь не сохраняются.":
+  unconfirmed?
+  "Обнаружены ключи без подтверждённой записи прохождения. Они показаны для проверки, но не считаются полученными наградами. Ничего автоматически не исправлено.":
   items.length?
-  "Только действительно записанные комбинации «герой × концовка». Награды Дела №001 хранятся отдельно; повторный исход не даёт второй жетон.":
+  "Только подтверждённые комбинации «герой × концовка». Награды Дела №001 хранятся отдельно; повторный исход не даёт второй жетон.":
   "Здесь появятся уникальные награды после завершения Дела №002. Закрытые концовки не раскрываются.";
  root.append(make("p",note,"case-reward-note"));
  if(!items.length){
@@ -1323,7 +1334,8 @@ function completionArchiveStatus(state){
   const records=JSON.parse(store.getItem(api.RECORD_KEY)||"null");
   const rewards=JSON.parse(store.getItem(api.REWARD_KEY)||"null");
   const recorded=Array.isArray(records)&&records.some(record=>record&&
-   record.attemptId===state.attemptId&&record.heroId===state.hero&&
+   record.caseId==="002"&&record.attemptId===state.attemptId&&
+    record.heroId===state.hero&&
    record.ending===state.ending);
   const reward=Array.isArray(rewards)&&rewards.includes(
    "002:"+state.hero+":"+state.ending);

@@ -104,6 +104,25 @@ def main():
                         "#caseRewardList").inner_text()
                     assert page.locator(".case-reward-entry").count() == 0
                     page.locator("#caseRewardArchive summary").click()
+                    # An unaccompanied reward key must not count as earned.
+                    page.evaluate("""() => localStorage.setItem(
+                        window.BirminghamCase002Engine.REWARD_KEY,
+                        JSON.stringify(["002:jack:trainEscape"]))""")
+                    page.reload(wait_until="load")
+                    ensure_selection(page)
+                    assert page.locator("#caseRewardCount").inner_text() == "0"
+                    assert page.locator("#caseRewardArchive").get_attribute(
+                        "data-unconfirmed") == "1"
+                    page.locator("#caseRewardArchive summary").click()
+                    assert page.locator('.case-reward-entry[data-verified="false"]').count() == 1
+                    assert "не считаются полученными" in page.locator(
+                        "#caseRewardList").inner_text()
+                    page.locator("#caseRewardArchive summary").click()
+                    page.evaluate("""() => localStorage.removeItem(
+                        window.BirminghamCase002Engine.REWARD_KEY)""")
+                    page.reload(wait_until="load")
+                    ensure_selection(page)
+                    assert page.locator("#caseRewardCount").inner_text() == "0"
                     assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-briefing-viaduct--mobile.webp")
                     assert page.locator("#hero").get_attribute("type") == "hidden"
                     assert page.locator("#priorDetails").is_hidden()
