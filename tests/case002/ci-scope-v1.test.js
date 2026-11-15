@@ -88,6 +88,9 @@ assert(one("docs/case002/case002-contract-v1.json").run_full);
 assert(one("tests/case002/explore-v3.test.js").run_full);
 assert(one("unknown-script-that-may-affect-the-build.js").run_full);
 assert(one(".github/workflows/case002-story-qa.yml").scope_label==="ci");
+const packageWorkflow=one(".github/workflows/case002-safari-package.yml");
+assert(packageWorkflow.scope_label==="ci"&&!packageWorkflow.run_full&&!packageWorkflow.run_browser,
+  "Manual Safari package changes must not launch story routes or browsers");
 const mixed=classify(["docs/case002/README.md","preview/case002-prototype/style.css"]);
 assert(mixed.run_browser&&!mixed.run_full&&!mixed.run_story);
 const joined=classify(["preview/case002-prototype/app.js","src/case002/engine-v3.js"]);

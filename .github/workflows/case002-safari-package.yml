@@ -1,16 +1,7 @@
 name: Case 002 isolated Safari beta package
+# Gate this expensive artifact build on a deliberate major-preview request.
+# Routine UI milestones use scoped QA, not repeated Safari packaging.
 on:
-  push:
-    branches: [feat/case002-story-bible-v1]
-    paths:
-      - 'deployment/case002-safari-preview.js'
-      - 'vercel.json'
-      - 'preview/case002-prototype/**'
-      - 'src/case002/**'
-      - 'assets/case002/scenes/**'
-      - 'assets/case002/portraits/**'
-      - 'assets/heroes/*.webp'
-      - '.github/workflows/case002-safari-package.yml'
   workflow_dispatch:
 permissions:
   contents: read

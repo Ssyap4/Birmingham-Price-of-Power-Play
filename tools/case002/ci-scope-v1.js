@@ -58,7 +58,8 @@ function category(file){
    if(/(?:mobile_browser|scene-prose|scene-presentation|telegram-safe-area|ui-events|ending-recap)/.test(p))return "ui";
    return "art";
  }
- if(p===".github/workflows/case002-story-qa.yml")return "ci";
+ if(p===".github/workflows/case002-story-qa.yml"||
+    p===".github/workflows/case002-safari-package.yml")return "ci";
  if(p===".github/workflows/case002-mobile-smoke.yml")return "art-installed";
  // Unknown files may change a live dependency. They get the complete gate.
  return "deep";
