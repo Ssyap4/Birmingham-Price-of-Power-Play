@@ -1,5 +1,5 @@
 (()=>{"use strict";
-/* Text-only iPhone/Telegram draft interface. Never modifies Case 001 records. */
+/* Isolated portrait-first Case 002 UI. Never modifies Case 001 records. */
 const data=window.BirminghamCase002Data,api=window.BirminghamCase002Engine;
 const $=id=>document.getElementById(id);
 const heroNames={jack:"Джек Харпер",finn:"Финн О’Коннор",eleanor:"Элеонора Блэквуд",victor:"Виктор Мэллоу",samuel:"Сэмюэл Рид"};
@@ -133,6 +133,21 @@ function init(){
    select.append(opt);
   }
  }catch(e){console.warn("[Case 002] Old archive is unreadable; neutral start available",e);}
+ $("priorDetails").hidden=priorRecords.length===0;
+ // A returning player with any Case 002 save goes directly to the hero screen.
+ // Never write a new preference or touch the saved game just to display UI.
+ let hasSave=false;
+ if(store)try{
+  hasSave=data.contract.heroes.some(hero=>Boolean(store.getItem(api.SAVE_PREFIX+hero)));
+ }catch(e){console.warn("[Case 002] Cannot inspect saved slots",e);}
+ $("caseBriefing").hidden=hasSave;
+ $("launch").hidden=!hasSave;
+ $("briefContinue").addEventListener("click",()=>showSelection({focus:true}));
+ $("backToBriefing").addEventListener("click",()=>{
+  $("launch").hidden=true;$("caseBriefing").hidden=false;
+  $("caseBriefing").focus({preventScroll:true});
+  window.scrollTo(0,0);
+ });
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
  $("backToLaunch").addEventListener("click",returnToLaunch);
@@ -168,17 +183,24 @@ function init(){
   hideNotice();
   tab=button.dataset.tab;evidenceFocus=null;renderTools();
  });
- $("hero").addEventListener("change",refreshResume);
  for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
   card.addEventListener("click",()=>{$("hero").value=card.dataset.hero;refreshResume();});
  }
  refreshResume();
 }
-function returnToLaunch(){
- hideNotice();$("game").hidden=true;$("launch").hidden=false;
+function selectedHeroButton(){
+ return document.querySelector('#heroGallery [data-hero="'+$("hero").value+'"]');
+}
+function showSelection({focus=false}={}){
+ $("caseBriefing").hidden=true;
+ $("launch").hidden=false;
  refreshResume();
- $("hero").focus({preventScroll:true});
+ if(focus)selectedHeroButton()?.focus({preventScroll:true});
  window.scrollTo(0,0);
+}
+function returnToLaunch(){
+ hideNotice();$("game").hidden=true;
+ showSelection({focus:true});
 }
 function refreshResume(){
  const hero=$("hero").value;

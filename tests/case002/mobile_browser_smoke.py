@@ -20,6 +20,15 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *_args):
         pass
 
+
+def ensure_selection(page):
+    """Follow the non-spoiling brief on a fresh run; saved runs skip it."""
+    if page.locator("#caseBriefing").is_visible():
+        assert page.locator("#launch").is_hidden()
+        assert page.locator("#briefContinue").is_visible()
+        page.locator("#briefContinue").click()
+    assert page.locator("#launch").is_visible()
+
 def main():
     quick = "--quick" in sys.argv
     handler = functools.partial(QuietHandler, directory=str(ROOT))
@@ -43,16 +52,25 @@ def main():
                     page.on("pageerror", lambda err: failures.append(str(err)))
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
-                    assert page.locator("#begin").is_visible()
+                    assert page.locator("#caseBriefing").is_visible()
+                    assert page.locator("#launch").is_hidden()
+                    assert "виадука" in page.locator("#caseBriefing").inner_text().lower()
+                    assert page.locator(".briefing-rule").count() == 3
+                    assert "сохраняется" in page.locator("#caseBriefing").inner_text().lower()
                     visual_dir=ROOT/"case002-qa-screens"
+                    page.screenshot(path=str(visual_dir/f"{browser_name}-briefing.png"),full_page=True)
+                    ensure_selection(page)
+                    assert page.locator("#begin").is_visible()
                     visual_dir.mkdir(parents=True,exist_ok=True)
                     page.wait_for_function(
-                        "() => [...document.querySelectorAll('#heroGallery img, .launch-cinematic img')].every(i => i.complete && i.naturalWidth > 0)",
+                        "() => [...document.querySelectorAll('#heroGallery img')].every(i => i.complete && i.naturalWidth > 0)",
                         timeout=8000
                     )
                     page.screenshot(path=str(visual_dir/f"{browser_name}-launch.png"),full_page=True)
                     assert page.locator("#heroGallery .hero-card").count() == 5
-                    assert page.locator(".launch-cinematic img").get_attribute("src").endswith("case002-mabel-portrait.webp")
+                    assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-mabel-portrait.webp")
+                    assert page.locator("#hero").get_attribute("type") == "hidden"
+                    assert page.locator("#priorDetails").is_hidden()
                     assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
                     for hero_id in ("jack","finn","eleanor","victor","samuel"):
                         assert page.locator(f'.hero-card[data-hero="{hero_id}"] img').get_attribute("src").endswith(f"/assets/heroes/{hero_id}.webp")
@@ -82,6 +100,7 @@ def main():
                             for x in outcomes
                         ), f"{browser_name}: ending or personal scene WebP unavailable: {outcomes}"
                     assert page.locator("#begin").bounding_box()["height"] >= 44
+                    ensure_selection(page)
                     page.locator("#begin").click()
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => document.activeElement === el"
@@ -209,12 +228,13 @@ def main():
                     page.locator("#backToLaunch").click()
                     assert page.locator("#launch").is_visible()
                     assert page.locator("#game").is_hidden()
-                    assert page.locator("#hero").evaluate(
+                    assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').evaluate(
                         "(el) => document.activeElement === el"
-                    ), f"{browser_name}: returning to launch must focus the hero selector"
+                    ), f"{browser_name}: returning to launch must focus the active hero card"
                     assert page.locator("#resume").is_enabled(), (
                         f"{browser_name}: resume must activate on returning to hero selection"
                     )
+                    ensure_selection(page)
                     page.locator("#resume").click()
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => document.activeElement === el"
@@ -224,6 +244,7 @@ def main():
                     )
                     page.reload(wait_until="load")
                     assert page.locator("#resume").is_enabled()
+                    ensure_selection(page)
                     page.locator("#resume").click()
                     assert page.locator("#sceneId").inner_text().startswith("P02"), "save didn't reload"
                     page.locator(".choice:not([disabled])").first.click()  # A01
@@ -258,6 +279,7 @@ def main():
                     form_errors = []
                     form_page.on("pageerror", lambda err: form_errors.append(str(err)))
                     form_page.goto(address, wait_until="load")
+                    ensure_selection(form_page)
                     form_page.locator("#begin").click()
                     for target in ("P02", "A01", "A02", "A04"):
                         action = form_page.locator(f'button.choice[data-to="{target}"]')
@@ -355,6 +377,7 @@ def main():
                         "(el) => getComputedStyle(el).overflowY === 'visible'"
                     ), f"{browser_name}: case journal must use the page scroll, not a nested box"
                     page.reload(wait_until="load")
+                    ensure_selection(page)
                     page.locator("#resume").click()
                     page.locator('button[data-tab="journal"]').click()
                     assert "Сцена A05" in page.locator("#toolContent").inner_text(), (
@@ -402,6 +425,7 @@ def main():
                     )
                     double_page = double_ctx.new_page()
                     double_page.goto(address, wait_until="load")
+                    ensure_selection(double_page)
                     double_page.locator("#begin").click()
                     double_page.locator('button.choice[data-to="P02"]').evaluate(
                         "(el) => {el.click();el.click();}"
@@ -424,10 +448,12 @@ def main():
                     )
                     first_tab = tabs_ctx.new_page()
                     first_tab.goto(address, wait_until="load")
+                    ensure_selection(first_tab)
                     first_tab.locator("#begin").click()
                     first_tab.locator('button.choice[data-to="P02"]').click()
                     second_tab = tabs_ctx.new_page()
                     second_tab.goto(address, wait_until="load")
+                    ensure_selection(second_tab)
                     second_tab.locator("#resume").click()
                     assert second_tab.locator("#sceneId").inner_text().startswith("P02")
                     first_tab.locator('button.choice[data-to="A01"]').click()
@@ -452,6 +478,7 @@ def main():
                     second_tab.locator("#noticeExit").click()
                     assert second_tab.locator("#notice").is_hidden()
                     assert second_tab.locator("#launch").is_visible()
+                    ensure_selection(second_tab)
                     second_tab.locator("#resume").click()
                     assert second_tab.locator("#sceneId").inner_text().startswith("A01"), (
                         f"{browser_name}: stale tab cannot reopen latest saved scene"
@@ -473,6 +500,7 @@ def main():
                             {kind:'final',text:'Сохранена запись о принятом решении.'}
                         ];
                     }""")
+                    ensure_selection(receipt_page)
                     receipt_page.locator("#begin").click()
                     receipt_page.locator('button.choice[data-to="P02"]').click()
                     assert receipt_page.locator("#noticeExpand").is_visible(), (
@@ -520,6 +548,7 @@ def main():
                     rotate_errors = []
                     rotate_page.on("pageerror", lambda err: rotate_errors.append(str(err)))
                     rotate_page.goto(address, wait_until="load")
+                    ensure_selection(rotate_page)
                     rotate_page.locator("#begin").click()
                     rotate_page.wait_for_function(
                         "() => document.querySelector('#game').dataset.artVerified === 'true'",
@@ -578,6 +607,7 @@ def main():
                           alt: 'Проверка политики портретного арта'
                         } : old(stage);
                     }""")
+                    ensure_selection(art_page)
                     art_page.locator("#begin").click()
                     art_page.wait_for_function("""() =>
                         document.querySelector('#sceneArtworkImage').complete
@@ -625,6 +655,7 @@ def main():
                         document.querySelector('#game').dataset.artVerified === 'true'
                     """, timeout=8000)
                     art_page.reload(wait_until="load")
+                    ensure_selection(art_page)
                     art_page.locator("#resume").click()
                     assert art_page.locator("#sceneId").inner_text().startswith("P02")
                     assert art_page.locator("#artRecovery").is_hidden(), (
@@ -647,6 +678,7 @@ def main():
                             route.continue_()
                     retry_page.route("**/case002-p01-scene--mobile.webp", intercept_portrait)
                     retry_page.goto(address,wait_until="load")
+                    ensure_selection(retry_page)
                     retry_page.locator("#begin").click()
                     retry_page.locator("#artRetry").wait_for(state="visible",timeout=8000)
                     assert retry_page.locator("#sceneArtwork").is_hidden()
@@ -673,6 +705,7 @@ def main():
                     desk_ctx = browser.new_context(viewport={"width":1024,"height":768})
                     desk = desk_ctx.new_page()
                     desk.goto(address, wait_until="load")
+                    ensure_selection(desk)
                     desk.locator("#begin").click()
                     desk.wait_for_function("""() =>
                         document.querySelector('#game').dataset.artVerified === 'true'
@@ -713,6 +746,7 @@ def main():
                     assert tg_insets == {"top":"64px","bottom":"26px","left":"6px"}, (
                         f"{browser_name}: Telegram content and device safe areas not combined: {tg_insets}"
                     )
+                    ensure_selection(tg_page)
                     tg_page.locator("#begin").click()
                     assert tg_page.locator("#quickNav").is_visible()
                     shell_top = tg_page.locator(".app-shell").evaluate(
@@ -783,6 +817,7 @@ def main():
                         errors = []
                         full_page.on("pageerror", lambda err: errors.append(str(err)))
                         full_page.goto(address, wait_until="load")
+                        ensure_selection(full_page)
                         full_page.locator("#begin").click()
                         for source, target, action in route[:-1]:
                             assert full_page.locator("#sceneId").inner_text().startswith(source), (
@@ -808,6 +843,7 @@ def main():
                             "el.scrollHeight <= el.clientHeight + 1"
                         ), "A long journal must not trap iPhone scrolling inside a 360px box"
                         full_page.reload(wait_until="load")
+                        ensure_selection(full_page)
                         full_page.locator("#resume").click()
                         assert full_page.locator("#sceneId").inner_text().startswith("F09")
                         assert full_page.locator("button.choice").count() == 1
@@ -876,6 +912,7 @@ def main():
                           localStorage.setItem(api.RECORD_KEY,'{damaged-json');
                         }""",saved_f09)
                         damaged_page.reload(wait_until="load")
+                        ensure_selection(damaged_page)
                         damaged_page.locator("#resume").click()
                         damaged_page.locator('button.choice[data-to="Z02"]').click()
                         assert damaged_page.locator("#sceneId").inner_text().startswith("Z02"), (
@@ -889,6 +926,7 @@ def main():
                           window.BirminghamCase002Engine.SAVE_PREFIX+'jack'
                         )"""))["node"] == "Z02", "Terminal scene must remain in primary save"
                         damaged_page.reload(wait_until="load")
+                        ensure_selection(damaged_page)
                         damaged_page.locator("#resume").click()
                         assert damaged_page.locator("#sceneId").inner_text().startswith("Z02"), (
                             "Archive corruption must not prevent reopening a valid finished save"
@@ -912,6 +950,7 @@ def main():
                           });
                         })();""")
                         private_page.goto(address, wait_until="load")
+                        ensure_selection(private_page)
                         private_page.locator("#begin").click()
                         for src,to,act in route:
                             target_choice = private_page.locator(
