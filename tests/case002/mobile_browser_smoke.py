@@ -983,9 +983,10 @@ def main():
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
                         full_page.locator(".finale-action.secondary").click()
                         assert full_page.locator('button[data-tab="journal"]').get_attribute("aria-pressed") == "true"
-                        assert full_page.evaluate("""() => localStorage.getItem(
-                            window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == archived_before,
-                            "Finale journal navigation must not rewrite the ending"
+                        assert (
+                            full_page.evaluate("""() => localStorage.getItem(
+                                window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == archived_before
+                        ), "Finale journal navigation must not rewrite the ending"
                         assert not errors, f"Full-route browser errors: {errors}"
                         # Leaving a terminal view returns to hero selection, keeping
                         # the finished save and making resume possible.
