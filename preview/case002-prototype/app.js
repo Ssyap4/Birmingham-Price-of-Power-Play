@@ -898,6 +898,11 @@ function renderSceneCast(stage,state){
    desc.append(make("span",person.role,"scene-participant-role"));
    if(person.status)desc.append(make("small",witnessLabel(person.id,person.status),
      "scene-participant-status"));
+   const open=make("button","ЛИЧНОЕ ДЕЛО ↗","scene-participant-open");
+   open.type="button";open.dataset.person=person.id;
+   open.setAttribute("aria-label","Открыть досье: "+person.name);
+   open.addEventListener("click",()=>jumpTo("witnesses",person.id));
+   desc.append(open);
    card.append(desc);root.append(card);
  }
 }
@@ -1438,6 +1443,29 @@ function renderTools(){
       "В досье появляются только те, о ком вы уже узнали. Статусы отражают события текущей попытки.":
       "Имена будут появляться по мере расследования.","people-dossier-description"));
     root.append(hd);
+    const tracked=contacts.filter(person=>Boolean(person.status));
+    if(tracked.length){
+     const stats=make("div",undefined,"people-status-compass");
+     stats.setAttribute("aria-label","Подтверждённое положение известных свидетелей");
+     const groups=[
+      ["protected","ПОД ЗАЩИТОЙ",p=>p.status==="protected"],
+      ["evacuated","ЭВАКУИРОВАНЫ",p=>p.status==="evacuated"],
+      ["unprotected","БЕЗ ПОДТВЕРЖДЁННОЙ ЗАЩИТЫ",
+       p=>["missing","located","detained"].includes(p.status)],
+      ["deceased","ПОГИБЛИ",p=>p.status==="deceased"]
+     ];
+     for(const [key,title,accept] of groups){
+      const count=tracked.filter(accept).length;
+      if(!count)continue;
+      const item=make("div",undefined,"people-status-count");
+      item.dataset.kind=key;
+      item.append(make("strong",String(count)),make("span",title));
+      stats.append(item);
+     }
+     root.append(stats);
+     root.append(make("p","Учитываются только уже встреченные свидетели. «Найдён» и «задержан» не означают «защищён».","people-status-caption"));
+    }
+    const records=window.BirminghamCase002Journal.entries(v.state,evidenceName);
     const gallery=make("div",undefined,"people-dossier-gallery");
     for(const person of contacts){
       const personRow=make("article",undefined,"person-entry");
@@ -1473,7 +1501,57 @@ function renderTools(){
         status.dataset.status=person.status;
         copy.append(status);
       }
-      personRow.append(avatar,copy);gallery.append(personRow);
+      personRow.append(avatar,copy);
+      // No invented biography: a first encountered scene and only committed
+      // status transitions visible in this attempt.
+      const identity=window.BirminghamCase002Cast.character(person.id);
+      const intro=v.state.visited.find(id=>identity?.intro.includes(id));
+      const timeline=make("details",undefined,"person-case-history");
+      const changes=(v.state.history||[]).filter(entry=>
+       entry?.changes?.witnesses?.[person.id]&&
+       typeof entry.changes.witnesses[person.id].to==="string");
+      timeline.append(make("summary","ИСТОРИЯ В ДЕЛЕ · "+(1+changes.length),
+       "person-case-history-toggle"));
+      const chronology=make("ol",undefined,"person-history-list");
+      if(intro){
+       const scene=data.graph.nodes.find(node=>node.id===intro);
+       const item=make("li",undefined,"person-history-entry");
+       item.dataset.kind="introduction";
+       item.append(make("span","ПЕРВОЕ ПОЯВЛЕНИЕ · "+intro,"person-history-kicker"),
+        make("span",scene?scene.title:"Первая встреча","person-history-description"));
+       chronology.append(item);
+      }
+      for(const entry of changes){
+       const code=entry.changes.witnesses[person.id].to;
+       const scene=data.graph.nodes.find(node=>node.id===entry.to);
+       const item=make("li",undefined,"person-history-entry");
+       item.dataset.kind="status";item.dataset.status=code;
+       item.append(make("span","СЦЕНА "+entry.to+
+        (scene?" · "+scene.title:""),"person-history-kicker"),
+        make("span","Тогда: "+witnessLabel(person.id,code),
+         "person-history-description"));
+       chronology.append(item);
+      }
+      timeline.append(chronology);
+      if(changes.length){
+       const latest=changes[changes.length-1];
+       const journalIndex=records.findIndex(item=>item.to===latest.to&&
+        item.notes.some(line=>line.startsWith(person.name+": ")));
+       if(journalIndex!==-1){
+        const jump=make("button","ПОСЛЕДНЕЕ ИЗМЕНЕНИЕ В ЖУРНАЛЕ ↗",
+         "person-history-journal");
+        jump.type="button";jump.dataset.journalIndex=String(journalIndex);
+        jump.addEventListener("click",()=>{
+         dossierTrail={sceneId:engine.snapshot().node,
+          fromSection:"witnesses",recordId:person.id,label:person.name,
+          targetSection:"journal"};
+         jumpTo("journal",String(journalIndex));
+        });
+        timeline.append(jump);
+       }
+      }
+      personRow.append(timeline);
+      gallery.append(personRow);
     }
     root.append(gallery);
     if(!contacts.length)root.append(make("p","Знакомства появятся по мере расследования. Чужие личности заранее не раскрываются.","empty"));

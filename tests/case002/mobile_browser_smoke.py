@@ -461,6 +461,26 @@ def main():
                     assert page.locator("#sceneId").inner_text().startswith("A03")
                     assert "Роуэн" in page.locator("#sceneCast").inner_text()
                     assert "Томми" not in page.locator("#sceneCast").inner_text()
+                    assert page.locator('#sceneCast .scene-participant-open').count() >= 1
+                    assert page.locator('#sceneCast [data-person="rowan"] .scene-participant-open').count() == 1
+                    scene_cast_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    page.locator('#sceneCast [data-person="rowan"] .scene-participant-open').click()
+                    assert page.locator('.person-entry[data-person="rowan"]').evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Current scene cast link must focus Rowan's discovered dossier"
+                    rowan_history=page.locator('.person-entry[data-person="rowan"] .person-case-history')
+                    assert rowan_history.count() == 1
+                    assert rowan_history.locator('.person-history-entry[data-kind="introduction"]').count() == 1
+                    rowan_history.locator("summary").click()
+                    assert "ПЕРВОЕ ПОЯВЛЕНИЕ" in rowan_history.inner_text()
+                    assert page.locator('.person-entry[data-person="tommy"]').count() == 0, (
+                        "Current scene dossier must not reveal a future character"
+                    )
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == scene_cast_save
+                    page.locator("#dossierReturn").click()
+                    assert page.locator("#sceneId").inner_text().startswith("A03")
                     page.wait_for_function(
                         "() => document.querySelector('#game').dataset.artVerified === 'true'",
                         timeout=8000
@@ -620,6 +640,9 @@ def main():
                     assert "Констебль Роуэн" in people
                     assert "Эдвард Хейл" in people
                     assert page.locator(".people-dossier-gallery .person-entry").count() >= 3
+                    assert page.locator(".people-status-compass").count() == 0, (
+                        "No one has an acquired witness status at the early bridge scene"
+                    )
                     mabel_card=page.locator('.person-entry[data-person="mabel"]')
                     assert mabel_card.count() == 1
                     assert mabel_card.locator(".person-portrait").count() == 1
@@ -1300,6 +1323,41 @@ def main():
                                 f"{section}: viewing a new dossier card rewrote progress"
                             )
                             assert test_page.locator("#dossierReturn").is_visible()
+                            if section=="witnesses":
+                                card=test_page.locator(
+                                    f'.person-entry[data-person="{expected}"]')
+                                assert card.locator('.person-status').get_attribute(
+                                    "data-status") == status["code"]
+                                summary=test_page.locator(".people-status-compass")
+                                assert summary.count() == 1
+                                assert "БЕЗ ПОДТВЕРЖДЁННОЙ ЗАЩИТЫ" in summary.inner_text() or (
+                                    "ПОД ЗАЩИТОЙ" in summary.inner_text() or
+                                    "ЭВАКУИРОВАНЫ" in summary.inner_text() or
+                                    "ПОГИБЛИ" in summary.inner_text()
+                                )
+                                timeline=card.locator(".person-case-history")
+                                timeline.locator("summary").click()
+                                assert timeline.locator(
+                                    '.person-history-entry[data-kind="introduction"]').count() == 1
+                                assert timeline.locator(
+                                    f'.person-history-entry[data-kind="status"]'
+                                    f'[data-status="{status["code"]}"]').count() >= 1
+                                latest=timeline.locator('.person-history-journal')
+                                if latest.count():
+                                    before_travel=test_page.evaluate("""() => localStorage.getItem(
+                                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                                    latest.click()
+                                    assert test_page.locator(".journal-event:focus").count() == 1
+                                    assert test_page.locator(
+                                        ".dossier-cross-return").get_attribute(
+                                        "data-return-section") == "witnesses"
+                                    test_page.locator(".dossier-cross-return").click()
+                                    assert test_page.locator(
+                                        f'.person-entry[data-person="{expected}"]').evaluate(
+                                            "(el) => document.activeElement === el"
+                                        ), "Return from journal must focus same witness dossier"
+                                    assert test_page.evaluate("""() => localStorage.getItem(
+                                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_travel
                             if section=="witnesses":
                                 test_page.locator('#quickNav [data-go="journal"]').click()
                                 witness_link=test_page.locator(

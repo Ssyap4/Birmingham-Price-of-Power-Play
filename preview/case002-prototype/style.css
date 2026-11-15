@@ -1111,3 +1111,58 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .journal-compass-action{font-size:.67rem;letter-spacing:0}
  #game .journal-source{font-size:.67rem}
 }
+
+/* Cycle 1, stage 7: character dossiers only display introduced cast and
+   recorded status transitions; no spoilers or invented character biography. */
+#game .scene-participant-open{display:block;margin-top:5px;
+ width:fit-content;max-width:100%;min-height:44px;padding:8px 10px;
+ text-align:left;background:#312417;border:1px solid #a58150;
+ border-radius:4px;color:#f5d9a9;
+ font:800 .69rem/1.35 system-ui,sans-serif}
+#game .scene-participant-open:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+#game .people-status-compass{display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 8px}
+#game .people-status-count{display:flex;min-width:0;
+ align-items:center;gap:10px;padding:8px 9px;
+ background:linear-gradient(115deg,#382819,#201811);
+ border:1px solid #896740;border-radius:5px}
+#game .people-status-count strong{flex:0 0 29px;color:#f2d7aa;
+ font:700 1.25rem/1 Georgia,serif;text-align:center}
+#game .people-status-count span{min-width:0;overflow-wrap:anywhere;
+ color:#e0c099;font:800 .64rem/1.35 system-ui,sans-serif;
+ letter-spacing:.025em}
+#game .people-status-count[data-kind="unprotected"],
+#game .people-status-count[data-kind="deceased"]{border-left:3px solid #bb7865}
+#game .people-status-count[data-kind="protected"],
+#game .people-status-count[data-kind="evacuated"]{border-left:3px solid #d5b07a}
+#game .people-status-caption{margin:0 0 17px!important;color:#bda689;
+ font:.72rem/1.45 system-ui,sans-serif}
+#game .people-dossier-gallery .person-entry{flex-wrap:wrap;align-content:start}
+#game .person-case-history{flex:1 0 100%;min-width:0;margin:1px 0 0;
+ padding-top:2px;border-top:1px solid #664c32}
+#game .person-case-history-toggle{cursor:pointer;padding:12px 0 10px;
+ color:#efcb97;font:800 .72rem/1.45 system-ui,sans-serif;
+ letter-spacing:.035em;list-style-position:inside;overflow-wrap:anywhere}
+#game .person-case-history-toggle:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+#game .person-history-list{list-style:none;display:grid;gap:8px;
+ padding:0!important;margin:3px 0 9px!important}
+#game .person-history-entry{min-width:0;border-left:2px solid #a98353;
+ padding:5px 9px;margin:0!important;background:#241c15}
+#game .person-history-entry[data-kind="status"]{border-left-color:#c09b6b}
+#game .person-history-kicker{display:block;color:#d9b78a;
+ font:800 .64rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .person-history-description{display:block;margin-top:5px;color:#ead5b5;
+ font:.80rem/1.45 Georgia,serif;overflow-wrap:anywhere}
+#game .person-history-journal{width:100%;min-width:0;min-height:46px;
+ padding:10px 9px;margin:3px 0 9px;border:1px solid #ad8758;
+ border-radius:4px;background:#37281b;text-align:left;color:#f5d8ae;
+ overflow-wrap:anywhere;font:800 .7rem/1.4 system-ui,sans-serif}
+#game .person-history-journal:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+@media(max-width:359px){
+ #game .scene-participant-open{font-size:.66rem;padding-inline:8px}
+ #game .people-status-count{gap:5px;padding:7px}
+ #game .people-status-count span{font-size:.60rem;letter-spacing:0}
+ #game .person-case-history-toggle{font-size:.68rem;letter-spacing:0}
+ #game .person-history-kicker{font-size:.62rem}
+ #game .person-history-journal{font-size:.67rem}
+}
