@@ -100,6 +100,7 @@ const actionLabels={
 };
 let store=null,engine=null,tab="evidence",priorRecords=[],evidenceFocus=null,activeNoticeFocus=null;
 let pairFirst=null,pairFeedback=null;
+let dossierTrail=null; // One-hop navigation between already earned dossier cards.
 let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 // Presentation-only state: never written to the game engine or the awards archive.
@@ -189,7 +190,7 @@ function init(){
  }
  for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{
   // A deliberate dossier switch supersedes any floating old receipt.
-  hideNotice();
+  hideNotice();dossierTrail=null;
   tab=button.dataset.tab;evidenceFocus=null;
   acknowledgeSection(tab);
   navSection=tab;renderTools();refreshNavigation();
@@ -504,7 +505,7 @@ function returnFromDossier(){
   dossierReturnPoint=null;
   jumpTo("scene");return;
  }
- dossierReturnPoint=null;hideNotice();
+ dossierReturnPoint=null;dossierTrail=null;hideNotice();
  // If the source was choices, retain the earlier passage bookmark. The
  // player may return through decisions to the interrupted paragraph.
  restoreScenePoint(point,point.section);
@@ -518,7 +519,7 @@ function showSelection({focus=false}={}){
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
- hideNotice();dossierReturnPoint=null;sceneReturnPoint=null;
+ hideNotice();dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  $("game").hidden=true;showSelection({focus:true});
 }
 function refreshResume(){
@@ -610,7 +611,7 @@ function showGame(){
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
  unseenEvidence=0;pendingEvidence=[];pendingWitnesses=[];pendingProofs=[];
  journalExpanded=false;navSection="scene";
- lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;
+ lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  refreshNavigation();
  render();
  showCurrentScene();
@@ -618,7 +619,7 @@ function showGame(){
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
 function showCurrentScene(){
- dossierReturnPoint=null;sceneReturnPoint=null;
+ dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  navSection="scene";refreshNavigation();
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
@@ -726,7 +727,9 @@ function jumpTo(where,recordId=null){
    ...captureScenePoint(),
    section:navSection==="choices"?"choices":"scene"
   };
- }else if(!toDossier)dossierReturnPoint=null;
+ }else if(!toDossier){
+  dossierReturnPoint=null;dossierTrail=null;
+ }
  if(where==="scene"||where==="reading")sceneReturnPoint=null;
  let target;
  if(where==="scene")target=$("storyPanel");
@@ -1072,6 +1075,24 @@ function renderTools(){
  setText($("toolsSectionLabel"),sectionLabels[tab]||"МАТЕРИАЛЫ");
  for(const b of document.querySelectorAll(".tool-tab"))b.setAttribute("aria-pressed",String(b.dataset.tab===tab));
  const root=$("toolContent");root.replaceChildren();const v=engine.view();
+ // A reversible dossier-to-dossier hop is useful when reading long evidence
+ // cards. It is strictly ephemeral and never becomes a saved history item.
+ if(dossierTrail&&(dossierTrail.targetSection!==tab||
+    dossierTrail.sceneId!==v.state.node))dossierTrail=null;
+ if(dossierTrail){
+   const back=dossierTrail;
+   const names={evidence:"К УЛИКЕ",deductions:"К ВЫВОДУ"};
+   const button=make("button","← "+(names[back.fromSection]||"НАЗАД")+
+    " · "+back.label,"dossier-cross-return");
+   button.type="button";
+   button.dataset.returnSection=back.fromSection;
+   button.setAttribute("aria-label","Вернуться к материалу: "+back.label);
+   button.addEventListener("click",()=>{
+    dossierTrail=null;
+    jumpTo(back.fromSection,back.recordId);
+   });
+   root.append(button);
+ }
  if(tab==="deductions"){
    const compare=window.BirminghamCase002DeductionBoard,held=v.state.evidence;
    if(pairFirst&&!held.includes(pairFirst)){pairFirst=null;pairFeedback=null;}
@@ -1145,6 +1166,15 @@ function renderTools(){
     root.append(panel);
    }
    const leads=compare.board(data.contract,held);
+   if(leads.length){
+    const proved=leads.filter(lead=>lead.verified).length;
+    const count=make("p","ОТКРЫТО СВЯЗЕЙ · "+leads.length+
+     "   /   ДОКАЗАНО · "+proved+"   /   ЗАЦЕПОК · "+(leads.length-proved),
+     "deduction-map-summary");
+    count.setAttribute("aria-label","Известных выводов: "+leads.length+
+     ". Подтверждено: "+proved+". Зацепок: "+(leads.length-proved));
+    root.append(count);
+   }
    if(!leads.length){
      root.append(make("p","Пока нет подтверждённых выводов или зацепок. Продолжайте искать доказательства.","empty"));
      return;
@@ -1165,15 +1195,10 @@ function renderTools(){
        btn.dataset.evidenceId=id;
        btn.setAttribute("aria-label","Открыть улику: "+evidenceName(id));
        btn.addEventListener("click",()=>{
-         tab="evidence";evidenceFocus=id;acknowledgeSection("evidence");navSection="evidence";
-         renderTools();refreshNavigation();
-         const evidenceCard=[...root.querySelectorAll(".evidence-card")]
-           .find(row=>row.dataset.evidenceId===id);
-         if(evidenceCard){
-           evidenceCard.tabIndex=-1;
-           evidenceCard.focus({preventScroll:true});
-           evidenceCard.scrollIntoView({block:"center",behavior:"auto"});
-         }
+         dossierTrail={sceneId:engine.snapshot().node,
+          fromSection:"deductions",recordId:lead.id,label:lead.title,
+          targetSection:"evidence"};
+         jumpTo("evidence",id);
        });
        sources.append(btn);
      }
@@ -1238,6 +1263,10 @@ function renderTools(){
  let items=[];
  if(tab==="evidence"){
     const dossier=v.evidenceDossier;
+    // Only already held clues and their currently disclosed deductions:
+    // the board itself is the spoiler-safe source of all associations.
+    const discoveredLeads=window.BirminghamCase002DeductionBoard.board(
+     data.contract,v.state.evidence);
     if(!dossier.length){
       root.append(make("p","Улик пока нет. Найденные предметы и записи появятся здесь.","empty"));
       return;
@@ -1268,6 +1297,9 @@ function renderTools(){
       openPair.setAttribute("aria-label","Сопоставить улику: "+evidenceName(item.id));
       openPair.addEventListener("click",()=>{
        pairFirst=item.id;pairFeedback=null;
+       dossierTrail={sceneId:engine.snapshot().node,
+        fromSection:"evidence",recordId:item.id,label:evidenceName(item.id),
+        targetSection:"deductions"};
        tab="deductions";evidenceFocus=null;navSection="deductions";
        renderTools();refreshNavigation();
        const selected=root.querySelector('.pair-item[data-evidence-id="'+item.id+'"]');
@@ -1275,6 +1307,30 @@ function renderTools(){
        selected?.scrollIntoView({block:"center",behavior:"auto"});
       });
       li.append(icon,description,openPair);
+      const known=discoveredLeads.filter(lead=>
+       lead.knownEvidence.includes(item.id));
+      if(known.length){
+       const details=make("details",undefined,"evidence-connections");
+       const summary=make("summary","СВЯЗИ В РАССЛЕДОВАНИИ · "+known.length,
+        "evidence-connections-summary");
+       details.append(summary);
+       const links=make("div",undefined,"evidence-connected-leads");
+       for(const lead of known){
+        const button=make("button",lead.status+" · "+lead.title,
+         "evidence-linked-lead");
+        button.type="button";button.dataset.deductionId=lead.id;
+        button.dataset.verified=String(lead.verified);
+        button.setAttribute("aria-label","Открыть известную связь: "+lead.title);
+        button.addEventListener("click",()=>{
+         dossierTrail={sceneId:engine.snapshot().node,
+          fromSection:"evidence",recordId:item.id,label:evidenceName(item.id),
+          targetSection:"deductions"};
+         jumpTo("deductions",lead.id);
+        });
+        links.append(button);
+       }
+       details.append(links);li.append(details);
+      }
       list.append(li);
     }
     root.append(list);

@@ -629,6 +629,9 @@ def main():
                     )
                     assert "Брэкеттом" not in page.locator("#toolContent").inner_text()
                     assert "Пока нет подтверждённых" in page.locator("#toolContent").inner_text()
+                    assert page.locator(".evidence-linked-lead").count() == 0, (
+                        "Unknown or unrelated leads must never appear for the old ticket"
+                    )
                     page.locator('button[data-tab="journal"]').click()
                     assert "Сцена A05" in page.locator("#toolContent").inner_text()
                     assert "Старинный билет Курзон-стрит" in page.locator("#toolContent").inner_text()
@@ -1255,6 +1258,12 @@ def main():
                         link_page.locator('#quickNav button[data-go="deductions"]').click()
                         source_link = link_page.locator(".deduction-source").first
                         assert source_link.count() == 1 and source_link.is_enabled()
+                        assert link_page.locator(".deduction-map-summary").count() == 1
+                        assert "ДОКАЗАНО" in link_page.locator(
+                            ".deduction-map-summary").inner_text()
+                        lead_id = source_link.evaluate(
+                            "el => el.closest('.deduction-card').dataset.deductionId"
+                        )
                         evidence_id = source_link.get_attribute("data-evidence-id")
                         before_link = link_page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
@@ -1269,11 +1278,65 @@ def main():
                         assert focused_clue.count() == 1 and "is-focused" in (
                             focused_clue.get_attribute("class") or ""
                         ), "Proof source must focus the actual acquired clue"
+                        assert link_page.locator(".dossier-cross-return").count() == 1
+                        assert link_page.locator(".dossier-cross-return").get_attribute(
+                            "data-return-section") == "deductions"
+                        # A deduction -> source -> deduction cycle returns to
+                        # the exact already-disclosed card, never to all results.
+                        link_page.locator(".dossier-cross-return").click()
+                        lead_card = link_page.locator(
+                            f'.deduction-card[data-deduction-id="{lead_id}"]'
+                        )
+                        assert lead_card.evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Return must focus the same revealed deduction"
+                        assert link_page.locator(".dossier-cross-return").count() == 0
+                        lead_card.locator(
+                            f'.deduction-source[data-evidence-id="{evidence_id}"]'
+                        ).click()
+                        focused_clue=link_page.locator(
+                            f'.evidence-card[data-evidence-id="{evidence_id}"]'
+                        )
+                        connections=focused_clue.locator(".evidence-connections")
+                        assert connections.count() == 1
+                        assert not connections.get_attribute("open"), (
+                            "Evidence association list must start collapsed"
+                        )
+                        connections.locator("summary").click()
+                        known=connections.locator(
+                            f'.evidence-linked-lead[data-deduction-id="{lead_id}"]'
+                        )
+                        assert known.count() == 1 and known.is_visible(), (
+                            "Only currently known leads should be available on evidence"
+                        )
+                        assert known.bounding_box()["height"] >= 44
+                        known.click()
+                        assert link_page.locator(
+                            f'.deduction-card[data-deduction-id="{lead_id}"]'
+                        ).evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Evidence must open its exact known deduction"
+                        assert link_page.locator(".dossier-cross-return").get_attribute(
+                            "data-return-section") == "evidence"
+                        link_page.locator(".dossier-cross-return").click()
+                        assert link_page.locator(
+                            f'.evidence-card[data-evidence-id="{evidence_id}"]'
+                        ).evaluate(
+                            "(el) => document.activeElement === el"
+                        ), "Return must focus the exact originating clue"
+                        # The dense dossier must remain one phone column at
+                        # 320px, and all new controls must be thumb-sized.
+                        link_page.set_viewport_size({"width":320,"height":790})
+                        assert not link_page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth + 1"
+                        ), "Linked evidence dossier overflows 320px phone"
+                        assert link_page.locator(
+                            ".evidence-connections-summary").first.bounding_box()["height"] >= 36
                         assert link_page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_link, (
-                            "Deduction -> evidence navigation wrote a game save"
+                            "Bidirectional dossier navigation must not write a save"
                         )
-                        assert not link_errors, f"Deduction link JS errors: {link_errors}"
+                        assert not link_errors, f"Dossier cross-link JS errors: {link_errors}"
                         link_ctx.close()
                     print(f"PASS {browser_name} {'quick' if quick else 'full'}: phone widths, canonical portraits, opening scenes, local clues, save/journal and layout")
                     context.close()

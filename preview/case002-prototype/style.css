@@ -980,3 +980,44 @@ html[data-case002-telegram="true"] .tool-tab{
  background:#88633d;color:#1c140d}
 #game .story-content:focus-visible,#game .choices:focus-visible{
  outline:2px solid #e5bc82;outline-offset:4px}
+
+/* Cycle 1, stage 4: earned-only two-way case-file navigation.
+   Evidence cards disclose only leads projected from already held items;
+   no unknown character, uncollected clue or future endpoint is rendered. */
+#game .dossier-cross-return{display:block;width:100%;min-width:0;
+ min-height:48px;margin:0 0 15px;padding:11px 12px;
+ text-align:left;overflow-wrap:anywhere;border:1px solid #c49a62;
+ border-left:3px solid #e9bf82;border-radius:5px;
+ background:linear-gradient(110deg,#47311e,#261d15);color:#f6d8a9;
+ font:800 .74rem/1.45 system-ui,sans-serif}
+#game .dossier-cross-return:focus-visible{outline:3px solid #ffe2b0;outline-offset:2px}
+#game .deduction-map-summary{margin:16px 0 13px!important;
+ padding:10px 11px;color:#e4c498;border:1px solid #7d5d3e;
+ border-radius:4px;background:#2e231a;
+ font:800 .70rem/1.55 system-ui,sans-serif;
+ letter-spacing:.035em;overflow-wrap:anywhere}
+#game .evidence-connections{flex:1 0 100%;min-width:0;margin-top:4px;
+ border-top:1px solid #624b32}
+#game .evidence-connections-summary{padding:11px 2px 9px;
+ cursor:pointer;color:#e9c593;line-height:1.4;
+ font:800 .70rem/1.5 system-ui,sans-serif;
+ letter-spacing:.045em;list-style-position:inside;overflow-wrap:anywhere}
+#game .evidence-connections-summary::marker{color:#e1b677}
+#game .evidence-connections-summary:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:2px}
+#game .evidence-connected-leads{display:grid;grid-template-columns:minmax(0,1fr);
+ gap:7px;padding:2px 0 10px}
+#game .evidence-linked-lead{width:100%;min-width:0;min-height:46px;
+ padding:9px 11px;text-align:left;overflow-wrap:anywhere;
+ color:#f0d9b5;background:#33271b;border:1px solid #8c6e4a;
+ border-radius:5px;font:700 .76rem/1.45 system-ui,sans-serif}
+#game .evidence-linked-lead[data-verified="true"]{
+ border-left:3px solid #e0ba7d;background:#40301e}
+#game .evidence-linked-lead:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:2px}
+@media(max-width:359px){
+ #game .dossier-cross-return{font-size:.71rem;padding:9px}
+ #game .deduction-map-summary{font-size:.67rem;letter-spacing:0}
+ #game .evidence-connections-summary{font-size:.67rem;letter-spacing:0}
+ #game .evidence-linked-lead{padding:9px;font-size:.72rem}
+}
