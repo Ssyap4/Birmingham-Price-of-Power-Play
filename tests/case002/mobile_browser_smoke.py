@@ -137,6 +137,7 @@ def main():
                     )
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
                     assert page.locator("#sceneDossierUpdates").is_hidden()
+                    assert page.locator("#sceneUpdateGroup").is_hidden()
                     assert page.locator('#quickNav [data-go="deductions"]').get_attribute("data-unread") == "false"
                     assert page.locator('#quickNav [data-go="witnesses"]').get_attribute("data-unread") == "false"
                     assert page.locator("#lastDecisionReceipt").is_hidden()
@@ -440,6 +441,16 @@ def main():
                     assert "УЛИКУ" in page.locator("#noticeJump").inner_text()
                     assert page.locator("#lastDecisionReceipt").is_visible()
                     assert page.locator("#lastDecisionReceipt").get_attribute("data-scene-id") == "A05"
+                    assert page.locator("#sceneUpdateGroup").is_visible()
+                    assert "НОВЫЕ УЛИКИ" in page.locator("#sceneUpdateSummary").inner_text()
+                    assert page.locator("#sceneUpdateGroup").evaluate("""group => {
+                        const art=document.querySelector('#sceneArtwork');
+                        const cast=document.querySelector('#sceneCast');
+                        const last=cast.hidden?art:cast;
+                        return group.getBoundingClientRect().top>=last.getBoundingClientRect().bottom-1
+                          && group.nextElementSibling.classList.contains('narrative-divider');
+                    }"""), "Approved scene image and cast must precede updates"
+                    assert page.locator("#sceneUpdateRead").bounding_box()["height"] >= 44
                     assert page.locator("#lastDecisionToggle").get_attribute("aria-expanded") == "false"
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
                     clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
@@ -469,9 +480,17 @@ def main():
                     assert page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == previous_save
                     assert clue_jump.is_visible()
+                    page.locator("#sceneUpdateRead").click()
+                    assert page.locator("#sceneText").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Case update desk must lead back to actual narration"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == previous_save
                     clue_jump.click()
                     assert page.locator("#dossierReturn").is_visible()
                     assert page.locator("#sceneFinds").is_hidden()
+                    assert page.locator("#sceneUpdateGroup").is_visible()
+                    assert "НОВЫЕ УЛИКИ" not in page.locator("#sceneUpdateSummary").inner_text()
                     assert page.locator('button[data-tab="evidence"]').get_attribute("aria-pressed") == "true"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("data-unread") == "false"
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute("aria-current") == "location"

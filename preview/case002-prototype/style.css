@@ -848,3 +848,31 @@ html[data-case002-telegram="true"] .tool-tab{
  outline:3px solid #f5cc8d;outline-offset:3px}
 @media(max-width:359px){.scene-dossier-updates{padding:9px}
  .scene-dossier-update{padding-inline:8px;font-size:.74rem}}
+
+/* Stage 15: coherent aftermath below the approved 720x900 scene image
+   and the actors, never an overlay or a stack ahead of cinema. */
+#game .scene-update-group{margin:13px 0 17px;padding:11px;
+ border:1px solid #98754c;border-top:2px solid #ddb27a;
+ border-radius:6px;background:linear-gradient(140deg,#2e241b,#19140f 90%)}
+#game .scene-update-group[hidden]{display:none!important}
+#game .scene-update-group-head{display:grid;gap:5px;
+ padding:0 1px 9px;margin-bottom:9px;border-bottom:1px solid #65482f}
+#game .scene-update-group-kicker{font:800 .68rem/1.35 system-ui,sans-serif;
+ letter-spacing:.12em;color:#f2d19c}
+#game .scene-update-group-summary{font:600 .69rem/1.4 system-ui,sans-serif;
+ color:#c9af91;overflow-wrap:anywhere}
+#game .scene-update-group-content{display:grid;gap:9px}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates,
+#game .scene-update-group-content>.last-decision-receipt{
+ margin:0;box-shadow:none;border-color:#695137;background:#241b14}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates{padding:9px}
+#game .scene-update-group-read{display:block;min-height:46px;width:100%;
+ margin-top:10px;padding:10px;border-radius:5px;border:1px solid #b58d5e;
+ background:#3a2a1b;color:#f8dcaf;
+ font:800 .74rem/1.35 system-ui,sans-serif;letter-spacing:.025em}
+#game .scene-update-group-read:focus-visible{outline:3px solid #f6d4a1;outline-offset:2px}
+@media(max-width:359px){#game .scene-update-group{padding:9px}
+ #game .scene-update-group-kicker{letter-spacing:.06em}
+ #game .scene-update-group-read{font-size:.71rem;letter-spacing:0}}

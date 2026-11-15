@@ -266,6 +266,48 @@ function acknowledgeSection(section){
  }else if(section==="witnesses")pendingWitnesses=[];
  else if(section==="deductions")pendingProofs=[];
  renderSceneUpdates();
+ refreshSceneUpdateGroup();
+}
+/* Stage 15: show cinematic art before aftermath; reuse the existing
+ * actual evidence, proof, witness and decision receipt components unchanged. */
+function renderSceneUpdateGroup(){
+ let group=$("sceneUpdateGroup");
+ if(!group){
+  group=make("section",undefined,"scene-update-group");
+  group.id="sceneUpdateGroup";
+  group.setAttribute("aria-label","Изменения в текущей сцене");
+  const head=make("div",undefined,"scene-update-group-head");
+  head.append(make("span","ПОСЛЕ ВАШЕГО РЕШЕНИЯ","scene-update-group-kicker"));
+  const info=make("span",undefined,"scene-update-group-summary");
+  info.id="sceneUpdateSummary";
+  head.append(info);
+  const content=make("div",undefined,"scene-update-group-content");
+  content.id="sceneUpdateContent";
+  const next=make("button","ПРОДОЛЖИТЬ ЧТЕНИЕ СЦЕНЫ ↓","scene-update-group-read");
+  next.id="sceneUpdateRead";next.type="button";
+  next.setAttribute("aria-controls","sceneText");
+  next.addEventListener("click",()=>jumpTo("reading"));
+  group.append(head,content,next);
+  $("sceneCast").insertAdjacentElement("afterend",group);
+ }
+ const content=$("sceneUpdateContent");
+ for(const id of ["sceneFinds","sceneDossierUpdates","lastDecisionReceipt"]){
+  const element=$(id);
+  if(element&&element.parentElement!==content)content.append(element);
+ }
+ refreshSceneUpdateGroup();
+}
+function refreshSceneUpdateGroup(){
+ const group=$("sceneUpdateGroup");
+ if(!group)return;
+ const parts=[
+  ["sceneFinds","НОВЫЕ УЛИКИ"],
+  ["sceneDossierUpdates","ВЫВОДЫ И СВЕДЕНИЯ"],
+  ["lastDecisionReceipt","ПОСЛЕДСТВИЯ РЕШЕНИЯ"]
+ ];
+ const active=parts.filter(([id])=>$(id)&&!$(id).hidden).map(([,label])=>label);
+ group.hidden=active.length===0;
+ if(active.length)setText($("sceneUpdateSummary"),active.join(" · "));
 }
 function renderNewFinds(){
  // A missed receipt is not a lost clue: all newly earned items remain
@@ -343,7 +385,7 @@ function renderDecisionReceipt(){
  const record=lastDecisionReceipt;
  panel.replaceChildren();
  panel.hidden=!record||!record.count;
- if(panel.hidden)return;
+ if(panel.hidden){refreshSceneUpdateGroup();return;}
  panel.dataset.sceneId=record.sceneId;
  const lines=Array.isArray(record.details)&&record.details.length?
   record.details:[record.message];
@@ -378,6 +420,7 @@ function renderDecisionReceipt(){
    countText+(show?" · СВЕРНУТЬ":" · РАСКРЫТЬ"));
  });
  panel.append(toggle,body);
+ refreshSceneUpdateGroup();
 }
 /* Remember the original reading viewport, not merely the scene's opening.
  * Using a stable text landmark compensates for disappearing clue banners. */
@@ -884,6 +927,7 @@ function render(){
  renderTools();
  renderReadingBridge(v);
  renderDecisionReceipt();
+ renderSceneUpdateGroup();
 }
 // The finale is a read-only view over the already committed Case 002 state.
 // It never unlocks a second ending, changes a saved slot, or awards a reward.
