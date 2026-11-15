@@ -29,6 +29,10 @@ function category(file){
  // Real approved scene/portrait WebP assets are visual changes, not game rules.
  // Unknown extensions and paths still fail closed to the full safety gate.
  if(/^assets\/case002\/candidates\/case002-[a-z0-9-]+\.webp$/.test(p))return "art";
+ // An installed front-door illustration is just as critical on iPhone as a
+ // story shot: run the art and full WebKit/Chromium gates, not 400 routes.
+ if(/^assets\/case002\/briefing\/case002-[a-z0-9-]+\.webp$/.test(p))
+   return "art-installed";
  // Installing scene bytes requires actual WebKit/Chromium route QA; merely
  // staging art candidates stays on the fast, isolated graphics gate.
  if(/^assets\/case002\/scenes\/case002-[a-z0-9-]+\.webp$/.test(p))

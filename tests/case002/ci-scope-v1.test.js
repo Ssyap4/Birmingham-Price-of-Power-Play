@@ -62,7 +62,8 @@ for(const artistic of [
 for(const installedScene of [
  "assets/case002/scenes/case002-p01-scene.webp",
  "assets/case002/scenes/case002-p01-scene--mobile.webp",
- "src/case002/approved-art-v1.js"
+ "src/case002/approved-art-v1.js",
+ "assets/case002/briefing/case002-briefing-viaduct--mobile.webp"
 ]){
  const result=one(installedScene);
  assert(result.run_art&&result.run_browser&&result.browser_full&&!result.run_full,

@@ -13,6 +13,13 @@ const {manifest,resolveScene,resolveNpc}=require("../../src/case002/approved-art
 const cast=require("../../src/case002/cast-registry-v1.js");
 const {goodRoute}=require("./simulate-story-model-v2.js");
 assert.equal(manifest.schemaVersion,1);
+const cover=manifest.briefingImage;
+assert(cover&&cover.review==="approved"&&cover.mobileWidth===720&&
+ cover.mobileHeight===900,"A reviewed independent briefing image is required");
+const coverBytes=fs.readFileSync(path.resolve(__dirname,"../..",cover.path));
+assert(coverBytes.subarray(0,4).toString("ascii")==="RIFF"&&
+ coverBytes.subarray(8,12).toString("ascii")==="WEBP");
+assert.equal(createHash("sha256").update(coverBytes).digest("hex"),cover.sha256);
 assert(Array.isArray(manifest.sceneImages),"scene approval list required");
 assert(Array.isArray(manifest.npcPortraits),"NPC approval list required");
 let states=0,verifiedSceneViews=0,verifiedPortraitViews=0;

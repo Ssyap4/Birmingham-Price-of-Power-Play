@@ -193,3 +193,17 @@ This source/HTTP evidence alone is not real iPhone Safari/WebKit acceptance.
 For the next full mobile QA gate, the same workflow now assembles and verifies
 the standalone Safari package before running Chromium and WebKit. Routine
 quick UI pushes continue to skip this extra release work under ADR-0005.
+
+### Final polish phase I — original briefing art and streamlined decision handoff
+
+The previous Mabel portrait on the Case002 briefing has been replaced with
+one original, scene-setting railway viaduct illustration (actual 720×900 WebP).
+Its file and SHA-256 are registered separately from the existing 102 approved
+story frames. The isolated exporter copies and verifies that asset. The scene
+reader bridge now contains only the existing decisions CTA (or finale CTA),
+and the pre-decision panel keeps important risk/availability information without
+duplicating an extra action count. All interactions are presentation-only.
+See [the accepted final polish plan](CASE002-FINAL-POLISH-PLAN.md).
+
+A pre-existing preview URL from an earlier commit will NOT have these changes
+until the distinct preview deployment is intentionally rebuilt and verified.

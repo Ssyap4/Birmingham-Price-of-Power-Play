@@ -37,6 +37,12 @@ for(const row of manifest.sceneImages){
  if(!shots.has(rel)){copy(rel,row.mobileSha256);shots.add(rel);}
 }
 if(scenes.size!==89)throw Error("Expected 89 illustrated scenes");
+const briefing=manifest.briefingImage;
+if(!briefing||briefing.review!=="approved"||
+   briefing.mobileWidth!==720||briefing.mobileHeight!==900||
+   briefing.path!=="assets/case002/briefing/case002-briefing-viaduct--mobile.webp"||!briefing.sha256)
+ throw Error("Missing reviewed standalone Case002 briefing art");
+copy(briefing.path,briefing.sha256);
 for(const p of manifest.npcPortraits){
  if(p.review!=="approved"||!p.sha256)throw Error("Unapproved NPC portrait");
  copy("assets/case002/portraits/"+p.file,p.sha256);

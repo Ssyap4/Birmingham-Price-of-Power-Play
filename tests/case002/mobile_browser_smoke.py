@@ -59,6 +59,10 @@ def main():
                     assert "виадука" in page.locator("#caseBriefing").inner_text().lower()
                     assert page.locator("#caseBriefing").get_attribute("aria-describedby") == "briefPremise"
                     page.locator(".briefing-visual img").evaluate("img => img.decode()")
+                    assert page.locator(".briefing-visual img").evaluate("""img =>
+                        img.naturalWidth === 720 && img.naturalHeight === 900 &&
+                        img.currentSrc.endsWith('/assets/case002/briefing/case002-briefing-viaduct--mobile.webp')
+                    """), f"{browser_name}: opening must load real reviewed place artwork"
                     cta = page.locator("#briefContinue").bounding_box()
                     assert cta and cta["y"] + cta["height"] <= 844, (
                         f"{browser_name}: briefing enter button falls below the first iPhone screen"
@@ -98,7 +102,7 @@ def main():
                         "#caseRewardList").inner_text()
                     assert page.locator(".case-reward-entry").count() == 0
                     page.locator("#caseRewardArchive summary").click()
-                    assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-mabel-portrait.webp")
+                    assert page.locator(".briefing-visual img").get_attribute("src").endswith("case002-briefing-viaduct--mobile.webp")
                     assert page.locator("#hero").get_attribute("type") == "hidden"
                     assert page.locator("#priorDetails").is_hidden()
                     assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
@@ -165,12 +169,16 @@ def main():
                     assert page.locator("#decisionCheckEvidence").count() == 0, (
                         "An uninvestigated prologue must not claim there is proof"
                     )
-                    assert page.locator(".choice-availability").count() == 1
+                    assert page.locator(".choice-availability").count() == 0
+                    assert page.locator("#decisionPreflight .decision-preflight-metric").count() >= 1
                     assert page.locator(".choice-locked .choice:not([disabled])").count() == 0
                     assert page.locator(".choice-locked-toggle").count() == (
                         1 if page.locator(".choice-locked .choice").count() else 0
                     )
-                    assert page.locator("#readerBridgeMarker").inner_text().endswith("P01")
+                    assert page.locator("#readerBridgeMarker").count() == 0
+                    assert page.locator("#readerBridgeSummary").count() == 0
+                    assert page.locator("#readerBridge").locator("button").count() == 1
+                    assert page.locator("#readerToChoices").inner_text() == "ПЕРЕЙТИ К РЕШЕНИЯМ ↓"
                     assert page.locator("#sceneDossierUpdates").is_hidden()
                     assert page.locator("#sceneUpdateGroup").is_hidden()
                     assert page.locator('#quickNav [data-go="evidence"]').get_attribute(
@@ -178,7 +186,9 @@ def main():
                     assert page.locator('#quickNav [data-go="deductions"]').get_attribute("data-unread") == "false"
                     assert page.locator('#quickNav [data-go="witnesses"]').get_attribute("data-unread") == "false"
                     assert page.locator("#lastDecisionReceipt").is_hidden()
-                    assert "доступн" in page.locator("#readerBridgeSummary").inner_text()
+                    assert page.locator("#decisionPreflight").get_attribute("data-available") == str(
+                        page.locator(".choice-available .choice:not([disabled])").count()
+                    )
                     first_save=page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""")
                     page.locator("#readerToChoices").click()
@@ -311,7 +321,8 @@ def main():
                     assert page.locator("#toolsSceneMarker").inner_text().endswith("P02")
                     assert page.locator("#decisionSceneTitle").inner_text() == page.locator("#sceneTitle").inner_text()
                     assert page.locator("#readerBridge").count() == 1
-                    assert page.locator("#readerBridgeMarker").inner_text().endswith("P02")
+                    assert page.locator("#readerBridgeMarker").count() == 0
+                    assert page.locator("#readerBridge").locator("button").count() == 1
                     assert page.locator("#readingProgress").count() == 1
                     assert page.locator("#readingProgress").evaluate(
                         "(el) => getComputedStyle(el).pointerEvents === 'none'"

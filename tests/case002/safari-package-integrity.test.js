@@ -4,6 +4,7 @@
  * It reads the isolated distribution, never the Case001 game or its saves.
  */
 const assert=require("node:assert/strict");
+const {createHash}=require("node:crypto");
 const fs=require("node:fs");
 const path=require("node:path");
 const ROOT=path.resolve(__dirname,"../..");
@@ -19,6 +20,18 @@ assert(start.includes('content="0;url='+entry+'"'),
 assert(start.includes('href="'+entry+'"'),
  "Manual fallback link must work at the same subpath");
 const html=fs.readFileSync(file(entry),"utf8");
+const briefing=manifest.briefingImage;
+assert(briefing&&briefing.review==="approved"&&
+ briefing.mobileWidth===720&&briefing.mobileHeight===900,
+ "Briefing must use a registered reviewed portrait scene-setting illustration");
+assert(html.includes('../../'+briefing.path),
+ "HTML must display the approved original case briefing, not a character portrait");
+const briefingBytes=fs.readFileSync(file(briefing.path));
+assert(briefingBytes.subarray(0,4).toString("ascii")==="RIFF"&&
+ briefingBytes.subarray(8,12).toString("ascii")==="WEBP",
+ "Briefing must be a real WebP");
+assert.equal(createHash("sha256").update(briefingBytes).digest("hex"),
+ briefing.sha256,"Standalone preview must include exactly the approved briefing art");
 let refs=0;
 for(const match of html.matchAll(/<(?:script|link|img|source)\b[^>]*?\b(?:src|href)\s*=\s*(["'])(.*?)\1/gi)){
  const rel=match[2];

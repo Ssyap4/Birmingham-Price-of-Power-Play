@@ -10,6 +10,14 @@
 "use strict";
 const manifest=Object.freeze({
  schemaVersion:1,
+ // Standalone non-story briefing artwork. This is a reviewed place establishing
+ // the case's atmosphere, not a portrait of Mabel or a storyline node.
+ briefingImage:Object.freeze({
+  review:"approved",
+  path:"assets/case002/briefing/case002-briefing-viaduct--mobile.webp",
+  mobileWidth:720,mobileHeight:900,
+  sha256:"7e8012f60023211bb15c394bcff47aee6afc5d2677bf26a918e2f59dccefe80c"
+ }),
  // Ending wave: seven distinct final scenes, with Z02 explicitly keyed by eight witness states.
  // Reuse of the independently accepted neutral Z02 image is restricted by the art binary audit.
  sceneImages:Object.freeze([

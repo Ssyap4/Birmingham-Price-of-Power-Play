@@ -325,7 +325,7 @@ html[data-case002-telegram="true"] .evidence-card{
 .briefing-visual{position:relative;height:clamp(175px,51vw,265px);overflow:hidden;
  background:radial-gradient(ellipse at center,#6b452b,#100d0c)}
 .briefing-visual>img{width:100%;height:100%;display:block;object-fit:cover;
- object-position:center 28%;filter:sepia(.2) brightness(.74)}
+ object-position:center 52%;filter:sepia(.12) brightness(.88)}
 .briefing-visual:after{content:"";position:absolute;inset:0;pointer-events:none;
  background:linear-gradient(0deg,#261e17 0%,#261e17a8 20%,transparent 80%)}
 .briefing-visual-stamp{position:absolute;z-index:1;bottom:10px;left:18px;
@@ -737,13 +737,9 @@ html[data-case002-telegram="true"] .tool-tab{
 
 /* Stage 10: an unobtrusive reading-to-decision bridge, after the full prose.
    Original art remains untouched and the controls never commit game choices. */
-.reader-bridge{display:grid;gap:9px;margin:19px 0 2px;padding:17px 13px 14px;
+.reader-bridge{display:block;margin:18px 0 2px;padding:9px;
  border-top:1px solid #8d6940;border-bottom:1px solid #644a32;
  background:linear-gradient(145deg,#34261b,#211911 85%);border-radius:5px}
-.reader-bridge-marker{color:#deb989;font:800 .66rem/1.4 system-ui,sans-serif;
- letter-spacing:.17em}
-.reader-bridge-summary{margin:0!important;color:#e9d3b5;
- font:.84rem/1.5 system-ui,sans-serif}
 .reader-bridge-button{width:100%;min-height:51px;
  background:linear-gradient(125deg,#d9b885,#9d713d);color:#24180e;
  border:1px solid #f2d1a0;border-radius:5px;font:800 .79rem/1.35 system-ui,sans-serif;
@@ -754,16 +750,13 @@ html[data-case002-telegram="true"] .tool-tab{
  padding:8px 10px;background:#241b15;border:1px solid #6b533a;border-radius:5px;
  color:#dec095;text-align:center;font:700 .73rem/1.35 system-ui,sans-serif;
  letter-spacing:.035em}
-@media(max-width:359px){.reader-bridge{padding:13px 10px 12px}
+@media(max-width:359px){.reader-bridge{padding:7px}
  .reader-bridge-button{font-size:.75rem;letter-spacing:.01em}}
 @media(prefers-reduced-motion:reduce){
  .reader-bridge,.reader-bridge-button,.reader-return{animation:none!important;transition:none!important}}
 
 /* Stage 11: present real decisions first; put locked choices into a clear
    voluntary disclosure. Nothing in this layer changes engine eligibility. */
-#game .choice-list>.choice-availability{
- margin:0 0 8px;padding:0;color:#f1d3a6;
- font:700 .7rem/1.4 system-ui,sans-serif;letter-spacing:.04em}
 #game .choice-available,#game .choice-locked{
  display:grid;gap:9px;min-width:0}
 #game .choice-locked[hidden]{display:none!important}
@@ -951,7 +944,7 @@ html[data-case002-telegram="true"] .tool-tab{
 #game .story-content .scene-spoken-line[data-speaker]:before{
  margin-bottom:7px}
 #game .narrative-divider{margin-bottom:19px}
-#game .reader-bridge{margin-top:23px;padding:16px 13px}
+#game .reader-bridge{margin-top:18px;padding:9px}
 #game .choice{min-height:56px;row-gap:7px;padding:14px 11px}
 #game .choice-label{line-height:1.43}
 #game .choice-risk-note{font-size:.68rem;line-height:1.45}
@@ -962,7 +955,7 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .scene-update-group-state{font-size:.61rem;letter-spacing:0}
  #game .story-content{line-height:1.63}
  #game .story-content .scene-spoken-line[data-speaker]{padding:10px 9px}
- #game .reader-bridge{padding:13px 10px}
+ #game .reader-bridge{padding:7px}
  #game .choice{padding:12px 9px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -1169,8 +1162,8 @@ html[data-case002-telegram="true"] .tool-tab{
 
 /* Cycle 1, stage 8: factual pre-decision checklist. The same filtered
    action list drives counts; unearned finale routes remain invisible. */
-#game .decision-preflight{display:grid;gap:9px;min-width:0;
- margin:0 0 15px;padding:13px 12px;border:1px solid #876742;
+#game .decision-preflight{display:grid;gap:7px;min-width:0;
+ margin:0 0 12px;padding:11px 12px;border:1px solid #876742;
  border-top:2px solid #ddb680;border-radius:5px;
  background:linear-gradient(135deg,#302319,#211911)}
 #game .decision-preflight-kicker{display:block;color:#edcc99;

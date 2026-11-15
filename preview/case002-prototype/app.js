@@ -1032,16 +1032,14 @@ function renderReadingBridge(view){
   footer=make("div",undefined,"reader-bridge");
   footer.id="readerBridge";
   footer.setAttribute("aria-label","Переход от текста сцены к решениям");
-  const marker=make("span","КОНЕЦ СЦЕНЫ","reader-bridge-marker");
-  marker.id="readerBridgeMarker";
-  const summary=make("p",undefined,"reader-bridge-summary");
-  summary.id="readerBridgeSummary";
-  const button=make("button","К РЕШЕНИЮ ↓","reader-bridge-button");
+  // No repeated scene-end headline, available-action count or explanation:
+  // the following decision preflight already contains those facts.
+  const button=make("button","К РЕШЕНИЯМ ↓","reader-bridge-button");
   button.id="readerToChoices";
   button.type="button";
   button.setAttribute("aria-controls","choicesPanel");
   button.addEventListener("click",()=>jumpTo("choices"));
-  footer.append(marker,summary,button);
+  footer.append(button);
   $("sceneText").insertAdjacentElement("afterend",footer);
   const back=make("button","↑ ВЕРНУТЬСЯ К ТЕКСТУ СЦЕНЫ","reader-return");
   back.id="choicesBackToText";
@@ -1051,13 +1049,6 @@ function renderReadingBridge(view){
   $("choiceList").insertAdjacentElement("beforebegin",back);
  }
  const finished=Boolean(view.state.finished);
- const available=[...$("choiceList").querySelectorAll("button.choice:not(:disabled)")].length;
- setText($("readerBridgeMarker"),finished?"РАЗВЯЗКА ДЕЛА":"КОНЕЦ СЦЕНЫ · "+view.scene.id);
- const count=available===1?"1 доступное действие":
-  available>=2&&available<=4?available+" доступных действия":
-  available+" доступных действий";
- setText($("readerBridgeSummary"),finished?
-  "История завершена. Ниже — итог вашего расследования.":count+". Решения находятся сразу под сценой.");
  setText($("readerToChoices"),finished?"ПОСМОТРЕТЬ ИТОГ ↓":"ПЕРЕЙТИ К РЕШЕНИЯМ ↓");
  setText($("choicesBackToText"),finished?
   "↑ ВЕРНУТЬСЯ К ЭПИЛОГУ":"↑ ВЕРНУТЬСЯ К ТЕКСТУ СЦЕНЫ");
@@ -1438,7 +1429,7 @@ function render(){
      "Среди доступных действий есть смертельно опасное. Оно выделено и потребует отдельного подтверждения.":
      revisited?
      "Некоторые открытые пути уже посещались. Выберите дальнейшее действие осознанно.":
-     "Ниже показаны действия, доступные именно сейчас. Выбор изменит ход расследования.",
+     "Выберите действие — последствия изменят ход расследования.",
      "decision-preflight-note"));
    if(s.evidence.length){
      const check=make("button","СВЕРИТЬ УЛИКИ НА ДОСКЕ ↗","decision-check-evidence");
@@ -1453,10 +1444,9 @@ function render(){
      });
      preflight.append(check);
    }
-   const count=make("p",allowed===1?"1 доступное действие":
-     allowed>=2&&allowed<=4?allowed+" доступных действия":allowed+" доступных действий",
-     "choice-availability");
-   choices.append(preflight,count,available);
+   // The preflight metric already announces the available action count.
+   // Do not repeat that number above the first choice card.
+   choices.append(preflight,available);
    if(blocked){
     const toggle=make("button","ПОКА ЗАКРЫТО: "+blocked+" · ПОКАЗАТЬ ПРИЧИНЫ",
       "choice-locked-toggle");
