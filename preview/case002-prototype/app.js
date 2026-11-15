@@ -106,7 +106,8 @@ let activeArtStage=null;
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
  journalExpanded=false,navSection="scene";
 let lastDecisionReceipt=null; // Presentation only: latest committed choice.
-let dossierReturnPoint=null; // Temporary reading bookmark; never persisted.
+let dossierReturnPoint=null; // Temporary dossier bookmark; never persisted.
+let sceneReturnPoint=null; // Reading-to-decisions bookmark, never persisted.
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -209,9 +210,17 @@ function refreshNavigation(){
   if(button.dataset.go===navSection)button.setAttribute("aria-current","location");
   else button.removeAttribute("aria-current");
   if(button.dataset.go==="scene"){
-   if(dossierReturnPoint&&isDossierSection(navSection))
-    button.setAttribute("aria-label",dossierReturnPoint.section==="choices"?
-      "Вернуться к месту выбора":"Вернуться к месту чтения");
+   const fromDossier=dossierReturnPoint&&isDossierSection(navSection);
+   const fromChoices=sceneReturnPoint&&navSection==="choices"&&engine&&
+    sceneReturnPoint.sceneId===engine.snapshot().node;
+   const point=fromDossier?dossierReturnPoint:fromChoices?sceneReturnPoint:null;
+   setText(button,fromDossier?"НАЗАД":fromChoices?
+    (point.reading?"ТЕКСТ":"КАДР"):"СЦЕНА");
+   button.dataset.returnPoint=String(Boolean(point));
+   if(fromDossier)button.setAttribute("aria-label",point.section==="choices"?
+     "Вернуться к месту выбора":"Вернуться к месту чтения");
+   else if(fromChoices)button.setAttribute("aria-label",point.reading?
+     "Вернуться к месту чтения":"Вернуться к кадру сцены");
    else button.removeAttribute("aria-label");
   }
  }
@@ -447,8 +456,29 @@ function renderDecisionReceipt(){
  panel.append(toggle,body);
  refreshSceneUpdateGroup();
 }
-/* Remember the original reading viewport, not merely the scene's opening.
- * Using a stable text landmark compensates for disappearing clue banners. */
+/* Anchor to current narration, not absolute page position: when an earned
+ * clue gets acknowledged, its vanished banner must not shift the bookmark. */
+function captureScenePoint(){
+ const narrative=$("sceneText"),bounds=narrative.getBoundingClientRect();
+ const fromReaderButton=document.activeElement?.id==="readerToChoices";
+ return {
+  sceneId:engine.snapshot().node,
+  anchorTop:bounds.top,
+  reading:fromReaderButton||
+    (bounds.top<window.innerHeight-105&&bounds.bottom>35)
+ };
+}
+function restoreScenePoint(point,section="scene"){
+ if(!engine||!point||engine.snapshot().node!==point.sceneId)return false;
+ const target=section==="choices"?$("choicesPanel"):
+  point.reading?$("sceneText"):$("storyPanel");
+ navSection=section;refreshNavigation();
+ target.focus({preventScroll:true});
+ const narrative=$("sceneText");
+ window.scrollTo(0,Math.max(0,window.scrollY+
+  narrative.getBoundingClientRect().top-point.anchorTop));
+ return true;
+}
 function isDossierSection(section){
  return ["evidence","deductions","witnesses","journal"].includes(section);
 }
@@ -474,16 +504,10 @@ function returnFromDossier(){
   dossierReturnPoint=null;
   jumpTo("scene");return;
  }
- dossierReturnPoint=null;
- hideNotice();
- navSection=point.section;refreshNavigation();
- const target=point.section==="choices"?$("choicesPanel"):$("storyPanel");
- target.focus({preventScroll:true});
- // Narrative anchor stays in the DOM while evidence, journal or deduction
- // content changes. Its viewport delta restores the same reading position.
- const narrative=$("sceneText");
- const newTop=window.scrollY+narrative.getBoundingClientRect().top-point.anchorTop;
- window.scrollTo(0,Math.max(0,newTop));
+ dossierReturnPoint=null;hideNotice();
+ // If the source was choices, retain the earlier passage bookmark. The
+ // player may return through decisions to the interrupted paragraph.
+ restoreScenePoint(point,point.section);
 }
 function showSelection({focus=false}={}){
  $("caseBriefing").hidden=true;
@@ -494,8 +518,8 @@ function showSelection({focus=false}={}){
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
- hideNotice();dossierReturnPoint=null;$("game").hidden=true;
- showSelection({focus:true});
+ hideNotice();dossierReturnPoint=null;sceneReturnPoint=null;
+ $("game").hidden=true;showSelection({focus:true});
 }
 function refreshResume(){
  const hero=$("hero").value;
@@ -586,14 +610,15 @@ function showGame(){
  hideNotice();tab="evidence";evidenceFocus=null;pairFirst=null;pairFeedback=null;
  unseenEvidence=0;pendingEvidence=[];pendingWitnesses=[];pendingProofs=[];
  journalExpanded=false;navSection="scene";
- lastDecisionReceipt=null;dossierReturnPoint=null;refreshNavigation();
+ lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;
+ refreshNavigation();
  render();
  showCurrentScene();
 }
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
 function showCurrentScene(){
- dossierReturnPoint=null;
+ dossierReturnPoint=null;sceneReturnPoint=null;
  navSection="scene";refreshNavigation();
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
@@ -683,14 +708,26 @@ function jumpTo(where,recordId=null){
  if(where==="scene"&&dossierReturnPoint&&isDossierSection(navSection)){
   returnFromDossier();return;
  }
+ // A one-thumb trip to decisions is reversible to the source viewport.
+ // A second SCENE tap goes to the actual opening illustration as before.
+ if((where==="scene"||where==="reading")&&navSection==="choices"&&
+    sceneReturnPoint&&sceneReturnPoint.sceneId===engine.snapshot().node&&
+    (where==="scene"||sceneReturnPoint.reading)){
+  const point=sceneReturnPoint;
+  sceneReturnPoint=null;dossierReturnPoint=null;hideNotice();
+  restoreScenePoint(point);return;
+ }
+ if(where==="choices"&&navSection==="scene"){
+  sceneReturnPoint=captureScenePoint();
+ }
  const toDossier=isDossierSection(where);
  if(toDossier&&!isDossierSection(navSection)){
   dossierReturnPoint={
-   sceneId:engine.snapshot().node,
-   section:navSection==="choices"?"choices":"scene",
-   anchorTop:$("sceneText").getBoundingClientRect().top
+   ...captureScenePoint(),
+   section:navSection==="choices"?"choices":"scene"
   };
  }else if(!toDossier)dossierReturnPoint=null;
+ if(where==="scene"||where==="reading")sceneReturnPoint=null;
  let target;
  if(where==="scene")target=$("storyPanel");
  else if(where==="choices")target=$("choicesPanel");

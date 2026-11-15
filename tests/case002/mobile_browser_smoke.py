@@ -159,9 +159,14 @@ def main():
                     assert page.locator("#choicesPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: reader next must focus decisions"
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "ТЕКСТ"
+                    assert page.locator('#quickNav [data-go="scene"]').get_attribute(
+                        "aria-label") == "Вернуться к месту чтения"
                     page.locator('#quickNav button[data-go="evidence"]').click()
                     assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "НАЗАД"
                     page.locator("#dossierReturn").click()
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "ТЕКСТ"
                     assert page.locator("#choicesPanel").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: dossier return must restore choices focus"
@@ -170,6 +175,7 @@ def main():
                     assert page.locator("#sceneText").evaluate(
                         "(el) => document.activeElement === el"
                     ), f"{browser_name}: reader back must focus current narration"
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "СЦЕНА"
                     assert page.evaluate("""() => localStorage.getItem(
                         window.BirminghamCase002Engine.SAVE_PREFIX + 'jack')""") == first_save, (
                         "Reading controls must never rewrite a save or progress a scene"
@@ -197,6 +203,30 @@ def main():
                         f"{browser_name}: returning from dossier must restore reading offset"
                     )
                     assert page.locator("#sceneId").inner_text().startswith("P01")
+                    # One thumb: paragraph -> decisions -> dossier -> decisions
+                    # -> exact prior reading offset, with appropriate focus.
+                    page.locator('#quickNav button[data-go="choices"]').click()
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "ТЕКСТ"
+                    assert page.locator('#quickNav [data-go="scene"]').get_attribute(
+                        "data-return-point") == "true"
+                    page.locator('#quickNav button[data-go="journal"]').click()
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "НАЗАД"
+                    page.locator('#dossierReturn').click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    )
+                    page.locator('#quickNav [data-go="scene"]').click()
+                    assert page.locator("#sceneText").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "One-handed scene return must focus original prose"
+                    assert abs(page.evaluate("() => window.scrollY")-before_dossier) <= 4, (
+                        f"{browser_name}: decisions must restore exact reading offset"
+                    )
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "СЦЕНА"
+                    page.locator('#quickNav [data-go="scene"]').click()
+                    assert page.locator("#storyPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Second scene tap must reach opening art"
                     page.locator('#quickNav button[data-go="choices"]').click()
                     assert page.locator("#choicesPanel").is_visible()
                     assert page.locator("#sceneId").inner_text().startswith("P01"), (
@@ -439,6 +469,9 @@ def main():
                     ), f"{browser_name}: A03 must show its own approved phone artwork"
                     page.locator(".choice:not([disabled])").first.click()  # A05
                     assert page.locator("#sceneId").inner_text().startswith("A05")
+                    assert page.locator('#quickNav [data-go="scene"]').inner_text() == "СЦЕНА", (
+                        "A fresh scene must discard the last reading bookmark"
+                    )
                     assert page.locator("#game").get_attribute("data-art-scene") == "A05"
                     page.wait_for_function(
                         "() => document.querySelector('#game').dataset.artVerified === 'true'",

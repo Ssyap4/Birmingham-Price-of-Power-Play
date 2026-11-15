@@ -968,3 +968,15 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(prefers-reduced-motion:reduce){
  #game .scene-update-group-toggle{transition:none!important}
 }
+
+/* Cycle 1, stage 3: the six-button thumb dock identifies the available
+   return point without creating another fixed overlay or reducing hitboxes. */
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]{
+ border-color:#deba80;background:linear-gradient(135deg,#5a4128,#302319);
+ color:#ffe1ac;box-shadow:inset 0 0 0 1px #d1ab7140}
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]:focus-visible{
+ outline:3px solid #ffe4bd;outline-offset:-3px}
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]:active{
+ background:#88633d;color:#1c140d}
+#game .story-content:focus-visible,#game .choices:focus-visible{
+ outline:2px solid #e5bc82;outline-offset:4px}
