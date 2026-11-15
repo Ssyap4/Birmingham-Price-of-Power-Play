@@ -53,3 +53,12 @@ jobs:
       - name: Full WebKit iPhone and Chromium story UI QA
         if: steps.scope.outputs.browser_full == 'true'
         run: python tests/case002/mobile_browser_smoke.py
+
+      - name: Capture mobile presentation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case002-mobile-visual-check
+          path: case002-qa-screens/
+          if-no-files-found: ignore
+          retention-days: 7

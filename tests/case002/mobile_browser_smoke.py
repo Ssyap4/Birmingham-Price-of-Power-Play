@@ -44,6 +44,13 @@ def main():
                     response = page.goto(address, wait_until="load")
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#begin").is_visible()
+                    visual_dir=ROOT/"case002-qa-screens"
+                    visual_dir.mkdir(parents=True,exist_ok=True)
+                    page.wait_for_function(
+                        "() => [...document.querySelectorAll('#heroGallery img, .launch-cinematic img')].every(i => i.complete && i.naturalWidth > 0)",
+                        timeout=8000
+                    )
+                    page.screenshot(path=str(visual_dir/f"{browser_name}-launch.png"),full_page=True)
                     assert page.locator("#heroGallery .hero-card").count() == 5
                     assert page.locator(".launch-cinematic img").get_attribute("src").endswith("case002-mabel-portrait.webp")
                     assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
@@ -159,6 +166,7 @@ def main():
                     )
                     assert page.locator("#sceneText .scene-spoken-line").nth(0).get_attribute("data-speaker") == "Мэйбл Кросс"
                     assert page.locator("#sceneText .scene-spoken-line").nth(1).get_attribute("data-speaker") == "Вы"
+                    page.screenshot(path=str(visual_dir/f"{browser_name}-dialogue.png"),full_page=True)
                     assert page.locator("#readScene").bounding_box()["height"] >= 44
                     page.locator("#readScene").click()
                     assert page.locator("#sceneText").evaluate(
@@ -803,6 +811,10 @@ def main():
                         full_page.locator('button[data-tab="deductions"]').click()
                         deductions = full_page.locator(".deduction-card")
                         assert deductions.count() >= 1, "Investigated case has no earned deductions"
+                        assert full_page.locator(".pair-board .pair-item").count() >= 2
+                        full_page.locator(".pair-board .pair-item").first.click()
+                        assert full_page.locator(".pair-result").is_visible()
+                        full_page.screenshot(path=str(visual_dir/"chromium-deduction.png"),full_page=True)
                         evidence_jump = full_page.locator(".deduction-source").first
                         assert evidence_jump.count() == 1 and evidence_jump.is_enabled()
                         expected_id = evidence_jump.get_attribute("data-evidence-id")
