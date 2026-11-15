@@ -141,6 +141,12 @@ def main():
                     # Read-only handoff from the end of prose to choices and back.
                     assert page.locator("#readerBridge").count() == 1
                     assert page.locator(".choice-available .choice:not([disabled])").count() >= 1
+                    assert page.locator("#decisionPreflight").is_visible()
+                    assert page.locator("#decisionPreflight").get_attribute("data-blocked") == "0"
+                    assert page.locator("#decisionPreflight").get_attribute("data-dangerous") == "0"
+                    assert page.locator("#decisionCheckEvidence").count() == 0, (
+                        "An uninvestigated prologue must not claim there is proof"
+                    )
                     assert page.locator(".choice-availability").count() == 1
                     assert page.locator(".choice-locked .choice:not([disabled])").count() == 0
                     assert page.locator(".choice-locked-toggle").count() == (
@@ -394,6 +400,8 @@ def main():
                         toggle=page.locator(".choice-locked-toggle")
                         assert toggle.get_attribute("aria-expanded") == "false"
                         assert page.locator("#lockedChoices").is_hidden()
+                        assert page.locator("#decisionPreflight").get_attribute(
+                            "data-blocked") == str(blocked.count())
                         previous=page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
                         toggle.click()
@@ -401,6 +409,9 @@ def main():
                         assert page.locator("#lockedChoices").is_visible()
                         assert blocked.first.is_disabled()
                         assert blocked.first.locator(".lock-reason").count() == 1
+                        assert blocked.first.get_attribute("data-decision-state") == "locked"
+                        assert page.locator(".choice-locked-explanation").is_visible()
+                        assert blocked.first.locator(".choice-locked-note").is_visible()
                         toggle.click()
                         assert page.locator("#lockedChoices").is_hidden()
                         assert page.evaluate("""() => localStorage.getItem(
@@ -531,6 +542,19 @@ def main():
                     assert page.locator("#sceneUpdateRead").bounding_box()["height"] >= 44
                     assert page.locator("#lastDecisionToggle").get_attribute("aria-expanded") == "false"
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
+                    assert page.locator("#decisionCheckEvidence").is_visible()
+                    before_preflight=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    page.locator("#decisionCheckEvidence").click()
+                    assert page.locator('button[data-tab="deductions"]').get_attribute(
+                        "aria-pressed") == "true"
+                    assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
+                    page.locator("#dossierReturn").click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Preflight dossier check must restore decision focus"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_preflight
                     clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
                     assert clue_jump.count() == 1 and clue_jump.is_visible()
                     assert "Старинный билет" in clue_jump.inner_text()
@@ -1409,6 +1433,11 @@ def main():
                             )
                             choice.click()
                         assert link_page.locator("#sceneId").inner_text().startswith("F09")
+                        assert link_page.locator("#decisionPreflight").get_attribute(
+                            "data-blocked") == "0", (
+                            "Closed final outcomes must not be counted or spoiled"
+                        )
+                        assert link_page.locator(".choice-locked-toggle").count() == 0
                         link_page.locator('#quickNav button[data-go="deductions"]').click()
                         source_link = link_page.locator(".deduction-source").first
                         assert source_link.count() == 1 and source_link.is_enabled()

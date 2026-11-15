@@ -1002,7 +1002,7 @@ function render(){
    locked.hidden=true;
    locked.setAttribute("role","group");
    locked.setAttribute("aria-label","Пока недоступные действия и причины");
-   let allowed=0,blocked=0;
+   let allowed=0,blocked=0,dangerous=0,revisited=0;
    for(const c of v.choices){
     if(s.node==="F09"&&!c.enabled)continue;
     const visited=s.visited.includes(c.to);
@@ -1010,22 +1010,68 @@ function render(){
       (c.confirm?" is-danger":"")+(visited?" is-visited":""));
     btn.type="button";btn.disabled=!c.enabled;
     btn.dataset.to=c.to;btn.dataset.action=c.action;
+    btn.dataset.decisionState=!c.enabled?"locked":c.confirm?"danger":
+     visited?"visited":"available";
     let title=actionLabels[s.node+":"+c.to+":"+c.action]||c.actionTitle;
     if(c.action==="continue")title=c.title+(actionLabels[s.node+":"+c.to+":continue"]?" · "+title:"");
     btn.append(make("span",title,"choice-label"));
     if(c.action!=="continue")btn.append(make("span","Следующая сцена: "+c.title,"choice-detail"));
-    if(!c.enabled)btn.append(make("span",translateReason(c,v),"choice-detail lock-reason"));
-    else if(c.confirm)btn.append(make("span","ОПАСНО · СМЕРТЕЛЬНЫЙ РИСК","choice-risk-note"));
-    else if(visited)btn.append(make("span","УЖЕ ПОСЕЩАЛИ","choice-visited-note"));
+    if(!c.enabled){
+     btn.append(make("span","ПОКА ЗАКРЫТО","choice-locked-note"));
+     btn.append(make("span",translateReason(c,v),"choice-detail lock-reason"));
+    }else if(c.confirm){
+     dangerous++;
+     btn.append(make("span","ОПАСНО · СМЕРТЕЛЬНЫЙ РИСК","choice-risk-note"));
+     btn.append(make("span","Перед этим действием потребуется подтверждение.",
+      "choice-detail choice-risk-explainer"));
+    }else if(visited){
+     revisited++;
+     btn.append(make("span","УЖЕ ПОСЕЩАЛИ","choice-visited-note"));
+    }
     // Detached old buttons cannot repeat a committed transition.
     btn.addEventListener("click",()=>select(c,s.node));
     if(c.enabled){available.append(btn);allowed++;}
     else{locked.append(btn);blocked++;}
    }
+   // The same currently visible choice set drives every number, including
+   // the spoiler-filtered finale. The preflight cannot offer an unearned route.
+   const preflight=make("section",undefined,"decision-preflight");
+   preflight.id="decisionPreflight";
+   preflight.dataset.available=String(allowed);
+   preflight.dataset.blocked=String(blocked);
+   preflight.dataset.dangerous=String(dangerous);
+   preflight.dataset.revisited=String(revisited);
+   preflight.setAttribute("aria-label","Подготовка к решению");
+   preflight.append(make("span","ПЕРЕД РЕШЕНИЕМ · "+scene.id,"decision-preflight-kicker"));
+   const metrics=make("div",undefined,"decision-preflight-metrics");
+   for(const [number,label,kind] of [
+     [allowed,"ДОСТУПНО","available"],
+     ...(dangerous?[[dangerous,"С РИСКОМ","danger"]]:[]),
+     ...(blocked?[[blocked,"ПОКА ЗАКРЫТО","blocked"]]:[])
+   ]){
+     const metric=make("div",undefined,"decision-preflight-metric");
+     metric.dataset.kind=kind;
+     metric.append(make("strong",String(number)),make("span",label));
+     metrics.append(metric);
+   }
+   preflight.append(metrics);
+   preflight.append(make("p",dangerous?
+     "Среди доступных действий есть смертельно опасное. Оно выделено и потребует отдельного подтверждения.":
+     revisited?
+     "Некоторые открытые пути уже посещались. Выберите дальнейшее действие осознанно.":
+     "Ниже показаны действия, доступные именно сейчас. Выбор изменит ход расследования.",
+     "decision-preflight-note"));
+   if(s.evidence.length){
+     const check=make("button","СВЕРИТЬ УЛИКИ НА ДОСКЕ ↗","decision-check-evidence");
+     check.id="decisionCheckEvidence";check.type="button";
+     check.setAttribute("aria-label","Проверить найденные улики и выводы перед решением");
+     check.addEventListener("click",()=>jumpTo("deductions"));
+     preflight.append(check);
+   }
    const count=make("p",allowed===1?"1 доступное действие":
      allowed>=2&&allowed<=4?allowed+" доступных действия":allowed+" доступных действий",
      "choice-availability");
-   choices.append(count,available);
+   choices.append(preflight,count,available);
    if(blocked){
     const toggle=make("button","ПОКА ЗАКРЫТО: "+blocked+" · ПОКАЗАТЬ ПРИЧИНЫ",
       "choice-locked-toggle");
@@ -1039,6 +1085,9 @@ function render(){
      setText(toggle,opening?"СКРЫТЬ НЕДОСТУПНЫЕ ПУТИ ("+blocked+")":
       "ПОКА ЗАКРЫТО: "+blocked+" · ПОКАЗАТЬ ПРИЧИНЫ");
     });
+    locked.insertBefore(make("p",
+     "Это пути, условия которых сейчас не выполнены. Просмотр причин не меняет маршрут и не расходует попытку.",
+     "choice-locked-explanation"),locked.firstChild);
     choices.append(toggle,locked);
    }
  }
