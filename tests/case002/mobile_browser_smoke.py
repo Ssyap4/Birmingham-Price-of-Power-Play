@@ -542,19 +542,6 @@ def main():
                     assert page.locator("#sceneUpdateRead").bounding_box()["height"] >= 44
                     assert page.locator("#lastDecisionToggle").get_attribute("aria-expanded") == "false"
                     assert page.locator("#pulseEvidence").inner_text() == "Улик: 1"
-                    assert page.locator("#decisionCheckEvidence").is_visible()
-                    before_preflight=page.evaluate("""() => localStorage.getItem(
-                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
-                    page.locator("#decisionCheckEvidence").click()
-                    assert page.locator('button[data-tab="deductions"]').get_attribute(
-                        "aria-pressed") == "true"
-                    assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
-                    page.locator("#dossierReturn").click()
-                    assert page.locator("#choicesPanel").evaluate(
-                        "(el) => document.activeElement === el"
-                    ), "Preflight dossier check must restore decision focus"
-                    assert page.evaluate("""() => localStorage.getItem(
-                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_preflight
                     clue_jump=page.locator('#sceneFinds .scene-finds-link[data-evidence-id="old_excursion_ticket"]')
                     assert clue_jump.count() == 1 and clue_jump.is_visible()
                     assert "Старинный билет" in clue_jump.inner_text()
@@ -630,6 +617,19 @@ def main():
                     page.locator("#dossierReturn").click()
                     assert page.locator("#dossierReturn").is_hidden()
                     assert page.locator("#sceneId").inner_text().startswith("A05")
+                    assert page.locator("#decisionCheckEvidence").is_visible()
+                    before_preflight=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    page.locator("#decisionCheckEvidence").click()
+                    assert page.locator('button[data-tab="deductions"]').get_attribute(
+                        "aria-pressed") == "true"
+                    assert "МЕСТУ ВЫБОРА" in page.locator("#dossierReturn").inner_text()
+                    page.locator("#dossierReturn").click()
+                    assert page.locator("#choicesPanel").evaluate(
+                        "(el) => document.activeElement === el"
+                    ), "Preflight dossier check must restore decision focus"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == before_preflight
                     page.locator('#quickNav button[data-go="evidence"]').click()
                     assert page.locator("#dossierReturn").is_visible()
                     # A collected clue can be sent straight to the comparison wall.
