@@ -312,6 +312,10 @@ def main():
                     assert page.locator("#decisionSceneTitle").inner_text() == page.locator("#sceneTitle").inner_text()
                     assert page.locator("#readerBridge").count() == 1
                     assert page.locator("#readerBridgeMarker").inner_text().endswith("P02")
+                    assert page.locator("#readingProgress").count() == 1
+                    assert page.locator("#readingProgress").is_hidden(), (
+                        "The long-reading track must not overlay a freshly opened scene"
+                    )
                     assert page.locator("#storyPanel").evaluate(
                         "(el) => 0 <= el.getBoundingClientRect().top < 170"
                     ), f"{browser_name}: after a decision the next scene must be on screen"
@@ -356,6 +360,43 @@ def main():
                         "#sceneText"
                     ).inner_text(), "Scene prose must keep original story words"
                     assert page.locator("#sceneText script").count() == 0
+                    # A deterministic long-text viewport: test only
+                    # presentation, without changing the story or saved data.
+                    scroll_save=page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
+                    page.locator("#sceneText").evaluate(
+                        "(el) => {el.style.minHeight='1450px'; el.scrollIntoView({block:'start'});}"
+                    )
+                    page.wait_for_function("""() => {
+                       const bar=document.querySelector('#readingProgress');
+                       return !bar.hidden && document.querySelector('#quickNav').dataset.reading === 'true';
+                    }""",timeout=2500)
+                    page.evaluate("window.scrollBy(0,320)")
+                    page.wait_for_function("""() => Number(
+                        document.querySelector('#readingProgress').dataset.progress)>0
+                    """,timeout=2500)
+                    progressed=int(page.locator("#readingProgress").get_attribute(
+                        "data-progress"))
+                    assert 0 < progressed < 100
+                    page.evaluate("window.scrollBy(0,460)")
+                    page.wait_for_function("""before => Number(
+                        document.querySelector('#readingProgress').dataset.progress)>before
+                    """,arg=progressed,timeout=2500)
+                    assert page.locator("#readingProgress").evaluate(
+                        "(el) => getComputedStyle(el).pointerEvents === 'none'"
+                    )
+                    page.locator("#quickNav button[data-go='choices']").click()
+                    assert page.locator("#readingProgress").is_hidden(), (
+                        "Reading progress must disappear while making decisions"
+                    )
+                    assert page.evaluate("""() => localStorage.getItem(
+                        window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == scroll_save, (
+                        "Reading progress and shortcut must not write to the save"
+                    )
+                    page.locator("#sceneText").evaluate(
+                        "(el) => {el.style.minHeight='';}"
+                    )
+                    page.locator("#readScene").click()
                     mabel_registered = page.evaluate("""() =>
                         window.BirminghamCase002ApprovedArt.manifest.npcPortraits.some(
                             e => e.id === 'mabel' && e.review === 'approved'
@@ -802,6 +843,11 @@ def main():
                         assert page.locator("#readerToChoices").bounding_box()["height"] >= 44, (
                             f"{browser_name}: reader next must be touch-sized at {width}px"
                         )
+                        assert page.locator("#readScene").bounding_box()["height"] >= 44
+                        assert page.locator("#readingProgress").count() == 1
+                        assert page.locator("#readingProgress").evaluate(
+                            "(el) => getComputedStyle(el).position === 'absolute'"
+                        ), "Reading progress must fit within the fixed nav without extra overlay"
                         assert page.locator("#choicesBackToText").bounding_box()["height"] >= 44
                         if page.locator(".choice-locked-toggle").count():
                             assert page.locator(".choice-locked-toggle").bounding_box()["height"] >= 44

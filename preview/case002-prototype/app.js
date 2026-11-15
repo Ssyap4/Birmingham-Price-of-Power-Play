@@ -113,6 +113,39 @@ let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
 let lastDecisionReceipt=null; // Presentation only: latest committed choice.
 let dossierReturnPoint=null; // Temporary dossier bookmark; never persisted.
 let sceneReturnPoint=null; // Reading-to-decisions bookmark, never persisted.
+let readingProgressQueued=false; // One passive viewport update per animation frame.
+function updateReadingProgress(){
+ const game=$("game"),nav=$("quickNav"),track=$("readingProgress");
+ const text=$("sceneText");
+ if(!game||!nav||!track||!text||game.hidden||!engine){
+  if(track)track.hidden=true;
+  if(nav)nav.dataset.reading="false";
+  return;
+ }
+ const bounds=text.getBoundingClientRect(),height=window.innerHeight||790;
+ // Only long real narration gets a progress rail. Short conversations keep
+ // every pixel of the usual six-action phone dock.
+ const longEnough=bounds.height>Math.max(380,height*.65);
+ const reading=longEnough&&bounds.top<height*.58&&bounds.bottom>height*.32;
+ track.hidden=!reading;
+ nav.dataset.reading=String(reading);
+ if(!reading)return;
+ const total=Math.max(1,bounds.height-height*.58);
+ const scrolled=Math.max(0,Math.min(total,18-bounds.top));
+ const percent=Math.round(scrolled/total*100);
+ if(track.dataset.progress!==String(percent)){
+  track.dataset.progress=String(percent);
+  $("readingProgressFill").style.width=percent+"%";
+ }
+}
+function queueReadingProgress(){
+ if(readingProgressQueued)return;
+ readingProgressQueued=true;
+ window.requestAnimationFrame(()=>{
+  readingProgressQueued=false;
+  updateReadingProgress();
+ });
+}
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
 function readStorage(){
  try{
@@ -193,6 +226,8 @@ function init(){
  for(const button of document.querySelectorAll("#quickNav [data-go]")){
    button.addEventListener("click",()=>jumpTo(button.dataset.go));
  }
+ window.addEventListener("scroll",queueReadingProgress,{passive:true});
+ window.addEventListener("resize",queueReadingProgress,{passive:true});
  for(const button of document.querySelectorAll(".tool-tab"))button.addEventListener("click",()=>{
   // A deliberate dossier switch supersedes any floating old receipt.
   hideNotice();dossierTrail=null;
@@ -559,7 +594,7 @@ function returnToLaunch(){
  hideNotice();dismissUnlockToast();
  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
  dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
- $("game").hidden=true;showSelection({focus:true});
+ $("game").hidden=true;showSelection({focus:true});queueReadingProgress();
 }
 function openFinaleCollection(kind){
  if(!engine||!engine.snapshot().finished)return;
@@ -590,7 +625,7 @@ function returnFromCollection(){
     s.node!==point.node)return;
  $("launch").hidden=true;$("game").hidden=false;
  $("app").dataset.screen="game";
- navSection="choices";refreshNavigation();
+ navSection="choices";refreshNavigation();queueReadingProgress();
  const report=$("finalePanel");
  if(report){
   report.setAttribute("tabindex","-1");
@@ -903,6 +938,7 @@ function showGame(){
  refreshNavigation();
  render();
  showCurrentScene();
+ queueReadingProgress();
 }
 // Preserve chapter titles on their first scene, then enter directly at the
 // next illustrated scene instead of resetting the viewport to the masthead.
@@ -912,6 +948,7 @@ function showCurrentScene(){
  const story=$("storyPanel"),chapter=$("chapterIntertitle");
  story.focus({preventScroll:true});
  (chapter.hidden?story:chapter).scrollIntoView({block:"start",behavior:"auto"});
+ queueReadingProgress();
 }
 function setText(element,value){element.textContent=String(value);}
 function make(tag,text,cls){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
@@ -1374,6 +1411,7 @@ function render(){
  renderDecisionReceipt();
  renderSceneUpdateGroup();
  renderUnlockToast(); // Scene and finale detail targets already exist.
+ queueReadingProgress();
 }
 // The finale is a read-only view over the already committed Case 002 state.
 // It never unlocks a second ending, changes a saved slot, or awards a reward.

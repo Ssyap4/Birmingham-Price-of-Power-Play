@@ -1508,3 +1508,56 @@ html[data-case002-telegram="true"] .tool-tab{
  #launch .collection-return-bar button,#launch .collection-return-inline{
  font-size:.68rem}
 }
+
+/* Cycle 1 stage 14: safe one-thumb reading and long-scene typography.
+   Progress measures only the player's document scroll through current
+   prose, never claims they read it and never changes any game record.
+   It fits INSIDE the six-action mobile dock, not as another overlay. */
+#game .case-quick-nav{isolation:isolate}
+#game .case-reading-progress{
+ position:absolute;left:8px;right:8px;top:1px;height:3px;
+ overflow:hidden;pointer-events:none;z-index:1;
+ border-radius:999px;background:#756044}
+#game .case-reading-progress[hidden]{display:none!important}
+#game .case-reading-progress-fill{
+ display:block;height:100%;width:0;border-radius:inherit;
+ background:linear-gradient(90deg,#e2b474,#ffdd9f);
+ box-shadow:0 0 5px #f3d29b88}
+#game .case-quick-nav[data-reading="true"] button[data-go="choices"]:not([aria-current="location"]){
+ border-top-color:#d4aa6a;box-shadow:inset 0 2px 0 #b9935b36}
+#game .story-read-button{
+ padding:10px 13px;border:1px solid #b18d5d;border-radius:5px;
+ background:linear-gradient(120deg,#45321f,#2b2118);
+ text-decoration:none;color:#ffe0ae;letter-spacing:.04em;
+ min-height:48px;max-width:100%;text-align:center}
+#game .story-read-button:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:3px}
+#game .scene-reading-context{padding-bottom:10px}
+#game .story-content{font-size:clamp(1.055rem,4.15vw,1.13rem);
+ line-height:1.72;text-wrap:pretty}
+#game .story-content .story-paragraph{margin-bottom:19px}
+#game .story-content .scene-spoken-line[data-speaker]{
+ line-height:1.67;padding:12px 13px 14px;margin:13px 0 15px;
+ text-wrap:pretty}
+#game .reader-bridge-button{min-height:54px;
+ box-shadow:inset 0 1px 0 #ffe7b655}
+#game .choices h3{line-height:1.36}
+#game .choice-label{font-size:clamp(.98rem,4.0vw,1.05rem);
+ line-height:1.45;text-wrap:pretty}
+#game .choice-detail,#game .lock-reason{line-height:1.5}
+@media(max-width:359px){
+ #game .case-reading-progress{left:4px;right:4px}
+ #game .story-content{font-size:1.055rem;line-height:1.67}
+ #game .story-content .scene-spoken-line[data-speaker]{
+  padding:10px 9px 12px;line-height:1.64}
+ #game .story-read-button{font-size:.72rem;padding:9px 10px}
+ #game .reader-bridge-button{min-height:52px}
+}
+@media(max-height:610px){
+ #game .case-unlock-toast{max-height:min(26dvh,148px)}
+ #game #notice{max-height:min(28dvh,165px)}
+ #game .case-unlock-toast-note{font-size:.67rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .case-reading-progress-fill{transition:none!important}
+}
