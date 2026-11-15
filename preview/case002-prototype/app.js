@@ -564,7 +564,7 @@ function returnToLaunch(){
 function openFinaleCollection(kind){
  if(!engine||!engine.snapshot().finished)return;
  const s=engine.snapshot();
- collectionReturnPoint={hero:s.hero,attemptId:s.attemptId,node:s.node};
+ collectionReturnPoint={hero:s.hero,attemptId:s.attemptId,node:s.node,kind};
  hideNotice();dismissUnlockToast();
  $("game").hidden=true;
  $("caseRewardArchive").open=false;
@@ -634,7 +634,7 @@ function renderRewardArchive(){
   "Здесь появятся уникальные награды после завершения Дела №002. Закрытые концовки не раскрываются.";
  root.append(make("p",note,"case-reward-note"));
  if(!items.length){
-  if(collectionReturnPoint){
+  if(collectionReturnPoint?.kind==="rewards"){
    const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
    returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
    root.append(returnButton);
@@ -655,7 +655,7 @@ function renderRewardArchive(){
   row.append(seal,copy);gallery.append(row);
  }
  root.append(gallery);
- if(collectionReturnPoint){
+ if(collectionReturnPoint?.kind==="rewards"){
   const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
   returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
   root.append(returnButton);
@@ -691,7 +691,7 @@ function renderAchievementArchive(){
   card.append(sigil,copy);listing.append(card);
  }
  root.append(listing);
- if(collectionReturnPoint){
+ if(collectionReturnPoint?.kind==="achievements"){
   const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
   returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
   root.append(returnButton);
