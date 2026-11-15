@@ -42,4 +42,13 @@ const labels=target.children[0].children.filter(x=>x.tag==="span"&&x.className==
 assert.deepEqual(labels.map(x=>x.attrs["data-speaker"]),["Мэйбл Кросс","Вы","Мэйбл Кросс","Мэйбл Кросс"]);
 assert.equal(flatten(target.children[0]),mabel);
 assert.equal(SPEAKER_LINES.P02.length,4);
+const narration=require("../../src/case002/browser-data-v3.js").narration;
+let verifiedScenes=0;
+for(const [id,prose] of Object.entries(narration)){
+ const spoken=parse(prose).flatMap(p=>p.lines).filter(line=>line.spoken).length;
+ if(!spoken)continue;
+ assert.equal(SPEAKER_LINES[id]?.length,spoken,"Scene "+id+" speaker sequence is out of sync");
+ verifiedScenes++;
+}
+assert.equal(verifiedScenes,73,"All 73 authored dialogue scenes must be covered");
 console.log("PASS Case002 local dialogue presentation: 13 structural assertions, source text preserved, no HTML or invented voices.");

@@ -45,6 +45,7 @@ def main():
                     assert response.status == 200, f"{browser_name}: URL failed"
                     assert page.locator("#begin").is_visible()
                     assert page.locator("#heroGallery .hero-card").count() == 5
+                    assert page.locator(".launch-cinematic img").get_attribute("src").endswith("case002-mabel-portrait.webp")
                     assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count() == 1
 
                     if not quick:
