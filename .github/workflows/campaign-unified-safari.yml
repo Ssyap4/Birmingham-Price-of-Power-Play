@@ -10,6 +10,11 @@ on:
       - 'tests/case002/unified_campaign_browser_smoke.py'
       - '.github/workflows/campaign-unified-safari.yml'
       - 'case002-map-entry-v1.js'
+      - 'campaign-hub-v1.js'
+      - 'campaign-case002-archive-v1.js'
+      - 'campaign-case002-archive-v1.css'
+      - 'index.html'
+      - 'tests/case002/unified-archive-v1.test.js'
       - 'case002-map-entry-v1.css'
       - 'preview/case002-prototype/index.html'
       - 'preview/case002-prototype/app.js'
@@ -36,6 +41,8 @@ jobs:
         run: node deployment/campaign-unified-release.js
       - name: Audit both cases, all referenced resources and approved artwork
         run: node tests/case002/unified-package-integrity.test.js
+      - name: Audit read-only shared archive with all 35 endings and corrupt data
+        run: node tests/case002/unified-archive-v1.test.js
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

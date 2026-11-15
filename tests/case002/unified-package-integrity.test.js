@@ -9,7 +9,9 @@ const entry=name=>path.join(dist,name);
 function exists(name){assert(fs.existsSync(entry(name))&&fs.statSync(entry(name)).isFile(),
  "Missing unified campaign resource: "+name);}
 for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
- "campaign-hub-v1.js","case002-map-entry-v1.js","case002-map-entry-v1.css",
+ "campaign-hub-v1.js","campaign-case002-archive-v1.js",
+ "campaign-case002-archive-v1.css","src/case002/browser-data-v3.js",
+ "case002-map-entry-v1.js","case002-map-entry-v1.css",
  "case001-briefing-v1.js","session-controls-v1.js",
  "preview/case002-prototype/index.html","preview/case002-prototype/style.css",
  "preview/case002-prototype/app.js","src/case002/engine-v3.js",
@@ -34,6 +36,18 @@ assert(second.includes("case002MapReturnBar")&&
  second.includes('../../index.html#district-digbeth')&&
  second.includes('id="caseBriefing"'),
  "Case 002 must return to same-origin Digbeth and retain no-spoiler briefing");
+assert(shell.includes('campaign-case002-archive-v1.js')&&
+ shell.includes('campaign-case002-archive-v1.css')&&
+ shell.includes('src/case002/browser-data-v3.js')&&
+ shell.includes('src/case002/achievements-v1.js'),
+ "Unified shared archive dependencies missing from entry");
+const archive=fs.readFileSync(entry("campaign-case002-archive-v1.js"),"utf8"),
+ hub=fs.readFileSync(entry("campaign-hub-v1.js"),"utf8");
+assert(hub.includes("birmingham:campaign-render")&&
+ archive.includes("birmingham:campaign-render")&&
+ archive.includes("35 уникальных знаков")&&
+ archive.includes("campaignSecondCaseHistory"),
+ "Main menu must render Case 002 rewards and history without writing them");
 assert(!shell.includes("case002-preview-dist")&&
  !map.includes("vercel.app")&&!map.includes("github.io"),
  "Do not route between two different origins");

@@ -193,7 +193,7 @@ function renderHistory(el,runs){
  }el.append(list);
  el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Основные, связанные и побочные дела будут добавляться в общий архив по их постоянным идентификаторам. Пока доступны только записи дела №001.'));
 }
-function render(id){const runs=persistFinished();const box=$(id)?.querySelector('.campaign-content');if(!box)return;box.replaceChildren();if(id==='campaignDossiers')renderDossiers(box,runs);if(id==='campaignAchievements')renderAchievements(box,runs);if(id==='campaignHistory')renderHistory(box,runs)}
+function render(id){const runs=persistFinished();const box=$(id)?.querySelector('.campaign-content');if(!box)return;box.replaceChildren();if(id==='campaignDossiers')renderDossiers(box,runs);if(id==='campaignAchievements')renderAchievements(box,runs);if(id==='campaignHistory')renderHistory(box,runs);document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}))}
 function sync(){const runs=persistFinished();awards(runs,true);const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}
 const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(outcome,{childList:true,subtree:true});
 // Existing history is registered without retroactive celebrations on page load.
