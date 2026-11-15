@@ -1633,6 +1633,15 @@ def main():
                         assert "Принято решений:" in report.locator(
                             ".finale-subtitle").inner_text()
                         assert report.locator(".finale-metric").count() == 3
+                        compass=report.locator("#finaleCollectionCompass")
+                        assert compass.is_visible()
+                        assert compass.locator(".finale-collection-slot").count() == 2
+                        assert compass.locator(
+                            '.finale-collection-slot[data-kind="rewards"] .finale-collection-count'
+                        ).inner_text() == "1 / 35"
+                        assert compass.locator(
+                            '.finale-collection-slot[data-kind="achievements"] .finale-collection-count'
+                        ).inner_text().endswith("/ 18")
                         assert report.locator(".finale-new-reward").count() == 1, (
                             "First real completion must show one earned reward receipt"
                         )
@@ -1670,11 +1679,43 @@ def main():
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish, (
                             "Reading the final character dossier rewrote game progress"
                         )
+                        # Both permanent collections must be reachable from a
+                        # real ending and must return to the exact same live
+                        # report without a fresh attempt, save write or reload.
+                        for kind,archive_id in (
+                            ("achievements","caseAchievementArchive"),
+                            ("rewards","caseRewardArchive")
+                        ):
+                            report.locator(
+                                f'.finale-collection-open[data-collection="{kind}"]').click()
+                            assert link_page.locator("#launch").is_visible()
+                            assert link_page.locator("#game").is_hidden()
+                            assert link_page.locator("#collectionReturnBar").is_visible()
+                            assert link_page.locator(f"#{archive_id}").get_attribute(
+                                "open") is not None
+                            assert link_page.locator(f"#{archive_id} summary").evaluate(
+                                "(el) => document.activeElement === el"
+                            ), "Archive navigation must focus opened collection"
+                            assert link_page.evaluate("""() => localStorage.getItem(
+                                window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish
+                            assert link_page.locator(".collection-return-inline").count() == 1, (
+                                "A long earned collection must offer one bottom return"
+                            )
+                            link_page.locator(".collection-return-inline").click()
+                            assert link_page.locator("#finalePanel").evaluate(
+                                "(el) => document.activeElement === el"
+                            ), "Collection return must focus the real completed report"
+                            assert link_page.locator("#launch").is_hidden()
+                            assert link_page.evaluate("""() => localStorage.getItem(
+                                window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish
                         # Returning to the selection reveals only genuinely
                         # stored keys. Reload and resume cannot replay a new
                         # reward announcement for an already earned outcome.
                         link_page.locator("#backToLaunch").click()
                         assert link_page.locator("#launch").is_visible()
+                        assert link_page.locator("#collectionReturnBar").is_hidden(), (
+                            "Normal return to hero select must not leave a stale finale bookmark"
+                        )
                         assert link_page.locator("#caseRewardCount").inner_text() == "1"
                         earned_count=int(link_page.locator(
                             "#caseAchievementCount").inner_text().split("/")[0].strip())

@@ -106,6 +106,7 @@ let activeArtStage=null;
 let newRewardOnFinish=null; // First-ever earned key in this UI session only.
 let newAchievements=[]; // First-time persisted milestones of one committed action.
 let unlockToastDismissed=false; // Ephemeral notice only; never in game saves.
+let collectionReturnPoint=null; // In-memory completed-finale bookmark only.
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
  journalExpanded=false,navSection="scene";
@@ -163,6 +164,7 @@ function init(){
  $("begin").addEventListener("click",start);
  $("resume").addEventListener("click",resume);
  $("backToLaunch").addEventListener("click",returnToLaunch);
+ $("collectionReturnFromLaunch").addEventListener("click",returnFromCollection);
  // The stale-save receipt must offer an exit above the fixed mobile dock.
  $("noticeExit").addEventListener("click",returnToLaunch);
  $("noticeDismiss").addEventListener("click",()=>{
@@ -549,13 +551,48 @@ function showSelection({focus=false}={}){
  $("launch").hidden=false;
  $("app").dataset.screen="selection";
  refreshResume();
+ $("collectionReturnBar").hidden=!collectionReturnPoint;
  if(focus)selectedHeroButton()?.focus({preventScroll:true});
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
  hideNotice();dismissUnlockToast();
+ collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
  dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  $("game").hidden=true;showSelection({focus:true});
+}
+function openFinaleCollection(kind){
+ if(!engine||!engine.snapshot().finished)return;
+ const s=engine.snapshot();
+ collectionReturnPoint={hero:s.hero,attemptId:s.attemptId,node:s.node};
+ hideNotice();dismissUnlockToast();
+ $("game").hidden=true;
+ $("caseRewardArchive").open=false;
+ $("caseAchievementArchive").open=false;
+ showSelection();
+ const archive=kind==="achievements"?$("caseAchievementArchive"):$("caseRewardArchive");
+ archive.open=true;
+ const summary=archive.querySelector("summary");
+ summary.scrollIntoView({block:"start",behavior:"auto"});
+ summary.focus({preventScroll:true});
+}
+function returnFromCollection(){
+ const point=collectionReturnPoint;
+ collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
+ if(!point||!engine)return;
+ const s=engine.snapshot();
+ // Refuse an obsolete bookmark rather than open a different character's case.
+ if(!s.finished||s.hero!==point.hero||s.attemptId!==point.attemptId||
+    s.node!==point.node)return;
+ $("launch").hidden=true;$("game").hidden=false;
+ $("app").dataset.screen="game";
+ navSection="choices";refreshNavigation();
+ const report=$("finalePanel");
+ if(report){
+  report.setAttribute("tabindex","-1");
+  report.scrollIntoView({block:"start",behavior:"auto"});
+  report.focus({preventScroll:true});
+ }
 }
 /* Only actual draft keys are listed; no locked ending names, invented
  * achievements, duplicate awards or writes into Case 001 storage. */
@@ -596,7 +633,14 @@ function renderRewardArchive(){
   "Только действительно записанные комбинации «герой × концовка». Награды Дела №001 хранятся отдельно; повторный исход не даёт второй жетон.":
   "Здесь появятся уникальные награды после завершения Дела №002. Закрытые концовки не раскрываются.";
  root.append(make("p",note,"case-reward-note"));
- if(!items.length)return;
+ if(!items.length){
+  if(collectionReturnPoint){
+   const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
+   returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
+   root.append(returnButton);
+  }
+  return;
+ }
  const gallery=make("ul",undefined,"case-reward-gallery");
  for(const item of items){
   const row=make("li",undefined,"case-reward-entry");
@@ -611,6 +655,11 @@ function renderRewardArchive(){
   row.append(seal,copy);gallery.append(row);
  }
  root.append(gallery);
+ if(collectionReturnPoint){
+  const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
+  returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
+  root.append(returnButton);
+ }
 }
 /* Distinct from the 35 hero × ending seals. This archive only contains
  * 18 actual verified milestones, never a projected future character or route.
@@ -642,6 +691,11 @@ function renderAchievementArchive(){
   card.append(sigil,copy);listing.append(card);
  }
  root.append(listing);
+ if(collectionReturnPoint){
+  const returnButton=make("button","← ВЕРНУТЬСЯ К ИТОГУ","collection-return-inline");
+  returnButton.type="button";returnButton.addEventListener("click",returnFromCollection);
+  root.append(returnButton);
+ }
 }
 function renderAchievementReceipt(){
  const root=$("caseAchievementReceipt");
@@ -802,6 +856,7 @@ function beginGame(ignorePrior=false){
 }
 function start(){
  try{
+  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
   const hero=$("hero").value;
   if(store&&store.getItem(api.SAVE_PREFIX+hero)&&
      !window.confirm("Начать новую попытку? Текущее сохранение этого героя будет заменено, но история завершённых попыток останется."))return;
@@ -812,6 +867,7 @@ function start(){
 }
 function resume(){
  try{
+  collectionReturnPoint=null;$("collectionReturnBar").hidden=true;
   engine=beginGame(true);
   engine.load();
   showGame();
@@ -1429,6 +1485,38 @@ function renderEndingRecap(target,view){
  archive.append(checks);
  archive.append(make("small","Наличие ключа награды не означает повторную выдачу за уже полученную комбинацию «дело × герой × концовка».","finale-archive-note"));
  panel.append(archive);
+ // Read the existing archives without guessing which awards a run would
+ // have earned. The counts distinguish verified keys from unconfirmed ones.
+ const achievements=window.BirminghamCase002Achievements.read(store);
+ const rewards=caseRewardArchiveSnapshot();
+ const collection=make("section",undefined,"finale-collection-compass");
+ collection.id="finaleCollectionCompass";
+ collection.setAttribute("aria-label","Коллекции после завершения Дела №002");
+ collection.append(make("h5","Ваши открытия в архиве"));
+ collection.append(make("p","Полученные достижения и награды сохраняются отдельно от истории этого прохождения. Откройте коллекцию и вернитесь сюда одним нажатием.","finale-collection-note"));
+ for(const kind of ["achievements","rewards"]){
+  const snapshot=kind==="achievements"?achievements:rewards;
+  const count=kind==="achievements"?achievements.items.length:
+   rewards.items.filter(item=>item.verified).length;
+  const verified=snapshot.status==="ready";
+  const total=kind==="achievements"?
+   window.BirminghamCase002Achievements.catalog.length:
+   data.contract.heroes.length*data.contract.endings.length;
+  const slot=make("div",undefined,"finale-collection-slot");
+  slot.dataset.kind=kind;slot.dataset.status=snapshot.status;
+  slot.append(make("strong",verified?count+" / "+total:"АРХИВ НЕ ПОДТВЕРЖДЁН",
+   "finale-collection-count"));
+  slot.append(make("span",kind==="achievements"?"ДОСТИЖЕНИЯ":"НАГРАДЫ ЗА ИСХОДЫ",
+   "finale-collection-label"));
+  const open=make("button",kind==="achievements"?"ОТКРЫТЬ ДОСТИЖЕНИЯ ↗":
+   "ОТКРЫТЬ НАГРАДЫ ↗","finale-collection-open");
+  open.type="button";open.dataset.collection=kind;
+  open.setAttribute("aria-label",kind==="achievements"?
+   "Открыть коллекцию достижений Дела 002":"Открыть коллекцию наград Дела 002");
+  open.addEventListener("click",()=>openFinaleCollection(kind));
+  slot.append(open);collection.append(slot);
+ }
+ panel.append(collection);
  const actions=make("div",undefined,"finale-actions");
  const journalButton=make("button","ПРОСМОТРЕТЬ ХОД ДЕЛА","finale-action secondary");
  journalButton.type="button";

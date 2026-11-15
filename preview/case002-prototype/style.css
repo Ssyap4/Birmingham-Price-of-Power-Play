@@ -1452,3 +1452,59 @@ html[data-case002-telegram="true"] .tool-tab{
 @media(prefers-reduced-motion:reduce){
  #game .case-unlock-toast{animation:none!important;transform:translateX(-50%)}
 }
+
+/* Cycle 1 stage 13: trustworthy, reversible archive navigation. A finale
+ * report can open either earned-only shelf and come back without load/save.
+ * The return control appears only when launched from a committed ending. */
+#launch .collection-return-bar{margin:12px 0;padding:10px 11px;
+ display:grid;gap:7px;border:1px solid #aa875c;border-left:3px solid #e2bb82;
+ border-radius:6px;background:linear-gradient(125deg,#40301f,#201a14)}
+#launch .collection-return-bar[hidden]{display:none!important}
+#launch .collection-return-bar span{font:800 .65rem/1.3 system-ui,sans-serif;
+ color:#d9bb8b;letter-spacing:.08em}
+#launch .collection-return-bar button,
+#launch .collection-return-inline{display:block;width:100%;min-height:48px;
+ padding:10px 9px;border:1px solid #c09a62;border-radius:5px;
+ background:#3d2b1c;color:#fbe0b3;text-align:center;
+ font:800 .72rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#launch .collection-return-inline{margin-top:12px}
+#launch #caseRewardArchive,#launch #caseAchievementArchive{
+ scroll-margin-top:calc(18px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)))}
+#game .finale-collection-compass{margin:17px 0 12px;padding:13px 11px;
+ border:1px solid #97734c;border-top:2px solid #e0b87b;
+ border-radius:6px;background:linear-gradient(140deg,#3b2a1d,#211a14);
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#game .finale-collection-compass h5,#game .finale-collection-note{
+ grid-column:1/-1}
+#game .finale-collection-compass h5{margin:0;color:#f2d4aa;
+ font:700 1.1rem/1.3 Georgia,serif}
+#game .finale-collection-note{margin:0 0 2px!important;color:#d5bfa3;
+ font:.76rem/1.48 system-ui,sans-serif}
+#game .finale-collection-slot{display:grid;grid-template-rows:auto auto 1fr;
+ min-width:0;gap:7px;padding:10px 8px;border:1px solid #7c5b3b;
+ border-radius:5px;background:#251d17;align-content:start}
+#game .finale-collection-count{font:700 1.25rem/1.18 Georgia,serif;
+ color:#ffe0ab;overflow-wrap:anywhere}
+#game .finale-collection-slot[data-status="damaged"] .finale-collection-count,
+#game .finale-collection-slot[data-status="unavailable"] .finale-collection-count{
+ color:#efb59f;font-size:.77rem}
+#game .finale-collection-label{font:800 .67rem/1.35 system-ui,sans-serif;
+ letter-spacing:.02em;color:#d8bb97}
+#game .finale-collection-open{align-self:end;min-height:48px;width:100%;
+ padding:9px 6px;border:1px solid #b99461;
+ background:linear-gradient(150deg,#63472c,#37271c);
+ border-radius:4px;color:#ffe0af;text-align:center;
+ font:800 .69rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .finale-collection-open:focus-visible,
+#launch .collection-return-inline:focus-visible,
+#launch #collectionReturnFromLaunch:focus-visible{
+ outline:3px solid #ffe0a8;outline-offset:2px}
+#game #finalePanel:focus-visible{outline:2px solid #d6b281;outline-offset:3px}
+@media(max-width:359px){
+ #game .finale-collection-compass{gap:6px;padding:10px 7px}
+ #game .finale-collection-slot{padding:8px 6px;gap:6px}
+ #game .finale-collection-count{font-size:1.08rem}
+ #game .finale-collection-open{font-size:.63rem;padding:7px 5px}
+ #launch .collection-return-bar button,#launch .collection-return-inline{
+ font-size:.68rem}
+}
