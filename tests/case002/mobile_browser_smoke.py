@@ -958,6 +958,7 @@ def main():
                         assert "Люди без прошлого" in full_page.locator(".finale-title").inner_text()
                         assert full_page.locator(".finale-metric").count() == 3
                         assert full_page.locator(".finale-action").count() == 2
+                        assert "СТАТУС АРХИВА" in full_page.locator("#finaleArchive").inner_text()
                         assert full_page.locator('#quickNav [data-go="choices"]').inner_text() == "ИТОГ"
                         assert full_page.locator("button.choice").count() == 0
                         full_page.wait_for_function(
@@ -1067,6 +1068,7 @@ def main():
                             private_page.locator("#finaleArchive").inner_text()
                         ), "Private mode must not promise a persisted completion"
                         assert private_page.locator("#finalePanel").is_visible()
+                        assert "сохранено" not in private_page.locator("#choicesHint").inner_text().lower()
                         private_ctx.close()
                         print(
                             "PASS chromium: full Case 002 mobile route, earned-only endings, "

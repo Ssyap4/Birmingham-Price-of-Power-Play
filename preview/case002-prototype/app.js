@@ -481,7 +481,7 @@ function render(){
  const v=engine.view(),s=v.state,scene=v.scene;
  $("game").dataset.completed=String(Boolean(s.finished));
  setText($("choicesHeading"),s.finished?"Итог расследования":"Ваше решение");
- setText($("choicesHint"),s.finished?"Ваше прохождение сохранено отдельно от других героев.":"Каждый выбор имеет последствия");
+ setText($("choicesHint"),s.finished?"Здесь показан исход этой попытки.":"Каждый выбор имеет последствия");
  const dockChoice=document.querySelector('#quickNav [data-go="choices"]');
  if(dockChoice)setText(dockChoice,s.finished?"ИТОГ":"РЕШЕНИЕ");
  setText($("pulseEvidence"),"Улик: "+s.evidence.length);
@@ -596,7 +596,7 @@ function renderEndingRecap(target,view){
  const archive=make("div",undefined,"finale-archive");
  archive.id="finaleArchive";
  archive.setAttribute("role","status");
- archive.append(make("span","ЗАПИСЬ В АРХИВЕ","finale-archive-kicker"));
+ archive.append(make("span","СТАТУС АРХИВА","finale-archive-kicker"));
  archive.append(make("p",completionMessage(view.state)));
  panel.append(archive);
  const actions=make("div",undefined,"finale-actions");

@@ -69,3 +69,5 @@ jobs:
           path: case002-qa-screens/
           if-no-files-found: ignore
           retention-days: 7
+
+# Finale archive text is neutral on iOS privacy mode: never claim persistence without storage.
