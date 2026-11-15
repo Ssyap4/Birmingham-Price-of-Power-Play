@@ -105,6 +105,7 @@ let activeNoticeSummary="",activeNoticeDetails=null;
 let activeArtStage=null;
 let newRewardOnFinish=null; // First-ever earned key in this UI session only.
 let newAchievements=[]; // First-time persisted milestones of one committed action.
+let unlockToastDismissed=false; // Ephemeral notice only; never in game saves.
 // Presentation-only state: never written to the game engine or the awards archive.
 let unseenEvidence=0,pendingEvidence=[],pendingWitnesses=[],pendingProofs=[],
  journalExpanded=false,navSection="scene";
@@ -552,7 +553,8 @@ function showSelection({focus=false}={}){
  window.scrollTo(0,0);
 }
 function returnToLaunch(){
- hideNotice();dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
+ hideNotice();dismissUnlockToast();
+ dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  $("game").hidden=true;showSelection({focus:true});
 }
 /* Only actual draft keys are listed; no locked ending names, invented
@@ -659,9 +661,74 @@ function renderAchievementReceipt(){
  dismiss.type="button";
  dismiss.addEventListener("click",()=>{
   newAchievements=[];root.hidden=true;root.replaceChildren();
+  dismissUnlockToast();
   $("storyPanel").focus({preventScroll:true});
  });
  root.append(dismiss);
+}
+/* A visible-on-arrival, nonmodal ceremony for genuinely earned keys.
+ * The durable scene/finale receipt remains available after dismissal.
+ * No engine or localStorage writes happen in these presentation functions.
+ */
+function dismissUnlockToast(){
+ unlockToastDismissed=true;
+ const toast=$("caseUnlockToast");
+ if(toast){toast.hidden=true;toast.dataset.token="";}
+}
+function renderUnlockToast(){
+ const toast=$("caseUnlockToast");
+ if(!toast||!engine)return;
+ const s=engine.snapshot();
+ const hasAchievement=newAchievements.length>0;
+ const rewardKey="002:"+s.hero+":"+s.ending;
+ const hasReward=Boolean(s.finished&&newRewardOnFinish===rewardKey&&
+  completionArchiveStatus(s).status==="verified");
+ if(unlockToastDismissed||(!hasAchievement&&!hasReward)){
+  toast.hidden=true;toast.dataset.token="";toast.replaceChildren();
+  return;
+ }
+ const token=s.attemptId+"|"+s.node+"|"+newAchievements.map(a=>a.id).join(",")+
+  "|"+(hasReward?rewardKey:"");
+ if(!toast.hidden&&toast.dataset.token===token)return;
+ const count=newAchievements.length;
+ const kicker=hasReward&&hasAchievement?"✦ ДОСТИЖЕНИЯ И НАГРАДА":
+  hasReward?"✦ НОВАЯ УНИКАЛЬНАЯ НАГРАДА":
+  count===1?"✦ ОТКРЫТО ДОСТИЖЕНИЕ":"✦ НОВЫЕ ДОСТИЖЕНИЯ · "+count;
+ const name=hasAchievement?newAchievements[0].name:
+  data.contract.endings.find(ending=>ending.id===s.ending)?.title||"Новый исход";
+ const note=hasReward&&hasAchievement?
+  (count>1?"Ещё "+(count-1)+" достижений. ":"")+"Получена также уникальная награда за эту концовку.":
+  hasReward?"Исход впервые зарегистрирован в коллекции наград Дела №002.":
+  count>1?"Ещё "+(count-1)+" достижений. Все открытия сохранены.":"Открытие сохранено в коллекции достижений.";
+ toast.replaceChildren();
+ const seal=make("span","✦","case-unlock-toast-seal");
+ seal.setAttribute("aria-hidden","true");
+ const copy=make("div",undefined,"case-unlock-toast-copy");
+ copy.append(make("small",kicker,"case-unlock-toast-kicker"),
+  make("strong",name,"case-unlock-toast-name"),
+  make("span",note,"case-unlock-toast-note"));
+ const controls=make("div",undefined,"case-unlock-toast-actions");
+ const details=make("button","ПОСМОТРЕТЬ ↗","case-unlock-toast-details");
+ details.type="button";
+ details.setAttribute("aria-label","Посмотреть подробности нового открытия");
+ details.addEventListener("click",()=>{
+  const target=hasAchievement?$("caseAchievementReceipt"):
+   document.querySelector("#finalePanel .finale-new-reward");
+  dismissUnlockToast();
+  if(target&&!target.hidden){
+   target.setAttribute("tabindex","-1");
+   target.scrollIntoView({block:"center",behavior:"auto"});
+   target.focus({preventScroll:true});
+  }
+ });
+ const close=make("button","ПОНЯТНО","case-unlock-toast-close");
+ close.type="button";
+ close.setAttribute("aria-label","Закрыть уведомление, сохранив награду в коллекции");
+ close.addEventListener("click",dismissUnlockToast);
+ controls.append(details,close);
+ toast.append(seal,copy,controls);
+ toast.dataset.token=token;
+ toast.hidden=false;
 }
 function grantCommittedAchievements(){
  const award=window.BirminghamCase002Achievements;
@@ -771,6 +838,8 @@ function showGame(){
  lastDecisionReceipt=null;dossierReturnPoint=null;sceneReturnPoint=null;dossierTrail=null;
  newRewardOnFinish=null; // Never replay a first-time reward upon resume/reload.
  newAchievements=[]; // A loaded milestone is not a new pop-up.
+ unlockToastDismissed=true; // Resume cannot replay a first-time ceremony.
+ $("caseUnlockToast").hidden=true;$("caseUnlockToast").dataset.token="";
  refreshNavigation();
  render();
  showCurrentScene();
@@ -1244,6 +1313,7 @@ function render(){
  renderReadingBridge(v);
  renderDecisionReceipt();
  renderSceneUpdateGroup();
+ renderUnlockToast(); // Scene and finale detail targets already exist.
 }
 // The finale is a read-only view over the already committed Case 002 state.
 // It never unlocks a second ending, changes a saved slot, or awards a reward.
@@ -1842,6 +1912,7 @@ function select(choice,fromScene){
   // The committed transition is the ONLY source of newly granted achievements.
   // A storage failure cannot invalidate or replay the already saved action.
   newAchievements=grantCommittedAchievements();
+  unlockToastDismissed=false; // A committed action may reveal new keys.
   recordNewDossierChanges(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
@@ -1865,6 +1936,7 @@ function select(choice,fromScene){
   const committed=current.history.length>before.history.length;
   if(committed){
    newRewardOnFinish=null;newAchievements=[]; // No false reward on archive errors.
+   unlockToastDismissed=true;
    recordNewDossierChanges(before,current);
    lastDecisionReceipt=null;
    render();

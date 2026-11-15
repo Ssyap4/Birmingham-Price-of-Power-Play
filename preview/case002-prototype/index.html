@@ -85,6 +85,9 @@
         <button id="noticeDismiss" type="button" class="notice-close">ПОНЯТНО</button>
       </div>
     </div>
+    <aside id="caseUnlockToast" class="case-unlock-toast"
+      role="status" aria-live="polite" aria-atomic="true"
+      aria-label="Новая награда или достижение" hidden></aside>
     <div class="case-pulse" id="casePulse" aria-label="Состояние расследования">
       <span id="pulseEvidence">Улик: 0</span>
       <span id="pulseProof">Выводов: 0</span>
@@ -97,7 +100,7 @@
       </div>
       <div id="sceneLocation" class="scene-location"></div>
       <section id="caseAchievementReceipt" class="case-achievement-receipt"
-        aria-label="Новые достижения" aria-live="polite" hidden></section>
+        aria-label="Новые достижения" tabindex="-1" hidden></section>
       <div class="story-read-action"><button id="readScene" class="story-read-button" type="button">К ТЕКСТУ СЦЕНЫ ↓</button></div>
       <figure id="sceneArtwork" class="scene-artwork" hidden>
         <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">

@@ -1389,3 +1389,66 @@ html[data-case002-telegram="true"] .tool-tab{
  #launch .case-achievement-copy small{font-size:.63rem}
  #launch .case-achievement-archive>summary{font-size:.67rem;padding:10px 8px}
 }
+
+/* Cycle 1 stage 12: single visible-on-arrival, nonmodal unlock flyout.
+   It is fixed at the safe top; existing evidence receipts remain at bottom
+   above the navigation. No timer: a player must not silently miss a reward. */
+#game .case-unlock-toast{
+ position:fixed;z-index:15;
+ top:calc(9px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)));
+ left:50%;
+ width:min(480px,calc(100% - 24px - var(--case002-safe-left) - var(--case002-safe-right)));
+ max-height:min(30dvh,220px);overflow-y:auto;overscroll-behavior:contain;
+ display:grid;grid-template-columns:42px minmax(0,1fr);
+ grid-template-rows:auto auto;align-items:center;column-gap:10px;row-gap:7px;
+ padding:12px 12px 10px;border:1px solid #f5ce90;border-left:4px solid #ffda91;
+ border-radius:9px;background:linear-gradient(125deg,#594025,#2b2119 76%);
+ color:#fce5c3;box-shadow:0 5px 12px #000b,0 20px 54px #000a;
+ pointer-events:none;
+ animation:case002-unlock-fly-in .34s cubic-bezier(.17,.75,.3,1) both;
+}
+#game .case-unlock-toast[hidden]{display:none!important}
+#game .case-unlock-toast-seal{display:grid;place-items:center;
+ width:42px;height:42px;border:2px solid #ffdb9f;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#aa7a43,#49321e);
+ color:#fff0c7;box-shadow:inset 0 0 0 3px #6b4825;
+ font:700 1.45rem/1 Georgia,serif}
+#game .case-unlock-toast-copy{display:grid;min-width:0;gap:4px;overflow-wrap:anywhere}
+#game .case-unlock-toast-kicker{color:#ffde9e;letter-spacing:.045em;
+ font:800 .64rem/1.34 system-ui,sans-serif}
+#game .case-unlock-toast-name{color:#fff0d1;
+ font:700 1.05rem/1.19 Georgia,serif;text-wrap:balance}
+#game .case-unlock-toast-note{color:#ecd0a9;
+ font:.72rem/1.35 system-ui,sans-serif}
+#game .case-unlock-toast-actions{display:grid;grid-template-columns:1fr 1fr;
+ gap:7px;grid-column:1/-1}
+#game .case-unlock-toast-actions button{min-width:0;min-height:44px;
+ padding:8px 6px;border-radius:5px;overflow-wrap:anywhere;
+ font:800 .70rem/1.26 system-ui,sans-serif;pointer-events:auto}
+#game .case-unlock-toast-details{background:#e8bf7f;color:#2c1c0f;border:1px solid #ffe2ae}
+#game .case-unlock-toast-close{background:#3a2b20;color:#ffe2b8;border:1px solid #a78455}
+#game .case-unlock-toast-actions button:focus-visible{
+ outline:3px solid #fff2cb;outline-offset:2px}
+#game .case-achievement-receipt:focus-visible,
+#game .finale-new-reward:focus-visible{
+ outline:3px solid #f4d3a4;outline-offset:3px}
+#game .case-achievement-receipt,
+#game .finale-new-reward{
+ scroll-margin-top:calc(18px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)))}
+@keyframes case002-unlock-fly-in{
+ from{opacity:0;transform:translate(-50%,-22px) scale(.97)}
+ to{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+@media(max-width:359px){
+ #game .case-unlock-toast{grid-template-columns:35px minmax(0,1fr);
+  column-gap:7px;padding:8px 9px 7px;row-gap:5px;
+  max-height:min(32dvh,190px)}
+ #game .case-unlock-toast-seal{width:35px;height:35px;font-size:1.2rem}
+ #game .case-unlock-toast-name{font-size:.94rem}
+ #game .case-unlock-toast-note{font-size:.67rem}
+ #game .case-unlock-toast-kicker{font-size:.60rem}
+ #game .case-unlock-toast-actions button{font-size:.68rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .case-unlock-toast{animation:none!important;transform:translateX(-50%)}
+}
