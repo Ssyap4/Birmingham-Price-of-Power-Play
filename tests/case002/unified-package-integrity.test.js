@@ -58,6 +58,17 @@ const case2App=fs.readFileSync(entry("preview/case002-prototype/app.js"),"utf8")
 assert(!case2App.includes("зарегистрированы в черновом архиве")&&
  case2App.includes("подтверждены в локальном архиве"),
  "A verified finale must give accurate player-facing release terminology");
+const briefing=fs.readFileSync(entry("case001-briefing-v1.js"),"utf8");
+assert(briefing.includes("закрытие страницы не сбрасывает попытку")&&
+ !briefing.includes("выход из игры во время незавершённого дела сбрасывает"),
+ "Case 001 rules must not lie about losing an autosaved case");
+const board=fs.readFileSync(entry("case-v33-inventory.js"),"utf8");
+assert(board.includes("function dismissResult()")&&
+ board.includes("shade.querySelector('.v33-result-layer')?.remove()"),
+ "Result dismissal must clean stale overlays before reopening evidence");
+assert(case2App.includes("function readResumeSlot(hero)")&&
+ case2App.includes("badge.textContent=canResume"),
+ "Case 002 hero selection must reject damaged saves before offering resume");
 assert(second.includes("Материалы ближнего круга")&&
  second.includes("не изменяет историю №001"),
  "Case 002 masthead and briefing must match connected campaign");
