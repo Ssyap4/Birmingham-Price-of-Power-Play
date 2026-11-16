@@ -60,6 +60,31 @@ def run():
                     page.locator("#districtsCard").click()
                     assert page.locator("#districts").is_visible()
                     assert page.locator(".map-pin").count()==5
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
+                    assert page.locator("#launchFirstCase").is_visible()
+                    assert page.locator("#launchSecondCase").is_hidden()
+                    for locked_district in ("aston","centre","jewellery"):
+                        page.locator(f'.map-pin[data-district="{locked_district}"]').click()
+                        assert page.locator(".district-case-label").inner_text()==(
+                            "ИЗ АРХИВА БУДУЩИХ ДЕЛ")
+                        assert page.locator(".district-locked").is_visible()
+                        assert page.locator("#launchSecondCase").is_hidden()
+                        assert page.locator("#launchFirstCase").is_hidden()
+                    page.locator('.map-pin[data-district="digbeth"]').click()
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №002 · ДОСТУПНО")
+                    # Leaving and reopening the district map used to preserve
+                    # an obsolete Digbeth label while resetting to Small Heath.
+                    page.locator("#districtBack").click()
+                    assert page.locator("#home").is_visible()
+                    page.locator("#districtsCard").click()
+                    assert page.locator('.map-pin[data-district="small-heath"]').get_attribute(
+                        "aria-pressed")=="true"
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
+                    assert page.locator("#launchSecondCase").is_hidden()
+                    assert page.locator("#launchFirstCase").is_visible()
                     page.locator('.map-pin[data-district="digbeth"]').click()
                     assert page.locator("#launchSecondCase").is_visible()
                     assert page.locator("#launchFirstCase").is_hidden()
@@ -106,6 +131,8 @@ def run():
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator('.map-pin[data-district="small-heath"]').click()
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
                     assert page.locator("#launchFirstCase").is_visible()
                     assert page.locator("#launchSecondCase").is_hidden()
                     page.locator("#launchFirstCase").click()

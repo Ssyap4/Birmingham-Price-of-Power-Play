@@ -17,18 +17,23 @@
  launch.after(future);
  const label=document.querySelector(".district-case-label");
  function refresh(){
-   const digbeth=selected()==="digbeth";
+   const district=selected();
+   const digbeth=district==="digbeth",smallHeath=district==="small-heath";
    launch.hidden=!digbeth;future.hidden=!digbeth;
-   // Case 001 retains its original launch button and its independent save.
-   locked.hidden=selected()==="small-heath"||digbeth;
+   // Never mark Small Heath as a future case: Case 001 is available here.
+   locked.hidden=smallHeath||digbeth;
    if(digbeth){
      document.getElementById("districtCase").textContent="Последний поезд из Бирмингема";
      document.getElementById("districtCaseDescription").textContent=
        "На железнодорожных путях исчезает вагон F-4182. За двумя поддельными ведомостями скрываются жизни свидетелей.";
    }
-   if(label)label.textContent=digbeth?"ДЕЛО №002 · ДОСТУПНО":"ИЗ АРХИВА БУДУЩИХ ДЕЛ";
+   if(label)label.textContent=digbeth?"ДЕЛО №002 · ДОСТУПНО":
+    smallHeath?"ДЕЛО №001 · ДОСТУПНО":"ИЗ АРХИВА БУДУЩИХ ДЕЛ";
  }
  document.querySelectorAll(".map-pin").forEach(pin=>pin.addEventListener("click",refresh));
+ // The original map's 'open' handler selects Small Heath programmatically.
+ // It does not emit a pin click: synchronize our case buttons on re-entry.
+ document.getElementById("districtsCard")?.addEventListener("click",refresh);
  function openHash(){
    if(window.location.hash!=="#district-digbeth")return;
    document.getElementById("districtsCard")?.click();
