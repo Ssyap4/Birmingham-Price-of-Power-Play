@@ -346,6 +346,22 @@ def run():
                     assert page.evaluate("""() => document.activeElement.id""")==(
                         "campaignHerofinn"
                     )
+                    assert page.locator(
+                        "#campaignDossiers .campaign-002-back-to-heroes").count()==5
+                    page.set_viewport_size({"width":320,"height":790})
+                    assert hero_jumps.locator("button").first.evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=13
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-metric small").first.evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=12
+                    hero_jumps.locator('[data-jump-to="campaignHerosamuel"]').click()
+                    page.locator(
+                        "#campaignHerosamuel .campaign-002-back-to-heroes").click()
+                    assert page.evaluate(
+                        "() => document.activeElement.dataset.jumpTo")=="campaignHerojack"
+                    assert not page.evaluate(
+                        "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     assert "В работе: «Гостья под дождём»" in page.locator(
                         "#campaignDossiers .campaign-card").first.inner_text()
                     assert "Продолжается: P02" not in page.locator(
