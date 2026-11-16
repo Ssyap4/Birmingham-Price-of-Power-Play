@@ -191,6 +191,9 @@ def run():
                                     final["status"] == "finished"
                                     and final["terminalId"] == proof["terminalId"]
                                 )
+                                # Ending has a story-specific afterword, grounded in saved flags.
+                                assert page.locator(".cr-epilogue-card").count() >= 1
+                                assert page.locator(".cr-epilogue h2").inner_text() == "После этой ночи"
                                 # The first confirmed ending raises a one-time toast.
                                 assert page.locator(".cr-reward-toast").is_visible()
                                 assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
@@ -213,6 +216,7 @@ def run():
                                     == count
                                 )
                                 assert page.locator(".cr-result").is_visible()
+                                assert page.locator(".cr-epilogue-card").count() >= 1
                                 # Reopening a persisted final must never announce a duplicate award.
                                 assert not page.locator(".cr-reward-toast").count()
                                 bounds(page)
@@ -238,6 +242,9 @@ def run():
                             "10 завершённых попыток"
                             in page.locator("#criminalScreen").inner_text()
                         )
+                        assert page.locator(".cr-epilogue-compact").count() >= 10
+                        touch(page, ".cr-epilogue-compact summary")
+                        assert page.locator(".cr-epilogue-compact[open]").count() == 1
                         page.screenshot(
                             path=str(OUT / (name + "-chronicle.png")), full_page=True
                         )
