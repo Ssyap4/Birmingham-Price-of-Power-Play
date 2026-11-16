@@ -54,3 +54,10 @@ jobs:
           name: criminal-v2-acceptance
           path: work/criminal/
           retention-days: 14
+      - name: Keep the reviewed unified offline package without publishing it
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: criminal-v2-unified-package
+          path: campaign-unified-dist/
+          retention-days: 14

@@ -255,6 +255,8 @@
     s.revision++;
     s.history.push({ revision: s.revision, from, choiceId });
     if (s.hp === 0) finish(s, "dead");
+    else if (Object.hasOwn(s.stats, "witness") && s.stats.witness === 0)
+      finish(s, "withdraw");
     else if (to === "@deliver" || to === "@withdraw") finish(s, to.slice(1));
     else {
       if (!C.missions[s.missionId].scenes[to]) throw Error("Нет сцены " + to);

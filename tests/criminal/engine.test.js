@@ -620,3 +620,36 @@ test("a no-roll escape warns when its direct HP cost would kill an already wound
   assert.equal(next.hp, 0);
   assert.equal(next.terminalId, "dead");
 });
+test("the witness at zero ends CR04 immediately: no later dialogue, evacuation or revival", () => {
+  let proof;
+  for (let seed = 0; seed < 3000 && !proof; seed++) {
+    const s = walk("CR04", seed, [
+      "arrive",
+      "medical",
+      "command",
+      "trustCall",
+      "retreat",
+      "wait",
+      "ammo",
+      "heal",
+      "none",
+      "pay",
+      "back",
+    ]);
+    if (
+      s &&
+      s.stats.witness === 0 &&
+      s.hp > 0 &&
+      s.lastEvent.choiceId === "back"
+    )
+      proof = s;
+  }
+  assert.ok(proof);
+  assert.equal(proof.status, "finished");
+  assert.equal(proof.sceneId, "end:failed");
+  assert.equal(proof.terminalId, "failed");
+  assert.equal(proof.objective, false);
+  assert.equal(E.availability(proof, "heal"), false);
+  assert.throws(() => E.choose(proof, "persuade", proof.revision));
+  assert.ok(E.validateState(proof).ok);
+});
