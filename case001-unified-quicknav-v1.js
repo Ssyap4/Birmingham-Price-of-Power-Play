@@ -57,7 +57,7 @@
  function explainLockedChoices(){
   for(const choice of choices.querySelectorAll(".case-choice:disabled[title]")){
    const reason=choice.getAttribute("title")?.trim();
-   if(!reason||choice.dataset.case001GateHint===reason)continue;
+   if(!reason?.startsWith("Нужна улика:")||choice.dataset.case001GateHint===reason)continue;
    choice.dataset.case001GateHint=reason;
    const label=choice.textContent.replace(/\s*·\s*нужна улика$/u,"").trim();
    if(label!==choice.textContent)choice.textContent=label;
