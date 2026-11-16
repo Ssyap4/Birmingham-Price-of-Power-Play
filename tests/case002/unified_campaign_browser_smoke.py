@@ -241,6 +241,18 @@ def run():
                         assert abs(dim["w"]/dim["h"]-dim["nw"]/dim["nh"])<.025
                         assert page.locator("#caseScene").bounding_box()["height"]>=320
                         assert page.locator("#caseScene .case001-read-scene").is_visible()
+                        # Unified iPhone thumb navigation, fixed to the real
+                        # viewport rather than the animated case screen.
+                        nav=page.locator("#case001QuickNav")
+                        assert nav.is_visible()
+                        assert nav.locator("button").count()==4
+                        assert nav.evaluate(
+                            "el => getComputedStyle(el).position")=="fixed"
+                        nav_rect=nav.bounding_box()
+                        assert 0<=nav_rect["y"] and nav_rect["y"]+nav_rect["height"]<=791
+                        assert page.locator(
+                            "#caseGame .case001-inline-evidence").evaluate(
+                                "el => !el.open"),name+" inline clues must be folded"
                         # The chosen hero and title must precede the scene art,
                         # exactly as in Case 002. Approved wide art stays intact.
                         title_box=page.locator(
@@ -287,6 +299,34 @@ def run():
                     case1=page.evaluate("""() => localStorage.getItem(
                         'birmingham_case_smol_heath_v1_jack')""")
                     assert case1, "The original Case 001 must create its own save"
+                    nav=page.locator("#case001QuickNav")
+                    # Validate real reading jumps and both existing tools.
+                    nav.locator('[data-go="choices"]').click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [aria-current]')
+                          ?.dataset.go==='choices' &&
+                        document.querySelector('#caseChoices')
+                          ?.getBoundingClientRect().top<210
+                    """)
+                    nav.locator('[data-go="scene"]').click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [aria-current]')
+                          ?.dataset.go==='scene' &&
+                        document.querySelector('#caseScene')
+                          ?.getBoundingClientRect().top<210
+                    """)
+                    nav.locator('[data-go="evidence"]').click()
+                    quick_shade=page.locator("#caseGame .v33-shade")
+                    assert quick_shade.is_visible()
+                    assert quick_shade.get_attribute("data-mode")=="inventory"
+                    assert nav.is_hidden()
+                    page.locator(".v33-close").click()
+                    assert nav.is_visible()
+                    nav.locator('[data-go="deduction"]').click()
+                    assert quick_shade.is_visible()
+                    assert quick_shade.get_attribute("data-mode")=="deduction"
+                    page.locator(".v33-close").click()
+                    assert nav.is_visible()
                     # Keep the Case 001 inventory in the physical phone
                     # viewport. A finished screen-entry transform used to turn
                     # this fixed overlay into a multi-thousand-pixel panel.
@@ -380,6 +420,7 @@ def run():
                         'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator("#caseBack").click()
                     assert page.locator("#districts").is_visible()
+                    assert page.locator("#case001QuickNav").is_hidden()
                     page.locator('.map-pin[data-district="digbeth"]').click()
                     page.locator("#launchSecondCase").click()
                     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
