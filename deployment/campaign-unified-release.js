@@ -114,6 +114,8 @@ for(const npc of approved.npcPortraits){
 }
 for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
+for(const name of fs.readdirSync(path.join(ROOT,"src/criminal")))
+ if(name.endsWith(".js"))copy("src/criminal/"+name);
 for(const name of ["index.html","style.css","app.js"])
  copy("preview/case002-prototype/"+name);
 let references=0;
