@@ -62,6 +62,21 @@ test("personal fates are conditional on actual completed flags, never a generic 
   }
 });
 
+test("different outcomes retain the actual cost rather than inheriting a clean epilogue", () => {
+  const proof = evidence.missions.CR05.terminalProofs;
+  const clean = replay("CR05", proof.clean);
+  const costly = replay("CR05", proof.costly);
+  assert.equal(clean.flags.exposed, undefined);
+  assert.equal(costly.flags.exposed, true);
+  assert.ok(epilogues.describe(costly).some(c => c.title === "Рейс замечен"));
+  assert.ok(!epilogues.describe(clean).some(c => c.title === "Рейс замечен"));
+  assert.notDeepEqual(epilogues.describe(clean), epilogues.describe(costly));
+
+  const jack = replay("CR01", evidence.missions.CR01.terminalProofs.costly);
+  assert.equal(jack.flags.violence, true);
+  assert.ok(epilogues.describe(jack).some(c => c.title === "Цена силы"));
+});
+
 test("active or unrelated game state does not produce criminal epilogues", () => {
   const s = E.create("CR01", 1, "unsaved_intro_01", 1);
   assert.deepEqual(epilogues.describe(s), []);
