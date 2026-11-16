@@ -36,6 +36,16 @@ assert(second.includes('id="case002SharedArchiveLink"')&&second.includes(
  '../../index.html#campaignAchievements'),
  "Case 002 needs a direct same-origin shared achievement link");
 const globalArchive=fs.readFileSync(entry("campaign-case002-archive-v1.js"),"utf8");
+assert(globalArchive.includes('unlocked?a.name:"НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ"')&&
+ globalArchive.includes("Условие откроется после получения."),
+ "Locked achievements must not spoil unearned plot revelations");
+const case2App=fs.readFileSync(entry("preview/case002-prototype/app.js"),"utf8");
+assert(!case2App.includes("зарегистрированы в черновом архиве")&&
+ case2App.includes("подтверждены в локальном архиве"),
+ "A verified finale must give accurate player-facing release terminology");
+assert(second.includes("Материалы ближнего круга")&&
+ second.includes("не изменяет историю №001"),
+ "Case 002 masthead and briefing must match connected campaign");
 assert(globalArchive.includes("campaign-002-to-digbeth")&&
  globalArchive.includes('back.href="#district-digbeth"'),
  "Shared archive must offer a direct Digbeth return");

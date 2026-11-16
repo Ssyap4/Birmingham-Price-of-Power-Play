@@ -84,8 +84,10 @@ function snapshot(store,contract,engine,achievements,graph){
    const raw=store.getItem(engine.SAVE_PREFIX+hero);
    if(raw===null){saves[hero]={status:"empty"};continue;}
    const state=JSON.parse(raw);
-   saves[hero]=validSave(state,hero,contract,nodes)?
-    {status:"ready",node:state.node,finished:state.finished,
+   const stage=graph.nodes.find(scene=>scene.id===state.node);
+  saves[hero]=validSave(state,hero,contract,nodes)?
+    {status:"ready",node:state.node,sceneTitle:stage?.title||"Текущая сцена",
+     sceneChapter:stage?.chapter||null,finished:state.finished,
      ending:state.ending,evidence:state.evidence.length}:
     {status:"damaged"};
   }catch(_){saves[hero]={status:"damaged"};}
@@ -167,7 +169,7 @@ function renderDossiers(doc,box,archive,heroes){
   if(saved?.status==="ready"){
    if(!saved.finished){
     appendText(doc,body,"p","campaign-002-progress",
-     "Продолжается: "+saved.node+" · улик: "+saved.evidence);
+     "В работе: «"+saved.sceneTitle+"» · улик: "+saved.evidence);
    }else if(!complete.some(r=>r.ending===saved.ending)){
     appendText(doc,body,"p","campaign-002-alert",
      "Завершённая попытка ожидает записи в архив.");
@@ -251,8 +253,10 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
   card.dataset.unlocked=String(unlocked);
   appendText(doc,card,"span","campaign-medal",unlocked?"✦":"◇");
   const info=make(doc,"div");
-  appendText(doc,info,"strong","",a.name);
-  appendText(doc,info,"p","",a.description);
+  // Mirror the in-case collection: locked outcomes must not reveal spoilers.
+  appendText(doc,info,"strong","",unlocked?a.name:"НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ");
+  appendText(doc,info,"p","",unlocked?a.description:
+   "Условие откроется после получения.");
   appendText(doc,info,"small","",unlocked?"ОТКРЫТО · №002":"ЕЩЁ НЕ ОТКРЫТО");
   card.append(info);grid.append(card);
  }

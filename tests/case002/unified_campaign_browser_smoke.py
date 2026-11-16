@@ -279,6 +279,23 @@ def run():
                     assert archive.locator(".campaign-002-achievement").count()==18
                     assert archive.locator('.campaign-002-achievement[data-unlocked="true"]').count()==2
                     assert archive.locator(".campaign-002-reward-group").count()==5
+                    # In-case and shared archives must enforce the SAME
+                    # no-spoiler contract for unopened milestone conditions.
+                    assert archive.locator(
+                       '.campaign-002-achievement[data-unlocked="false"]').count()==16
+                    locked=archive.locator(
+                       '.campaign-002-achievement[data-unlocked="false"]')
+                    assert locked.locator("strong").first.inner_text()==(
+                        "НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ")
+                    assert locked.locator("p").first.inner_text()==(
+                        "Условие откроется после получения.")
+                    assert "Доказать убийство Эдварда Хейла" not in (
+                        locked.inner_text())
+                    earned=archive.locator(
+                       '.campaign-002-achievement[data-achievement-id="two-tracks"]')
+                    assert earned.locator("strong").inner_text()=="Два следа на карте"
+                    assert earned.locator("p").inner_text()==(
+                       "Исследовать два независимых маршрута.")
                     assert archive.locator('.campaign-reward-card[data-verified="true"]').count()==2
                     assert "2 / 35" in archive.locator(".campaign-intro").first.inner_text()
                     assert "Ключей наград без подтверждённого прохождения: 1" in archive.inner_text()
@@ -310,7 +327,9 @@ def run():
                     assert page.evaluate("""() => document.activeElement.id""")==(
                         "campaignHerofinn"
                     )
-                    assert "Продолжается: P02" in page.locator(
+                    assert "В работе: «Гостья под дождём»" in page.locator(
+                        "#campaignDossiers .campaign-card").first.inner_text()
+                    assert "Продолжается: P02" not in page.locator(
                         "#campaignDossiers .campaign-card").first.inner_text()
                     assert page.locator(
                         '#campaignDossiers .campaign-tags.campaign-002-tags span[data-unlocked="true"]').count()==3

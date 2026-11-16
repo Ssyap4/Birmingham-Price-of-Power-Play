@@ -55,6 +55,9 @@ assert.equal(view.withoutSeals,0);
 assert.equal(view.earned.status,"ready");
 assert.equal(view.earned.items.length,18);
 assert.equal(view.saves.jack.node,"P02");
+assert.equal(view.saves.jack.sceneTitle,"Гостья под дождём",
+ "Never display a raw internal node identifier in player-facing dossiers");
+assert.equal(view.saves.jack.sceneChapter,"P");
 assert.equal(view.saves.finn.status,"empty");
 assert.equal(JSON.stringify(s.dump()),before);
 assert.equal(s.writes,0);

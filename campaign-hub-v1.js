@@ -69,7 +69,7 @@ const profile=$('profile');if(profile){const link=document.createElement('div');
 function make(tag,cls,txt){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el}
 function stat(run){return ENDINGS[run.ending]||run.ending}
 function renderDossiers(el,runs){
- const intro=make('p','campaign-intro','За каждым детективом сохраняется отдельный путь в каждом деле. Повторное получение уже открытой концовки не создаёт новую награду.');el.append(intro);
+ const intro=make('p','campaign-intro','Каждый из пяти людей ближнего круга проходит собственный путь. Повтор уже открытой концовки не приносит новую награду.');el.append(intro);
  const grid=make('div','campaign-grid');
  for(const hero of HEROES()){
   const own=runs.filter(x=>x.heroId===hero.id&&x.caseId===CASE_ID), s=state(hero.id);
@@ -176,7 +176,7 @@ function renderUniqueRewards(el,runs){
 }
 function renderAchievements(el,runs){
  const a=awards(runs),n=Object.keys(a).filter(k=>ACH.some(v=>v[0]===k)).length;
- el.append(make('p','campaign-intro','Открыто '+n+' / '+ACH.length+'. Награды учитываются один раз и сохраняются локально в браузере. Условия будущих дел получат отдельные наборы достижений.'));
+ el.append(make('p','campaign-intro','Открыто '+n+' / '+ACH.length+'. Достижения этого дела сохраняются локально в браузере; награды за уникальные исходы учитываются отдельно.'));
  for(const group of [...new Set(ACH.map(x=>x[3]))]){el.append(make('h3','campaign-group-title',group));const grid=make('div','campaign-award-grid');
   for(const achievement of ACH.filter(x=>x[3]===group)){
    const [id,title,desc]=achievement,secret=achievement[5]===true&&!a[id];
