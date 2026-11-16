@@ -7,7 +7,7 @@ body { background:#111819; color:#efe2ca; margin:0; min-height:100vh; font:16px/
 .screen[hidden], [hidden] { display:none!important; }
 #home { max-width:540px; margin:0 auto; padding:34px 4px max(36px, env(safe-area-inset-bottom, 0px)); }
 .cr-preview-kicker { letter-spacing:2px; color:#cfaf7b; font:600 11px/1.5 system-ui,sans-serif; text-align:center; }
-.cr-preview-art { width:100%; aspect-ratio:1/0.85; margin:18px 0 22px; border:1px solid #856941; background:linear-gradient(to bottom, #10181900 52%, #111819e8),url('assets/criminal/cr01-arrival.webp') center 44%/cover; }
+.cr-preview-art { width:100%; aspect-ratio:1/0.85; margin:18px 0 22px; border:1px solid #856941; background:linear-gradient(to bottom, #10181900 52%, #111819e8),url('../../assets/criminal/cr01-arrival.webp') center 44%/cover; }
 #home header h1 { font:normal clamp(30px,8vw,43px)/1.1 Georgia,serif; color:#ffe8c6; margin:8px 0 18px; }
 .cr-preview-subline { font-size:14px; color:#cfad79; margin:0; }
 .cr-preview-intro { max-width:45ch; font-size:18px; line-height:1.65; color:#e4dac8; }
