@@ -27,6 +27,7 @@
     pending = null,
     memory = false,
     notice = "",
+    rewardNotice = null,
     mode = "map";
   const esc = (x) =>
     String(x ?? "").replace(
@@ -62,7 +63,18 @@
     document.body.dataset.criminal = "active";
     document.getElementById("homeBtn").hidden = false;
   }
+  function confirmPendingLeave() {
+    return (
+      !pending ||
+      confirm(
+        "Последний ход рассчитан, но не сохранён. Выход потеряет этот результат. Покинуть поручение?",
+      )
+    );
+  }
   function close() {
+    pending = null;
+    state = null;
+    rewardNotice = null;
     root.hidden = true;
     delete document.body.dataset.criminal;
     setHash("");
@@ -109,6 +121,7 @@
     mode = "map";
     state = null;
     pending = null;
+    rewardNotice = null;
     setHash("map");
     const points = [
         [9, 9],
@@ -143,6 +156,7 @@
     );
   }
   function brief(id) {
+    rewardNotice = null;
     mode = "brief";
     const m = C.missions[id];
     if (!m) return map();
@@ -196,6 +210,7 @@
       e = entropy();
     const s = E.create(id, e.seed, e.id);
     memory = inMemory;
+    rewardNotice = null;
     notice = "";
     raw = expected;
     if (memory) {
@@ -223,6 +238,7 @@
     state = s.state;
     raw = s.raw;
     memory = false;
+    rewardNotice = null;
     notice = "";
     scene(true);
   }
@@ -315,13 +331,13 @@
     let result = "";
     if (showResult && state.lastEvent) {
       const e = state.lastEvent;
-      result = `<section class="cr-consequence" aria-live="polite"><h2>Цена решения</h2><p>${esc(e.text)}</p><p>HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}${btn("ack", "Продолжить →", "cr-primary")}</section>`;
+      result = `<section class="cr-consequence" aria-live="polite"><small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p>HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}${btn("ack", "Продолжить →", "cr-primary")}</section>`;
     }
     const choiceViews = E.choices(state);
     const choicesHtml = choiceViews
       .map(
         (c) =>
-          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small>${esc(c.risk.level)}${c.risk.lethal ? " · Возможна гибель" : ""}: ${esc(c.risk.reason)}</small>${
+          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small>${esc(c.risk.level)}${c.risk.probability ? " · " + c.risk.probability + "%" : ""}${c.risk.lethal ? " · Возможна гибель" : ""}: ${esc(c.risk.reason)}</small>${
             Object.keys(c.cost || {}).length
               ? `<small>Расход: ${Object.entries(c.cost)
                   .map(([k, v]) => esc(C.items[k][1]) + " ×" + v)
@@ -373,6 +389,16 @@
       );
     }
   }
+  function awardBanner() {
+    if (!rewardNotice) return "";
+    return `<aside class="cr-reward-toast" role="status" aria-live="assertive" aria-label="Новая награда">
+      <span class="cr-reward-symbol" aria-hidden="true">✦</span>
+      <div><b>${rewardNotice.award ? "Новый знак получен" : "Новое достижение"}</b>
+      ${rewardNotice.award ? `<span>${esc(rewardNotice.award)}</span>` : ""}
+      ${rewardNotice.achievement ? `<small>${esc(rewardNotice.achievement)}</small>` : ""}</div>
+      ${btn("dismissReward", "Закрыть ×")}
+    </aside>`;
+  }
   function ending() {
     mode = "ending";
     const m = C.missions[state.missionId],
@@ -383,11 +409,22 @@
             error: "Эта попытка проходила без сохранения; награды не выдаются.",
           }
         : A.recover(store, state);
+    if (a.ok && (a.awardAdded || a.achievementAdded)) {
+      rewardNotice = {
+        award: a.awardAdded ? C.awardName(m.id, state.terminalId) : null,
+        achievement: a.achievementAdded
+          ? state.terminalId === "clean"
+            ? "Приказ выполнен без тяжёлых потерь"
+            : "Память о невозвращении"
+          : null,
+      };
+    }
     render(
-      `<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div><ul>${r.notes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
+      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div><ul>${r.notes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
     );
   }
   function chronicle() {
+    rewardNotice = null;
     mode = "chronicle";
     setHash("chronicle");
     const l = A.ledger(store);
@@ -435,16 +472,15 @@
     const id = currentId();
     switch (b.dataset.action) {
       case "map":
-        if (
-          pending &&
-          !confirm(
-            "Ход ещё не сохранён. Покинуть экран с неподтверждённой записью?",
-          )
-        )
-          return;
+        if (!confirmPendingLeave()) return;
         return map();
       case "home":
+        if (!confirmPendingLeave()) return;
         return close();
+      case "dismissReward":
+        rewardNotice = null;
+        root.querySelector(".cr-reward-toast")?.remove();
+        return;
       case "chronicle":
         if (pending) return;
         return chronicle();
@@ -531,23 +567,26 @@
       if (root.hidden) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (
-        pending &&
-        !confirm("Неподтверждённый ход может потеряться. Выйти в меню?")
-      )
-        return;
+      if (!confirmPendingLeave()) return;
       close();
     },
     true,
   );
   document.getElementById("profileBtn").addEventListener(
     "click",
-    () => {
-      if (!root.hidden) {
-        root.hidden = true;
-        delete document.body.dataset.criminal;
-        setHash("");
+    (e) => {
+      if (root.hidden) return;
+      if (!confirmPendingLeave()) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
       }
+      pending = null;
+      state = null;
+      rewardNotice = null;
+      root.hidden = true;
+      delete document.body.dataset.criminal;
+      setHash("");
     },
     true,
   );
@@ -558,7 +597,7 @@
       if (root.hidden || !e.target.closest("#gameExitBtn")) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (pending && !confirm("Ход не сохранён. Вернуться в меню?")) return;
+      if (!confirmPendingLeave()) return;
       close();
     },
     true,
