@@ -44,7 +44,12 @@ with sync_playwright() as p:
                 }""", timeout=30000
             )
             tap(page, '[data-action="start"]')
-            assert page.locator("#criminalScreen .cr-choices button").count()>=1
+            if page.locator("#criminalScreen .cr-choices button").count()<1:
+                page.screenshot(path=str(OUT/(engine+"-"+mission+"-failure.png")),full_page=True)
+                print("DIAGNOSTIC",engine,mission,
+                    "SCREEN=",page.locator("#criminalScreen").inner_text()[:1600],
+                    "JS=",errors[:5],"HTTP=",bad[:7],flush=True)
+                raise AssertionError("No playable choices after starting "+mission)
             tap(page, "#criminalScreen .cr-choices button:not([disabled])")
             assert page.locator("#criminalScreen .cr-consequence").is_visible()
             assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
