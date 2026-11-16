@@ -127,19 +127,39 @@
     const found = l.value.attempts.find((s) => s.attemptId === state.attemptId);
     if (found)
       return E.canonical(found) === E.canonical(state)
-        ? { ok: true, value: l.value, recovered: false }
+        ? {
+            ok: true,
+            value: l.value,
+            recovered: false,
+            awardAdded: false,
+            achievementAdded: false,
+          }
         : { ok: false, error: "Конфликт идентификатора попытки" };
     const next = JSON.parse(JSON.stringify(l.value)),
       combo = [state.missionId, state.heroId, state.terminalId].join(":");
+    const achievementKey =
+      state.terminalId === "clean"
+        ? "clean:" + state.missionId
+        : state.terminalId === "dead"
+          ? "remember:" + state.missionId
+          : null;
+    const awardAdded = !Object.hasOwn(next.rewards, combo);
+    const achievementAdded =
+      achievementKey !== null &&
+      !Object.hasOwn(next.achievements, achievementKey);
     next.attempts.push(state);
     next.rewards[combo] ??= state.attemptId;
-    if (state.terminalId === "clean")
-      next.achievements["clean:" + state.missionId] ??= state.attemptId;
-    if (state.terminalId === "dead")
-      next.achievements["remember:" + state.missionId] ??= state.attemptId;
+    if (achievementKey)
+      next.achievements[achievementKey] ??= state.attemptId;
     validateLedger(next);
     const w = exactWrite(store, LEDGER, JSON.stringify(next), l.raw);
-    return { ...w, value: w.ok ? next : null, recovered: w.ok };
+    return {
+      ...w,
+      value: w.ok ? next : null,
+      recovered: w.ok,
+      awardAdded: w.ok && awardAdded,
+      achievementAdded: w.ok && achievementAdded,
+    };
   }
   function backupCorrupt(store, id, expected, stamp) {
     const current = load(store, id);
