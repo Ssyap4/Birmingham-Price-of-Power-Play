@@ -114,65 +114,64 @@ def run():
                     page.route("https://**/*", lambda r: r.abort())
                     page.goto(origin + "/index.html", wait_until="domcontentloaded")
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
-                    # The detective menu card must use art WITHOUT baked-in quotes
-                    # or lettering that would show through the real HTML label.
-                    detective_bg = page.locator("#districtsCard").evaluate(
-                        "e => getComputedStyle(e).backgroundImage"
-                    )
-                    assert "assets/original-art/city-card-clean.webp" in detective_bg, detective_bg
-                    assert "assets/cinema/city.webp" not in detective_bg
-                    assert page.evaluate("""async () => {
-                        const img = new Image();img.src = 'assets/original-art/city-card-clean.webp';
-                        try {await img.decode();} catch {return false;}
-                        return img.naturalWidth > 100;
-                    }""")
+                    # New home is independent of the historic illustrated cabinet.
+                    assert page.locator("#home.cinema-home").count() == 1
+                    assert page.locator("#home .cinema-hero").is_visible()
+                    assert page.locator("#home .cinema-rain").count() == 1
+                    assert page.locator("#home .cinema-smoke").count() == 2
+                    assert page.locator("#home .cinema-record").count() == 1
+                    assert page.locator("#home .cabinet-menu > button").count() == 6
+                    assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
                     assert page.locator("#cabinetProfile").get_attribute("aria-label") == "Профиль"
-                    profile_bg = page.locator("#cabinetProfile").evaluate("e => getComputedStyle(e).backgroundImage")
-                    assert "assets/original-art/profile.webp" in profile_bg, profile_bg
-                    assert "settings" not in profile_bg.lower()
-                    seal = page.locator("#cabinetProfile .cabinet-profile-seal")
-                    assert seal.count() == 1
-                    assert "assets/cabinet/profile-seal.svg" in seal.evaluate("e => getComputedStyle(e).backgroundImage")
-                    assert page.evaluate("""async () => {
-                        for(const src of ['assets/original-art/profile.webp','assets/cabinet/profile-seal.svg']){
-                            const img=new Image(); img.src=src;
-                            try{await img.decode();}catch{return false;}
-                            if(img.naturalWidth<96)return false;
-                        }
-                        return true;
-                    }"""), "profile illustration did not decode"
-                    page.wait_for_function("() => document.getElementById('home').classList.contains('cabinet-art-ready')", timeout=15000)
-                    assert page.locator("#districtsCard .cabinet-entry-copy strong").is_visible()
-                    assert page.locator("#criminalEntry .cabinet-entry-copy strong").is_visible()
-                    assert page.locator("#cabinetProfile .cabinet-entry-copy strong").is_visible()
-                    assert page.locator("#cabinetProfile .cabinet-entry-copy strong").inner_text() == "Профиль"
                     assert page.locator("#storyStart .cabinet-entry-copy small").inner_text() == "Знаки расследований и поручений · Общий архив"
-                    # Six real labels, distinct photographic layers, safe horizontal bounds.
-                    assert page.locator("#home .cabinet-menu > button").count() == 6
-                    for selector in ("#districtsCard","#criminalEntry",".cabinet-entry-quiz",
-                                     "#storyStart","#profileCard","#cabinetProfile"):
-                        assert page.locator(selector + " .cabinet-entry-copy strong").is_visible()
-                    for selector, asset in (
+                    assert not page.locator("#cabinetSettings").count()
+                    assert not page.locator("#cabinetSettingsDialog").count()
+                    assert page.locator("#bhMusic").is_visible()
+                    assert page.locator("#bhEffects").is_visible()
+                    assert page.locator("#bhMenuTrack").is_visible()
+                    assert "1 / 2" in page.locator("#bhMenuTrack").inner_text()
+                    touch(page, "#bhMenuTrack")
+                    assert "2 / 2" in page.locator("#bhMenuTrack").inner_text()
+                    for selector, image in (
+                        ("#districtsCard", "assets/original-art/city-card-clean.webp"),
+                        ("#criminalEntry", "assets/criminal/cr01-arrival.webp"),
                         (".cabinet-entry-quiz", "assets/original-art/challenges.webp"),
                         ("#storyStart", "assets/original-art/clock.webp"),
                         ("#profileCard", "assets/original-art/city.webp"),
+                        ("#cabinetProfile", "assets/original-art/profile.webp"),
                     ):
-                        assert asset in page.locator(selector).evaluate(
-                            "e => getComputedStyle(e).backgroundImage"
+                        assert page.locator(selector + " .cabinet-entry-copy strong").is_visible()
+                        found=page.locator(selector).evaluate(
+                            "e => getComputedStyle(e,'::before').backgroundImage"
                         )
+                        assert image in found, (selector, found)
+                    seal=page.locator("#cabinetProfile .cabinet-profile-seal")
+                    assert "assets/cabinet/profile-seal.svg" in seal.evaluate(
+                        "e => getComputedStyle(e).backgroundImage"
+                    )
+                    assert page.evaluate("""async () => {
+                        for(const src of [
+                            'assets/original-art/profile.webp',
+                            'assets/original-art/city-card-clean.webp',
+                            'assets/cabinet/profile-seal.svg']){
+                            const img=new Image();img.src=src;
+                            try{await img.decode()}catch{return false}
+                            if(img.naturalWidth<96)return false;
+                        }
+                        return true
+                    }"""), "cinema artwork did not decode"
                     assert page.evaluate("""() => {
                         const cards=[...document.querySelectorAll('#home .cabinet-menu > button')];
                         return cards.length===6 && cards.every(el=>{
-                            const box=el.getBoundingClientRect();
-                            const t=el.querySelector('.cabinet-entry-copy strong').getBoundingClientRect();
-                            return box.width>=240 && box.height>=44 &&
-                              box.left>=-1 && box.right<=innerWidth+1 &&
-                              t.width>0 && t.left>=box.left-1 && t.right<=box.right+1 &&
-                              getComputedStyle(el.querySelector('.cabinet-entry-copy strong')).opacity==='1';
-                        }) && document.documentElement.scrollWidth<=innerWidth+1;
-                    }"""), "cabinet menu target or title clipped"
-                    page.screenshot(path=str(OUT / (name + "-" + str(width) + "-cabinet-v10.png")), full_page=True)
+                          const b=el.getBoundingClientRect();
+                          const t=el.querySelector('strong').getBoundingClientRect();
+                          return b.width>=240 && b.height>=44 && b.left>=-1 &&
+                            b.right<=innerWidth+1 && t.width>0 && t.left>=b.left-1 &&
+                            t.right<=b.right+1
+                        }) && document.documentElement.scrollWidth<=innerWidth+1
+                    }"""), "cinematic home clipped a button or title"
+                    page.screenshot(path=str(OUT / (name + "-" + str(width) + "-cinema-menu.png")), full_page=True)
                     touch(page, "#storyStart")
                     assert page.locator("#campaignAchievements").is_visible()
                     touch(page, "#homeBtn")
