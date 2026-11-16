@@ -194,6 +194,23 @@ def run():
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
                     assert page.locator("#caseGame").is_visible()
+                    # Original 001 artwork must keep its native aspect ratio.
+                    for scene_width in (320,390):
+                        page.set_viewport_size({"width":scene_width,"height":790})
+                        photo=page.locator("#caseArt .case001-portrait-image")
+                        photo.wait_for(state="visible")
+                        dim=photo.evaluate("""el => ({
+                            nw:el.naturalWidth,nh:el.naturalHeight,
+                            w:el.getBoundingClientRect().width,
+                            h:el.getBoundingClientRect().height
+                        })""")
+                        assert dim["nw"]>0 and dim["nh"]>0
+                        assert abs(dim["w"]/dim["h"]-dim["nw"]/dim["nh"])<.025
+                        assert page.locator("#caseScene").bounding_box()["height"]>=320
+                        assert page.locator("#caseScene .case001-read-scene").is_visible()
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     case1=page.evaluate("""() => localStorage.getItem(
                         'birmingham_case_smol_heath_v1_jack')""")
                     assert case1, "The original Case 001 must create its own save"
