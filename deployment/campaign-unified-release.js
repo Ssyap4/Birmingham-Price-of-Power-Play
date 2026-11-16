@@ -40,7 +40,7 @@ function recurseAssets(relative){
   const item=relative+"/"+entry.name;
   if(entry.isSymbolicLink())throw Error("Symlink in published assets: "+item);
   if(entry.isDirectory()){
-   if(item==="assets/case002")continue; // only approved manifest assets may enter this subtree
+   if(item==="assets/case002"||item==="assets/criminal")continue; // only approved manifest assets may enter this subtree
    recurseAssets(item);continue;
   }
   if(entry.name===".gitkeep")continue; // source marker, never a web resource
@@ -116,7 +116,28 @@ for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
 for(const name of ["index.html","style.css","app.js"])
  copy("preview/case002-prototype/"+name);
+// Criminal v2 is an additive, ordinary-script subtree: local HTML needs no fetch.
+function copyCriminalScripts(relative){
+ for(const entry of fs.readdirSync(path.join(ROOT,relative),{withFileTypes:true})){
+  const name=relative+"/"+entry.name;
+  if(entry.isSymbolicLink())throw Error("Symlink in criminal sources: "+name);
+  if(entry.isDirectory())copyCriminalScripts(name);
+  else if(entry.isFile()&&name.endsWith(".js"))copy(name);
+  else throw Error("Unexpected criminal runtime file: "+name);
+ }
+}
+copyCriminalScripts("src/criminal");
+const criminalArt=require("../src/criminal/art-manifest.js");
+for(const frame of criminalArt.frames){
+ if(frame.review!=="approved"||frame.width!==720||frame.height!==900||
+   !/^assets\/criminal\/[a-z0-9-]+\.webp$/.test(frame.path)||!frame.sha256)
+  throw Error("Invalid criminal art manifest entry: "+frame.id);
+ copy(frame.path,frame.sha256);
+}
 let references=0;
+for(const frame of criminalArt.frames)
+ if(assertReference("index.html",frame.path))references++;
+
 for(const entry of ["index.html","preview/case002-prototype/index.html"]){
  const markup=fs.readFileSync(path.join(DIST,entry),"utf8");
  for(const match of markup.matchAll(/<(?:script|link|img|source)\b[^>]*?\b(?:src|href)\s*=\s*(["'])(.*?)\1/gi))

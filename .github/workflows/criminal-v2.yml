@@ -1,0 +1,56 @@
+name: Criminal operations v2 acceptance
+on:
+  push:
+    branches: [feat/criminal-operations-codex-v2]
+    paths:
+      - "src/criminal/**"
+      - "assets/criminal/**"
+      - "criminal-operations-v2.css"
+      - "tests/criminal/**"
+      - "index.html"
+      - "deployment/campaign-unified-release.js"
+      - ".github/workflows/criminal-v2.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: criminal-v2-acceptance
+  cancel-in-progress: true
+jobs:
+  isolated-mode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pure engine, persistence, branch and resource proofs
+        run: |
+          node --test tests/criminal/engine.test.js
+          node tests/criminal/playthroughs.js
+      - name: Build the unified offline package and verify unchanged Case002 contract
+        run: |
+          node deployment/campaign-unified-release.js
+          node tests/case002/unified-package-integrity.test.js
+      - name: Install test-only decoders and mobile browser engines
+        run: |
+          python -m pip install 'playwright==1.62.0' 'Pillow==11.3.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Decode every new frame and test real phone touch flows
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python tests/criminal/art_package.py
+          python tests/criminal/mobile_browser.py
+          python tests/criminal/legacy_smoke.py
+      - name: Keep route proofs and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: criminal-v2-acceptance
+          path: work/criminal/
+          retention-days: 14

@@ -1,0 +1,444 @@
+/* Only the added screen and added menu control belong to this stylesheet. */
+#criminalScreen {
+  --cr-gold: #d7b77e;
+  color: #eddfc7;
+  background: #111819;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 14px max(12px, env(safe-area-inset-right, 0px))
+    max(28px, env(safe-area-inset-bottom, 0px))
+    max(12px, env(safe-area-inset-left, 0px));
+  font:
+    17px/1.6 Georgia,
+    serif;
+  overflow-wrap: anywhere;
+  animation: none;
+}
+#criminalScreen[hidden] {
+  display: none !important;
+}
+#criminalScreen *,
+#criminalScreen *::before,
+#criminalScreen *::after {
+  box-sizing: border-box;
+}
+body[data-criminal="active"] {
+  overflow-x: hidden;
+  background: #111819;
+}
+body[data-criminal="active"] .shell {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 0 10px;
+  margin: 0 auto;
+}
+body[data-criminal="active"] .top {
+  padding: 12px;
+  position: relative;
+  height: auto;
+  min-height: 60px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+body[data-criminal="active"] .grain,
+body[data-criminal="active"] .smoke,
+body[data-criminal="active"] .ambient-glow {
+  display: none;
+}
+body[data-criminal="active"] .top {
+  display: none !important;
+}
+body[data-criminal="active"] > .bh-audio-controls {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 12px 12px max(18px, env(safe-area-inset-bottom, 0px));
+  gap: 8px;
+}
+body[data-criminal="active"] > .bh-audio-controls button {
+  min-height: 44px;
+  white-space: normal;
+}
+#criminalScreen h1 {
+  font:
+    normal clamp(29px, 8vw, 40px) / 1.12 Georgia,
+    serif;
+  letter-spacing: 0;
+  color: #f4e4c6;
+  text-transform: none;
+  margin: 9px 0 17px;
+}
+#criminalScreen h2 {
+  font:
+    normal 24px/1.25 Georgia,
+    serif;
+  color: #e7c58a;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 24px 0 12px;
+}
+#criminalScreen p {
+  margin: 14px 0;
+  max-width: 100%;
+}
+#criminalScreen button {
+  min-height: 48px;
+  max-width: 100%;
+  border: 1px solid #776242;
+  background: #202a2b;
+  color: #f3dfbb;
+  border-radius: 5px;
+  padding: 12px 13px;
+  text-align: left;
+  font:
+    600 15px/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+  white-space: normal;
+  touch-action: manipulation;
+  box-shadow: none;
+}
+#criminalScreen button:disabled {
+  opacity: 0.53;
+  cursor: default;
+  background: #161e20;
+}
+#criminalScreen button:focus-visible {
+  outline: 3px solid #f3c677;
+  outline-offset: 3px;
+}
+#criminalScreen button small,
+#criminalScreen button b {
+  display: block;
+}
+#criminalScreen button small {
+  font:
+    400 13px/1.5 system-ui,
+    sans-serif;
+  margin-top: 7px;
+  color: #d0c3aa;
+}
+#criminalScreen .cr-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+#criminalScreen .cr-top button {
+  font-size: 13px;
+  flex: 1;
+  padding: 10px 8px;
+  text-align: center;
+}
+#criminalScreen .cr-heading > span,
+#criminalScreen .cr-small,
+#criminalScreen figcaption,
+#criminalScreen small {
+  font:
+    12px/1.55 system-ui,
+    sans-serif;
+  color: #c0ae8e;
+  letter-spacing: 0.3px;
+}
+#criminalScreen .cr-tagline {
+  font-style: italic;
+  color: #d7b77e;
+  font-size: 21px;
+}
+#criminalScreen .cr-map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 360/460;
+  margin: 24px 0 12px;
+  border: 1px solid #6f6045;
+  background: #161d1e;
+}
+#criminalScreen .cr-map svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#criminalScreen button.cr-pin {
+  position: absolute;
+  min-height: 52px;
+  width: 37%;
+  padding: 5px 4px;
+  border-color: #bd975c;
+  background: #121b1de8;
+  border-radius: 2px;
+  text-align: center;
+  font-size: clamp(11px, 3.2vw, 15px);
+  box-shadow: 0 5px 20px #000a;
+}
+#criminalScreen .cr-pin span {
+  display: block;
+  font-size: 11px;
+  color: #d6b476;
+}
+#criminalScreen .cr-pin strong {
+  font-size: inherit;
+  white-space: nowrap;
+}
+#criminalScreen .cr-mission-list,
+#criminalScreen .cr-actions,
+#criminalScreen .cr-choices {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+#criminalScreen .cr-mission-list button {
+  border-left: 3px solid #bf9a60;
+}
+#criminalScreen .cr-mission-list span {
+  display: block;
+  font-size: 13px;
+  color: #d6bc90;
+  margin-top: 6px;
+}
+#criminalScreen .cr-primary {
+  background: #624b2f;
+  border-color: #e6c188;
+}
+#criminalScreen .cr-danger {
+  border-color: #d67d6a;
+  background: #482d2b;
+}
+#criminalScreen .cr-frame {
+  margin: 20px 0;
+  max-width: 100%;
+  width: 100%;
+  background: #0d1112;
+}
+#criminalScreen .cr-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: contain;
+}
+#criminalScreen figcaption {
+  padding: 7px 10px;
+  border-bottom: 1px solid #6d5a3e;
+}
+#criminalScreen .cr-hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 15px 0;
+}
+#criminalScreen .cr-hero img {
+  display: block;
+  width: 58px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid #a88b60;
+  border-radius: 3px;
+}
+#criminalScreen .cr-hero b {
+  font-size: 18px;
+  font-weight: normal;
+}
+#criminalScreen .cr-hero small {
+  display: block;
+  font-size: 11px;
+}
+#criminalScreen .cr-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+}
+#criminalScreen .cr-hud > * {
+  background: #212d2d;
+  border: 1px solid #5c655a;
+  padding: 7px 9px;
+  border-radius: 3px;
+}
+#criminalScreen .cr-wounded {
+  color: #ffb3a1;
+}
+#criminalScreen .cr-inventory,
+#criminalScreen .cr-journal {
+  border: 1px solid #62563f;
+  border-radius: 4px;
+  margin: 15px 0;
+  background: #182223;
+}
+#criminalScreen summary {
+  padding: 12px;
+  min-height: 48px;
+  cursor: pointer;
+  font:
+    15px/1.6 system-ui,
+    sans-serif;
+  color: #e3c188;
+}
+#criminalScreen details > div,
+#criminalScreen details > ol {
+  max-height: 50vh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 14px 14px;
+  margin: 0;
+}
+#criminalScreen details > ol {
+  padding-left: 30px;
+  font-size: 14px;
+}
+#criminalScreen .cr-inventory p {
+  font:
+    14px/1.5 system-ui,
+    sans-serif;
+  border-bottom: 1px solid #394442;
+  padding-bottom: 8px;
+}
+#criminalScreen .cr-inventory p span {
+  display: inline-block;
+  min-width: 22px;
+  color: #ebc98b;
+}
+#criminalScreen .cr-story > p {
+  font-size: 19px;
+  line-height: 1.65;
+}
+#criminalScreen .cr-dialogue {
+  border-left: 2px solid #ad8850;
+  padding: 1px 0 1px 14px;
+  background: linear-gradient(90deg, #80673b14, transparent);
+}
+#criminalScreen .cr-dialogue strong {
+  display: block;
+  font:
+    600 12px/1.5 system-ui,
+    sans-serif;
+  color: #dfbb7c;
+  margin-bottom: 3px;
+}
+#criminalScreen .cr-dialogue span {
+  display: block;
+  font-size: 18px;
+}
+#criminalScreen .cr-consequence,
+#criminalScreen .cr-result {
+  border: 1px solid #aa8956;
+  background: #26302b;
+  padding: 16px;
+  margin: 22px 0;
+}
+#criminalScreen .cr-consequence h2 {
+  margin-top: 0;
+}
+#criminalScreen .cr-save-status {
+  font:
+    12px/1.6 system-ui,
+    sans-serif;
+  color: #b9d2b9;
+}
+#criminalScreen .cr-warning {
+  border: 1px solid #dd9c67;
+  background: #412c21;
+  padding: 13px;
+  font:
+    14px/1.6 system-ui,
+    sans-serif;
+  margin: 18px 0;
+  color: #ffe0b2;
+}
+#criminalScreen .cr-record {
+  padding: 15px 0;
+  border-bottom: 1px solid #6e5c41;
+}
+#criminalScreen .cr-art-fallback {
+  padding: 24px;
+  border: 1px dashed #8e7957;
+  background: #202727;
+  font-size: 15px;
+}
+#criminalScreen[data-telegram="true"] {
+  padding-top: var(--cr-safe-top, 0px);
+  padding-right: calc(12px + var(--cr-safe-right, 0px));
+  padding-bottom: calc(28px + var(--cr-safe-bottom, 0px));
+  padding-left: calc(12px + var(--cr-safe-left, 0px));
+}
+/* The approved menu hides text for its raster panels. This added control uses live text. */
+#home.cabinet-art-ready #criminalEntry {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 76px !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  padding: 15px !important;
+  background:
+    linear-gradient(90deg, #101d20e8, #16272bbb),
+    url("assets/criminal/cr01-arrival.webp") center 55% / cover !important;
+  border: 1px solid #ae8f58 !important;
+  border-radius: 2px !important;
+  animation: none !important;
+  transform: none !important;
+}
+#home.cabinet-art-ready #criminalEntry > * {
+  display: block !important;
+}
+#home.cabinet-art-ready #criminalEntry .cabinet-entry-copy {
+  flex: 1 !important;
+  text-align: left !important;
+}
+#home.cabinet-art-ready #criminalEntry strong {
+  display: block !important;
+  font:
+    600 19px/1.2 Georgia,
+    serif !important;
+  color: #ffe5af !important;
+}
+#home.cabinet-art-ready #criminalEntry small {
+  display: block !important;
+  font:
+    11px/1.5 system-ui,
+    sans-serif !important;
+  color: #dfcba6 !important;
+  margin-top: 5px !important;
+}
+#criminalScreen .cr-awards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#criminalScreen .cr-awards article {
+  padding: 12px 10px;
+  background: #1d2928;
+  border: 1px solid #8e7549;
+  text-align: center;
+}
+#criminalScreen .cr-awards article > span {
+  display: block;
+  font-size: 32px;
+  color: #d9b16d;
+}
+#criminalScreen .cr-awards b {
+  display: block;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: normal;
+}
+#criminalScreen .cr-awards small {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+}
+#criminalScreen .cr-achievement {
+  border-left: 2px solid #c29a5a;
+  padding-left: 12px;
+  font-size: 15px;
+}

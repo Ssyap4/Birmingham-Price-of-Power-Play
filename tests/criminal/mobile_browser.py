@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Real touch acceptance of the exported same-origin package. No mock DOM.
+Run with --system-chromium for an installed Chromium; default covers Chromium+WebKit.
+Generate engine evidence first: node tests/criminal/playthroughs.js.
+"""
+import json,sys,contextlib
+from pathlib import Path
+from functools import partial
+from threading import Thread
+from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
+from playwright.sync_api import sync_playwright
+ROOT=Path(__file__).resolve().parents[2];DIST=ROOT/'campaign-unified-dist';OUT=ROOT/'work/criminal/browser';OUT.mkdir(parents=True,exist_ok=True)
+PLANS=json.loads((ROOT/'work/criminal/playthroughs.json').read_text())
+PREFIX='birmingham_criminal_v2_'
+OLD=['birmingham_case_smol_heath_v1_jack','birmingham_case_v20_findings_jack','birmingham_case002_draft_v3_finn','birmingham_case002_records_draft_v3','birmingham_case002_rewards_draft_v3','birmingham_campaign_records_v1','birmingham_campaign_awards_v1','birmingham_campaign_unique_rewards_v1']
+class Quiet(SimpleHTTPRequestHandler):
+ def log_message(self,*args):pass
+
+def value(page,id):return page.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',PREFIX+'save_'+id)
+def bounds(page):
+ assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1'),'horizontal overflow'
+ for button in page.locator('#criminalScreen button:not([disabled])').all():
+  assert button.bounding_box()['height']>=43,'target smaller than 44px'
+def touch(page,selector):
+ loc=page.locator(selector).first;loc.scroll_into_view_if_needed();loc.tap()
+def start(page,id,seed):
+ touch(page,'#criminalEntry');touch(page,f'.cr-pin[data-mission="{id}"]');page.evaluate('(n)=>window.__crSeed=n',seed)
+ if page.locator('[data-action="start"]').count():touch(page,'[data-action="start"]')
+ else:touch(page,'[data-action="restart"]')
+ assert value(page,id)['rng']['seed']==seed
+
+def run():
+ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(DIST)));Thread(target=server.serve_forever,daemon=True).start();origin=f'http://127.0.0.1:{server.server_port}'
+ summary=[]
+ try:
+  with sync_playwright() as p:
+   for name in (['chromium'] if '--system-chromium' in sys.argv else ['chromium','webkit']):
+    opts={'headless':True}
+    if '--system-chromium' in sys.argv:opts['executable_path']='/usr/bin/chromium'
+    browser=getattr(p,name).launch(**opts)
+    for width in [320,360,390,430]:
+     ctx=browser.new_context(viewport={'width':width,'height':844},is_mobile=True,has_touch=True,device_scale_factor=1)
+     ctx.add_init_script('''(()=>{const old=crypto.getRandomValues.bind(crypto);crypto.getRandomValues=a=>{old(a);if(a instanceof Uint32Array&&a.length===2&&Number.isInteger(window.__crSeed))a[0]=window.__crSeed;return a;};})();''')
+     page=ctx.new_page();errors=[];missing=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('response',lambda r:missing.append(r.url) if r.status>=400 and r.url.startswith(origin) else None);page.on('dialog',lambda d:d.accept());page.route('https://**/*',lambda r:r.abort())
+     page.goto(origin+'/index.html',wait_until='domcontentloaded');touch(page,'#criminalEntry');bounds(page);assert page.locator('.cr-pin').count()==5
+     if width==390:page.screenshot(path=str(OUT/(name+'-map.png')),full_page=True)
+     touch(page,'[data-action="home"]');assert page.locator('#home').is_visible()
+     # Set raw legacy bytes after startup. The criminal mode must not write them.
+     page.evaluate('(keys)=>keys.forEach((k,i)=>localStorage.setItem(k,JSON.stringify({fixture:i})+" "))',OLD);before=page.evaluate('(ks)=>ks.map(k=>localStorage.getItem(k))',OLD)
+     if width!=390:
+      start(page,'CR01',0);bounds(page);touch(page,'[data-choice="accept"]');saved=value(page,'CR01');assert saved['revision']==1
+      page.reload(wait_until='domcontentloaded');touch(page,'[data-action="resume"]');assert value(page,'CR01')==saved;touch(page,'[data-action="ack"]');bounds(page)
+      touch(page,'.cr-inventory summary');assert page.locator('.cr-inventory[open]').count()==1
+      page.screenshot(path=str(OUT/(name+'-'+str(width)+'-scene.png')),full_page=True);touch(page,'[data-action="home"]')
+     else:
+      for id,types in PLANS.items():
+       for kind,proof in types.items():
+        start(page,id,proof['rng']['seed']);last_act=1
+        for step in proof['history']:
+         s=value(page,id);assert s['sceneId']==step['from'],(id,kind,step,s['sceneId'])
+         # The actual rendered choice uses the same choiceId and risk as the engine.
+         assert page.evaluate('''s=>CriminalEngine.choices(s).every(c=>{const b=document.querySelector('[data-choice="'+c.id+'"]');return b&&Number(b.dataset.risk)===c.risk.probability&&b.textContent.includes(c.risk.level)&&b.disabled===!c.available;})''',s)
+         bounds(page)
+         touch(page,f'[data-choice="{step["choiceId"]}"]');next=value(page,id);assert next['revision']==s['revision']+1;assert page.evaluate('s=>CriminalEngine.validateState(s).ok',next)
+         if next['status']=='finished':break
+         assert page.locator('.cr-consequence').is_visible()
+         act=page.evaluate('s=>CriminalContent.missions[s.missionId].scenes[s.sceneId].act',next)
+         if act!=last_act:
+          page.reload(wait_until='domcontentloaded');touch(page,'[data-action="resume"]');assert value(page,id)==next;last_act=act
+         touch(page,'[data-action="ack"]')
+        final=value(page,id);assert final['status']=='finished' and final['terminalId']==proof['terminalId']
+        ledger=page.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',PREFIX+'ledger');count=len(ledger['attempts'])
+        page.reload(wait_until='domcontentloaded');touch(page,'[data-action="resume"]');assert len(page.evaluate('(k)=>JSON.parse(localStorage.getItem(k)).attempts',PREFIX+'ledger'))==count
+        assert page.locator('.cr-result').is_visible();bounds(page)
+        if kind=='care':page.screenshot(path=str(OUT/(name+'-'+id+'-ending.png')),full_page=True)
+        touch(page,'[data-action="home"]')
+      # Stale double touch: result acknowledgement cannot create a second gameplay action.
+      start(page,'CR01',0);button=page.locator('[data-choice="accept"]');button.scroll_into_view_if_needed();box=button.bounding_box();page.touchscreen.tap(box['x']+20,box['y']+20);page.touchscreen.tap(box['x']+20,box['y']+20);assert value(page,'CR01')['revision']==1
+      touch(page,'[data-action="map"]');touch(page,'[data-action="chronicle"]');assert '10 завершённых попыток' in page.locator('#criminalScreen').inner_text();page.screenshot(path=str(OUT/(name+'-chronicle.png')),full_page=True)
+     assert page.evaluate('(ks)=>ks.map(k=>localStorage.getItem(k))',OLD)==before,'legacy save bytes changed'
+     assert not errors,errors;assert not missing,missing
+     summary.append({'browser':name,'width':width,'touch':True,'legacyBytes':'unchanged','errors':errors});ctx.close()
+    # Read-blocked storage and quota states are new-mode warnings, never success claims.
+    ctx=browser.new_context(viewport={'width':320,'height':844},is_mobile=True,has_touch=True);page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.goto(origin+'/index.html',wait_until='domcontentloaded')
+    page.evaluate('''()=>{const g=Storage.prototype.getItem;Storage.prototype.getItem=function(k){if(k.startsWith('birmingham_criminal_v2_'))throw Error('private');return g.call(this,k);};}''');touch(page,'#criminalEntry');touch(page,'.cr-pin[data-mission="CR01"]');assert not page.locator('[data-action="start"]').count();assert page.locator('[data-action="memoryStart"]').is_visible();touch(page,'[data-action="memoryStart"]');assert 'Игра без сохранения' in page.locator('.cr-warning').inner_text();touch(page,'[data-choice="accept"]');assert not page.locator('.cr-save-status').count();ctx.close()
+    # Corrupt slot cannot be replaced by an ordinary Start.
+    ctx=browser.new_context(viewport={'width':320,'height':844},is_mobile=True,has_touch=True);page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.on('dialog',lambda d:d.accept());page.goto(origin+'/index.html',wait_until='domcontentloaded');page.evaluate('(k)=>localStorage.setItem(k,"CORRUPT exact bytes\\n")',PREFIX+'save_CR01');touch(page,'#criminalEntry');touch(page,'.cr-pin[data-mission="CR01"]');assert not page.locator('[data-action="start"]').count();touch(page,'[data-action="resetCorrupt"]');assert value(page,'CR01')['revision']==0;assert page.evaluate('''p=>Object.keys(localStorage).some(k=>k.startsWith(p+'backup_CR01_')&&localStorage.getItem(k)==='CORRUPT exact bytes\\n')''',PREFIX);ctx.close()
+    # A calculated random result is withheld until an exact write succeeds.
+    ctx=browser.new_context(viewport={"width":320,"height":844},is_mobile=True,has_touch=True);page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.goto(origin+'/index.html',wait_until='domcontentloaded');touch(page,'#criminalEntry');touch(page,'.cr-pin[data-mission="CR01"]');touch(page,'[data-action="start"]');touch(page,'[data-choice="accept"]');touch(page,'[data-action="ack"]');touch(page,'[data-choice="front"]');touch(page,'[data-action="ack"]');before=value(page,'CR01');expected=page.evaluate('s=>CriminalEngine.choose(s,"threat",s.revision)',before)
+    page.evaluate("""()=>{window.__oldSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith('birmingham_criminal_v2_'))throw Error('quota');return window.__oldSet.call(this,k,v);};}""");touch(page,'[data-choice="threat"]');assert value(page,'CR01')==before;assert 'Ход рассчитан, но не сохранён' in page.locator('#criminalScreen h1').inner_text();assert not page.locator('.cr-consequence').count();page.evaluate('Storage.prototype.setItem=window.__oldSet');touch(page,'[data-action="retryWrite"]');assert value(page,'CR01')==expected;ctx.close()
+    # A terminal slot can be recovered after an archive-write failure, once only.
+    ctx=browser.new_context(viewport={"width":390,"height":844},is_mobile=True,has_touch=True);page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.goto(origin+'/index.html',wait_until='domcontentloaded');page.evaluate('(s)=>localStorage.setItem("birmingham_criminal_v2_save_CR03",JSON.stringify(s))',PLANS['CR03']['care']);page.evaluate("""()=>{window.__oldSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='birmingham_criminal_v2_ledger')throw Error('quota ledger');return window.__oldSet.call(this,k,v);};}""");touch(page,'#criminalEntry');touch(page,'.cr-pin[data-mission="CR03"]');touch(page,'[data-action="resume"]');assert 'Финал не объявляется награждённым' in page.locator('.cr-warning').inner_text();assert page.evaluate('localStorage.getItem("birmingham_criminal_v2_ledger")') is None;page.evaluate('Storage.prototype.setItem=window.__oldSet');touch(page,'[data-action="retryArchive"]');assert len(page.evaluate('JSON.parse(localStorage.getItem("birmingham_criminal_v2_ledger")).attempts'))==1;ctx.close()
+    # Telegram supplied insets are scoped to the new screen and update live.
+    ctx=browser.new_context(viewport={"width":320,"height":844},is_mobile=True,has_touch=True);ctx.add_init_script("""window.Telegram={WebApp:{safeAreaInset:{top:20,bottom:12,left:0,right:0},contentSafeAreaInset:{top:30,bottom:8,left:0,right:0},ready(){},expand(){},onEvent(name,fn){(window.__insets??={})[name]=fn;}}};""");page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.goto(origin+'/index.html',wait_until='domcontentloaded');touch(page,'#criminalEntry');assert page.locator('#criminalScreen').evaluate("e=>getComputedStyle(e).paddingTop")=='50px';bounds(page);page.evaluate("Telegram.WebApp.contentSafeAreaInset.top=10;window.__insets.safeAreaChanged()");assert page.locator('#criminalScreen').evaluate("e=>getComputedStyle(e).paddingTop")=='30px';ctx.close()
+    # Offline local HTML path works with ordinary script tags and local WebPs.
+    if '--system-chromium' not in sys.argv:
+     ctx=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True);page=ctx.new_page();page.route('https://**/*',lambda r:r.abort());page.goto((DIST/'index.html').as_uri(),wait_until='domcontentloaded');touch(page,'#criminalEntry');touch(page,'.cr-pin[data-mission="CR05"]');assert page.locator('#criminalScreen h1').inner_text()=='Последний рейс';assert page.locator('.cr-frame img').evaluate('(im)=>im.complete&&im.naturalWidth===720');ctx.close()
+    else:
+     summary.append({'browser':name,'fileProtocol':'unverified locally: managed browser blocks file URLs; CI gate required'})
+    browser.close()
+  (OUT/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2));print(json.dumps(summary,ensure_ascii=False))
+ finally:server.shutdown()
+if __name__=='__main__':run()
