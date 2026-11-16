@@ -155,7 +155,7 @@ def run():
                     for selector, asset in (
                         (".cabinet-entry-quiz", "assets/original-art/challenges.webp"),
                         ("#storyStart", "assets/original-art/clock.webp"),
-                        ("#profileCard", "assets/cabinet/birmingham_cabinet_office_art.webp"),
+                        ("#profileCard", "assets/original-art/city.webp"),
                     ):
                         assert asset in page.locator(selector).evaluate(
                             "e => getComputedStyle(e).backgroundImage"

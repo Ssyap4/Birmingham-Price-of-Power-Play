@@ -203,7 +203,7 @@
  background-position:center 59%!important;background-size:cover!important;
 }
 #home.cabinet-art-ready .cabinet-menu > #profileCard{
- background-image:linear-gradient(96deg,rgba(19,17,15,.97),rgba(25,20,17,.90) 60%,rgba(23,18,15,.67)),url('assets/cabinet/birmingham_cabinet_office_art.webp')!important;
+ background-image:linear-gradient(96deg,rgba(19,17,15,.97),rgba(25,20,17,.90) 60%,rgba(23,18,15,.67)),url('assets/original-art/city.webp')!important;
  background-position:center 55%!important;background-size:cover!important;
 }
 #home.cabinet-art-ready .cabinet-menu > :is(#storyStart,#profileCard,.cabinet-entry-quiz){

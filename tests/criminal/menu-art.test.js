@@ -19,7 +19,7 @@ test("personal Profile is its own illustration, not renamed Settings bitmap",()=
  assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-(campaign|trials|achievements|dossiers)\.webp/);
  assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinetRotatePrompt|orientation:landscape|cabinet-menu-open/);
  assert.doesNotMatch(read("home-story-first-v1.js"),/achievements\.addEventListener/);
- for(const art of ["assets/original-art/challenges.webp","assets/original-art/clock.webp","assets/cabinet/birmingham_cabinet_office_art.webp"])
+ for(const art of ["assets/original-art/challenges.webp","assets/original-art/clock.webp","assets/original-art/city.webp"])
   assert.ok(fs.statSync(path.join(root,art)).size>1000,art);
  assert.match(css,/assets\/original-art\/challenges\.webp/);
  assert.match(css,/assets\/original-art\/clock\.webp/);
