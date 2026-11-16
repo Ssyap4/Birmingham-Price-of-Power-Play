@@ -29,6 +29,8 @@
     notice = "",
     rewardNotice = null,
     selectedMissionId = null,
+    archiveMission = "all",
+    archivePage = 0,
     mode = "map";
   const esc = (x) =>
     String(x ?? "").replace(
@@ -117,6 +119,27 @@
   function warning(text) {
     return `<div class="cr-warning" role="status">${esc(text)}</div>`;
   }
+  function missionProgress(id) {
+    const slot = A.load(store, id);
+    if (slot.kind === "unavailable")
+      return { status: "unavailable", label: "Хранилище недоступно", action: "Играть без сохранения" };
+    if (slot.kind === "corrupt")
+      return { status: "corrupt", label: "Слот требует проверки", action: "Проверить сохранение" };
+    if (slot.kind !== "valid")
+      return { status: "new", label: "Ещё не начато", action: "Открыть поручение" };
+    const s = slot.state;
+    if (s.status === "active") {
+      const act = C.missions[id].scenes[s.sceneId]?.act || 1;
+      return { status: "active", label: "В работе · акт " + act + "/3 · " + s.revision + " решений", action: "Продолжить" };
+    }
+    const outcomes = {
+      clean: "Выполнено · чистый исход",
+      costly: "Выполнено · дорогая победа",
+      failed: "Приказ не выполнен",
+      dead: "Герой погиб в попытке",
+    };
+    return { status: s.terminalId, label: outcomes[s.terminalId] || "Попытка завершена", action: "Посмотреть результат" };
+  }
   function map() {
     selectedMissionId = null;
     mode = "map";
@@ -124,6 +147,9 @@
     pending = null;
     rewardNotice = null;
     setHash("map");
+    const progress = Object.fromEntries(Object.keys(C.missions).map((id) => [id, missionProgress(id)]));
+    const inProgress = Object.values(progress).filter((p) => p.status === "active").length;
+    const finished = Object.values(progress).filter((p) => ["clean", "costly", "failed", "dead"].includes(p.status)).length;
     const points = [
         [9, 9],
         [60, 26],
@@ -141,19 +167,19 @@
         "CR01",
       ]
         .map((id, i) => {
-          const m = C.missions[id];
-          return `<button type="button" class="cr-pin" data-mission="${id}" style="left:${points[i][0]}%;top:${points[i][1]}%"><span>${icons[i]} ${id}</span><strong>${esc(m.district)}</strong></button>`;
+          const m = C.missions[id], p = progress[id];
+          return `<button type="button" class="cr-pin" data-mission="${id}" data-progress="${p.status}" aria-label="${esc(m.district)}. ${esc(m.title)}. ${esc(p.label)}" style="left:${points[i][0]}%;top:${points[i][1]}%"><span>${icons[i]} ${id}</span><strong>${esc(m.district)}</strong></button>`;
         })
         .join(
           "",
         )}</div><p class="cr-small">Север сверху. Канал и дороги показаны схематически. Все адреса поручений вымышлены; это игровая карта, а не исторический план.</p><div class="cr-mission-list">${Object.values(
         C.missions,
       )
-        .map(
-          (m) =>
-            `<button type="button" data-mission="${m.id}"><small>${m.id} · ${esc(m.district)}</small><b>${esc(m.title)}</b><span>${esc(m.hero.name)} →</span></button>`,
-        )
-        .join("")}</div>${btn("chronicle", "Открыть локальную хронику")}`,
+        .map((m) => {
+          const p = progress[m.id];
+          return `<button type="button" data-mission="${m.id}" data-progress="${p.status}"><small>${m.id} · ${esc(m.district)}</small><b>${esc(m.title)}</b><span>${esc(m.hero.name)} · ${esc(p.label)}</span><em class="cr-mission-action">${esc(p.action)} →</em></button>`;
+        })
+        .join("")}</div><p class="cr-progress-summary" role="status">${inProgress} в работе · ${finished} завершено · ${Object.keys(C.missions).length} поручений</p>${btn("chronicle", "Открыть локальную хронику")}`,
     );
   }
   function brief(id) {
@@ -459,6 +485,14 @@
       return render(
         `<h1>Локальная хроника</h1>${warning(l.error + " Существующие байты хроники не изменены.")}`,
       );
+    const history = l.value.attempts.slice().reverse().filter((s) => archiveMission === "all" || s.missionId === archiveMission);
+    const pageSize = 10;
+    const pages = Math.max(1, Math.ceil(history.length / pageSize));
+    archivePage = Math.max(0, Math.min(archivePage, pages - 1));
+    const shown = history.slice(archivePage * pageSize, (archivePage + 1) * pageSize);
+    const first = shown.length ? archivePage * pageSize + 1 : 0;
+    const filters = `<nav class="cr-archive-filters" aria-label="Фильтр по поручению">${[["all", "Все"], ...Object.keys(C.missions).map((id) => [id, id])].map(([id, title]) => `<button type="button" data-archive-mission="${id}" aria-pressed="${archiveMission === id}">${title}</button>`).join("")}</nav>`;
+    const pager = `<nav class="cr-archive-pager" aria-label="Страницы хроники"><button type="button" data-action="archivePrev" ${archivePage === 0 ? "disabled" : ""}>← Назад</button><span>Страница ${archivePage + 1} из ${pages}</span><button type="button" data-action="archiveNext" ${archivePage >= pages - 1 ? "disabled" : ""}>Далее →</button></nav>`;
     render(
       `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника криминальных дел</h1></header><p>${l.value.attempts.length} завершённых попыток · ${Object.keys(l.value.rewards).length} уникальных знаков · ${Object.keys(l.value.achievements).length} памятных отметок</p><p class="cr-small">Знак хранит ссылку на доказанный завершённый исход. Повтор того же финала тем же героем остаётся новой попыткой, но второго знака не даёт. Детективный архив не изменяется.</p><h2>Знаки этой ночи</h2><div class="cr-awards">${
         Object.entries(l.value.rewards)
@@ -474,17 +508,14 @@
             return `<p class="cr-achievement">${key.startsWith("clean:") ? "✦ Приказ выполнен без тяжёлых потерь" : "† Память о невозвращении"} · ${s.missionId} · ${esc(C.missions[s.missionId].hero.name)}</p>`;
           })
           .join("") || "<p>Эта страница ещё ждёт имён.</p>"
-      }<h2>Завершённые попытки</h2>${
-        l.value.attempts
-          .slice()
-          .reverse()
-          .map((s) => {
+      }<h2>Завершённые попытки</h2>${filters}<p class="cr-archive-count" role="status">Показано ${first}–${shown.length ? first + shown.length - 1 : 0} из ${history.length}</p>${
+        shown.map((s) => {
             const m = C.missions[s.missionId],
               r = E.report(s);
             return `<article class="cr-record"><small>${m.id} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p>${esc(r.text)}</p><p>HP ${s.hp}/100 · ${s.revision} решений</p>${epilogue(s, true)}${verifiedNotes(r.notes)}</article>`;
           })
           .join("") || "<p>Завершённых попыток пока нет.</p>"
-      }${btn("commonArchive", "Открыть общие достижения кампании")}`,
+      }${pager}${btn("commonArchive", "Открыть общие достижения кампании")}`,
     );
   }
   function currentId() {
@@ -494,6 +525,11 @@
     const b = e.target.closest("button");
     if (!b || b.disabled) return;
     if (b.dataset.mission) return brief(b.dataset.mission);
+    if (b.dataset.archiveMission) {
+      archiveMission = b.dataset.archiveMission;
+      archivePage = 0;
+      return chronicle();
+    }
     if (b.dataset.choice)
       return advance(b.dataset.choice, Number(b.dataset.revision));
     const id = currentId();
@@ -510,6 +546,12 @@
         return;
       case "chronicle":
         if (pending) return;
+        return chronicle();
+      case "archivePrev":
+        archivePage = Math.max(0, archivePage - 1);
+        return chronicle();
+      case "archiveNext":
+        archivePage += 1;
         return chronicle();
       case "retryBrief":
         return brief(id);

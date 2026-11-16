@@ -148,6 +148,10 @@ def run():
                             full_page=True,
                         )
                         touch(page, '[data-action="home"]')
+                        touch(page, "#criminalEntry")
+                        assert page.locator('.cr-pin[data-mission="CR01"]').get_attribute("data-progress") == "active"
+                        assert "В работе · акт" in page.locator('.cr-mission-list [data-mission="CR01"]').inner_text()
+                        touch(page, '[data-action="home"]')
                     else:
                         for id, types in PLANS.items():
                             for kind, proof in types.items():
@@ -242,7 +246,14 @@ def run():
                             "10 завершённых попыток"
                             in page.locator("#criminalScreen").inner_text()
                         )
-                        assert page.locator(".cr-epilogue-compact").count() >= 10
+                        assert page.locator(".cr-epilogue-compact").count() == 10
+                        assert page.locator(".cr-record").count() == 10
+                        touch(page, '[data-archive-mission="CR01"]')
+                        assert page.locator(".cr-record").count() == 2
+                        assert page.locator('[data-archive-mission="CR01"]').get_attribute("aria-pressed") == "true"
+                        touch(page, '[data-archive-mission="all"]')
+                        assert page.locator(".cr-record").count() == 10
+                        assert page.locator('[data-action="archiveNext"]').is_disabled()
                         touch(page, ".cr-epilogue-compact summary")
                         assert page.locator(".cr-epilogue-compact[open]").count() == 1
                         page.screenshot(
