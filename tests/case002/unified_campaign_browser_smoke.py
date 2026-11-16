@@ -204,9 +204,16 @@ def run():
                     assert "Артур Прайс" in premise.inner_text()
                     assert premise.bounding_box()["y"] < page.locator(
                         "#heroSelection .hero-cards").bounding_box()["y"]
+                    # Restrict to the heading: the detailed hero biography
+                    # also contains a .hero-eyebrow.
                     assert page.locator(
-                        "#heroSelection .hero-eyebrow").inner_text()==(
+                        "#heroSelection .hero-top .hero-eyebrow").inner_text()==(
                             "БЛИЖНИЙ КРУГ · ВЫБОР ГЕРОЯ")
+                    # The original dossier is long: its primary start button
+                    # must stay reachable in the same mobile viewport.
+                    start=page.locator("#heroSelection .hero-begin").bounding_box()
+                    assert start["y"]>=0 and start["y"]+start["height"]<=844, (
+                        name+" Case001 hero start fell below phone viewport")
                     page.locator("#heroSelection .hero-begin").click()
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()

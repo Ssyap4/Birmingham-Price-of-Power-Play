@@ -42,7 +42,7 @@
    heroImage.src="assets/heroes/"+hero+".webp";
   }
   name.textContent=data?.name||"Участник ближнего круга";
-  captionPlace.textContent=place.textContent.trim()||"Бирмингем · 1920";
+  captionPlace.textContent=(place.textContent.trim()||"Бирмингем · 1920").toLocaleUpperCase("ru-RU");
  }
  new MutationObserver(refresh).observe(place,{childList:true,characterData:true,subtree:true});
  new MutationObserver(refresh).observe(scene,{attributes:true,attributeFilter:["hidden"]});
