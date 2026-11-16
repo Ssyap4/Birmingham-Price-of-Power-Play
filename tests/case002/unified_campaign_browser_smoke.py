@@ -800,8 +800,10 @@ def run():
                         // displace Finn's unfinished investigation.
                         localStorage.setItem('birmingham_case002_draft_v3_victor',
                           JSON.stringify({...jack,hero:'victor',node:'Z01',
-                            finished:true,ending:'Z01',
+                            visited:[...new Set([...jack.visited,'Z01'])],
+                            finished:true,ending:'trainTruth',
                             startedAt:jack.startedAt+2000,
+                            completedAt:jack.startedAt+2500,
                             attemptId:'002-victor-completed'}));
                         localStorage.setItem('birmingham_case002_draft_v3_samuel',
                           JSON.stringify({...jack,hero:'samuel',
