@@ -298,7 +298,7 @@ def run():
                         assert "10 уникальных знаков" in page.locator("#campaignCriminalAchievements").inner_text()
                         assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").first.is_visible()
                         page.locator("#campaignCriminalAchievements .campaign-criminal-fold summary").first.tap()
-                        assert page.locator("#campaignCriminalAchievements .campaign-criminal-seal.earned").count() == 2
+                        assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").first.locator(".campaign-criminal-seal.earned").count() == 2
                         touch(page, '#campaignAchievements [data-open-section="campaignHistory"]')
                         assert page.locator("#campaignHistory").is_visible()
                         assert page.locator("#campaignCriminalHistory .campaign-criminal-attempt").count() == 8
