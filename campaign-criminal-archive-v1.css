@@ -42,3 +42,16 @@
  .campaign-hub .campaign-criminal-fold summary{font-size:15px;padding:11px;}
 }
 @media(max-width:345px){.campaign-hub .campaign-criminal-heroes{grid-template-columns:minmax(0,1fr);}}
+
+/* Archive navigation is direct UI, not a cutscene. The old .screen keyframe
+   starts by painting all achievements at opacity 0, creating a black flash
+   on iPhone and unreadable first screenshots. Match the corrected Profile. */
+#campaignAchievements.screen:not([hidden]),
+#campaignHistory.screen:not([hidden]),
+#campaignDossiers.screen:not([hidden]) {
+  animation:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  filter:none!important;
+}

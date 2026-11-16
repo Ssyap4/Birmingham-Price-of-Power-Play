@@ -293,6 +293,7 @@ def run():
                         touch(page, '[data-action="home"]')
                         touch(page, "#storyStart")
                         assert page.locator("#campaignAchievements").is_visible()
+                        assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignAchievements") == "1"
                         assert page.locator("#campaignCriminalAchievements").is_visible()
                         assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").count() >= 5
                         assert "10 уникальных знаков" in page.locator("#campaignCriminalAchievements").inner_text()
@@ -301,9 +302,11 @@ def run():
                         assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").first.locator(".campaign-criminal-seal.earned").count() == 2
                         touch(page, '#campaignAchievements [data-open-section="campaignHistory"]')
                         assert page.locator("#campaignHistory").is_visible()
+                        assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignHistory") == "1"
                         assert page.locator("#campaignCriminalHistory .campaign-criminal-attempt").count() == 8
                         touch(page, '#campaignHistory [data-open-section="campaignDossiers"]')
                         assert page.locator("#campaignDossiers").is_visible()
+                        assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignDossiers") == "1"
                         assert page.locator("#campaignCriminalDossiers .campaign-criminal-hero").count() == 5
                         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                         assert saved_ledger == page.evaluate("localStorage.getItem('birmingham_criminal_v2_ledger')")
