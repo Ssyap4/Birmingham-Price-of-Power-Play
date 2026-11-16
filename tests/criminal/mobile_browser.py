@@ -116,11 +116,21 @@ def run():
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
                     assert page.locator("#cabinetProfile").get_attribute("aria-label") == "Профиль"
+                    page.wait_for_function("() => document.getElementById('home').classList.contains('cabinet-art-ready')", timeout=15000)
+                    assert page.locator("#districtsCard .cabinet-entry-copy strong").is_visible()
+                    assert page.locator("#criminalEntry .cabinet-entry-copy strong").is_visible()
+                    assert page.locator("#cabinetProfile .cabinet-entry-copy strong").is_visible()
+                    assert page.locator("#cabinetProfile .cabinet-entry-copy strong").inner_text() == "Профиль"
+                    if width == 390:
+                        page.screenshot(path=str(OUT / (name + "-main-menu-v7.png")), full_page=True)
                     assert not page.locator("#cabinetSettings").count()
                     assert not page.locator("#cabinetSettingsDialog").count()
                     if width in (320, 390):
                         touch(page, "#cabinetProfile")
                         assert page.locator("#profile").is_visible()
+                        assert page.evaluate("getComputedStyle(document.getElementById('profile')).opacity") == "1"
+                        assert page.locator("#profile .profile-hero").is_visible()
+                        assert page.locator("#profile .profile-hero h2").inner_text() == "ТВОЯ ИСТОРИЯ"
                         assert page.locator("#playerCampaignOverview").is_visible()
                         assert page.locator(".player-overview-card").count() == 3
                         assert page.locator("#profileBtn").inner_text().endswith("ПРОФИЛЬ")
