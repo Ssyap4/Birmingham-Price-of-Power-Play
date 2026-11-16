@@ -41,12 +41,25 @@ test("valid completed operations appear in read-only unified archive, no duplica
  assert.ok(out.history.every(s=>s.hp>=0&&s.decisions>0));
  assert.equal(storage.writes,writes);
  assert.equal(storage.getItem(A.LEDGER),before);
- const repeat=ending("CR01","clean");
- // A second run with same ending and hero but unique attemptId => no second seal.
- const duplicate={...repeat,attemptId:"different"};
- // validateState rejects tampering with the completed attempt, so no award may be forged.
- assert.equal(E.validateState(duplicate).ok,false);
- assert.equal(projection.snapshot(storage,A,C).unique,10);
+ // A genuinely replayed second attempt with a different ID is valid,
+ // but it MUST NOT produce a second unique ending reward.
+ const p=proof.missions.CR01.terminalProofs.clean;
+ let repeated=E.create("CR01",p.seed,"repeat_CR01_clean",p.startedAt+10);
+ for(const step of p.path) repeated=E.choose(repeated,step.choiceId,repeated.revision);
+ assert.equal(E.validateState(repeated).ok,true);
+ assert.equal(repeated.terminalId,"clean");
+ assert.equal(A.save(storage,repeated).ok,true);
+ const recovered=A.recover(storage,repeated);
+ assert.equal(recovered.ok,true);
+ assert.equal(recovered.awardAdded,false);
+ const after=storage.getItem(A.LEDGER),priorWrites=storage.writes;
+ const projectionAgain=projection.snapshot(storage,A,C);
+ assert.equal(projectionAgain.total,11);
+ assert.equal(projectionAgain.unique,10);
+ assert.equal(projectionAgain.missions[0].attempts,3);
+ assert.equal(projectionAgain.history[0].newSeal,false);
+ assert.equal(storage.getItem(A.LEDGER),after);
+ assert.equal(storage.writes,priorWrites);
 });
 test("tampered ledger is never displayed as earned progress or rewards",()=>{
  const storage=store(),s=ending("CR04","dead");
