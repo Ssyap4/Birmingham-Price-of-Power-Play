@@ -140,7 +140,7 @@ for(const id of gearIds){
  if(!/^[a-zA-Z]+$/.test(id))throw Error("Unsafe equipment id: "+id);
  const name="assets/criminal/equipment/"+id+".svg";
  const svg=fs.readFileSync(path.join(ROOT,name),"utf8");
- if(!/^<svg\b/.test(svg)||/<script|<foreignObject|\bon\w+\s*=|https?:\/\//i.test(svg))
+ if(!/^<svg\b/.test(svg)||/<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i.test(svg))
   throw Error("Unsafe criminal equipment SVG "+id);
  copy(name);
 }

@@ -45,7 +45,7 @@ function copy(name,expectedHash){
   if(name.endsWith(".webp") &&
     (bytes.toString("ascii",0,4)!=="RIFF" || bytes.toString("ascii",8,12)!=="WEBP"))
     throw Error("Not WebP "+name);
-  if(name.endsWith(".svg") && (!bytes.toString("utf8").startsWith("<svg") || /<script|<foreignObject|\bon\w+\s*=|https?:\/\//i.test(bytes.toString("utf8"))))
+  if(name.endsWith(".svg") && (!bytes.toString("utf8").startsWith("<svg") || /<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i.test(bytes.toString("utf8"))))
     throw Error("Unsafe equipment image "+name);
   const dest = path.join(OUT,name);
   fs.mkdirSync(path.dirname(dest),{recursive:true});

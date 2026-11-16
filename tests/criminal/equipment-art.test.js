@@ -16,7 +16,7 @@ test("each of the 28 real inventory items has its own safe illustrated SVG", () 
     const s=fs.readFileSync(path.join(dir,id+".svg"),"utf8");
     assert.match(s,/^<svg[^>]*viewBox="0 0 96 96"/);
     assert.match(s,/<path /);
-    assert.doesNotMatch(s,/<script|<foreignObject|\bon\w+\s*=|https?:\/\//i);
+    assert.doesNotMatch(s,/<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i);
     drawings.add(s);
   }
   assert.equal(drawings.size,28,"none of the illustrations are symbol duplicates");
