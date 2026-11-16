@@ -723,6 +723,82 @@ def run():
                     page.screenshot(path=str(SHOTS/f"{name}-unified-archive-320.png"))
                     assert not errors, name+" archive JS errors: "+str(errors)
                     context.close()
+                    # Cross-case continuity: a returning player must see
+                    # the right save/hero on map, Case 001 and Case 002.
+                    continuity=browser.new_context(
+                        viewport={"width":390,"height":844},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    returning=continuity.new_page()
+                    returning.route("https://telegram.org/js/telegram-web-app.js",
+                                    lambda route:route.abort())
+                    returning.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    returning.evaluate("""(raw) => {
+                        const fin={
+                         node:'intro',items:[],flags:{},trail:[],
+                         ending:null,started:1700000000000,health:100,
+                         riskSeen:[],bandaged:false,medicalKits:0
+                        };
+                        localStorage.setItem('birmingham_case_smol_heath_v1_finn',
+                          JSON.stringify(fin));
+                        localStorage.setItem('birmingham_case_smol_heath_v1_jack',
+                          JSON.stringify({...fin,node:'endingRescue',
+                            ending:'endingRescue',started:1699999999000}));
+                        localStorage.setItem('birmingham_hero_selection_v1','finn');
+                        const jack=JSON.parse(raw);
+                        const copied={...jack,hero:'finn',
+                            startedAt:jack.startedAt+1000,
+                            attemptId:'002-finn-test-copy'};
+                        localStorage.setItem('birmingham_case002_draft_v3_jack',
+                          raw);
+                        localStorage.setItem('birmingham_case002_draft_v3_finn',
+                          JSON.stringify(copied));
+                    }""",case2)
+                    original_finn=returning.evaluate("""() =>
+                        localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")
+                    returning.locator("#districtsCard").click()
+                    status=returning.locator("#campaignDistrictState")
+                    assert status.is_visible()
+                    assert "В РАБОТЕ: 1 · ЗАВЕРШЕНО: 1" in status.inner_text()
+                    assert "Финн О’Коннор" in status.inner_text()
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#launchFirstCase").inner_text()
+                    returning.locator("#launchFirstCase").click()
+                    assert returning.locator(
+                        '#heroCards .hero-card.active').inner_text().find("Финн")>=0
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#heroSelection .hero-begin").inner_text()
+                    returning.locator("#heroSelection .hero-close").click()
+                    assert returning.evaluate(
+                        "() => document.activeElement.id")=="launchFirstCase"
+                    returning.locator('.map-pin[data-district="digbeth"]').click()
+                    assert "В РАБОТЕ: 2 · ЗАВЕРШЕНО: 0" in status.inner_text()
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#launchSecondCase").inner_text()
+                    returning.wait_for_function("""() => {
+                        const y=document.querySelector('#districtCase')
+                          .getBoundingClientRect().top;
+                        return y>=0 && y<innerHeight-90;
+                    }""",timeout=8000)
+                    returning.locator("#launchSecondCase").click()
+                    returning.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+                    assert returning.locator("#caseBriefing").is_hidden()
+                    assert returning.locator("#hero").input_value()=="finn"
+                    assert returning.locator(
+                        '#heroGallery [data-hero="finn"]').get_attribute(
+                            "aria-pressed")=="true"
+                    assert returning.locator("#resume").is_visible()
+                    returning.locator("#case002MapReturn").click()
+                    returning.wait_for_url("**/index.html#district-digbeth")
+                    returning.wait_for_function("""() =>
+                        !document.querySelector('#campaignDistrictState').hidden &&
+                        document.querySelector('#campaignDistrictState')
+                          .textContent.includes('В РАБОТЕ: 2')
+                    """)
+                    assert returning.evaluate("""() =>
+                        localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")==original_finn
+                    assert not returning.evaluate(
+                        "() => document.documentElement.scrollWidth > innerWidth+1")
+                    continuity.close()
                     # Silent loss of a Case 001 achievement write must NEVER
                     # show the player a celebratory popup or a phantom seal.
                     restricted=browser.new_context(

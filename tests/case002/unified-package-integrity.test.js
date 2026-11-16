@@ -12,6 +12,7 @@ for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
  "campaign-hub-v1.js","campaign-case002-archive-v1.js",
  "campaign-case002-archive-v1.css","src/case002/browser-data-v3.js",
  "case002-map-entry-v1.js","case002-map-entry-v1.css",
+ "campaign-map-journey-v1.js","campaign-map-journey-v1.css",
  "case001-briefing-v1.js","case001-portrait-stage-v1.js",
  "case001-portrait-stage-v1.css","case001-unified-reader-v1.css",
  "case001-unified-evidence-v1.css",
@@ -35,6 +36,9 @@ assert(shell.includes("case001-campaign-cohesion-v1.js")&&
  "Case 001 unified mobile composition is not included");
 assert(shell.includes('id="districtsCard"')&&shell.includes('data-district="digbeth"'),
  "The original five-district campaign map must be the publication entry");
+assert(shell.includes('campaign-map-journey-v1.js')&&
+ shell.includes('campaign-map-journey-v1.css'),
+ "Unified district continuation summary must ship with the game");
 assert(shell.includes('case002-map-entry-v1.js')&&map.includes("launchSecondCase")&&
  map.includes("launchFirstCase")&&map.includes("from=map"),
  "The real Digbeth map button must reach Case 002 at the same origin");

@@ -196,10 +196,25 @@ function init(){
  $("priorDetails").hidden=priorRecords.length===0;
  // A returning player with any Case 002 save goes directly to the hero screen.
  // Never write a new preference or touch the saved game just to display UI.
- let hasSave=false;
+ let hasSave=false,preferredHero=null,latestStart=-Infinity;
  if(store)try{
-  hasSave=data.contract.heroes.some(hero=>Boolean(store.getItem(api.SAVE_PREFIX+hero)));
+  for(const hero of data.contract.heroes){
+   const raw=store.getItem(api.SAVE_PREFIX+hero);
+   if(!raw)continue;
+   hasSave=true;
+   try{
+    const saved=JSON.parse(raw);
+    // Use the newest valid attempt on this device, never a guessed
+    // preference or a write to the game's canonical save slots.
+    if(saved?.version===3&&saved.caseId==="002"&&saved.hero===hero&&
+       typeof saved.node==="string"&&typeof saved.attemptId==="string"&&
+       Number.isFinite(saved.startedAt)&&saved.startedAt>latestStart){
+     preferredHero=hero;latestStart=saved.startedAt;
+    }
+   }catch(_){/* damaged slot remains available for recovery */}
+  }
  }catch(e){console.warn("[Case 002] Cannot inspect saved slots",e);}
+ if(preferredHero)$("hero").value=preferredHero;
  $("caseBriefing").hidden=hasSave;
  $("launch").hidden=!hasSave;
  $("app").dataset.screen=hasSave?"selection":"briefing";
