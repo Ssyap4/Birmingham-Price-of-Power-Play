@@ -208,6 +208,10 @@ def run():
                                     == count
                                 )
                                 assert page.locator(".cr-result").is_visible()
+                                assert page.locator(".cr-reward-toast").is_visible()
+                                assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
+                                touch(page, '[data-action="dismissReward"]')
+                                assert not page.locator(".cr-reward-toast").count()
                                 bounds(page)
                                 if kind == "care":
                                     page.screenshot(
@@ -325,6 +329,16 @@ def run():
                     in page.locator("#criminalScreen h1").inner_text()
                 )
                 assert not page.locator(".cr-consequence").count()
+                # Both top-menu and legacy profile navigation must honour a cancelled
+                # pending-write warning without discarding the in-memory RNG outcome.
+                page.once("dialog", lambda d: d.dismiss())
+                touch(page, '[data-action="home"]')
+                assert page.locator("#criminalScreen").is_visible()
+                assert "Ход рассчитан, но не сохранён" in page.locator("#criminalScreen h1").inner_text()
+                page.once("dialog", lambda d: d.dismiss())
+                page.evaluate("document.getElementById('profileBtn').click()")
+                assert page.locator("#criminalScreen").is_visible()
+                assert value(page, "CR01") == before
                 page.evaluate("()=>{Storage.prototype.setItem=window.__oldSet;}")
                 touch(page, '[data-action="retryWrite"]')
                 assert value(page, "CR01") == expected
