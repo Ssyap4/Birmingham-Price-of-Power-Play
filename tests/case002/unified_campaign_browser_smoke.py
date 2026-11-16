@@ -641,7 +641,7 @@ def run():
                          'birmingham_campaign_unique_rewards_v1')||'{}')).length
                     })""")==once, name+" finale must not duplicate rewards"
                     terminal.close()
-                    print("PASS "+name+": cross-case archive deep links, Digbeth 
+                    print("PASS "+name+": cross-case archive deep links, Digbeth "
                           "return, Case001 saved-write acknowledgement and no "
                           "phantom notifications; 002 resume and archives intact")
                 finally:
