@@ -31,9 +31,12 @@
     smallHeath?"ДЕЛО №001 · ДОСТУПНО":"ИЗ АРХИВА БУДУЩИХ ДЕЛ";
  }
  document.querySelectorAll(".map-pin").forEach(pin=>pin.addEventListener("click",refresh));
- // The original map's 'open' handler selects Small Heath programmatically.
- // It does not emit a pin click: synchronize our case buttons on re-entry.
- document.getElementById("districtsCard")?.addEventListener("click",refresh);
+ // Reopening the map reselects Small Heath without emitting a map-pin
+ // event. Case 001's original button is managed by its own pin-click handler;
+ // reuse that exact handler so both launch buttons and the label agree.
+ document.getElementById("districtsCard")?.addEventListener("click",()=>{
+   document.querySelector('.map-pin[data-district="small-heath"]')?.click();
+ });
  function openHash(){
    if(window.location.hash!=="#district-digbeth")return;
    document.getElementById("districtsCard")?.click();
