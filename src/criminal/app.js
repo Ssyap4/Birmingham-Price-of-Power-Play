@@ -394,6 +394,23 @@
       );
     }
   }
+  function epilogue(s, compact = false) {
+    const cards = globalThis.CriminalEpilogues?.describe(s) || [];
+    if (!cards.length) return "";
+    const rendered = (compact ? cards.slice(0, 1) : cards)
+      .map(
+        (c) =>
+          `<article class="cr-epilogue-card" data-tone="${esc(c.tone)}"><small>${esc(c.title)}</small><p>${esc(c.text)}</p></article>`,
+      )
+      .join("");
+    if (compact)
+      return `<details class="cr-epilogue-compact"><summary>Что осталось после этой ночи</summary><div>${rendered}</div></details>`;
+    return `<section class="cr-epilogue" aria-label="Последствия для людей"><h2>После этой ночи</h2><div class="cr-epilogue-grid">${rendered}</div></section>`;
+  }
+  function verifiedNotes(notes) {
+    if (!notes?.length) return "";
+    return `<details class="cr-fact-notes"><summary>Факты, подтверждённые решениями · ${notes.length}</summary><ul>${notes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details>`;
+  }
   function awardBanner() {
     if (!rewardNotice) return "";
     return `<aside class="cr-reward-toast" role="status" aria-live="assertive" aria-label="Новая награда">
@@ -425,7 +442,7 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div><ul>${r.notes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
+      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
     );
   }
   function chronicle() {
@@ -459,7 +476,7 @@
           .map((s) => {
             const m = C.missions[s.missionId],
               r = E.report(s);
-            return `<article class="cr-record"><small>${m.id} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p>${esc(r.text)}</p><p>HP ${s.hp}/100 · ${s.revision} решений</p><ul>${r.notes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></article>`;
+            return `<article class="cr-record"><small>${m.id} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p>${esc(r.text)}</p><p>HP ${s.hp}/100 · ${s.revision} решений</p>${epilogue(s, true)}${verifiedNotes(r.notes)}</article>`;
           })
           .join("") || "<p>Завершённых попыток пока нет.</p>"
       }${btn("commonArchive", "Открыть общие достижения кампании")}`,
