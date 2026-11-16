@@ -235,6 +235,59 @@ def run():
                     case1=page.evaluate("""() => localStorage.getItem(
                         'birmingham_case_smol_heath_v1_jack')""")
                     assert case1, "The original Case 001 must create its own save"
+                    # Keep the Case 001 inventory in the physical phone
+                    # viewport. A finished screen-entry transform used to turn
+                    # this fixed overlay into a multi-thousand-pixel panel.
+                    old_findings=page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case_v20_findings_jack')""")
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const state=JSON.parse(localStorage.getItem(key));
+                        state.items=['key','envelope','receipt','ledger','invoice','route'];
+                        localStorage.setItem(key,JSON.stringify(state));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:state.started,
+                            deductions:['След склада D-17'],reactions:[]}));
+                    }""")
+                    for board_width in (320,390):
+                        page.set_viewport_size({"width":board_width,"height":790})
+                        page.locator(".v34-open-inventory").click()
+                        shade=page.locator("#caseGame .v33-shade")
+                        assert shade.is_visible()
+                        board=page.locator("#caseGame .v33-window")
+                        overlay=shade.bounding_box()
+                        window=board.bounding_box()
+                        assert abs(overlay["y"])<2, name+" board offset"
+                        assert abs(overlay["height"]-790)<2, name+" board viewport height"
+                        assert window["height"]<=790
+                        assert board.evaluate(
+                            "el => el.scrollHeight > el.clientHeight"), (
+                            name+" board must remain independently scrollable")
+                        solved=page.locator(".v33-solved-board")
+                        assert solved.evaluate(
+                            "el => getComputedStyle(el).display")=="grid"
+                        assert solved.locator(".v33-tile").count()==2
+                        assert page.locator(".v33-board .v33-tile").count()==4
+                        assert page.locator("#caseGame").evaluate(
+                            "el => getComputedStyle(el).animationName")=="none"
+                        board.evaluate("el => el.scrollTop=el.scrollHeight")
+                        close=page.locator(".v33-close")
+                        assert 0<=close.bounding_box()["y"]<80
+                        close.click()
+                        assert shade.is_hidden()
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.evaluate("""(data) => {
+                        localStorage.setItem('birmingham_case_smol_heath_v1_jack',
+                            data[0]);
+                        if(data[1]===null)
+                          localStorage.removeItem('birmingham_case_v20_findings_jack');
+                        else localStorage.setItem('birmingham_case_v20_findings_jack',
+                            data[1]);
+                    }""",[case1,old_findings])
+                    page.set_viewport_size({"width":390,"height":844})
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case_smol_heath_v1_jack')""")==case1
                     page.screenshot(path=str(SHOTS/f"{name}-case001.png"))
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
