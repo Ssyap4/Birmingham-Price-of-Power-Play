@@ -259,7 +259,7 @@
       state.stats,
     )
       .map(([k, v]) => `<span>${names[k]} <b>${v}</b></span>`)
-      .join("")}</div>`;
+      .join("")}</div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div>`;
   }
   function inventory() {
     return `<details class="cr-inventory"><summary>Снаряжение · ${Object.keys(state.inventory).length} позиций</summary><div>${
@@ -322,6 +322,11 @@
       })
       .join("")}</ol></details>`;
   }
+  function actProgress(current) {
+    return `<div class="cr-act-progress" aria-label="Акт ${current} из 3">${[1, 2, 3]
+      .map((act) => `<span class="${act <= current ? "is-reached" : ""}" aria-hidden="true"></span>`)
+      .join("")}</div>`;
+  }
   function scene(showResult) {
     mode = "scene";
     const m = C.missions[state.missionId];
@@ -347,7 +352,7 @@
       )
       .join("");
     render(
-      `<header class="cr-heading"><span>${m.id} · АКТ ${n.act}/3 · ${esc(m.acts[n.act - 1])}</span><h1>${esc(n.title)}</h1></header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
+      `<header class="cr-heading"><span>${m.id} · АКТ ${n.act}/3 · ${esc(m.acts[n.act - 1])}</span><h1>${esc(n.title)}</h1>${actProgress(n.act)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
         result ||
         `${art(m, state.sceneId)}<article class="cr-story"><p>${esc(n.text)}</p><div class="cr-dialogue">${n.lines
           .filter((l) => !l[2] || E.test(state, l[2]))
