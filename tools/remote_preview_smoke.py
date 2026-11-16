@@ -43,6 +43,14 @@ with sync_playwright() as p:
                     return im && im.complete && im.naturalWidth===720 && im.naturalHeight===900;
                 }""", timeout=30000
             )
+            preflight = page.evaluate("""mission => {
+              const a=new Uint32Array(2);crypto.getRandomValues(a);
+              const id="cr_"+Date.now().toString(36)+"_"+a[1].toString(36);
+              try {const v=CriminalEngine.create(mission,a[0],id);
+                return {ok:true,seed:a[0],id,attemptId:v.attemptId};
+              } catch(e) {return {ok:false,seed:a[0],id,message:e.message,registered:Object.keys(CriminalContent.missions)};}
+            }""",mission)
+            print("PREFLIGHT",engine,mission,preflight,flush=True)
             tap(page, '[data-action="start"]')
             if page.locator("#criminalScreen .cr-choices button").count()<1:
                 page.screenshot(path=str(OUT/(engine+"-"+mission+"-failure.png")),full_page=True)
