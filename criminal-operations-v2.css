@@ -458,3 +458,135 @@ body[data-criminal="active"] > .bh-audio-controls button {
   color: #f0d9b0;
   border-radius: 3px;
 }
+
+/* Isolated v3 presentation polish: no detective UI selectors are modified. */
+#criminalScreen .cr-act-progress {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 16px 0 4px;
+}
+#criminalScreen .cr-act-progress span {
+  height: 4px;
+  background: #424740;
+  border-radius: 2px;
+}
+#criminalScreen .cr-act-progress span.is-reached {
+  background: linear-gradient(90deg, #9d7844, #e6c18b);
+  box-shadow: 0 0 9px #a1835360;
+}
+#criminalScreen .cr-hp-track {
+  width: 100%;
+  height: 7px;
+  background: #422e2e;
+  margin: 8px 0 17px;
+  overflow: hidden;
+  border: 1px solid #67564a;
+  border-radius: 6px;
+}
+#criminalScreen .cr-hp-track > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #bd654c, #d6a96e);
+  transition: width 240ms ease-out;
+}
+#criminalScreen .cr-story {
+  border: 1px solid #514632;
+  border-left: 3px solid #ad8850;
+  padding: 4px 16px 16px;
+  background: linear-gradient(160deg, #202a29, #161e1f 76%);
+  box-shadow: inset 0 1px 0 #e6c18b12;
+}
+#criminalScreen .cr-story .cr-dialogue {
+  margin-top: 16px;
+}
+#criminalScreen .cr-dialogue p {
+  margin: 0;
+  padding: 11px 6px 13px 0;
+  border-bottom: 1px solid #8e795530;
+}
+#criminalScreen .cr-dialogue p:last-child {
+  border-bottom: 0;
+}
+#criminalScreen .cr-frame {
+  border: 1px solid #6b5538;
+  box-shadow: 0 14px 35px #0009;
+}
+#criminalScreen .cr-frame img {
+  background: #171c1d;
+}
+#criminalScreen .cr-choices button {
+  position: relative;
+  border-left: 4px solid #ba945a;
+  background: linear-gradient(125deg, #28312e, #172123);
+}
+#criminalScreen .cr-choices button:disabled {
+  border-left-color: #625746;
+  background: #1a2222;
+}
+#criminalScreen .cr-consequence-origin {
+  display: block;
+  color: #e2c08b;
+  font-weight: 700;
+  margin: 0 0 5px;
+}
+#criminalScreen .cr-reward-toast {
+  position: fixed;
+  z-index: 10030;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(430px, calc(100vw - 24px));
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 12px;
+  border: 2px solid #e7c18a;
+  border-radius: 7px;
+  background: linear-gradient(140deg, #334034 0%, #162323 90%);
+  box-shadow: 0 10px 46px #000e, 0 0 0 2px #141b1b;
+  color: #fae6bc;
+  font: 14px/1.4 system-ui, sans-serif;
+  animation: cr-award-appear 300ms ease-out both;
+}
+#criminalScreen .cr-reward-toast .cr-reward-symbol {
+  font-size: 30px;
+  color: #efd093;
+  text-shadow: 0 0 12px #e5ba7a80;
+}
+#criminalScreen .cr-reward-toast b,
+#criminalScreen .cr-reward-toast span,
+#criminalScreen .cr-reward-toast small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+#criminalScreen .cr-reward-toast b {
+  font-size: 15px;
+  color: #ffdf9d;
+}
+#criminalScreen .cr-reward-toast small {
+  margin-top: 4px;
+  color: #d0d7c5;
+}
+#criminalScreen .cr-reward-toast button {
+  min-width: 60px;
+  min-height: 44px;
+  padding: 6px;
+  font-size: 12px;
+  text-align: center;
+  border-color: #a08a65;
+  background: #25302c;
+}
+#criminalScreen[data-telegram="true"] .cr-reward-toast {
+  top: calc(10px + var(--cr-safe-top, 0px));
+}
+@keyframes cr-award-appear {
+  from { opacity: 0; box-shadow: 0 2px 10px #000a; }
+  to { opacity: 1; box-shadow: 0 10px 46px #000e, 0 0 0 2px #141b1b; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #criminalScreen .cr-reward-toast { animation: none; }
+  #criminalScreen .cr-hp-track > span { transition: none; }
+}
