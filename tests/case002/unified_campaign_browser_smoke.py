@@ -216,6 +216,24 @@ def run():
                         name+" Case001 hero start fell below phone viewport")
                     page.locator("#heroSelection .hero-begin").click()
                     assert page.locator("#case001Briefing").is_visible()
+                    assert "закрытие страницы не сбрасывает попытку" in (
+                        page.locator("#case001Briefing").inner_text())
+                    assert "Спасение, доказательства, сделка" not in (
+                        page.locator("#case001Briefing").inner_text())
+                    page.keyboard.press("Escape")
+                    assert page.locator("#case001Briefing").is_hidden()
+                    assert page.locator("#heroSelection").is_visible()
+                    assert page.locator("#caseGame").is_hidden()
+                    page.locator("#heroSelection .hero-begin").focus()
+                    page.keyboard.press("Tab")
+                    assert page.evaluate("""() => document.activeElement
+                        .classList.contains('hero-close')"""), (
+                        name+" Case 001 hero selection leaks Tab focus")
+                    page.keyboard.press("Shift+Tab")
+                    assert page.evaluate("""() => document.activeElement
+                        .classList.contains('hero-begin')""")
+                    page.locator("#heroSelection .hero-begin").click()
+                    assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
                     assert page.locator("#caseGame").is_visible()
                     # The complete Case 001 UI must read as one campaign:
@@ -419,6 +437,30 @@ def run():
                           ?.textContent.includes('Открыто решений: 2')
                     """)
                     assert page.locator("#caseChoices > .case-choice:disabled").count()==0
+                    nav.locator('[data-go="deduction"]').click()
+                    page.locator('.v33-solved-board .v33-tile[data-id="receipt"]').click()
+                    page.locator('.v33-solved-board .v33-tile[data-id="ledger"]').click()
+                    assert page.locator(".v33-result-layer").is_visible()
+                    page.keyboard.press("Escape")
+                    assert page.locator(".v33-result-layer").count()==0
+                    assert quick_shade.is_visible()
+                    assert page.locator(".v33-solved-board .v33-tile").count()==2
+                    assert "Установлено связей: 1" in page.locator(
+                        ".v33-stats").inner_text()
+                    page.keyboard.press("Escape")
+                    assert quick_shade.is_hidden()
+                    assert nav.is_visible()
+                    nav.locator('[data-go="deduction"]').click()
+                    page.locator('.v33-solved-board .v33-tile[data-id="receipt"]').click()
+                    page.locator('.v33-solved-board .v33-tile[data-id="ledger"]').click()
+                    assert page.locator(".v33-result-layer").is_visible()
+                    quick_shade.evaluate("""el => el.dispatchEvent(
+                        new MouseEvent('click',{bubbles:true}))""")
+                    assert quick_shade.is_hidden()
+                    assert page.locator(".v33-result-layer").count()==0
+                    nav.locator('[data-go="deduction"]').click()
+                    assert page.locator(".v33-result-layer").count()==0
+                    page.locator(".v33-close").click()
                     nav.locator('[data-go="choices"]').click()
                     assert nav.locator('[data-go="choices"]').get_attribute(
                         "data-new-decision")=="false"
@@ -758,9 +800,16 @@ def run():
                         // displace Finn's unfinished investigation.
                         localStorage.setItem('birmingham_case002_draft_v3_victor',
                           JSON.stringify({...jack,hero:'victor',node:'Z01',
-                            finished:true,ending:'Z01',
+                            visited:[...new Set([...jack.visited,'Z01'])],
+                            finished:true,ending:'trainTruth',
                             startedAt:jack.startedAt+2000,
+                            completedAt:jack.startedAt+2500,
                             attemptId:'002-victor-completed'}));
+                        localStorage.setItem('birmingham_case002_draft_v3_samuel',
+                          JSON.stringify({...jack,hero:'samuel',
+                            attemptId:'002-corrupt-history',
+                            startedAt:jack.startedAt+3000,
+                            history:'not an array'}));
                     }""",case2)
                     original_finn=returning.evaluate("""() =>
                         localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")
@@ -776,11 +825,19 @@ def run():
                         '#heroCards .hero-card.active').inner_text().find("Финн")>=0
                     assert "ПРОДОЛЖИТЬ" in returning.locator(
                         "#heroSelection .hero-begin").inner_text()
+                    assert returning.locator(
+                        '#heroCards .hero-card.active .hero-case-progress'
+                        ).get_attribute("data-status")=="active"
+                    assert returning.locator(
+                        '#heroCards .hero-card:nth-child(1) .hero-case-progress'
+                        ).get_attribute("data-status")=="finished"
                     returning.locator("#heroSelection .hero-close").click()
                     assert returning.evaluate(
                         "() => document.activeElement.id")=="launchFirstCase"
                     returning.locator('.map-pin[data-district="digbeth"]').click()
                     assert "В РАБОТЕ: 2 · ЗАВЕРШЕНО: 1" in status.inner_text()
+                    assert "Не удалось прочитать 1 сохранение" in (
+                        status.inner_text())
                     assert "ПРОДОЛЖИТЬ" in returning.locator(
                         "#launchSecondCase").inner_text()
                     returning.wait_for_function("""() => {
@@ -795,6 +852,15 @@ def run():
                     assert returning.locator(
                         '#heroGallery [data-hero="finn"]').get_attribute(
                             "aria-pressed")=="true"
+                    assert returning.locator("#resume").is_visible()
+                    samuel=returning.locator('#heroGallery [data-hero="samuel"]')
+                    assert samuel.get_attribute("data-save-status")=="damaged"
+                    assert "ПОВРЕЖДЕНО" in samuel.inner_text()
+                    samuel.click()
+                    assert returning.locator("#resume").is_hidden()
+                    assert "Сохранение повреждено" in returning.locator(
+                        "#selectedHeroStatus").inner_text()
+                    returning.locator('#heroGallery [data-hero="finn"]').click()
                     assert returning.locator("#resume").is_visible()
                     returning.locator("#case002MapReturn").click()
                     returning.wait_for_url("**/index.html#district-digbeth")

@@ -2188,18 +2188,23 @@ def main():
                         assert link_page.locator(".collection-return-inline").is_visible()
                         assert link_page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""") == after_finish
-                        # Attempt to load a genuinely invalid save of another
-                        # hero, without modifying the original finished slot.
+                        # A broken hero slot must be visibly marked and
+                        # offered only as a confirmed replacement, never as
+                        # a false 'continue' action. The earlier finale stays
+                        # available from the collection return control.
                         link_page.evaluate("""() => localStorage.setItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'finn','{broken-save')""")
                         link_page.locator('.hero-card[data-hero="finn"]').click()
-                        assert link_page.locator("#resume").is_visible()
-                        link_page.locator("#resume").click()
-                        assert link_page.locator("#launchError").is_visible()
-                        assert "Не удалось открыть сохранение" in link_page.locator(
-                            "#launchError").inner_text()
+                        assert link_page.locator("#resume").is_hidden()
+                        assert link_page.locator(
+                            '.hero-card[data-hero="finn"]').get_attribute(
+                                "data-save-status")=="damaged"
+                        assert "ПОВРЕЖДЕНО" in link_page.locator(
+                            '.hero-card[data-hero="finn"]').inner_text()
+                        assert "Сохранение повреждено" in link_page.locator(
+                            "#selectedHeroStatus").inner_text()
                         assert link_page.locator("#collectionReturnBar").is_visible(), (
-                            "Invalid resume must preserve the original finale bookmark"
+                            "Invalid slot inspection must preserve the original finale bookmark"
                         )
                         link_page.evaluate("""() => localStorage.removeItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'finn')""")

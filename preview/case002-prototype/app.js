@@ -160,6 +160,57 @@ function queueReadingProgress(){
  });
 }
 function appError(message){$("launchError").hidden=false;$("launchError").textContent=String(message);}
+// Read-only preflight for hero selection. Never attempt engine.load() here:
+// restoring a completed attempt can flush the independent records archive.
+// Older valid v3 saves without an evidenceLedger remain resumable because
+// engine.load() reconstructs that ledger before checking the save.
+function readResumeSlot(hero){
+ if(!store)return {status:"missing"};
+ let raw;
+ try{raw=store.getItem(api.SAVE_PREFIX+hero);}
+ catch(_){return {status:"damaged"};}
+ if(raw===null)return {status:"missing"};
+ let s;
+ try{s=JSON.parse(raw);}catch(_){return {status:"damaged"};}
+ const contract=data?.contract,graph=data?.graph;
+ const known=new Set((graph?.nodes||[]).map(n=>n.id));
+ const list=(v,supported)=>Array.isArray(v)&&
+  v.every(x=>supported.includes(x))&&new Set(v).size===v.length;
+ const witnesses=s?.witnesses;
+ const valid=!!contract&&!!s&&s.version===3&&s.caseId==="002"&&
+  s.hero===hero&&typeof s.attemptId==="string"&&
+  s.attemptId.length>0&&s.attemptId.length<160&&
+  known.has(s.node)&&Number.isFinite(s.startedAt)&&s.startedAt>0&&
+  Number.isFinite(s.health)&&s.health>=0&&s.health<=100&&
+  list(s.evidence,contract.supportedEvidence)&&
+  list(s.routes,["rail","canal","factory"])&&
+  list(s.visited,[...known])&&s.visited.includes(s.node)&&
+  Array.isArray(s.history)&&s.history.length<=2000&&
+  !!s.flags&&typeof s.flags==="object"&&!Array.isArray(s.flags)&&
+  !!witnesses&&typeof witnesses==="object"&&
+  !Array.isArray(witnesses)&&Object.keys(witnesses).length===3&&
+  ["ada","tommy","mercer"].every(id=>
+   contract.witnessStates.includes(witnesses[id]))&&
+  typeof s.finished==="boolean"&&
+  (s.finished?contract.endings.some(e=>e.id===s.ending):s.ending===null)&&
+  (!s.prior||!(s.prior.heroId===hero&&s.prior.ending==="endingDeath"));
+ if(!valid)return {status:"damaged"};
+ // A present but contradictory ledger cannot be repaired on load.
+ // Absence alone is supported by the historical v3 migration path.
+ if(s.evidenceLedger!==undefined){
+  const ledger=s.evidenceLedger;
+  if(!ledger||typeof ledger!=="object"||Array.isArray(ledger)||
+     Object.keys(ledger).length!==s.evidence.length||
+     s.evidence.some(id=>{
+      const x=ledger[id];
+      return !x||typeof x.source!=="string"||!x.source||
+       typeof x.form!=="string"||!x.form||
+       typeof x.originalHolder!=="string"||
+       !["hero","workers"].includes(x.holder)||x.verified!==true;
+     }))return {status:"damaged"};
+ }
+ return {status:"ready",state:s};
+}
 function readStorage(){
  try{
   const ls=window.localStorage,probe="case002_draft_probe";
@@ -197,32 +248,18 @@ function init(){
  // A returning player with any Case 002 save goes directly to the hero screen.
  // Never write a new preference or touch the saved game just to display UI.
  let hasSave=false,preferredHero=null,latestStart=-Infinity,preferredActive=false;
- if(store)try{
-  for(const hero of data.contract.heroes){
-   const raw=store.getItem(api.SAVE_PREFIX+hero);
-   if(!raw)continue;
-   hasSave=true;
-   try{
-    const saved=JSON.parse(raw);
-    // Active attempts outrank completed reports. Within the same
-    // status, prefer the newest attempt. Nothing is persisted on entry.
-    if(saved?.version===3&&saved.caseId==="002"&&saved.hero===hero&&
-       typeof saved.node==="string"&&typeof saved.attemptId==="string"&&
-       Number.isFinite(saved.startedAt)&&saved.startedAt>0&&
-       typeof saved.finished==="boolean"&&
-       (data.graph.nodes.some(scene=>scene.id===saved.node))&&
-       (saved.finished?data.contract.endings.some(e=>e.id===saved.ending):
-        saved.ending===null)){
-     const active=!saved.finished;
-     if(!preferredHero||(active&&!preferredActive)||
-        (active===preferredActive&&saved.startedAt>latestStart)){
-      preferredHero=hero;latestStart=saved.startedAt;
-      preferredActive=active;
-     }
-    }
-   }catch(_){/* damaged slot remains available for recovery */}
+ if(store)for(const hero of data.contract.heroes){
+  const slot=readResumeSlot(hero);
+  if(slot.status==="missing")continue;
+  hasSave=true;
+  if(slot.status!=="ready")continue;
+  const saved=slot.state,active=!saved.finished;
+  if(!preferredHero||(active&&!preferredActive)||
+     (active===preferredActive&&saved.startedAt>latestStart)){
+   preferredHero=hero;latestStart=saved.startedAt;
+   preferredActive=active;
   }
- }catch(e){console.warn("[Case 002] Cannot inspect saved slots",e);}
+ }
  if(preferredHero)$("hero").value=preferredHero;
  $("caseBriefing").hidden=hasSave;
  $("launch").hidden=!hasSave;
@@ -966,20 +1003,24 @@ function grantCommittedAchievements(){
 }
 function refreshResume(){
  const hero=$("hero").value;
- let available=false;
+ let available=false,selectedDamaged=false;
  try{
   for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
    const selected=card.dataset.hero===hero;
    card.setAttribute("aria-pressed",String(selected));
-   const hasSave=Boolean(store&&store.getItem(api.SAVE_PREFIX+card.dataset.hero));
+   const slot=readResumeSlot(card.dataset.hero);
+   const hasSave=slot.status!=="missing";
+   const canResume=slot.status==="ready";
    card.dataset.hasSave=String(hasSave);
+   card.dataset.saveStatus=slot.status;
    let badge=card.querySelector(".hero-save-badge");
    if(!badge){
     badge=make("small","СОХРАНЕНО","hero-save-badge");
     card.querySelector("span")?.append(badge);
    }
    badge.hidden=!hasSave;
-   if(selected)available=hasSave;
+   badge.textContent=canResume?"СОХРАНЕНО":"ПОВРЕЖДЕНО";
+   if(selected){available=canResume;selectedDamaged=hasSave&&!canResume;}
   }
  }catch(e){
   appError("Не удалось прочитать сохранение. Проверьте доступность хранилища браузера.");
@@ -988,7 +1029,9 @@ function refreshResume(){
  $("resume").disabled=!available;
  $("resume").hidden=!available;
  setText($("selectedHeroStatus"),"Выбран: "+heroNames[hero]+
-  (available?" · Можно продолжить сохранённое расследование":" · Готов к новому расследованию"));
+  (available?" · Можно продолжить сохранённое расследование":
+   selectedDamaged?" · Сохранение повреждено: продолжение недоступно. Новая попытка заменит этот слот после подтверждения.":
+   " · Готов к новому расследованию"));
  renderRewardArchive();
  renderAchievementArchive();
 }
