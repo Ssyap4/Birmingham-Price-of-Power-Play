@@ -49,6 +49,11 @@ def run():
                     if width==390:
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-map.png")),full_page=True)
                     for mission in ("CR01","CR02","CR03","CR04","CR05"):
+                        # Some file/sandbox browsers prohibit history.replaceState;
+                        # mission identity must not depend on a writable hash.
+                        blocked_hash = mission == "CR01" and width == 390
+                        if blocked_hash:
+                            page.evaluate("window.__oldReplace=history.replaceState;history.replaceState=()=>{throw Error('history denied')}")
                         tap(page,f'.cr-pin[data-mission="{mission}"]')
                         assert page.locator("#criminalScreen h1").first.is_visible()
                         image = page.locator(".cr-frame img").first
@@ -63,6 +68,8 @@ def run():
                         first=page.locator(".cr-choices button:not([disabled])").first
                         first.tap()
                         assert page.locator(".cr-consequence").is_visible()
+                        if blocked_hash:
+                            page.evaluate("history.replaceState=window.__oldReplace")
                         page.reload(wait_until="domcontentloaded")
                         assert page.locator("#criminalScreen").is_visible()
                         tap(page,'[data-action="resume"]') if page.locator('[data-action="resume"]').count() else None
