@@ -191,6 +191,11 @@ def run():
                                     final["status"] == "finished"
                                     and final["terminalId"] == proof["terminalId"]
                                 )
+                                # The first confirmed ending raises a one-time toast.
+                                assert page.locator(".cr-reward-toast").is_visible()
+                                assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
+                                touch(page, '[data-action="dismissReward"]')
+                                assert not page.locator(".cr-reward-toast").count()
                                 ledger = page.evaluate(
                                     "(k)=>JSON.parse(localStorage.getItem(k))",
                                     PREFIX + "ledger",
@@ -208,9 +213,7 @@ def run():
                                     == count
                                 )
                                 assert page.locator(".cr-result").is_visible()
-                                assert page.locator(".cr-reward-toast").is_visible()
-                                assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
-                                touch(page, '[data-action="dismissReward"]')
+                                # Reopening a persisted final must never announce a duplicate award.
                                 assert not page.locator(".cr-reward-toast").count()
                                 bounds(page)
                                 if kind == "care":
