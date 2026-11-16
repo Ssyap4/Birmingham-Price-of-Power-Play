@@ -7,7 +7,7 @@
   root.id = "criminalScreen";
   root.className = "screen";
   root.hidden = true;
-  root.setAttribute("aria-label", "Криминальные дела");
+  root.setAttribute("aria-label", "Работа для своих");
   document.querySelector("main.shell").append(root);
   let store;
   try {
@@ -159,7 +159,7 @@
       ],
       icons = ["♜", "⚓", "◇", "▤", "⚒"];
     render(
-      `<header class="cr-heading"><span>ПОРУЧЕНИЯ БЛИЖНЕГО КРУГА</span><h1>Криминальные дела</h1><p class="cr-tagline">Пять приказов. Пять человек.<br>Вернутся не все.</p></header><p>Здесь нужно <b>выполнить поручение и остаться в живых</b>. Риск выше, чем в расследованиях. Решения необратимы внутри попытки; каждый ход сохраняется до показа результата, если браузер разрешает запись.</p><div class="cr-map" aria-label="Схематическая карта пяти криминальных районов"><svg viewBox="0 0 360 460" aria-hidden="true"><defs><pattern id="crBlocks" width="36" height="38" patternUnits="userSpaceOnUse"><path d="M4 6h24v24H4z" fill="none" stroke="#584c3b" stroke-width=".8"/></pattern></defs><rect width="360" height="460" fill="#171c1c"/><path d="M18 12L327 20 348 412 279 447 29 414Z" fill="url(#crBlocks)" stroke="#8e7955"/><path d="M50 0Q120 180 210 220T350 460M0 250Q160 180 360 235M180 0Q170 180 120 460M0 370Q180 300 360 320" fill="none" stroke="#64543d" stroke-width="8"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#315c64" stroke-width="12"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#9baca6" stroke-width="1"/><path d="M10 335L348 120" stroke="#888073" stroke-dasharray="5 5" stroke-width="2"/><text x="185" y="250" fill="#c4b18b" font-size="14">ЦЕНТР</text><text x="15" y="438" fill="#baa578" font-size="12">С ↑ · СХЕМА ГОРОДА</text></svg>${[
+      `<header class="cr-heading"><span>ПРИКАЗЫ БЛИЖНЕГО КРУГА</span><h1>Работа для своих</h1><p class="cr-tagline">Пять приказов. Пять человек.<br>Вернутся не все.</p></header><p>Здесь нужно <b>выполнить поручение и остаться в живых</b>. Риск выше, чем в расследованиях. Решения необратимы внутри попытки; каждый ход сохраняется до показа результата, если браузер разрешает запись.</p><div class="cr-map" aria-label="Схематическая карта пяти криминальных районов"><svg viewBox="0 0 360 460" aria-hidden="true"><defs><pattern id="crBlocks" width="36" height="38" patternUnits="userSpaceOnUse"><path d="M4 6h24v24H4z" fill="none" stroke="#584c3b" stroke-width=".8"/></pattern></defs><rect width="360" height="460" fill="#171c1c"/><path d="M18 12L327 20 348 412 279 447 29 414Z" fill="url(#crBlocks)" stroke="#8e7955"/><path d="M50 0Q120 180 210 220T350 460M0 250Q160 180 360 235M180 0Q170 180 120 460M0 370Q180 300 360 320" fill="none" stroke="#64543d" stroke-width="8"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#315c64" stroke-width="12"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#9baca6" stroke-width="1"/><path d="M10 335L348 120" stroke="#888073" stroke-dasharray="5 5" stroke-width="2"/><text x="185" y="250" fill="#c4b18b" font-size="14">ЦЕНТР</text><text x="15" y="438" fill="#baa578" font-size="12">С ↑ · СХЕМА ГОРОДА</text></svg>${[
         "CR04",
         "CR02",
         "CR05",
@@ -291,14 +291,14 @@
       .map(([k, v]) => `<span>${names[k]} <b>${v}</b></span>`)
       .join("")}</div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div>`;
   }
+  function gearArt(id, cssClass = "cr-gear-illustration") {
+    if (!Object.prototype.hasOwnProperty.call(C.items, id)) return "";
+    return `<img class="${cssClass}" src="assets/criminal/equipment/${id}.svg" width="64" height="64" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
+  }
   function inventory() {
-    return `<details class="cr-inventory"><summary>Снаряжение · ${Object.keys(state.inventory).length} позиций</summary><div>${
-      Object.entries(state.inventory)
-        .map(
-          ([k, v]) =>
-            `<p><span aria-hidden="true">${C.items[k][0]}</span> ${esc(C.items[k][1])} <b>×${v}</b></p>`,
-        )
-        .join("") || "<p>Пусто</p>"
+    const items = Object.entries(state.inventory).filter(([, count]) => count > 0);
+    return `<details class="cr-inventory"><summary>Снаряжение · ${items.length} позиций</summary><div class="cr-equipment-grid">${
+      items.map(([id, count]) => `<article class="cr-equipment-item" data-item="${id}">${gearArt(id)}<div class="cr-equipment-meta"><span>${esc(C.items[id][1])}</span><strong>×${count}</strong></div></article>`).join("") || '<p class="cr-equipment-empty">Сейчас снаряжения нет.</p>'
     }</div></details>`;
   }
   function resourceChanges() {
@@ -315,7 +315,7 @@
       const delta = (state.inventory[id] || 0) - (before.inventory[id] || 0);
       return delta
         ? [
-            `<span>${C.items[id][0]} ${esc(C.items[id][1])} ${delta > 0 ? "+" : ""}${delta}</span>`,
+            `<span class="cr-resource-item">${gearArt(id, "cr-resource-icon")}<span>${esc(C.items[id][1])}</span><b>${delta > 0 ? "+" : ""}${delta}</b></span>`,
           ]
         : [];
     });
@@ -392,7 +392,7 @@
           )
           .join(
             "",
-          )}</div></article><h2>Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b>✚ Перевязать раны · +35 HP</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
+          )}</div></article><h2>Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b class="cr-heal-label">${gearArt("bandage", "cr-heal-icon")} Перевязать раны · +35 HP</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
       }${journal()}`,
     );
   }

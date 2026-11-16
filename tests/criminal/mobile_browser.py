@@ -113,8 +113,11 @@ def run():
                     page.on("dialog", lambda d: d.accept())
                     page.route("https://**/*", lambda r: r.abort())
                     page.goto(origin + "/index.html", wait_until="domcontentloaded")
+                    assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
+                    assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
                     touch(page, "#criminalEntry")
                     bounds(page)
+                    assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
                     assert page.locator(".cr-pin").count() == 5
                     if width == 390:
                         page.screenshot(
@@ -143,6 +146,8 @@ def run():
                         bounds(page)
                         touch(page, ".cr-inventory summary")
                         assert page.locator(".cr-inventory[open]").count() == 1
+                        assert page.locator(".cr-gear-illustration").count() >= 2
+                        page.wait_for_function("() => [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].every(i=>i.complete&&i.naturalWidth===96)")
                         page.screenshot(
                             path=str(OUT / (name + "-" + str(width) + "-scene.png")),
                             full_page=True,

@@ -44,7 +44,7 @@ def run():
                     tap(page,"#criminalEntry")
                     assert page.locator("#criminalScreen").is_visible()
                     assert page.locator(".cr-pin").count()==5
-                    assert page.locator("#criminalScreen h1").inner_text()=="Криминальные дела"
+                    assert page.locator("#criminalScreen h1").inner_text()=="Работа для своих"
                     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                     if width==390:
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-map.png")),full_page=True)
@@ -64,6 +64,9 @@ def run():
                         assert image.is_visible()
                         tap(page,'[data-action="start"]')
                         assert page.locator(".cr-choices button").count()>=1
+                        tap(page, ".cr-inventory summary")
+                        page.wait_for_function("() => [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].length>0 && [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].every(i=>i.complete&&i.naturalWidth===96)")
+                        tap(page, ".cr-inventory summary")
                         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                         first=page.locator(".cr-choices button:not([disabled])").first
                         first.tap()

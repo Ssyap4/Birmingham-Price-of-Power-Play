@@ -134,6 +134,16 @@ for(const frame of criminalArt.frames){
   throw Error("Invalid criminal art manifest entry: "+frame.id);
  copy(frame.path,frame.sha256);
 }
+const gearIds=Object.keys(require("../src/criminal/content.js").items);
+if(gearIds.length!==28)throw Error("Expected exactly 28 registered criminal items");
+for(const id of gearIds){
+ if(!/^[a-zA-Z]+$/.test(id))throw Error("Unsafe equipment id: "+id);
+ const name="assets/criminal/equipment/"+id+".svg";
+ const svg=fs.readFileSync(path.join(ROOT,name),"utf8");
+ if(!/^<svg\b/.test(svg)||/<script|<foreignObject|\bon\w+\s*=|https?:\/\//i.test(svg))
+  throw Error("Unsafe criminal equipment SVG "+id);
+ copy(name);
+}
 let references=0;
 for(const frame of criminalArt.frames)
  if(assertReference("index.html",frame.path))references++;

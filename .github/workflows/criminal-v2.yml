@@ -32,7 +32,7 @@ jobs:
           python-version: "3.12"
       - name: Pure engine, persistence, branch and resource proofs
         run: |
-          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js
+          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js
           node tests/criminal/playthroughs.js
       - name: Build the unified offline package and verify unchanged Case002 contract
         run: |

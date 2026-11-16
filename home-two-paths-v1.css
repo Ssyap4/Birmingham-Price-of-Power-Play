@@ -1,0 +1,47 @@
+/* Final labels stay real HTML instead of being hidden behind artwork.
+ * Only two primary campaign destinations; supporting buttons remain unchanged. */
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) {
+  display:flex !important; align-items:center; justify-content:flex-start;
+  min-height:90px !important; height:auto !important; width:100%;
+  padding:13px 16px !important; gap:12px;
+  background-size:cover !important; background-position:center !important;
+  border:1px solid #b08e5b !important; border-left:4px solid #e0ba79 !important;
+  box-shadow:inset 0 0 0 1px #3d3427,0 10px 26px #000a !important;
+  clip-path:none !important; border-radius:4px; color:#ffe6b8;
+}
+#home.cabinet-art-ready #districtsCard {
+  background-image:linear-gradient(95deg,#17120fe8 8%,#1c1a18cc 72%,#1a1815ad),url('assets/cinema/city.webp') !important;
+}
+#home.cabinet-art-ready #criminalEntry {
+  background-image:linear-gradient(95deg,#1b1915ec 10%,#28221cdb 70%,#1c1d1dc0),url('assets/criminal/cr01-arrival.webp') !important;
+  border-left-color:#c8a072 !important;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) > * {
+  opacity:1 !important; pointer-events:none !important;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-copy {
+  display:flex; flex-direction:column; min-width:0; gap:6px;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-copy strong {
+  font:700 clamp(20px,2.2vw,31px)/1.06 Georgia,serif; color:#ffe5b4; letter-spacing:.015em;
+  text-shadow:0 2px 6px #000;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-copy small {
+  font:400 clamp(11px,1vw,13px)/1.4 system-ui,sans-serif; color:#e2cead;
+  letter-spacing:0; text-shadow:0 1px 4px #000;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-icon {
+  display:grid; place-items:center; width:38px;height:46px;min-width:38px;
+  border:1px solid #ae8e5e; background:#121715aa; color:#f0d3a1; font-size:24px;
+}
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-arrow { color:#e9be7e; opacity:1; }
+#home.cabinet-art-ready :is(#districtsCard,#criminalEntry):focus-visible { outline:3px solid #f6d08e; outline-offset:3px; }
+@media (max-width:700px) {
+ #home.cabinet-art-ready :is(#districtsCard,#criminalEntry) {min-height:78px!important;padding:10px 12px!important;}
+ #home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-copy strong {font-size:clamp(21px,6vw,28px)}
+ #home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-copy small {font-size:11px}
+}
+@media (max-width:340px) {
+ #home.cabinet-art-ready :is(#districtsCard,#criminalEntry) {gap:8px;padding:9px!important;}
+ #home.cabinet-art-ready :is(#districtsCard,#criminalEntry) .cabinet-entry-icon {width:30px;min-width:30px;height:36px;font-size:19px;}
+}

@@ -24,7 +24,9 @@ const heroes = ["jack", "finn", "eleanor", "victor", "samuel"]
   .map(x => "assets/heroes/" + x + ".webp");
 const manifest = require("../src/criminal/art-manifest");
 const images = manifest.frames.map(f => f.path);
-const required = [ ...scripts, ...styles, ...heroes, ...images ];
+const equipment = Object.keys(require("../src/criminal/content.js").items).map(id => "assets/criminal/equipment/" + id + ".svg");
+if(equipment.length!==28) throw Error("Incomplete illustrated equipment catalog");
+const required = [ ...scripts, ...styles, ...heroes, ...images, ...equipment ];
 if(manifest.frames.length !== 40)
   throw Error("Unexpected reviewed image count");
 if(new Set(required).size !== required.length)
@@ -43,6 +45,8 @@ function copy(name,expectedHash){
   if(name.endsWith(".webp") &&
     (bytes.toString("ascii",0,4)!=="RIFF" || bytes.toString("ascii",8,12)!=="WEBP"))
     throw Error("Not WebP "+name);
+  if(name.endsWith(".svg") && (!bytes.toString("utf8").startsWith("<svg") || /<script|<foreignObject|\bon\w+\s*=|https?:\/\//i.test(bytes.toString("utf8"))))
+    throw Error("Unsafe equipment image "+name);
   const dest = path.join(OUT,name);
   fs.mkdirSync(path.dirname(dest),{recursive:true});
   fs.writeFileSync(dest,bytes);
