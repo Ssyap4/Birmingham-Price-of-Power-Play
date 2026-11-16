@@ -1,0 +1,33 @@
+name: Criminal isolated live Safari preview smoke
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - ".github/workflows/criminal-preview-remote.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  remote-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      CRIMINAL_PREVIEW_URL: https://birmingham-criminal-v3-safari.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install strictly browser-test dependencies
+        run: |
+          python -m pip install 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Verify live HTTPS, pinned assets, real WebKit/Chromium touch and errors
+        run: python tools/remote_preview_smoke.py
+      - name: Keep live preview screenshots and summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: criminal-v3-live-preview-proof
+          path: work/criminal/remote/
+          retention-days: 14
