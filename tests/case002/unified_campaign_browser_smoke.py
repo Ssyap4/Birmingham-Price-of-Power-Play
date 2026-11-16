@@ -403,6 +403,9 @@ def run():
                     assert nav.locator('[data-go="choices"]').get_attribute(
                         "data-new-decision")=="false"
                     assert page.locator("#case001DecisionFeedback").is_visible()
+                    assert page.locator("#case001DecisionFeedback").evaluate(
+                        "el => el.nextElementSibling?.id")=="caseChoices", (
+                            name+" feedback must appear immediately above the decisions")
                     assert page.evaluate("""() => {
                         return JSON.parse(localStorage.getItem(
                             'birmingham_case_v20_findings_jack'))
