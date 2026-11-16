@@ -30,6 +30,7 @@ with sync_playwright() as p:
         page.on("response", lambda r: bad.append({"url":r.url,"status":r.status}) if r.status>=400 else None)
         page.goto(URL+"/", wait_until="domcontentloaded", timeout=60000)
         page.wait_for_selector("#criminalEntry", timeout=60000)
+        page.wait_for_function("() => Boolean(window.CriminalEngine && document.getElementById('criminalScreen'))", timeout=60000)
         assert page.locator("#home").is_visible()
         tap(page, "#criminalEntry")
         assert page.locator(".cr-pin").count()==5
