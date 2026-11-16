@@ -1,4 +1,4 @@
-/* Keep the approved five-entry cabinet menu connected to existing game screens. */
+/* Preserve existing campaign and dossier entries while the cabinet gains a personal profile. */
 document.addEventListener('DOMContentLoaded',()=>{
  const achievements=document.getElementById('storyStart');
  const dossier=document.getElementById('profileCard');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 document.addEventListener('DOMContentLoaded',async()=>{
  const home=document.getElementById('home');
  if(!home)return;
- const names=['scene','title','campaign','trials','achievements','dossier','settings'];
+ const names=['scene','title','campaign','trials','achievements','dossier'];
  const images=names.map(n=>'assets/cabinet/cabinet-'+n+'.webp');
  const ready=await Promise.all(images.map(src=>new Promise(resolve=>{
    const img=new Image();

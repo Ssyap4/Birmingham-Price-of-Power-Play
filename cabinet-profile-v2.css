@@ -1,0 +1,110 @@
+/* Personal profile replaces Settings. Two cinematic story entries dominate,
+   while four utility entries remain text-accessible and visually secondary. */
+#home.cabinet-art-ready .cabinet-menu {
+  gap:clamp(7px,.65vw,12px);
+}
+#home.cabinet-art-ready .cabinet-menu > .cabinet-entry {
+  overflow:hidden;
+  position:relative;
+}
+#home.cabinet-art-ready .cabinet-menu > .cabinet-entry > * {
+  opacity:1!important;
+  pointer-events:none;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(#districtsCard,#criminalEntry) {
+  min-height:105px!important;
+  background-size:cover!important;
+  border-radius:6px!important;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) {
+  display:flex!important;align-items:center!important;
+  width:100%!important;height:auto!important;min-height:64px!important;
+  flex:none!important;gap:12px!important;
+  padding:9px 14px!important;
+  background:linear-gradient(105deg,#261e19,#1a1b1a 60%,#24201a)!important;
+  border:1px solid #6f5c44!important;border-left:3px solid #957952!important;
+  border-radius:5px!important;clip-path:none!important;
+  box-shadow:inset 0 0 0 1px #b99a6918,0 4px 14px #0008!important;
+}
+#home.cabinet-art-ready .cabinet-entry-profile {
+  border-left-color:#d8af76!important;
+  background:linear-gradient(110deg,#34261e,#22211f 55%,#28231f)!important;
+}
+#home.cabinet-art-ready .cabinet-entry-profile .cabinet-entry-icon {color:#f4daaa;}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) .cabinet-entry-copy {
+  display:flex!important;min-width:0;flex-direction:column;gap:4px;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) .cabinet-entry-copy strong {
+  color:#efd9b4; font:700 clamp(19px,1.6vw,25px)/1.05 Georgia,serif;
+  text-shadow:0 1px 4px #000;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) .cabinet-entry-copy small {
+  color:#cebd9e;font:12px/1.35 system-ui,sans-serif;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) .cabinet-entry-icon {
+  display:grid;place-items:center;width:38px;height:40px;min-width:38px;
+  border:1px solid #85704e;border-radius:4px;background:#131b1aab;
+  font:24px Georgia,serif;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(
+  .cabinet-entry-quiz,.cabinet-entry-achievements,
+  .cabinet-entry-dossier,.cabinet-entry-profile
+) .cabinet-entry-arrow {opacity:1!important;color:#cfaa74;}
+#home.cabinet-art-ready .cabinet-entry:focus-visible {outline:3px solid #f6d08e;outline-offset:2px;}
+#profile .player-campaign-overview {
+  margin:22px 0;padding:18px 15px;border:1px solid #9c8058;
+  border-left:3px solid #d1b17a;background:linear-gradient(130deg,#252321,#151d1d);
+}
+#profile .player-campaign-overview h3{margin:8px 0 10px;color:#f5dbad;font:700 clamp(22px,6vw,30px)/1.2 Georgia,serif;}
+#profile .player-overview-note{margin:0 0 16px;color:#d6c6ac;font:13px/1.55 system-ui,sans-serif;}
+#profile .player-overview-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}
+#profile .player-overview-card{
+ display:flex;flex-direction:column;gap:6px;min-width:0;
+ background:linear-gradient(160deg,#2b312b,#141f20);border:1px solid #786247;border-radius:4px;
+ padding:12px 9px;color:#e9d7ba;
+}
+#profile .player-overview-card h4{font:700 16px/1.28 Georgia,serif;color:#f1d5a1;margin:0;overflow-wrap:anywhere;}
+#profile .player-overview-card strong{font:700 25px/1 system-ui,sans-serif;color:#ffe2ab;}
+#profile .player-overview-card small{color:#d0bfaa;font:12px/1.4 system-ui,sans-serif;overflow-wrap:anywhere;}
+#profile .player-overview-card[data-status="damaged"]{border-color:#a5736c;}
+@media(max-width:700px){
+ #home.cabinet-art-ready .cabinet-menu{gap:6px;}
+ #home.cabinet-art-ready .cabinet-menu > :is(#districtsCard,#criminalEntry){min-height:84px!important;}
+ #home.cabinet-art-ready .cabinet-menu > :is(
+   .cabinet-entry-quiz,.cabinet-entry-achievements,.cabinet-entry-dossier,.cabinet-entry-profile
+ ){min-height:59px!important;padding:8px 10px!important;}
+ #home.cabinet-art-ready .cabinet-menu > :is(
+   .cabinet-entry-quiz,.cabinet-entry-achievements,.cabinet-entry-dossier,.cabinet-entry-profile
+ ) .cabinet-entry-copy strong{font-size:clamp(18px,5.2vw,22px);}
+ #home.cabinet-art-ready .cabinet-menu > :is(
+   .cabinet-entry-quiz,.cabinet-entry-achievements,.cabinet-entry-dossier,.cabinet-entry-profile
+ ) .cabinet-entry-copy small{font-size:11px;}
+ #profile .player-overview-cards{grid-template-columns:minmax(0,1fr);}
+ #profile .player-overview-card{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 8px;}
+ #profile .player-overview-card h4{grid-column:1;grid-row:1;}
+ #profile .player-overview-card strong{grid-column:2;grid-row:1/3;}
+ #profile .player-overview-card small{grid-column:1;grid-row:2;}
+}
+@media(max-width:340px){
+ #home.cabinet-art-ready .cabinet-menu > :is(
+   .cabinet-entry-quiz,.cabinet-entry-achievements,.cabinet-entry-dossier,.cabinet-entry-profile
+ ) {gap:7px!important;padding:7px!important;}
+ #home.cabinet-art-ready .cabinet-menu > :is(
+   .cabinet-entry-quiz,.cabinet-entry-achievements,.cabinet-entry-dossier,.cabinet-entry-profile
+ ) .cabinet-entry-copy small{font-size:10px;}
+}
