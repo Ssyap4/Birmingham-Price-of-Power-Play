@@ -55,8 +55,7 @@ assert(shell.includes('campaign-case002-archive-v1.js')&&
  shell.includes('src/case002/browser-data-v3.js')&&
  shell.includes('src/case002/achievements-v1.js'),
  "Unified shared archive dependencies missing from entry");
-const archive=fs.readFileSync(entry("campaign-case002-archive-v1.js"),"utf8"),
- hub=fs.readFileSync(entry("campaign-hub-v1.js"),"utf8");
+const archive=fs.readFileSync(entry("campaign-case002-archive-v1.js"),"utf8");
 assert(hub.includes("birmingham:campaign-render")&&
  archive.includes("birmingham:campaign-render")&&
  archive.includes("35 уникальных знаков")&&
