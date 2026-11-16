@@ -44,3 +44,14 @@ Next image candidates after actual binary handoff and continuity check: CR03 dis
 2. If the author accepts the Safari test, improve the scene pacing and illustration-to-scene matching without expanding mechanics unnecessarily.
 3. Integrate any approved raster candidate as a *new* manifest entry for precisely its intended scene, verify SHA and full package.
 4. Later, decide unified archive cross-mode visibility and server profiles separately, preserving legacy save namespaces.
+
+## Complete offline + unified mobile QA (final)
+
+**SUCCESS**: [GitHub Actions run 43944650905](https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43944650905), tested SHA `22bfe679451beed0bf2f5e90979de5d806dcca60`. All steps passed, including:
+- Node story/engine/epilogue replay, RNG/loot/resources, archive and unique reward validation.
+- Unified Cases №001 + №002 + criminal offline package and unchanged legacy storage/entry smoke.
+- All 40 installed criminal WebPs decoded and SHA-verified.
+- Real-touch Chromium/WebKit test matrix across 320/360/390/430 (full campaign), plus the standalone preview at 320/390/430 for five missions, image loading, save/reload, back navigation and blocked `history.replaceState`.
+- Artifacts: `criminal-v2-unified-package` (44,181,807 ZIP bytes), `criminal-v3-standalone-preview` (4,630,065 ZIP bytes), `criminal-v2-acceptance` (10,746,086 ZIP bytes). Artifact ZIP byte sizes are GitHub upload sizes, not unpacked sizes. Exact artifact IDs: 14264378512, 14263653847, 14263563930.
+
+The initial failed test runs in this wave were caused by newly added harness selectors/paths/mocks, separately addressed. They do not replace this later **green** full run. The pin-only Vercel preview passed its separate live HTTPS WebKit+Chromium test [43943646202](https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43943646202). Neither automated test substitutes for physical iPhone Safari QA.
