@@ -1,0 +1,220 @@
+/* Cohesive Case 001 mobile composition. Case 002 is the visual reference:
+ * compact campaign pulse, distinct story/decisions, warm-noir evidence cards,
+ * and a collapsible progress ledger. No changes to mechanics or original art. */
+.case001-campaign-pulse[hidden]{display:none!important}
+.case001-campaign-pulse{display:none}
+.case001-goal-drawer>summary{display:none}
+.case001-board-guide{display:none}
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame.case-screen{
+  box-sizing:border-box!important;width:100%!important;
+  max-width:640px!important;margin-inline:auto!important;
+  padding:5px 9px calc(112px + env(safe-area-inset-bottom,0px))!important;
+ }
+ #caseGame .case-topline{margin:0 0 7px!important;gap:8px!important}
+ #caseGame .case-v18-layout{gap:10px!important;min-width:0!important}
+ #caseGame .case-v18-middle{gap:11px!important}
+ #caseGame #caseScene.case-scene{
+  border-radius:9px!important;border-color:#a7804d!important;
+  box-shadow:0 0 0 2px #342619,0 9px 21px #0009!important;
+ }
+ #caseGame #caseScene .case-scene-inner{
+  background:linear-gradient(125deg,#2b2119,#16120f)!important;
+ }
+ #caseGame .case-dialogue:not([hidden]){border-radius:7px!important}
+ #caseGame .case-paper{border-radius:9px!important}
+ #caseGame .case-paper>.case-section-label{
+  color:#e9bd81!important;letter-spacing:.09em!important;
+ }
+ #caseGame #caseChoices>.case-choice{
+  border-radius:7px!important;
+  box-shadow:inset 0 1px #eac49420,0 3px 10px #0006!important;
+ }
+ #caseGame #caseChoices>.case-choice:disabled{
+  box-shadow:none!important;
+ }
+ #caseGame .case-v18-right{
+  position:static!important;display:flex!important;flex-direction:column!important;
+  min-width:0!important;gap:9px!important;
+  padding:11px 12px!important;overflow:visible!important;
+  border-radius:9px!important;
+ }
+ #caseGame .case-v18-right .case-sidebar{display:block!important}
+ #caseGame .case-v18-right .case-sidebar>.case-section-label{
+  display:block!important;margin:3px 0 5px!important;
+  font-size:.66rem!important;letter-spacing:.11em!important;
+  color:#d9b584!important;
+ }
+ #caseGame .case-v18-right .case-sidebar>h3{
+  margin:0 0 9px!important;
+  font:700 1.15rem/1.26 Georgia,serif!important;
+ }
+ #caseGame .case-v18-right .case-sidebar>p{margin:9px 0 12px!important}
+ #caseGame .case-v18-right .case-secondary{
+  display:block;min-height:44px!important;box-sizing:border-box!important;
+  width:100%!important;margin-top:7px!important;
+  border-radius:6px!important;
+ }
+ #caseGame #caseHealthStatus{
+  margin:10px 0 12px!important;padding:11px 12px!important;
+  border-radius:7px!important;
+ }
+ #caseGame .case-health-track{margin-top:8px!important}
+ #caseGame .case-health-supplies{margin-top:8px!important}
+ .case001-campaign-pulse:not([hidden]){
+  display:block;box-sizing:border-box;min-width:0;
+  padding:11px 12px 10px;margin:0 0 11px;
+  border:1px solid #947248;border-radius:8px;
+  background:linear-gradient(125deg,#2f2319,#17130f);
+  box-shadow:inset 0 1px #e5bb8530,0 5px 14px #0006;
+ }
+ .case001-pulse-heading{
+  display:flex;align-items:start;justify-content:space-between;
+  flex-wrap:wrap;gap:5px 10px;margin-bottom:9px;
+  color:#e6bd84;font:800 .64rem/1.5 system-ui,sans-serif;
+  letter-spacing:.095em;
+ }
+ .case001-pulse-heading span{
+  color:#d2b291;font-weight:600;letter-spacing:.015em;
+  text-align:right;overflow-wrap:anywhere;
+ }
+ .case001-pulse-metrics{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+ }
+ .case001-pulse-metrics>div{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;min-width:0;min-height:62px;
+  padding:7px 4px;
+  border:1px solid #71583a;border-radius:5px;
+  background:#1c1712;
+ }
+ .case001-pulse-metrics small{
+  color:#c8aa86;font:750 clamp(.52rem,2.05vw,.64rem)/1.3 system-ui,sans-serif;
+  letter-spacing:.025em;text-align:center;
+ }
+ .case001-pulse-metrics b{
+  color:#f6d6a2;font:700 clamp(1rem,4.2vw,1.27rem)/1.3 Georgia,serif;
+  text-align:center;overflow-wrap:anywhere;
+ }
+ .case001-pulse-track{
+  height:4px;margin-top:9px;overflow:hidden;border-radius:99px;
+  background:#21180f;border:1px solid #664d2f;
+ }
+ .case001-pulse-track i{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,#ad804c,#e7bf81);
+  border-radius:inherit;
+ }
+ #caseGame .case001-goal-drawer{
+  box-sizing:border-box!important;display:block!important;
+  min-width:0!important;margin:0 0 3px!important;
+  border:1px solid #866540;border-radius:6px;
+  background:#201912;
+ }
+ #caseGame .case001-goal-drawer>summary{
+  display:block;box-sizing:border-box;position:relative;
+  list-style:none;min-height:47px;padding:12px 28px 11px 10px;
+  color:#e6c08f;font:800 .74rem/1.55 system-ui,sans-serif;
+  letter-spacing:.04em;cursor:pointer;touch-action:manipulation;
+ }
+ #caseGame .case001-goal-drawer>summary::-webkit-details-marker{display:none}
+ #caseGame .case001-goal-drawer>summary::after{
+  content:"⌄";position:absolute;right:10px;top:11px;
+  font:700 1.1rem/1 Georgia,serif;color:#e6bf86;
+ }
+ #caseGame .case001-goal-drawer[open]>summary::after{content:"⌃"}
+ #caseGame .case001-goal-drawer>summary:focus-visible{
+  outline:3px solid #f6d5a5;outline-offset:2px;
+ }
+ #caseGame .case001-goal-count{
+  color:#cbb390;font-weight:600;white-space:nowrap;
+ }
+ #caseGame .case001-goal-drawer .case-v19-goals{
+  margin:0!important;padding:13px 10px 11px!important;
+  border:0!important;border-top:1px solid #735735!important;
+  background:#1a1510!important;
+ }
+ #caseGame .case001-goal-drawer .case-v19-goals>h4{display:none!important}
+ #caseGame .case001-goal-drawer .case-v19-goals li{
+  color:#e0caad!important;font:600 .78rem/1.45 system-ui,sans-serif!important;
+ }
+ #caseGame .case001-goal-drawer .case-v19-goals li.done{
+  color:#9dc9a9!important;
+ }
+ /* The evidence sidebar stays a fallback, but the existing fixed tools
+    are the primary mobile way to work with clues and the deduction wall. */
+ #caseGame .case001-inline-evidence{margin-top:8px!important}
+ #caseGame .v33-stats{
+  margin:12px 0 9px!important;font-size:.78rem!important;
+ }
+ #caseGame .case001-board-guide{
+  display:block;box-sizing:border-box;min-width:0;
+  margin:0 0 13px!important;padding:10px 11px!important;
+  border:1px solid #816544;border-left:3px solid #d1a975;
+  border-radius:0 5px 5px 0;
+  background:#211911;color:#eed2ac;
+  font:650 .8rem/1.5 system-ui,sans-serif;
+  overflow-wrap:anywhere;
+ }
+ /* Case 002 evidence cards use matte dark material, not bright paper tiles.
+    Preserve the original selected/compatible semantics and photographs. */
+ #caseGame .v33-board,#caseGame .v33-solved-board{gap:8px!important}
+ #caseGame .v33-tile{
+  min-height:135px!important;padding:8px 7px 9px!important;
+  border-color:#896944!important;border-radius:7px!important;
+  background:linear-gradient(145deg,#3b2c20,#1c1712 85%)!important;
+  color:#f0d9b9!important;
+  box-shadow:inset 0 1px #f0d0a22c,0 4px 12px #0007!important;
+ }
+ #caseGame .v33-tile img{
+  height:clamp(86px,24vw,109px)!important;
+  border-color:#725637!important;
+  background:linear-gradient(135deg,#1b1511,#0f100f)!important;
+ }
+ #caseGame .v33-tile span{
+  padding-top:7px!important;
+  color:#f1dabb!important;
+  font:700 clamp(.8rem,3.3vw,.94rem)/1.4 Georgia,serif!important;
+ }
+ #caseGame .v33-tile.v33-selected{
+  border:2px solid #eac28b!important;
+  background:linear-gradient(135deg,#624629,#2c2016)!important;
+ }
+ #caseGame .v33-tile.v33-compatible{
+  border:2px solid #75bb8c!important;
+  background:linear-gradient(140deg,#284631,#17261d)!important;
+ }
+ #caseGame .v33-tile.v33-compatible span{color:#e3f0d8!important}
+ #caseGame .v33-solved-board .v33-tile{
+  border-color:#7c7056!important;
+  background:linear-gradient(145deg,#2e2920,#191712)!important;
+ }
+ #caseGame .v33-solved-board .v33-tile span{color:#d9c4a8!important}
+ #caseGame .v33-solved-board .v33-tile.v33-selected{
+  border:2px solid #eac28b!important;
+ }
+ #caseGame .v33-solved-board .v33-tile.v33-compatible{
+  border:2px solid #75bb8c!important;
+ }
+ #caseGame .v33-solved-board .v33-tile.v33-compatible span{color:#e3f0d8!important}
+ #caseGame .v33-solved{margin-top:16px!important;padding:12px 10px!important}
+ #caseGame .v33-findings{margin-top:16px!important;padding-top:10px!important}
+ #caseGame .v33-findings-list article{padding:12px!important}
+ #caseGame .v33-ending-report{border-radius:9px!important}
+ #caseGame .case001-finale-actions button{border-radius:7px!important}
+}
+@media (orientation:portrait) and (max-width:359px){
+ #caseGame.case-screen{padding-inline:7px!important}
+ .case001-campaign-pulse:not([hidden]){padding:9px 8px}
+ .case001-pulse-metrics{gap:4px}
+ .case001-pulse-metrics>div{padding:6px 2px;min-height:60px}
+ #caseGame .v33-tile{min-height:130px!important;padding-inline:5px!important}
+}
+@media (min-width:701px){
+ #caseGame .case001-goal-drawer{border:0;margin:0;background:none}
+ #caseGame .case001-goal-drawer .case-v19-goals{margin-bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){
+ #caseGame .case001-goal-drawer>summary,
+ #caseGame .v33-tile{transition:none!important}
+}

@@ -1,0 +1,167 @@
+/* Case 001 complete-episode reader, aligned with the finished Case 002 recap.
+   No changes to narrative, accounting, achievements, ending selection or saves. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame .case-paper:has(>.v33-ending-report){
+  border-color:#b48c59!important;border-radius:8px!important;
+  background:linear-gradient(155deg,#322519,#18130e 65%)!important;
+ }
+ #caseGame .case-outcome:not([hidden]){
+  box-sizing:border-box!important;
+  margin:13px 0 16px!important;
+  padding:14px 13px!important;
+  border:1px solid #9f7749!important;
+  border-left:3px solid #d5a267!important;
+  border-radius:0 6px 6px 0!important;
+  background:linear-gradient(125deg,#35251a,#1d1712)!important;
+  color:#efdbc0!important;
+  font:400 clamp(.96rem,4.2vw,1.08rem)/1.55 Georgia,serif!important;
+  overflow-wrap:anywhere!important;
+ }
+ #caseGame .v33-ending-report{
+  position:relative!important;isolation:isolate!important;
+  display:block!important;overflow:hidden!important;
+  box-sizing:border-box!important;margin:15px 0 22px!important;
+  padding:19px 14px 18px!important;
+  border:1px solid #bd945f!important;border-radius:8px!important;
+  background:repeating-linear-gradient(0deg,#d6b17a0c 0 1px,transparent 1px 7px),
+   linear-gradient(145deg,#38291c,#18130e 78%)!important;
+  box-shadow:inset 0 0 0 2px #a980442c,0 11px 27px #0009!important;
+ }
+ #caseGame .v33-ending-report::before{
+  content:"";position:absolute;top:0;left:18px;right:18px;
+  height:2px;background:linear-gradient(90deg,transparent,#e7bc80,transparent);
+  pointer-events:none;
+ }
+ #caseGame .v33-ending-head small{
+  display:block!important;
+  font:800 .68rem/1.4 system-ui,sans-serif!important;
+  letter-spacing:.13em!important;color:#e8be87!important;
+ }
+ #caseGame .v33-ending-head h3{
+  margin:9px 0 9px!important;
+  font:700 clamp(1.55rem,6.2vw,1.94rem)/1.18 Georgia,serif!important;
+  color:#f4daad!important;text-wrap:balance!important;
+  overflow-wrap:anywhere!important;
+ }
+ #caseGame .v33-ending-report >p{
+  margin:0 0 16px!important;
+  font:400 clamp(.96rem,4.14vw,1.09rem)/1.58 Georgia,serif!important;
+  color:#ebd5b7!important;
+ }
+ #caseGame .case001-finale-subtitle{
+  margin:0 0 17px!important;
+  font:600 .78rem/1.55 system-ui,sans-serif!important;
+  color:#d2b48d!important;
+  letter-spacing:.015em!important;overflow-wrap:anywhere!important;
+ }
+ /* In Case 001, 'Outcome' is prose, unlike the three numeric counts in 002.
+    Give the longer classification its own row and align the two evidence
+    totals beneath it; fatalities add an additional pair of summary rows. */
+ #caseGame .v33-ending-metrics{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;margin:17px 0 18px!important;
+ }
+ #caseGame .v33-ending-metrics>div{
+  box-sizing:border-box!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  min-width:0!important;min-height:75px!important;
+  gap:7px!important;padding:13px 8px!important;
+  border:1px solid #947246!important;border-radius:6px!important;
+  background:#211a13bd!important;text-align:center!important;
+ }
+ #caseGame .v33-ending-metrics>div:first-child{
+  grid-column:1/-1!important;min-height:70px!important;
+ }
+ #caseGame .v33-ending-metrics:has(>div:nth-child(6))>div:last-child{
+  grid-column:1/-1!important;
+ }
+ #caseGame .v33-ending-metrics small{
+  display:block!important;margin:0!important;
+  color:#cfb08a!important;font:750 .65rem/1.37 system-ui,sans-serif!important;
+  letter-spacing:.04em!important;
+  overflow-wrap:anywhere!important;
+ }
+ #caseGame .v33-ending-metrics strong{
+  display:block!important;margin:0!important;
+  color:#f2d5a9!important;
+  font:700 clamp(1.01rem,4.7vw,1.42rem)/1.28 Georgia,serif!important;
+  overflow-wrap:anywhere!important;text-wrap:balance!important;
+ }
+ #caseGame .case001-finale-materials{
+  box-sizing:border-box!important;
+  margin:17px 0!important;padding:0!important;
+  border:1px solid #846642!important;border-radius:6px!important;
+  background:#1c1611!important;
+ }
+ #caseGame .case001-finale-materials summary{
+  cursor:pointer;list-style-position:inside;
+  padding:13px 11px!important;color:#e8c69a!important;
+  font:750 .8rem/1.45 system-ui,sans-serif!important;
+  touch-action:manipulation;
+ }
+ #caseGame .case001-finale-materials summary:focus-visible{
+  outline:3px solid #f4d19e;outline-offset:2px;
+ }
+ #caseGame .case001-finale-materials[open] summary{
+  border-bottom:1px solid #7f603f!important;
+ }
+ #caseGame .case001-finale-materials-body{
+  display:grid;gap:12px;padding:13px 11px!important;
+ }
+ #caseGame .case001-finale-materials-body h4{
+  margin:0 0 8px!important;color:#dabc8d!important;
+  font:800 .7rem/1.4 system-ui,sans-serif!important;
+  letter-spacing:.085em!important;
+ }
+ #caseGame .case001-finale-materials-body ul{
+  display:grid;gap:6px;margin:0;padding:0 0 0 16px;
+ }
+ #caseGame .case001-finale-materials-body li{
+  color:#e9d4ba;font:400 .84rem/1.5 Georgia,serif;
+  overflow-wrap:anywhere;
+ }
+ #caseGame .case001-finale-materials-body p{
+  color:#c9b292;font:.81rem/1.5 system-ui,sans-serif;margin:0;
+ }
+ #caseGame .case001-finale-archive-note{
+  margin:16px 0 0!important;padding:12px!important;
+  border:1px solid #7e603f;border-radius:6px;
+  background:#17130f;color:#d8bf9d!important;
+  font:.8rem/1.55 system-ui,sans-serif!important;
+ }
+ #caseGame .case001-finale-actions{
+  display:grid;gap:9px;margin:15px 0 0;
+ }
+ #caseGame .case001-finale-actions button{
+  box-sizing:border-box!important;
+  width:100%;min-height:50px;padding:12px 13px;
+  border:1px solid #bc9562;border-radius:6px;
+  background:linear-gradient(110deg,#503821,#251b14);
+  color:#f4d6a8;font:750 .8rem/1.45 system-ui,sans-serif;
+  letter-spacing:.04em;text-align:center;cursor:pointer;
+  touch-action:manipulation;overflow-wrap:anywhere;
+ }
+ #caseGame .case001-finale-actions button.secondary{
+  background:#211a14;color:#e6c7a0;
+ }
+ #caseGame .case001-finale-actions button:focus-visible{
+  outline:3px solid #fbd9a2;outline-offset:2px;
+ }
+ #caseGame .case-paper:has(>.v33-ending-report) #caseChoices{
+  padding-top:2px!important;
+ }
+ #caseGame .case-paper:has(>.v33-ending-report) #caseChoices>.case-choice{
+  min-height:52px!important;
+  background:linear-gradient(120deg,#4b321e,#261c14)!important;
+ }
+}
+@media (orientation:portrait) and (max-width:359px){
+ #caseGame .v33-ending-report{padding:15px 10px 13px!important}
+ #caseGame .v33-ending-metrics{gap:6px!important}
+ #caseGame .v33-ending-metrics>div{padding:11px 6px!important}
+ #caseGame .case001-finale-actions{gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+ #caseGame .case001-finale-actions button{transition:none!important}
+}

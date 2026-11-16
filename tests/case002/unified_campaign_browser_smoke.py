@@ -78,6 +78,12 @@ def run():
                     # an obsolete Digbeth label while resetting to Small Heath.
                     page.locator("#districtBack").click()
                     assert page.locator("#home").is_visible()
+                    # Re-entry must not move an illustrated button under Safari.
+                    assert page.locator("#districtsCard").evaluate(
+                        "el => getComputedStyle(el).animationName")==(
+                            "bh-menu-entry-opacity")
+                    assert page.locator("#districtsCard").evaluate(
+                        "el => getComputedStyle(el).transform")=="none"
                     page.locator("#districtsCard").click()
                     assert page.locator('.map-pin[data-district="small-heath"]').get_attribute(
                         "aria-pressed")=="true"
@@ -97,6 +103,25 @@ def run():
                     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
                     assert page.url.startswith(origin+"/")
                     assert page.locator("#case002MapReturnBar").is_visible()
+                    # The connected-case navigation must not consume two rows
+                    # above the briefing on small iPhones (320px and 390px).
+                    for width in (320,390):
+                        page.set_viewport_size({"width":width,"height":790})
+                        nav=page.locator("#case002MapReturnBar")
+                        left=page.locator("#case002MapReturn")
+                        right=page.locator("#case002SharedArchiveLink")
+                        l=left.bounding_box();r=right.bounding_box()
+                        assert l and r
+                        assert abs(l["y"]-r["y"])<=1, (
+                            name+" connected nav wrapped at "+str(width))
+                        assert min(l["height"],r["height"])>=44
+                        assert nav.bounding_box()["height"]<78, (
+                            name+" connected navigation hides briefing")
+                        assert left.get_attribute("aria-label")=="К карте Бирмингема"
+                        assert "двух дел" in right.get_attribute("aria-label")
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     assert page.locator("#caseBriefing").is_visible()
                     assert page.locator(".briefing-visual img").evaluate(
                         "img => img.complete && img.naturalWidth===720 && img.naturalHeight===900")
@@ -171,18 +196,349 @@ def run():
                     assert page.locator("#launchSecondCase").is_hidden()
                     page.locator("#launchFirstCase").click()
                     assert page.locator("#heroSelection").is_visible()
+                    # Case 001 now has the same first-screen logic as 002:
+                    # spoiler-safe premise precedes protagonist selection.
+                    premise=page.locator(
+                        "#heroSelection .case001-unified-premise")
+                    assert premise.is_visible()
+                    assert "Артур Прайс" in premise.inner_text()
+                    assert premise.bounding_box()["y"] < page.locator(
+                        "#heroSelection .hero-cards").bounding_box()["y"]
+                    # Restrict to the heading: the detailed hero biography
+                    # also contains a .hero-eyebrow.
+                    assert page.locator(
+                        "#heroSelection .hero-top .hero-eyebrow").inner_text()==(
+                            "БЛИЖНИЙ КРУГ · ВЫБОР ГЕРОЯ")
+                    # The original dossier is long: its primary start button
+                    # must stay reachable in the same mobile viewport.
+                    start=page.locator("#heroSelection .hero-begin").bounding_box()
+                    assert start["y"]>=0 and start["y"]+start["height"]<=844, (
+                        name+" Case001 hero start fell below phone viewport")
                     page.locator("#heroSelection .hero-begin").click()
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
                     assert page.locator("#caseGame").is_visible()
+                    # The complete Case 001 UI must read as one campaign:
+                    # scene pulse, a concise optional goals ledger and
+                    # the genuine original investigation board.
+                    pulse=page.locator("#case001CampaignPulse")
+                    assert pulse.is_visible()
+                    assert pulse.locator(".case001-pulse-metrics>div").count()==3
+                    assert pulse.locator("#case001PulseClues").inner_text()=="0"
+                    assert pulse.locator("#case001PulseLinks").inner_text()=="0"
+                    assert "HP" in pulse.locator("#case001PulseHealth").inner_text()
+                    drawer=page.locator("#case001GoalDrawer")
+                    assert drawer.is_visible()
+                    assert drawer.evaluate("el => !el.open")
+                    drawer.locator("summary").click()
+                    assert drawer.evaluate("el => el.open")
+                    assert drawer.locator("#v19Goals li").count()==3
+                    drawer.locator("summary").click()
+                    assert drawer.evaluate("el => !el.open")
+                    # Health calculations stay owned by Case 001; visual
+                    # status remains legible on a portrait phone.
+                    health=page.locator("#caseHealthStatus")
+                    assert health.is_visible()
+                    assert health.locator(".case-health-track").bounding_box()["height"]>=8
+                    assert health.locator(".case-health-head").evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=11
+                    assert health.evaluate(
+                        "el => getComputedStyle(el).borderRadius")!="0px"
+                    assert health.evaluate(
+                        "el => el.nextElementSibling?.classList.contains('case-section-label')") , (
+                            name+" health must precede the decisions heading")
+                    # Original 001 artwork must keep its native aspect ratio.
+                    for scene_width in (320,390):
+                        page.set_viewport_size({"width":scene_width,"height":790})
+                        photo=page.locator("#caseArt .case001-portrait-image")
+                        photo.wait_for(state="visible")
+                        dim=photo.evaluate("""el => ({
+                            nw:el.naturalWidth,nh:el.naturalHeight,
+                            w:el.getBoundingClientRect().width,
+                            h:el.getBoundingClientRect().height
+                        })""")
+                        assert dim["nw"]>0 and dim["nh"]>0
+                        assert abs(dim["w"]/dim["h"]-dim["nw"]/dim["nh"])<.025
+                        assert page.locator("#caseScene").bounding_box()["height"]>=320
+                        assert page.locator("#caseScene .case001-read-scene").is_visible()
+                        # Unified iPhone thumb navigation, fixed to the real
+                        # viewport rather than the animated case screen.
+                        nav=page.locator("#case001QuickNav")
+                        assert nav.is_visible()
+                        assert nav.locator("button").count()==4
+                        assert nav.evaluate(
+                            "el => getComputedStyle(el).position")=="fixed"
+                        nav_rect=nav.bounding_box()
+                        assert 0<=nav_rect["y"] and nav_rect["y"]+nav_rect["height"]<=791
+                        assert page.locator(
+                            "#caseGame .case001-inline-evidence").evaluate(
+                                "el => !el.open"),name+" inline clues must be folded"
+                        # The chosen hero and title must precede the scene art,
+                        # exactly as in Case 002. Approved wide art stays intact.
+                        title_box=page.locator(
+                            "#caseScene .case-scene-inner").bounding_box()
+                        art_box=page.locator("#caseArt").bounding_box()
+                        assert art_box["height"]<=max(205,scene_width*.62+8), (
+                            name+" wide art still has excessive letterboxing")
+                        read_box=page.locator(
+                            "#caseScene .case001-read-scene").bounding_box()
+                        assert title_box["y"]<art_box["y"],name+" title below artwork"
+                        assert read_box["y"]<art_box["y"],name+" read button below artwork"
+                        assert page.locator(
+                            "#caseScene .case001-hero-name").inner_text()==(
+                                "Джек Харпер")
+                        assert page.locator(
+                            "#caseScene .case001-scene-hero img").evaluate(
+                                "el => el.complete && el.naturalWidth>0")
+                        assert page.locator(".case001-art-caption").is_visible()
+                        assert page.locator(
+                            ".case001-art-caption").inner_text().find(
+                                page.locator("#casePlace").inner_text())>=0
+                        # Unified Case 001 reader must match Case 002's
+                        # legible mobile dialogue, prose and numbered decisions.
+                        choices=page.locator("#caseChoices > .case-choice")
+                        assert choices.count()>=1
+                        choice=choices.first
+                        assert choice.evaluate(
+                            "el => getComputedStyle(el).display")=="grid"
+                        assert choice.evaluate(
+                            "el => parseFloat(getComputedStyle(el).fontSize)")>=15
+                        assert "counter(case001-decision" in choice.evaluate(
+                            "el => getComputedStyle(el,'::before').content")
+                        assert choice.bounding_box()["height"]>=48
+                        # Touch players must see the actual missing evidence,
+                        # not a mouse-only tooltip on a disabled decision.
+                        page.evaluate("""() => {
+                            const b=document.createElement('button');
+                            b.type='button';b.className='case-choice';
+                            b.disabled=true;
+                            b.title='Нужна улика: Старый ключ';
+                            b.textContent='Открыть дверь · нужна улика';
+                            b.dataset.uiProbe='lock';
+                            document.querySelector('#caseChoices').append(b);
+                        }""")
+                        page.wait_for_function("""() =>
+                            document.querySelector('[data-ui-probe="lock"]')
+                              ?.dataset.case001GateHint==='Нужна улика: Старый ключ'
+                        """)
+                        locked=page.locator('[data-ui-probe="lock"]')
+                        assert "Нужна улика: Старый ключ" in locked.evaluate(
+                            "el => getComputedStyle(el,'::after').content")
+                        assert locked.inner_text()=="Открыть дверь"
+                        locked.evaluate("el => el.remove()")
+                        assert page.locator("#caseText").evaluate(
+                            "el => parseFloat(getComputedStyle(el).fontSize)")>=16
+                        assert page.locator(".case-paper").evaluate(
+                            "el => getComputedStyle(el).borderRadius")!="0px"
+                        dialogue=page.locator("#caseGame .case-dialogue")
+                        if dialogue.is_visible():
+                            assert dialogue.evaluate(
+                                "el => getComputedStyle(el).display")=="grid"
+                            assert page.locator("#caseSpeaker").inner_text()
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     case1=page.evaluate("""() => localStorage.getItem(
                         'birmingham_case_smol_heath_v1_jack')""")
                     assert case1, "The original Case 001 must create its own save"
+                    nav=page.locator("#case001QuickNav")
+                    assert page.locator(
+                        "#caseGame .v34-open-inventory").is_hidden(), (
+                            name+" redundant sidebar inventory on phone")
+                    # A new clue remains flagged on the fixed toolbar until
+                    # the player opens the real inventory.
+                    page.evaluate("""() => {
+                        document.querySelector('#caseJournalCount').textContent='1';
+                    }""")
+                    page.wait_for_function("""() =>
+                        document.querySelector(
+                          '#case001QuickNav [data-go="evidence"]')
+                          ?.dataset.unread==='true'
+                    """)
+                    assert "НОВАЯ" in nav.locator(
+                        '[data-go="evidence"]').evaluate(
+                            "el => getComputedStyle(el,'::after').content")
+                    page.evaluate("""() => {
+                        document.querySelector('#caseJournalCount').textContent='0';
+                    }""")
+                    # Validate real reading jumps and both existing tools.
+                    nav.locator('[data-go="choices"]').click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [aria-current]')
+                          ?.dataset.go==='choices' &&
+                        document.querySelector('#caseChoices')
+                          ?.getBoundingClientRect().top<210
+                    """)
+                    nav.locator('[data-go="scene"]').click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [aria-current]')
+                          ?.dataset.go==='scene' &&
+                        document.querySelector('#caseScene')
+                          ?.getBoundingClientRect().top<210
+                    """)
+                    nav.locator('[data-go="evidence"]').click()
+                    quick_shade=page.locator("#caseGame .v33-shade")
+                    assert quick_shade.is_visible()
+                    assert quick_shade.get_attribute("data-mode")=="inventory"
+                    assert nav.locator(
+                        '[data-go="evidence"]').get_attribute(
+                            "data-unread")=="false"
+                    assert nav.is_hidden()
+                    page.locator(".v33-close").click()
+                    assert nav.is_visible()
+                    nav.locator('[data-go="deduction"]').click()
+                    assert quick_shade.is_visible()
+                    assert quick_shade.get_attribute("data-mode")=="deduction"
+                    page.locator(".v33-close").click()
+                    assert nav.is_visible()
+                    # A genuine deduction must refresh premium gates and
+                    # visibly announce newly opened decisions on a phone.
+                    old_findings=page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case_v20_findings_jack')""")
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const s=JSON.parse(localStorage.getItem(key));
+                        s.node='expose';
+                        s.items=['receipt','ledger','testimony'];
+                        localStorage.setItem(key,JSON.stringify(s));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:s.started,
+                            deductions:[],reactions:[]}));
+                        window.BirminghamCase.resume();
+                    }""")
+                    assert page.locator("#caseChoices > .case-choice:disabled").count()==2
+                    nav.locator('[data-go="deduction"]').click()
+                    page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                    page.locator('.v33-board .v33-tile[data-id="ledger"]').click()
+                    assert page.locator(".v33-result-layer").is_visible()
+                    page.locator(".v33-result button").click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [data-go="choices"]')
+                          ?.dataset.newDecision==='true' &&
+                        document.querySelector('#case001DecisionFeedback')
+                          ?.textContent.includes('Открыто решений: 2')
+                    """)
+                    assert page.locator("#caseChoices > .case-choice:disabled").count()==0
+                    nav.locator('[data-go="choices"]').click()
+                    assert nav.locator('[data-go="choices"]').get_attribute(
+                        "data-new-decision")=="false"
+                    assert page.locator("#case001DecisionFeedback").is_visible()
+                    assert page.locator("#case001DecisionFeedback").evaluate(
+                        "el => el.nextElementSibling?.id")=="caseChoices", (
+                            name+" feedback must appear immediately above the decisions")
+                    assert page.evaluate("""() => {
+                        return JSON.parse(localStorage.getItem(
+                            'birmingham_case_v20_findings_jack'))
+                              .deductions.includes('Деньги и двойной учёт');
+                    }""")
+                    # A scene change clears the old decision hint naturally.
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const s=JSON.parse(localStorage.getItem(key));
+                        s.node='intro';
+                        localStorage.setItem(key,JSON.stringify(s));
+                        window.BirminghamCase.resume();
+                    }""")
+                    assert page.locator("#case001DecisionFeedback").is_hidden()
+                    # Keep the Case 001 inventory in the physical phone
+                    # viewport. A finished screen-entry transform used to turn
+                    # this fixed overlay into a multi-thousand-pixel panel.
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const state=JSON.parse(localStorage.getItem(key));
+                        state.items=['key','envelope','receipt','ledger','invoice','route'];
+                        localStorage.setItem(key,JSON.stringify(state));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:state.started,
+                            deductions:['След склада D-17'],reactions:[]}));
+                    }""")
+                    for board_width in (320,390):
+                        page.set_viewport_size({"width":board_width,"height":790})
+                        nav.locator('[data-go="evidence"]').click()
+                        shade=page.locator("#caseGame .v33-shade")
+                        assert shade.is_visible()
+                        board=page.locator("#caseGame .v33-window")
+                        overlay=shade.bounding_box()
+                        window=board.bounding_box()
+                        assert abs(overlay["y"])<2, name+" board offset"
+                        assert abs(overlay["height"]-790)<2, name+" board viewport height"
+                        assert window["height"]<=790
+                        assert board.evaluate(
+                            "el => el.scrollHeight > el.clientHeight"), (
+                            name+" board must remain independently scrollable")
+                        solved=page.locator(".v33-solved-board")
+                        assert solved.evaluate(
+                            "el => getComputedStyle(el).display")=="grid"
+                        assert solved.locator(".v33-tile").count()==2
+                        assert page.locator(".v33-board .v33-tile").count()==4
+                        assert page.locator(".case001-board-guide").is_visible()
+                        page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                        assert "ВЫБРАНО" in page.locator(
+                            ".case001-board-guide").inner_text()
+                        page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                        assert "Коснись улики" in page.locator(
+                            ".case001-board-guide").inner_text()
+                        assert page.locator("#caseGame").evaluate(
+                            "el => getComputedStyle(el).animationName")=="none"
+                        board.evaluate("el => el.scrollTop=el.scrollHeight")
+                        close=page.locator(".v33-close")
+                        assert 0<=close.bounding_box()["y"]<80
+                        close.click()
+                        assert shade.is_hidden()
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.evaluate("""(data) => {
+                        localStorage.setItem('birmingham_case_smol_heath_v1_jack',
+                            data[0]);
+                        if(data[1]===null)
+                          localStorage.removeItem('birmingham_case_v20_findings_jack');
+                        else localStorage.setItem('birmingham_case_v20_findings_jack',
+                            data[1]);
+                    }""",[case1,old_findings])
+                    page.set_viewport_size({"width":390,"height":844})
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case_smol_heath_v1_jack')""")==case1
+                    # Presentation-only probes; remove them without
+                    # triggering rewards or changing persistent data.
+                    toast_layout=page.evaluate("""() => {
+                        const tray=document.querySelector('.campaign-unlock-tray');
+                        let root=document.getElementById('caseHealthToasts');
+                        const created=!root;
+                        if(created){
+                            root=document.createElement('div');
+                            root.id='caseHealthToasts';
+                            document.body.append(root);
+                        }
+                        const event=document.createElement('div');
+                        event.className='case-health-toast wound';
+                        event.innerHTML='<strong>CHECK</strong><p>CHECK</p>';
+                        root.append(event);
+                        const award=document.createElement('div');
+                        award.className='campaign-unlock-popup';
+                        award.textContent='CHECK';
+                        tray.append(award);
+                        const a=tray.getBoundingClientRect();
+                        const b=root.getBoundingClientRect();
+                        const result={
+                            awardTop:a.top,eventTop:b.top,
+                            eventHeight:b.height,
+                            pointerEvents:getComputedStyle(root).pointerEvents,
+                            width:document.documentElement.scrollWidth-window.innerWidth
+                        };
+                        award.remove();event.remove();
+                        if(created)root.remove();
+                        return result;
+                    }""")
+                    assert 0<=toast_layout["awardTop"]<80
+                    assert 0<toast_layout["eventTop"]<844
+                    assert toast_layout["pointerEvents"]=="none"
+                    assert toast_layout["width"]<=1
                     page.screenshot(path=str(SHOTS/f"{name}-case001.png"))
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator("#caseBack").click()
                     assert page.locator("#districts").is_visible()
+                    assert page.locator("#case001QuickNav").is_hidden()
                     page.locator('.map-pin[data-district="digbeth"]').click()
                     page.locator("#launchSecondCase").click()
                     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
@@ -327,6 +683,22 @@ def run():
                     assert page.evaluate("""() => document.activeElement.id""")==(
                         "campaignHerofinn"
                     )
+                    assert page.locator(
+                        "#campaignDossiers .campaign-002-back-to-heroes").count()==5
+                    page.set_viewport_size({"width":320,"height":790})
+                    assert hero_jumps.locator("button").first.evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=13
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-metric small").first.evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=12
+                    hero_jumps.locator('[data-jump-to="campaignHerosamuel"]').click()
+                    page.locator(
+                        "#campaignHerosamuel .campaign-002-back-to-heroes").click()
+                    assert page.evaluate(
+                        "() => document.activeElement.dataset.jumpTo")=="campaignHerojack"
+                    assert not page.evaluate(
+                        "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     assert "В работе: «Гостья под дождём»" in page.locator(
                         "#campaignDossiers .campaign-card").first.inner_text()
                     assert "Продолжается: P02" not in page.locator(
@@ -351,6 +723,91 @@ def run():
                     page.screenshot(path=str(SHOTS/f"{name}-unified-archive-320.png"))
                     assert not errors, name+" archive JS errors: "+str(errors)
                     context.close()
+                    # Cross-case continuity: a returning player must see
+                    # the right save/hero on map, Case 001 and Case 002.
+                    continuity=browser.new_context(
+                        viewport={"width":390,"height":844},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    returning=continuity.new_page()
+                    returning.route("https://telegram.org/js/telegram-web-app.js",
+                                    lambda route:route.abort())
+                    returning.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    returning.evaluate("""(raw) => {
+                        const fin={
+                         node:'intro',items:[],flags:{},trail:[],
+                         ending:null,started:1700000000000,health:100,
+                         riskSeen:[],bandaged:false,medicalKits:0
+                        };
+                        localStorage.setItem('birmingham_case_smol_heath_v1_finn',
+                          JSON.stringify(fin));
+                        localStorage.setItem('birmingham_case_smol_heath_v1_jack',
+                          JSON.stringify({...fin,node:'endingRescue',
+                            ending:'endingRescue',started:1699999999000}));
+                        // Jack was the last viewed hero, but his 001 story
+                        // is finished. The unfinished Finn run must win.
+                        localStorage.setItem('birmingham_hero_selection_v1','jack');
+                        const jack=JSON.parse(raw);
+                        const copied={...jack,hero:'finn',
+                            startedAt:jack.startedAt+1000,
+                            attemptId:'002-finn-test-copy'};
+                        localStorage.setItem('birmingham_case002_draft_v3_jack',
+                          raw);
+                        localStorage.setItem('birmingham_case002_draft_v3_finn',
+                          JSON.stringify(copied));
+                        // A still newer completed 002 save must not
+                        // displace Finn's unfinished investigation.
+                        localStorage.setItem('birmingham_case002_draft_v3_victor',
+                          JSON.stringify({...jack,hero:'victor',node:'Z01',
+                            finished:true,ending:'Z01',
+                            startedAt:jack.startedAt+2000,
+                            attemptId:'002-victor-completed'}));
+                    }""",case2)
+                    original_finn=returning.evaluate("""() =>
+                        localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")
+                    returning.locator("#districtsCard").click()
+                    status=returning.locator("#campaignDistrictState")
+                    assert status.is_visible()
+                    assert "В РАБОТЕ: 1 · ЗАВЕРШЕНО: 1" in status.inner_text()
+                    assert "Финн О’Коннор" in status.inner_text()
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#launchFirstCase").inner_text()
+                    returning.locator("#launchFirstCase").click()
+                    assert returning.locator(
+                        '#heroCards .hero-card.active').inner_text().find("Финн")>=0
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#heroSelection .hero-begin").inner_text()
+                    returning.locator("#heroSelection .hero-close").click()
+                    assert returning.evaluate(
+                        "() => document.activeElement.id")=="launchFirstCase"
+                    returning.locator('.map-pin[data-district="digbeth"]').click()
+                    assert "В РАБОТЕ: 2 · ЗАВЕРШЕНО: 1" in status.inner_text()
+                    assert "ПРОДОЛЖИТЬ" in returning.locator(
+                        "#launchSecondCase").inner_text()
+                    returning.wait_for_function("""() => {
+                        const y=document.querySelector('#districtCase')
+                          .getBoundingClientRect().top;
+                        return y>=0 && y<innerHeight-90;
+                    }""",timeout=8000)
+                    returning.locator("#launchSecondCase").click()
+                    returning.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+                    assert returning.locator("#caseBriefing").is_hidden()
+                    assert returning.locator("#hero").input_value()=="finn"
+                    assert returning.locator(
+                        '#heroGallery [data-hero="finn"]').get_attribute(
+                            "aria-pressed")=="true"
+                    assert returning.locator("#resume").is_visible()
+                    returning.locator("#case002MapReturn").click()
+                    returning.wait_for_url("**/index.html#district-digbeth")
+                    returning.wait_for_function("""() =>
+                        !document.querySelector('#campaignDistrictState').hidden &&
+                        document.querySelector('#campaignDistrictState')
+                          .textContent.includes('В РАБОТЕ: 2')
+                    """)
+                    assert returning.evaluate("""() =>
+                        localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")==original_finn
+                    assert not returning.evaluate(
+                        "() => document.documentElement.scrollWidth > innerWidth+1")
+                    continuity.close()
                     # Silent loss of a Case 001 achievement write must NEVER
                     # show the player a celebratory popup or a phantom seal.
                     restricted=browser.new_context(
@@ -394,6 +851,77 @@ def run():
                         "#campaignFirstCaseAchievements .campaign-reward-card.earned"
                     ).count()==0
                     restricted.close()
+                    # Isolated completed Case 001: read-only finale over a
+                    # verified ending, no interference with the shared archive.
+                    terminal=browser.new_context(
+                        viewport={"width":320,"height":790},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    ended=terminal.new_page()
+                    ended.route("https://telegram.org/js/telegram-web-app.js",
+                                lambda route:route.abort())
+                    ended.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    ended.locator("#districtsCard").click()
+                    ended.locator('.map-pin[data-district="small-heath"]').click()
+                    ended.locator("#launchFirstCase").click()
+                    ended.locator("#heroSelection .hero-begin").click()
+                    ended.locator("#case001Briefing .briefing-start").click()
+                    ended.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const save=JSON.parse(localStorage.getItem(key));
+                        save.node='endingTruth';
+                        save.health=85;
+                        save.items=['key','envelope','receipt','ledger',
+                                    'invoice','route'];
+                        localStorage.setItem(key,JSON.stringify(save));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:save.started,
+                            deductions:['След склада D-17','Путь груза'],
+                            reactions:[]}));
+                        window.BirminghamCase.resume();
+                    }""")
+                    finale=ended.locator("#caseGame .v33-ending-report")
+                    assert finale.is_visible()
+                    assert finale.get_attribute("aria-label")=="Итог Дела №001"
+                    assert "ДЕЛО №001 ЗАКРЫТО" in finale.locator(
+                        ".v33-ending-head small").inner_text()
+                    assert finale.locator(".v33-ending-metrics>div").count()==3
+                    assert finale.locator(
+                        ".case001-finale-actions button").count()==2
+                    assert ended.locator(
+                        "#caseGame .case-paper>.case-section-label").last.inner_text()==(
+                            "СЛЕДУЮЩИЙ ШАГ")
+                    materials=finale.locator(".case001-finale-materials")
+                    assert "6 УЛИК" in materials.locator("summary").inner_text()
+                    assert "2 СВЯЗЕЙ" in materials.locator("summary").inner_text()
+                    materials.locator("summary").click()
+                    assert materials.evaluate("el => el.open")
+                    assert materials.locator("li").count()==8
+                    for finale_width in (320,390):
+                        ended.set_viewport_size(
+                            {"width":finale_width,"height":790})
+                        assert not ended.evaluate(
+                            "() => document.documentElement.scrollWidth > innerWidth+1"
+                        ), name+" completed Case 001 overflows "+str(finale_width)+"px"
+                    finale.locator(".case001-finale-actions button").first.click()
+                    assert ended.locator("#campaignAchievements").is_visible()
+                    once=ended.evaluate("""() => ({
+                       records:JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_records_v1')||'[]').length,
+                       unique:Object.keys(JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_unique_rewards_v1')||'{}')).length
+                    })""")
+                    assert once["records"]==1 and once["unique"]==1
+                    ended.evaluate("() => window.BirminghamCase.resume()")
+                    ended.locator(
+                        ".case001-finale-actions button.secondary").click()
+                    assert ended.locator("#districts").is_visible()
+                    assert ended.evaluate("""() => ({
+                       records:JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_records_v1')||'[]').length,
+                       unique:Object.keys(JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_unique_rewards_v1')||'{}')).length
+                    })""")==once, name+" finale must not duplicate rewards"
+                    terminal.close()
                     print("PASS "+name+": cross-case archive deep links, Digbeth "
                           "return, Case001 saved-write acknowledgement and no "
                           "phantom notifications; 002 resume and archives intact")

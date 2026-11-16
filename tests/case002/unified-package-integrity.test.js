@@ -12,7 +12,16 @@ for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
  "campaign-hub-v1.js","campaign-case002-archive-v1.js",
  "campaign-case002-archive-v1.css","src/case002/browser-data-v3.js",
  "case002-map-entry-v1.js","case002-map-entry-v1.css",
- "case001-briefing-v1.js","session-controls-v1.js",
+ "campaign-map-journey-v1.js","campaign-map-journey-v1.css",
+ "case001-briefing-v1.js","case001-portrait-stage-v1.js",
+ "case001-portrait-stage-v1.css","case001-unified-reader-v1.css",
+ "case001-unified-evidence-v1.css",
+ "case001-unified-status-v1.css",
+ "case001-unified-finale-v1.css","case001-unified-finale-v1.js",
+ "case001-unified-scene-flow-v1.css","case001-unified-scene-flow-v1.js",
+ "case001-unified-quicknav-v1.css","case001-unified-quicknav-v1.js",
+ "case001-campaign-cohesion-v1.css","case001-campaign-cohesion-v1.js",
+ "session-controls-v1.js",
  "preview/case002-prototype/index.html","preview/case002-prototype/style.css",
  "preview/case002-prototype/app.js","src/case002/engine-v3.js",
  "src/case002/achievements-v1.js","assets/districts/digbeth.webp",
@@ -22,8 +31,14 @@ const shell=fs.readFileSync(entry("index.html"),"utf8"),
  map=fs.readFileSync(entry("case002-map-entry-v1.js"),"utf8"),
  old=fs.readFileSync(entry("case-v14.js"),"utf8"),
  second=fs.readFileSync(entry("preview/case002-prototype/index.html"),"utf8");
+assert(shell.includes("case001-campaign-cohesion-v1.js")&&
+ shell.includes("case001-campaign-cohesion-v1.css"),
+ "Case 001 unified mobile composition is not included");
 assert(shell.includes('id="districtsCard"')&&shell.includes('data-district="digbeth"'),
  "The original five-district campaign map must be the publication entry");
+assert(shell.includes('campaign-map-journey-v1.js')&&
+ shell.includes('campaign-map-journey-v1.css'),
+ "Unified district continuation summary must ship with the game");
 assert(shell.includes('case002-map-entry-v1.js')&&map.includes("launchSecondCase")&&
  map.includes("launchFirstCase")&&map.includes("from=map"),
  "The real Digbeth map button must reach Case 002 at the same origin");

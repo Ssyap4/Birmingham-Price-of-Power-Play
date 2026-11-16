@@ -188,6 +188,13 @@ function renderDossiers(doc,box,archive,heroes){
   body.append(badges);
   const future=body.querySelector(".campaign-future");
   if(future)future.textContent="Дело №002 доступно в Дигбете; новые истории появятся позже.";
+  const returnButton=appendText(doc,body,"button",
+   "campaign-002-back-to-heroes","↑ К СПИСКУ ГЕРОЕВ");
+  returnButton.type="button";
+  returnButton.addEventListener("click",()=>{
+   nav.scrollIntoView({block:"start",behavior:"auto"});
+   nav.querySelector("button")?.focus({preventScroll:true});
+  });
  });
  showAlert(doc,box,archive);
 }

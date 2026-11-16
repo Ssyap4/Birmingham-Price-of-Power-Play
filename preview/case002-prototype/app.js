@@ -196,10 +196,34 @@ function init(){
  $("priorDetails").hidden=priorRecords.length===0;
  // A returning player with any Case 002 save goes directly to the hero screen.
  // Never write a new preference or touch the saved game just to display UI.
- let hasSave=false;
+ let hasSave=false,preferredHero=null,latestStart=-Infinity,preferredActive=false;
  if(store)try{
-  hasSave=data.contract.heroes.some(hero=>Boolean(store.getItem(api.SAVE_PREFIX+hero)));
+  for(const hero of data.contract.heroes){
+   const raw=store.getItem(api.SAVE_PREFIX+hero);
+   if(!raw)continue;
+   hasSave=true;
+   try{
+    const saved=JSON.parse(raw);
+    // Active attempts outrank completed reports. Within the same
+    // status, prefer the newest attempt. Nothing is persisted on entry.
+    if(saved?.version===3&&saved.caseId==="002"&&saved.hero===hero&&
+       typeof saved.node==="string"&&typeof saved.attemptId==="string"&&
+       Number.isFinite(saved.startedAt)&&saved.startedAt>0&&
+       typeof saved.finished==="boolean"&&
+       (data.graph.nodes.some(scene=>scene.id===saved.node))&&
+       (saved.finished?data.contract.endings.some(e=>e.id===saved.ending):
+        saved.ending===null)){
+     const active=!saved.finished;
+     if(!preferredHero||(active&&!preferredActive)||
+        (active===preferredActive&&saved.startedAt>latestStart)){
+      preferredHero=hero;latestStart=saved.startedAt;
+      preferredActive=active;
+     }
+    }
+   }catch(_){/* damaged slot remains available for recovery */}
+  }
  }catch(e){console.warn("[Case 002] Cannot inspect saved slots",e);}
+ if(preferredHero)$("hero").value=preferredHero;
  $("caseBriefing").hidden=hasSave;
  $("launch").hidden=!hasSave;
  $("app").dataset.screen=hasSave?"selection":"briefing";
