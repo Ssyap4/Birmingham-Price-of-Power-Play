@@ -3,3 +3,7 @@
 .bh-audio-controls button[aria-pressed="false"]{color:#a6a09a;border-color:#605448}
 .bh-audio-controls button:hover,.bh-audio-controls button:focus-visible{border-color:#e3b975;outline:1px solid #d2a76c}
 @media(max-width:600px){.bh-audio-controls{right:6px;bottom:6px;gap:4px}.bh-audio-controls button{padding:7px 8px;font-size:10px}}
+
+.bh-audio-controls #bhMenuTrack{display:none}
+.bh-audio-controls button{min-height:44px;touch-action:manipulation}
+@media(prefers-reduced-motion:reduce){.bh-audio-controls button{transition:none!important}}
