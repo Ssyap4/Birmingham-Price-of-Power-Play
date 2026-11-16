@@ -23,6 +23,10 @@ test("personal Profile is its own illustration, not renamed Settings bitmap",()=
   assert.ok(fs.statSync(path.join(root,art)).size>1000,art);
  assert.match(css,/assets\/original-art\/challenges\.webp/);
  assert.match(css,/assets\/original-art\/clock\.webp/);
+ const case002Bridge=read("campaign-case002-archive-v1.js");
+ assert.ok(case002Bridge.includes("Знаки расследований и поручений · Общий архив"));
+ assert.ok(!case002Bridge.includes("Награды дел №001 и №002 · Коллекция"));
+ assert.ok(html.includes("Знаки расследований и поручений · Общий архив"));
  const seal=read("assets/cabinet/profile-seal.svg");assert.match(seal,/^<svg/);
  assert.match(seal,/<path /);assert.doesNotMatch(seal,/<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i);
  assert.ok(fs.statSync(path.join(root,"assets/original-art/profile.webp")).size>1000);

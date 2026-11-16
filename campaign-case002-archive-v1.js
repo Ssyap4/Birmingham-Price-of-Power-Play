@@ -397,8 +397,7 @@ function append(id,box,oldRuns,root){
    "↗ К ДЕЛУ №002 · ДИГБЕТ");
   back.href="#district-digbeth";heading.append(back);
  }
- if(title)title.textContent="Дело №001 · Долг, который не прощают. Дело №002 · "+
-  CASE_NAME+". Два дела — один архив.";
+ if(title)title.textContent="Детективные дела №001 и №002 · «Работа для своих». Три игровые линии — общий архив.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
  if(id==="campaignAchievements")renderAchievements(doc,box,archive,
   [...box.querySelectorAll(".campaign-award")],heroes);
@@ -413,7 +412,7 @@ function attach(root){
   append(id,box,runs,root);
  });
  const entry=root.document.querySelector("#storyStart .cabinet-entry-copy small");
- if(entry)entry.textContent="Награды дел №001 и №002 · Коллекция";
+ if(entry)entry.textContent="Знаки расследований и поручений · Общий архив";
 }
 return {readArray,validRecord,validSave,snapshot,append,attach};
 });

@@ -147,6 +147,7 @@ def run():
                     assert page.locator("#criminalEntry .cabinet-entry-copy strong").is_visible()
                     assert page.locator("#cabinetProfile .cabinet-entry-copy strong").is_visible()
                     assert page.locator("#cabinetProfile .cabinet-entry-copy strong").inner_text() == "Профиль"
+                    assert page.locator("#storyStart .cabinet-entry-copy small").inner_text() == "Знаки расследований и поручений · Общий архив"
                     # Six real labels, distinct photographic layers, safe horizontal bounds.
                     assert page.locator("#home .cabinet-menu > button").count() == 6
                     for selector in ("#districtsCard","#criminalEntry",".cabinet-entry-quiz",
