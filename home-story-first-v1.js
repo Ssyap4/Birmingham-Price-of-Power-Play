@@ -1,10 +1,5 @@
-/* Preserve existing campaign and dossier entries while the cabinet gains a personal profile. */
-document.addEventListener('DOMContentLoaded',()=>{
- const achievements=document.getElementById('storyStart');
- const dossier=document.getElementById('profileCard');
- if(achievements&&dossier)achievements.addEventListener('click',()=>dossier.click());
-});
-
+/* Menu art readiness only. Routes belong to the campaign and game handlers;
+   do not proxy Achievements into Dossier. */
 /* Never show blank illustrated buttons if the image pack has not been committed. */
 document.addEventListener('DOMContentLoaded',async()=>{
  const home=document.getElementById('home');

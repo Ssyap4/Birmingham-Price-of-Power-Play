@@ -147,6 +147,43 @@ def run():
                     assert page.locator("#criminalEntry .cabinet-entry-copy strong").is_visible()
                     assert page.locator("#cabinetProfile .cabinet-entry-copy strong").is_visible()
                     assert page.locator("#cabinetProfile .cabinet-entry-copy strong").inner_text() == "Профиль"
+                    # Six real labels, distinct photographic layers, safe horizontal bounds.
+                    assert page.locator("#home .cabinet-menu > button").count() == 6
+                    for selector in ("#districtsCard","#criminalEntry",".cabinet-entry-quiz",
+                                     "#storyStart","#profileCard","#cabinetProfile"):
+                        assert page.locator(selector + " .cabinet-entry-copy strong").is_visible()
+                    for selector, asset in (
+                        (".cabinet-entry-quiz", "assets/original-art/challenges.webp"),
+                        ("#storyStart", "assets/original-art/clock.webp"),
+                        ("#profileCard", "assets/cabinet/birmingham_cabinet_office_art.webp"),
+                    ):
+                        assert asset in page.locator(selector).evaluate(
+                            "e => getComputedStyle(e).backgroundImage"
+                        )
+                    assert page.evaluate("""() => {
+                        const cards=[...document.querySelectorAll('#home .cabinet-menu > button')];
+                        return cards.length===6 && cards.every(el=>{
+                            const box=el.getBoundingClientRect();
+                            const t=el.querySelector('.cabinet-entry-copy strong').getBoundingClientRect();
+                            return box.width>=240 && box.height>=44 &&
+                              box.left>=-1 && box.right<=innerWidth+1 &&
+                              t.width>0 && t.left>=box.left-1 && t.right<=box.right+1 &&
+                              getComputedStyle(el.querySelector('.cabinet-entry-copy strong')).opacity==='1';
+                        }) && document.documentElement.scrollWidth<=innerWidth+1;
+                    }"""), "cabinet menu target or title clipped"
+                    page.screenshot(path=str(OUT / (name + "-" + str(width) + "-cabinet-v10.png")), full_page=True)
+                    touch(page, "#storyStart")
+                    assert page.locator("#campaignAchievements").is_visible()
+                    touch(page, "#homeBtn")
+                    assert page.locator("#home").is_visible()
+                    touch(page, "#profileCard")
+                    assert page.locator("#campaignDossiers").is_visible()
+                    touch(page, "#homeBtn")
+                    assert page.locator("#home").is_visible()
+                    touch(page, "#districtsCard")
+                    assert page.locator("#districts").is_visible()
+                    touch(page, "#districtBack")
+                    assert page.locator("#home").is_visible()
                     if width == 390:
                         page.screenshot(path=str(OUT / (name + "-main-menu-v7.png")), full_page=True)
                         page.locator("#cabinetProfile").screenshot(path=str(OUT / (name + "-profile-illustrated-tile.png")))

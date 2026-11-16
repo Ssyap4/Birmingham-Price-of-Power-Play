@@ -191,3 +191,33 @@
  }
 }
 @media(max-width:340px){#home .cabinet-menu > #cabinetProfile .cabinet-entry-copy small{font-size:10px!important;}}
+
+/* V10: existing no-lettering photos make supporting destinations part of one city.
+   Main campaigns remain larger; every button keeps live, accessible HTML copy. */
+#home.cabinet-art-ready .cabinet-menu > .cabinet-entry-quiz{
+ background-image:linear-gradient(96deg,rgba(18,16,15,.96),rgba(23,20,18,.88) 58%,rgba(22,21,20,.70)),url('assets/original-art/challenges.webp')!important;
+ background-position:center 48%!important;background-size:cover!important;
+}
+#home.cabinet-art-ready .cabinet-menu > #storyStart{
+ background-image:linear-gradient(96deg,rgba(22,18,16,.97),rgba(25,21,18,.89) 58%,rgba(26,21,17,.63)),url('assets/original-art/clock.webp')!important;
+ background-position:center 59%!important;background-size:cover!important;
+}
+#home.cabinet-art-ready .cabinet-menu > #profileCard{
+ background-image:linear-gradient(96deg,rgba(19,17,15,.97),rgba(25,20,17,.90) 60%,rgba(23,18,15,.67)),url('assets/cabinet/birmingham_cabinet_office_art.webp')!important;
+ background-position:center 55%!important;background-size:cover!important;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(#storyStart,#profileCard,.cabinet-entry-quiz){
+ border-color:#8d714e!important;border-left-color:#b39461!important;
+}
+#home.cabinet-art-ready .cabinet-menu > :is(#districtsCard,#criminalEntry,#storyStart,#profileCard,#cabinetProfile,.cabinet-entry-quiz):active{
+ filter:brightness(1.16)!important;
+}
+@media(max-width:700px){
+ #home.cabinet-art-ready .cabinet-menu>.cabinet-entry{min-height:56px!important;}
+ #home.cabinet-art-ready .cabinet-menu>:is(#districtsCard,#criminalEntry){min-height:86px!important;}
+ #home.cabinet-art-ready .cabinet-menu .cabinet-entry-copy strong,
+ #home.cabinet-art-ready .cabinet-menu .cabinet-entry-copy small{overflow-wrap:break-word;}
+}
+@media(prefers-reduced-motion:reduce){
+ #home.cabinet-art-ready .cabinet-menu>.cabinet-entry{transition:none!important;}
+}
