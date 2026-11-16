@@ -29,7 +29,11 @@ assert(milestones.run_ui&&milestones.run_browser&&!milestones.run_full,
 assert(one("tests/case002/achievements-v1.test.js").run_ui);
 assert(one("tests/case002/ending-recap-v1.test.js").run_ui);
 const mobile=one("preview/case002-prototype/app.js");
-assert(mobile.run_ui&&mobile.run_browser&&!mobile.run_full);
+assert(mobile.run_ui&&mobile.run_browser&&!mobile.run_full&&!mobile.browser_full);
+const browserSpec=one("tests/case002/mobile_browser_smoke.py");
+assert(browserSpec.run_ui&&browserSpec.run_browser&&browserSpec.browser_full&&
+ !browserSpec.run_full&&!browserSpec.run_art,
+ "Changing the iPhone acceptance test must run real WebKit without 400 routes");
 const telegramSafe=one("src/case002/telegram-safe-area-v1.js");
 assert(telegramSafe.run_ui&&telegramSafe.run_browser&&!telegramSafe.run_full);
 assert(one("tests/case002/telegram-safe-area-v1.test.js").run_ui);
