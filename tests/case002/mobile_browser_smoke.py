@@ -2491,9 +2491,12 @@ def main():
                             "(img, v) => img.currentSrc.endsWith('case002-z02-scene--' + v + '--mobile.webp')",
                             variant,
                         ), f"Wrong ending art for Z02: {variant}"
-                        assert "зарегистрированы в черновом архиве" in full_page.locator(
+                        assert "подтверждены в локальном архиве" in full_page.locator(
                             "#finaleArchive"
                         ).inner_text(), "Normal completion must verify actual archived outcome"
+                        assert "ОБЕ ЗАПИСИ ПОДТВЕРЖДЕНЫ" in full_page.locator(
+                            "#finaleArchive .finale-archive-status"
+                        ).inner_text(), "Finale must validate completion and award separately"
                         assert "зарегистрированы" not in full_page.locator(".finale-eyebrow").inner_text()
                         full_page.screenshot(path=str(visual_dir/"chromium-finale.png"),full_page=True)
                         archived_before=full_page.evaluate("""() => localStorage.getItem(
