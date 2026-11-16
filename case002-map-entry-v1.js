@@ -38,7 +38,14 @@
    document.querySelector('.map-pin[data-district="small-heath"]')?.click();
  });
  function openHash(){
-   if(window.location.hash!=="#district-digbeth")return;
+   const target=window.location.hash.slice(1);
+   if(["campaignAchievements","campaignHistory","campaignDossiers"].includes(target)){
+     // Archive deep links work on a direct HTTPS visit, on Safari Back,
+     // and after returning from Case 002 — without touching either save.
+     window.BirminghamCampaign?.open(target);
+     return;
+   }
+   if(target!=="district-digbeth")return;
    document.getElementById("districtsCard")?.click();
    document.querySelector('.map-pin[data-district="digbeth"]')?.click();
    launch.focus({preventScroll:true});

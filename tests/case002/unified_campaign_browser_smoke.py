@@ -122,6 +122,32 @@ def run():
                         'birmingham_campaign_unique_rewards_v1')""")==old_rewards
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_campaign_records_v1')""")==old_records
+                    # New cross-case navigation: Case 002 -> shared achievements
+                    # -> Digbeth map -> resume exact same scene and save.
+                    assert page.locator("#case002SharedArchiveLink").is_visible()
+                    page.locator("#case002SharedArchiveLink").click()
+                    page.wait_for_url("**/index.html#campaignAchievements")
+                    assert page.locator("#campaignAchievements").is_visible()
+                    assert page.locator("#campaignSecondCaseAchievements").is_visible()
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-to-digbeth").is_visible()
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-to-digbeth").get_attribute(
+                        "href")=="#district-digbeth"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case002_draft_v3_jack')""")==case2
+                    page.locator("#campaignAchievements .campaign-002-to-digbeth").click()
+                    page.wait_for_url("**/index.html#district-digbeth")
+                    assert page.locator("#districts").is_visible()
+                    assert page.locator("#launchSecondCase").is_visible()
+                    page.locator("#launchSecondCase").click()
+                    page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+                    assert page.locator("#caseBriefing").is_hidden()
+                    assert page.locator("#resume").is_visible()
+                    page.locator("#resume").click()
+                    assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator("#case002MapReturn").click()
                     page.wait_for_url("**/index.html#district-digbeth")
                     assert page.locator("#districts").is_visible()
@@ -298,8 +324,52 @@ def run():
                     page.screenshot(path=str(SHOTS/f"{name}-unified-archive-320.png"))
                     assert not errors, name+" archive JS errors: "+str(errors)
                     context.close()
-                    print("PASS "+name+": unified map, 002 intro+P02 save, 001 native "
-                          "hero+briefing, 002 resume, Case001 canon and awards preserved")
+                    # Silent loss of a Case 001 achievement write must NEVER
+                    # show the player a celebratory popup or a phantom seal.
+                    restricted=browser.new_context(
+                        viewport={"width":375,"height":812},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    blocked=restricted.new_page()
+                    blocked.route("https://telegram.org/js/telegram-web-app.js",
+                                  lambda route:route.abort())
+                    blocked.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    blocked.evaluate("""() => localStorage.setItem(
+                       'birmingham_case_smol_heath_v1_jack',JSON.stringify({
+                        node:'endingPower',items:[
+                          'envelope','key','invoice','receipt','route',
+                          'ledger','testimony','note','witness','ash','overheard'
+                        ],trail:['intro','office','pump'],
+                        flags:{},started:1770000000000,health:75,riskSeen:[]
+                       }))""")
+                    blocked.add_init_script("""(() => {
+                       const original=Storage.prototype.setItem;
+                       Storage.prototype.setItem=function(key,value){
+                        // Simulate Safari acknowledging a write while quietly
+                        // discarding it. Other localStorage keys still work.
+                        if(key==='birmingham_campaign_awards_v1'||
+                           key==='birmingham_campaign_unique_rewards_v1')
+                          return;
+                        return original.call(this,key,value);
+                       };
+                    })()""")
+                    blocked.reload(wait_until="domcontentloaded")
+                    blocked.evaluate("""() => document.dispatchEvent(
+                      new CustomEvent('birmingham:case-findings-changed'))""")
+                    assert blocked.locator(".campaign-unlock-popup").count()==0, (
+                        name+" phantom achievement announced after discarded write")
+                    assert blocked.evaluate("""() => localStorage.getItem(
+                        'birmingham_campaign_awards_v1')""") is None
+                    blocked.locator("#storyStart").click()
+                    assert blocked.locator(
+                        "#campaignFirstCaseAchievements .campaign-award.unlocked"
+                    ).count()==0
+                    assert blocked.locator(
+                        "#campaignFirstCaseAchievements .campaign-reward-card.earned"
+                    ).count()==0
+                    restricted.close()
+                    print("PASS "+name+": cross-case archive deep links, Digbeth "
+                          "return, Case001 saved-write acknowledgement and no "
+                          "phantom notifications; 002 resume and archives intact")
                 finally:
                     browser.close()
     finally:

@@ -29,6 +29,20 @@ assert(shell.includes('case002-map-entry-v1.js')&&map.includes("launchSecondCase
  "The real Digbeth map button must reach Case 002 at the same origin");
 assert(map.includes('preview/case002-prototype/index.html?from=map'),
  "Case 002 cannot be an external beta-domain link");
+assert(map.includes("campaignAchievements")&&map.includes(
+ "BirminghamCampaign?.open(target)"),
+ "Campaign map must resolve shared archive URL fragments");
+assert(second.includes('id="case002SharedArchiveLink"')&&second.includes(
+ '../../index.html#campaignAchievements'),
+ "Case 002 needs a direct same-origin shared achievement link");
+const globalArchive=fs.readFileSync(entry("campaign-case002-archive-v1.js"),"utf8");
+assert(globalArchive.includes("campaign-002-to-digbeth")&&
+ globalArchive.includes('back.href="#district-digbeth"'),
+ "Shared archive must offer a direct Digbeth return");
+const hub=fs.readFileSync(entry("campaign-hub-v1.js"),"utf8");
+assert(hub.includes('return localStorage.getItem(k)===encoded')&&
+ hub.includes('if(dirty&&!put(AWARD_KEY,a))return previous'),
+ "Case 001 award notifications must never precede verified storage writes");
 assert(old.includes("launchFirstCase")&&old.includes("caseBack")&&
  shell.includes("Дело №001 доступно в Смолл-Хите"),
  "Case 001 district, original map return and launch must remain present");

@@ -378,6 +378,14 @@ function append(id,box,oldRuns,root){
  }
  const heroes=root.BirminghamHero?.heroes||[];
  const title=doc.querySelector("#"+id+" .campaign-head p");
+ const heading=doc.querySelector("#"+id+" .campaign-head");
+ // One persistent, direct way back into the playable Digbeth investigation.
+ // The campaign map handles the hash without a second publication origin.
+ if(heading&&!heading.querySelector(".campaign-002-to-digbeth")){
+  const back=make(doc,"a","campaign-002-to-digbeth",
+   "↗ К ДЕЛУ №002 · ДИГБЕТ");
+  back.href="#district-digbeth";heading.append(back);
+ }
  if(title)title.textContent="Дело №001 · Долг, который не прощают. Дело №002 · "+
   CASE_NAME+". Два дела — один архив.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
