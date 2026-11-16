@@ -196,6 +196,17 @@ def run():
                     assert page.locator("#launchSecondCase").is_hidden()
                     page.locator("#launchFirstCase").click()
                     assert page.locator("#heroSelection").is_visible()
+                    # Case 001 now has the same first-screen logic as 002:
+                    # spoiler-safe premise precedes protagonist selection.
+                    premise=page.locator(
+                        "#heroSelection .case001-unified-premise")
+                    assert premise.is_visible()
+                    assert "Артур Прайс" in premise.inner_text()
+                    assert premise.bounding_box()["y"] < page.locator(
+                        "#heroSelection .hero-cards").bounding_box()["y"]
+                    assert page.locator(
+                        "#heroSelection .hero-eyebrow").inner_text()==(
+                            "БЛИЖНИЙ КРУГ · ВЫБОР ГЕРОЯ")
                     page.locator("#heroSelection .hero-begin").click()
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
@@ -223,6 +234,25 @@ def run():
                         assert abs(dim["w"]/dim["h"]-dim["nw"]/dim["nh"])<.025
                         assert page.locator("#caseScene").bounding_box()["height"]>=320
                         assert page.locator("#caseScene .case001-read-scene").is_visible()
+                        # The chosen hero and title must precede the scene art,
+                        # exactly as in Case 002. Approved wide art stays intact.
+                        title_box=page.locator(
+                            "#caseScene .case-scene-inner").bounding_box()
+                        art_box=page.locator("#caseArt").bounding_box()
+                        read_box=page.locator(
+                            "#caseScene .case001-read-scene").bounding_box()
+                        assert title_box["y"]<art_box["y"],name+" title below artwork"
+                        assert read_box["y"]<art_box["y"],name+" read button below artwork"
+                        assert page.locator(
+                            "#caseScene .case001-hero-name").inner_text()==(
+                                "Джек Харпер")
+                        assert page.locator(
+                            "#caseScene .case001-scene-hero img").evaluate(
+                                "el => el.complete && el.naturalWidth>0")
+                        assert page.locator(".case001-art-caption").is_visible()
+                        assert page.locator(
+                            ".case001-art-caption").inner_text().find(
+                                page.locator("#casePlace").inner_text())>=0
                         # Unified Case 001 reader must match Case 002's
                         # legible mobile dialogue, prose and numbered decisions.
                         choices=page.locator("#caseChoices > .case-choice")
