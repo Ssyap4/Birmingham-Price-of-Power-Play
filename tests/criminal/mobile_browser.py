@@ -115,6 +115,19 @@ def run():
                     page.goto(origin + "/index.html", wait_until="domcontentloaded")
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
+                    assert page.locator("#cabinetProfile").get_attribute("aria-label") == "Профиль"
+                    assert not page.locator("#cabinetSettings").count()
+                    assert not page.locator("#cabinetSettingsDialog").count()
+                    if width in (320, 390):
+                        touch(page, "#cabinetProfile")
+                        assert page.locator("#profile").is_visible()
+                        assert page.locator("#playerCampaignOverview").is_visible()
+                        assert page.locator(".player-overview-card").count() == 3
+                        assert page.locator("#profileBtn").inner_text().endswith("ПРОФИЛЬ")
+                        if width == 390:
+                            page.screenshot(path=str(OUT / (name + "-personal-profile.png")), full_page=True)
+                        touch(page, "#homeBtn")
+                        assert page.locator("#home").is_visible()
                     touch(page, "#criminalEntry")
                     bounds(page)
                     assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
