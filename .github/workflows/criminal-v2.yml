@@ -12,6 +12,8 @@ on:
       - "cabinet-profile-v2.css"
       - "home-story-first-v1.js"
       - "home-two-paths-v1.css"
+      - "campaign-criminal-archive-v1.js"
+      - "campaign-criminal-archive-v1.css"
       - "deployment/campaign-unified-release.js"
       - "deployment/criminal-standalone-preview.js"
       - "preview/criminal/**"
@@ -36,7 +38,7 @@ jobs:
           python-version: "3.12"
       - name: Pure engine, persistence, branch and resource proofs
         run: |
-          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js
+          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js tests/criminal/campaign-archive-bridge.test.js
           node tests/criminal/playthroughs.js
       - name: Build the unified offline package and verify unchanged Case002 contract
         run: |

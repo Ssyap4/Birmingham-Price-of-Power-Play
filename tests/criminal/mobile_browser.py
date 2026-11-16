@@ -287,6 +287,30 @@ def run():
                         page.screenshot(
                             path=str(OUT / (name + "-chronicle.png")), full_page=True
                         )
+                        saved_ledger = page.evaluate(
+                            "localStorage.getItem('birmingham_criminal_v2_ledger')"
+                        )
+                        touch(page, '[data-action="home"]')
+                        touch(page, "#storyStart")
+                        assert page.locator("#campaignAchievements").is_visible()
+                        assert page.locator("#campaignCriminalAchievements").is_visible()
+                        assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").count() >= 5
+                        assert "10 уникальных знаков" in page.locator("#campaignCriminalAchievements").inner_text()
+                        assert page.locator("#campaignCriminalAchievements .campaign-criminal-fold").first.is_visible()
+                        page.locator("#campaignCriminalAchievements .campaign-criminal-fold summary").first.tap()
+                        assert page.locator("#campaignCriminalAchievements .campaign-criminal-seal.earned").count() == 2
+                        touch(page, '#campaignAchievements [data-open-section="campaignHistory"]')
+                        assert page.locator("#campaignHistory").is_visible()
+                        assert page.locator("#campaignCriminalHistory .campaign-criminal-attempt").count() == 8
+                        touch(page, '#campaignHistory [data-open-section="campaignDossiers"]')
+                        assert page.locator("#campaignDossiers").is_visible()
+                        assert page.locator("#campaignCriminalDossiers .campaign-criminal-hero").count() == 5
+                        assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+                        assert saved_ledger == page.evaluate("localStorage.getItem('birmingham_criminal_v2_ledger')")
+                        page.screenshot(path=str(OUT / (name + "-combined-archive.png")), full_page=True)
+                        touch(page, "#campaignCriminalDossiers .campaign-criminal-jump")
+                        assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
+                        touch(page, '[data-action="home"]')
                     assert (
                         page.evaluate("(ks)=>ks.map(k=>localStorage.getItem(k))", OLD)
                         == before

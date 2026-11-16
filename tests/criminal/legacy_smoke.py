@@ -96,6 +96,8 @@ def run():
                 tap(page, "#storyStart")
                 assert page.locator("#campaignAchievements").is_visible()
                 assert page.locator("#campaignSecondCaseAchievements").is_visible()
+                assert page.locator("#campaignCriminalAchievements").is_visible()
+                assert "Работа для своих" in page.locator("#campaignCriminalAchievements").inner_text()
                 assert (
                     page.evaluate(
                         "localStorage.getItem('birmingham_case_smol_heath_v1_jack')"
