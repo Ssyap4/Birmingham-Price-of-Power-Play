@@ -290,7 +290,7 @@ def run():
                     assert locked.locator("p").first.inner_text()==(
                         "Условие откроется после получения.")
                     assert "Доказать убийство Эдварда Хейла" not in (
-                        locked.inner_text())
+                        "\n".join(locked.all_inner_texts()))
                     earned=archive.locator(
                        '.campaign-002-achievement[data-achievement-id="two-tracks"]')
                     assert earned.locator("strong").inner_text()=="Два следа на карте"
