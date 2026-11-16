@@ -19,6 +19,7 @@ for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
  "case001-unified-finale-v1.css","case001-unified-finale-v1.js",
  "case001-unified-scene-flow-v1.css","case001-unified-scene-flow-v1.js",
  "case001-unified-quicknav-v1.css","case001-unified-quicknav-v1.js",
+ "case001-campaign-cohesion-v1.css","case001-campaign-cohesion-v1.js",
  "session-controls-v1.js",
  "preview/case002-prototype/index.html","preview/case002-prototype/style.css",
  "preview/case002-prototype/app.js","src/case002/engine-v3.js",
@@ -29,6 +30,9 @@ const shell=fs.readFileSync(entry("index.html"),"utf8"),
  map=fs.readFileSync(entry("case002-map-entry-v1.js"),"utf8"),
  old=fs.readFileSync(entry("case-v14.js"),"utf8"),
  second=fs.readFileSync(entry("preview/case002-prototype/index.html"),"utf8");
+assert(shell.includes("case001-campaign-cohesion-v1.js")&&
+ shell.includes("case001-campaign-cohesion-v1.css"),
+ "Case 001 unified mobile composition is not included");
 assert(shell.includes('id="districtsCard"')&&shell.includes('data-district="digbeth"'),
  "The original five-district campaign map must be the publication entry");
 assert(shell.includes('case002-map-entry-v1.js')&&map.includes("launchSecondCase")&&

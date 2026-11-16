@@ -218,6 +218,23 @@ def run():
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
                     assert page.locator("#caseGame").is_visible()
+                    # The complete Case 001 UI must read as one campaign:
+                    # scene pulse, a concise optional goals ledger and
+                    # the genuine original investigation board.
+                    pulse=page.locator("#case001CampaignPulse")
+                    assert pulse.is_visible()
+                    assert pulse.locator(".case001-pulse-metrics>div").count()==3
+                    assert pulse.locator("#case001PulseClues").inner_text()=="0"
+                    assert pulse.locator("#case001PulseLinks").inner_text()=="0"
+                    assert "HP" in pulse.locator("#case001PulseHealth").inner_text()
+                    drawer=page.locator("#case001GoalDrawer")
+                    assert drawer.is_visible()
+                    assert drawer.evaluate("el => !el.open")
+                    drawer.locator("summary").click()
+                    assert drawer.evaluate("el => el.open")
+                    assert drawer.locator("#v19Goals li").count()==3
+                    drawer.locator("summary").click()
+                    assert drawer.evaluate("el => !el.open")
                     # Health calculations stay owned by Case 001; visual
                     # status remains legible on a portrait phone.
                     health=page.locator("#caseHealthStatus")
@@ -227,6 +244,9 @@ def run():
                         "el => parseFloat(getComputedStyle(el).fontSize)")>=11
                     assert health.evaluate(
                         "el => getComputedStyle(el).borderRadius")!="0px"
+                    assert health.evaluate(
+                        "el => el.nextElementSibling?.classList.contains('case-section-label')") , (
+                            name+" health must precede the decisions heading")
                     # Original 001 artwork must keep its native aspect ratio.
                     for scene_width in (320,390):
                         page.set_viewport_size({"width":scene_width,"height":790})
@@ -451,6 +471,13 @@ def run():
                             "el => getComputedStyle(el).display")=="grid"
                         assert solved.locator(".v33-tile").count()==2
                         assert page.locator(".v33-board .v33-tile").count()==4
+                        assert page.locator(".case001-board-guide").is_visible()
+                        page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                        assert "ВЫБРАНО" in page.locator(
+                            ".case001-board-guide").inner_text()
+                        page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                        assert "Коснись улики" in page.locator(
+                            ".case001-board-guide").inner_text()
                         assert page.locator("#caseGame").evaluate(
                             "el => getComputedStyle(el).animationName")=="none"
                         board.evaluate("el => el.scrollTop=el.scrollHeight")
