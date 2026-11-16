@@ -442,3 +442,19 @@ body[data-criminal="active"] > .bh-audio-controls button {
   padding-left: 12px;
   font-size: 15px;
 }
+#criminalScreen .cr-resource-changes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 18px;
+  font:
+    13px/1.5 system-ui,
+    sans-serif;
+}
+#criminalScreen .cr-resource-changes span {
+  padding: 6px 8px;
+  border: 1px solid #7b825e;
+  background: #1b2624;
+  color: #f0d9b0;
+  border-radius: 3px;
+}

@@ -255,6 +255,45 @@
         .join("") || "<p>Пусто</p>"
     }</div></details>`;
   }
+  function resourceChanges() {
+    // Reconstruct the previous confirmed state; no presentation data enters the save.
+    let before = E.create(
+      state.missionId,
+      state.rng.seed,
+      state.attemptId,
+      state.startedAt,
+    );
+    for (const h of state.history.slice(0, -1))
+      before = E.choose(before, h.choiceId, before.revision);
+    const changes = Object.keys(C.items).flatMap((id) => {
+      const delta = (state.inventory[id] || 0) - (before.inventory[id] || 0);
+      return delta
+        ? [
+            `<span>${C.items[id][0]} ${esc(C.items[id][1])} ${delta > 0 ? "+" : ""}${delta}</span>`,
+          ]
+        : [];
+    });
+    const names = {
+      time: "Ходы",
+      alert: "Тревога",
+      suspicion: "Подозрение",
+      trust: "Доверие",
+      witness: "Дэниел",
+      cover: "Укрытие",
+      siege: "Осада",
+      car: "Машина",
+      fuel: "Топливо",
+      cargo: "Груз",
+    };
+    for (const [id, value] of Object.entries(state.stats)) {
+      const delta = value - before.stats[id];
+      if (delta)
+        changes.push(
+          `<span>${names[id]} ${delta > 0 ? "+" : ""}${delta}</span>`,
+        );
+    }
+    return `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>`;
+  }
   function journal() {
     return `<details class="cr-journal"><summary>Журнал решений · ${state.revision}</summary><ol>${state.history
       .map((h) => {
@@ -276,7 +315,7 @@
     let result = "";
     if (showResult && state.lastEvent) {
       const e = state.lastEvent;
-      result = `<section class="cr-consequence" aria-live="polite"><h2>Цена решения</h2><p>${esc(e.text)}</p><p>HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${btn("ack", "Продолжить →", "cr-primary")}</section>`;
+      result = `<section class="cr-consequence" aria-live="polite"><h2>Цена решения</h2><p>${esc(e.text)}</p><p>HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}${btn("ack", "Продолжить →", "cr-primary")}</section>`;
     }
     const choiceViews = E.choices(state);
     const choicesHtml = choiceViews
