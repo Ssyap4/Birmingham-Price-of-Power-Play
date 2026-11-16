@@ -97,6 +97,25 @@ def run():
                     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
                     assert page.url.startswith(origin+"/")
                     assert page.locator("#case002MapReturnBar").is_visible()
+                    # The connected-case navigation must not consume two rows
+                    # above the briefing on small iPhones (320px and 390px).
+                    for width in (320,390):
+                        page.set_viewport_size({"width":width,"height":790})
+                        nav=page.locator("#case002MapReturnBar")
+                        left=page.locator("#case002MapReturn")
+                        right=page.locator("#case002SharedArchiveLink")
+                        l=left.bounding_box();r=right.bounding_box()
+                        assert l and r
+                        assert abs(l["y"]-r["y"])<=1, (
+                            name+" connected nav wrapped at "+str(width))
+                        assert min(l["height"],r["height"])>=44
+                        assert nav.bounding_box()["height"]<78, (
+                            name+" connected navigation hides briefing")
+                        assert left.get_attribute("aria-label")=="К карте Бирмингема"
+                        assert "двух дел" in right.get_attribute("aria-label")
+                        assert not page.evaluate(
+                            "() => document.documentElement.scrollWidth > window.innerWidth+1")
+                    page.set_viewport_size({"width":390,"height":844})
                     assert page.locator("#caseBriefing").is_visible()
                     assert page.locator(".briefing-visual img").evaluate(
                         "img => img.complete && img.naturalWidth===720 && img.naturalHeight===900")
