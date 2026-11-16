@@ -27,6 +27,8 @@
  document.body.append(nav);
  const buttons=[...nav.querySelectorAll("button")];
  const buttonBy=(go)=>nav.querySelector('button[data-go="'+go+'"]');
+ buttonBy("evidence").setAttribute("aria-description","Найденные предметы и их описание");
+ buttonBy("deduction").setAttribute("aria-description","Сопоставление найденных улик и выводы");
  // Real Case 001 modal capture handler only accepts button[data-tool]
  // events descending from the Case 001 screen, so bridge to that handler.
  const bridge=document.createElement("button");
@@ -43,13 +45,29 @@
   const count=Number.isFinite(parsed)?parsed:0;
   if(lastCount!==null&&count>lastCount)unread=true;
   lastCount=count;
-  summary.textContent="ПРОСМОТРЕТЬ СОБРАННЫЕ УЛИКИ · "+count;
+  summary.textContent="СОБРАННЫЕ УЛИКИ · "+count+" · раскрыть список";
   const evidence=buttonBy("evidence");
   evidence.querySelector(".case001-quick-count").textContent=String(count);
   evidence.dataset.unread=unread?"true":"false";
   evidence.setAttribute("aria-label",
    "Открыть инвентарь: "+count+" улик"+(unread?", есть новые":""));
  }
+ // The original engine sets the exact missing clue only in a mouse title.
+ // Surface that existing reason on narrow touch screens; do not change gating.
+ function explainLockedChoices(){
+  for(const choice of choices.querySelectorAll(".case-choice:disabled[title]")){
+   const reason=choice.getAttribute("title")?.trim();
+   if(!reason||choice.dataset.case001GateHint===reason)continue;
+   choice.dataset.case001GateHint=reason;
+   const label=choice.textContent.replace(/\s*·\s*нужна улика$/u,"").trim();
+   if(label!==choice.textContent)choice.textContent=label;
+   choice.setAttribute("aria-label",label+". "+reason);
+  }
+ }
+ new MutationObserver(explainLockedChoices).observe(choices,{
+  childList:true
+ });
+ explainLockedChoices();
  function active(){
   if(nav.hidden)return;
   let current;

@@ -284,6 +284,26 @@ def run():
                         assert "counter(case001-decision" in choice.evaluate(
                             "el => getComputedStyle(el,'::before').content")
                         assert choice.bounding_box()["height"]>=48
+                        # Touch players must see the actual missing evidence,
+                        # not a mouse-only tooltip on a disabled decision.
+                        page.evaluate("""() => {
+                            const b=document.createElement('button');
+                            b.type='button';b.className='case-choice';
+                            b.disabled=true;
+                            b.title='Нужна улика: Старый ключ';
+                            b.textContent='Открыть дверь · нужна улика';
+                            b.dataset.uiProbe='lock';
+                            document.querySelector('#caseChoices').append(b);
+                        }""")
+                        page.wait_for_function("""() =>
+                            document.querySelector('[data-ui-probe="lock"]')
+                              ?.dataset.case001GateHint==='Нужна улика: Старый ключ'
+                        """)
+                        locked=page.locator('[data-ui-probe="lock"]')
+                        assert "Нужна улика: Старый ключ" in locked.evaluate(
+                            "el => getComputedStyle(el,'::after').content")
+                        assert locked.inner_text()=="Открыть дверь"
+                        locked.evaluate("el => el.remove()")
                         assert page.locator("#caseText").evaluate(
                             "el => parseFloat(getComputedStyle(el).fontSize)")>=16
                         assert page.locator(".case-paper").evaluate(
@@ -300,6 +320,25 @@ def run():
                         'birmingham_case_smol_heath_v1_jack')""")
                     assert case1, "The original Case 001 must create its own save"
                     nav=page.locator("#case001QuickNav")
+                    assert page.locator(
+                        "#caseGame .v34-open-inventory").is_hidden(), (
+                            name+" redundant sidebar inventory on phone")
+                    # A new clue remains flagged on the fixed toolbar until
+                    # the player opens the real inventory.
+                    page.evaluate("""() => {
+                        document.querySelector('#caseJournalCount').textContent='1';
+                    }""")
+                    page.wait_for_function("""() =>
+                        document.querySelector(
+                          '#case001QuickNav [data-go="evidence"]')
+                          ?.dataset.unread==='true'
+                    """)
+                    assert "НОВАЯ" in nav.locator(
+                        '[data-go="evidence"]').evaluate(
+                            "el => getComputedStyle(el,'::after').content")
+                    page.evaluate("""() => {
+                        document.querySelector('#caseJournalCount').textContent='0';
+                    }""")
                     # Validate real reading jumps and both existing tools.
                     nav.locator('[data-go="choices"]').click()
                     page.wait_for_function("""() =>
@@ -319,6 +358,9 @@ def run():
                     quick_shade=page.locator("#caseGame .v33-shade")
                     assert quick_shade.is_visible()
                     assert quick_shade.get_attribute("data-mode")=="inventory"
+                    assert nav.locator(
+                        '[data-go="evidence"]').get_attribute(
+                            "data-unread")=="false"
                     assert nav.is_hidden()
                     page.locator(".v33-close").click()
                     assert nav.is_visible()
@@ -343,7 +385,7 @@ def run():
                     }""")
                     for board_width in (320,390):
                         page.set_viewport_size({"width":board_width,"height":790})
-                        page.locator(".v34-open-inventory").click()
+                        nav.locator('[data-go="evidence"]').click()
                         shade=page.locator("#caseGame .v33-shade")
                         assert shade.is_visible()
                         board=page.locator("#caseGame .v33-window")

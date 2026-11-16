@@ -103,3 +103,26 @@
 @media (prefers-reduced-motion:reduce){
  .case001-quick-nav button{transition:none!important}
 }
+
+/* On portrait phones the fixed evidence tool supersedes the old sidebar
+   launch button. Keep the optional folded gallery, not two tool launches.
+   A real clue-unread indicator stays visible until the inventory is opened. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame .v34-sidebar-actions .v34-open-inventory{
+  display:none!important;
+ }
+ .case001-quick-nav button[data-go="evidence"][data-unread="true"]{
+  padding-top:16px!important;padding-bottom:5px!important;
+ }
+ .case001-quick-nav button[data-go="evidence"][data-unread="true"]::after{
+  content:"НОВАЯ"!important;
+  width:auto!important;height:auto!important;
+  position:absolute!important;top:2px!important;right:2px!important;
+  box-sizing:border-box!important;padding:1px 3px!important;
+  border:1px solid #513315!important;border-radius:3px!important;
+  background:#e7bd7c!important;
+  color:#28190f!important;box-shadow:none!important;
+  font:800 .53rem/1.15 system-ui,sans-serif!important;
+  letter-spacing:0!important;
+ }
+}

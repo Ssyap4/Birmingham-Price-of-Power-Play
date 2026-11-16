@@ -133,3 +133,22 @@
 @media(prefers-reduced-motion:reduce){
  #caseGame #caseChoices>.case-choice{transition:none!important}
 }
+
+/* A disabled Case 001 decision must explain its missing evidence on touch
+   screens instead of relying on a mouse-only title tooltip. The original
+   case engine still decides which choices are locked. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame #caseChoices>.case-choice:disabled[data-case001-gate-hint]{
+  opacity:.9!important;
+  row-gap:5px!important;
+ }
+ #caseGame #caseChoices>.case-choice:disabled[data-case001-gate-hint]::after{
+  content:"🔒 " attr(data-case001-gate-hint);
+  display:block!important;grid-column:2!important;
+  padding:5px 0 0!important;margin:0!important;
+  border-top:1px solid #796046!important;
+  font:650 .76rem/1.45 system-ui,sans-serif!important;
+  letter-spacing:0!important;color:#ddbc91!important;
+  text-align:left!important;overflow-wrap:anywhere!important;
+ }
+}
