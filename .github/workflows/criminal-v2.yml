@@ -1,7 +1,7 @@
 name: Criminal operations v2 acceptance
 on:
   push:
-    branches: [feat/criminal-operations-codex-v2]
+    branches: [feat/criminal-operations-codex-v2, feat/criminal-operations-polish-v3]
     paths:
       - "src/criminal/**"
       - "assets/criminal/**"
