@@ -116,6 +116,20 @@ def run():
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
                     assert page.locator("#cabinetProfile").get_attribute("aria-label") == "Профиль"
+                    profile_bg = page.locator("#cabinetProfile").evaluate("e => getComputedStyle(e).backgroundImage")
+                    assert "assets/original-art/profile.webp" in profile_bg, profile_bg
+                    assert "settings" not in profile_bg.lower()
+                    seal = page.locator("#cabinetProfile .cabinet-profile-seal")
+                    assert seal.count() == 1
+                    assert "assets/cabinet/profile-seal.svg" in seal.evaluate("e => getComputedStyle(e).backgroundImage")
+                    assert page.evaluate("""async () => {
+                        for(const src of ['assets/original-art/profile.webp','assets/cabinet/profile-seal.svg']){
+                            const img=new Image(); img.src=src;
+                            try{await img.decode();}catch{return false;}
+                            if(img.naturalWidth<96)return false;
+                        }
+                        return true;
+                    }"""), "profile illustration did not decode"
                     page.wait_for_function("() => document.getElementById('home').classList.contains('cabinet-art-ready')", timeout=15000)
                     assert page.locator("#districtsCard .cabinet-entry-copy strong").is_visible()
                     assert page.locator("#criminalEntry .cabinet-entry-copy strong").is_visible()
@@ -123,6 +137,7 @@ def run():
                     assert page.locator("#cabinetProfile .cabinet-entry-copy strong").inner_text() == "Профиль"
                     if width == 390:
                         page.screenshot(path=str(OUT / (name + "-main-menu-v7.png")), full_page=True)
+                        page.locator("#cabinetProfile").screenshot(path=str(OUT / (name + "-profile-illustrated-tile.png")))
                     assert not page.locator("#cabinetSettings").count()
                     assert not page.locator("#cabinetSettingsDialog").count()
                     if width in (320, 390):

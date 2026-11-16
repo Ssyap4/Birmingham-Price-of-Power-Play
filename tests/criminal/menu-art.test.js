@@ -1,0 +1,17 @@
+"use strict";
+const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+const root=path.join(__dirname,"../..");const read=f=>fs.readFileSync(path.join(root,f),"utf8");
+test("personal Profile is its own illustration, not renamed Settings bitmap",()=>{
+ const html=read("index.html"),css=read("cabinet-profile-v2.css");
+ assert.match(html,/id="cabinetProfile" aria-label="Профиль"/);
+ assert.match(html,/class="cabinet-entry-icon cabinet-profile-seal"/);
+ assert.match(html,/id="profileCard" aria-label="Досье персонажей"/);
+ assert.doesNotMatch(html,/cabinetSettings|Настройки/);
+ assert.match(css,/assets\/original-art\/profile\.webp/);
+ assert.match(css,/assets\/cabinet\/profile-seal\.svg/);
+ assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinetSettingsDialog|cabinet-settings\.webp/);
+ assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-settings\.webp/);
+ const seal=read("assets/cabinet/profile-seal.svg");assert.match(seal,/^<svg/);
+ assert.match(seal,/<path /);assert.doesNotMatch(seal,/<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i);
+ assert.ok(fs.statSync(path.join(root,"assets/original-art/profile.webp")).size>1000);
+});

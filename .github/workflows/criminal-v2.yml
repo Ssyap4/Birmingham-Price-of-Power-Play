@@ -10,6 +10,9 @@ on:
       - "index.html"
       - "player-profile-overview-v1.js"
       - "cabinet-profile-v2.css"
+      - "cabinet-menu-v1.css"
+      - "mobile-approved-menu-v1.css"
+      - "assets/cabinet/profile-seal.svg"
       - "home-story-first-v1.js"
       - "home-two-paths-v1.css"
       - "campaign-criminal-archive-v1.js"
@@ -38,7 +41,7 @@ jobs:
           python-version: "3.12"
       - name: Pure engine, persistence, branch and resource proofs
         run: |
-          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js tests/criminal/campaign-archive-bridge.test.js
+          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js tests/criminal/campaign-archive-bridge.test.js tests/criminal/menu-art.test.js
           node tests/criminal/playthroughs.js
       - name: Build the unified offline package and verify unchanged Case002 contract
         run: |
