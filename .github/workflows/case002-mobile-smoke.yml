@@ -20,6 +20,8 @@ on:
       - 'assets/case002/portraits/**'
       - 'assets/heroes/*.webp'
       - 'tests/case002/mobile_browser_smoke.py'
+      - 'tools/case002/ci-scope-v1.js'
+      - 'tests/case002/ci-scope-v1.test.js'
       - '.github/workflows/case002-mobile-smoke.yml'
   workflow_dispatch:
 permissions:

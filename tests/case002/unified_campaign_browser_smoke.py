@@ -60,6 +60,31 @@ def run():
                     page.locator("#districtsCard").click()
                     assert page.locator("#districts").is_visible()
                     assert page.locator(".map-pin").count()==5
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
+                    assert page.locator("#launchFirstCase").is_visible()
+                    assert page.locator("#launchSecondCase").is_hidden()
+                    for locked_district in ("aston","centre","jewellery"):
+                        page.locator(f'.map-pin[data-district="{locked_district}"]').click()
+                        assert page.locator(".district-case-label").inner_text()==(
+                            "ИЗ АРХИВА БУДУЩИХ ДЕЛ")
+                        assert page.locator(".district-locked").is_visible()
+                        assert page.locator("#launchSecondCase").is_hidden()
+                        assert page.locator("#launchFirstCase").is_hidden()
+                    page.locator('.map-pin[data-district="digbeth"]').click()
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №002 · ДОСТУПНО")
+                    # Leaving and reopening the district map used to preserve
+                    # an obsolete Digbeth label while resetting to Small Heath.
+                    page.locator("#districtBack").click()
+                    assert page.locator("#home").is_visible()
+                    page.locator("#districtsCard").click()
+                    assert page.locator('.map-pin[data-district="small-heath"]').get_attribute(
+                        "aria-pressed")=="true"
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
+                    assert page.locator("#launchSecondCase").is_hidden()
+                    assert page.locator("#launchFirstCase").is_visible()
                     page.locator('.map-pin[data-district="digbeth"]').click()
                     assert page.locator("#launchSecondCase").is_visible()
                     assert page.locator("#launchFirstCase").is_hidden()
@@ -97,6 +122,40 @@ def run():
                         'birmingham_campaign_unique_rewards_v1')""")==old_rewards
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_campaign_records_v1')""")==old_records
+                    # New cross-case navigation: Case 002 -> shared achievements
+                    # -> Digbeth map -> resume exact same scene and save.
+                    assert page.locator("#case002SharedArchiveLink").is_visible()
+                    page.locator("#case002SharedArchiveLink").click()
+                    page.wait_for_url("**/index.html#campaignAchievements")
+                    assert page.locator("#campaignAchievements").is_visible()
+                    assert page.locator("#campaignSecondCaseAchievements").is_visible()
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-to-digbeth").is_visible()
+                    assert page.locator(
+                        "#campaignAchievements .campaign-002-to-digbeth").get_attribute(
+                        "href")=="#district-digbeth"
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case002_draft_v3_jack')""")==case2
+                    page.locator("#campaignAchievements .campaign-002-to-digbeth").click()
+                    page.wait_for_url("**/index.html#district-digbeth")
+                    # Same-document hashchange follows URL update in the event
+                    # loop, so is_visible() can race the router by one tick.
+                    page.wait_for_function("""() => {
+                        const d=document.getElementById('districts');
+                        const b=document.getElementById('launchSecondCase');
+                        return d && !d.hidden && b && !b.hidden &&
+                          document.querySelector('.map-pin.selected')?.dataset.district === 'digbeth';
+                    }""",timeout=5000)
+                    assert page.locator("#districts").is_visible()
+                    assert page.locator("#launchSecondCase").is_visible()
+                    page.locator("#launchSecondCase").click()
+                    page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+                    assert page.locator("#caseBriefing").is_hidden()
+                    assert page.locator("#resume").is_visible()
+                    page.locator("#resume").click()
+                    assert page.locator("#sceneId").inner_text().startswith("P02")
+                    assert page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator("#case002MapReturn").click()
                     page.wait_for_url("**/index.html#district-digbeth")
                     assert page.locator("#districts").is_visible()
@@ -106,6 +165,8 @@ def run():
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator('.map-pin[data-district="small-heath"]').click()
+                    assert page.locator(".district-case-label").inner_text()==(
+                        "ДЕЛО №001 · ДОСТУПНО")
                     assert page.locator("#launchFirstCase").is_visible()
                     assert page.locator("#launchSecondCase").is_hidden()
                     page.locator("#launchFirstCase").click()
@@ -195,9 +256,46 @@ def run():
                          "errors":errors,
                         },flush=True)
                     assert archive.is_visible(), "Case 002 common archive not visible"
+                    # Both cases remain present and discoverable, but long
+                    # collections start folded instead of forcing deep scroll.
+                    first_fold=page.locator("#campaignFirstCaseAchievements")
+                    assert first_fold.is_visible()
+                    assert first_fold.get_attribute("open") is None
+                    assert first_fold.locator(".campaign-award").count()==18
+                    milestones=page.locator("#campaignSecondCaseMilestones")
+                    assert milestones.is_visible()
+                    assert milestones.get_attribute("open") is None
+                    assert archive.locator(".campaign-002-achievement").first.is_hidden()
+                    jumps=page.locator("#campaignAchievements .campaign-002-jumps")
+                    assert jumps.locator("button").count()==2
+                    jumps.locator('[data-jump-to="campaignFirstCaseAchievements"]').click()
+                    assert first_fold.get_attribute("open") is not None
+                    assert first_fold.locator(".campaign-award").first.is_visible()
+                    jumps.locator('[data-jump-to="campaignSecondCaseAchievements"]').click()
+                    assert archive.is_visible()
+                    milestones.locator("summary").click()
+                    assert milestones.get_attribute("open") is not None
+                    assert archive.locator(".campaign-002-achievement").first.is_visible()
                     assert archive.locator(".campaign-002-achievement").count()==18
                     assert archive.locator('.campaign-002-achievement[data-unlocked="true"]').count()==2
                     assert archive.locator(".campaign-002-reward-group").count()==5
+                    # In-case and shared archives must enforce the SAME
+                    # no-spoiler contract for unopened milestone conditions.
+                    assert archive.locator(
+                       '.campaign-002-achievement[data-unlocked="false"]').count()==16
+                    locked=archive.locator(
+                       '.campaign-002-achievement[data-unlocked="false"]')
+                    assert locked.locator("strong").first.inner_text()==(
+                        "НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ")
+                    assert locked.locator("p").first.inner_text()==(
+                        "Условие откроется после получения.")
+                    assert "Доказать убийство Эдварда Хейла" not in (
+                        "\n".join(locked.all_inner_texts()))
+                    earned=archive.locator(
+                       '.campaign-002-achievement[data-achievement-id="two-tracks"]')
+                    assert earned.locator("strong").inner_text()=="Два следа на карте"
+                    assert earned.locator("p").inner_text()==(
+                       "Исследовать два независимых маршрута.")
                     assert archive.locator('.campaign-reward-card[data-verified="true"]').count()==2
                     assert "2 / 35" in archive.locator(".campaign-intro").first.inner_text()
                     assert "Ключей наград без подтверждённого прохождения: 1" in archive.inner_text()
@@ -208,6 +306,13 @@ def run():
                     page.locator('#campaignAchievements [data-open-section="campaignHistory"]').click()
                     assert page.locator("#campaignSecondCaseHistory").is_visible()
                     assert page.locator(".campaign-002-attempt").count()==3
+                    history_jumps=page.locator("#campaignHistory .campaign-002-jumps")
+                    assert history_jumps.locator("button").count()==2
+                    history_jumps.locator('[data-jump-to="campaignSecondCaseHistory"]').click()
+                    assert page.locator("#campaignSecondCaseHistory").is_visible()
+                    assert page.evaluate("""() => document.activeElement.id""")==(
+                        "campaignSecondCaseHistory"
+                    )
                     summary=page.locator("#campaignHistory .campaign-summary").inner_text()
                     assert "4 / 65" in summary, (
                         "One Case 001 and three Case 002 unique outcomes must share the total"
@@ -216,7 +321,15 @@ def run():
                     page.locator('#campaignHistory [data-open-section="campaignDossiers"]').click()
                     assert page.locator("#campaignDossiers").is_visible()
                     assert page.locator(".campaign-002-card-title").count()==5
-                    assert "Продолжается: P02" in page.locator(
+                    hero_jumps=page.locator("#campaignDossiers .campaign-002-jumps")
+                    assert hero_jumps.locator("button").count()==5
+                    hero_jumps.locator('[data-jump-to="campaignHerofinn"]').click()
+                    assert page.evaluate("""() => document.activeElement.id""")==(
+                        "campaignHerofinn"
+                    )
+                    assert "В работе: «Гостья под дождём»" in page.locator(
+                        "#campaignDossiers .campaign-card").first.inner_text()
+                    assert "Продолжается: P02" not in page.locator(
                         "#campaignDossiers .campaign-card").first.inner_text()
                     assert page.locator(
                         '#campaignDossiers .campaign-tags.campaign-002-tags span[data-unlocked="true"]').count()==3
@@ -238,8 +351,52 @@ def run():
                     page.screenshot(path=str(SHOTS/f"{name}-unified-archive-320.png"))
                     assert not errors, name+" archive JS errors: "+str(errors)
                     context.close()
-                    print("PASS "+name+": unified map, 002 intro+P02 save, 001 native "
-                          "hero+briefing, 002 resume, Case001 canon and awards preserved")
+                    # Silent loss of a Case 001 achievement write must NEVER
+                    # show the player a celebratory popup or a phantom seal.
+                    restricted=browser.new_context(
+                        viewport={"width":375,"height":812},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    blocked=restricted.new_page()
+                    blocked.route("https://telegram.org/js/telegram-web-app.js",
+                                  lambda route:route.abort())
+                    blocked.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    blocked.evaluate("""() => localStorage.setItem(
+                       'birmingham_case_smol_heath_v1_jack',JSON.stringify({
+                        node:'endingPower',items:[
+                          'envelope','key','invoice','receipt','route',
+                          'ledger','testimony','note','witness','ash','overheard'
+                        ],trail:['intro','office','pump'],
+                        flags:{},started:1770000000000,health:75,riskSeen:[]
+                       }))""")
+                    blocked.add_init_script("""(() => {
+                       const original=Storage.prototype.setItem;
+                       Storage.prototype.setItem=function(key,value){
+                        // Simulate Safari acknowledging a write while quietly
+                        // discarding it. Other localStorage keys still work.
+                        if(key==='birmingham_campaign_awards_v1'||
+                           key==='birmingham_campaign_unique_rewards_v1')
+                          return;
+                        return original.call(this,key,value);
+                       };
+                    })()""")
+                    blocked.reload(wait_until="domcontentloaded")
+                    blocked.evaluate("""() => document.dispatchEvent(
+                      new CustomEvent('birmingham:case-findings-changed'))""")
+                    assert blocked.locator(".campaign-unlock-popup").count()==0, (
+                        name+" phantom achievement announced after discarded write")
+                    assert blocked.evaluate("""() => localStorage.getItem(
+                        'birmingham_campaign_awards_v1')""") is None
+                    blocked.locator("#storyStart").click()
+                    assert blocked.locator(
+                        "#campaignFirstCaseAchievements .campaign-award.unlocked"
+                    ).count()==0
+                    assert blocked.locator(
+                        "#campaignFirstCaseAchievements .campaign-reward-card.earned"
+                    ).count()==0
+                    restricted.close()
+                    print("PASS "+name+": cross-case archive deep links, Digbeth "
+                          "return, Case001 saved-write acknowledgement and no "
+                          "phantom notifications; 002 resume and archives intact")
                 finally:
                     browser.close()
     finally:

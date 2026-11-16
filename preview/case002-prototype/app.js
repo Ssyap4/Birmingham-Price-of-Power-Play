@@ -1345,7 +1345,7 @@ function completionArchiveStatus(state){
   const status=recorded&&reward?"verified":
    recorded||reward?"partial":"unconfirmed";
   const message=status==="verified"?
-   "Расследование завершено. Итог и уникальная награда зарегистрированы в черновом архиве.":
+   "Расследование завершено. Итог и уникальный знак подтверждены в локальном архиве.":
    "Расследование завершено. Текущая попытка сохранена, но запись итога или награды в архиве пока не подтверждена.";
   return {status,recorded,reward,message};
  }catch(_){

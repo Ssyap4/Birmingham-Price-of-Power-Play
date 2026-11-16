@@ -68,7 +68,7 @@ function snapshot(store,contract,engine,achievements,graph){
  const combos=new Set(completed.map(r=>"002:"+r.heroId+":"+r.ending));
  const confirmed=rewards.status==="ready"?
   new Set(rewards.rows.filter(key=>combos.has(key))):new Set();
- const orphaned=rewards.status==="ready"?
+ const orphaned=records.status==="ready"&&rewards.status==="ready"?
   rewards.rows.filter(key=>!combos.has(key)).length:0;
  const withoutSeals=records.status==="ready"&&rewards.status==="ready"?
   [...combos].filter(key=>!confirmed.has(key)).length:0;
@@ -84,8 +84,10 @@ function snapshot(store,contract,engine,achievements,graph){
    const raw=store.getItem(engine.SAVE_PREFIX+hero);
    if(raw===null){saves[hero]={status:"empty"};continue;}
    const state=JSON.parse(raw);
-   saves[hero]=validSave(state,hero,contract,nodes)?
-    {status:"ready",node:state.node,finished:state.finished,
+   const stage=graph.nodes.find(scene=>scene.id===state.node);
+  saves[hero]=validSave(state,hero,contract,nodes)?
+    {status:"ready",node:state.node,sceneTitle:stage?.title||"Текущая сцена",
+     sceneChapter:stage?.chapter||null,finished:state.finished,
      ending:state.ending,evidence:state.evidence.length}:
     {status:"damaged"};
   }catch(_){saves[hero]={status:"damaged"};}
@@ -117,18 +119,45 @@ function sentence(archive){
  if(archive.withoutSeals)alerts.push(
   "Уникальных прохождений без записанного знака: "+archive.withoutSeals);
  if(Object.values(archive.saves).some(x=>x.status==="damaged"))
-  alerts.push("Обнаружено незавершённое или повреждённое сохранение");
+  alerts.push("Обнаружено повреждённое или несовместимое сохранение №002");
  return alerts.join(". ")+(alerts.length?".":"");
 }
 function showAlert(doc,container,archive){
  const message=sentence(archive);
  if(message)appendText(doc,container,"p","campaign-002-alert",message);
 }
+// The long mobile archive is navigable without forcing players to scroll
+// past every hero or all 65 reward tiles. These are native 48px controls.
+function jumpNav(doc,items,label){
+ const nav=make(doc,"nav","campaign-002-jumps");
+ nav.setAttribute("aria-label",label);
+ for(const [id,title] of items){
+  const button=appendText(doc,nav,"button","campaign-002-jump",title);
+  button.type="button";button.dataset.jumpTo=id;
+  button.addEventListener("click",()=>{
+   const target=doc.getElementById(id);
+   if(!target)return;
+   if(target.tagName==="DETAILS")target.open=true;
+   target.tabIndex=-1;
+   target.scrollIntoView({block:"start",behavior:"auto"});
+   const focusTarget=target.tagName==="DETAILS"?
+    target.querySelector("summary")||target:target;
+   focusTarget.focus({preventScroll:true});
+  });
+ }
+ return nav;
+}
 function renderDossiers(doc,box,archive,heroes){
  const cards=[...box.querySelectorAll(".campaign-grid .campaign-card")];
+ const nav=jumpNav(doc,archive.heroes.map(id=>[
+  "campaignHero"+id,heroes.find(h=>h.id===id)?.name||id
+ ]),"Переход к досье героя");
+ const intro=box.querySelector(".campaign-intro");
+ if(intro)intro.after(nav);else box.prepend(nav);
  archive.heroes.forEach((heroId,i)=>{
   const card=cards[i],body=card?.querySelector(".campaign-card-body");
   if(!body)return;
+  card.id="campaignHero"+heroId;card.tabIndex=-1;
   const complete=archive.completed.filter(r=>r.heroId===heroId);
   const unique=new Set(complete.map(r=>r.ending));
   const title=appendText(doc,body,"h4","campaign-002-card-title",
@@ -140,7 +169,7 @@ function renderDossiers(doc,box,archive,heroes){
   if(saved?.status==="ready"){
    if(!saved.finished){
     appendText(doc,body,"p","campaign-002-progress",
-     "Продолжается: "+saved.node+" · улик: "+saved.evidence);
+     "В работе: «"+saved.sceneTitle+"» · улик: "+saved.evidence);
    }else if(!complete.some(r=>r.ending===saved.ending)){
     appendText(doc,body,"p","campaign-002-alert",
      "Завершённая попытка ожидает записи в архив.");
@@ -185,6 +214,20 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
   total.append(cell);
  }
  top.append(total);
+ // Fold the original Case 001 achievement and reward cards rather than
+ // forcing 18 + 30 tiles ahead of the Case 002 archive on a phone.
+ const firstFold=make(doc,"details","campaign-002-fold campaign-002-first-fold");
+ firstFold.id="campaignFirstCaseAchievements";
+ const originalBody=make(doc,"div","campaign-002-fold-body");
+ appendText(doc,firstFold,"summary","campaign-002-fold-summary",
+  "ДЕЛО №001 · 18 ДОСТИЖЕНИЙ · 30 ЗНАКОВ");
+ for(const node of [...box.children])if(node!==intro)originalBody.append(node);
+ firstFold.append(originalBody);
+ box.append(firstFold);
+ if(intro)intro.after(jumpNav(doc,[
+  ["campaignFirstCaseAchievements","ДЕЛО №001"],
+  ["campaignSecondCaseAchievements","ДЕЛО №002"]
+ ],"Быстрый переход между наградами двух дел"));
  box.prepend(top);
  // Preserve the original Case 001 cards and their live notification lifecycle.
  const headings=[...box.querySelectorAll("h3.campaign-group-title")];
@@ -210,12 +253,19 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
   card.dataset.unlocked=String(unlocked);
   appendText(doc,card,"span","campaign-medal",unlocked?"✦":"◇");
   const info=make(doc,"div");
-  appendText(doc,info,"strong","",a.name);
-  appendText(doc,info,"p","",a.description);
+  // Mirror the in-case collection: locked outcomes must not reveal spoilers.
+  appendText(doc,info,"strong","",unlocked?a.name:"НЕИЗВЕСТНОЕ ДОСТИЖЕНИЕ");
+  appendText(doc,info,"p","",unlocked?a.description:
+   "Условие откроется после получения.");
   appendText(doc,info,"small","",unlocked?"ОТКРЫТО · №002":"ЕЩЁ НЕ ОТКРЫТО");
   card.append(info);grid.append(card);
  }
- group.append(grid);
+ const milestones=make(doc,"details","campaign-002-fold campaign-002-milestone-fold");
+ milestones.id="campaignSecondCaseMilestones";
+ appendText(doc,milestones,"summary","campaign-002-fold-summary",
+  "18 ДОСТИЖЕНИЙ №002 · ОТКРЫТО "+archive.earned.items.length+
+  " · ПОКАЗАТЬ СПИСОК");
+ milestones.append(grid);group.append(milestones);
  appendText(doc,group,"h4","campaign-002-subhead","35 уникальных знаков по персонажам");
  const list=make(doc,"div","campaign-002-reward-list");
  for(const heroId of archive.heroes){
@@ -259,6 +309,14 @@ function renderHistory(doc,box,archive,oldRuns,heroes){
    if(value)value.textContent=String(totals[i]);
   });
  }
+ const firstHeading=[...box.querySelectorAll(".campaign-group-title")].find(h=>
+  h.textContent.startsWith("Дело №001 ·"));
+ if(firstHeading){firstHeading.id="campaignFirstCaseHistory";firstHeading.tabIndex=-1;}
+ const jumps=jumpNav(doc,[
+  ["campaignFirstCaseHistory","ДЕЛО №001"],
+  ["campaignSecondCaseHistory","ДЕЛО №002"]
+ ],"Переход к истории одного из двух дел");
+ if(summary)summary.after(jumps);else box.prepend(jumps);
  const future=[...box.querySelectorAll(".campaign-group-title")].find(h=>
   h.textContent==="Следующие дела");
  const group=make(doc,"section","campaign-002-section campaign-002-history");
@@ -317,8 +375,21 @@ function append(id,box,oldRuns,root){
  let store=null;
  try{store=root.localStorage}catch(_){}
  const archive=snapshot(store,data.contract,engine,achievements,data.graph);
+ if(archive.status!=="ready"){
+  appendText(doc,box,"p","campaign-002-alert",
+   "Архив №002 не удалось открыть: данные контракта дела недоступны.");
+  return;
+ }
  const heroes=root.BirminghamHero?.heroes||[];
  const title=doc.querySelector("#"+id+" .campaign-head p");
+ const heading=doc.querySelector("#"+id+" .campaign-head");
+ // One persistent, direct way back into the playable Digbeth investigation.
+ // The campaign map handles the hash without a second publication origin.
+ if(heading&&!heading.querySelector(".campaign-002-to-digbeth")){
+  const back=make(doc,"a","campaign-002-to-digbeth",
+   "↗ К ДЕЛУ №002 · ДИГБЕТ");
+  back.href="#district-digbeth";heading.append(back);
+ }
  if(title)title.textContent="Дело №001 · Долг, который не прощают. Дело №002 · "+
   CASE_NAME+". Два дела — один архив.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);

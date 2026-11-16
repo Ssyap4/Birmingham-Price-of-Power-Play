@@ -86,7 +86,10 @@ function classify(files,{manual=false}={}){
    run_package:has("package"),
    run_browser:full||has("story")||has("art")||has("art-installed")||has("evidence")||
      has("reporting")||has("ui")||has("visual"),
-   browser_full:full||has("art-installed"),
+   // Changes to the mobile acceptance test itself must run its full path.
+   // Keep ordinary UI/text edits quick and avoid unrelated 400-route QA.
+   browser_full:full||has("art-installed")||
+     files.includes("tests/case002/mobile_browser_smoke.py"),
    scope_label:full?"full":CATEGORIES.filter(k=>known.has(k)).join("+")||"docs"
  };
  return outputs;

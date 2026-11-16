@@ -5,7 +5,13 @@ const HEROES=()=>window.BirminghamHero?.heroes||[], ENDINGS={
  endingRescue:'Человек важнее бумаг',endingEvidence:'Цена доказательств',endingDeal:'Договор с тенью',
  endingTruth:'Город узнает правду',endingPower:'Власть в твоих руках',endingDeath:'Последняя ошибка'};
 const readJSON=(k,fallback)=>{try{const x=JSON.parse(localStorage.getItem(k)||'null');return x??fallback}catch{return fallback}};
-const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('[campaign] Local archive unavailable',e)}};
+// Verify a real read-back: some private/restricted browser stores acknowledge
+// setItem but silently discard it. Never celebrate an unsaved achievement.
+const put=(k,v)=>{try{
+ const encoded=JSON.stringify(v);
+ localStorage.setItem(k,encoded);
+ return localStorage.getItem(k)===encoded;
+}catch(e){console.warn('[campaign] Local archive unavailable',e);return false}};
 function state(hero){const s=readJSON('birmingham_case_smol_heath_v1_'+hero,null);return s&&Array.isArray(s.items)&&Array.isArray(s.trail)&&typeof s.started==='number'?s:null}
 function findings(hero,s){const f=readJSON('birmingham_case_v20_findings_'+hero,null);return f&&f.started===s?.started&&Array.isArray(f.deductions)?f.deductions:[]}
 function records(){const a=readJSON(RECORD_KEY,[]);return Array.isArray(a)?a.filter(x=>x&&x.caseId&&x.heroId&&x.ending&&x.key):[]}
@@ -20,7 +26,8 @@ function persistFinished(){
    visited:[...new Set(s.trail)],health:Math.max(0,Number(s.health)||0),cause:s.deathCause||''};
   runs.push(rec);dirty=true;
  }
- if(dirty)put(RECORD_KEY,runs);
+ // Completion must exist on disk before it can justify a unique award.
+ if(dirty){put(RECORD_KEY,runs);runs=records();}
  uniqueRewards(runs);
  return runs;
 }
@@ -33,7 +40,10 @@ function uniqueRewards(runs){
   const key=[r.caseId,r.heroId,r.ending].join(':');
   if(!rewards[key]){rewards[key]=r.finished||Date.now();changed=true}
  }
- if(changed)put(UNIQUE_KEY,rewards);
+ if(changed&&!put(UNIQUE_KEY,rewards)){
+  const onDisk=readJSON(UNIQUE_KEY,{});
+  return onDisk&&typeof onDisk==="object"&&!Array.isArray(onDisk)?onDisk:{};
+ }
  return rewards;
 }
 const screens=[
@@ -59,7 +69,7 @@ const profile=$('profile');if(profile){const link=document.createElement('div');
 function make(tag,cls,txt){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el}
 function stat(run){return ENDINGS[run.ending]||run.ending}
 function renderDossiers(el,runs){
- const intro=make('p','campaign-intro','За каждым детективом сохраняется отдельный путь в каждом деле. Повторное получение уже открытой концовки не создаёт новую награду.');el.append(intro);
+ const intro=make('p','campaign-intro','Каждый из пяти людей ближнего круга проходит собственный путь. Повтор уже открытой концовки не приносит новую награду.');el.append(intro);
  const grid=make('div','campaign-grid');
  for(const hero of HEROES()){
   const own=runs.filter(x=>x.heroId===hero.id&&x.caseId===CASE_ID), s=state(hero.id);
@@ -124,12 +134,21 @@ function celebrate(title,group){
 }
 function awards(runs,announce=false){
  const m=metrics(runs),stored=readJSON(AWARD_KEY,{});
- const a=stored&&typeof stored==='object'&&!Array.isArray(stored)?stored:{};
- let dirty=stored!==a;
+ const previous=stored&&typeof stored==='object'&&!Array.isArray(stored)?stored:{};
+ const a={...previous},fresh=[];
+ let dirty=stored!==previous;
  for(const [id,title,,group,pred] of ACH){
-  if(!a[id]&&pred(m)){a[id]=Date.now();dirty=true;if(announce)celebrate(title,group)}
+  if(!a[id]&&pred(m)){
+   a[id]=Date.now();dirty=true;
+   fresh.push({id,title,group});
+  }
  }
- if(dirty)put(AWARD_KEY,a);
+ if(dirty&&!put(AWARD_KEY,a))return previous;
+ if(announce&&fresh.length){
+  const verified=readJSON(AWARD_KEY,{});
+  for(const item of fresh)if(verified?.[item.id]===a[item.id])
+   celebrate(item.title,item.group);
+ }
  return a;
 }
 function renderUniqueRewards(el,runs){
@@ -157,7 +176,7 @@ function renderUniqueRewards(el,runs){
 }
 function renderAchievements(el,runs){
  const a=awards(runs),n=Object.keys(a).filter(k=>ACH.some(v=>v[0]===k)).length;
- el.append(make('p','campaign-intro','Открыто '+n+' / '+ACH.length+'. Награды учитываются один раз и сохраняются локально в браузере. Условия будущих дел получат отдельные наборы достижений.'));
+ el.append(make('p','campaign-intro','Открыто '+n+' / '+ACH.length+'. Достижения этого дела сохраняются локально в браузере; награды за уникальные исходы учитываются отдельно.'));
  for(const group of [...new Set(ACH.map(x=>x[3]))]){el.append(make('h3','campaign-group-title',group));const grid=make('div','campaign-award-grid');
   for(const achievement of ACH.filter(x=>x[3]===group)){
    const [id,title,desc]=achievement,secret=achievement[5]===true&&!a[id];
