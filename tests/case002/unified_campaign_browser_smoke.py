@@ -138,6 +138,14 @@ def run():
                         'birmingham_case002_draft_v3_jack')""")==case2
                     page.locator("#campaignAchievements .campaign-002-to-digbeth").click()
                     page.wait_for_url("**/index.html#district-digbeth")
+                    # Same-document hashchange follows URL update in the event
+                    # loop, so is_visible() can race the router by one tick.
+                    page.wait_for_function("""() => {
+                        const d=document.getElementById('districts');
+                        const b=document.getElementById('launchSecondCase');
+                        return d && !d.hidden && b && !b.hidden &&
+                          document.querySelector('.map-pin.selected')?.dataset.district === 'digbeth';
+                    }""",timeout=5000)
                     assert page.locator("#districts").is_visible()
                     assert page.locator("#launchSecondCase").is_visible()
                     page.locator("#launchSecondCase").click()
