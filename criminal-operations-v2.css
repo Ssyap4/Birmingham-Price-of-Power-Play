@@ -590,3 +590,67 @@ body[data-criminal="active"] > .bh-audio-controls button {
   #criminalScreen .cr-reward-toast { animation: none; }
   #criminalScreen .cr-hp-track > span { transition: none; }
 }
+
+/* v3 cinematic afterword: only outcomes of the isolated criminal campaign. */
+#criminalScreen .cr-epilogue {
+  margin: 28px 0 20px;
+}
+#criminalScreen .cr-epilogue h2 {
+  margin: 0 0 13px;
+  font-size: 25px;
+}
+#criminalScreen .cr-epilogue-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 11px;
+}
+#criminalScreen .cr-epilogue-card {
+  padding: 15px 16px;
+  border: 1px solid #716246;
+  border-left: 4px solid #a98a58;
+  background: linear-gradient(135deg, #242d2b, #131d1e);
+  box-shadow: 0 8px 18px #0005;
+  min-width: 0;
+}
+#criminalScreen .cr-epilogue-card[data-tone="hope"] { border-left-color: #c9ba83; }
+#criminalScreen .cr-epilogue-card[data-tone="cost"] { border-left-color: #bd8b61; }
+#criminalScreen .cr-epilogue-card[data-tone="loss"] { border-left-color: #b9796d; }
+#criminalScreen .cr-epilogue-card[data-tone="unknown"] { border-left-color: #88979a; }
+#criminalScreen .cr-epilogue-card small {
+  display: block;
+  margin-bottom: 6px;
+  color: #e1c18b;
+  font: 700 12px/1.55 system-ui,sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+#criminalScreen .cr-epilogue-card p {
+  font: 17px/1.6 Georgia,serif;
+  color: #ecdfc9;
+  margin: 0;
+}
+#criminalScreen .cr-fact-notes,
+#criminalScreen .cr-epilogue-compact {
+  border: 1px solid #65563f;
+  background: #1a2324;
+  margin: 14px 0;
+  padding: 0;
+}
+#criminalScreen .cr-fact-notes ul {
+  padding: 0 18px 16px 30px;
+  margin: 0;
+  font: 14px/1.6 system-ui,sans-serif;
+}
+#criminalScreen .cr-fact-notes li { margin: 7px 0; }
+#criminalScreen .cr-epilogue-compact > div { padding: 0 10px 12px; }
+#criminalScreen .cr-epilogue-compact .cr-epilogue-card {
+  padding: 12px;
+}
+#criminalScreen .cr-epilogue-compact .cr-epilogue-card p {
+  font-size: 15px;
+}
+@media (min-width: 460px) {
+  #criminalScreen .cr-epilogue-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
