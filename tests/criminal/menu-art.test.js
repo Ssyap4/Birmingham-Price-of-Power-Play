@@ -8,6 +8,9 @@ test("personal Profile is its own illustration, not renamed Settings bitmap",()=
  assert.match(html,/id="profileCard" aria-label="Досье персонажей"/);
  assert.doesNotMatch(html,/cabinetSettings|Настройки/);
  assert.match(css,/assets\/original-art\/profile\.webp/);
+ const menu=read("home-two-paths-v1.css");
+ assert.match(menu,/assets\/original-art\/city-card-clean\.webp/);
+ assert.doesNotMatch(menu,/assets\/cinema\/city\.webp/);
  assert.match(css,/assets\/cabinet\/profile-seal\.svg/);
  assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinetSettingsDialog|cabinet-settings\.webp/);
  assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-settings\.webp/);

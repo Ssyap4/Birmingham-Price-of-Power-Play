@@ -114,6 +114,18 @@ def run():
                     page.route("https://**/*", lambda r: r.abort())
                     page.goto(origin + "/index.html", wait_until="domcontentloaded")
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
+                    # The detective menu card must use art WITHOUT baked-in quotes
+                    # or lettering that would show through the real HTML label.
+                    detective_bg = page.locator("#districtsCard").evaluate(
+                        "e => getComputedStyle(e).backgroundImage"
+                    )
+                    assert "assets/original-art/city-card-clean.webp" in detective_bg, detective_bg
+                    assert "assets/cinema/city.webp" not in detective_bg
+                    assert page.evaluate("""async () => {
+                        const img = new Image();img.src = 'assets/original-art/city-card-clean.webp';
+                        try {await img.decode();} catch {return false;}
+                        return img.naturalWidth > 100;
+                    }""")
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
                     assert page.locator("#cabinetProfile").get_attribute("aria-label") == "Профиль"
                     profile_bg = page.locator("#cabinetProfile").evaluate("e => getComputedStyle(e).backgroundImage")

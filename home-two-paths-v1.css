@@ -10,7 +10,7 @@
   clip-path:none !important; border-radius:4px; color:#ffe6b8;
 }
 #home.cabinet-art-ready #districtsCard {
-  background-image:linear-gradient(95deg,#17120fe8 8%,#1c1a18cc 72%,#1a1815ad),url('assets/cinema/city.webp') !important;
+  background-image:linear-gradient(95deg,#17120fe8 8%,#1c1a18cc 72%,#1a1815ad),url('assets/original-art/city-card-clean.webp') !important;
 }
 #home.cabinet-art-ready #criminalEntry {
   background-image:linear-gradient(95deg,#1b1915ec 10%,#28221cdb 70%,#1c1d1dc0),url('assets/criminal/cr01-arrival.webp') !important;
