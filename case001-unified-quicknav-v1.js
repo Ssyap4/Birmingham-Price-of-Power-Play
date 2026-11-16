@@ -190,7 +190,17 @@
  if(modal)new MutationObserver(scheduleActive).observe(modal,{
   attributes:true,attributeFilter:["hidden","data-mode"]
  });
- new MutationObserver(visibility).observe(game,{
+ // Entering or resuming a case is not a fresh clue discovery. The real
+ // item counter may jump when switching heroes; only changes inside an
+ // already visible investigation should set the NEW badge.
+ new MutationObserver(()=>{
+  if(!game.hidden){
+   unread=false;
+   lastCount=null;
+   updateCount();
+  }
+  visibility();
+ }).observe(game,{
   attributes:true,attributeFilter:["hidden"]
  });
  new MutationObserver(visibility).observe(document.body,{

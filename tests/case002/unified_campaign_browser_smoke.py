@@ -743,7 +743,9 @@ def run():
                         localStorage.setItem('birmingham_case_smol_heath_v1_jack',
                           JSON.stringify({...fin,node:'endingRescue',
                             ending:'endingRescue',started:1699999999000}));
-                        localStorage.setItem('birmingham_hero_selection_v1','finn');
+                        // Jack was the last viewed hero, but his 001 story
+                        // is finished. The unfinished Finn run must win.
+                        localStorage.setItem('birmingham_hero_selection_v1','jack');
                         const jack=JSON.parse(raw);
                         const copied={...jack,hero:'finn',
                             startedAt:jack.startedAt+1000,
@@ -752,6 +754,13 @@ def run():
                           raw);
                         localStorage.setItem('birmingham_case002_draft_v3_finn',
                           JSON.stringify(copied));
+                        // A still newer completed 002 save must not
+                        // displace Finn's unfinished investigation.
+                        localStorage.setItem('birmingham_case002_draft_v3_victor',
+                          JSON.stringify({...jack,hero:'victor',node:'Z01',
+                            finished:true,ending:'Z01',
+                            startedAt:jack.startedAt+2000,
+                            attemptId:'002-victor-completed'}));
                     }""",case2)
                     original_finn=returning.evaluate("""() =>
                         localStorage.getItem('birmingham_case_smol_heath_v1_finn')""")
@@ -771,7 +780,7 @@ def run():
                     assert returning.evaluate(
                         "() => document.activeElement.id")=="launchFirstCase"
                     returning.locator('.map-pin[data-district="digbeth"]').click()
-                    assert "В РАБОТЕ: 2 · ЗАВЕРШЕНО: 0" in status.inner_text()
+                    assert "В РАБОТЕ: 2 · ЗАВЕРШЕНО: 1" in status.inner_text()
                     assert "ПРОДОЛЖИТЬ" in returning.locator(
                         "#launchSecondCase").inner_text()
                     returning.wait_for_function("""() => {

@@ -21,10 +21,23 @@ function close(restoreFocus=true){
  openedFrom=null;
 }
 function open(){
- // Always offer the hero of the last actual Case 001 save first.
- // The previous hard-coded 'jack' silently hid another hero's progress.
+ // Respect the chosen hero while their run is active. If it is already
+ // finished, lead with the newest unfinished attempt, not an old report.
+ // Presentation only: no save slot or preferred hero is overwritten.
  let persisted='jack';
  try{persisted=api.selectedId}catch{}
+ const active=heroes.filter(h=>window.BirminghamCase.hasProgress(h.id));
+ if(active.length&&!active.some(h=>h.id===persisted)){
+  let last=-Infinity;
+  for(const hero of active){
+   try{
+    const save=JSON.parse(localStorage.getItem(
+      'birmingham_case_smol_heath_v1_'+hero.id)||'null');
+    const started=Number.isFinite(save?.started)?save.started:0;
+    if(started>last){last=started;persisted=hero.id}
+   }catch{}
+  }
+ }
  chosen=heroes.some(h=>h.id===persisted)?persisted:'jack';
  openedFrom=document.activeElement;
  draw();modal.hidden=false;document.body.classList.add('hero-modal-open');

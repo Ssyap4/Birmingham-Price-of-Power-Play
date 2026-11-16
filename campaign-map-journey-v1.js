@@ -65,9 +65,13 @@
   headline.textContent=valid.length?
    "В РАБОТЕ: "+active.length+" · ЗАВЕРШЕНО: "+complete.length:
    "ЕЩЁ НЕТ СОХРАНЁННЫХ ПРОХОЖДЕНИЙ";
-  const current=id==="001"?
-   valid.find(row=>row.hero===(window.BirminghamHero?.selectedId||"jack")):
-   [...active].sort((a,b)=>b.started-a.started)[0];
+  // The map and hero entry must agree: lead with an unfinished case even
+  // when another hero's completed report was the last viewed slot.
+  const selected=id==="001"?(window.BirminghamHero?.selectedId||"jack"):null;
+  const current=active.find(row=>row.hero===selected)||
+   [...active].sort((a,b)=>b.started-a.started)[0]||
+   valid.find(row=>row.hero===selected)||
+   [...complete].sort((a,b)=>b.started-a.started)[0];
   const name=current?names[current.hero]:"";
   note.textContent=damaged?
    "Не удалось прочитать "+damaged+" сохранение(й). Данные не изменены.":
@@ -85,8 +89,9 @@
     "ОТКРЫТЬ ДЕЛО · ДОЛГ, КОТОРЫЙ НЕ ПРОЩАЮТ →";
    first.setAttribute("aria-label","Дело №001: выбор героя и расследования");
   }else{
-   second.textContent=valid.length?
+   second.textContent=active.length?
     "ВЫБРАТЬ ГЕРОЯ · ПРОДОЛЖИТЬ №002 →":
+    valid.length?"ВЫБРАТЬ ГЕРОЯ · ОТЧЁТ ИЛИ НОВОЕ ДЕЛО №002 →":
     "ОТКРЫТЬ ДЕЛО №002 · ПОСЛЕДНИЙ ПОЕЗД ИЗ БИРМИНГЕМА →";
    second.setAttribute("aria-label","Дело №002: выбор героя и расследования");
   }
