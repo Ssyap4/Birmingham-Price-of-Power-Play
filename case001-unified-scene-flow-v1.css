@@ -31,7 +31,10 @@
   height:clamp(196px,61vw,322px)!important;
  }
  #caseGame #caseArt .case001-portrait-image{
+  /* Width:auto allows the browser to preserve 16:9 proportions when the
+     reduced art frame constrains the image by height instead of width. */
   flex:0 1 auto!important;min-height:0!important;
+  width:auto!important;height:auto!important;max-width:100%!important;
   max-height:calc(100% - 34px)!important;
  }
  #caseGame #caseScene .case-scene-inner::before{

@@ -68,6 +68,9 @@
    if(game.hidden)return;
    const after=[...choices.querySelectorAll(":scope > .case-choice")];
    if(before.length!==after.length)return;
+   // Health UI can be inserted before the choices after this module loads.
+   // Keep the notice immediately adjacent to the decisions, not above HP.
+   choices.before(feedback);
    const unlocked=after.filter((button,i)=>before[i]&&!button.disabled);
    if(unlocked.length){
     const count=unlocked.length;
