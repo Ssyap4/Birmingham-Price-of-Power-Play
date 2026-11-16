@@ -2111,8 +2111,10 @@ def main():
                         assert report.locator(".finale-archive-check").count() == 2
                         assert report.locator(
                             '.finale-archive-check[data-verified="true"]').count() == 2
-                        assert "зарегистрированы" in report.locator(
+                        assert "подтверждены в локальном архиве" in report.locator(
                             "#finaleArchive").inner_text()
+                        assert "ОБЕ ЗАПИСИ ПОДТВЕРЖДЕНЫ" in report.locator(
+                            "#finaleArchive .finale-archive-status").inner_text()
                         assert not link_page.evaluate(
                             "() => document.documentElement.scrollWidth > window.innerWidth + 1"
                         ), "Finale report overflows 320px portrait phone"
@@ -2497,7 +2499,7 @@ def main():
                         assert "ОБЕ ЗАПИСИ ПОДТВЕРЖДЕНЫ" in full_page.locator(
                             "#finaleArchive .finale-archive-status"
                         ).inner_text(), "Finale must validate completion and award separately"
-                        assert "зарегистрированы" not in full_page.locator(".finale-eyebrow").inner_text()
+                        assert "подтверждены в локальном архиве" not in full_page.locator(".finale-eyebrow").inner_text()
                         full_page.screenshot(path=str(visual_dir/"chromium-finale.png"),full_page=True)
                         archived_before=full_page.evaluate("""() => localStorage.getItem(
                             window.BirminghamCase002Engine.SAVE_PREFIX+'jack')""")
@@ -2544,7 +2546,7 @@ def main():
                         ).inner_text(), "Corrupt archive must not claim reward was granted"
                         assert damaged_page.locator("#finalePanel").is_visible()
                         assert "повреждён" in damaged_page.locator("#finaleArchive").inner_text()
-                        assert "зарегистрированы" not in damaged_page.locator("#finaleArchive").inner_text()
+                        assert "подтверждены в локальном архиве" not in damaged_page.locator("#finaleArchive").inner_text()
                         assert damaged_page.locator("#finaleArchive").get_attribute(
                             "data-status") == "damaged"
                         assert damaged_page.locator(
