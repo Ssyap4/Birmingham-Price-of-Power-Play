@@ -366,9 +366,11 @@ test("concurrent tab CAS refuses older revision overwrite", () => {
 test("old detective/campaign bytes are unchanged after CR01–CR05 and archive recovery", () => {
   const store = new Store();
   const names = [
-    "birmingham_case_smol_heath_v1_jack",
-    "birmingham_case_v20_findings_jack",
-    "birmingham_case002_draft_v3_finn",
+    ...["jack", "finn", "eleanor", "victor", "samuel"].flatMap((hero) => [
+      "birmingham_case_smol_heath_v1_" + hero,
+      "birmingham_case_v20_findings_" + hero,
+      "birmingham_case002_draft_v3_" + hero,
+    ]),
     "birmingham_case002_records_draft_v3",
     "birmingham_case002_rewards_draft_v3",
     "birmingham_campaign_records_v1",

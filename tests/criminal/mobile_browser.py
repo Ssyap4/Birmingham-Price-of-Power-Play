@@ -17,9 +17,15 @@ OUT.mkdir(parents=True, exist_ok=True)
 PLANS = json.loads((ROOT / "work/criminal/playthroughs.json").read_text())
 PREFIX = "birmingham_criminal_v2_"
 OLD = [
-    "birmingham_case_smol_heath_v1_jack",
-    "birmingham_case_v20_findings_jack",
-    "birmingham_case002_draft_v3_finn",
+    *[
+        prefix + hero
+        for hero in ["jack", "finn", "eleanor", "victor", "samuel"]
+        for prefix in [
+            "birmingham_case_smol_heath_v1_",
+            "birmingham_case_v20_findings_",
+            "birmingham_case002_draft_v3_",
+        ]
+    ],
     "birmingham_case002_records_draft_v3",
     "birmingham_case002_rewards_draft_v3",
     "birmingham_campaign_records_v1",
