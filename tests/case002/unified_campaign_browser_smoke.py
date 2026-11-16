@@ -78,6 +78,12 @@ def run():
                     # an obsolete Digbeth label while resetting to Small Heath.
                     page.locator("#districtBack").click()
                     assert page.locator("#home").is_visible()
+                    # Re-entry must not move an illustrated button under Safari.
+                    assert page.locator("#districtsCard").evaluate(
+                        "el => getComputedStyle(el).animationName")==(
+                            "bh-menu-entry-opacity")
+                    assert page.locator("#districtsCard").evaluate(
+                        "el => getComputedStyle(el).transform")=="none"
                     page.locator("#districtsCard").click()
                     assert page.locator('.map-pin[data-district="small-heath"]').get_attribute(
                         "aria-pressed")=="true"
@@ -194,6 +200,15 @@ def run():
                     assert page.locator("#case001Briefing").is_visible()
                     page.locator("#case001Briefing .briefing-start").click()
                     assert page.locator("#caseGame").is_visible()
+                    # Health calculations stay owned by Case 001; visual
+                    # status remains legible on a portrait phone.
+                    health=page.locator("#caseHealthStatus")
+                    assert health.is_visible()
+                    assert health.locator(".case-health-track").bounding_box()["height"]>=8
+                    assert health.locator(".case-health-head").evaluate(
+                        "el => parseFloat(getComputedStyle(el).fontSize)")>=11
+                    assert health.evaluate(
+                        "el => getComputedStyle(el).borderRadius")!="0px"
                     # Original 001 artwork must keep its native aspect ratio.
                     for scene_width in (320,390):
                         page.set_viewport_size({"width":scene_width,"height":790})
@@ -288,6 +303,41 @@ def run():
                     page.set_viewport_size({"width":390,"height":844})
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case_smol_heath_v1_jack')""")==case1
+                    # Presentation-only probes; remove them without
+                    # triggering rewards or changing persistent data.
+                    toast_layout=page.evaluate("""() => {
+                        const tray=document.querySelector('.campaign-unlock-tray');
+                        let root=document.getElementById('caseHealthToasts');
+                        const created=!root;
+                        if(created){
+                            root=document.createElement('div');
+                            root.id='caseHealthToasts';
+                            document.body.append(root);
+                        }
+                        const event=document.createElement('div');
+                        event.className='case-health-toast wound';
+                        event.innerHTML='<strong>CHECK</strong><p>CHECK</p>';
+                        root.append(event);
+                        const award=document.createElement('div');
+                        award.className='campaign-unlock-popup';
+                        award.textContent='CHECK';
+                        tray.append(award);
+                        const a=tray.getBoundingClientRect();
+                        const b=root.getBoundingClientRect();
+                        const result={
+                            awardTop:a.top,eventTop:b.top,
+                            eventHeight:b.height,
+                            pointerEvents:getComputedStyle(root).pointerEvents,
+                            width:document.documentElement.scrollWidth-window.innerWidth
+                        };
+                        award.remove();event.remove();
+                        if(created)root.remove();
+                        return result;
+                    }""")
+                    assert 0<=toast_layout["awardTop"]<80
+                    assert 0<toast_layout["eventTop"]<844
+                    assert toast_layout["pointerEvents"]=="none"
+                    assert toast_layout["width"]<=1
                     page.screenshot(path=str(SHOTS/f"{name}-case001.png"))
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
