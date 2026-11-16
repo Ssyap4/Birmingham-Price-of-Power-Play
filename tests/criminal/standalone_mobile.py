@@ -50,7 +50,7 @@ def run():
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-map.png")),full_page=True)
                     for mission in ("CR01","CR02","CR03","CR04","CR05"):
                         tap(page,f'.cr-pin[data-mission="{mission}"]')
-                        assert page.locator("h1").first.is_visible()
+                        assert page.locator("#criminalScreen h1").first.is_visible()
                         image = page.locator(".cr-frame img").first
                         page.wait_for_function("""() => {
                           const im=document.querySelector('#criminalScreen .cr-frame img');
