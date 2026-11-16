@@ -195,6 +195,26 @@ def run():
                          "errors":errors,
                         },flush=True)
                     assert archive.is_visible(), "Case 002 common archive not visible"
+                    # Both cases remain present and discoverable, but long
+                    # collections start folded instead of forcing deep scroll.
+                    first_fold=page.locator("#campaignFirstCaseAchievements")
+                    assert first_fold.is_visible()
+                    assert first_fold.get_attribute("open") is None
+                    assert first_fold.locator(".campaign-award").count()==18
+                    milestones=page.locator("#campaignSecondCaseMilestones")
+                    assert milestones.is_visible()
+                    assert milestones.get_attribute("open") is None
+                    assert archive.locator(".campaign-002-achievement").first.is_hidden()
+                    jumps=page.locator("#campaignAchievements .campaign-002-jumps")
+                    assert jumps.locator("button").count()==2
+                    jumps.locator('[data-jump-to="campaignFirstCaseAchievements"]').click()
+                    assert first_fold.get_attribute("open") is not None
+                    assert first_fold.locator(".campaign-award").first.is_visible()
+                    jumps.locator('[data-jump-to="campaignSecondCaseAchievements"]').click()
+                    assert archive.is_visible()
+                    milestones.locator("summary").click()
+                    assert milestones.get_attribute("open") is not None
+                    assert archive.locator(".campaign-002-achievement").first.is_visible()
                     assert archive.locator(".campaign-002-achievement").count()==18
                     assert archive.locator('.campaign-002-achievement[data-unlocked="true"]').count()==2
                     assert archive.locator(".campaign-002-reward-group").count()==5
@@ -208,6 +228,13 @@ def run():
                     page.locator('#campaignAchievements [data-open-section="campaignHistory"]').click()
                     assert page.locator("#campaignSecondCaseHistory").is_visible()
                     assert page.locator(".campaign-002-attempt").count()==3
+                    history_jumps=page.locator("#campaignHistory .campaign-002-jumps")
+                    assert history_jumps.locator("button").count()==2
+                    history_jumps.locator('[data-jump-to="campaignSecondCaseHistory"]').click()
+                    assert page.locator("#campaignSecondCaseHistory").is_visible()
+                    assert page.evaluate("""() => document.activeElement.id""")==(
+                        "campaignSecondCaseHistory"
+                    )
                     summary=page.locator("#campaignHistory .campaign-summary").inner_text()
                     assert "4 / 65" in summary, (
                         "One Case 001 and three Case 002 unique outcomes must share the total"
@@ -216,6 +243,12 @@ def run():
                     page.locator('#campaignHistory [data-open-section="campaignDossiers"]').click()
                     assert page.locator("#campaignDossiers").is_visible()
                     assert page.locator(".campaign-002-card-title").count()==5
+                    hero_jumps=page.locator("#campaignDossiers .campaign-002-jumps")
+                    assert hero_jumps.locator("button").count()==5
+                    hero_jumps.locator('[data-jump-to="campaignHerofinn"]').click()
+                    assert page.evaluate("""() => document.activeElement.id""")==(
+                        "campaignHerofinn"
+                    )
                     assert "Продолжается: P02" in page.locator(
                         "#campaignDossiers .campaign-card").first.inner_text()
                     assert page.locator(

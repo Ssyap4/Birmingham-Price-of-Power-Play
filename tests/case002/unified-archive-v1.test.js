@@ -80,6 +80,11 @@ const otherCase=bridge.snapshot(setup([...rows,{...rows[0],caseId:"001"}]),C,eng
 assert.equal(otherCase.records.status,"damaged","Do not silently import Case 001 rows");
 assert.equal(otherCase.confirmed.size,0);
 assert.equal(otherCase.completed.length,0);
+assert.equal(otherCase.orphaned,0,
+ "A damaged completion archive must not label all reward keys as orphaned");
+const unsupported=bridge.snapshot(s,{...C,heroes:[]},engine,A,data.graph);
+assert.equal(unsupported.status,"unavailable");
+assert.equal(s.writes,0);
 const wrongTime=bridge.snapshot(setup([{...rows[0],finished:0}],[],[]),C,engine,A,data.graph);
 assert.equal(wrongTime.records.status,"damaged");
 const unknown=bridge.snapshot(setup(rows,[...keys,"002:jack:unknown-ending"]),C,engine,A,data.graph);
