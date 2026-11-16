@@ -570,7 +570,75 @@ def run():
                         "#campaignFirstCaseAchievements .campaign-reward-card.earned"
                     ).count()==0
                     restricted.close()
-                    print("PASS "+name+": cross-case archive deep links, Digbeth "
+                    # Isolated completed Case 001: read-only finale over a
+                    # verified ending, no interference with the shared archive.
+                    terminal=browser.new_context(
+                        viewport={"width":320,"height":790},is_mobile=True,
+                        device_scale_factor=2,has_touch=True)
+                    ended=terminal.new_page()
+                    ended.route("https://telegram.org/js/telegram-web-app.js",
+                                lambda route:route.abort())
+                    ended.goto(origin+"/index.html",wait_until="domcontentloaded")
+                    ended.locator("#districtsCard").click()
+                    ended.locator('.map-pin[data-district="small-heath"]').click()
+                    ended.locator("#launchFirstCase").click()
+                    ended.locator("#heroSelection .hero-begin").click()
+                    ended.locator("#case001Briefing .briefing-start").click()
+                    ended.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const save=JSON.parse(localStorage.getItem(key));
+                        save.node='endingTruth';
+                        save.health=85;
+                        save.items=['key','envelope','receipt','ledger',
+                                    'invoice','route'];
+                        localStorage.setItem(key,JSON.stringify(save));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:save.started,
+                            deductions:['След склада D-17','Путь груза'],
+                            reactions:[]}));
+                        window.BirminghamCase.resume();
+                    }""")
+                    finale=ended.locator("#caseGame .v33-ending-report")
+                    assert finale.is_visible()
+                    assert finale.get_attribute("aria-label")=="Итог Дела №001"
+                    assert "ДЕЛО №001 ЗАКРЫТО" in finale.locator(
+                        ".v33-ending-head small").inner_text()
+                    assert finale.locator(".v33-ending-metrics>div").count()==3
+                    assert finale.locator(
+                        ".case001-finale-actions button").count()==2
+                    materials=finale.locator(".case001-finale-materials")
+                    assert "6 УЛИК" in materials.locator("summary").inner_text()
+                    assert "2 СВЯЗЕЙ" in materials.locator("summary").inner_text()
+                    materials.locator("summary").click()
+                    assert materials.evaluate("el => el.open")
+                    assert materials.locator("li").count()==8
+                    for finale_width in (320,390):
+                        ended.set_viewport_size(
+                            {"width":finale_width,"height":790})
+                        assert not ended.evaluate(
+                            "() => document.documentElement.scrollWidth > innerWidth+1"
+                        ), name+" completed Case 001 overflows "+str(finale_width)+"px"
+                    finale.locator(".case001-finale-actions button").first.click()
+                    assert ended.locator("#campaignAchievements").is_visible()
+                    once=ended.evaluate("""() => ({
+                       records:JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_records_v1')||'[]').length,
+                       unique:Object.keys(JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_unique_rewards_v1')||'{}')).length
+                    })""")
+                    assert once["records"]==1 and once["unique"]==1
+                    ended.evaluate("() => window.BirminghamCase.resume()")
+                    ended.locator(
+                        ".case001-finale-actions button.secondary").click()
+                    assert ended.locator("#districts").is_visible()
+                    assert ended.evaluate("""() => ({
+                       records:JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_records_v1')||'[]').length,
+                       unique:Object.keys(JSON.parse(localStorage.getItem(
+                         'birmingham_campaign_unique_rewards_v1')||'{}')).length
+                    })""")==once, name+" finale must not duplicate rewards"
+                    terminal.close()
+                    print("PASS "+name+": cross-case archive deep links, Digbeth 
                           "return, Case001 saved-write acknowledgement and no "
                           "phantom notifications; 002 resume and archives intact")
                 finally:
