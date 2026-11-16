@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
-      CRIMINAL_PREVIEW_URL: https://birmingham-criminal-v3-safari.vercel.app
+      CRIMINAL_PREVIEW_URL: https://birmingham-criminal-v3-safari-mkqi48w6l-lillineeb51-9659.vercel.app
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
