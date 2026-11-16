@@ -4,9 +4,13 @@ on:
     branches: [feat/criminal-operations-polish-v3]
     paths:
       - ".github/workflows/criminal-preview-remote.yml"
+      - "tools/remote_preview_smoke.py"
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: criminal-live-preview
+  cancel-in-progress: true
 jobs:
   remote-preview:
     runs-on: ubuntu-latest
