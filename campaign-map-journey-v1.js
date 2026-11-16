@@ -35,19 +35,18 @@
  function case001(hero){
   const s=read("birmingham_case_smol_heath_v1_"+hero);
   if(s===null)return null;
-  if(s==="damaged"||!window.BirminghamCase?.hasSavedCase(hero))return "damaged";
+  if(s==="damaged"||!Number.isFinite(s?.started)||
+    !window.BirminghamCase?.hasSavedCase(hero))return "damaged";
   return {hero,started:Number.isFinite(s.started)?s.started:0,
    status:known001.has(s.node)?"finished":"active"};
  }
  function case002(hero){
   const s=read(prefix002+hero);
   if(s===null)return null;
-  if(s==="damaged"||!s||s.version!==3||s.caseId!=="002"||
-    s.hero!==hero||typeof s.node!=="string"||
-    (known002.size>0&&!known002.has(s.node))||
-    !Number.isFinite(s.startedAt)||s.startedAt<=0||
-    typeof s.finished!=="boolean"||
-    (s.finished&&typeof s.ending!=="string"))return "damaged";
+  const archive=window.BirminghamCase002CampaignArchive;
+  const contract=window.BirminghamCase002Data?.contract;
+  if(s==="damaged"||!contract||
+    !archive?.validSave?.(s,hero,contract,known002))return "damaged";
   return {hero,started:s.startedAt,status:s.finished?"finished":"active"};
  }
  function paint(){

@@ -14,13 +14,13 @@ const shade=document.createElement('div');shade.className='v33-shade';shade.hidd
 root.append(shade);
 const board=shade.querySelector('.v33-board'), solvedBoard=shade.querySelector('.v33-solved-board'), stats=shade.querySelector('.v33-stats'), findings=shade.querySelector('.v33-findings-list');
 const allTiles=()=>shade.querySelectorAll('.v33-tile');
-let selected=null,drag=null,suppressClick=false;
+let selected=null,drag=null,suppressClick=false,opener=null;
 const match=(a,b)=>pairs.find(p=>(p.a===a&&p.b===b)||(p.a===b&&p.b===a));
 function clear(){selected=null;allTiles().forEach(t=>t.classList.remove('v33-selected','v33-compatible','v33-target'))}
 function illuminate(id){allTiles().forEach(t=>{const other=t.dataset.id;t.classList.toggle('v33-selected',other===id);t.classList.toggle('v33-compatible',other!==id&&!!match(id,other))})}
 function refreshFindings(){const done=new Set(saved().deductions||[]);findings.replaceChildren();for(const p of pairs){if(!done.has(p.title))continue;const article=document.createElement('article');article.innerHTML='<strong>✦ '+p.title+'</strong>';const desc=document.createElement('p');desc.textContent=p.text;article.append(desc);findings.append(article)}if(!findings.children.length){const empty=document.createElement('p');empty.textContent='Пока нет установленных связей. Совмести найденные доказательства.';findings.append(empty)}}
 function explain(p,already){const layer=document.createElement('div');layer.className='v33-result-layer';layer.innerHTML='<section class="v33-result" role="alertdialog" aria-modal="true"><div class="v33-seal">✦</div><small>ДЕДУКТИВНОЕ ЗАКЛЮЧЕНИЕ</small><h3></h3><div class="v33-result-photos"></div><p></p><div class="v33-result-status"></div><button type="button">ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ</button></section>';
-layer.querySelector('h3').textContent=p.title;layer.querySelector('p').textContent=p.text;layer.querySelector('.v33-result-status').textContent=already?'Связь уже внесена в досье':'Новая связь установлена и сохранена в досье';const photos=layer.querySelector('.v33-result-photos');photos.append(photo(p.a),photo(p.b));const close=()=>{layer.remove();render();clear();shade.hidden=true;document.body.classList.remove('v34-board-open')};layer.querySelector('button').onclick=close;layer.addEventListener('click',e=>{if(e.target===layer)close()});shade.append(layer);layer.querySelector('button').focus()}
+layer.querySelector('h3').textContent=p.title;layer.querySelector('p').textContent=p.text;layer.querySelector('.v33-result-status').textContent=already?'Связь уже внесена в досье':'Новая связь установлена и сохранена в досье';const photos=layer.querySelector('.v33-result-photos');photos.append(photo(p.a),photo(p.b));const closeResult=()=>close();layer.querySelector('button').onclick=closeResult;layer.addEventListener('click',e=>{if(e.target===layer)closeResult()});shade.append(layer);layer.querySelector('button').focus()}
 function combine(a,b){if(a===b){clear();return}const p=match(a,b);if(!p){clear();return}const already=(saved().deductions||[]).includes(p.title);if(!already)store(p.title);explain(p,already)}
 function choose(id){if(selected===id){clear();return}if(selected){if(match(selected,id)){combine(selected,id);return}selected=id;illuminate(id);return}selected=id;illuminate(id)}
 function render(){const ids=found();board.replaceChildren();solvedBoard.replaceChildren();clear();const done=new Set(saved().deductions||[]);const solvedIds=new Set(pairs.filter(p=>done.has(p.title)).flatMap(p=>[p.a,p.b]));stats.textContent='Найдено предметов: '+ids.length+' / 11    ·    Установлено связей: '+pairs.filter(p=>done.has(p.title)).length+' / '+pairs.length;
@@ -31,9 +31,47 @@ for(const id of ids){const tile=document.createElement('button');tile.type='butt
  tile.addEventListener('pointercancel',()=>{drag=null;clear()});(solvedIds.has(id)?solvedBoard:board).append(tile)}
 shade.querySelector('.v33-solved').hidden=!solvedBoard.children.length;
 if(!ids.length){const p=document.createElement('p');p.className='v33-empty';p.textContent='Пока улик нет. Начни расследование — найденные предметы появятся здесь.';board.append(p)}else if(!board.children.length){const p=document.createElement('p');p.className='v33-empty';p.textContent='Все найденные улики уже участвуют в заключениях. Новые находки появятся здесь.';board.append(p)}refreshFindings()}
-function open(mode='inventory'){render();shade.dataset.mode=mode;shade.querySelector('.v33-head h2').textContent=mode==='deduction'?'ДЕДУКЦИЯ · СВЯЗИ УЛИК':'ИНВЕНТАРЬ УЛИК';shade.querySelector('.v33-head p').textContent=mode==='deduction'?'Выбери улику: все найденные совместимые доказательства сразу подсветятся зелёным. Нажми на подсвеченную карточку для заключения.':'Перетащи улику на подсвеченный предмет или нажми на две карточки по очереди.';shade.hidden=false;document.body.classList.add('v34-board-open');shade.querySelector('.v33-close').focus()}
-function close(){shade.hidden=true;document.body.classList.remove('v34-board-open');clear()}
-shade.querySelector('.v33-close').onclick=close;shade.addEventListener('click',e=>{if(e.target===shade)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!shade.hidden){const layer=shade.querySelector('.v33-result-layer');if(layer)layer.remove();else close()}});
+function open(mode='inventory'){opener=document.activeElement;render();shade.dataset.mode=mode;shade.querySelector('.v33-head h2').textContent=mode==='deduction'?'ДЕДУКЦИЯ · СВЯЗИ УЛИК':'ИНВЕНТАРЬ УЛИК';shade.querySelector('.v33-head p').textContent=mode==='deduction'?'Выбери улику: все найденные совместимые доказательства сразу подсветятся зелёным. Нажми на подсвеченную карточку для заключения.':'Перетащи улику на подсвеченный предмет или нажми на две карточки по очереди.';shade.hidden=false;document.body.classList.add('v34-board-open');shade.querySelector('.v33-close').focus()}
+function close(){
+ shade.querySelector('.v33-result-layer')?.remove();
+ shade.hidden=true;document.body.classList.remove('v34-board-open');
+ clear();drag=null;suppressClick=false;
+ const target=opener;opener=null;
+ if(target?.isConnected&&!target.closest('[hidden]'))
+  target.focus({preventScroll:true});
+}
+function dismissResult(){
+ const layer=shade.querySelector('.v33-result-layer');
+ if(!layer)return;
+ layer.remove();render();clear();drag=null;suppressClick=false;
+ shade.querySelector('.v33-close').focus({preventScroll:true});
+}
+shade.querySelector('.v33-close').onclick=close;
+shade.addEventListener('click',e=>{if(e.target===shade)close()});
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Escape'||shade.hidden)return;
+ e.preventDefault();e.stopPropagation();
+ if(shade.querySelector('.v33-result-layer'))dismissResult();
+ else close();
+});
+shade.addEventListener('keydown',e=>{
+ if(e.key!=='Tab'||shade.hidden)return;
+ const layer=shade.querySelector('.v33-result-layer');
+ const scope=layer||shade.querySelector('.v33-window');
+ const focusable=[...scope.querySelectorAll('button:not([disabled])')]
+  .filter(btn=>btn.getClientRects().length>0&&!btn.closest('[hidden]'));
+ if(!focusable.length)return;
+ const first=focusable[0],last=focusable[focusable.length-1];
+ if(!scope.contains(document.activeElement)||
+   (e.shiftKey&&document.activeElement===first)||
+   (!e.shiftKey&&document.activeElement===last)){
+  e.preventDefault();
+  (e.shiftKey?last:first).focus({preventScroll:true});
+ }
+});
+new MutationObserver(()=>{
+ if(root.hidden&&!shade.hidden)close();
+}).observe(root,{attributes:true,attributeFilter:['hidden']});
 // Capture existing menu actions before legacy dialogs open. Preserve all other tools.
 root.addEventListener('click',e=>{const button=e.target.closest('button[data-tool="evidence"],button[data-tool="deduction"]');if(!button)return;e.preventDefault();e.stopImmediatePropagation();open(button.dataset.tool==='deduction'?'deduction':'inventory')},true);
 // Sidebar opens the same complete inventory, instead of only a single evidence detail.
