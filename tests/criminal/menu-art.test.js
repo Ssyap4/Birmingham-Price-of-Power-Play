@@ -15,14 +15,14 @@ test("personal Profile is its own illustration, not renamed Settings bitmap",()=
  assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinetSettingsDialog|cabinet-settings\.webp/);
  assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-settings\.webp/);
  // Historic bitmaps with baked lettering must not be active menu layers.
- assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinet-(campaign|trials|achievements|dossier)\\.webp/);
- assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-(campaign|trials|achievements|dossiers)\\.webp/);
+ assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinet-(campaign|trials|achievements|dossier)\.webp/);
+ assert.doesNotMatch(read("mobile-approved-menu-v1.css"),/approved-(campaign|trials|achievements|dossiers)\.webp/);
  assert.doesNotMatch(read("cabinet-menu-v1.css"),/cabinetRotatePrompt|orientation:landscape|cabinet-menu-open/);
- assert.doesNotMatch(read("home-story-first-v1.js"),/achievements\\.addEventListener/);
+ assert.doesNotMatch(read("home-story-first-v1.js"),/achievements\.addEventListener/);
  for(const art of ["assets/original-art/challenges.webp","assets/original-art/clock.webp","assets/cabinet/birmingham_cabinet_office_art.webp"])
   assert.ok(fs.statSync(path.join(root,art)).size>1000,art);
- assert.match(css,/assets\/original-art\/challenges\\.webp/);
- assert.match(css,/assets\/original-art\/clock\\.webp/);
+ assert.match(css,/assets\/original-art\/challenges\.webp/);
+ assert.match(css,/assets\/original-art\/clock\.webp/);
  const seal=read("assets/cabinet/profile-seal.svg");assert.match(seal,/^<svg/);
  assert.match(seal,/<path /);assert.doesNotMatch(seal,/<script|<foreignObject|\bon\w+\s*=|\bhref\s*=/i);
  assert.ok(fs.statSync(path.join(root,"assets/original-art/profile.webp")).size>1000);
