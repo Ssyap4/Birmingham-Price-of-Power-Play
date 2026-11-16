@@ -28,6 +28,7 @@
     memory = false,
     notice = "",
     rewardNotice = null,
+    selectedMissionId = null,
     mode = "map";
   const esc = (x) =>
     String(x ?? "").replace(
@@ -51,9 +52,7 @@
       history.replaceState(
         null,
         "",
-        location.pathname +
-          location.search +
-          (value ? "#criminal/" + value : ""),
+        location.href.split("#")[0] + (value ? "#criminal/" + value : ""),
       );
     } catch {}
   }
@@ -75,6 +74,7 @@
     pending = null;
     state = null;
     rewardNotice = null;
+    selectedMissionId = null;
     root.hidden = true;
     delete document.body.dataset.criminal;
     setHash("");
@@ -118,6 +118,7 @@
     return `<div class="cr-warning" role="status">${esc(text)}</div>`;
   }
   function map() {
+    selectedMissionId = null;
     mode = "map";
     state = null;
     pending = null;
@@ -156,6 +157,7 @@
     );
   }
   function brief(id) {
+    selectedMissionId = id;
     rewardNotice = null;
     mode = "brief";
     const m = C.missions[id];
@@ -206,6 +208,7 @@
     };
   }
   function start(id, inMemory = false, expected = raw) {
+    selectedMissionId = id;
     const m = C.missions[id],
       e = entropy();
     const s = E.create(id, e.seed, e.id);
@@ -233,6 +236,7 @@
     }
   }
   function resume(id) {
+    selectedMissionId = id;
     const s = A.load(store, id);
     if (s.kind !== "valid") return brief(id);
     state = s.state;
@@ -446,6 +450,7 @@
     );
   }
   function chronicle() {
+    selectedMissionId = null;
     rewardNotice = null;
     mode = "chronicle";
     setHash("chronicle");
@@ -483,7 +488,7 @@
     );
   }
   function currentId() {
-    return state?.missionId || location.hash.split("/")[1];
+    return state?.missionId || selectedMissionId || location.hash.split("/")[1];
   }
   root.addEventListener("click", (e) => {
     const b = e.target.closest("button");
@@ -606,6 +611,7 @@
       pending = null;
       state = null;
       rewardNotice = null;
+      selectedMissionId = null;
       root.hidden = true;
       delete document.body.dataset.criminal;
       setHash("");
