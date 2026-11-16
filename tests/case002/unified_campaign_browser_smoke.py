@@ -606,6 +606,9 @@ def run():
                     assert finale.locator(".v33-ending-metrics>div").count()==3
                     assert finale.locator(
                         ".case001-finale-actions button").count()==2
+                    assert ended.locator(
+                        "#caseGame .case-paper>.case-section-label").last.inner_text()==(
+                            "СЛЕДУЮЩИЙ ШАГ")
                     materials=finale.locator(".case001-finale-materials")
                     assert "6 УЛИК" in materials.locator("summary").inner_text()
                     assert "2 СВЯЗЕЙ" in materials.locator("summary").inner_text()

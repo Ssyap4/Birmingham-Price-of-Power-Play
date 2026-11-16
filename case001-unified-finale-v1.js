@@ -9,7 +9,9 @@
   "След склада D-17","Деньги и двойной учёт","Путь груза",
   "Слова Артура","Две версии разговора","Уничтоженные записи"
  ]);
- const choiceHeading=paper.querySelector(".case-section-label:has(+ #caseChoices)");
+ const choiceHeading=[...paper.children].find(child=>
+  child.classList.contains("case-section-label")&&
+  child.textContent.trim()==="ВАШЕ РЕШЕНИЕ");
  function pickState(){
   const heroId=window.BirminghamHero?.selectedId||"jack";
   let state,conclusions;
