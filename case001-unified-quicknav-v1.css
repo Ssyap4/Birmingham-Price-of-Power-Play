@@ -126,3 +126,38 @@
   letter-spacing:0!important;
  }
 }
+
+/* Deduction-to-decision continuity: one compact notice in the story, and a
+   passive NEW indicator on the existing thumb bar, never a second modal. */
+#caseGame #case001DecisionFeedback[hidden]{display:none!important}
+#caseGame #case001DecisionFeedback{display:none}
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame #case001DecisionFeedback:not([hidden]){
+  display:block!important;box-sizing:border-box!important;
+  min-width:0;margin:4px 0 12px!important;
+  padding:11px 12px!important;
+  border:1px solid #b88d56!important;
+  border-left:3px solid #e3ba7a!important;
+  border-radius:0 5px 5px 0!important;
+  background:linear-gradient(125deg,#3d2b1b,#201914)!important;
+  color:#f1d3a3!important;
+  font:650 .83rem/1.5 system-ui,sans-serif!important;
+  overflow-wrap:anywhere!important;
+  scroll-margin-top:16px!important;
+  scroll-margin-bottom:calc(94px + env(safe-area-inset-bottom,0px))!important;
+ }
+ #caseGame #case001DecisionFeedback:focus-visible{
+  outline:3px solid #ffe2ac!important;outline-offset:2px!important;
+ }
+ .case001-quick-nav button[data-go="choices"][data-new-decision="true"]{
+  padding-top:16px!important;padding-bottom:5px!important;
+ }
+ .case001-quick-nav button[data-go="choices"][data-new-decision="true"]::after{
+  content:"НОВОЕ"!important;
+  position:absolute!important;top:2px!important;right:2px!important;
+  padding:1px 3px!important;border:1px solid #513315!important;
+  border-radius:3px!important;background:#e7bd7c!important;
+  color:#28190f!important;
+  font:800 .53rem/1.15 system-ui,sans-serif!important;
+ }
+}

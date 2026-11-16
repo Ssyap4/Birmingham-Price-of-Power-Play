@@ -26,6 +26,9 @@
   order:1!important;display:flex!important;
   flex-direction:column!important;gap:8px!important;
   padding:10px 8px 8px!important;
+  /* Approved 16:9 originals were getting 50–75px empty letterboxing.
+     Reduce the surrounding frame, never crop or stretch the artwork. */
+  height:clamp(196px,61vw,322px)!important;
  }
  #caseGame #caseArt .case001-portrait-image{
   flex:0 1 auto!important;min-height:0!important;

@@ -258,6 +258,8 @@ def run():
                         title_box=page.locator(
                             "#caseScene .case-scene-inner").bounding_box()
                         art_box=page.locator("#caseArt").bounding_box()
+                        assert art_box["height"]<=max(205,scene_width*.62+8), (
+                            name+" wide art still has excessive letterboxing")
                         read_box=page.locator(
                             "#caseScene .case001-read-scene").bounding_box()
                         assert title_box["y"]<art_box["y"],name+" title below artwork"
@@ -369,11 +371,55 @@ def run():
                     assert quick_shade.get_attribute("data-mode")=="deduction"
                     page.locator(".v33-close").click()
                     assert nav.is_visible()
+                    # A genuine deduction must refresh premium gates and
+                    # visibly announce newly opened decisions on a phone.
+                    old_findings=page.evaluate("""() => localStorage.getItem(
+                        'birmingham_case_v20_findings_jack')""")
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const s=JSON.parse(localStorage.getItem(key));
+                        s.node='expose';
+                        s.items=['receipt','ledger','testimony'];
+                        localStorage.setItem(key,JSON.stringify(s));
+                        localStorage.setItem('birmingham_case_v20_findings_jack',
+                          JSON.stringify({started:s.started,
+                            deductions:[],reactions:[]}));
+                        window.BirminghamCase.resume();
+                    }""")
+                    assert page.locator("#caseChoices > .case-choice:disabled").count()==2
+                    nav.locator('[data-go="deduction"]').click()
+                    page.locator('.v33-board .v33-tile[data-id="receipt"]').click()
+                    page.locator('.v33-board .v33-tile[data-id="ledger"]').click()
+                    assert page.locator(".v33-result-layer").is_visible()
+                    page.locator(".v33-result button").click()
+                    page.wait_for_function("""() =>
+                        document.querySelector('#case001QuickNav [data-go="choices"]')
+                          ?.dataset.newDecision==='true' &&
+                        document.querySelector('#case001DecisionFeedback')
+                          ?.textContent.includes('Открыто решений: 2')
+                    """)
+                    assert page.locator("#caseChoices > .case-choice:disabled").count()==0
+                    nav.locator('[data-go="choices"]').click()
+                    assert nav.locator('[data-go="choices"]').get_attribute(
+                        "data-new-decision")=="false"
+                    assert page.locator("#case001DecisionFeedback").is_visible()
+                    assert page.evaluate("""() => {
+                        return JSON.parse(localStorage.getItem(
+                            'birmingham_case_v20_findings_jack'))
+                              .deductions.includes('Деньги и двойной учёт');
+                    }""")
+                    # A scene change clears the old decision hint naturally.
+                    page.evaluate("""() => {
+                        const key='birmingham_case_smol_heath_v1_jack';
+                        const s=JSON.parse(localStorage.getItem(key));
+                        s.node='intro';
+                        localStorage.setItem(key,JSON.stringify(s));
+                        window.BirminghamCase.resume();
+                    }""")
+                    assert page.locator("#case001DecisionFeedback").is_hidden()
                     # Keep the Case 001 inventory in the physical phone
                     # viewport. A finished screen-entry transform used to turn
                     # this fixed overlay into a multi-thousand-pixel panel.
-                    old_findings=page.evaluate("""() => localStorage.getItem(
-                        'birmingham_case_v20_findings_jack')""")
                     page.evaluate("""() => {
                         const key='birmingham_case_smol_heath_v1_jack';
                         const state=JSON.parse(localStorage.getItem(key));

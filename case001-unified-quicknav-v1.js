@@ -27,6 +27,61 @@
  document.body.append(nav);
  const buttons=[...nav.querySelectorAll("button")];
  const buttonBy=(go)=>nav.querySelector('button[data-go="'+go+'"]');
+ // Display only: the existing story engine remains sole owner of gates.
+ const feedback=document.createElement("p");
+ feedback.id="case001DecisionFeedback";
+ feedback.className="case001-decision-feedback";
+ feedback.hidden=true;
+ feedback.tabIndex=-1;
+ feedback.setAttribute("role","status");
+ feedback.setAttribute("aria-live","polite");
+ choices.before(feedback);
+ const decisionButton=buttonBy("choices");
+ function markRead(){
+  decisionButton.dataset.newDecision="false";
+  decisionButton.setAttribute("aria-label","Перейти к решениям");
+ }
+ function clearDecisionFeedback(){
+  feedback.hidden=true;
+  feedback.textContent="";
+  markRead();
+ }
+ document.getElementById("caseTitle") &&
+  new MutationObserver(clearDecisionFeedback).observe(
+   document.getElementById("caseTitle"),{childList:true,characterData:true,subtree:true});
+ // The Case 001 engine handles this event without replaying the scene.
+ // Capture before its listener, then compare the updated DOM in a microtask.
+ document.addEventListener("birmingham:case-findings-changed",event=>{
+  if(game.hidden||!compact.matches)return;
+  const hero=window.BirminghamHero?.selectedId||"jack";
+  if(event.detail?.heroId!==hero)return;
+  let sameAttempt=false;
+  try{
+   const saved=JSON.parse(localStorage.getItem(
+    "birmingham_case_smol_heath_v1_"+hero)||"null");
+   sameAttempt=saved?.started===event.detail?.started;
+  }catch{}
+  if(!sameAttempt)return;
+  const before=[...choices.querySelectorAll(":scope > .case-choice")]
+   .map(button=>button.disabled);
+  queueMicrotask(()=>{
+   if(game.hidden)return;
+   const after=[...choices.querySelectorAll(":scope > .case-choice")];
+   if(before.length!==after.length)return;
+   const unlocked=after.filter((button,i)=>before[i]&&!button.disabled);
+   if(unlocked.length){
+    const count=unlocked.length;
+    feedback.textContent=count===1?
+     "НОВЫЙ ПУТЬ · Открыто решение: "+unlocked[0].textContent.trim():
+     "НОВЫЕ ПУТИ · Открыто решений: "+count+". Проверь доступные варианты.";
+    decisionButton.dataset.newDecision="true";
+    decisionButton.setAttribute("aria-label","Решения: открыты новые варианты");
+   }else{
+    feedback.textContent="Вывод сохранён на доске. Для новых решений могут потребоваться другие доказательства.";
+   }
+   feedback.hidden=false;
+  });
+ },true);
  buttonBy("evidence").setAttribute("aria-description","Найденные предметы и их описание");
  buttonBy("deduction").setAttribute("aria-description","Сопоставление найденных улик и выводы");
  // Real Case 001 modal capture handler only accepts button[data-tool]
@@ -89,6 +144,7 @@
  function visibility(){
   nav.hidden=game.hidden||!compact.matches||
    document.body.classList.contains("v34-board-open");
+  if(game.hidden)clearDecisionFeedback();
   scheduleActive();
  }
  function syncLayout(){
@@ -113,7 +169,11 @@
   if(!button)return;
   const go=button.dataset.go;
   if(go==="scene"){jump(scene);return}
-  if(go==="choices"){jump(choices);return}
+  if(go==="choices"){
+   jump(feedback.hidden?choices:feedback);
+   markRead();
+   return;
+  }
   if(go==="evidence"||go==="deduction"){
    if(go==="evidence"){unread=false;updateCount()}
    bridge.dataset.tool=go==="deduction"?"deduction":"evidence";

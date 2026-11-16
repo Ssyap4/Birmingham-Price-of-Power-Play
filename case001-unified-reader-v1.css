@@ -3,7 +3,7 @@
  * Presentation only; desktop/tablet widescreen is unchanged. */
 @media (orientation:portrait) and (max-width:700px){
  #caseGame .case-v18-middle{
-  box-sizing:border-box!important;gap:13px!important;
+  box-sizing:border-box!important;gap:11px!important;
  }
  #caseGame .case-dialogue:not([hidden]){
   box-sizing:border-box!important;display:grid!important;
@@ -56,11 +56,11 @@
   display:block!important;color:#e5bb82!important;
   font:800 .69rem/1.5 system-ui,sans-serif!important;
   letter-spacing:.115em!important;
-  margin:0 0 14px!important;padding:0 0 10px!important;
+  margin:0 0 11px!important;padding:0 0 8px!important;
   border-bottom:1px solid #765634!important;
  }
  #caseGame #caseText{
-  margin:0 0 23px!important;padding:0 2px!important;
+  margin:0 0 17px!important;padding:0 2px!important;
   font:400 clamp(1.055rem,4.4vw,1.15rem)/1.72 Georgia,serif!important;
   letter-spacing:0!important;color:#ead9c3!important;
   text-wrap:pretty!important;overflow-wrap:anywhere!important;
