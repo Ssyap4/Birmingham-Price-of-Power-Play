@@ -420,6 +420,12 @@ def run():
                         page.locator("#criminalScreen h1").inner_text()
                         == "Последний рейс"
                     )
+                    page.wait_for_function(
+                        """() => {
+                        const im = document.querySelector('.cr-frame img');
+                        return im && im.complete && im.naturalWidth === 720 && im.naturalHeight === 900;
+                    }"""
+                    )
                     assert page.locator(".cr-frame img").evaluate(
                         "(im)=>im.complete&&im.naturalWidth===720"
                     )
