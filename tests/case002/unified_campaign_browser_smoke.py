@@ -208,6 +208,27 @@ def run():
                         assert abs(dim["w"]/dim["h"]-dim["nw"]/dim["nh"])<.025
                         assert page.locator("#caseScene").bounding_box()["height"]>=320
                         assert page.locator("#caseScene .case001-read-scene").is_visible()
+                        # Unified Case 001 reader must match Case 002's
+                        # legible mobile dialogue, prose and numbered decisions.
+                        choices=page.locator("#caseChoices > .case-choice")
+                        assert choices.count()>=1
+                        choice=choices.first
+                        assert choice.evaluate(
+                            "el => getComputedStyle(el).display")=="grid"
+                        assert choice.evaluate(
+                            "el => parseFloat(getComputedStyle(el).fontSize)")>=15
+                        assert "counter(case001-decision" in choice.evaluate(
+                            "el => getComputedStyle(el,'::before').content")
+                        assert choice.bounding_box()["height"]>=48
+                        assert page.locator("#caseText").evaluate(
+                            "el => parseFloat(getComputedStyle(el).fontSize)")>=16
+                        assert page.locator(".case-paper").evaluate(
+                            "el => getComputedStyle(el).borderRadius")!="0px"
+                        dialogue=page.locator("#caseGame .case-dialogue")
+                        if dialogue.is_visible():
+                            assert dialogue.evaluate(
+                                "el => getComputedStyle(el).display")=="grid"
+                            assert page.locator("#caseSpeaker").inner_text()
                         assert not page.evaluate(
                             "() => document.documentElement.scrollWidth > window.innerWidth+1")
                     page.set_viewport_size({"width":390,"height":844})
