@@ -95,6 +95,7 @@ assert(mut("E10",s=>{s.flags.localIntermediary=true}).includes("Посредни
 assert(mut("F09",()=>{}).includes("отказаться от дальнейшей борьбы"));
 assert(mut("F09",()=>{}).includes("обещать кому-либо выезд из города пока было нельзя"),
  "A protected witness alone must not be called evacuated");
+assert(mut("F09",s=>{s.witnesses.ada="protected";s.flags.evacuationRoutePrepared=true}).includes("Пока они только под защитой"), "A prepared route is not a completed evacuation");
 assert(mut("F09",s=>{s.witnesses.ada="evacuated"}).includes("кого уже удалось вывезти"),
  "A recorded evacuation must remain visible without inventing other rescues");
 assert(!mut("F09",()=>{}).includes("Оставались трудные пути"),

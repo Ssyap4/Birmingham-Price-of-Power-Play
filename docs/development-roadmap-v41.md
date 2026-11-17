@@ -38,3 +38,6 @@
 - PR #8, V44 run 44141842904: структурная и художественная проверка PASS; старые browser jobs FAIL из-за ожидания удалённого пятиэлементного кабинета и landscape. 202 сценария ещё не подтверждены.
 - Устаревшие UI проверки заменены действующим portrait iPhone regression в PR (оба движка, 4 ширины WebKit). Старые тесты оставлены в репозитории для истории; сохранены 202 сценария, архивы, обучение, выходы и контроль арта. Добавлены пакетный экспорт, проверка ресурсов, архивов/движка №002 и криминальных поручений. Тесты пакета/маршрута приведены в соответствие V40 (нет быстрого перехода в №002).
 - Merge только после подтверждения релевантных тестов; сохранить прежний main как точку отката. Стабильную Safari V39 не менять; основной релиз публиковать осознанно. CI проверять по конкретному HEAD.
+
+- V45 follow-up: F09 preserves already evacuated witnesses, distinguishes prepared routes and no-evacuation. Restored heroine-specific F07 phrasing; added assertion for protected/not yet evacuated witness. Existing narrative variant script executed against actual engine in isolated JS with in-memory file and assert adapters. First V45 run 44142612820 failed before browser launch on F09 expectation; rerun needed.
+- Rollback branch backup/main-before-unified-v45 created from 3dbadc9cf0f60fd5f5fb209fba9c573e7be6c595; main unchanged.
