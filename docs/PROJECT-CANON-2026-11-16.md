@@ -84,3 +84,7 @@
 ## 17.11.2026 — Новый художественный кабинет V12 установлен автоматически
 
 В `feat/criminal-operations-polish-v3` установлен исходный WebP 720×900, 136048 байт (`assets/cabinet/cinema-home-art-v12.webp`, Git blob `743d61fa58035e45782cb1c3d33dcae5d458e116`). Убрана дублированная CSS-модель граммофона; дождь, свет и дым привязаны к фотографии. Музыка и все игровые маршруты сохранены. Детали: `docs/criminal-operations/V12-MENU-ART-CANDIDATE.md`. Мобильный CI и визуальную приёмку подтверждать только по факту, затем переходить к единой карте/архивам. `main`, `preview/unified-campaign-safari` не трогать.
+
+## 17.11.2026 — Финальная техническая приёмка V12
+
+Новый WebP кабинета (`assets/cabinet/cinema-home-art-v12.webp`) установлен и проверен. **Игровой SHA:** `dae037661b2eaf9c20e91cb071fdbcdf12ab12d6`. **CI [№43995137775](https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43995137775): SUCCESS** — Chromium и WebKit по 320/360/390/430 px, общая автономная сборка, навигация, награды и сохранения. WebKit-360 заголовок исправлен адресно; финальный мобильный снимок просмотрен. Оригинальные две музыкальные композиции и три OGG расследования сохранены. Следующий рабочий участок — V13, см. `docs/criminal-operations/V13-UNIFIED-NAVIGATION-AUDIT.md`. Ни `main`, ни Safari-preview не изменялись.
