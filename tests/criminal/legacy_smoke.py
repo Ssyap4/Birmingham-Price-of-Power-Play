@@ -85,12 +85,20 @@ def run():
                 second_rule=episode_material(page,"#caseBriefing .briefing-rule","--campaign-episode-rule")
                 assert second_rule["color"]=="rgb(23, 20, 17)",second_rule
                 tap(page, "#briefContinue")
+                assert page.locator("#heroGallery .hero-card").count()==5
+                assert page.locator('#heroGallery .hero-card[aria-pressed="true"]').count()==1
+                second_hero=episode_material(page,'#heroGallery .hero-card[aria-pressed="true"]','--campaign-work-active')
+                second_other=episode_material(page,'#heroGallery .hero-card[aria-pressed="false"]','--campaign-work-card')
+                assert second_hero["background"]!=second_other["background"]
+                page.locator("#heroGallery").screenshot(path=str(OUT / (name + "-v55-case002-hero-picker.png")))
                 tap(page, "#begin")
                 assert page.locator("#game").is_visible()
                 assert page.locator("#sceneId").inner_text().startswith("P01")
                 tap(page, 'button.choice[data-to="P02"]')
                 assert page.locator("#sceneId").inner_text().startswith("P02")
                 second_visual=reading_language(page,"#sceneText")
+                assert page.locator("#casePulse span").evaluate_all("""els=>els.length===3&&els.every(e=>{const s=getComputedStyle(e);return s.borderTopLeftRadius==='5px'&&s.fontVariantNumeric==='tabular-nums'&&s.color==='rgb(239, 221, 198)'})""")
+                assert page.locator("#caseTools").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                 second = page.evaluate(
                     "localStorage.getItem('birmingham_case002_draft_v3_jack')"
                 )
@@ -99,6 +107,13 @@ def run():
                 tap(page, '.map-pin[data-district="small-heath"]')
                 tap(page, "#launchFirstCase")
                 assert page.locator("#heroSelection").is_visible()
+                assert page.locator("#heroCards .hero-card").count()==5
+                assert page.locator('#heroCards .hero-card[aria-pressed="true"]').count()==1
+                first_hero=episode_material(page,'#heroCards .hero-card[aria-pressed="true"]','--campaign-work-active')
+                first_other=episode_material(page,'#heroCards .hero-card[aria-pressed="false"]','--campaign-work-card')
+                assert first_hero["background"]==second_hero["background"],(first_hero,second_hero)
+                assert first_other["background"]==second_other["background"],(first_other,second_other)
+                page.locator("#heroCards").screenshot(path=str(OUT / (name + "-v55-case001-hero-picker.png")))
                 tap(page, "#heroSelection .hero-begin")
                 assert page.locator("#case001Briefing").is_visible()
                 first_rule=episode_material(page,"#case001Briefing .case001-briefing-points section","--campaign-episode-rule")
@@ -127,6 +142,7 @@ def run():
                 }""")
                 tap(page, "#case001QuickNav [data-go='evidence']")
                 assert page.locator(".v33-shade").is_visible()
+                assert page.locator(".v33-window").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                 tap(page, '.v33-tile[data-id="invoice"]')
                 assert "Совместимых улик: 1" in page.locator(".v33-selection-note").inner_text()
                 assert page.locator('.v33-tile[data-id="invoice"]').get_attribute("aria-pressed")=="true"

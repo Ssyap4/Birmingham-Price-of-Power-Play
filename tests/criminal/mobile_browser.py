@@ -288,8 +288,12 @@ def run():
                         bounds(page)
                         touch(page, '[data-action="choices"]')
                         assert page.locator("#crDecisionHeading").evaluate("e=>document.activeElement===e")
+                        assert page.locator(".cr-hero").evaluate("""e=>{const s=getComputedStyle(e);return s.borderTopLeftRadius==='7px'&&s.getPropertyValue('--campaign-work-sheet').trim().startsWith('linear-gradient(')}""")
+                        assert page.locator(".cr-hud > *").evaluate_all("""els=>els.length>0&&els.every(e=>{const s=getComputedStyle(e);return s.borderTopLeftRadius==='5px'&&s.fontVariantNumeric==='tabular-nums'&&e.scrollWidth<=e.clientWidth+1})""")
+                        assert page.locator(".cr-hp-track").get_attribute("aria-valuenow")==str(saved["hp"])
                         touch(page, ".cr-inventory summary")
                         assert page.locator(".cr-inventory[open]").count() == 1
+                        assert page.locator(".cr-inventory").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                         assert page.locator(".cr-equipment-grid").evaluate("e=>getComputedStyle(e).maxHeight")== "none"
                         assert page.locator(".cr-gear-illustration").count() >= 2
                         page.wait_for_function("() => [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].every(i=>i.complete&&i.naturalWidth===96)")

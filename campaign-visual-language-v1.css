@@ -259,3 +259,135 @@
     border-radius:var(--campaign-episode-radius);
   }
 }
+
+
+/* V55 — character identity and working dossier, not identical mechanics.
+   Keep source artwork, existing card geometry, selected/custody/proven
+   states, warning colours, risk values and the native inventory scroll. */
+@media (orientation:portrait) and (max-width:700px) {
+  #heroSelection, #launch, #caseGame, #game, #criminalScreen {
+    --campaign-work-radius: 7px;
+    --campaign-work-card: linear-gradient(145deg,#38291e,#1c1712 85%);
+    --campaign-work-active: linear-gradient(135deg,#58432b,#261b13);
+    --campaign-work-sheet: linear-gradient(145deg,#2d2118,#1a1510 68%,#15120f);
+    --campaign-work-edge: #947044;
+    --campaign-work-ink: #efddc6;
+    --campaign-work-caption: #d8b995;
+  }
+  /* Same dossier cover and selection signal, without changing the two
+     different character pickers or turning fixed criminal heroes into picks. */
+  #heroSelection .hero-card, #launch .hero-card {
+    border-radius:var(--campaign-work-radius) !important;
+    background:var(--campaign-work-card) !important;
+    min-width:0;
+  }
+  #heroSelection .hero-card[aria-pressed="true"],
+  #launch .hero-card[aria-pressed="true"] {
+    background:var(--campaign-work-active) !important;
+    border-color:#edbd73 !important;
+    box-shadow:0 0 0 1px #edbd73, inset 0 1px #f5d6a52b, 0 5px 15px #0008 !important;
+  }
+  #heroSelection .hero-card img, #launch .hero-card img,
+  #criminalScreen .cr-hero img, #game #heroPortrait {
+    border-radius:5px !important;
+    border-color:#a58152 !important;
+  }
+  #heroSelection .hero-card strong, #launch .hero-card > span {
+    color:var(--campaign-work-ink);
+    overflow-wrap:anywhere;
+  }
+  #heroSelection .hero-details, #launch .hero-selection-status,
+  #criminalScreen .cr-hero {
+    background:var(--campaign-work-sheet) !important;
+    border:1px solid var(--campaign-work-edge) !important;
+    border-radius:var(--campaign-work-radius) !important;
+  }
+  #launch .hero-selection-status {
+    border-left:3px solid #cda16a !important;
+    overflow-wrap:anywhere;
+  }
+  #criminalScreen .cr-hero {
+    padding:10px;
+    min-width:0;
+  }
+  #criminalScreen .cr-hero img {flex:none;}
+  #criminalScreen .cr-hero div {min-width:0;overflow-wrap:anywhere;}
+  #criminalScreen .cr-hero b {
+    color:var(--campaign-work-ink);
+    font:600 1.06rem/1.35 Georgia,serif;
+  }
+  #criminalScreen .cr-hero small {
+    margin-top:4px;
+    color:var(--campaign-work-caption);
+    font:500 .73rem/1.45 system-ui,sans-serif;
+  }
+  /* Readable live indicators. The evidence pulse is not a health bar. */
+  #game .case-pulse span, #criminalScreen .cr-hud > * {
+    border:1px solid #947044;
+    border-radius:5px;
+    background:#251d15;
+    color:var(--campaign-work-ink);
+    padding:7px 9px;
+    font:650 .75rem/1.45 system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    min-width:0;
+    max-width:100%;
+  }
+  #criminalScreen .cr-hud > .cr-wounded {
+    color:#ffb3a1;
+    border-color:#cb836e;
+    background:#36201c;
+  }
+  #criminalScreen .cr-hp-track {
+    height:9px;
+    border:1px solid #796040;
+    border-radius:999px;
+  }
+  /* Read-only materials: preserve meaningful state markers in both
+     investigation boards (including the parchment tiles of Case001). */
+  #game #caseTools, #criminalScreen .cr-inventory, #criminalScreen .cr-journal {
+    border-color:var(--campaign-work-edge) !important;
+    border-radius:var(--campaign-work-radius) !important;
+    background:var(--campaign-work-sheet) !important;
+  }
+  #caseGame .v33-window, #caseGame #caseHealthStatus {
+    border-radius:var(--campaign-work-radius) !important;
+  }
+  #game .tool-tab {
+    min-height:54px;
+    overflow-wrap:anywhere;
+  }
+  #game .evidence-card, #game .deduction-card {
+    border-radius:var(--campaign-work-radius);
+  }
+  #game .evidence-card:not([data-holder="workers"]):not(.is-focused),
+  #game .deduction-card, #criminalScreen .cr-equipment-item {
+    background:var(--campaign-work-card);
+  }
+  #criminalScreen .cr-inventory > summary, #criminalScreen .cr-journal > summary {
+    padding-block:14px;
+    line-height:1.5;
+    color:var(--campaign-work-ink);
+  }
+  /* Consequence panels retain their actual source, delta labels and colours.
+     A nested equipment label is text, not another resource chip. */
+  #criminalScreen .cr-consequence {
+    border-color:var(--campaign-work-edge);
+    border-radius:var(--campaign-work-radius);
+    background:var(--campaign-work-sheet);
+  }
+  #criminalScreen .cr-resource-changes .cr-resource-item {
+    background:var(--campaign-work-card);
+    border-color:var(--campaign-work-edge);
+    border-radius:5px;
+  }
+  #criminalScreen .cr-resource-changes .cr-resource-item > span {
+    border:0;
+    background:none;
+    padding:0;
+    min-width:0;
+    color:var(--campaign-work-ink);
+  }
+}

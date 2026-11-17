@@ -75,3 +75,9 @@
 
 ## V54 — единый ритм эпизода: инструктажи, подтверждённые открытия, финалы
 - V53 44158754708 SUCCESS (mobile five combinations). V54 only shared portrait CSS and addressed browser assertions. Standardized briefing rule cards/primary actions, persistent verified receipt materials and final report frames across three modes. Preserves ending-specific moods, sequence, local saves, awards, timers, and existing navigation. Criminal brief has separate visual treatment for its own prose; no extra overlay. Browser checks compare first/second actual briefing and earned receipts, criminal earned toast and persistent ending receipt, with existing no-repeat and save tests retained. Main V50 and Safari V39 unchanged. V54 QA pending, visual and physical Safari acceptance pending.
+
+
+## V55 — выбор героя, живые показатели и рабочее досье
+- V54 mobile 44159834336 and criminal/unified 44159834678: SUCCESS, both completed. Verified stable main cba573d9865ef25b0584d8f9b7d6fb392c2aeecc and V54 branch 60bc1834051957a1fd8addf4f59f43b976a5a132 before editing.
+- V55 extends the existing portrait-only visual layer: common selected/unselected hero covers and portrait frames; fixed criminal hero identity retains its own semantics; numeric status readability, explicit preserved wounded distinction; working dossier/inventory/journal materials; consistent consequence sheet and removes nested resource-chip decoration. No changed engine, hero choice logic, evidence ownership, board matching, health values, navigation, art or saves.
+- Browser assertions use the two actual hero pickers and compare computed selected/unselected materials, check case pulse, board and criminal inventory/hud/HP on the existing matrix, retain existing touch/save/board tests; additional hero-picker screenshots. Pending remote QA and visual inspection. Case001 portrait audit still not artist-reviewed. Main V50 and Safari V39 unchanged.
