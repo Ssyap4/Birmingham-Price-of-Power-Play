@@ -31,6 +31,8 @@ jobs:
         run: |
           node --test tests/iphone-v16-static.test.js
           node --check audio-v1.js
+          node --test tests/audio-v27-playlist.test.js
+          sha256sum --check docs/criminal-operations/soundtrack-v27.sha256
           node --check profile-page.js
           node --check campaign-hub-v1.js
           node --check campaign-bridge-v13.js

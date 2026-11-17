@@ -68,18 +68,15 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
  assert.match(read("player-overview-cinema-v1.css"),/#profile \.player-campaign-overview/);
  assert.match(read("cinema-home-v1.js"),/MutationObserver/);
 });
-test("existing two menu compositions remain in one audio player and settings persist",()=>{
- const js=read("audio-v1.js"),h=read("index.html");
- assert.match(js,/menu:\['night-on-the-docks\.mp3','menu-original\.ogg'\]/);
- assert.match(js,/case:\['case-fog\.ogg','case-ledger\.ogg','case-shadows\.ogg'\]/);
- assert.match(js,/bh_music_enabled/);
- assert.match(js,/bh_effects_enabled/);
- assert.match(js,/id="bhMenuTrack"/);
- assert.match(js,/trackBtn\.addEventListener/);
- assert.match(js,/p\.src=base\+playlists\[mode\]\[index\]/);
- assert.match(h,/audio-v1\.js/);assert.match(h,/audio-v1\.css/);
- for(const f of ["night-on-the-docks.mp3","menu-original.ogg","case-fog.ogg","case-ledger.ogg","case-shadows.ogg"])
-  assert.ok(fs.statSync(path.join(root,"assets/audio",f)).size>1000,f);
+test("approved 2+2+3 local tracks, existing toggles and both real entries",()=>{
+ const js=read("audio-v1.js"),h=read("index.html"),core=require("../../src/audio/playlist-v27.js");
+ assert.deepEqual(core.groups,{menu:["covert-affair","just-as-soon"],detective:["spy-glass","moil"],criminal:["hard-boiled","dances-and-dames","deadly-roulette"]});
+ for(const key of ["bh_music_enabled","bh_effects_enabled","id=\"bhMenuTrack\"","fadeMs=3400","core.fadeGains"])assert.ok(js.includes(key));
+ assert.equal((js.match(/new Audio\(\)/g)||[]).length,2);
+ assert.match(h,/audio-v1\.js/);assert.match(h,/audio-v1\.css/);assert.match(h,/src\/audio\/playlist-v27\.js/);
+ assert.ok(read("preview/case002-prototype/index.html").includes('data-soundtrack="detective"'));
+ for(const id of Object.values(core.groups).flat())assert.ok(fs.statSync(path.join(root,"assets/audio/soundtrack",id+".mp3")).size>1000,id);
+ for(const stale of ["night-on-the-docks.mp3","menu-original.ogg","case-fog.ogg","case-ledger.ogg","case-shadows.ogg"])assert.ok(!fs.existsSync(path.join(root,"assets/audio",stale)),stale);
 });
 
 test("V23 criminal menu uses independent verified artwork, never the CR01 scene",()=>{

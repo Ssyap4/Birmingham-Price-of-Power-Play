@@ -7,3 +7,14 @@
 .bh-audio-controls #bhMenuTrack{display:none}
 .bh-audio-controls button{min-height:44px;touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){.bh-audio-controls button{transition:none!important}}
+
+/* V30: no floating audio controls across the separate Case 002 layout. */
+#case002AudioDock{margin:10px 0 12px;padding:8px;border:1px solid #8e7047;border-radius:4px;background:#171411}
+#case002AudioDock .bh-audio-controls{position:static;display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
+#case002AudioDock .bh-audio-controls button{min-height:44px;flex:1 1 115px}
+.bh-music-credits{margin:14px 0 8px;padding:8px 10px;border:1px solid #735739;border-radius:4px;color:#dbc6ab;background:#181410;font:12px/1.5 system-ui,sans-serif}
+.bh-music-credits summary{min-height:44px;display:flex;align-items:center;cursor:pointer;touch-action:manipulation;color:#e9c38b;font-weight:600}
+.bh-music-credits a{color:#edc995;text-decoration:underline}
+.bh-music-credits p{margin:7px 0;overflow-wrap:anywhere}
+#case002AudioDock .bh-music-credits{margin:5px 0 0;border:0;padding:0 5px}
+#case002AudioDock .bh-music-credits:not([open]) summary{min-height:31px;justify-content:center;font-size:11px}

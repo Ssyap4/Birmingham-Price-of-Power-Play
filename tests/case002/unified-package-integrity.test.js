@@ -25,7 +25,7 @@ for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
  "preview/case002-prototype/index.html","preview/case002-prototype/style.css",
  "preview/case002-prototype/app.js","src/case002/engine-v3.js",
  "src/case002/achievements-v1.js","assets/districts/digbeth.webp",
- "assets/districts/small-heath.webp","assets/audio/night-on-the-docks.mp3"])
+ "assets/districts/small-heath.webp","assets/audio/soundtrack/covert-affair.mp3","assets/audio/soundtrack/just-as-soon.mp3","assets/audio/soundtrack/spy-glass.mp3","assets/audio/soundtrack/moil.mp3","assets/audio/soundtrack/hard-boiled.mp3","assets/audio/soundtrack/dances-and-dames.mp3","assets/audio/soundtrack/deadly-roulette.mp3","src/audio/playlist-v27.js"])
  exists(name);
 const shell=fs.readFileSync(entry("index.html"),"utf8"),
  map=fs.readFileSync(entry("case002-map-entry-v1.js"),"utf8"),

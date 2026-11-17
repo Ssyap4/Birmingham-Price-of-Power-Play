@@ -51,6 +51,8 @@ for(const id of ["jack","finn","eleanor","victor","samuel"])
  copy("assets/heroes/"+id+".webp");
 for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
+for(const name of ["audio-v1.js","audio-v1.css","src/audio/playlist-v27.js","docs/criminal-operations/MUSIC-CREDITS-v30.txt"])copy(name);
+for(const id of require("../src/audio/playlist-v27.js").groups.detective)copy("assets/audio/soundtrack/"+id+".mp3");
 for(const name of ["index.html","app.js","style.css"])
  copy("preview/case002-prototype/"+name);
 // A successful copy count does not guarantee that Safari can load the entry.

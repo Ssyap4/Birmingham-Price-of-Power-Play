@@ -98,6 +98,9 @@ for(const name of fs.readdirSync(ROOT)){
 // All historic Case 001 visual families remain available, including
 // dynamically constructed scene/image/audio paths. Never ship drafts.
 recurseAssets("assets");
+copy("src/audio/playlist-v27.js");
+copy("docs/criminal-operations/MUSIC-CREDITS-v30.txt");
+for(const id of Object.values(require("../src/audio/playlist-v27.js").groups).flat()){if(!copied.has("assets/audio/soundtrack/"+id+".mp3"))throw Error("Missing approved soundtrack "+id)}
 // Remove any Case 002 directory copied by the general enumerator if present.
 // The recursive call is intentionally excluded for that directory below.
 if(approved.schemaVersion!==1||approved.sceneImages.length!==102||

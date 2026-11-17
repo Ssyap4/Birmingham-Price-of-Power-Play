@@ -25,12 +25,13 @@ test("V16 atmosphere uses drops instead of CSS stripes, motion has reduced-motio
  assert.match(css,/mix-blend-mode:screen/);
  assert.match(read("cinema-home-v1.css"),/cinema-home-art-v12\.webp/);
 });
-test("V16 volume lowered while keeping both original menu songs and one audio engine",()=>{
+test("V30 preserves quiet playback, two players and isolated playlists",()=>{
  const audio=read("audio-v1.js");
  assert.match(audio,/const volume=\.075/);
  assert.doesNotMatch(audio,/const volume=\.19/);
- for(const file of ["night-on-the-docks.mp3","menu-original.ogg","case-fog.ogg","case-ledger.ogg","case-shadows.ogg"])
-  assert.ok(audio.includes(file));
+ const core=require("../src/audio/playlist-v27.js");
+ assert.deepEqual(Object.values(core.groups).map(g=>g.length),[2,2,3]);
+ assert.ok(audio.includes("core.fadeGains")&&audio.includes("fadeMs=3400"));
  assert.equal((audio.match(/new Audio\(\)/g)||[]).length,2);
 });
 test("V16 archive tabs update active destination and profile opens only the requested screen",()=>{
