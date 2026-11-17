@@ -117,6 +117,15 @@ def run():
                     # New home is independent of the historic illustrated cabinet.
                     assert page.locator("#home.cinema-home").count() == 1
                     assert page.locator("#home .cinema-hero").is_visible()
+                    assert page.evaluate("""() => {
+                        const h=document.querySelector('#home .cinema-crest h1');
+                        if(!h||!h.firstChild)return false;
+                        const range=document.createRange();
+                        range.selectNodeContents(h.firstChild);
+                        const bounds=range.getBoundingClientRect();
+                        return bounds.width>0 && bounds.left>=-1 && bounds.right<=innerWidth+1;
+                    }"""), "320px cinematic heading spills outside viewport"
+
                     assert "assets/cabinet/cinema-home-art-v12.webp" in page.locator("#home .cinema-art").evaluate(
                         "e => getComputedStyle(e).backgroundImage"
                     )
