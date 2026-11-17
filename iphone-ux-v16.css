@@ -366,30 +366,30 @@ body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .
 /* V29: compact internal header and readable entry points.
    All existing routes/state/data-progress values remain owned by their engines. */
 @media(orientation:portrait) and (max-width:700px){
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top{
   display:flex!important;align-items:center!important;gap:8px!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand{
   flex:1 1 auto!important;min-width:0!important;gap:7px!important;max-width:none!important;overflow:visible!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand>div{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand>div{
   display:block!important;min-width:0!important;overflow:visible!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand small{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand small{
   display:block!important;font:600 8px/1.35 system-ui,sans-serif!important;letter-spacing:.04em!important;white-space:normal!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand strong{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand strong{
   display:block!important;font:700 clamp(12px,3.5vw,17px)/1.15 Georgia,serif!important;
   letter-spacing:.02em!important;white-space:normal!important;overflow-wrap:normal!important;
   text-overflow:clip!important;color:#f3d8af!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand strong i{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand strong i{
   display:block!important;font:600 9px/1.35 Georgia,serif!important;letter-spacing:.08em!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .top-actions{
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .top-actions{
   flex:0 0 auto!important;min-width:0!important;gap:5px!important;align-items:center!important;
  }
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top :is(#profileBtn,#homeBtn){
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top :is(#profileBtn,#homeBtn){
   box-sizing:border-box!important;min-width:0!important;min-height:44px!important;max-width:none!important;
   width:auto!important;padding:8px 9px!important;flex:0 0 auto!important;white-space:nowrap!important;
   font:600 11px/1.25 system-ui,sans-serif!important;letter-spacing:0!important;
@@ -432,7 +432,7 @@ body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .
  #districts :is(#launchFirstCase,#launchSecondCase):focus-visible{outline:3px solid #f4cd91;outline-offset:2px}
 }
 @media(orientation:portrait) and (max-width:430px){
- body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand-mark{display:none!important}
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand-mark{display:none!important}
 }
 
 /* V30: criminal briefing uses the same primary/secondary reading rhythm. */
@@ -444,4 +444,38 @@ body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .
  #criminalScreen .cr-hero small{font:400 12px/1.45 system-ui,sans-serif;color:#d9c0a0}
  #criminalScreen .cr-actions button{min-height:48px}
  #criminalScreen .cr-actions .cr-primary{min-height:54px;border-color:#d9ab6e;background:linear-gradient(145deg,#654326,#302115)}
+}
+
+/* V39: browser review found a translucent first frame in the trial results
+   and legacy pseudo-art extending past its parent. Use the same immediate
+   portrait screen presentation as the archive. The approved art is retained. */
+@media(orientation:portrait) and (max-width:700px){
+ :is(#choose,#play,#result).screen:not([hidden]){
+  animation:none!important;opacity:1!important;visibility:visible!important;
+  transform:none!important;filter:none!important;
+  min-width:0!important;max-width:100%!important;
+ }
+ #choose.screen::before{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  height:clamp(100px,35vw,160px)!important;margin:0 0 16px!important;
+  border:1px solid #8d704e;border-radius:4px;
+ }
+ #play.screen::before{content:none!important;display:none!important}
+ #play .fate-banner{
+  min-height:0!important;padding:12px 13px!important;
+  background:linear-gradient(140deg,#35271b,#1c1713)!important;
+ }
+ #play .fate-banner h2{font:700 clamp(19px,5.4vw,25px)/1.18 Georgia,serif!important;margin:6px 0 5px!important}
+ #play .fate-banner p{font:13px/1.45 system-ui,sans-serif!important}
+ #play .quiz-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:7px!important}
+ #play #modeName{min-width:0;overflow-wrap:normal;letter-spacing:.04em}
+ #play #questionNumber{white-space:nowrap;letter-spacing:.035em}
+ #choose #difficultyList .mode:hover:not(.upcoming),#play #answers .answer:hover:not(:disabled){transform:none!important}
+ #result .fate-result-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:16px 0}
+ #result .fate-result-stat{padding:10px 3px!important;min-width:0!important;max-width:100%;overflow-wrap:anywhere}
+ #result .fate-result-stat b{font:700 clamp(12px,3.9vw,19px)/1.3 system-ui,sans-serif!important}
+ #result .fate-result-stat small{font:600 9px/1.4 system-ui,sans-serif!important;letter-spacing:0}
+ #result #retryBtn,#result #resultHomeBtn{box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin:8px 0!important;padding:12px 8px!important;white-space:normal;overflow-wrap:anywhere}
+ #result .fate-result-seal{font-size:42px;margin-bottom:7px}
+ #result #resultScore{font-size:clamp(40px,14vw,62px)!important}
 }

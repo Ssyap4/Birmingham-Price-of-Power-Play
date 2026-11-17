@@ -113,3 +113,11 @@
  #play #answers .answer.correct{border-color:#a6b986!important;background:linear-gradient(125deg,#34432d,#1a241c)!important;color:#e3efcf!important}
  #play #answers .answer.wrong{border-color:#c38a76!important;background:linear-gradient(125deg,#572f25,#291b18)!important;color:#f7d1bc!important}
 }
+
+/* V39: the portrait question picture is a frame, never a stretched image. */
+@media(orientation:portrait) and (max-width:700px){
+ #play .question-image{background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;background-color:#151411!important}
+ #play .question-card{min-width:0!important}
+ #play .question-card .quiz-corner{pointer-events:none}
+ #play .quiz-actions{min-width:0!important}
+}

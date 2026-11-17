@@ -15,6 +15,18 @@ def tap(page,sel):
  el.scroll_into_view_if_needed()
  el.tap(timeout=15000)
 
+def trial_bounds(page,screen,width):
+ page.wait_for_function("""({screen,width})=>{
+  const el=document.getElementById(screen),r=el.getBoundingClientRect(),head=document.querySelector('.shell>.top'),h=head.getBoundingClientRect(),style=getComputedStyle(el);
+  return style.opacity==='1'&&r.width>0&&r.left>=-1&&r.right<=width+1&&h.left>=-1&&h.right<=width+1&&document.documentElement.scrollWidth<=width+1&&innerWidth<=width+1;
+ }""",arg={"screen":screen,"width":width},timeout=5000)
+ assert page.locator("#"+screen).evaluate("e=>getComputedStyle(e).animationName")== "none"
+ for selector in ["#profileBtn","#homeBtn"]:
+  b=page.locator(selector)
+  if b.is_visible():
+   r=b.bounding_box()
+   assert r["x"]>=-1 and r["x"]+r["width"]<=width+1 and r["height"]>=44, (screen,width,selector,r)
+
 def current(page,screen):
  active=page.locator(f"#{screen} .campaign-tabs [data-open-section='{screen}']")
  assert active.count()==1 and active.get_attribute("aria-current")=="true",(screen,active.count())
@@ -373,12 +385,16 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,"#trialMode [data-trial-mode='timed']")
     assert page.locator("#trialMode [data-trial-mode='timed']").get_attribute("aria-pressed")=="true"
     assert "15 секунд" in page.locator("#chooseDescription").inner_text()
-    page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trials-selector.png"),full_page=True)
+    trial_bounds(page,"choose",width)
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v39-trials-selector.png"),full_page=True)
     tap(page,"#difficultyList button.mode")
     page.locator("#play").wait_for(state="visible")
     assert page.locator("#clockWrap").is_visible()
     page.wait_for_function("Number(document.getElementById('clock').textContent)<15")
     page.wait_for_function("document.getElementById('questionImage').dataset.imageStatus==='ready'")
+    trial_bounds(page,"play",width)
+    assert page.locator("#answers .answer:visible").count()==4
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v39-trial-full-question.png"),full_page=True)
     # Simulate the mobile lifecycle without relying on the test-host tab focus.
     page.evaluate("""() => {Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))}""")
     paused=page.locator("#clock").inner_text()
@@ -412,7 +428,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.locator("#resultTitle").inner_text()=="ПОПЫТКА ЗАВЕРШЕНА"
     assert page.locator("#result .trial-audio-dock .bh-audio-controls").count()==1
     assert page.locator("#trialSaveStatus").get_attribute("data-status")=="ready"
-    page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trial-result.png"),full_page=True)
+    trial_bounds(page,"result",width)
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v39-trial-result.png"),full_page=True)
     tap(page,"#retryBtn")
     assert page.locator("#trialMode [data-trial-mode='timed']").get_attribute("aria-pressed")=="true"
     tap(page,"#trialMode [data-trial-mode='classic']")
@@ -442,6 +459,27 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.locator("#campaignTrialsHistory .trial-history-row").count()>=1
     tap(page,"#homeBtn")
     assert page.locator(".bh-audio-controls").count()==1
+   if width!=390:
+    # Compact portrait layouts: exercise actual selector and active question,
+    # not only the final home viewport.
+    page.goto(url,wait_until="domcontentloaded")
+    tap(page,".cabinet-entry-quiz")
+    trial_bounds(page,"choose",width)
+    tap(page,"#difficultyList button.mode")
+    trial_bounds(page,"play",width)
+    page.wait_for_function("document.getElementById('questionImage').dataset.imageStatus==='ready'")
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v39-trial-full-question.png"),full_page=True)
+    for _ in range(3):
+     wrong=page.evaluate("""() => {
+       const q=Object.values(window.BIRMINGHAM_QUESTIONS).flat().find(x=>x.question===document.getElementById('questionText').textContent);
+       return [...document.querySelectorAll('#answers .answer')].findIndex(b=>b.textContent!==q.correct);
+     }""")
+     assert wrong>=0
+     page.locator("#answers .answer").nth(wrong).tap()
+     tap(page,"#nextBtn")
+    trial_bounds(page,"result",width)
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v39-trial-result.png"),full_page=True)
+    tap(page,"#resultHomeBtn")
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
    report.append({"engine":engine,"width":width,"status":"PASS",

@@ -141,3 +141,10 @@ test("V28 atlas heading and archive visual refinements preserve routes",()=>{
  assert.ok(archive.includes("СВОДКА РАССЛЕДОВАНИЙ"));
  assert.ok(archive.includes('back.href="#district-digbeth"'));
 });
+
+test("V39 uses the same compact header and directly readable portrait trial screens",()=>{
+ const css=read("iphone-ux-v16.css");
+ assert.ok(css.includes(":is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result)"));
+ assert.match(css,/:is\(#choose,#play,#result\)\.screen:not\(\[hidden\]\)\{\s*animation:none!important;opacity:1!important/);
+ assert.ok(css.includes("#play.screen::before{content:none!important;display:none!important}"));
+});
