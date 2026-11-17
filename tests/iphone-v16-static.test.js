@@ -218,3 +218,50 @@ test("V42 contextual location follows Evelyn and introduces Reed when not yet kn
  assert.ok(source.includes("Смолл-Хит · дом соседки · кухня"));
  assert.ok(source.includes("В участке тебя направляют к сержанту Риду"));
 });
+
+
+test("V43 Case002 prose follows actual transitions, pending decisions, and saved evacuation",()=>{
+ const data=require("../src/case002/browser-data-v3.js"),engine=require("../src/case002/engine-v3.js"),narr=require("../src/case002/story-variants-v4.js");
+ const suite=function(data,engine,narr,check){
+ let transitions=0,cases=0;
+ const heroes=data.contract.heroes;
+ for(const hero of heroes){
+  const store=new Map(),storage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
+  const create=()=>engine.createEngine({graph:data.graph,contract:data.contract,hero,store:storage,now:()=>1000,attemptId:"audit-"+hero});
+  let e=create();
+  const choice=(to,action="continue")=>{e.choose(to,action);transitions++;};
+  const go=(...ids)=>ids.forEach(id=>choice(id));const raw=()=>narr.render(data,e.view());
+  const ok=(v,msg)=>check(v,hero+": "+msg);
+  const start=(manifest)=>{e.reset("audit-"+hero+"-"+(++cases));go("P02","A01","A02","A04","A06","A08","A10","B01");
+    go("B05","B06","B07","B01");ok(raw().includes("Проверенные направления: канал"),"repeat B01");
+    if(manifest)go("B02","B03","B04","B01");
+    go("B08","B09","B10","B11","B12","B13","B14","C01","C02","C03","C04");
+    if(!manifest)ok(raw().includes("На возвращение")&&!raw().includes("Принесите"),"impossible return instruction");else ok(raw().includes("Да."),"confession with manifest");
+    go("C05","C06","C07","C08","C09","C10","D01");
+  };
+  const finale=(prepare)=>{go("D11","E01","E04");choice("E05","safeAccess");choice("E08","clearWorkers");
+    go("E09","E10","E11");choice("F01",prepare?"prepareEvacuation":"continue");go("F02","F03","F04","F05","F06");choice("F07","acknowledgeDanger");
+    ok(!raw().includes("кого удалось вывести"),"premature evacuation");
+    go("F08","F09");
+    if(prepare){ok(raw().includes("Подготовлен маршрут вывоза")&&raw().includes("Пока они только под защитой"),"evacuation anticipated not completed");e=create();e.load();ok(raw().includes("Подготовлен маршрут вывоза"),"evacuation resume");}
+    else ok(raw().includes("подготовленного вывоза"),"no evacuation preparation");
+    go("Z02");ok(e.snapshot().witnesses.ada===(prepare?"evacuated":"protected"),"end witness state");ok(raw().includes(prepare?"уехали":"Никто"),"end prose");
+  };
+  start(false);go("D02","D03");choice("D10","hideAda");go("D01","D04","D05");choice("D06","extractTommy");
+  if(hero==="victor"){go("HV02");ok(raw().includes("уже выведен"),"Tommy already released");ok(!e.availableChoices().find(c=>c.action==="verifyTommyGuarantee").enabled,"second guarantee blocked");go("D10");}
+  else go("D10");
+  finale(true);
+  start(true);go("D02","D03");choice("D10","hideAda");
+  finale(false);
+ }
+ // Specialist decisions must be legible prior to commitment.
+ for(const hero of ["finn","samuel","eleanor","victor"]){
+   for(const [id,expected] of Object.entries({finn:["HF03","всё ещё в сейфе"],samuel:["HS03","ещё предстоит"],eleanor:["HE03","не закончена"],victor:["HV02","не получено"]}).filter(([k])=>k===hero).map(([,v])=>v).map(([a,b])=>[a,b])){
+     const node=data.graph.nodes.find(n=>n.id===id);const state={hero,flags:{},evidence:[],witnesses:{ada:"missing",tommy:"detained",mercer:"located"}};
+     check(narr.render(data,{scene:node,state,facts:{}}).includes(expected),hero+" prior to choice "+id);
+   }
+ }
+ return {transitions,cases};
+};
+ suite(data,engine,narr,assert.ok);
+});
