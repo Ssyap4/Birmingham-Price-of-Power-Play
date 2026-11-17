@@ -1,0 +1,52 @@
+name: V16 iPhone scroll, atmosphere and archive route QA
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - iphone-ux-v16.css
+      - tests/iphone-v16-static.test.js
+      - tests/iphone-v16-mobile.py
+      - .github/workflows/iphone-v16-ui.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: iphone-v16-ui
+  cancel-in-progress: true
+jobs:
+  iphone-v16:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check static contracts and syntax
+        run: |
+          node --test tests/iphone-v16-static.test.js
+          node --check audio-v1.js
+          node --check profile-page.js
+          node --check campaign-hub-v1.js
+          node --check campaign-bridge-v13.js
+          python -m py_compile tests/iphone-v16-mobile.py
+      - name: Install only portrait browser runtimes
+        run: |
+          python -m pip install 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Safari/WebKit and Chromium scroll, motion and archive links
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python tests/iphone-v16-mobile.py
+      - name: Save screenshots and compact report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iphone-v16-mobile-proof
+          path: work/iphone-v16/
+          retention-days: 14
