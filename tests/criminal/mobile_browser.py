@@ -117,9 +117,20 @@ def run():
                     # New home is independent of the historic illustrated cabinet.
                     assert page.locator("#home.cinema-home").count() == 1
                     assert page.locator("#home .cinema-hero").is_visible()
+                    assert "assets/cabinet/cinema-home-art-v12.webp" in page.locator("#home .cinema-art").evaluate(
+                        "e => getComputedStyle(e).backgroundImage"
+                    )
+                    assert page.evaluate("""async () => {
+                        const img=new Image();
+                        img.src='assets/cabinet/cinema-home-art-v12.webp';
+                        try {await img.decode();}catch{return false;}
+                        return img.naturalWidth===720 && img.naturalHeight===900;
+                    }"""), "V12 cinematic artwork failed to decode"
+
                     assert page.locator("#home .cinema-rain").count() == 1
                     assert page.locator("#home .cinema-smoke").count() == 2
-                    assert page.locator("#home .cinema-record").count() == 1
+                    assert page.locator("#home .cinema-vinyl-glint").count() == 1
+                    assert page.locator("#home .cinema-gramophone").count() == 0
                     assert page.locator("#home .cabinet-menu > button").count() == 6
                     assert page.locator("#districtsCard").get_attribute("aria-label") == "Детективные дела"
                     assert page.locator("#criminalEntry").get_attribute("aria-label") == "Работа для своих"
