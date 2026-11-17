@@ -22,7 +22,7 @@
   if(!game||game.hidden)return;
   const target=game.querySelector(".case-dialogue:not([hidden])")||
    game.querySelector(".case-paper");
-  target?.scrollIntoView({block:"start",behavior:"smooth"});
+  target?.scrollIntoView({block:"start",behavior:"instant"});
  });
  heading?.append(readButton);
  let current="";
@@ -34,8 +34,9 @@
   photo.hidden=true;
   stage.classList.remove("case001-art-fallback");
   if(!url){stage.classList.add("case001-art-fallback");photo.removeAttribute("src");return;}
-  photo.onload=()=>{if(current===url)photo.hidden=false;};
-  photo.onerror=()=>{if(current===url)stage.classList.add("case001-art-fallback");};
+  const matches=()=>current===url&&photo.getAttribute("src")===url;
+  photo.onload=()=>{if(matches()&&photo.naturalWidth>0)photo.hidden=false;};
+  photo.onerror=()=>{if(matches()){photo.hidden=true;stage.classList.add("case001-art-fallback");}};
   photo.src=url;
   if(photo.complete&&photo.naturalWidth>0)photo.hidden=false;
  }

@@ -378,6 +378,18 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.locator("#play").wait_for(state="visible")
     assert page.locator("#clockWrap").is_visible()
     page.wait_for_function("Number(document.getElementById('clock').textContent)<15")
+    page.wait_for_function("document.getElementById('questionImage').dataset.imageStatus==='ready'")
+    # Simulate the mobile lifecycle without relying on the test-host tab focus.
+    page.evaluate("""() => {Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))}""")
+    paused=page.locator("#clock").inner_text()
+    page.wait_for_timeout(1250)
+    assert page.locator("#clock").inner_text()==paused
+    page.evaluate("""() => {delete document.hidden;document.dispatchEvent(new Event('visibilitychange'))}""")
+    page.wait_for_function("old=>Number(document.getElementById('clock').textContent)<Number(old)",arg=paused)
+    # A cancelled leave must preserve the active timer.
+    page.once("dialog",lambda d:d.dismiss())
+    tap(page,"#homeBtn")
+    assert page.locator("#play").is_visible()
     assert page.locator("#play .trial-audio-dock .bh-audio-controls").count()==1
     assert page.locator("#gameExitBtn").is_hidden()
     tap(page,"#fiftyBtn")

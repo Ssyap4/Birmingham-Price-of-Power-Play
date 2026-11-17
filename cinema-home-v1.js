@@ -28,7 +28,8 @@
   const geometryObserver=new ResizeObserver(syncCabinetGeometry);
   geometryObserver.observe(hero);
  }else window.addEventListener("resize",syncCabinetGeometry,{passive:true});
- const syncMotion=()=>home.classList.toggle("cinema-still",!!home.hidden||document.hidden||!heroVisible);
+ let pageSuspended=false;
+ const syncMotion=()=>home.classList.toggle("cinema-still",!!home.hidden||document.hidden||pageSuspended||!heroVisible);
  const sync=()=>{
   syncMotion();
   syncCabinetGeometry();
@@ -44,6 +45,8 @@
  const observer=new MutationObserver(sync);
  observer.observe(home,{attributes:true,attributeFilter:["hidden"]});
  document.addEventListener("visibilitychange",sync,{passive:true});
+ window.addEventListener("pagehide",()=>{pageSuspended=true;syncMotion()});
+ window.addEventListener("pageshow",()=>{pageSuspended=false;sync()});
  // No scroll listener: suspend the five decorative layers when off screen.
  if(hero&&"IntersectionObserver" in window){
   const visibility=new IntersectionObserver(entries=>{

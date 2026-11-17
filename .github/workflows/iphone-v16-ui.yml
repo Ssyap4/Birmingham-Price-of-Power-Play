@@ -7,6 +7,9 @@ on:
       - audio-v1.js
       - audio-v1.css
       - game.js
+      - cinema-home-v1.js
+      - case001-portrait-stage-v1.js
+      - index.html
       - trial-progress-v1.js
       - profile-page.js
       - campaign-hub-v1.js
@@ -45,6 +48,10 @@ jobs:
         run: |
           node --test tests/iphone-v16-static.test.js
           node --check audio-v1.js
+          node --check game.js
+          node --check cinema-home-v1.js
+          node --check case001-portrait-stage-v1.js
+          node --check preview/case002-prototype/app.js
           node --test tests/audio-v27-playlist.test.js
           sha256sum --check docs/criminal-operations/soundtrack-v27.sha256
           node --check profile-page.js

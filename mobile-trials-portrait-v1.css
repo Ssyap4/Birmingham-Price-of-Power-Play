@@ -104,3 +104,12 @@
 .trial-audio-dock .bh-audio-controls{position:static!important;inset:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%;margin:0;transform:none!important;pointer-events:auto}
 .trial-audio-dock .bh-audio-controls button{min-height:44px;min-width:0;white-space:normal;overflow-wrap:anywhere}
 .trial-audio-dock #bhMenuTrack,.trial-audio-dock #gameExitBtn{display:none!important}
+
+/* V38: reserve image space while decoding; avoid a stale frame on slow WebViews. */
+#play .question-image[data-image-status=loading]{background-color:#251b13;background-image:linear-gradient(135deg,#35261b,#151410)!important}
+#play .question-image[data-image-status=unavailable]{display:none!important}
+@media(orientation:portrait) and (max-width:700px){
+ #play .question-card,#play .question-image{overflow-anchor:none}
+ #play #answers .answer.correct{border-color:#a6b986!important;background:linear-gradient(125deg,#34432d,#1a241c)!important;color:#e3efcf!important}
+ #play #answers .answer.wrong{border-color:#c38a76!important;background:linear-gradient(125deg,#572f25,#291b18)!important;color:#f7d1bc!important}
+}

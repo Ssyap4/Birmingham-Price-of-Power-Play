@@ -1315,6 +1315,14 @@ let artRenderSerial=0;
 function renderApprovedSceneArt(stage){
  const root=$("sceneArtwork"),img=$("sceneArtworkImage"),host=$("game");
  const recovery=$("artRecovery");
+ const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
+ // Re-rendering a receipt or disclosure in the same scene must not clear a
+ // previously decoded, identity-matched frame or collapse the reader layout.
+ if(approved?.mobileSrc&&host.dataset.artVerified==="true"&&
+    img.getAttribute("src")===approved.mobileSrc&&img.complete&&
+    img.naturalWidth>=500&&img.naturalHeight>=700){
+   img.alt=approved.alt;root.hidden=false;recovery.hidden=true;return;
+ }
  const serial=++artRenderSerial;
  root.hidden=true;
  recovery.hidden=true;
@@ -1326,7 +1334,6 @@ function renderApprovedSceneArt(stage){
  // Game art is portrait-only. Clear the old source before requesting this
  // scene's independently approved WebP. Never show an unverified old frame.
  img.removeAttribute("src");
- const approved=window.BirminghamCase002ApprovedArt.resolveScene(stage);
  const stillCurrent=()=>serial===artRenderSerial&&
   host.dataset.artScene===stage.sceneId&&host.dataset.artVariant===stage.variantKey;
  const failed=()=>{
