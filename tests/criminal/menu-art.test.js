@@ -18,7 +18,10 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
  assert.match(h,/player-overview-cinema-v1\.css/);
  assert.match(h,/cinema-home-v1\.js/);
  assert.match(h,/id="cinemaAudioDock"/);
- assert.match(read("cinema-home-v1.js"),/destination=home.hidden\?document.body:dock/);
+ const docking=read("cinema-home-v1.js");
+ assert.match(docking,/if\(controls.parentElement===dock\)document.body.append\(controls\)/);
+ assert.match(docking,/else if\(controls.parentElement!==dock\)/);
+ assert.doesNotMatch(docking,/destination=home.hidden\?document.body:dock/);
  assert.match(css,/#home \.cinema-audio-dock \.bh-audio-controls/);
  assert.match(css,/assets\/original-art\/city-card-clean\.webp/);
  assert.match(css,/assets\/cabinet\/cinema-home-art-v12\.webp/);

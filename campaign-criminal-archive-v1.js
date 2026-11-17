@@ -88,6 +88,7 @@
       const grid=make(doc,"div","campaign-criminal-hero-folds");
       for(const m of data.missions){
         const fold=make(doc,"details","campaign-criminal-fold");
+        fold.dataset.archiveFold="criminal:reward:"+m.id;
         const summary=make(doc,"summary","",m.id+" · "+m.hero+" · "+
           m.rewards.length+" / 4 знака");
         fold.append(summary);
@@ -106,6 +107,7 @@
       wrap.append(grid);
       if(data.achievements.length){
         const memory=make(doc,"details","campaign-criminal-fold");
+        memory.dataset.archiveFold="criminal:memory";
         memory.append(make(doc,"summary","","Памятные отметки · "+data.achievements.length));
         const group=make(doc,"div","campaign-criminal-seals");
         for(const x of data.achievements)

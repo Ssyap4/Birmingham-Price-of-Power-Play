@@ -50,3 +50,16 @@ test("V17 stabilizes mobile shell and does not steal map audio on visibilitychan
  assert.ok(home.includes("if(controls.parentElement===dock)document.body.append(controls)"));
  assert.ok(!home.includes("home.hidden?document.body:dock"));
 });
+
+
+test("V17 archive view state is restored by stable fold IDs, not save data",()=>{
+ const hub=read("campaign-hub-v1.js");
+ assert.ok(hub.includes("folds.set(key,el.open)"));
+ assert.ok(hub.includes("if(folds.has(key))el.open=folds.get(key)"));
+ assert.ok(hub.includes("if(!visible)return"));
+ assert.ok(hub.includes("focus.focus({preventScroll:true})"));
+ assert.ok(hub.includes("001:reward:"));
+ assert.ok(hub.includes("001:attempt:"));
+ assert.ok(read("campaign-case002-archive-v1.js").includes("002:attempt:"));
+ assert.ok(read("campaign-criminal-archive-v1.js").includes("criminal:reward:"));
+});

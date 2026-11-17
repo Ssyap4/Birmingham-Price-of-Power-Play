@@ -55,6 +55,8 @@ const main=document.querySelector('main');if(!main)return;
 for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Общий локальный архив: Дела №001 и №002, «Работа для своих». Записи хранятся на этом устройстве.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
 const $=id=>document.getElementById(id),allScreens=()=>document.querySelectorAll('.screen');
 function open(id){
+ const destination=$(id);
+ if(destination&&!destination.hidden&&destination.classList.contains('campaign-hub'))return;
  if(id==='campaignHistory'||id==='campaignAchievements'||id==='campaignDossiers'){render(id)}
  allScreens().forEach(s=>s.hidden=s.id!==id);
  for(const section of ['campaignDossiers','campaignAchievements','campaignHistory']){
@@ -169,6 +171,7 @@ function renderUniqueRewards(el,runs){
  const epithets={endingRescue:'Спаситель',endingEvidence:'Хранитель доказательств',endingDeal:'Мастер компромисса',endingTruth:'Голос города',endingPower:'Тайный властитель',endingDeath:'Последняя тень'};
  for(const hero of HEROES()){
   const details=make('details','campaign-reward-group');
+  details.dataset.archiveFold='001:reward:'+hero.id;
   details.open=hero.id===(window.BirminghamHero?.selectedId||'jack');
   const count=Object.keys(ENDINGS).filter(ending=>earned[[CASE_ID,hero.id,ending].join(':')]).length;
   details.append(make('summary','',hero.name+' · '+count+' / 6 знаков'));
@@ -210,6 +213,7 @@ function renderHistory(el,runs){
  const renderList=(body,title,items)=>{const section=make('section','campaign-attempt-section');section.append(make('h4','',title));if(!items.length)section.append(make('p','campaign-intro','Записей нет.'));else{const ul=make('ul','campaign-attempt-list');for(const item of items)ul.append(make('li','',item));section.append(ul)}body.append(section)};
  for(const r of [...runs].sort((a,b)=>b.finished-a.finished)){
   const hero=HEROES().find(h=>h.id===r.heroId),card=make('details','campaign-attempt'),summary=make('summary','campaign-attempt-summary');
+  card.dataset.archiveFold='001:attempt:'+r.key;
   summary.append(make('strong','',hero?.name||r.heroId),make('span','',stat(r)),make('small','',new Date(r.finished).toLocaleDateString('ru-RU')+' · '+(r.items?.length||0)+' улик · '+(r.deductions?.length||0)+' связей'));card.append(summary);
   const detail=make('div','campaign-attempt-detail');
   detail.append(make('p','', 'Дело №'+r.caseId+' · '+(r.caseTitle||CASE_TITLE)));
@@ -222,7 +226,44 @@ function renderHistory(el,runs){
  }el.append(list);
  el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Выше — подтверждённые записи Дела №001. История Дела №002 и «Работы для своих» показана ниже отдельными разделами.'));
 }
-function render(id){const runs=persistFinished();const box=$(id)?.querySelector('.campaign-content');if(!box)return;box.replaceChildren();if(id==='campaignDossiers')renderDossiers(box,runs);if(id==='campaignAchievements')renderAchievements(box,runs);if(id==='campaignHistory')renderHistory(box,runs);document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}))}
+// View-only state: keep opened AND explicitly closed folds across rebuilds.
+ // No persistent keys, timers, engine changes or extra navigation.
+ function foldKey(el){return el.dataset.archiveFold||el.id||''}
+ function render(id){
+  const runs=persistFinished(),screen=$(id),box=screen?.querySelector('.campaign-content');if(!box)return;
+  const visible=!screen.hidden, oldY=window.scrollY;
+  const folds=new Map();let focusedKey='',anchorKey='',anchorTop=0;
+  for(const el of box.querySelectorAll('details')){
+   const key=foldKey(el);if(!key)continue;
+   folds.set(key,el.open);
+   const summary=el.querySelector('summary');
+   if(!summary||!visible)continue;
+   if(document.activeElement===summary)focusedKey=key;
+   const rect=summary.getBoundingClientRect();
+   if(!anchorKey&&rect.height>0&&rect.bottom>0&&rect.top<window.innerHeight){
+    anchorKey=key;anchorTop=rect.top;
+   }
+  }
+  box.replaceChildren();
+  if(id==='campaignDossiers')renderDossiers(box,runs);
+  if(id==='campaignAchievements')renderAchievements(box,runs);
+  if(id==='campaignHistory')renderHistory(box,runs);
+  document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}));
+  let anchor=null,focus=null;
+  for(const el of box.querySelectorAll('details')){
+   const key=foldKey(el);if(!key)continue;
+   if(folds.has(key))el.open=folds.get(key);
+   if(visible&&key===anchorKey)anchor=el.querySelector('summary');
+   if(visible&&key===focusedKey)focus=el.querySelector('summary');
+  }
+  if(!visible)return;
+  if(focus)focus.focus({preventScroll:true});
+  // Only correct a displacement caused by this actual rebuild; don't
+  // interfere with scrolling, viewport resize, or native details toggles.
+  const rect=anchor?.getBoundingClientRect();
+  const target=rect&&rect.height>0?window.scrollY+rect.top-anchorTop:oldY;
+  if(Math.abs(target-window.scrollY)>2)window.scrollTo({top:Math.max(0,target),behavior:'instant'});
+ }
 function sync(){const runs=persistFinished();awards(runs,true);const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}
 const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(outcome,{childList:true,subtree:true});
 // Existing history is registered without retroactive celebrations on page load.

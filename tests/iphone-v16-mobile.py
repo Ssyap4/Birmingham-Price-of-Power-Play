@@ -94,6 +94,24 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    current(page,"campaignAchievements")
    assert page.locator("#profile").is_hidden()
    assert page.evaluate("scrollY")<12,(engine,width,"achievements entry scrolled unexpectedly")
+   # Expand two independent folds and preserve explicit closure of a nested one.
+   page.evaluate("""() => {
+    document.querySelector('#campaignFirstCaseAchievements').open=true;
+    document.querySelector('#campaignSecondCaseMilestones').open=true;
+    const nested=document.querySelector('#campaignFirstCaseAchievements details[open]');
+    if(nested)nested.open=false;
+   }""")
+   closed=page.locator("#campaignFirstCaseAchievements details[data-archive-fold]").first
+   closed.evaluate("(el)=>el.open=false")
+   page.locator("#campaignSecondCaseMilestones > summary").scroll_into_view_if_needed()
+   archive_y=page.evaluate("scrollY")
+   page.evaluate("window.BirminghamCampaign.open('campaignAchievements')")
+   assert abs(page.evaluate("scrollY")-archive_y)<=3,(engine,width,"same archive tab snapped")
+   page.evaluate("document.dispatchEvent(new Event('birmingham:case-findings-changed'))")
+   assert page.locator("#campaignFirstCaseAchievements").evaluate("(el)=>el.open")
+   assert page.locator("#campaignSecondCaseMilestones").evaluate("(el)=>el.open")
+   assert not closed.evaluate("(el)=>el.open")
+   assert abs(page.evaluate("scrollY")-archive_y)<=3,(engine,width,"archive refresh shifted scroll")
    tap(page,"#campaignAchievements .campaign-tabs [data-open-section='campaignDossiers']")
    page.locator("#campaignDossiers").wait_for(state="visible")
    current(page,"campaignDossiers")
@@ -106,6 +124,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#profile .campaign-portal-v13 [data-campaign-jump='archive']")
    page.locator("#campaignAchievements").wait_for(state="visible")
    current(page,"campaignAchievements")
+   assert page.locator("#campaignFirstCaseAchievements").evaluate("(el)=>el.open")
+   assert page.locator("#campaignSecondCaseMilestones").evaluate("(el)=>el.open")
+   assert not page.locator("#campaignFirstCaseAchievements details[data-archive-fold]").first.evaluate("(el)=>el.open")
    page.screenshot(path=str(OUT/f"{engine}-{width}-achievements.png"),full_page=False)
    tap(page,"#homeBtn")
    page.locator("#home").wait_for(state="visible")

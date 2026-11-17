@@ -279,6 +279,7 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
   const hero=heroes.find(x=>x.id===heroId);
   const details=make(doc,"details","campaign-reward-group campaign-002-reward-group");
   details.dataset.hero=heroId;
+  details.dataset.archiveFold="002:reward:"+heroId;
   const count=[...archive.outcomes].filter(([ending])=>
    archive.confirmed.has("002:"+heroId+":"+ending)).length;
   appendText(doc,details,"summary","", (hero?.name||heroId)+" · "+count+" / 7 знаков");
@@ -339,6 +340,7 @@ function renderHistory(doc,box,archive,oldRuns,heroes){
   for(const r of [...archive.completed].sort((a,b)=>b.finished-a.finished)){
    const hero=heroes.find(h=>h.id===r.heroId),details=make(doc,"details","campaign-attempt campaign-002-attempt");
    details.dataset.attemptId=r.attemptId;
+   details.dataset.archiveFold="002:attempt:"+r.attemptId;
    const heading=make(doc,"summary","campaign-attempt-summary");
    appendText(doc,heading,"strong","",hero?.name||r.heroId);
    appendText(doc,heading,"span","",archive.outcomes.get(r.ending)||r.ending);
