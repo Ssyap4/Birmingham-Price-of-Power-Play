@@ -40,3 +40,13 @@ test("V16 archive tabs update active destination and profile opens only the requ
  for(const id of ["campaignDossiers","campaignAchievements","campaignHistory"])
   assert.ok(hub.includes(id));
 });
+
+test("V17 stabilizes mobile shell and does not steal map audio on visibilitychange",()=>{
+ const css=read("iphone-ux-v16.css"),home=read("cinema-home-v1.js");
+ assert.match(css,/min-height:100svh/);
+ assert.match(css,/padding-left:max\(12px,var\(--bh-inset-left/);
+ assert.match(css,/padding-right:max\(12px,var\(--bh-inset-right/);
+ assert.match(css,/cinema-still \.cinema-rain::after\{animation-play-state:paused!important\}/);
+ assert.ok(home.includes("if(controls.parentElement===dock)document.body.append(controls)"));
+ assert.ok(!home.includes("home.hidden?document.body:dock"));
+});

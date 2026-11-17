@@ -9,8 +9,13 @@
  const sync=()=>{
   home.classList.toggle("cinema-still",!!home.hidden||document.hidden);
   if(!dock||!controls)return;
-  const destination=home.hidden?document.body:dock;
-  if(controls.parentElement!==destination)destination.append(controls);
+  // The district observer owns its dock. Never pull controls out of
+  // that dock on visibilitychange, or move them twice during navigation.
+  if(home.hidden){
+   if(controls.parentElement===dock)document.body.append(controls);
+  }else if(controls.parentElement!==dock){
+   dock.append(controls);
+  }
  };
  const observer=new MutationObserver(sync);
  observer.observe(home,{attributes:true,attributeFilter:["hidden"]});

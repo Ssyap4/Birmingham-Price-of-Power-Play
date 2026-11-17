@@ -69,3 +69,24 @@
   animation:none!important;transform:none!important;
  }
 }
+
+/* V17: stable document geometry on portrait Safari and Telegram WebView.
+   Only the shell/menu/archive presentation is affected, not gameplay. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(#home.cinema-home:not([hidden]))>.shell{min-height:100svh}
+ #home .cinema-menu{
+  padding-left:max(12px,var(--bh-inset-left,0px));
+  padding-right:max(12px,var(--bh-inset-right,0px));
+ }
+ #home .cinema-crest{top:max(22px,var(--bh-inset-top,0px))}
+ #home .cinema-legal{padding-bottom:max(95px,calc(80px + var(--bh-inset-bottom,0px)))}
+ body:has(> .shell > :is(#profile,.campaign-hub,#districts):not([hidden]))>.shell{
+  padding-bottom:max(18px,var(--bh-inset-bottom,0px))!important;
+ }
+ .campaign-hub summary{min-height:44px;box-sizing:border-box;touch-action:manipulation}
+}
+@media(hover:none) and (pointer:coarse){
+ #home .cabinet-entry:hover:not(:active):not(:focus-visible){transform:none;filter:none}
+}
+/* Pause the nested V16 droplets too, including while the app is backgrounded. */
+#home.cinema-still .cinema-rain::after{animation-play-state:paused!important}

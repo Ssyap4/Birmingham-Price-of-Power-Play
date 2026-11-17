@@ -27,7 +27,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
  threading.Thread(target=srv.serve_forever,daemon=True).start()
  url="http://127.0.0.1:"+str(srv.server_address[1])+"/index.html"
  with sync_playwright() as p:
-  for engine,width in [("webkit",390),("webkit",320),("chromium",390)]:
+  for engine,width in [("webkit",390),("webkit",320),("webkit",360),("webkit",430),("chromium",390)]:
    browser=getattr(p,engine).launch(headless=True)
    ctx=browser.new_context(viewport={"width":width,"height":844},is_mobile=True,
      has_touch=True,device_scale_factor=1,reduced_motion="no-preference")
@@ -63,6 +63,26 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert abs(scroll["wanted"]-scroll["actual"])<=3,(engine,width,scroll)
    page.wait_for_timeout(180)
    assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3,(engine,width,scroll)
+   # Resize is an approximation of browser chrome changing, not a physical swipe.
+   page.set_viewport_size({"width":width,"height":780})
+   page.wait_for_timeout(180)
+   assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3,(engine,width,"viewport resize moved scroll")
+   page.set_viewport_size({"width":width,"height":844})
+   page.wait_for_timeout(180)
+   assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3
+   page.emulate_media(reduced_motion="reduce")
+   assert page.evaluate("""() => ['.cinema-rain','.cinema-smoke'].every(s=>getComputedStyle(document.querySelector('#home '+s)).animationName==='none') && getComputedStyle(document.querySelector('#home .cinema-rain'),'::after').animationName==='none'""")
+   page.emulate_media(reduced_motion="no-preference")
+   tap(page,"#districtsCard")
+   page.locator("#districts").wait_for(state="visible")
+   page.locator("#districtAudioDock .bh-audio-controls").wait_for(state="visible")
+   # The real event is approximated; verify neither observer steals the dock.
+   page.evaluate("document.dispatchEvent(new Event('visibilitychange'))")
+   assert page.locator("#districtAudioDock .bh-audio-controls").count()==1
+   assert page.locator(".bh-audio-controls").count()==1
+   tap(page,"#homeBtn")
+   page.locator("#home").wait_for(state="visible")
+   page.locator("#cinemaAudioDock .bh-audio-controls").wait_for(state="visible")
    tap(page,"#cabinetProfile")
    page.locator("#profile").wait_for(state="visible")
    assert page.locator("#home").is_hidden()
