@@ -200,6 +200,7 @@ for (const [id, types] of Object.entries(plans)) {
     );
   }
 }
+fs.mkdirSync("work/criminal", { recursive: true });
 fs.writeFileSync(
   "work/criminal/playthroughs.json",
   JSON.stringify(result, null, 2),

@@ -92,6 +92,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           python tests/criminal/art_package.py
+          python tests/criminal/startup_isolation.py
           python tests/criminal/case001_art_browser.py
           python tests/criminal/legacy_smoke.py
           python tests/criminal/mobile_browser.py
