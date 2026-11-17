@@ -99,9 +99,6 @@
 #home .cinema-vinyl-glint{left:75%;top:52%;width:20%;transform-origin:center}
 #home .cinema-crest h1{text-shadow:0 2px 3px #140e08,0 4px 18px #000}
 #home .cinema-epigraph p{text-shadow:0 2px 4px #000,0 4px 12px #000}
-#home .cabinet-entry::before{
- background:linear-gradient(90deg,#141210f5 0%,#171512e5 48%,#17151291 76%,#17151245 100%),var(--cinema-card) right center/cover no-repeat;
-}
 @media(orientation:portrait) and (max-width:700px){
  :root{--bh-v18-paper:#ead3ad;--bh-v18-edge:#b18a57;--bh-v18-ink:#191510}
  #districts .districts-heading,#criminalScreen .cr-heading,.campaign-hub .campaign-head{
@@ -146,3 +143,42 @@
 .campaign-hub .campaign-001-alert{margin:12px 0;padding:12px 14px;border:1px solid #b78c61;border-left:4px solid #d2a472;background:#352419;color:#ffe0b5;font:14px/1.55 system-ui,sans-serif;overflow-wrap:anywhere}
 #profile .player-overview-card[data-status="partial"]{border-left-color:#c19a63}
 #profile .player-overview-card[data-status="unavailable"]{border-left-color:#8e8980}
+
+/* V21: visible, source-anchored motion instead of a flat fog blob.
+   The original photograph is untouched; moving rain and refracted light
+   remain lightweight decorative layers, not a second image or video. */
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 26% 22% at 19% 46%,rgba(255,216,137,.72),rgba(231,151,64,.17) 58%,transparent 100%),
+ radial-gradient(ellipse 39% 16% at 32% 70%,rgba(255,191,104,.34),transparent 100%);
+ filter:blur(4px);
+ animation-duration:5.2s;
+}
+@keyframes cinema-v16-lamplight{
+ 0%,25%,74%,100%{opacity:.64}
+ 12%,39%,85%{opacity:1}
+ 48%{opacity:.29}51%{opacity:.88}53%{opacity:.42}56%{opacity:.94}
+}
+#home .cinema-rain{opacity:.6}
+#home .cinema-rain::after{
+ opacity:.88;
+ background-image:
+ radial-gradient(ellipse 1.4px 10px at 33% 45%,rgba(230,242,237,.96),rgba(193,217,226,.27) 60%,transparent 100%),
+ radial-gradient(ellipse 1px 7px at 66% 73%,rgba(234,244,241,.85),transparent 94%),
+ radial-gradient(ellipse 1.5px 12px at 82% 11%,rgba(226,240,237,.9),rgba(193,217,226,.22) 62%,transparent 100%);
+ animation-duration:3.8s;
+}
+#home .cinema-smoke{
+ left:17%;bottom:30%;width:25%;height:28%;background:none;filter:blur(1.5px);
+ opacity:.7;transform-origin:28% 97%;animation-duration:8.2s;
+}
+#home .cinema-smoke svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+#home .cinema-smoke.second{left:18%;bottom:30%;width:25%;height:28%;filter:blur(3px);animation-duration:11s;animation-delay:-4s}
+@keyframes cinema-v16-smoke{
+ 0%{transform:translate3d(0,7px,0) rotate(-4deg) scale(.83);opacity:0}
+ 22%{opacity:.84}
+ 62%{opacity:.62}
+ 100%{transform:translate3d(7px,-27px,0) rotate(9deg) scale(1.14);opacity:0}
+}
+#home .cinema-vinyl-glint{left:74%;top:52%;width:21%;background:conic-gradient(from 25deg,transparent 0deg,rgba(255,225,183,.48) 33deg,transparent 70deg,transparent 196deg,rgba(255,225,183,.24) 228deg,transparent 270deg)}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.42}
+@media(prefers-reduced-motion:reduce){#home .cinema-smoke{opacity:0!important}#home .cinema-vinyl-glint{opacity:0!important}}

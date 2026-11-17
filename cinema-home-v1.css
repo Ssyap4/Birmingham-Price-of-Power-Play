@@ -27,25 +27,32 @@ body:has(#home.cinema-home:not([hidden])) #gameExitBtn{display:none!important}
 body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vinyl 2.65s linear infinite}
 #home .cinema-menu{box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:20px max(12px,var(--bh-inset-left,12px)) 12px max(12px,var(--bh-inset-right,12px));background:radial-gradient(ellipse at 50% 0,rgba(98,66,43,.38),transparent 64%),linear-gradient(180deg,#20150f 0%,#0f1010 64%,#100d0b 100%);border-top:2px solid #a98050}
 #home .cinema-menu-heading{text-align:center;margin:0 0 9px;color:#d7b17b;font:700 10px/1.4 Georgia,serif;letter-spacing:.24em}
-#home .cabinet-entry{box-sizing:border-box;appearance:none;position:relative;isolation:isolate;display:grid;grid-template-columns:46px minmax(0,1fr) 18px;align-items:center;gap:11px;min-width:0;width:100%;min-height:69px;height:auto;flex:none;margin:0;padding:11px 12px;text-align:left;cursor:pointer;overflow:hidden;border:1px solid rgba(178,136,84,.55);border-left:3px solid #a88659;border-radius:5px;background:#1d1815;color:#efd7b1;box-shadow:0 7px 16px #0008,inset 0 0 0 1px #b39b7424;transition:filter .25s,transform .25s,border-color .25s;touch-action:manipulation}
-#home .cabinet-entry::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(94deg,#141210f2 0%,#171512d9 58%,#17151282 100%),var(--cinema-card) right center/cover no-repeat;filter:saturate(.87)}
-#home .cabinet-entry:is(:hover,:focus-visible){filter:brightness(1.14);border-color:#e3bd83;transform:translateY(-1px)}
-#home .cabinet-entry:active{transform:scale(.986);filter:brightness(1.15)}
+/* V21: actual, independently lit image panels. No icon substitute or dark
+   text scrim over the artwork. All six actions retain their original IDs. */
+#home .cabinet-entry{box-sizing:border-box;appearance:none;position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,43%) minmax(0,1fr);align-items:stretch;gap:0;min-width:0;width:100%;min-height:116px;height:auto;flex:none;margin:0;padding:0;text-align:left;cursor:pointer;overflow:hidden;border:1px solid #b18a57;border-radius:5px;background:linear-gradient(145deg,#352319,#171411 78%);color:#efd7b1;box-shadow:0 5px 14px #0007,inset 0 0 0 1px #b39b7424;transition:border-color .2s;touch-action:manipulation}
+#home .cabinet-entry::before,#home .cabinet-entry::after{content:none!important;background:none!important}
+#home .cabinet-entry-primary,#home #criminalEntry{min-height:142px;border-color:#d0a367}
+#home .cabinet-entry-art{position:relative;display:block;min-width:0;overflow:hidden;isolation:isolate;align-self:stretch;border-right:1px solid #ac8055;background:#282019;pointer-events:none}
+#home .cabinet-entry-art img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;filter:brightness(1.08) contrast(1.02);opacity:1;pointer-events:none}
+#home #districtsCard .cabinet-entry-art img{object-position:66% 55%}
+#home #criminalEntry .cabinet-entry-art img{object-position:48% 34%}
+#home .cabinet-art-clock img{object-position:92% 77%;filter:brightness(1.16)}
+#home .cabinet-art-medal img{inset:-15% auto auto -1%;height:130%;width:auto;max-width:none;object-fit:fill;filter:brightness(1.04)}
+#home .cabinet-art-profile img{object-position:0% 82%;filter:brightness(1.18)}
+#home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;padding:6px;background:#33251b}
+#home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:1px solid #b39570;box-sizing:border-box;filter:brightness(1.07)}
+#home .cabinet-entry-copy{box-sizing:border-box;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 20px 14px 12px;opacity:1;pointer-events:none}
+#home .cabinet-entry-copy strong{font:700 clamp(17px,5.25vw,28px)/1.12 Georgia,serif;color:#ffe8c0;text-shadow:0 2px 3px #0009;overflow-wrap:normal}
+#home .cabinet-entry-copy small{font:400 12px/1.4 system-ui,Arial,sans-serif;color:#dfcbb0;text-shadow:none;overflow-wrap:break-word}
+#home .cabinet-entry-primary .cabinet-entry-copy strong,#home #criminalEntry .cabinet-entry-copy strong{font-size:clamp(20px,6vw,31px)}
+#home .cabinet-entry-arrow{position:absolute;right:7px;top:50%;transform:translateY(-50%);color:#c6a16e;font:23px/1 Georgia,serif;pointer-events:none}
+#home .cabinet-entry:active{border-color:#ffe3ab;box-shadow:inset 0 0 0 2px #d9b779,0 5px 14px #0007}
 #home .cabinet-entry:focus-visible{outline:3px solid #f4d09a;outline-offset:2px}
-#home .cabinet-entry-primary,#home #criminalEntry{min-height:100px;border-left:4px solid #daa966}
-#home #districtsCard{--cinema-card:url('assets/original-art/city-card-clean.webp')}
-#home #criminalEntry{--cinema-card:url('assets/criminal/cr01-arrival.webp')}
-#home .cabinet-entry-quiz{--cinema-card:url('assets/original-art/challenges.webp')}
-#home #storyStart{--cinema-card:url('assets/original-art/clock.webp')}
-#home #profileCard{--cinema-card:url('assets/original-art/city.webp')}
-#home #cabinetProfile{--cinema-card:url('assets/original-art/profile.webp');border-left-color:#c29d68}
-#home .cabinet-entry-icon{box-sizing:border-box;display:grid;place-items:center;width:44px;height:44px;min-width:44px;border:1px solid #a0825b99;border-radius:4px;background:rgba(22,21,19,.66);color:#eecb94;font:27px/1 Georgia,serif;pointer-events:none}
-#home .cabinet-profile-seal{background:rgba(25,24,21,.8) url('assets/cabinet/profile-seal.svg') center/90% no-repeat;color:transparent;font-size:0}
-#home .cabinet-entry-copy{min-width:0;display:flex;flex-direction:column;gap:4px;opacity:1;pointer-events:none}
-#home .cabinet-entry-copy strong{font:700 clamp(18px,5.1vw,24px)/1.08 Georgia,serif;color:#ffe4b5;text-shadow:0 2px 9px #000}
-#home .cabinet-entry-copy small{font:400 11px/1.35 system-ui,Arial,sans-serif;color:#d4c4a9;text-shadow:0 1px 5px #000;overflow-wrap:break-word}
-#home .cabinet-entry-primary .cabinet-entry-copy strong,#home #criminalEntry .cabinet-entry-copy strong{font-size:clamp(23px,6.4vw,29px)}
-#home .cabinet-entry-arrow{justify-self:end;color:#e8bd7e;font:26px Georgia,serif;pointer-events:none}
+@media(max-width:355px){
+ #home .cabinet-entry{grid-template-columns:minmax(0,40%) minmax(0,1fr)}
+ #home .cabinet-entry-copy{padding:11px 16px 11px 9px;gap:5px}
+ #home .cabinet-entry-copy small{font-size:11px}
+}
 #home .cinema-afterword{text-align:center;padding:14px 15px 0;font:10px/1.7 Georgia,serif;letter-spacing:.12em;color:#a58a67}
 #home .cinema-stats{margin:0;padding:0 16px 12px;background:#100d0b}
 #home .cinema-stats summary{width:max-content;max-width:100%;margin:0 auto;cursor:pointer;text-align:center;padding:9px 13px;font:11px/1.4 Georgia,serif;color:#caa976;min-height:44px;box-sizing:border-box}
@@ -71,9 +78,6 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 @media(max-width:355px){
  #home .cinema-crest h1{font-size:34px;letter-spacing:.04em}
  #home .cinema-crest h1 span{font-size:24px;letter-spacing:.08em}
- #home .cabinet-entry{grid-template-columns:38px minmax(0,1fr) 14px;gap:7px;padding:9px}
- #home .cabinet-entry-icon{width:38px;min-width:38px;height:39px;font-size:23px}
- #home .cabinet-entry-copy small{font-size:10px}
  #home .cinema-audio-dock .bh-audio-controls button{font-size:9px;padding:7px 3px}
 }
 @media(min-width:701px){

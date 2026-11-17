@@ -87,7 +87,6 @@
       const entry=root.document.getElementById("cabinetProfile");
       const top=root.document.getElementById("profileBtn");
       entry?.addEventListener("click",()=>top?.click());
-      top?.addEventListener("click",()=>render(root));
       const refreshVisible=()=>{if(!root.document.getElementById("profile")?.hidden)render(root)};
       root.addEventListener("pageshow",refreshVisible);
       root.addEventListener("storage",refreshVisible);

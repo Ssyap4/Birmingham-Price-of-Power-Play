@@ -131,10 +131,7 @@
           "Показаны последние "+data.history.length+" попыток. Полная хроника доступна внутри режима."));
       wrap.append(history);
     }
-    const jump=make(doc,"button","campaign-criminal-jump","К карте «Работа для своих»");
-    jump.type="button";
-    jump.addEventListener("click",()=>doc.getElementById("criminalEntry")?.click());
-    wrap.append(jump);box.append(wrap);
+    box.append(wrap);
   }
   function attach(root){
     if(!root.document)return;

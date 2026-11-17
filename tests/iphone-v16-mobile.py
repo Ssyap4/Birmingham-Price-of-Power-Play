@@ -54,6 +54,16 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert "repeating-linear-gradient" not in effects["rainImage"]
    page.wait_for_timeout(350)
    page.screenshot(path=str(OUT/f"{engine}-{width}-home.png"),full_page=False)
+   menu=page.locator("#home .cinema-menu")
+   assert menu.locator(".cabinet-entry").count()==6
+   assert menu.locator(".cabinet-entry-icon").count()==0
+   page.wait_for_function("Array.from(document.querySelectorAll('#home .cabinet-entry-art img')).every(i=>i.complete && i.naturalWidth>0)")
+   cards=menu.locator(".cabinet-entry")
+   for i in range(6):
+    geometry=cards.nth(i).evaluate("""el=>{let a=el.querySelector('.cabinet-entry-art').getBoundingClientRect(), t=el.querySelector('.cabinet-entry-copy').getBoundingClientRect(), b=el.getBoundingClientRect();return {ratio:a.width/b.width,height:a.height,overlap:a.right>t.left+1,scrim:getComputedStyle(el,'::before').content}}""")
+    assert .36<=geometry["ratio"]<=.46 and geometry["height"]>=105 and not geometry["overlap"] and geometry["scrim"]=="none",(engine,width,i,geometry)
+   menu.screenshot(path=str(OUT/f"{engine}-{width}-v21-menu.png"))
+   page.evaluate("window.scrollTo(0,0)")
    if engine=="webkit" and width==390:
     # Record the same cabinet at four moments for human visual comparison.
     for seconds,delay in [(0,0),(1,1000),(3,2000),(6,3000)]:
@@ -97,6 +107,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    page.locator("#profile").wait_for(state="visible")
    assert page.locator("#home").is_hidden()
    assert page.locator("#profile .campaign-profile-links [data-open-section]").count()==3
+   assert page.locator("#profile .campaign-portal-v13").count()==0
+   page.wait_for_function("document.querySelector('#profile .profile-v21-art img').naturalWidth>0")
+   assert page.locator("#profile .player-overview-card").count()==3
    assert page.evaluate("scrollY")<12,(engine,width,"profile unexpectedly scrolled to middle")
    page.screenshot(path=str(OUT/f"{engine}-{width}-profile.png"),full_page=False)
    tap(page,"#profile .campaign-profile-links [data-open-section='campaignAchievements']")
@@ -131,10 +144,13 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#campaignDossiers .campaign-tabs [data-open-section='campaignHistory']")
    page.locator("#campaignHistory").wait_for(state="visible")
    current(page,"campaignHistory")
-   tap(page,"#campaignHistory .campaign-portal-v13 [data-campaign-jump='profile']")
+   assert page.locator(".campaign-hub .campaign-portal-v13").count()==0
+   assert page.locator(".campaign-hub .campaign-criminal-jump").count()==0
+   tap(page,"#homeBtn")
+   tap(page,"#cabinetProfile")
    page.locator("#profile").wait_for(state="visible")
    assert page.locator("#campaignHistory").is_hidden()
-   tap(page,"#profile .campaign-portal-v13 [data-campaign-jump='archive']")
+   tap(page,"#profile .campaign-profile-links [data-open-section='campaignAchievements']")
    page.locator("#campaignAchievements").wait_for(state="visible")
    current(page,"campaignAchievements")
    assert page.locator("#campaignFirstCaseAchievements").evaluate("(el)=>el.open")
@@ -196,9 +212,11 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.locator("#criminalScreen .cr-map").wait_for(state="visible")
     tap(page,"#criminalScreen .campaign-portal-v13 [data-campaign-jump='archive']")
     page.locator("#campaignAchievements").wait_for(state="visible")
-    tap(page,"#campaignAchievements .campaign-portal-v13 [data-campaign-jump='profile']")
+    tap(page,"#homeBtn")
+    tap(page,"#cabinetProfile")
     page.locator("#profile").wait_for(state="visible")
-    tap(page,"#profile .campaign-portal-v13 [data-campaign-jump='detective']")
+    tap(page,"#homeBtn")
+    tap(page,"#districtsCard")
     page.locator("#districts").wait_for(state="visible")
     assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
     tap(page,"#homeBtn")

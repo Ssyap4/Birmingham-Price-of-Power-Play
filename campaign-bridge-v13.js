@@ -11,8 +11,6 @@
  const choices={
   detective:[["criminal","Работа для своих"],["archive","Общий архив"],["home","Главное меню"]],
   criminal:[["detective","Детективная карта"],["archive","Общий архив"],["home","Главное меню"]],
-  archive:[["detective","Детективные дела"],["criminal","Работа для своих"],["profile","Мой профиль"]],
-  profile:[["detective","Детективные дела"],["criminal","Работа для своих"],["archive","Общие достижения"]]
  };
  function makeBar(kind){
   const nav=d.createElement("nav");
@@ -26,8 +24,8 @@
   return nav;
  }
  detective.querySelector(".districts-heading")?.after(makeBar("detective"));
- for(const screen of screens)screen.querySelector(".campaign-tabs")?.after(makeBar("archive"));
- profile.querySelector(".profile-hero")?.after(makeBar("profile"));
+ // V21: the archive and profile are destinations, not secondary main menus.
+ // Maps retain their contextual exit/archives; no portal is inserted above personal data.
  // The criminal renderer replaces its HTML on every move. Add links to
  // MAP only, never while choosing or recovering a pending game action.
  function syncCriminal(){

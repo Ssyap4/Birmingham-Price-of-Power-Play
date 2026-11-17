@@ -93,3 +93,17 @@ test("V19 damaged Case001 archive is not overwritten or counted as confirmed",()
  assert.ok(hub.includes("campaign-001-alert"));
  assert.ok(read("player-profile-overview-v1.js").includes("подтверждённых знаков"));
 });
+
+
+test("V21 uses image panels and removes redundant profile/archive portals",()=>{
+ const h=read("index.html"),css=read("cinema-home-v1.css"),bridge=read("campaign-bridge-v13.js");
+ assert.equal((h.match(/class="cabinet-entry-art(?: |")/g)||[]).length,6);
+ assert.doesNotMatch(h,/class="cabinet-entry-icon/);
+ for(const file of ["assets/districts/centre.webp","assets/criminal/cr01-arrival.webp","assets/original-art/clock.webp","assets/mobile-menu/approved-achievements.webp","assets/heroes/jack.webp","assets/heroes/eleanor.webp","assets/original-art/profile.webp"]){
+  assert.ok(h.includes(file));assert.ok(fs.statSync(path.join(root,file)).size>1000);
+ }
+ assert.match(css,/\.cabinet-entry::before,#home \.cabinet-entry::after\{content:none!important/);
+ assert.ok(!bridge.includes('makeBar("archive")'));assert.ok(!bridge.includes('makeBar("profile")'));
+ assert.ok(!read("campaign-criminal-archive-v1.js").includes('doc.getElementById("criminalEntry")?.click()'));
+ assert.match(h,/class="profile-v21-art"/);
+});

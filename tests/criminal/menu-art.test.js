@@ -23,7 +23,7 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
  assert.match(docking,/else if\(controls.parentElement!==dock\)/);
  assert.doesNotMatch(docking,/destination=home.hidden\?document.body:dock/);
  assert.match(css,/#home \.cinema-audio-dock \.bh-audio-controls/);
- assert.match(css,/assets\/original-art\/city-card-clean\.webp/);
+ assert.match(h,/src="assets\/districts\/centre\.webp"/);
  assert.match(css,/assets\/cabinet\/cinema-home-art-v12\.webp/);
  assert.doesNotMatch(css,/\.cinema-gramophone\{/);
  assert.doesNotMatch(h,/class="cinema-gramophone"/);
@@ -37,8 +37,11 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
 
  assert.equal(crypto.createHash("sha256").update(photo).digest("hex"),"173dc43614f1870fb21e48ac5f40de89ecf69f8a8fbef4a96f2446ef29958799");
 
- assert.match(css,/assets\/original-art\/profile\.webp/);
- assert.match(css,/assets\/cabinet\/profile-seal\.svg/);
+ assert.match(h,/src="assets\/original-art\/profile\.webp"/);
+ assert.match(h,/src="assets\/cabinet\/profile-seal\.svg"/);
+ assert.doesNotMatch(h,/class="cabinet-entry-icon/);
+ assert.equal((h.match(/class="cabinet-entry-art(?: |")/g)||[]).length,6);
+ assert.match(css,/grid-template-columns:minmax\(0,43%\) minmax\(0,1fr\)/);
  assert.match(css,/cinema-rainfall/);assert.match(css,/cinema-smoke/);
  assert.match(css,/cinema-lamp/);assert.match(css,/cinema-vinyl/);
  assert.match(css,/prefers-reduced-motion:reduce/);
