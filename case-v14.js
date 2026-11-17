@@ -158,6 +158,9 @@ function sceneText(n){
   }
   if(seen)return 'Эвелин снова принимает тебя в доме. Ключ №17 уже у тебя; она ждёт новостей об Артуре. Можно уточнить детали или продолжить расследование.';
   break;
+ case 'interview':
+  if(state.flags.widowSafe)return 'На кухне у соседки Эвелин говорит вполголоса, чтобы не тревожить детей. «Артур боялся не Крейна. Он боялся, что я узнаю, кому он помогал». Она вспоминает серый автомобиль и имя Рид.';
+  break;
  case 'office':
   if(seen)return 'Ты возвращаешься в кабинет Артура. Копия накладной уже у тебя. Можно проверить оставшиеся следы или вернуться к свидетелям.';
   break;
@@ -181,7 +184,7 @@ function sceneText(n){
  case 'reed':
   if(state.flags.reedAlert)return 'Ты снова пришёл в участок после открытого обвинения. Рид узнаёт тебя и держится настороженно. Он согласен выслушать новые сведения, но прежнего доверия уже нет.';
   if(seen)return 'Рид узнаёт тебя. Он по-прежнему требует документы в обмен на помощь. Можно предъявить найденное или уйти, не раскрывая карты.';
-  if(!state.items.includes('witness')&&!state.items.includes('key'))return 'Ты находишь сержанта Рида по имени, указанному на складском документе или услышанному у причала. Он слишком быстро узнаёт о пропавшей книге и предлагает защиту семьи в обмен на бумаги.';
+  if(!state.items.includes('witness')&&!state.items.includes('key'))return 'В участке тебя направляют к сержанту Риду, который ведает складскими причалами. Он слишком быстро узнаёт о пропавшей книге и предлагает защиту семьи в обмен на бумаги.';
   break;
  case 'heroJack':
   if(visited('sneak'))return 'Джек требует запись о ночной смене. Сторож подтверждает происхождение уже найденного обрывка с подписью Рида и уступает проход. Обрывок остаётся у тебя в единственном экземпляре.';
@@ -205,6 +208,11 @@ function sceneText(n){
  }
  return n.text;
 }
+function scenePlace(n){
+ if(state.flags.widowSafe&&state.node==='widow')return 'Смолл-Хит · дом соседки';
+ if(state.flags.widowSafe&&state.node==='interview')return 'Смолл-Хит · дом соседки · кухня';
+ return n.place||'СМОЛЛ-ХИТ · АРХИВ';
+}
 function sceneActor(){
  const actor=ACTORS[state.node];
  if(state.node==='reed'&&state.flags.reedAlert)return ['СЕРЖАНТ РИД','«Снова вы. Если у вас появились документы, я выслушаю».','reed'];
@@ -212,6 +220,7 @@ function sceneActor(){
  return actor||null;
 }
 function choiceText(label,target){
+ if(target==='reed'&&!state.items.some(item=>['key','witness','receipt','overheard','testimony'].includes(item)))return 'Узнать о складе в полицейском участке';
  if(target==='bribe'&&visited('bribe'))return 'Напомнить сторожу об уговоре';
  if(target==='sneak'&&visited('sneak'))return 'Вернуться через знакомый проход';
  if(target==='unlock'&&(visited('unlock')||visited('heroFinn')||visited('warehouse')))return 'Проверить знакомый вход ключом №17';
@@ -219,7 +228,7 @@ function choiceText(label,target){
  if(target==='endingDeal'&&state.node==='confront'&&visited('rescue'))return 'Договориться об уничтожении документов и безопасном уходе';
  return label;
 }
-function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=n.place||'СМОЛЛ-ХИТ · АРХИВ';$('caseTitle').textContent=n.title;$('caseText').textContent=sceneText(n);$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';verifySceneArt(ART[state.node]||'intro-meeting');$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=sceneActor();const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
+function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=scenePlace(n);$('caseTitle').textContent=n.title;$('caseText').textContent=sceneText(n);$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';verifySceneArt(ART[state.node]||'intro-meeting');$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=sceneActor();const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
 function renderChoices(){const n=scenes[state.node];$('caseChoices').replaceChildren();$('caseOutcome').hidden=!n.end;if(n.end){state.ending=state.node;$('caseOutcome').textContent=n.outcome+(state.node==='endingDeath'?' · Причина: '+(state.deathCause||'опасное столкновение'):' · Репутация +'+n.reputation);save();const b=button('ПЕРЕИГРАТЬ ДЕЛО С НАЧАЛА',()=>{if(confirm('Начать дело заново? Текущие решения будут заменены.')){state=fresh();save();render()}});$('caseChoices').append(b);return}healChoice();for(const [label,target,requirement] of n.choices){
 // Each one-time scene grants a unique clue. Those existing permanent clues
 // survive the bounded journal and also cover old saves without a schema change.

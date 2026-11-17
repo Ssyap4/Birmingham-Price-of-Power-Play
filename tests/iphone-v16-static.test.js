@@ -210,3 +210,11 @@ test("V42 revisit continuity and all six endings remain reachable for every hero
  assert.doesNotMatch(reactions,/nodes:\['confront','trade'/);
  assert.ok(reactions.includes("e.requires.every(item=>current.items.includes(item))"));
 });
+
+
+test("V42 contextual location follows Evelyn and introduces Reed when not yet known",()=>{
+ const source=read("case-v14.js");
+ assert.ok(source.includes("$('casePlace').textContent=scenePlace(n)"));
+ assert.ok(source.includes("Смолл-Хит · дом соседки · кухня"));
+ assert.ok(source.includes("В участке тебя направляют к сержанту Риду"));
+});
