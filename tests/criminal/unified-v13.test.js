@@ -30,7 +30,7 @@ test("shared archive copy reflects the three active story lines",()=>{
  }
  assert.match(criminal,/Работа для своих/);
  assert.match(second,/campaignSecondCaseAchievements/);
- assert.match(criminal,/campaignCriminalAchievements/);
+ assert.match(criminal,/wrap\.id="campaignCriminal"\+\(\{campaignAchievements:"Achievements"/);
  assert.doesNotMatch(hub,/Пока доступны только записи дела №001/);
  assert.doesNotMatch(read("campaign-hub-v1.css"),/in cabinet settings/);
 });
