@@ -35,6 +35,17 @@ def return_from_case002(page,save,label):
  page.locator("#launchSecondCase").wait_for(state="visible")
  assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
 
+def cabinet_material(page,selector):
+ el=page.locator(selector).first
+ el.wait_for(state="visible")
+ m=el.evaluate("""e=>{const s=getComputedStyle(e);return {surface:s.backgroundImage,
+  radius:s.borderTopLeftRadius,edge:s.borderTopColor,
+  token:s.getPropertyValue('--campaign-cabinet-surface').trim()};}""")
+ assert m["radius"]=="7px" and m["edge"]=="rgb(148, 112, 68)", (selector,m)
+ assert m["token"].startswith("linear-gradient("), (selector,m)
+ assert m["surface"]!="none", (selector,m)
+ return m["surface"]
+
 def trial_bounds(page,screen,width):
  page.wait_for_function("""({screen,width})=>{
   const el=document.getElementById(screen),r=el.getBoundingClientRect(),head=document.querySelector('.shell>.top'),h=head.getBoundingClientRect(),style=getComputedStyle(el);
@@ -197,6 +208,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    title=page.locator("#districts .district-atlas-title")
    assert title.evaluate("""el=>{const bounds=el.getBoundingClientRect(), words=[...el.querySelectorAll('span')];return words.length===2&&words.every(w=>{const range=document.createRange();range.selectNodeContents(w);const rects=[...range.getClientRects()];return rects.length===1&&rects[0].left>=bounds.left-1&&rects[0].right<=bounds.right+1})}"""),(engine,width,"atlas heading wraps or clips")
    page.locator("#districts .districts-heading").screenshot(path=str(OUT/f"{engine}-{width}-v28-atlas-heading.png"))
+   cabinet_reference=cabinet_material(page,"#districts .district-detail")
+   page.screenshot(path=str(OUT/f"{engine}-{width}-v53-district-card.png"),full_page=True)
    page.locator("#districtAudioDock .bh-audio-controls").wait_for(state="visible")
    # The real event is approximated; verify neither observer steals the dock.
    page.evaluate("document.dispatchEvent(new Event('visibilitychange'))")
@@ -214,11 +227,15 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert page.locator("#profile .profile-v21-art img").evaluate("el=>el.naturalHeight===540 && getComputedStyle(el).objectFit==='contain'")
    page.locator("#profile .profile-v21-art").screenshot(path=str(OUT/f"{engine}-{width}-v22-profile-art.png"))
    assert page.locator("#profile .player-overview-card").count()==3
+   assert cabinet_material(page,"#profile .player-campaign-overview")==cabinet_reference
+   assert page.locator("#profile .player-overview-card").evaluate_all("els=>els.every(e=>getComputedStyle(e).borderTopLeftRadius==='7px')")
    assert page.evaluate("scrollY")<12,(engine,width,"profile unexpectedly scrolled to middle")
    page.screenshot(path=str(OUT/f"{engine}-{width}-profile.png"),full_page=False)
    tap(page,"#profile .campaign-profile-links [data-open-section='campaignAchievements']")
    page.locator("#campaignAchievements").wait_for(state="visible")
    current(page,"campaignAchievements")
+   assert cabinet_material(page,"#campaignAchievements .campaign-002-overview")==cabinet_reference
+   assert cabinet_material(page,"#campaignCriminalAchievements")==cabinet_reference
    assert page.locator("#campaignAchievements .campaign-002-overview").evaluate("""el=>{const cells=[...el.querySelectorAll('.campaign-002-metric')];const boxes=cells.map(c=>c.getBoundingClientRect());return cells.length===3&&boxes.every(b=>Math.abs(b.top-boxes[0].top)<2)&&cells.every(c=>c.scrollWidth<=c.clientWidth+1)}"""),(engine,width,"archive metric layout")
    assert page.locator("#campaignAchievements .campaign-tabs").evaluate("el=>[...el.querySelectorAll('button')].every(b=>b.getBoundingClientRect().height>=48&&b.scrollWidth<=b.clientWidth+1)")
    page.locator("#campaignAchievements .campaign-002-overview").screenshot(path=str(OUT/f"{engine}-{width}-v28-archive-summary.png"))
@@ -329,6 +346,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     # Assert criminal atlas -> common archive -> profile -> detective atlas.
     tap(page,"#criminalEntry")
     page.locator("#criminalScreen .cr-map").wait_for(state="visible")
+    assert cabinet_material(page,"#criminalScreen .campaign-portal-v13")==cabinet_reference
+    assert page.locator("#criminalScreen .cr-map").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
     assert page.locator("#criminalScreen .cr-mission-list").evaluate("""el=>{const cards=[...el.querySelectorAll('button[data-mission]')];return cards.length===5&&cards.every(c=>c.getBoundingClientRect().height>=98&&c.scrollWidth<=c.clientWidth+1&&c.querySelector('.cr-mission-action'))}""")
     page.locator("#criminalScreen .cr-mission-list").screenshot(path=str(OUT/f"{engine}-{width}-v29-criminal-entry.png"))
     tap(page,"#criminalScreen .campaign-portal-v13 [data-campaign-jump='archive']")

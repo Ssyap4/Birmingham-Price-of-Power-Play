@@ -104,3 +104,75 @@
   }
   #criminalScreen .cr-story {padding-inline:11px;}
 }
+
+/* V53 — shared cabinet materials. The maps retain their own cartography;
+   archived awards retain earned/locked distinction and data-status borders. */
+@media (orientation:portrait) and (max-width:700px) {
+  #districts, #criminalScreen, .campaign-hub, #profile {
+    --campaign-cabinet-surface: linear-gradient(145deg,#2d2118,#1a1510 68%,#15120f);
+    --campaign-cabinet-tile: linear-gradient(145deg,#3b2c20,#1c1712 85%);
+    --campaign-cabinet-edge: #947044;
+    --campaign-cabinet-radius: 7px;
+    --campaign-cabinet-ink: #efddc6;
+    --campaign-cabinet-action: linear-gradient(110deg,#49341f,#2b2119 78%);
+  }
+  #districts .map-panel, #criminalScreen .cr-map {
+    border-radius: var(--campaign-cabinet-radius);
+    border-color: var(--campaign-cabinet-edge) !important;
+  }
+  #districts .district-detail,
+  #profile .player-campaign-overview,
+  .campaign-hub .campaign-002-overview,
+  .campaign-hub .campaign-criminal-section {
+    background: var(--campaign-cabinet-surface) !important;
+    border-radius: var(--campaign-cabinet-radius) !important;
+    border-color: var(--campaign-cabinet-edge) !important;
+  }
+  #districts #launchFirstCase,
+  #districts #launchSecondCase,
+  #criminalScreen .cr-mission-list button:not([data-progress="corrupt"]):not([data-progress="dead"]),
+  #profile .campaign-profile-links button {
+    border-radius: var(--campaign-cabinet-radius) !important;
+    background: var(--campaign-cabinet-action) !important;
+    color: var(--campaign-cabinet-ink) !important;
+  }
+  #profile .player-overview-card,
+  .campaign-hub .campaign-002-fold,
+  .campaign-hub .campaign-criminal-fold,
+  .campaign-hub .campaign-criminal-hero,
+  .campaign-hub .campaign-criminal-attempt,
+  .campaign-hub .campaign-attempt {
+    background: var(--campaign-cabinet-tile) !important;
+    border-radius: var(--campaign-cabinet-radius) !important;
+  }
+  .campaign-hub .campaign-card,
+  .campaign-hub .campaign-award,
+  .campaign-hub .campaign-reward-card {
+    border-radius: var(--campaign-cabinet-radius) !important;
+  }
+  .campaign-hub .campaign-criminal-seal:not(.earned) {
+    background:#1c1712;
+  }
+  .campaign-hub .campaign-002-fold>summary,
+  .campaign-hub .campaign-criminal-fold>summary {
+    min-height:54px;
+    line-height:1.5;
+    color:var(--campaign-cabinet-ink);
+  }
+  .campaign-hub .campaign-criminal-fold>summary::marker {color:#dcb27b;}
+  #districts .campaign-portal-v13,
+  #criminalScreen .campaign-portal-v13 {
+    background: var(--campaign-cabinet-surface);
+    border-radius: var(--campaign-cabinet-radius);
+    border-color: var(--campaign-cabinet-edge) !important;
+  }
+  #districts .campaign-portal-v13 button,
+  #criminalScreen .campaign-portal-v13 button,
+  .campaign-hub .campaign-002-jump,
+  .campaign-hub .campaign-tabs button {
+    border-radius:var(--campaign-cabinet-radius) !important;
+  }
+  #profile .player-overview-card strong {
+    font-variant-numeric:tabular-nums;
+  }
+}
