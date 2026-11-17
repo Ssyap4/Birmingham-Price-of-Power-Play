@@ -690,3 +690,16 @@
   #criminalScreen .cr-journal>ol>li::marker{color:#dcb27b;font-weight:700}
   #criminalScreen .cr-journal-action{display:block;margin-top:5px}
 }
+
+
+/* V68: individually reviewed rescue-ending composition. Reproduce the
+   accepted central 4:5 crop from the original frame without new art bytes,
+   stretching or affecting any other ending. A missing/nonmatching image
+   retains the prior natural-image/fallback behavior. */
+@media (orientation: portrait) and (max-width:700px){
+ #caseGame #caseScene[data-ending="endingRescue"] #caseArt .case001-portrait-image:not([hidden])[src$="/endingRescue-approved.webp"]{
+  width:100%!important;height:auto!important;aspect-ratio:4/5!important;
+  max-width:100%!important;max-height:none!important;min-height:0!important;
+  object-fit:cover!important;object-position:50% 50%!important;
+ }
+}

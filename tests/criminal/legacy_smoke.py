@@ -71,6 +71,8 @@ def run():
                 page = ctx.new_page()
                 errors = []
                 page.on("pageerror", lambda e: errors.append(str(e)))
+                page.on("crash", lambda _: print("FAIL browser page crashed", name, flush=True))
+                page.on("close", lambda _: print("TRACE page closed", name, flush=True))
                 page.route("https://**/*", lambda r: r.abort())
                 page.goto(origin + "/index.html", wait_until="domcontentloaded")
                 # Return from the new mode before entering the old five-district map.
@@ -310,6 +312,16 @@ def run():
                 page.wait_for_function("document.querySelector('.case001-finale-archive-note')?.dataset.status==='verified'")
                 assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="ИТОГ"
                 terminal_bytes=page.evaluate("k=>localStorage.getItem(k)",keys["key"])
+                # Reviewed art pilot: same underlying original, one scene only.
+                # Test portrait geometry at three phone widths, not just a CSS value.
+                photo=page.locator("#caseArt .case001-portrait-image")
+                page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image');return i&&!i.hidden&&i.complete&&i.naturalWidth===1448&&i.naturalHeight===1086}""")
+                for width in (320,390,430):
+                    page.set_viewport_size({"width":width,"height":844})
+                    page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image'),s=getComputedStyle(i),r=i.getBoundingClientRect();return s.objectFit==='cover'&&Math.abs(r.width/r.height-.8)<.015&&r.width>240&&document.documentElement.scrollWidth<=innerWidth+1}""")
+                    photo.screenshot(path=str(OUT/(name+f"-v68-rescue-art-{width}.png")))
+                    assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==terminal_bytes
+                page.set_viewport_size({"width":390,"height":844})
                 tap(page,"#case001QuickNav [data-go='choices']")
                 assert page.evaluate("document.activeElement.matches('.v33-ending-report')")
                 page.wait_for_function("document.querySelector('#case001QuickNav [data-go=choices]').getAttribute('aria-current')==='location'")
@@ -330,6 +342,7 @@ def run():
                   window.BirminghamCase.resume();
                 }""",{"k":keys,"originals":final_fixture})
                 assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="РЕШЕНИЯ"
+                page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image');return i&&!i.hidden&&i.complete&&getComputedStyle(i).objectFit==='contain'}""")
                 # V37: the global exit no longer deletes the active investigation.
                 assert "Сбросить" in page.locator("#caseDiscardBtn").inner_text()
                 assert page.locator("#gameExitBtn").is_hidden()
@@ -384,6 +397,7 @@ def run():
                 assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==second
                 # V65 map/profile parity, including JSON null (not missing) and an
                 # inconsistent Case001 non-terminal state. Do not open or replace these slots.
+                print("TRACE slot parity start",name,flush=True)
                 slot_fixture=page.evaluate("""()=>{const values={
                   birmingham_case_smol_heath_v1_finn:'null',
                   birmingham_case002_draft_v3_finn:'null',
@@ -391,8 +405,10 @@ def run():
                 };const old=Object.fromEntries(Object.keys(values).map(k=>[k,localStorage.getItem(k)]));
                 for(const [k,v] of Object.entries(values))localStorage.setItem(k,v);
                 window.dispatchEvent(new StorageEvent('storage',{key:null}));return {values,old}}""")
+                slot_parity_failed=False
                 try:
                     assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.map(e=>[e.dataset.active,e.dataset.finished,e.dataset.issues])")==[["1","0","2"],["1","0","1"],["1","0","0"]]
+                    print("TRACE map entry after profile fixture",name,flush=True)
                     tap(page,"#homeBtn")
                     tap(page,"#districtsCard")
                     board=page.locator("#campaignDistrictState")
@@ -400,18 +416,34 @@ def run():
                     assert board.get_attribute("data-active")=="1"
                     assert board.get_attribute("data-finished")=="0"
                     assert "Требуют проверки: 2" in board.inner_text()
+                    print("TRACE small-heath confirmed; select digbeth",name,flush=True)
                     tap(page,'.map-pin[data-district="digbeth"]')
                     page.wait_for_function("document.querySelector('#campaignDistrictState').dataset.issues==='1'")
                     assert board.get_attribute("data-active")=="1"
                     assert board.get_attribute("data-finished")=="0"
+                    print("TRACE digbeth confirmed; select aston",name,flush=True)
                     tap(page,'.map-pin[data-district="aston"]')
                     assert board.is_hidden()
                     assert page.evaluate("keys=>Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]))",list(slot_fixture["values"]))==slot_fixture["values"]
+                    print("TRACE return to profile after parity",name,flush=True)
                     tap(page,"#homeBtn")
                     tap(page,"#cabinetProfile")
+                    print("TRACE profile re-entry completed",name,flush=True)
+                except Exception as exc:
+                    slot_parity_failed=True
+                    print("FAIL slot parity",name,type(exc).__name__,str(exc),flush=True)
+                    raise
                 finally:
-                    page.evaluate("""old=>{for(const [k,v] of Object.entries(old)){if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}
-                    window.dispatchEvent(new StorageEvent('storage',{key:null}))}""",slot_fixture["old"])
+                    # Do not mask an earlier crash/timeout by trying to evaluate
+                    # cleanup on a closed test target. Production slots are not involved.
+                    if not page.is_closed():
+                        try:
+                            page.evaluate("""old=>{for(const [k,v] of Object.entries(old)){if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}
+                            window.dispatchEvent(new StorageEvent('storage',{key:null}))}""",slot_fixture["old"])
+                        except Exception as exc:
+                            if not slot_parity_failed:
+                                raise
+                            print("FAIL fixture cleanup",name,str(exc),flush=True)
                 tap(page,"#profile .campaign-profile-links [data-open-section='campaignDossiers']")
                 assert page.locator("#campaignDossiers .campaign-live").first.inner_text().startswith("Расследование в работе")
                 tap(page,"#homeBtn")
