@@ -413,7 +413,7 @@ def run():
                 tap(page,"#homeBtn")
                 tap(page,".cabinet-entry-quiz")
                 assert page.locator(".screen:not([hidden])").evaluate_all("els=>els.map(e=>e.id)")==["choose"]
-                tap(page,"#difficultyList button.mode")
+                page.locator("#difficultyList button.mode").first.tap()
                 assert page.locator(".screen:not([hidden])").evaluate_all("els=>els.map(e=>e.id)")==["play"]
                 page.once("dialog",lambda d:d.dismiss())
                 tap(page,"#homeBtn")
