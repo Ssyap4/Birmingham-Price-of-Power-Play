@@ -334,6 +334,10 @@ def run():
                                     if next["status"] == "finished":
                                         break
                                     assert page.locator(".cr-consequence").is_visible()
+                                    origin_title = page.evaluate("s=>CriminalContent.missions[s.missionId].scenes[s.sceneId].title",s)
+                                    assert page.locator('.cr-heading[data-phase="consequence"] h1').inner_text()==origin_title
+                                    assert "ИТОГ РЕШЕНИЯ" in page.locator(".cr-heading > span").inner_text()
+                                    assert page.locator("[data-choice]").count()==0
                                     act = page.evaluate(
                                         "s=>CriminalContent.missions[s.missionId].scenes[s.sceneId].act",
                                         next,
@@ -344,6 +348,10 @@ def run():
                                         assert value(page, id) == next
                                         last_act = act
                                     touch(page, '[data-action="ack"]')
+                                    next_title=page.evaluate("s=>CriminalContent.missions[s.missionId].scenes[s.sceneId].title",next)
+                                    assert page.locator('.cr-heading[data-phase="scene"] h1').inner_text()==next_title
+                                    assert not page.locator(".cr-consequence").count()
+                                    assert value(page,id)==next
                                 final = value(page, id)
                                 assert (
                                     final["status"] == "finished"

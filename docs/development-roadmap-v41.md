@@ -83,3 +83,10 @@
 - Browser assertions use the two actual hero pickers and compare computed selected/unselected materials, check case pulse, board and criminal inventory/hud/HP on the existing matrix, retain existing touch/save/board tests; additional hero-picker screenshots. Pending remote QA and visual inspection. Case001 portrait audit still not artist-reviewed. Main V50 and Safari V39 unchanged.
 
 - V55 art follow-up: downloaded and visually inspected all 7 Case001 inventory comparison sheets, 37 scene rows. Initial human-style composition triage in docs/case001-portrait-adaptation-v1.md: safe-reframe 12, outpaint 18, keep-portrait 2, keep-wide 5. No image candidate or source art installed; gallery sizes insufficient for final clue/pixel review. Codex first reframe batch specified; don't block other interface work.
+
+
+## V56 — ясный переход между решением и сценой, рамки без кадрирования
+- V55 criminal/unified CI 44161564047 SUCCESS on fa614a4b4cee33bd6e8f7999a0ea8e888fdc1562; art follow-up f766b84f54ccbac3a26b526acb265f7d9596c216 docs only.
+- Case001 decoded source frame now follows original aspect ratio at full available width; no extra blur of duplicate art or fixed-height letterbox after decoding. Loading/error fallback retained. No original artwork/crop choices changed. Shared captions/read/decision action presentation and first-case numeric pulse readability across readers.
+- Criminal reader used to display destination scene title/act while the previous decision receipt was still open. During the existing receipt phase show origin scene and act, explicitly marked outcome; ack shows destination. Engine, event, confirmed saved bytes, HP, rewards, available choices and navigation handlers not changed. On reload existing receipt semantics preserved.
+- Existing browser matrix now asserts actual original/display Case001 ratio and fit, status typography, Case002 read action, actual receipt origin title, destination after acknowledgement and identical saved state; retains existing full criminal route checks. Remote QA pending; no new deployment/main change. Gallery review is not visual acceptance of artwork variants.

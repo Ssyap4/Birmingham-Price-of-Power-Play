@@ -391,3 +391,80 @@
     color:var(--campaign-work-ink);
   }
 }
+
+
+/* V56 — one readable scene rhythm. Full original images, no forced crop.
+   The existing art-loading fallback remains intact when decoding fails. */
+@media (orientation:portrait) and (max-width:700px) {
+  #caseGame #caseArt.case-art:has(.case001-portrait-image:not([hidden])) {
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    background:linear-gradient(145deg,#261d16,#110e0d) !important;
+    padding:8px 7px 0 !important;
+    gap:0 !important;
+  }
+  #caseGame #caseArt.case-art:has(.case001-portrait-image:not([hidden]))::before {
+    display:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  #caseGame #caseArt .case001-portrait-image:not([hidden]) {
+    flex:none !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    object-fit:contain !important;
+    border-radius:4px !important;
+    box-shadow:none !important;
+  }
+  #caseGame #caseArt .case001-art-caption,
+  #game .scene-art-caption,
+  #criminalScreen .cr-frame figcaption {
+    box-sizing:border-box;
+    min-height:33px;
+    padding:8px 6px;
+    color:#d8bd96;
+    font:650 .67rem/1.4 system-ui,sans-serif;
+    letter-spacing:.025em;
+    overflow-wrap:anywhere;
+  }
+  /* Same visible action weight, not a new button or scroll handler. */
+  #caseGame #caseScene .case001-read-scene,
+  #game #readScene,
+  #criminalScreen .cr-reader-jump button {
+    box-sizing:border-box;
+    min-height:48px !important;
+    width:100%;
+    border:1px solid #b18d5d !important;
+    border-radius:5px !important;
+    background:linear-gradient(120deg,#45321f,#2b2118) !important;
+    color:#ffe0ae !important;
+    font:750 .75rem/1.45 system-ui,sans-serif;
+    letter-spacing:.04em;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  #caseGame #caseScene .case001-scene-hero img {
+    border-radius:5px;
+  }
+  #caseGame .case001-campaign-pulse:not([hidden]) {
+    border-radius:var(--campaign-work-radius);
+    background:var(--campaign-work-sheet);
+  }
+  #caseGame .case001-pulse-metrics small {
+    font-size:clamp(.59rem,2.1vw,.68rem);
+    overflow-wrap:anywhere;
+  }
+  #caseGame .case001-pulse-metrics b {
+    font-variant-numeric:tabular-nums;
+  }
+  #criminalScreen .cr-heading[data-phase="consequence"] {
+    border-left:3px solid #cda16a;
+    padding-left:10px;
+  }
+  #criminalScreen .cr-heading[data-phase="consequence"] h1 {
+    overflow-wrap:anywhere;
+    text-wrap:balance;
+  }
+}

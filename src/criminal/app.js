@@ -384,8 +384,14 @@
           }${!c.available ? "<small>Недоступно: не выполнено условие или не хватает ресурса.</small>" : ""}</button>`,
       )
       .join("");
+    // The confirmed state already points to the next node. While displaying
+    // the last choice's receipt, label the scene/act that actually produced it.
+    // After acknowledgement, the existing render reveals the next heading.
+    const origin = result ? m.scenes[state.lastEvent.from] : null;
+    const heading = origin || n;
+    const phase = result ? "consequence" : "scene";
     render(
-      `<header class="cr-heading"><span>${m.id} · АКТ ${n.act}/3 · ${esc(m.acts[n.act - 1])}</span><h1>${esc(n.title)}</h1>${actProgress(n.act)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
+      `<header class="cr-heading" data-phase="${phase}"><span>${m.id} · АКТ ${heading.act}/3 · ${esc(m.acts[heading.act - 1])}${result ? " · ИТОГ РЕШЕНИЯ" : ""}</span><h1>${esc(heading.title)}</h1>${actProgress(heading.act)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
         result ||
         `${art(m, state.sceneId)}<article class="cr-story" id="crStory" tabindex="-1"><p>${esc(n.text)}</p><div class="cr-dialogue">${n.lines
           .filter((l) => !l[2] || E.test(state, l[2]))

@@ -97,6 +97,7 @@ def run():
                 tap(page, 'button.choice[data-to="P02"]')
                 assert page.locator("#sceneId").inner_text().startswith("P02")
                 second_visual=reading_language(page,"#sceneText")
+                assert page.locator("#readScene").evaluate("e=>{const s=getComputedStyle(e);return e.getBoundingClientRect().height>=48&&s.borderTopLeftRadius==='5px'}")
                 assert page.locator("#casePulse span").evaluate_all("""els=>els.length===3&&els.every(e=>{const s=getComputedStyle(e);return s.borderTopLeftRadius==='5px'&&s.fontVariantNumeric==='tabular-nums'&&s.color==='rgb(239, 221, 198)'})""")
                 assert page.locator("#caseTools").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                 second = page.evaluate(
@@ -122,6 +123,12 @@ def run():
                 assert page.locator("#caseGame").is_visible()
                 assert page.locator("#caseChoices button").count() > 0
                 first_visual=reading_language(page,"#caseText")
+                page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image');return i&&!i.hidden&&i.complete&&i.naturalWidth>0}""")
+                art_geometry=page.locator("#caseArt .case001-portrait-image").evaluate("""i=>{const s=getComputedStyle(i),r=i.getBoundingClientRect(),stage=i.parentElement;return {ratio:(r.width-parseFloat(s.borderLeftWidth)-parseFloat(s.borderRightWidth))/(r.height-parseFloat(s.borderTopWidth)-parseFloat(s.borderBottomWidth)),original:i.naturalWidth/i.naturalHeight,fill:r.width/stage.clientWidth,fit:s.objectFit,stageHeight:stage.clientHeight,imageHeight:r.height}}""")
+                assert abs(art_geometry["ratio"]-art_geometry["original"])<.035,art_geometry
+                assert art_geometry["fill"]>.9 and art_geometry["fit"]=="contain",art_geometry
+                assert art_geometry["stageHeight"]-art_geometry["imageHeight"]<100,art_geometry
+                assert page.locator("#case001PulseClues").evaluate("e=>getComputedStyle(e).fontVariantNumeric")=="tabular-nums"
                 first = page.evaluate(
                     "localStorage.getItem('birmingham_case_smol_heath_v1_jack')"
                 )
