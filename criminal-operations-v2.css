@@ -721,3 +721,11 @@ body[data-criminal="active"] > .bh-audio-controls button {
 #criminalScreen .cr-inventory>summary:focus-visible,#criminalScreen .cr-journal>summary:focus-visible{outline:2px solid #f2d19c;outline-offset:-3px}
 #criminalScreen .cr-final-receipt:focus-visible,#criminalScreen #crDecisionHeading:focus-visible{outline:2px solid #f2d19c;outline-offset:2px}
 @media(max-width:355px){#criminalScreen .cr-choices button{padding-left:36px}#criminalScreen .cr-choices button::before{left:9px}#criminalScreen .cr-story{padding-inline:11px}}
+
+/* V72: retain guarded internal action without a second visible Menu. */
+#criminalScreen .cr-top button[hidden]{display:none!important}
+#criminalScreen .cr-frame{position:relative}
+#criminalScreen .cr-frame[data-art-state="loading"]::before{
+ content:"Кадр загружается…";position:absolute;z-index:1;left:50%;top:44%;transform:translate(-50%,-50%);
+ max-width:85%;padding:7px 10px;border:1px solid #8b6a43;border-radius:4px;background:#201811;color:#e9cda3;font:600 .78rem/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;
+}

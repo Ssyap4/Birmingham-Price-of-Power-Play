@@ -47,8 +47,12 @@
     );
   const btn = (id, text, cls = "") =>
     `<button type="button" data-action="${id}" class="${cls}">${text}</button>`;
+  const unified=!!document.querySelector("#home.cinema-home");
   function top() {
-    return `<div class="cr-top">${btn("map", "← Карта")}${mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${btn("home", "Меню")}</div>`;
+    // Preserve the guarded local action for internal bridge and standalone.
+    const mapButton=unified&&mode==="map"?"":btn("map","← Карта");
+    const homeButton=unified?'<button type="button" data-action="home" hidden>Меню</button>':btn("home","Меню");
+    return `<div class="cr-top">${mapButton}${mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${homeButton}</div>`;
   }
   function setHash(value) {
     try {
@@ -90,13 +94,26 @@
     open();
     root.innerHTML = top() + html;
     root.querySelectorAll("img").forEach((img) => {
-      img.addEventListener("error", () => {
+      const frame=img.closest(".cr-frame");
+      const fallback=()=>{
+        if(!img.isConnected||!root.contains(img))return;
+        if(frame)frame.dataset.artState="unavailable";
         const f = document.createElement("p");
         f.className = "cr-art-fallback";
-        f.textContent =
-          "Кадр недоступен. История и управление продолжают работать.";
+        f.textContent = "Кадр недоступен. История и управление продолжают работать.";
         img.replaceWith(f);
-      });
+      };
+      img.addEventListener("error",fallback,{once:true});
+      if(!frame)return;
+      const ready=()=>{
+        if(!img.isConnected||!root.contains(img))return;
+        if(!img.naturalWidth)return fallback();
+        const done=()=>{if(img.isConnected&&root.contains(img)&&img.naturalWidth)frame.dataset.artState="ready"};
+        if(typeof img.decode==="function")img.decode().then(done,()=>{if(img.complete&&img.naturalWidth)done();else if(img.complete)fallback()});
+        else done();
+      };
+      img.addEventListener("load",ready,{once:true});
+      if(img.complete){if(img.naturalWidth)ready();else fallback()}
     });
     const heading=root.querySelector("h1");
     heading?.setAttribute("tabindex", "-1");
@@ -115,7 +132,7 @@
           f.kind === (sceneId?.startsWith("end:") ? "aftermath" : "arrival"),
       );
     return entry
-      ? `<figure class="cr-frame"><img src="${entry.path}" width="720" height="900" alt="${esc(entry.alt)}" decoding="async"><figcaption>${esc(m.district)} · ${sceneId?.startsWith("end:") ? "После этой ночи" : "Бирмингем, 1920-е"}</figcaption></figure>`
+      ? `<figure class="cr-frame" data-art-state="loading"><img src="${entry.path}" width="720" height="900" alt="${esc(entry.alt)}" loading="eager" decoding="sync"><figcaption>${esc(m.district)} · ${sceneId?.startsWith("end:") ? "После этой ночи" : "Бирмингем, 1920-е"}</figcaption></figure>`
       : '<div class="cr-art-fallback">Для этой сцены кадр ещё не установлен. Игра доступна полностью.</div>';
   }
   function hero(m) {

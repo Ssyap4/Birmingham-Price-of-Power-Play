@@ -9,8 +9,8 @@
  const screens=["campaignAchievements","campaignDossiers","campaignHistory"].map(id=>d.getElementById(id));
  if(screens.some(el=>!el))return;
  const choices={
-  detective:[["criminal","Работа для своих"],["archive","Общий архив"],["home","Главное меню"]],
-  criminal:[["detective","Детективная карта"],["archive","Общий архив"],["home","Главное меню"]],
+  detective:[["criminal","Работа для своих"],["archive","Общий архив"]],
+  criminal:[["detective","Детективная карта"],["archive","Общий архив"]],
  };
  function makeBar(kind){
   const nav=d.createElement("nav");

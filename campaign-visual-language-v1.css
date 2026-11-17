@@ -741,3 +741,18 @@
  #caseGame #case001PulseHealth{font-size:clamp(.88rem,3.7vw,1.16rem)!important;white-space:nowrap!important;letter-spacing:-.015em}
  #caseGame .case001-pulse-heading{letter-spacing:.065em!important}
 }
+
+/* V72: real shared header remains reachable while reading either atlas. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(>.shell>#districts:not([hidden])),
+ body:has(>.shell>#criminalScreen:not([hidden]) .cr-map){overflow-x:clip!important}
+ body:has(>.shell>#districts:not([hidden]))>.shell>.top,
+ body:has(>.shell>#criminalScreen:not([hidden]) .cr-map)>.shell>.top{
+  position:sticky!important;top:env(safe-area-inset-top,0px)!important;z-index:90!important;
+  background:#18130f!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 4px 12px #0008!important;
+ }
+ html:has(body>.shell>#districts:not([hidden])),
+ html:has(body>.shell>#criminalScreen:not([hidden]) .cr-map){scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+ #districts .map-pin,#districts #districtCase,#criminalScreen .cr-pin{scroll-margin-top:8px}
+ #districts .campaign-portal-v13,#criminalScreen .campaign-portal-v13{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}

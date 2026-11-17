@@ -49,7 +49,7 @@ def bounds(page):
     assert not page.evaluate(
         "document.documentElement.scrollWidth>innerWidth+1"
     ), "horizontal overflow"
-    for button in page.locator("#criminalScreen button:not([disabled])").all():
+    for button in page.locator("#criminalScreen button:not([disabled]):visible").all():
         assert button.bounding_box()["height"] >= 43, "target smaller than 44px"
 
 
@@ -213,7 +213,7 @@ def run():
                     assert page.locator("#home").is_visible()
                     touch(page, "#districtsCard")
                     assert page.locator("#districts").is_visible()
-                    assert page.locator('#districts .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                    assert page.locator('#districts .campaign-portal-v13 [data-campaign-jump]').count() == 2
                     assert page.locator("#campaignDistrictState").count() == 1
                     touch(page, '#districts [data-campaign-jump="archive"]')
                     assert page.locator("#campaignAchievements").is_visible()
@@ -227,7 +227,7 @@ def run():
                     touch(page, "#criminalEntry")
                     assert page.locator("#criminalScreen .cr-map").is_visible()
                     assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == 5
-                    assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                    assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 2
                     touch(page, '#criminalScreen [data-campaign-jump="detective"]')
                     assert page.locator("#districts").is_visible()
                     assert not page.locator("body[data-criminal='active']").count()
@@ -265,11 +265,14 @@ def run():
                     assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
                     assert page.locator(".cr-pin").count() == 5
                     assert page.locator("#criminalScreen .campaign-portal-v13").count() == 1
+                    assert page.locator("#criminalScreen .cr-top [data-action=home]").is_hidden()
+                    assert page.locator("#criminalScreen .cr-top [data-action=map]").count()==0
+                    assert page.locator("#homeBtn").is_visible()
                     if width == 390:
                         page.screenshot(
                             path=str(OUT / (name + "-map.png")), full_page=True
                         )
-                    touch(page, '[data-action="home"]')
+                    touch(page, "#homeBtn")
                     assert page.locator("#home").is_visible()
                     # Set raw legacy bytes after startup. The criminal mode must not write them.
                     page.evaluate(
@@ -310,11 +313,11 @@ def run():
                             path=str(OUT / (name + "-" + str(width) + "-scene.png")),
                             full_page=True,
                         )
-                        touch(page, '[data-action="home"]')
+                        touch(page, "#homeBtn")
                         touch(page, "#criminalEntry")
                         assert page.locator('.cr-pin[data-mission="CR01"]').get_attribute("data-progress") == "active"
                         assert "В работе · акт" in page.locator('.cr-mission-list [data-mission="CR01"]').inner_text()
-                        touch(page, '[data-action="home"]')
+                        touch(page, "#homeBtn")
                     else:
                         for id, types in PLANS.items():
                             for kind, proof in types.items():
@@ -419,13 +422,17 @@ def run():
                                         assert not page.locator(".cr-reward-toast").count()
                                         assert page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"save_"+id)==exact_slot
                                         assert page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"ledger")==exact_ledger
+                                    frame=page.locator("#criminalScreen .cr-frame")
+                                    page.wait_for_function("""()=>{const f=document.querySelector('#criminalScreen .cr-frame'),i=f?.querySelector('img');return f?.dataset.artState==='ready'&&i?.complete&&i.naturalWidth===720&&i.naturalHeight===900}""")
+                                    frame.locator("img").evaluate("i=>i.decode()")
+                                    page.evaluate("()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))")
                                     page.screenshot(
                                         path=str(
                                             OUT / (name + "-" + id + "-ending.png")
                                         ),
                                         full_page=True,
                                     )
-                                touch(page, '[data-action="home"]')
+                                touch(page, "#homeBtn")
                         # Stale double touch: result acknowledgement cannot create a second gameplay action.
                         start(page, "CR01", 0)
                         button = page.locator('[data-choice="accept"]')
@@ -457,7 +464,7 @@ def run():
                         saved_ledger = page.evaluate(
                             "localStorage.getItem('birmingham_criminal_v2_ledger')"
                         )
-                        touch(page, '[data-action="home"]')
+                        touch(page, "#homeBtn")
                         touch(page, "#storyStart")
                         assert page.locator("#campaignAchievements").is_visible()
                         assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignAchievements") == "1"
@@ -483,7 +490,7 @@ def run():
                         touch(page, "#homeBtn")
                         touch(page, "#criminalEntry")
                         assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
-                        touch(page, '[data-action="home"]')
+                        touch(page, "#homeBtn")
                     assert (
                         page.evaluate("(ks)=>ks.map(k=>localStorage.getItem(k))", OLD)
                         == before
@@ -584,7 +591,7 @@ def run():
                 # Both top-menu and legacy profile navigation must honour a cancelled
                 # pending-write warning without discarding the in-memory RNG outcome.
                 page.once("dialog", lambda d: d.dismiss())
-                touch(page, '[data-action="home"]')
+                touch(page, "#homeBtn")
                 assert page.locator("#criminalScreen").is_visible()
                 assert "Ход рассчитан, но не сохранён" in page.locator("#criminalScreen h1").inner_text()
                 page.once("dialog", lambda d: d.dismiss())

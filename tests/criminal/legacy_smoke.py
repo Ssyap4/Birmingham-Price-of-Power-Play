@@ -77,7 +77,7 @@ def run():
                 page.goto(origin + "/index.html", wait_until="domcontentloaded")
                 # Return from the new mode before entering the old five-district map.
                 tap(page, "#criminalEntry")
-                tap(page, '[data-action="home"]')
+                tap(page, "#homeBtn")
                 tap(page, "#districtsCard")
                 assert page.locator(".map-pin").count() == 5
                 tap(page, '.map-pin[data-district="digbeth"]')
@@ -365,7 +365,7 @@ def run():
                 print("PASS common narrative material and reading metrics",name,flush=True)
                 page.screenshot(path=str(OUT/(name+"-criminal-v51-reader.png")),full_page=True)
                 tap(page, '[data-choice="go"]')
-                tap(page, '[data-action="home"]')
+                tap(page, "#homeBtn")
                 tap(page, "#storyStart")
                 assert page.locator("#campaignAchievements").is_visible()
                 assert page.locator("#campaignSecondCaseAchievements").is_visible()
@@ -427,6 +427,7 @@ def run():
                     # is released and its inactive screen is not mutated on exit.
                     assert page.locator("#caseArt .case001-portrait-image").get_attribute("src") is None
                     page.evaluate("""()=>{const el=document.querySelector('#caseGame');window.__inactiveCaseMutations=0;window.__inactiveCaseObserver=new MutationObserver(records=>{window.__inactiveCaseMutations+=records.length});window.__inactiveCaseObserver.observe(el,{attributes:true,attributeFilter:['hidden']})}""")
+                    assert page.locator("#homeBtn").evaluate("""e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('#homeBtn')===e}""")
                     tap(page,"#homeBtn")
                     assert page.locator("#home").is_visible()
                     page.wait_for_function("window.scrollY<=1")

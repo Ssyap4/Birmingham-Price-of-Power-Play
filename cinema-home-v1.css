@@ -101,3 +101,5 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 /* Hidden cabinet owns no running decorative animation or retained will-change
    hint. Visible menu retains its original rain, smoke, lamp and vinyl effects. */
 #home[hidden] .cinema-hero::before,#home[hidden] .cinema-rain,#home[hidden] .cinema-smoke,#home[hidden] .cinema-vinyl-glint{animation:none!important;will-change:auto!important}
+
+#home[hidden] .cinema-rain::after{animation:none!important;will-change:auto!important}

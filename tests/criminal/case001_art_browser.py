@@ -76,6 +76,8 @@ def run():
                         for district in ("small-heath","digbeth","aston"):
                             tap(page,f'.map-pin[data-district="{district}"]')
                             assert page.locator(f'.map-pin[data-district="{district}"]').get_attribute("aria-pressed")=="true"
+                        page.evaluate("window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'})")
+                        page.wait_for_function("""()=>{const e=document.querySelector('#homeBtn'),r=e.getBoundingClientRect();return scrollY>0&&r.top>=0&&r.bottom<=innerHeight&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('#homeBtn')===e}""")
                         tap(page,"#homeBtn")
                         page.locator("#home").wait_for(state="visible")
                         page.wait_for_function("scrollY<=1")
