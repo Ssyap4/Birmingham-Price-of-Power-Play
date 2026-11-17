@@ -105,3 +105,16 @@
 ### Пакет Codex: первая волна
 - Отдельная ветка от актуальной проверенной рабочей базы, никакого merge/publish. Считать данный реестр художественными направлениями, а не утверждением кандидатов. Сохранить SHA всех оригиналов. Подготовить индивидуальные координаты и кандидаты только для safe-reframe, начать с intro/envelope/widow/endingRescue, затем остальные. На каждой паре показать оригинал целиком и вариант в реальном масштабе 320/390/430; скачать/декодировать реально доступные оригиналы. Для outpaint оформить индивидуальное ТЗ без подмены кадра, оставлять оригинал до дальнейшей работы. Не обещать генератор при отсутствии доступа; не массово генерировать. Для keep-wide и keep-portrait не создавать бессмысленные дубликаты.
 - Не трогать активный ART, screenplay, engines, progress/rewards, V50 main и V39. Отчёт с индивидуальными координатами и хешами, сравнительные PNG/JPG, кандидаты отдельно; только после художественной приёмки отдельный интеграционный PR с fallback и Chromium/WebKit. Читаемость документов оценивать по оригиналам, уменьшенные галереи не доказательство читаемости.
+
+
+## V67 — pilot from original approved WebP bytes (17/18.11.2026)
+Reviewed the four originals from unified package V65 artifact 14370102417 and individualized 4:5 crop diagnostics at 720×900. Not generative artwork; no stretching or original replacement. Coordinates are zero-origin Pillow (left, top, right, bottom), exclusive right/bottom.
+
+| Scene | Source dimensions | Crop trial | Decision |
+|---|---:|---|---|
+| intro | 1672×941 | (510,0,1262,940) | Reject this crop: envelope and woman survive, but most wet industrial street, signs/door context disappear. Keep original; consider outpaint or less narrow format. |
+| envelope | 1672×941 | (465,0,1217,940) | Reject: D-17 seal stays visible but envelope edges and adjacent papers are clipped. Keep original. |
+| widow | 1671×941 | (470,0,1222,940) | Reject: face, hand and tag survive, but photograph on table and contextual kitchen objects lost. Keep original. |
+| endingRescue | 1448×1086 | (290,0,1158,1085) | Accept as candidate only: both faces, embrace, hands, injury, stove/window context remain; peripheral lamp/table lost, not necessary to this ending. Reviewed static scale 320/390/430 px. Real browser integration QA still required. |
+
+Source SHA-256 values are embedded in scripts/case001-portrait-pilot-v1.py; it verifies bytes, dimensions, and crop size before export. Candidate output is 720×900, WebP quality 92 method 6. Local prototype candidate SHA-256 d3712533d2f6f7d7070fca0a1269f4ec68023379eb5f8ca7070ac2d97e7f27a6 (encoder versions may differ; report actual output hash). Script exports only the accepted candidate and comparison sheets, no game or original files. Separate branch dedicated to reproducible art experiment. The existing ART remains untouched. Do not infer acceptance of other 33 scenes from this pilot. No actual phone/browser integration of candidate yet.
