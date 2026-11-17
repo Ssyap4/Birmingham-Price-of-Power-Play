@@ -72,7 +72,7 @@ const screens=[
  ['campaignHistory','История прохождений','АРХИВ ДЕЛ']
 ];
 const main=document.querySelector('main');if(!main)return;
-for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Общий локальный архив: Дела №001 и №002, «Работа для своих». Записи хранятся на этом устройстве.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
+for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Расследования · «Работа для своих» · Испытания. Общий архив этого устройства.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
 const $=id=>document.getElementById(id),allScreens=()=>document.querySelectorAll('.screen');
 function open(id){
  const destination=$(id);
@@ -286,7 +286,6 @@ function renderHistory(el,runs){
   if(r.cause)detail.append(make('p','', 'Причина гибели: '+r.cause));
   card.append(detail);list.append(card)
  }el.append(list);
- el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Выше — подтверждённые записи Дела №001. История Дела №002 и «Работы для своих» показана ниже отдельными разделами.'));
 }
 // View-only state: keep opened AND explicitly closed folds across rebuilds.
  // No persistent keys, timers, engine changes or extra navigation.

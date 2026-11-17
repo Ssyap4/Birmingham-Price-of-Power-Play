@@ -139,7 +139,7 @@ test("V28 atlas heading and archive visual refinements preserve routes",()=>{
  assert.ok(css.includes(".district-atlas-title span{display:block;white-space:nowrap}"));
  assert.ok(css.includes("#campaignDossiers .campaign-002-jumps>button:last-child:nth-child(odd){grid-column:1/-1}"));
  assert.ok(archive.includes("СВОДКА РАССЛЕДОВАНИЙ"));
- assert.ok(archive.includes('back.href="#district-digbeth"'));
+ assert.ok(!archive.includes('back.href="#district-digbeth"'));
 });
 
 test("V39 uses the same compact header and directly readable portrait trial screens",()=>{
@@ -147,4 +147,13 @@ test("V39 uses the same compact header and directly readable portrait trial scre
  assert.ok(css.includes(":is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result)"));
  assert.match(css,/:is\(#choose,#play,#result\)\.screen:not\(\[hidden\]\)\{\s*animation:none!important;opacity:1!important/);
  assert.ok(css.includes("#play.screen::before{content:none!important;display:none!important}"));
+});
+
+test("V40 common archive excludes case launch and obsolete future-case placeholder",()=>{
+ const archive=read("campaign-case002-archive-v1.js"),hub=read("campaign-hub-v1.js");
+ for(const source of [archive,hub,read("campaign-case002-archive-v1.css")])assert.doesNotMatch(source,/campaign-002-to-digbeth|Следующие дела|Другие дела — впереди/);
+ assert.ok(hub.includes("Расследования · «Работа для своих» · Испытания."));
+ assert.ok(archive.includes('title.dataset.caseId="002"'));
+ assert.ok(archive.includes("campaignSecondCaseAchievements"));
+ assert.ok(archive.includes("campaignSecondCaseHistory"));
 });

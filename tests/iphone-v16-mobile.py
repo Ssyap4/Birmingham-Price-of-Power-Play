@@ -235,6 +235,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    current(page,"campaignHistory")
    assert page.locator(".campaign-hub .campaign-portal-v13").count()==0
    assert page.locator(".campaign-hub .campaign-criminal-jump").count()==0
+   for section in ("campaignDossiers","campaignAchievements","campaignHistory"):
+    assert page.locator(f"#{section} .campaign-002-to-digbeth").count()==0
+    assert page.locator(f"#{section} .campaign-head a[href='#district-digbeth']").count()==0
    tap(page,"#homeBtn")
    tap(page,"#cabinetProfile")
    page.locator("#profile").wait_for(state="visible")
@@ -287,7 +290,12 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,"#districts .campaign-portal-v13 [data-campaign-jump='archive']")
     page.locator("#campaignAchievements").wait_for(state="visible")
     assert page.url.endswith("#district-digbeth")
-    tap(page,"#campaignAchievements .campaign-002-to-digbeth")
+    assert page.locator("#campaignAchievements .campaign-002-to-digbeth").count()==0
+    tap(page,"#homeBtn")
+    page.locator("#home").wait_for(state="visible")
+    tap(page,"#districtsCard")
+    page.locator("#districts").wait_for(state="visible")
+    tap(page,'.map-pin[data-district="digbeth"]')
     page.locator("#launchSecondCase").wait_for(state="visible")
     assert page.locator("#campaignAchievements").is_hidden()
     assert "В РАБОТЕ: 1" in page.locator("#campaignDistrictState").inner_text()

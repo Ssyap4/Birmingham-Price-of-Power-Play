@@ -100,23 +100,6 @@
  .campaign-hub .campaign-002-jump{transition:none}
 }
 
-/* Cross-case navigation is link-based and keyboard accessible. */
-.campaign-hub .campaign-002-to-digbeth{
- display:inline-flex;align-items:center;justify-content:center;
- box-sizing:border-box;min-height:48px;margin:13px 0 0;
- padding:11px 14px;border:1px solid #ad8650;border-radius:5px;
- background:linear-gradient(135deg,#48301b,#1c1510);
- color:#f5d9ab;text-decoration:none;text-align:center;
- font:700 .78rem/1.4 system-ui,sans-serif;letter-spacing:.03em;
- overflow-wrap:anywhere
-}
-.campaign-hub .campaign-002-to-digbeth:focus-visible{
- outline:3px solid #f4cb80;outline-offset:2px
-}
-@media(max-width:380px){
- .campaign-hub .campaign-002-to-digbeth{width:100%;padding-inline:8px}
-}
-
 /* Portrait archive reading pass: keep full hero names legible without
    overlays or horizontal page scrolling. */
 .campaign-hub .campaign-002-back-to-heroes{

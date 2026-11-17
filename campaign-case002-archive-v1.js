@@ -186,8 +186,6 @@ function renderDossiers(doc,box,archive,heroes){
    b.dataset.ending=ending;b.dataset.unlocked=String(known);
   }
   body.append(badges);
-  const future=body.querySelector(".campaign-future");
-  if(future)future.textContent="Дело №002 доступно в Дигбете; новые истории появятся позже.";
   const returnButton=appendText(doc,body,"button",
    "campaign-002-back-to-heroes","↑ К СПИСКУ ГЕРОЕВ");
   returnButton.type="button";
@@ -200,7 +198,7 @@ function renderDossiers(doc,box,archive,heroes){
 }
 function renderAchievements(doc,box,archive,oldAchievements,heroes){
  const intro=box.querySelector(".campaign-intro");
- if(intro)intro.textContent="Достижения и знаки обоих дел учитываются отдельно. В этом архиве показаны только сохранённые записи; повторное прохождение не создаёт новый знак.";
+ if(intro)intro.textContent="Достижения и знаки каждого расследования учитываются отдельно. В этом архиве показаны только сохранённые записи; повторное прохождение не создаёт новый знак.";
  const oldCount=Array.isArray(oldAchievements)?
   oldAchievements.length:0;
  // For Case 001 the existing archive is the authority; we never backfill it.
@@ -234,7 +232,7 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
  if(intro)intro.after(jumpNav(doc,[
   ["campaignFirstCaseAchievements","ДЕЛО №001"],
   ["campaignSecondCaseAchievements","ДЕЛО №002"]
- ],"Быстрый переход между наградами двух дел"));
+ ],"Переход к наградам расследований"));
  box.prepend(top);
  // Preserve the original Case 001 cards and their live notification lifecycle.
  const headings=[...box.querySelectorAll("h3.campaign-group-title")];
@@ -302,7 +300,7 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
 }
 function renderHistory(doc,box,archive,oldRuns,heroes){
  const intro=box.querySelector(".campaign-intro");
- if(intro)intro.textContent="Архив завершённых расследований обоих дел. Повторные попытки сохраняются в истории, но уникальные знаки считаются только один раз за сочетание «дело × герой × концовка».";
+ if(intro)intro.textContent="Архив завершённых расследований. Повторные попытки сохраняются в истории, но уникальные знаки считаются только один раз за сочетание «дело × герой × концовка».";
  const oldCombos=new Set(oldRuns.filter(r=>r.caseId==="001").map(r=>
   "001:"+r.heroId+":"+r.ending));
  const totals=[
@@ -323,17 +321,15 @@ function renderHistory(doc,box,archive,oldRuns,heroes){
  const jumps=jumpNav(doc,[
   ["campaignFirstCaseHistory","ДЕЛО №001"],
   ["campaignSecondCaseHistory","ДЕЛО №002"]
- ],"Переход к истории одного из двух дел");
+ ],"Переход к истории расследования");
  if(summary)summary.after(jumps);else box.prepend(jumps);
- const future=[...box.querySelectorAll(".campaign-group-title")].find(h=>
-  h.textContent==="Следующие дела");
  const group=make(doc,"section","campaign-002-section campaign-002-history");
  group.dataset.caseId="002";group.id="campaignSecondCaseHistory";
  appendText(doc,group,"h3","campaign-group-title","Дело №002 · "+CASE_NAME);
  if(!archive.completed.length){
   appendText(doc,group,"p","campaign-intro",
    archive.records.status==="ready"?
-   "Завершённых прохождений №002 пока нет. Войти можно через Дигбет.":
+   "Завершённых прохождений этого дела пока нет.":
    "История №002 не читается: исходы не будут показаны как подтверждённые.");
  }else{
   const entries=make(doc,"div","campaign-history-list");
@@ -364,13 +360,7 @@ function renderHistory(doc,box,archive,oldRuns,heroes){
   group.append(entries);
  }
  showAlert(doc,group,archive);
- if(future){
-  future.before(group);
-  future.textContent="Другие дела — впереди";
-  const p=future.nextElementSibling;
-  if(p?.classList.contains("campaign-intro"))
-   p.textContent="Дела №001 и №002 доступны в Смолл-Хите и Дигбете. Новые расследования будут добавляться в этот архив.";
- }else box.append(group);
+ box.append(group);
 }
 function append(id,box,oldRuns,root){
  const doc=root.document;
@@ -391,15 +381,7 @@ function append(id,box,oldRuns,root){
  }
  const heroes=root.BirminghamHero?.heroes||[];
  const title=doc.querySelector("#"+id+" .campaign-head p");
- const heading=doc.querySelector("#"+id+" .campaign-head");
- // One persistent, direct way back into the playable Digbeth investigation.
- // The campaign map handles the hash without a second publication origin.
- if(heading&&!heading.querySelector(".campaign-002-to-digbeth")){
-  const back=make(doc,"a","campaign-002-to-digbeth",
-   "↗ К ДЕЛУ №002 · ДИГБЕТ");
-  back.href="#district-digbeth";heading.append(back);
- }
- if(title)title.textContent="Детективные дела №001 и №002 · «Работа для своих» · Испытания. Общий архив этого устройства.";
+ if(title)title.textContent="Расследования · «Работа для своих» · Испытания. Общий архив этого устройства.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
  if(id==="campaignAchievements")renderAchievements(doc,box,archive,
   [...box.querySelectorAll(".campaign-award")],heroes);
