@@ -170,6 +170,8 @@ def run():
                 assert abs(art_geometry["ratio"]-art_geometry["original"])<.035,art_geometry
                 assert art_geometry["fill"]>.9 and art_geometry["fit"]=="contain",art_geometry
                 assert art_geometry["stageHeight"]-art_geometry["imageHeight"]<100,art_geometry
+                assert page.locator("#caseScene > .case001-read-scene").evaluate("b=>b.getBoundingClientRect().top>=document.querySelector('#caseArt').getBoundingClientRect().bottom-1")
+                assert page.locator("#caseGame > .bh-audio-controls").evaluate("e=>e.getBoundingClientRect().top>=document.querySelector('#caseGame .case-v18-layout').getBoundingClientRect().bottom-1")
                 assert page.locator("#case001PulseClues").evaluate("e=>getComputedStyle(e).fontVariantNumeric")=="tabular-nums"
                 first = page.evaluate(
                     "localStorage.getItem('birmingham_case_smol_heath_v1_jack')"
@@ -300,6 +302,29 @@ def run():
                   if(k.originalMeta===null)localStorage.removeItem(k.meta);else localStorage.setItem(k.meta,k.originalMeta);
                   window.BirminghamCase.resume();
                 }""",keys)
+                # V70: individually composed frames, no changes to story data.
+                # Fixtures are restored before continuing the same genuine route.
+                for node,filename,ratio,position in (
+                    ("interview","interview-kitchen.webp",1,31.43),
+                    ("bribe","bribe.webp",1,31.46),
+                    ("pretend","pretend.webp",.8,50),
+                ):
+                    page.evaluate("""({k,node})=>{const s=JSON.parse(k.original);s.node=node;localStorage.setItem(k.key,JSON.stringify(s));window.BirminghamCase.resume()}""",{"k":keys,"node":node})
+                    image=page.locator("#caseArt .case001-portrait-image")
+                    page.wait_for_function("""filename=>{const i=document.querySelector('#caseArt .case001-portrait-image');return !i.hidden&&i.complete&&i.naturalWidth>0&&i.getAttribute('src').endsWith('/'+filename)}""",arg=filename)
+                    raw_art=page.evaluate("k=>localStorage.getItem(k)",keys["key"])
+                    for art_width in (320,390,430):
+                        page.set_viewport_size({"width":art_width,"height":844})
+                        page.wait_for_function("""ratio=>{const i=document.querySelector('#caseArt .case001-portrait-image'),r=i.getBoundingClientRect();return getComputedStyle(i).objectFit==='cover'&&Math.abs(r.width/r.height-ratio)<.015&&document.documentElement.scrollWidth<=innerWidth+1}""",arg=ratio)
+                        assert abs(float(image.evaluate("i=>parseFloat(getComputedStyle(i).objectPosition)"))-position)<.1
+                        if art_width==390:
+                            image.evaluate("i=>i.scrollIntoView({block:'center',behavior:'instant'})")
+                            page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image'),r=i.getBoundingClientRect(),n=document.querySelector('#case001QuickNav').getBoundingClientRect();return r.top>=0&&r.bottom<n.top-2}""")
+                            image.screenshot(path=str(OUT/(name+f"-v70-{node}-frame.png")))
+                        assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==raw_art
+                    page.set_viewport_size({"width":390,"height":844})
+                page.evaluate("""k=>{localStorage.setItem(k.key,k.original);if(k.originalMeta===null)localStorage.removeItem(k.meta);else localStorage.setItem(k.meta,k.originalMeta);window.BirminghamCase.resume()}""",keys)
+                page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image');return !i.hidden&&i.complete&&getComputedStyle(i).objectFit==='contain'}""")
                 # Final-archive fixture: actual terminal screen, deliberately damaged archive.
                 # Not a claim that this fixture is a played ending.
                 final_fixture=page.evaluate("""k=>{
@@ -319,6 +344,8 @@ def run():
                 for width in (320,390,430):
                     page.set_viewport_size({"width":width,"height":844})
                     page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image'),s=getComputedStyle(i),r=i.getBoundingClientRect();return s.objectFit==='cover'&&Math.abs(r.width/r.height-.8)<.015&&r.width>240&&document.documentElement.scrollWidth<=innerWidth+1}""")
+                    photo.evaluate("i=>i.scrollIntoView({block:'center',behavior:'instant'})")
+                    page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image'),r=i.getBoundingClientRect(),n=document.querySelector('#case001QuickNav').getBoundingClientRect();return r.top>=0&&r.bottom<n.top-2}""")
                     photo.screenshot(path=str(OUT/(name+f"-v68-rescue-art-{width}.png")))
                     assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==terminal_bytes
                 page.set_viewport_size({"width":390,"height":844})

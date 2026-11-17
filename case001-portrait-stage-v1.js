@@ -13,7 +13,6 @@
  photo.loading="eager";
  photo.hidden=true;
  stage.append(photo);
- const heading=document.querySelector("#caseScene .case-scene-inner");
  const readButton=document.createElement("button");
  readButton.type="button";
  readButton.className="case001-read-scene";
@@ -28,7 +27,8 @@
   target.focus({preventScroll:true});
   target.scrollIntoView({block:"start",behavior:"instant"});
  });
- heading?.append(readButton);
+ // The artwork precedes its reading action in both DOM and mobile layout.
+ stage.after(readButton);
  let current="";
  function refresh(){
   // Release the duplicate decoded display image when the case is closed.

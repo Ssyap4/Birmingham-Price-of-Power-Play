@@ -703,3 +703,31 @@
   object-fit:cover!important;object-position:50% 50%!important;
  }
 }
+
+
+/* V70: individually reviewed crops. No blanket format conversion. The
+   original source remains the fallback, and all other scenes are contain. */
+@media (orientation:portrait) and (max-width:700px){
+ #caseGame #caseArt .case001-portrait-image:not([hidden]):is([src$="/interview-kitchen.webp"],[src$="/bribe.webp"],[src$="/pretend.webp"]){
+  width:100%!important;height:auto!important;max-height:none!important;
+  aspect-ratio:1/1!important;object-fit:cover!important;object-position:31.43% 50%!important;
+ }
+ #caseGame #caseArt .case001-portrait-image:not([hidden])[src$="/bribe.webp"]{object-position:31.46% 50%!important}
+ #caseGame #caseArt .case001-portrait-image:not([hidden])[src$="/pretend.webp"]{aspect-ratio:4/5!important;object-position:50% 50%!important}
+ /* Move the reading action below the frame. Keep one visible text jump and
+    the existing always-reachable navigation; do not add a competing toolbar. */
+ #caseGame #caseScene > .case001-read-scene{
+  order:2!important;align-self:center!important;
+  width:calc(100% - 16px)!important;margin:0 8px 9px!important;
+ }
+ #caseGame #caseArt .case001-portrait-image,
+ #caseGame #caseScene > .case001-read-scene{
+  scroll-margin-top:12px!important;
+  scroll-margin-bottom:calc(90px + env(safe-area-inset-bottom,0px))!important;
+ }
+ #caseGame .case001-campaign-pulse:not([hidden]){padding:8px 9px!important;margin-bottom:9px!important}
+ #caseGame .case001-pulse-heading{margin-bottom:6px!important}
+ #caseGame .case001-pulse-metrics>div{min-height:48px!important;padding:5px 3px!important;gap:2px!important}
+ #caseGame .case001-pulse-track{margin-top:6px!important}
+ #caseGame > .bh-audio-controls{margin:10px 0 0!important}
+}

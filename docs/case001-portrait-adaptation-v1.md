@@ -105,3 +105,20 @@
 ### Пакет Codex: первая волна
 - Отдельная ветка от актуальной проверенной рабочей базы, никакого merge/publish. Считать данный реестр художественными направлениями, а не утверждением кандидатов. Сохранить SHA всех оригиналов. Подготовить индивидуальные координаты и кандидаты только для safe-reframe, начать с intro/envelope/widow/endingRescue, затем остальные. На каждой паре показать оригинал целиком и вариант в реальном масштабе 320/390/430; скачать/декодировать реально доступные оригиналы. Для outpaint оформить индивидуальное ТЗ без подмены кадра, оставлять оригинал до дальнейшей работы. Не обещать генератор при отсутствии доступа; не массово генерировать. Для keep-wide и keep-portrait не создавать бессмысленные дубликаты.
 - Не трогать активный ART, screenplay, engines, progress/rewards, V50 main и V39. Отчёт с индивидуальными координатами и хешами, сравнительные PNG/JPG, кандидаты отдельно; только после художественной приёмки отдельный интеграционный PR с fallback и Chromium/WebKit. Читаемость документов оценивать по оригиналам, уменьшенные галереи не доказательство читаемости.
+
+
+## V70 — second manual composition review
+Reviewed eight additional originals from V65 package (artifact 14370102417) with center 4:5 and adjusted square/portrait trials. The adjusted crops are not separate generated art files. CSS uses exactly the original URL and per-image object-position; no source replacement.
+
+| Scene | Trial source box (x,y,w,h) | Decision |
+|---|---|---|
+| interview | 220,0,900,900 (1600×900) | Square candidate: Evelyn face and hands, cold tea and table papers/photograph preserved; peripheral hat and kettle edge outside. |
+| heroEleanor | 460,0,941,941 (1671×941) | Reject: camera is part of this protagonist's specific action; keep wide. |
+| bribe | 230,0,941,941 (1672×941) | Square candidate: guard, cap, both hands, route, purse and lamp; most of the canal panorama sacrificed, not necessary to this close-up exchange. |
+| reed | 530,0,900,900 (1600×900) | Hold: dossier right edge too tight; keep wide. |
+| pretend | 440,0,720,900 (1600×900) | 4:5 candidate: Reed face, extended hand, note with address, desk; retain peripheral lamp/books in original only. |
+| expose | 400,0,941,941 (1672×941) | Hold: payment papers and hands close to edges; keep wide. |
+| endingPower | 400,0,941,941 (1671×941) | Hold: full folder and seal/right edge too tight; keep wide. |
+| endingDeath | 550,0,900,900 (1600×900) | Composition candidate only, not integrated: cap and pool visible, needs terminal-frame QA. |
+
+Accepted for browser integration review: interview, bribe, pretend (V70); prior endingRescue remains. Static comparison is not approval of physical-phone behavior. Real browser proofs require three widths, unchanged bytes, active fixed navigation outside frame, and a restored original contain scene. No new image generation. All originals remain intact. 
