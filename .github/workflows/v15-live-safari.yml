@@ -1,0 +1,40 @@
+name: Unified V15 live Safari HTTPS acceptance
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - "tests/v15-live-safari-smoke.py"
+      - ".github/workflows/v15-live-safari.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: unified-v15-live-safari
+  cancel-in-progress: true
+jobs:
+  safari-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      V15_SAFARI_URL: https://birmingham-unified-v15-safari.vercel.app
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile address-specific HTTPS smoke
+        run: python -m py_compile tests/v15-live-safari-smoke.py
+      - name: Install only the browser runtimes needed for this HTTPS test
+        run: |
+          python -m pip install 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Verify deployed V15 assets and touch routes in WebKit and Chromium
+        run: python tests/v15-live-safari-smoke.py
+      - name: Retain a concise report and real mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-v15-live-safari-proof
+          path: work/v15-live-safari/
+          retention-days: 14

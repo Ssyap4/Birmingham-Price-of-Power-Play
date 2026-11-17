@@ -21,6 +21,7 @@ def no_evidence_deadend(browser):
 def basic_gate(browser):
  g=q.game(browser);g.path(['envelope','canal'])
  b=g.p.locator('#caseChoices button').filter(has_text='Открыть дверь ключом');assert b.is_disabled()
+ assert 'полицейском участке' in g.choice('reed').inner_text()
  g.path(['reed']);assert g.p.locator('#caseChoices button').filter(has_text='Показать ему найденную ведомость').is_disabled()
  return {'missing_key':'blocked','missing_ledger':'blocked'}
 
@@ -40,13 +41,24 @@ def reactions(browser,who):
 def reaction_precomputed(browser,who):
  g=q.game(browser)
  if who=='evelyn':
-  g.path(['widow','interview','office','canal','bribe','warehouse','warn','office']);g.combine('note','witness');g.go('widow');g.go('canal');g.go('bribe');g.go('warehouse');g.go('warn')
+  # The note is awarded only by the first warning. Precompute the
+  # deduction in the office, then meet Evelyn at the neighbor's house.
+  g.path(['widow','interview','office','canal','bribe','warehouse','warn','office'])
+  assert {'note','witness'}<=set(g.state()['items'])
+  g.combine('note','witness')
+  assert g.p.locator('.v20-interrogate').count()==0
+  assert 'соседки' in g.choice('widow').inner_text()
+  g.go('widow')
  elif who=='reed':
   g.path(['envelope','widow','office','canal','listen','sneak','warehouse','reed','reedProof','confession','warn','office']);g.combine('testimony','overheard');g.go('reed')
  g.p.locator('.v20-interrogate').click();assert g.p.locator('.case-v18-overlay').is_visible();g.p.locator('.v18-close').click()
  assert g.p.locator('.v20-interrogate').count()==0
  # Enter the same scene again and verify no duplicate reaction.
- if who=='evelyn':g.path(['office','canal','bribe','warehouse','warn'])
+ if who=='evelyn':
+  g.go('office');assert 'соседки' in g.choice('widow').inner_text()
+  g.go('widow');assert g.p.locator('.v20-interrogate').count()==0
+  g.path(['canal','bribe','warehouse'])
+  assert g.choice('warn').count()==0,'A protected family must not be warned again'
  else:g.path(['canal','reed'])
  assert g.p.locator('.v20-interrogate').count()==0
  assert len(g.meta()['reactions'])==1

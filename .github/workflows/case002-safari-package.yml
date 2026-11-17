@@ -1,0 +1,40 @@
+name: Case 002 isolated Safari beta package
+# Gate this expensive artifact build on a deliberate major-preview request.
+# Routine UI milestones use scoped QA, not repeated Safari packaging.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case002-safari-package
+  cancel-in-progress: true
+jobs:
+  static-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Build exact portrait-only preview
+        run: node deployment/case002-safari-preview.js
+      - name: Validate standalone Safari entry and packaged references
+        run: node tests/case002/safari-package-integrity.test.js
+      - name: Inspect isolated files (no legacy case)
+        run: |
+          test -s case002-preview-dist/index.html
+          test -s case002-preview-dist/preview/case002-prototype/index.html
+          test -s case002-preview-dist/assets/case002/scenes/case002-p01-scene--mobile.webp
+          test -s case002-preview-dist/assets/heroes/finn.webp
+          test -s case002-preview-dist/assets/heroes/eleanor.webp
+          test -s case002-preview-dist/assets/heroes/samuel.webp
+          test ! -e case002-preview-dist/assets/case-scenes/heroFinn.webp
+          test ! -e case002-preview-dist/001.html
+          test ! -e case002-preview-dist/assets/case002/scenes/case002-p01-scene.webp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: case002-safari-beta
+          path: case002-preview-dist/
+          if-no-files-found: error
+          retention-days: 14

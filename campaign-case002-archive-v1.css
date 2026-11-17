@@ -1,0 +1,126 @@
+/* Read-only cross-case archive projection. Existing Case 001 styles remain. */
+.campaign-002-section{margin:26px 0 8px;padding-top:18px;border-top:1px solid rgba(196,153,94,.48)}
+.campaign-002-section h3.campaign-group-title{margin:6px 0 13px}
+.campaign-002-overview{margin:0 0 24px;padding:15px 13px;border:1px solid rgba(197,155,97,.45);border-radius:9px;background:linear-gradient(130deg,rgba(65,45,27,.88),rgba(19,20,19,.8))}
+.campaign-002-overview h3{margin:0 0 14px}
+.campaign-002-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.campaign-002-metric{min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;padding:12px 4px;text-align:center;border:1px solid rgba(193,151,89,.3);border-radius:7px;background:rgba(17,15,13,.44)}
+.campaign-002-metric small{color:#d6b68a;font-size:clamp(.55rem,1.9vw,.65rem);letter-spacing:.035em;line-height:1.3}
+.campaign-002-metric strong{color:#f1d6aa;font-size:clamp(.78rem,3vw,1.13rem);line-height:1.35;overflow-wrap:anywhere}
+.campaign-002-card-title{margin:14px 0 7px;padding-top:13px;border-top:1px solid rgba(193,151,89,.35);color:#e5bd81;letter-spacing:.04em;font-size:.8rem;line-height:1.5}
+.campaign-002-count,.campaign-002-progress{margin:5px 0 9px;color:#eed6b5;font-size:.85rem;line-height:1.5}
+.campaign-002-progress{color:#d9c29e}
+.campaign-002-tags{margin:9px 0 12px}
+.campaign-002-tags span{font-size:.72rem;line-height:1.35}
+.campaign-002-alert{margin:13px 0;padding:11px 12px;border:1px solid #aa7a46;border-radius:6px;background:#32241b;color:#ffe2bc;font-size:.78rem;line-height:1.55;overflow-wrap:anywhere}
+.campaign-002-awards,.campaign-002-reward-list{margin:13px 0 23px}
+.campaign-002-achievement{min-width:0}
+.campaign-002-achievement strong,.campaign-002-reward-group strong{overflow-wrap:anywhere}
+.campaign-002-subhead{margin:22px 0 10px;color:#deb47a;font-size:.88rem;letter-spacing:.06em}
+.campaign-002-reward-group{margin:12px 0}
+.campaign-002-attempt{margin:9px 0}
+.campaign-002-attempt summary{min-height:44px}
+.campaign-002-attempt .campaign-attempt-detail{overflow-wrap:anywhere}
+@media(max-width:380px){
+ .campaign-002-overview{padding:11px 7px}
+ .campaign-002-metrics{gap:4px}
+ .campaign-002-metric{padding:10px 3px}
+ .campaign-002-metric small{font-size:.56rem}
+ .campaign-002-card-title{font-size:.75rem}
+}
+
+/* Compact archive navigation: no fixed overlays, no horizontal pan, no
+ * automatic scrolling when opening a tab. Large sections stay in DOM for
+ * screen readers and expand on explicit request only. */
+.campaign-hub .campaign-002-jumps{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;
+ margin:14px 0 19px;max-width:650px
+}
+.campaign-hub .campaign-002-jumps:has(>button:nth-child(5)){
+ grid-template-columns:repeat(3,minmax(0,1fr))
+}
+.campaign-hub .campaign-002-jump{
+ min-width:0;min-height:48px;padding:11px 8px;
+ color:#f2d5aa;background:linear-gradient(125deg,#43301e,#19130e);
+ border:1px solid #ae8754;border-radius:5px;
+ font:700 .76rem/1.4 system-ui,sans-serif;letter-spacing:.03em;
+ cursor:pointer;touch-action:manipulation;overflow-wrap:anywhere
+}
+.campaign-hub .campaign-002-jump:active{background:#624324}
+.campaign-hub .campaign-002-jump:focus-visible{
+ outline:3px solid #f5cc88;outline-offset:2px
+}
+.campaign-hub .campaign-002-fold{
+ min-width:0;margin:17px 0;border:1px solid #906d42;
+ background:linear-gradient(145deg,#282018,#13100d)
+}
+.campaign-hub .campaign-002-fold>summary{
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ min-height:54px;padding:14px 15px;cursor:pointer;list-style:none;
+ color:#f2d8ae;font:700 clamp(.78rem,2.7vw,1rem)/1.5 Georgia,serif;
+ letter-spacing:.045em;touch-action:manipulation;overflow-wrap:anywhere
+}
+.campaign-hub .campaign-002-fold>summary::-webkit-details-marker{display:none}
+.campaign-hub .campaign-002-fold>summary::after{
+ content:"▾";color:#efc185;flex:none;font:700 1.4rem system-ui,sans-serif
+}
+.campaign-hub .campaign-002-fold[open]>summary::after{content:"▴"}
+.campaign-hub .campaign-002-fold>summary:focus-visible{
+ outline:3px solid #f6cc82;outline-offset:-3px
+}
+.campaign-hub .campaign-002-fold-body,
+.campaign-hub .campaign-002-milestone-fold>.campaign-award-grid{
+ padding:14px 12px 17px;border-top:1px solid #745a3a
+}
+.campaign-hub .campaign-002-first-fold .campaign-group-title:first-child{
+ margin-top:8px
+}
+.campaign-hub .campaign-002-first-fold .campaign-reward-group summary{
+ min-height:48px
+}
+.campaign-hub #campaignSecondCaseAchievements{
+ scroll-margin-top:22px
+}
+.campaign-hub #campaignFirstCaseAchievements,
+.campaign-hub #campaignFirstCaseHistory,
+.campaign-hub #campaignSecondCaseHistory,
+.campaign-hub .campaign-card[id^="campaignHero"]{
+ scroll-margin-top:22px
+}
+@media(max-width:380px){
+ .campaign-hub .campaign-002-jumps{gap:6px}
+ .campaign-hub .campaign-002-jump{padding:9px 5px;font-size:.69rem}
+ .campaign-hub .campaign-002-fold>summary{padding:12px 10px}
+ .campaign-hub .campaign-002-fold-body,
+ .campaign-hub .campaign-002-milestone-fold>.campaign-award-grid{
+  padding-inline:7px
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .campaign-hub .campaign-002-jump{transition:none}
+}
+
+/* Portrait archive reading pass: keep full hero names legible without
+   overlays or horizontal page scrolling. */
+.campaign-hub .campaign-002-back-to-heroes{
+ display:block;box-sizing:border-box;width:100%;min-height:48px;
+ margin:17px 0 2px;padding:11px 12px;
+ border:1px solid #9b794b;border-radius:6px;
+ background:linear-gradient(120deg,#302418,#1b1713);
+ color:#f1d4a7;font:700 .8rem/1.4 system-ui,sans-serif;
+ letter-spacing:.035em;text-align:center;touch-action:manipulation;
+ cursor:pointer
+}
+.campaign-hub .campaign-002-back-to-heroes:focus-visible{
+ outline:3px solid #f5cc88;outline-offset:2px
+}
+@media(max-width:520px){
+ .campaign-hub .campaign-002-jumps:has(>button:nth-child(5)){
+  grid-template-columns:repeat(2,minmax(0,1fr))
+ }
+ .campaign-hub .campaign-002-jump{
+  min-height:52px;font-size:.875rem;padding:10px 8px
+ }
+ .campaign-hub .campaign-002-metric small{font-size:.75rem;line-height:1.3}
+ .campaign-hub .campaign-002-metric strong{font-size:.9375rem}
+}

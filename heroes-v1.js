@@ -6,26 +6,83 @@ const heroes=[
 {id:'victor',name:'Виктор Мэллоу',alias:'Джентльмен',role:'Переговорщик',items:['Поддельное удостоверение','Конверт с наличными'],bio:'Сын разорившегося торговца, научившийся жить за счёт чужих слабостей и секретов. Однажды Виктор обыграл букмекера, работавшего против Шелби, и принёс семье записи о его махинациях. С тех пор ему доверяют разговоры, в которых оружие только мешает.',trait:'Убеждение, обман и подкуп. Не каждый противник готов слушать.',style:'Хитрость · сделки · влияние'},
 {id:'samuel',name:'Сэмюэл Рид',alias:'Механик',role:'Специалист по операциям',items:['Набор инструментов','Дымовая шашка'],bio:'Десять лет Сэмюэл обслуживал станки на заводах Астона. Когда из-за приказа владельца погибли трое рабочих, он сохранил документы, доказывавшие вину руководства. За ним пришли люди фабриканта. Шелби спрятали механика и помогли вывезти его семью. Теперь он открывает для них двери, которые не поддаются обычным ключам.',trait:'Разбирается в механизмах, сигнализации и отвлекающих манёврах. Не стремится к открытой драке.',style:'Техника · отвлечение · саботаж'}
 ];
-const STORE='birmingham_hero_selection_v1';let chosen='jack';
-const api={get selectedId(){return localStorage.getItem(STORE)||'jack'},heroes};window.BirminghamHero=api;
-const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР ДЕТЕКТИВА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-rules" type="button">ПРАВИЛА ДЕЛА</button><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
+const STORE='birmingham_hero_selection_v1';let chosen='jack',currentHero='jack';
+try{const persisted=localStorage.getItem(STORE);if(heroes.some(h=>h.id===persisted))currentHero=persisted}catch{}
+const api={get selectedId(){return currentHero},heroes};window.BirminghamHero=api;
+const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР УЧАСТНИКА КРУГА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-rules" type="button">ПРАВИЛА ДЕЛА</button><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
 document.body.append(modal);
 const cards=modal.querySelector('#heroCards'),detail=modal.querySelector('#heroDetails');
-function draw(){cards.replaceChildren();heroes.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='hero-card'+(h.id===chosen?' active':'');b.setAttribute('aria-pressed',String(h.id===chosen));b.innerHTML=`<img src="assets/heroes/${h.id}.webp" alt=""><strong>${h.name}</strong><small>${h.role}</small>`;b.onclick=()=>{chosen=h.id;draw()};cards.append(b)});const h=heroes.find(x=>x.id===chosen);detail.innerHTML=`<img class="hero-detail-photo" src="assets/heroes/${h.id}.webp" alt=""><div class="hero-biography"><span class="hero-eyebrow">${h.alias.toUpperCase()} · ${h.role.toUpperCase()}</span><h3>${h.name}</h3><p>${h.bio}</p><h4>Стартовое снаряжение</h4><div class="hero-gear">${h.items.map(x=>`<span>✦ ${x}</span>`).join('')}</div></div><div class="hero-traits"><h4>Специализация</h4><p>${h.trait}</p><h4>Стиль игры</h4><p>${h.style}</p><small>На канале доступно личное действие героя. Оно открывает свой путь или даёт улику и используется один раз за расследование.</small></div>`;const resumable=window.BirminghamCase.hasProgress(chosen);modal.querySelector('.hero-begin').textContent=resumable?'ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ →':window.BirminghamCase.hasSavedCase(chosen)?'ОТКРЫТЬ ОТЧЁТ →':'НАЧАТЬ РАССЛЕДОВАНИЕ →';modal.querySelector('.hero-new').hidden=!window.BirminghamCase.hasSavedCase(chosen)}
-function close(){modal.hidden=true;document.body.classList.remove('hero-modal-open')}
-function open(){chosen='jack';draw();modal.hidden=false;document.body.classList.add('hero-modal-open');modal.querySelector('.hero-close').focus()}
-api.openSelection=open;modal.querySelector('.hero-close').onclick=close;modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
+function draw(){cards.replaceChildren();heroes.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='hero-card'+(h.id===chosen?' active':'');b.setAttribute('aria-pressed',String(h.id===chosen));b.innerHTML=`<img src="assets/heroes/${h.id}.webp" alt=""><strong>${h.name}</strong><small>${h.role}</small>`;const hasSaved=window.BirminghamCase.hasSavedCase(h.id);
+if(hasSaved){
+ const mark=document.createElement('span');
+ const active=window.BirminghamCase.hasProgress(h.id);
+ mark.className='hero-case-progress';
+ mark.dataset.status=active?'active':'finished';
+ mark.textContent=active?'СОХРАНЕНО · ПРОДОЛЖИТЬ':'ОТЧЁТ СОХРАНЁН';
+ b.append(mark);
+}
+b.onclick=()=>{chosen=h.id;draw();cards.querySelector('.hero-card.active')?.focus({preventScroll:true})};cards.append(b)});const h=heroes.find(x=>x.id===chosen);detail.innerHTML=`<img class="hero-detail-photo" src="assets/heroes/${h.id}.webp" alt=""><div class="hero-biography"><span class="hero-eyebrow">${h.alias.toUpperCase()} · ${h.role.toUpperCase()}</span><h3>${h.name}</h3><p>${h.bio}</p><h4>Стартовое снаряжение</h4><div class="hero-gear">${h.items.map(x=>`<span>✦ ${x}</span>`).join('')}</div></div><div class="hero-traits"><h4>Специализация</h4><p>${h.trait}</p><h4>Стиль игры</h4><p>${h.style}</p><small>На канале доступно личное действие героя. Оно открывает свой путь или даёт улику и используется один раз за расследование.</small></div>`;const resumable=window.BirminghamCase.hasProgress(chosen);modal.querySelector('.hero-begin').textContent=resumable?'ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ →':window.BirminghamCase.hasSavedCase(chosen)?'ОТКРЫТЬ ОТЧЁТ →':'НАЧАТЬ РАССЛЕДОВАНИЕ →';modal.querySelector('.hero-new').hidden=!window.BirminghamCase.hasSavedCase(chosen)}
+let openedFrom=null;
+function close(restoreFocus=true){
+ modal.hidden=true;
+ document.body.classList.remove('hero-modal-open');
+ if(restoreFocus&&openedFrom?.isConnected&&!openedFrom.closest('[hidden]'))
+  openedFrom.focus({preventScroll:true});
+ openedFrom=null;
+}
+function open(){
+ // Respect the chosen hero while their run is active. If it is already
+ // finished, lead with the newest unfinished attempt, not an old report.
+ // Presentation only: no save slot or preferred hero is overwritten.
+ let persisted='jack';
+ try{persisted=api.selectedId}catch{}
+ const active=heroes.filter(h=>window.BirminghamCase.hasProgress(h.id));
+ if(active.length&&!active.some(h=>h.id===persisted)){
+  let last=-Infinity;
+  for(const hero of active){
+   try{
+    const save=JSON.parse(localStorage.getItem(
+      'birmingham_case_smol_heath_v1_'+hero.id)||'null');
+    const started=Number.isFinite(save?.started)?save.started:0;
+    if(started>last){last=started;persisted=hero.id}
+   }catch{}
+  }
+ }
+ chosen=heroes.some(h=>h.id===persisted)?persisted:'jack';
+ openedFrom=document.activeElement;
+ draw();modal.hidden=false;document.body.classList.add('hero-modal-open');
+ modal.querySelector('.hero-close').focus();
+}
+api.openSelection=open;modal.querySelector('.hero-close').onclick=close;
+modal.addEventListener('click',e=>{if(e.target===modal)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
+modal.addEventListener('keydown',e=>{
+ if(e.key!=='Tab'||modal.hidden)return;
+ const focusable=[...modal.querySelectorAll('button:not([disabled])')]
+  .filter(button=>button.getClientRects().length>0&&!button.closest('[hidden]'));
+ if(!focusable.length)return;
+ const first=focusable[0],last=focusable[focusable.length-1];
+ if(!modal.contains(document.activeElement)||
+  (e.shiftKey&&document.activeElement===first)||
+  (!e.shiftKey&&document.activeElement===last)){
+  e.preventDefault();(e.shiftKey?last:first).focus({preventScroll:true});
+ }
+});
 const launch=document.getElementById('launchFirstCase');if(!launch)return;
 launch.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open()},true);
 function begin(newAttempt,briefed=false){
  if(!briefed&&(newAttempt||!window.BirminghamCase.hasSavedCase(chosen))&&window.BirminghamCaseRules){window.BirminghamCaseRules.open(()=>begin(newAttempt,true));return}
  if(newAttempt&&window.BirminghamCase.hasSavedCase(chosen)&&!confirm('Начать новое расследование? Сохранённая попытка этого героя будет заменена.'))return;
  const h=chosen,key='birmingham_case_smol_heath_v1_'+h;
+ currentHero=h;
  try{
   if(!localStorage.getItem(key)&&!localStorage.getItem('birmingham_legacy_case_migrated_v1')){const old=localStorage.getItem('birmingham_case_smol_heath_v1');if(old){localStorage.setItem(key,old);localStorage.setItem('birmingham_legacy_case_migrated_v1',h)}}
   localStorage.setItem(STORE,h);
  }catch(e){console.warn('Сохранение персонажа недоступно',e)}
- close();if(newAttempt||!window.BirminghamCase.hasSavedCase(h))window.BirminghamCase.startNew();else window.BirminghamCase.resume();
+ close(false);
+ if(newAttempt||!window.BirminghamCase.hasSavedCase(h))window.BirminghamCase.startNew();
+ else window.BirminghamCase.resume();
+ document.getElementById('caseScene')?.focus({preventScroll:true});
 }
 modal.querySelector('.hero-rules').onclick=()=>window.BirminghamCaseRules?.open(()=>{}, {force:true});
 modal.querySelector('.hero-begin').onclick=()=>begin(false);

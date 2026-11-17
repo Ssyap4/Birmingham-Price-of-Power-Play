@@ -1,0 +1,1675 @@
+:root{color-scheme:dark;--bg:#0d0c0b;--panel:#1b1714;--panel2:#211b16;--line:#644a2f;--gold:#d6ae70;--text:#f0e7d9;--muted:#c1ac92}*{box-sizing:border-box}html{font-size:16px;-webkit-text-size-adjust:100%}body{margin:0;min-height:100vh;min-height:100dvh;background:radial-gradient(ellipse at 50% 0%,#292018 0%,#13100f 40%,#090909 85%);color:var(--text);font-family:Georgia,Times New Roman,serif;overflow-x:hidden}button,select{font:inherit}button{touch-action:manipulation;cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #ffe1ad;outline-offset:3px}[hidden]{display:none!important}.app-shell{width:min(100%,640px);margin:0 auto;padding:env(safe-area-inset-top,0px) 14px calc(24px + env(safe-area-inset-bottom,0px))}.masthead{padding:22px 0 19px;text-align:center;border-bottom:1px solid var(--line)}.masthead small{display:block;letter-spacing:.23em;font:600 .67rem system-ui,sans-serif;color:var(--gold)}.masthead h1{font-size:clamp(1.55rem,6vw,2rem);margin:9px auto 8px;line-height:1.14;color:#e8bc77;text-wrap:balance}.masthead p{font:400 .76rem system-ui,sans-serif;margin:0;color:var(--muted)}.launch,.story,.choices,.case-tools{background:linear-gradient(150deg,#261e19,#15120f);border:1px solid #665031;border-radius:10px;margin:14px 0;padding:18px 16px;box-shadow:0 5px 15px #0006}.launch h2,.story h2{font-size:1.45rem;line-height:1.2;margin:0 0 13px;color:#efd2a2}.launch label{display:block;font:600 .78rem system-ui,sans-serif;letter-spacing:.06em;margin:14px 0 7px;color:var(--gold)}.launch select{display:block;width:100%;height:52px;border:1px solid #a08256;border-radius:6px;background:#211a13;color:var(--text);padding:0 13px;min-width:0}.launch .muted{color:var(--muted);font-size:.87rem;line-height:1.5}.launch-actions{display:grid;gap:10px;margin-top:17px}button{border:1px solid #9b743e;color:#f6e5cd;background:linear-gradient(155deg,#59452e,#292116);border-radius:7px;min-height:48px;padding:12px 14px}button:active{transform:scale(.997)}button.secondary{background:#28211b}.error{font:400 .85rem system-ui,sans-serif;line-height:1.5;color:#ffbdad}.chapter-row{display:flex;justify-content:space-between;align-items:center;padding:12px 2px 2px;color:var(--gold);letter-spacing:.1em;font:600 .74rem system-ui,sans-serif}.notice{position:sticky;top:max(6px,env(safe-area-inset-top,0px));z-index:3;border:1px solid #dbb16c;background:#382b1c;padding:12px 14px;border-radius:6px;line-height:1.4;color:#ffe4bc;box-shadow:0 2px 20px #0009;font-size:.86rem}.story{padding-top:22px}.story h2{margin-bottom:15px}.story-content{color:#e9dccb;line-height:1.62;font-size:1.04rem;overflow-wrap:anywhere;white-space:normal}.story-content p{margin:0 0 13px;white-space:pre-line}.story-content p:last-child{margin-bottom:0}.choices{padding:16px 13px}.choices h3{font-size:1.05rem;margin:0 0 13px;color:var(--gold);font-weight:normal}.choice-list{display:grid;gap:10px}.choice{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:5px;width:100%;min-height:52px}.choice .choice-label{line-height:1.32;font-size:1rem}.choice .choice-detail{font:400 .78rem system-ui,sans-serif;color:#e3c9a1}.choice:disabled{cursor:not-allowed;opacity:.63;background:#27201a;color:#dbc2a0;transform:none}.choice:disabled .choice-detail{color:#c7a985}.choice.is-danger{border-color:#b86557;background:linear-gradient(150deg,#512823,#2a1817)}.choice.is-visited{border-color:#665c45}.case-tools{padding:0;overflow:hidden}.tool-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--line)}.tool-tab{border:0;border-right:1px solid var(--line);border-radius:0;font:700 .72rem system-ui,sans-serif;letter-spacing:.04em;background:#1e1813;padding:14px 5px;min-height:49px}.tool-tab:last-child{border-right:0}.tool-tab[aria-pressed=true]{color:#27190e;background:#d0ab74}.tool-content{padding:15px;line-height:1.5;font-size:.91rem}.tool-content ul{margin:0;padding-left:19px}.tool-content li{margin:0 0 7px}.tool-content p{margin:0 0 7px}.underbar{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#bcaa96;font:400 .76rem system-ui,sans-serif;margin:10px 2px 4px;flex-wrap:wrap}.text-button{border:0;background:transparent;color:#edc994;min-height:45px;padding:4px 8px;font:.76rem system-ui,sans-serif}.empty{color:#ad9b82;font-style:italic}.lock-reason{color:#e4bca4}@media(min-width:580px){.app-shell{padding-left:20px;padding-right:20px}.masthead{padding-top:38px}.story,.choices,.launch{padding:24px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}.case-journal{margin:0;padding-left:20px;max-height:none;overflow:visible}.case-journal>li{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #4d3a29}.case-journal strong{color:var(--gold);font-size:.81rem}.case-journal ul{padding-left:16px;margin-top:5px}.case-journal ul li{font-size:.86rem;margin:3px 0}.tool-tab{font-size:clamp(.59rem,2.4vw,.72rem);padding-inline:3px}
+/* Approved hero assets from Case 001; no invented NPC art yet. */
+.scene-heading{display:flex;align-items:center;gap:14px;margin-bottom:16px;min-height:100px}.scene-heading-title{min-width:0;flex:1}.scene-heading h2{margin:7px 0 8px}.hero-portrait{width:80px;height:100px;flex-shrink:0;object-fit:cover;object-position:center 25%;border-radius:7px;border:1px solid #8e6c40;background:#0f0b09;box-shadow:0 4px 17px #0008}.hero-portrait[hidden]{display:none}.portrait-label{color:#cba678;letter-spacing:.12em;font:600 .63rem system-ui,sans-serif}.hero-name{color:#cab497;font:.79rem system-ui,sans-serif}@media(max-width:360px){.scene-heading{gap:10px}.hero-portrait{width:68px;height:88px}.scene-heading h2{font-size:1.25rem}}
+/* NPC dossier cards: monograms deliberately replace missing, unapproved art. */
+.people-heading{font:700 .75rem system-ui,sans-serif;letter-spacing:.08em;color:var(--gold);margin:0 0 13px}.person-entry{display:flex;align-items:center;gap:12px;padding:12px 1px;border-bottom:1px solid #56412e}.person-entry:last-child{border-bottom:0}.person-monogram{display:grid;place-items:center;border:1px solid #85663f;background:linear-gradient(145deg,#443320,#16100e);width:44px;height:50px;flex-shrink:0;border-radius:6px;color:#e2be87;font:600 1rem Georgia,serif}.person-copy{min-width:0;display:flex;flex-direction:column;gap:4px}.person-copy strong{font-size:.99rem;color:#efddc4}.person-role,.person-status{font:.78rem system-ui,sans-serif;color:#c5ac8c}.person-status{color:#ebc88f}
+
+/* Case 002 draft dialogue speaker slots: show only discovered, physically
+   present people. Monograms are deliberate until original NPC art exists. */
+.scene-cast{display:flex;flex-wrap:wrap;gap:9px;padding:12px 0 16px;margin:0 0 15px;border-bottom:1px solid #655035}
+.scene-cast[hidden]{display:none}
+.scene-participant{display:flex;gap:10px;align-items:center;min-width:0;flex:1 1 180px;max-width:100%;padding:8px 10px;background:#191510;border:1px solid #594329;border-radius:7px}
+.scene-participant-monogram{display:grid;place-items:center;flex:0 0 46px;width:46px;height:52px;border-radius:5px;background:linear-gradient(145deg,#4c3825,#1c1611);border:1px solid #856540;color:#e9c792;font:700 1.03rem Georgia,serif}
+.scene-participant-description{display:flex;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere}
+.scene-participant-description strong{color:#f0d3a5;font:.96rem Georgia,serif}
+.scene-participant-role,.scene-participant-status{color:#c8af8d;font:.75rem system-ui,sans-serif;line-height:1.35}
+.scene-participant-status{color:#e5c18a}
+@media(max-width:360px){.scene-cast{gap:7px;padding:10px 0}.scene-participant{flex-basis:100%}}
+
+/* Image gate: actual scene imagery appears ONLY after a reviewed manifest entry
+   resolves and the decoded WebP has valid dimensions. No fake stock art. */
+.scene-location{font:600 .72rem system-ui,sans-serif;letter-spacing:.10em;
+ text-transform:uppercase;color:#d2ad76;padding:11px 0 8px;
+ border-top:1px solid #60472f}
+.scene-artwork{margin:8px 0 18px;border:1px solid #85613c;border-radius:8px;
+ overflow:hidden;background:#15120f;aspect-ratio:4/5}
+.scene-artwork[hidden]{display:none}
+.scene-artwork img{display:block;width:100%;height:100%;aspect-ratio:4/5;
+ object-fit:cover;object-position:center}
+.scene-participant-monogram[hidden],.scene-participant-portrait[hidden]{display:none}
+.scene-participant-portrait{width:46px;height:52px;object-fit:cover;
+ flex:0 0 46px;border-radius:5px;border:1px solid #856540}
+
+/* Individual original vector evidence tokens. No new character art or image fetch. */
+.evidence-heading{font:600 .72rem system-ui,sans-serif;text-transform:uppercase;
+ letter-spacing:.09em;color:#d8b47d;margin:0 0 13px!important}
+.evidence-gallery{list-style:none;display:grid;gap:9px;margin:0;padding:0!important}
+.evidence-card{display:flex;gap:12px;align-items:center;min-width:0;
+ padding:11px 10px;background:#1b1611;border:1px solid #624c32;
+ border-radius:8px;margin:0!important;min-height:72px}
+.evidence-card .evidence-symbol{display:block;flex:0 0 52px;width:52px;height:52px}
+.evidence-description{display:flex;flex-direction:column;gap:4px;min-width:0;
+ overflow-wrap:anywhere}
+.evidence-description strong{font:600 .92rem Georgia,serif;color:#edddc3}
+.evidence-custody{font:.79rem system-ui,sans-serif;color:#d9bc92}
+.evidence-origin{font:.71rem system-ui,sans-serif;color:#aa977d}
+.evidence-card[data-holder="workers"]{border-color:#9b7541;background:#261f15}
+.evidence-card[data-holder="workers"] .evidence-custody{color:#f2d4a3}
+
+/* Spoiler-safe deduction dossiers. Only earned evidence or verified conclusions
+   are ever rendered. Links focus the actual held item, not unknown future clues. */
+.deduction-gallery{display:grid;gap:12px}
+.deduction-card{border:1px solid #67503a;background:linear-gradient(160deg,#2b2119,#17130f);
+ border-radius:9px;padding:14px;min-width:0}
+.deduction-card.is-proven{border-color:#aa8450}
+.deduction-status{font:700 .69rem system-ui,sans-serif;color:#c6a779;letter-spacing:.14em}
+.deduction-card.is-proven .deduction-status{color:#f3d099}
+.deduction-card h4{font:600 1.12rem Georgia,serif;margin:8px 0 7px;color:#f1dfc5}
+.deduction-explanation{font:.84rem/1.55 system-ui,sans-serif;color:#c4b09b;margin:0 0 12px!important}
+.deduction-caption{font:600 .72rem system-ui,sans-serif;color:#dbc094;display:block;margin-bottom:8px}
+.deduction-sources{display:flex;flex-wrap:wrap;gap:7px}
+.deduction-source{min-height:44px;padding:9px 11px;font:.79rem/1.3 system-ui,sans-serif;
+ border-color:#866842;background:#292016;max-width:100%;text-align:left;overflow-wrap:anywhere}
+.evidence-card.is-focused{border-color:#e8bc77;box-shadow:0 0 0 2px #a47a3a66}
+.evidence-card:focus{outline:2px solid #edc994;outline-offset:2px}
+
+/* Screenplay typography — faithful to the original words. A dash at line
+   start highlights speech but does not falsely attribute it to an actor. */
+.story-content .story-paragraph{margin-bottom:15px}
+.story-content .scene-prose-line{white-space:pre-line}
+.story-content .scene-spoken-line{display:block;white-space:pre-line;
+ margin:5px 0;padding:7px 11px 7px 13px;border-left:2px solid #c29a60;
+ background:linear-gradient(90deg,#5a412526,transparent 90%);
+ color:#f5e6d2;font-size:1.015em;line-height:1.63}
+.story-content .scene-spoken-line:first-child{margin-top:0}
+.story{animation:case002-soft-enter .24s ease-out both}
+@keyframes case002-soft-enter{
+ from{opacity:.85;transform:translateY(4px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){.story{animation:none}}
+
+/* Case 002 mobile command deck: the player never has to scroll the whole
+   chapter just to reach clues, deductions, witnesses or a pending decision. */
+#game{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+.case-pulse{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.case-pulse span{border:1px solid #71563a;background:#221911;color:#e4c294;
+ border-radius:999px;padding:6px 9px;font:600 .7rem system-ui,sans-serif;white-space:nowrap}
+#storyPanel,#choicesPanel,#caseTools{scroll-margin-top:14px}
+.case-quick-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+ z-index:10;width:min(100%,640px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:3px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
+ background:linear-gradient(0deg,#17110d,#302317);border:1px solid #8f693c;
+ border-bottom:0;border-radius:12px 12px 0 0;box-shadow:0 -8px 30px #000b}
+.case-quick-nav button{min-width:0;min-height:48px;padding:9px 2px;border:1px solid #6c5032;
+ background:#282017;color:#f0d5a8;white-space:nowrap;font:700 clamp(.58rem,2.1vw,.74rem) system-ui,sans-serif;
+ letter-spacing:.012em;touch-action:manipulation}
+.case-quick-nav button:active{background:#8b693b;color:#16120c}
+.case-quick-nav button:focus-visible{outline-offset:-2px}
+.notice{position:fixed;top:auto;left:50%;bottom:calc(78px + env(safe-area-inset-bottom,0px));
+ transform:translateX(-50%);z-index:12;width:min(calc(100% - 28px),612px);
+ max-height:min(42dvh,320px);overflow-y:auto;overscroll-behavior:contain;
+ padding:12px 14px;background:linear-gradient(145deg,#44301f,#241a12);
+ border:1px solid #ddb477;box-shadow:0 10px 40px #000d;
+ border-radius:9px;color:#fff0db}
+.notice[hidden]{display:none}
+.notice-kicker{font:700 .65rem system-ui,sans-serif;letter-spacing:.12em;color:#f0bf78;margin-bottom:6px}
+.notice-content{font:.88rem/1.42 system-ui,sans-serif;overflow-wrap:anywhere}
+.notice-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:10px}
+.notice-actions button{min-height:44px;padding:9px 13px;font:700 .73rem system-ui,sans-serif}
+.notice-actions .notice-close{background:#201913;color:#e0c49b;border-color:#8c6b44}
+.notice-actions .notice-open{background:#8a6436;color:#fff3de;border-color:#d5ad6e}
+@media(max-width:359px){.case-quick-nav{gap:2px;padding-inline:4px}
+ .case-quick-nav button{font-size:.59rem;letter-spacing:0;padding-inline:1px}
+ .notice-actions button{flex:1}}
+@media(prefers-reduced-motion:reduce){
+ .case-quick-nav button,.notice{animation:none!important;transition:none!important}
+}
+
+/* No splash overlay: chapter card is an in-flow title, safe for 360px phones
+   and reduced-motion settings. Plot buttons and inventory stay accessible. */
+.chapter-intertitle{margin:11px 0 17px;padding:20px 16px;
+ background:radial-gradient(ellipse at 85% 25%,#76512b55,transparent 62%),
+   linear-gradient(135deg,#1f1914,#33271b 55%,#181310);
+ border:1px solid #986f42;border-radius:8px;position:relative;
+ box-shadow:inset 0 0 0 3px #b28a3417,0 10px 25px #0006;
+ text-align:center;overflow:hidden}
+.chapter-intertitle[hidden]{display:none}
+.chapter-intertitle::before,.chapter-intertitle::after{
+ content:"";display:block;height:1px;width:70%;margin:0 auto;
+ background:linear-gradient(90deg,transparent,#c89b58 45%,transparent)}
+.chapter-intertitle::after{margin-top:15px}
+.chapter-intertitle-name{font:600 clamp(.91rem,3.5vw,1.1rem) Georgia,serif;
+ letter-spacing:.13em;line-height:1.45;color:#eaca93;text-wrap:balance;
+ margin:13px auto}
+.chapter-intertitle-line{margin:0 auto;color:#d6c0a4;
+ font:italic .89rem/1.5 Georgia,serif;max-width:440px}
+@media(max-width:359px){.chapter-intertitle{padding:15px 11px}
+ .chapter-intertitle-name{letter-spacing:.055em}}
+
+/* Every active scene now uses its separately approved 720×900 vertical WebP.
+   No responsive <picture> source and no fallback to horizontal art. */
+.scene-artwork[data-portrait="true"],.scene-artwork[data-portrait="true"] img{
+ aspect-ratio:4/5
+}
+
+
+/* Case 002 mobile-first viewport, including optional Telegram Mini App controls.
+ * The bridge combines Telegram's hardware/content insets, and max() avoids
+ * double-counting native Safari env() insets. No SDK/network needed offline. */
+:root{--case002-safe-top:0px;--case002-safe-bottom:0px;
+ --case002-safe-left:0px;--case002-safe-right:0px}
+.app-shell{
+ padding-top:max(env(safe-area-inset-top,0px),var(--case002-safe-top));
+ padding-left:calc(14px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+ padding-right:calc(14px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ padding-bottom:calc(24px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+}
+#game{padding-bottom:calc(92px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+.case-quick-nav{
+ padding-left:calc(8px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+ padding-right:calc(8px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ padding-bottom:calc(8px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+}
+.notice{
+ bottom:calc(78px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)));
+ max-width:calc(100% - 28px - var(--case002-safe-left) - var(--case002-safe-right));
+}
+@media(min-width:580px){
+ .app-shell{
+  padding-left:calc(20px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+  padding-right:calc(20px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ }
+}
+@media(max-width:359px){
+ .case-quick-nav{
+  padding-left:calc(4px + max(env(safe-area-inset-left,0px),var(--case002-safe-left)));
+  padding-right:calc(4px + max(env(safe-area-inset-right,0px),var(--case002-safe-right)));
+ }
+}
+
+/* Safari/WebKit Telegram explicit pixel inset fallback. Some WKWebView builds
+ * fail to compute max(env(...),var(...)) even when both operands are valid.
+ * The bridge supplies device+Telegram insets, so use them directly only when
+ * available. Standalone Safari retains the native env() safe-area rules. */
+html[data-case002-telegram="true"] .app-shell{
+ padding-top:var(--case002-safe-top);
+ padding-left:calc(14px + var(--case002-safe-left));
+ padding-right:calc(14px + var(--case002-safe-right));
+ padding-bottom:calc(24px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] #game{
+ padding-bottom:calc(92px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] .case-quick-nav{
+ padding-left:calc(8px + var(--case002-safe-left));
+ padding-right:calc(8px + var(--case002-safe-right));
+ padding-bottom:calc(8px + var(--case002-safe-bottom));
+}
+html[data-case002-telegram="true"] .notice{
+ bottom:calc(78px + var(--case002-safe-bottom));
+}
+@media(min-width:580px){
+ html[data-case002-telegram="true"] .app-shell{
+  padding-left:calc(20px + var(--case002-safe-left));
+  padding-right:calc(20px + var(--case002-safe-right));
+ }
+}
+@media(max-width:359px){
+ html[data-case002-telegram="true"] .case-quick-nav{
+  padding-left:calc(4px + var(--case002-safe-left));
+  padding-right:calc(4px + var(--case002-safe-right));
+ }
+}
+
+/* Long illustrated chapters on iPhone: a real, touch-sized reading shortcut.
+ * The art remains untouched; the jump targets only earned current narration. */
+.story-read-action{display:flex;justify-content:flex-end;margin:-2px 0 7px}
+.story-read-button{min-height:44px;padding:9px 5px;border:0;background:transparent;
+ color:#e8c48b;font:700 .72rem/1.35 system-ui,sans-serif;
+ letter-spacing:.07em;text-decoration:underline;text-underline-offset:4px}
+.story-read-button:focus-visible{outline:2px solid #f7d4a0;outline-offset:3px}
+#chapterIntertitle,#sceneText{scroll-margin-top:18px}
+#sceneText:focus-visible{outline:2px solid #d8af6b;outline-offset:5px}
+
+/* Decision receipt overflow: every committed consequence stays readable.
+   Compact notices remain small; expanded notices scroll without hiding actions. */
+.notice-content{white-space:pre-line}
+.notice-actions{position:sticky;bottom:-12px;padding:10px 0 3px;
+ background:linear-gradient(0deg,#241a12 65%,#241a1200)}
+.notice-expand{background:#2c2419;color:#f3cd94;border-color:#ba8d55}
+
+/* Case 002 iPhone legibility: previous clamp() resolved to 9–10px on
+ * common phone widths. Preserve large touch targets and permit wrapping. */
+.case-quick-nav button{font-size:clamp(.70rem,3vw,.78rem);line-height:1.2}
+.tool-tab{font-size:clamp(.70rem,3vw,.79rem);line-height:1.2}
+@media(max-width:359px){
+ .case-quick-nav button{font-size:.72rem;white-space:normal;
+  overflow-wrap:anywhere;letter-spacing:0;line-height:1.15}
+}
+/* Real scroll anchors must remain below the Safari/Telegram top inset. */
+#storyPanel,#choicesPanel,#caseTools,#chapterIntertitle,#sceneText,.evidence-card{
+ scroll-margin-top:calc(18px + env(safe-area-inset-top,0px))
+}
+html[data-case002-telegram="true"] #storyPanel,
+html[data-case002-telegram="true"] #choicesPanel,
+html[data-case002-telegram="true"] #caseTools,
+html[data-case002-telegram="true"] #chapterIntertitle,
+html[data-case002-telegram="true"] #sceneText,
+html[data-case002-telegram="true"] .evidence-card{
+ scroll-margin-top:calc(18px + var(--case002-safe-top))
+}
+
+/* Portrait-only experience from Case 002 onward. Keep desktop QA usable,
+ * but render the game in a narrow portrait column even on a wide monitor. */
+.app-shell{max-width:520px}
+.case-quick-nav{max-width:520px}
+.portrait-gate{display:none;position:fixed;inset:0;z-index:1000;
+ background:radial-gradient(circle at 50% 30%,#473320,#140f0c 70%);
+ color:#efddc4;padding:24px;align-items:center;justify-content:center;
+ text-align:center;overflow-y:auto}
+.portrait-gate-content{max-width:420px;display:grid;gap:12px;justify-items:center;
+ border:1px solid #ac8047;border-radius:12px;background:#211810;
+ padding:24px 20px;box-shadow:0 8px 28px #0008}
+.portrait-gate-mark{color:#eac18a;font-size:2rem;line-height:1}
+.portrait-gate strong{font:600 clamp(1.15rem,4vw,1.5rem)/1.28 Georgia,serif}
+.portrait-gate p{margin:0;font:.89rem/1.5 system-ui,sans-serif;color:#dcc5a7}
+@media (orientation:landscape) and (pointer:coarse){
+ #app{visibility:hidden}
+ .portrait-gate{display:flex}
+}
+
+/* Fail-closed original portrait recovery: never substitute horizontal art or
+ * stale imagery. The scene and its dialogue remain accessible without it. */
+.art-recovery{margin:9px 0 17px;padding:15px 13px;border:1px solid #85613c;
+ border-radius:8px;background:linear-gradient(145deg,#241c15,#161210);color:#e5d1b7}
+.art-recovery p{margin:0 0 11px;font:.86rem/1.5 system-ui,sans-serif}
+.art-retry{min-height:44px;font:700 .75rem/1.3 system-ui,sans-serif;
+ letter-spacing:.03em;background:#4e3b25;border-color:#b18b52}
+
+/* A fixed consequence receipt must not strand return-to-launch under the
+ * mobile command deck: conflict receipts offer a direct touch-sized exit. */
+#noticeExit{min-height:44px;white-space:normal;max-width:100%}
+#backToLaunch{scroll-margin-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+
+/* Case 002 cinematic entry: approved art only, no new assets or landscape mode. */
+.launch{position:relative;isolation:isolate;overflow:hidden;padding-top:0}
+.launch-cinematic{height:clamp(168px,48vw,260px);margin:0 -16px 17px;position:relative;overflow:hidden;background:#20150e}
+.launch-cinematic img{width:100%;height:100%;object-fit:cover;object-position:center 26%;filter:sepia(.18) brightness(.68)}
+.launch-cinematic::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#231a14 1%,#231a1466 42%,transparent 95%)}
+.launch-eyebrow{font:700 .68rem system-ui,sans-serif;letter-spacing:.2em;color:#deb77a;margin:0 0 8px}
+.launch-intro{color:#d4bc9d;font-size:.91rem;line-height:1.55;margin:0 0 17px}
+.hero-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0 20px}
+.hero-card{display:flex;align-items:center;text-align:left;gap:9px;min-width:0;min-height:86px;padding:7px;background:linear-gradient(145deg,#291f19,#17120f);border-color:#725331}
+.hero-card img{height:75px;width:58px;flex:0 0 58px;object-fit:cover;object-position:center 26%;border-radius:5px;border:1px solid #866036}
+.hero-card span{display:block;min-width:0;overflow-wrap:anywhere;font:600 .85rem/1.25 Georgia,serif}
+.hero-card small{display:block;font:500 .69rem system-ui,sans-serif;color:#c8ab82;margin-top:6px}
+.hero-card[aria-pressed="true"]{border-color:#edbd73;background:linear-gradient(135deg,#58432b,#261b13);box-shadow:0 0 0 2px #c08d4880,0 0 24px #cd915326}
+.hero-card[aria-pressed="true"] small{color:#f3d4a4}
+@media(min-width:580px){.launch-cinematic{margin:0 -24px 21px}.hero-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-card{flex-direction:column;align-items:stretch;gap:6px}.hero-card img{width:100%;height:128px;object-position:center 20%}.hero-card span{text-align:center}}
+@media(max-width:360px){.hero-card{gap:6px;padding:5px}.hero-card img{width:48px;flex-basis:48px;height:70px}.hero-card span{font-size:.76rem}}
+.story-content .scene-spoken-line[data-speaker]{border-left-color:#e6b66f;padding:11px 13px;background:linear-gradient(100deg,#6646264d,#241b1550)}
+.story-content .scene-spoken-line[data-speaker]::before{content:attr(data-speaker);display:block;margin:0 0 6px;font:800 .71rem/1.35 system-ui,sans-serif;letter-spacing:.07em;color:#f0c58b;text-transform:uppercase}
+.story-content .scene-spoken-line[data-speaker="Вы"]{border-color:#ddbd82;background:#54412c42}
+.story-content .scene-spoken-line[data-speaker="Мысли"]{font-style:italic;border-color:#776b5b}
+.story-content .scene-spoken-line[data-speaker="Неизвестный голос"]{border-color:#826a50}
+.pair-board{border:1px solid #856641;border-radius:10px;background:#1b1510;padding:13px;margin:0 0 16px}
+.pair-board h4{margin:0 0 7px;font:600 1.13rem Georgia,serif;color:#efce9a}
+.pair-board>p{font:.83rem/1.5 system-ui,sans-serif;color:#d3bda1;margin:0 0 10px!important}
+.pair-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pair-item{display:flex;gap:7px;align-items:center;text-align:left;min-width:0;min-height:68px;background:#2d241b;border:1px solid #806042;padding:7px;font:.76rem/1.32 system-ui,sans-serif}
+.pair-item svg{width:33px;height:33px;flex:0 0 33px}
+.pair-item[aria-pressed="true"]{border-color:#f1c184;background:#5b4024}
+.pair-result{margin:12px 0 0;border-top:1px solid #685036;padding-top:10px;color:#eed0a7;font:.84rem/1.55 system-ui,sans-serif}
+.pair-result strong{display:block;color:#f6d79f;margin-bottom:4px}
+@media(max-width:359px){.pair-items{grid-template-columns:1fr}}
+
+
+/* Case 002: one-screen story + rules briefing before hero selection.
+ * In the normal flow only one of briefing, launch, and game is visible. */
+.case002-briefing{
+ position:relative;isolation:isolate;overflow:hidden;
+ margin:14px 0;border:1px solid #966f42;border-radius:10px;
+ background:linear-gradient(160deg,#261e17 4%,#14110e 92%);
+ box-shadow:0 15px 44px #0009,inset 0 0 0 2px #b98b3219}
+.briefing-visual{position:relative;height:clamp(175px,51vw,265px);overflow:hidden;
+ background:radial-gradient(ellipse at center,#6b452b,#100d0c)}
+.briefing-visual>img{width:100%;height:100%;display:block;object-fit:cover;
+ object-position:center 52%;filter:sepia(.12) brightness(.88)}
+.briefing-visual:after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(0deg,#261e17 0%,#261e17a8 20%,transparent 80%)}
+.briefing-visual-stamp{position:absolute;z-index:1;bottom:10px;left:18px;
+ font:700 .6rem/1.25 system-ui,sans-serif;letter-spacing:.22em;color:#edd3a9}
+.briefing-copy{padding:4px 17px 18px}
+.briefing-index{font:700 .66rem/1.4 system-ui,sans-serif;letter-spacing:.17em;color:#dfa95e}
+.case002-briefing h2{margin:7px 0 10px;color:#f2ce99;font:700 clamp(1.45rem,6.4vw,1.85rem)/1.12 Georgia,serif;text-wrap:balance}
+.briefing-premise{margin:0 0 15px;color:#f1dfc7;font:.95rem/1.51 Georgia,serif}
+.briefing-rules{border-top:1px solid #8e693f;padding-top:12px;display:grid;gap:9px}
+.briefing-rules h3{margin:0 0 2px;color:#eac18b;font:700 .73rem/1.4 system-ui,sans-serif;letter-spacing:.11em;text-transform:uppercase}
+.briefing-rule{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start}
+.briefing-rule>span{color:#e6bc80;font:700 .8rem/1.5 Georgia,serif}
+.briefing-rule p{margin:0;color:#d8c4ad;font:.82rem/1.45 system-ui,sans-serif}
+.briefing-enter{display:flex;width:100%;align-items:center;justify-content:center;gap:12px;
+ min-height:54px;margin-top:17px;color:#1c120b;border:1px solid #efcc91;
+ background:linear-gradient(130deg,#efd5a7,#bc8950);font:800 .83rem/1.35 system-ui,sans-serif;
+ letter-spacing:.045em;box-shadow:0 5px 22px #0008}
+.briefing-enter>span{font-size:1.2rem;line-height:1}
+.briefing-note{color:#af9980;font:.7rem/1.45 system-ui,sans-serif;margin:10px 0 0;text-align:center}
+.launch-brief-back{margin-top:12px;width:100%;background:transparent;border-color:#6d5232;
+ color:#d3b48c;font:700 .75rem/1.45 system-ui,sans-serif;letter-spacing:.03em}
+.prior-details{border:1px solid #74583b;border-radius:7px;padding:11px 12px;margin:12px 0;background:#1c1712}
+.prior-details summary{cursor:pointer;color:#e2c49d;font:700 .81rem/1.4 system-ui,sans-serif}
+.prior-details summary span{font-weight:400;color:#ae997e}
+.prior-details[open]{padding-bottom:15px}
+.hero-card{min-height:89px}
+@media(max-width:359px){
+ .briefing-copy{padding:3px 12px 14px}
+ .briefing-visual{height:160px}
+ .briefing-premise{font-size:.88rem;line-height:1.44}
+ .briefing-rule{gap:6px}
+ .briefing-rule p{font-size:.77rem;line-height:1.37}
+ .briefing-rules{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+ .case002-briefing,.briefing-visual,.briefing-enter{transition:none!important;animation:none!important}
+}
+
+/* The case title belongs to the illustrated briefing, not a repeated masthead. */
+.app-shell[data-screen="briefing"] .masthead,
+.app-shell[data-screen="selection"] .masthead{display:none}
+.case002-briefing{margin-top:6px}
+.briefing-visual{height:clamp(160px,43vw,220px)}
+.launch .launch-actions #resume[hidden]{display:none!important}
+
+
+/* Milestone: cinematic story framing. The approved 720x900 frame stays intact,
+   with all scene labels OUTSIDE the image to avoid covering narrative art. */
+#app[data-screen="game"] .masthead{
+ padding:10px 0 11px;border-color:#6f5031;
+ background:linear-gradient(90deg,transparent,#38261928 50%,transparent)}
+#app[data-screen="game"] .masthead h1{
+ font-size:clamp(1.03rem,3.6vw,1.26rem);margin:3px 0;
+ color:#e3bd85;line-height:1.2}
+#app[data-screen="game"] .masthead small{font-size:.57rem}
+#app[data-screen="game"] .masthead p{font-size:.68rem;opacity:.8}
+#game .chapter-row{font-size:.7rem;padding:12px 5px 3px;gap:10px;line-height:1.4}
+#game .chapter-row span:last-child{text-align:right;letter-spacing:.04em}
+#game .case-pulse{margin-top:10px}
+#game .story{position:relative;overflow:hidden;
+ background:linear-gradient(160deg,#2a2018,#18130f 65%,#120f0d);
+ border-color:#926b3f;box-shadow:0 12px 32px #0009,inset 0 0 0 2px #c5953b14;
+ padding:15px 13px 17px}
+#game .story:before{content:"";position:absolute;top:0;left:16px;right:16px;height:2px;
+ background:linear-gradient(90deg,transparent,#cf9d5c 25%,#e2c38b 50%,#cf9d5c 75%,transparent);
+ pointer-events:none}
+#game .scene-heading{min-height:74px;gap:13px;margin-bottom:8px}
+#game .hero-portrait{width:62px;height:78px;flex-basis:62px;border-radius:4px;
+ object-position:center 23%;border-color:#aa7e4b}
+#game .scene-heading h2{font:700 clamp(1.29rem,5vw,1.7rem)/1.18 Georgia,serif;
+ color:#f4d6a7;text-wrap:balance;margin:5px 0}
+#game .portrait-label{font-size:.62rem;color:#d6ad77}
+#game .hero-name{color:#d9bea0;font-size:.74rem}
+#game .scene-location{border-top:1px solid #6f5231;margin-top:12px;
+ font-size:.68rem;padding:11px 2px 7px;letter-spacing:.12em}
+#game .story-read-action{margin:-5px 0 4px}
+#game .story-read-button{text-decoration:none;border-bottom:1px solid #ab8152;
+ color:#e7c38f;min-height:44px;padding:9px 2px}
+#game .scene-artwork{
+ aspect-ratio:auto;position:relative;margin:5px 0 15px;padding:6px 6px 0;
+ border:1px solid #947044;border-radius:5px;background:#110e0d;
+ box-shadow:0 0 0 3px #382719,0 15px 25px #0008;
+ overflow:hidden}
+#game .scene-artwork img,#game .scene-artwork[data-portrait="true"] img{
+ display:block;width:100%;height:auto;aspect-ratio:4/5;
+ object-fit:cover;border-radius:2px 2px 0 0}
+.scene-art-caption{display:flex;align-items:center;justify-content:space-between;
+ gap:12px;min-height:33px;padding:8px 7px;
+ color:#d8bd96;font:700 .61rem/1.35 system-ui,sans-serif;
+ letter-spacing:.07em}
+.scene-art-caption span{min-width:0;overflow-wrap:anywhere}
+.scene-art-caption span:last-child{font-weight:500;text-align:right;color:#ac977c}
+#game .scene-cast{padding:6px 0 14px;margin:3px 0 12px}
+#game .scene-participant{border-color:#715233;background:linear-gradient(125deg,#241b13,#15110e);
+ border-radius:5px}
+.narrative-divider{display:flex;align-items:center;justify-content:center;gap:12px;
+ margin:8px 0 17px;color:#b69a6e;font:700 .64rem/1 system-ui,sans-serif;
+ letter-spacing:.25em;opacity:.88}
+.narrative-divider:before,.narrative-divider:after{content:"";height:1px;flex:1;
+ background:linear-gradient(90deg,transparent,#785a36)}
+.narrative-divider:after{transform:rotate(180deg)}
+#game .story-content{font-size:clamp(1rem,3.9vw,1.08rem);line-height:1.58;
+ color:#e6d6c1}
+#game .story-content .story-paragraph{margin-bottom:13px}
+#game .story-content .scene-spoken-line[data-speaker]{border:1px solid #60462d;
+ border-left:3px solid #b68a53;border-radius:0 6px 6px 0;
+ background:linear-gradient(120deg,#34251b,#211a15 88%);color:#f2dfc5;
+ margin:9px 0;padding:11px 12px 12px}
+#game .story-content .scene-spoken-line[data-speaker]:before{
+ font-size:.7rem;letter-spacing:.12em;margin-bottom:8px}
+#game .story-content .scene-spoken-line[data-speaker="Вы"]{
+ border-left-color:#eac48d;background:linear-gradient(110deg,#4a3626,#261e17)}
+#game .story-content .scene-spoken-line[data-speaker="Мысли"]{
+ border-left-color:#796e5c;background:#211c17}
+#game .choices{border-color:#856038;
+ background:linear-gradient(140deg,#2d2118,#17130f);padding:16px 12px}
+#game .choices h3{font:700 1.15rem/1.25 Georgia,serif;color:#f0ce9b;
+ padding-bottom:11px;border-bottom:1px solid #694d2e;margin-bottom:12px}
+.choices-hint{display:block;margin:5px 0 0;color:#ae987d;font:500 .7rem/1.35 system-ui,sans-serif}
+#game .choice-list{counter-reset:decision;gap:9px}
+#game .choice{counter-increment:decision;display:grid;
+ grid-template-columns:29px minmax(0,1fr);column-gap:9px;row-gap:5px;
+ text-align:left;align-items:start;padding:13px 10px;
+ border:1px solid #9d7642;background:linear-gradient(105deg,#49341f,#2c2119 75%);
+ border-radius:6px;box-shadow:inset 0 1px 0 #e2bb7130}
+#game .choice:before{content:counter(decision,decimal-leading-zero);
+ grid-row:1 / span 3;color:#d6aa70;font:700 .84rem Georgia,serif;align-self:start;margin-top:2px}
+#game .choice-label{font:600 .98rem/1.36 Georgia,serif;color:#f4dfbf}
+#game .choice-detail{font:.75rem/1.42 system-ui,sans-serif;color:#d8b995}
+#game .choice:disabled{box-shadow:none;background:#28211a;border-color:#5f4b38}
+#game .choice.is-danger{border-color:#bd7760;background:linear-gradient(120deg,#51251f,#2a1815)}
+#game .choice.is-danger:before{color:#ffc09f}
+/* Interactive evidence wall: visual string between two selectable clues.
+   Never displays the name of a hidden/uncollected clue. */
+.pair-board{
+ padding:14px 11px 13px;
+ background:repeating-linear-gradient(0deg,#ffffff04 0 1px,transparent 1px 6px),
+ linear-gradient(125deg,#493523,#221a14 65%,#18120f);
+ border:1px solid #a17a49;border-radius:7px;
+ box-shadow:inset 0 0 0 3px #0e0a0966,0 7px 18px #0008}
+.pair-board .pair-kicker{margin:0 0 7px!important;color:#d6b47b;
+ font:700 .64rem/1.35 system-ui,sans-serif;letter-spacing:.14em}
+.pair-board-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.pair-board-head h4{font-size:1.22rem;color:#fae1b1;margin:0 0 8px}
+.pair-total{font:.71rem system-ui,sans-serif;color:#cbb392;text-align:right}
+.pair-instruction{font:.82rem/1.45 system-ui,sans-serif;color:#e5c9aa;margin:0 0 12px!important}
+.pair-connection{display:grid;grid-template-columns:minmax(0,1fr) 21px minmax(0,1fr);
+ gap:5px;align-items:center;border:1px dashed #bc925d;border-radius:7px;
+ background:#150f0b99;padding:9px 8px;margin:0 0 13px}
+.pair-connection-slot{min-width:0;overflow-wrap:anywhere;text-align:center;
+ color:#aa977f;font:700 .69rem/1.35 system-ui,sans-serif;letter-spacing:.04em}
+.pair-connection-slot.is-filled{color:#f3d2a1}
+.pair-connection-symbol{position:relative;text-align:center;color:#f2ba75;font-size:.75rem}
+.pair-connection-symbol:before,.pair-connection-symbol:after{content:"";position:absolute;
+ width:7px;top:50%;height:1px;background:#c79258}
+.pair-connection-symbol:before{left:0}.pair-connection-symbol:after{right:0}
+.pair-items{gap:9px}
+.pair-item{position:relative;align-items:flex-start;min-width:0;min-height:76px;
+ padding:10px 8px;background:linear-gradient(145deg,#ead6b4,#bd9f78);
+ color:#291d11;border:1px solid #644629;border-radius:3px;
+ box-shadow:2px 3px 0 #0006;transform:rotate(-.2deg)}
+.pair-item:nth-child(2n){transform:rotate(.25deg);background:linear-gradient(145deg,#e5ca9e,#b99a72)}
+.pair-item[aria-pressed="true"]{border:2px solid #f3dba8;
+ background:linear-gradient(145deg,#f7e2b9,#d1b183);
+ box-shadow:0 0 0 2px #ad793f,3px 5px 7px #0008}
+.pair-item:focus-visible{outline:3px solid #fff0c6;outline-offset:3px}
+.pair-item .pair-item-copy{display:block;min-width:0;overflow-wrap:anywhere}
+.pair-item strong{font:700 .76rem/1.35 Georgia,serif;color:#2d2015}
+.pair-item svg{flex:0 0 35px;width:35px;height:35px}
+.pair-item-hint{display:block;margin-top:6px;border-top:1px solid #795a3a;
+ padding-top:6px;color:#4b301d;font:.71rem/1.42 system-ui,sans-serif}
+.pair-result{background:linear-gradient(135deg,#281d14,#130f0b);
+ padding:13px 10px 12px;border:1px solid #906b3b;border-radius:5px}
+.pair-result[data-kind="match"]{border-color:#dcb374;background:#362719}
+.pair-result[data-kind="unrelated"]{border-color:#846547}
+.pair-result-status{display:block;color:#cda569;font:700 .67rem/1.4 system-ui,sans-serif;
+ letter-spacing:.12em;margin-bottom:5px}
+.pair-result-sources{color:#dfc59c;font:italic .76rem/1.45 Georgia,serif;
+ margin-bottom:7px;overflow-wrap:anywhere}
+.pair-result:focus-visible{outline:3px solid #f7d7a4;outline-offset:3px}
+.evidence-card{flex-wrap:wrap}
+.evidence-card .evidence-description{flex:1 1 125px}
+.evidence-to-board{flex:0 0 auto;min-height:44px;margin-left:auto;
+ padding:8px 11px;border-color:#b88c51;background:linear-gradient(140deg,#594026,#2d2118);
+ font:700 .69rem/1.3 system-ui,sans-serif;letter-spacing:.03em;color:#f6d7a1}
+.evidence-to-board:focus-visible{outline:3px solid #f9dcaa;outline-offset:2px}
+@media(max-width:359px){
+ #game .story{padding:12px 10px}
+ #game .scene-artwork{padding:4px 4px 0}
+ .scene-art-caption{font-size:.56rem}
+ .pair-item{padding:8px 5px;gap:5px}
+ .pair-item svg{width:28px;height:28px;flex-basis:28px}
+ .pair-item strong{font-size:.72rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .pair-item{transform:none!important}
+}
+
+/* Case002 dossiers: approved NPC portraits and card index. No unrevealed cast
+   is ever created; discovered() is the only source of visible people. */
+.people-dossier-header,.case-journal-heading{
+ margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #85603a}
+.people-dossier-kicker,.case-journal-eyebrow{
+ display:block;color:#d9b37e;font:700 .64rem/1.4 system-ui,sans-serif;
+ letter-spacing:.16em}
+.people-dossier-header h3,.case-journal-heading h3{
+ color:#f2d3a1;margin:6px 0 7px;font:700 1.25rem/1.25 Georgia,serif}
+.people-dossier-description,.case-journal-intro{
+ color:#cbb79a;margin:0!important;font:.81rem/1.5 system-ui,sans-serif}
+.people-dossier-gallery{display:grid;gap:10px}
+.people-dossier-gallery .person-entry{
+ display:flex;gap:12px;align-items:center;min-height:110px;
+ padding:10px;border:1px solid #80603d;border-radius:6px;
+ background:linear-gradient(115deg,#38291d,#17120f);
+ box-shadow:inset 0 1px 0 #e4bb7f20,0 5px 12px #0005}
+.person-avatar{position:relative;flex:0 0 76px;width:76px;height:94px;
+ overflow:hidden;background:linear-gradient(145deg,#4c3723,#16100d);
+ border:1px solid #b38a57;border-radius:4px;
+ box-shadow:0 3px 10px #0009}
+.person-avatar .person-monogram{width:100%;height:100%;border:0;
+ background:transparent;border-radius:0;display:grid;place-items:center;
+ font:700 1.35rem Georgia,serif;color:#ebc791}
+.person-avatar .person-portrait{position:absolute;inset:0;width:100%;height:100%;
+ object-fit:cover;object-position:center 25%;display:block}
+.person-avatar .person-portrait[hidden],.person-avatar .person-monogram[hidden]{display:none!important}
+.people-dossier-gallery .person-copy{flex:1;min-width:0;display:flex;flex-direction:column;
+ gap:5px;overflow-wrap:anywhere}
+.people-dossier-gallery .person-index{color:#ad906d;font:700 .59rem/1.2 system-ui,sans-serif;
+ letter-spacing:.13em}
+.people-dossier-gallery .person-copy strong{font:700 1.04rem/1.25 Georgia,serif;color:#f5d9ac}
+.people-dossier-gallery .person-role{color:#d4b99a;font:.77rem/1.4 system-ui,sans-serif}
+.people-dossier-gallery .person-status{color:#f5d7a7;
+ font:700 .72rem/1.4 system-ui,sans-serif}
+.person-status[data-status="detained"],.person-status[data-status="deceased"]{color:#ecaf9c}
+.person-status[data-status="protected"],.person-status[data-status="evacuated"]{color:#f0d5a4}
+@media(max-width:359px){
+ .person-avatar{flex-basis:60px;width:60px;height:80px}
+ .people-dossier-gallery .person-entry{gap:9px;padding:8px}
+ .people-dossier-gallery .person-copy strong{font-size:.94rem}
+}
+/* Journal film ledger: newest verified records first. No reconstructed or
+   future actions, and no nested scrolling. */
+.case-journal{padding:0 0 0 13px!important;margin:0;list-style:none;
+ border-left:2px solid #89633e;max-height:none;overflow:visible}
+.case-journal .journal-event{position:relative;margin:0 0 12px;
+ padding:12px 11px 12px 15px;border:1px solid #6d5134;
+ border-radius:0 6px 6px 0;background:linear-gradient(110deg,#2b2118,#17120f);
+ box-shadow:0 4px 11px #0005}
+.case-journal .journal-event:before{content:"";position:absolute;
+ top:17px;left:-21px;width:10px;height:10px;
+ border:2px solid #e5bd7d;border-radius:50%;background:#27180f}
+.journal-event[hidden]{display:none!important}
+.journal-event-header{display:flex;justify-content:space-between;flex-wrap:wrap;
+ gap:6px 12px;margin-bottom:8px}
+.journal-event-number{font:700 .66rem/1.35 system-ui,sans-serif;letter-spacing:.1em;
+ color:#dbb982}
+.journal-event-scene{font:600 .66rem/1.35 system-ui,sans-serif;color:#bba185}
+.journal-event-title{color:#efd2a5;margin:0 0 10px;font:700 .98rem/1.3 Georgia,serif}
+.journal-event-notes{list-style:none;padding:0!important;margin:0!important}
+.journal-event-note{position:relative;margin:0 0 5px!important;padding:0 0 0 12px;
+ color:#ded0bc;font:.81rem/1.48 system-ui,sans-serif}
+.journal-event-note:before{content:"";position:absolute;left:0;top:.53em;
+ width:5px;height:5px;border-radius:50%;background:#b88b50}
+.journal-event-note[data-kind="evidence"]{color:#f0d5a4}
+.journal-event-note[data-kind="witness"]{color:#ead0ad}
+.journal-event-note[data-kind="custody"]{color:#e8bc94}
+.journal-show-all{display:block;width:100%;margin:10px 0 2px;
+ min-height:48px;background:#322417;border-color:#b48a53;
+ color:#f3d2a2;font:700 .76rem/1.4 system-ui,sans-serif;letter-spacing:.03em}
+.journal-event:focus-visible{outline:3px solid #f3d4a6;outline-offset:3px}
+/* Consequence receipts remain above the fixed mobile dock and keep their
+   original complete text + accessible expandable details. */
+#notice{border-radius:8px;background:linear-gradient(140deg,#443020,#231a13);
+ box-shadow:0 8px 35px #000d,inset 0 1px 0 #f6d39330}
+#notice:before{content:"";position:absolute;top:0;left:15px;right:15px;height:2px;
+ background:linear-gradient(90deg,transparent,#e3b978,transparent)}
+#notice[data-section="witnesses"]{border-color:#b18d63}
+#notice[data-section="evidence"]{border-color:#d7b279}
+#notice .notice-kicker{color:#f0d2a2;font:800 .67rem/1.35 system-ui,sans-serif;
+ letter-spacing:.14em;padding-bottom:6px}
+#notice .notice-content{line-height:1.48;color:#f8e5ca}
+#notice .notice-actions{gap:8px}
+@media(prefers-reduced-motion:reduce){
+ .people-dossier-gallery .person-entry,.case-journal .journal-event{animation:none!important}
+}
+
+/* Receipt interaction safety: toast overlays must not eat taps intended for
+   nearby dossier tabs. Only explicitly actionable receipt buttons capture
+   pointer input; expanded detail text can be scrolled separately. */
+#notice{pointer-events:none}
+#notice .notice-actions{pointer-events:none}
+#notice .notice-actions button{pointer-events:auto}
+#notice.is-expanded .notice-content{
+ pointer-events:auto;overflow-y:auto;overscroll-behavior:contain;
+ max-height:min(30dvh,230px)
+}
+html{scroll-padding-bottom:calc(125px + env(safe-area-inset-bottom,0px))}
+.tool-tab{scroll-margin-bottom:calc(145px + env(safe-area-inset-bottom,0px))}
+html[data-case002-telegram="true"] .tool-tab{
+ scroll-margin-bottom:calc(145px + var(--case002-safe-bottom))
+}
+
+/* Case 002 terminal report, shown only after the engine has committed a
+   real Z01–Z07 ending. No independent progression, rewards or save writes. */
+#game[data-completed="true"] .choices{padding:13px 11px 15px}
+#game[data-completed="true"] .choices h3{margin-bottom:12px}
+.finale-panel{position:relative;isolation:isolate;overflow:hidden;
+ padding:17px 12px 14px;border:1px solid #b38a55;border-radius:8px;
+ background:repeating-linear-gradient(0deg,#caaa8310 0 1px,transparent 1px 7px),
+ linear-gradient(145deg,#38281b,#19130f 75%);
+ box-shadow:inset 0 0 0 2px #b3833f26,0 10px 24px #0008}
+.finale-panel:before{content:"";position:absolute;top:0;left:22px;right:22px;
+ height:2px;background:linear-gradient(90deg,transparent,#e5bc80,transparent)}
+.finale-eyebrow{margin:0 0 9px!important;color:#eac48e;
+ font:800 .67rem/1.4 system-ui,sans-serif;letter-spacing:.13em}
+.finale-title{font:700 clamp(1.5rem,5vw,1.9rem)/1.2 Georgia,serif;
+ color:#f3d9ac;margin:0 0 7px;text-wrap:balance}
+.finale-subtitle{color:#c9ad8a;font:.79rem/1.5 system-ui,sans-serif;margin:0 0 15px!important}
+.finale-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:6px;margin:13px 0 16px}
+.finale-metric{display:flex;flex-direction:column;gap:6px;align-items:center;
+ min-width:0;text-align:center;border:1px solid #977348;background:#23190fbd;
+ border-radius:6px;padding:11px 3px}
+.finale-metric strong{color:#f1d19b;font:700 1.6rem/1 Georgia,serif}
+.finale-metric span{color:#cdb596;font:600 .65rem/1.25 system-ui,sans-serif}
+.finale-people,.finale-history{border-top:1px solid #785b37;padding-top:11px;margin-top:11px}
+.finale-people h5,.finale-history h5{font:700 1rem/1.25 Georgia,serif;
+ margin:0 0 9px;color:#f0cd95}
+.finale-people ul,.finale-history ul{list-style:none;padding:0!important;margin:0!important}
+.finale-people li{display:flex;gap:8px;align-items:baseline;justify-content:space-between;
+ flex-wrap:wrap;padding:7px 0;border-bottom:1px solid #59432d}
+.finale-people li strong{font:.88rem Georgia,serif;color:#f0dac0}
+.finale-people li span{font:.76rem/1.4 system-ui,sans-serif;color:#ddbf98}
+.finale-people li[data-status="deceased"] span,
+.finale-people li[data-status="detained"] span{color:#e9a99d}
+.finale-history li{position:relative;padding:4px 0 7px 12px;
+ color:#d8c4a7;font:.79rem/1.45 system-ui,sans-serif}
+.finale-history li:before{content:"";position:absolute;left:0;top:12px;width:4px;
+ height:4px;border-radius:50%;background:#d3a66c}
+.finale-archive{margin-top:15px;padding:12px;background:#18120e;
+ border:1px solid #816343;border-radius:6px}
+.finale-archive-kicker{display:block;color:#eac38f;letter-spacing:.1em;
+ font:700 .66rem/1.3 system-ui,sans-serif;margin-bottom:5px}
+.finale-archive p{font:.81rem/1.55 system-ui,sans-serif;
+ color:#e3ceb0;margin:0!important}
+.finale-actions{display:grid;gap:9px;margin-top:14px}
+.finale-action{width:100%;min-height:50px;
+ border-color:#c89c66;font:700 .8rem/1.45 system-ui,sans-serif;letter-spacing:.03em}
+.finale-action.secondary{background:#211a14;color:#f1d2a7}
+#game[data-completed="true"] .choice-list{display:block}
+@media(max-width:359px){.finale-panel{padding:14px 9px 12px}
+ .finale-metric span{font-size:.59rem}.finale-metric strong{font-size:1.45rem}}
+
+/* Stage 8: consistent brass-paper accents and readable thumb navigation.
+   Every indicator is transient; no plot, persistence or reward side effects. */
+.hero-selection-status{margin:-7px 0 16px;padding:10px 12px;border-left:3px solid #cda16a;
+ background:#241b14;color:#f0d4a9;font:600 .78rem/1.45 system-ui,sans-serif}
+.hero-card[data-has-save="true"]{border-color:#b99563}
+.hero-card .hero-save-badge{display:inline-block;margin-top:8px;padding:4px 6px;
+ border:1px solid #947144;border-radius:3px;background:#261b11;color:#f1ca91;
+ font:700 .59rem/1.3 system-ui,sans-serif;letter-spacing:.025em}
+.hero-card .hero-save-badge[hidden]{display:none!important}
+#app[data-screen="game"] .masthead p{display:none}
+.case-quick-nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+.case-quick-nav button{position:relative;white-space:normal;overflow-wrap:anywhere;
+ font-size:clamp(.7rem,2.55vw,.78rem);line-height:1.16;letter-spacing:0;padding-inline:2px}
+.case-quick-nav button[aria-current="location"]{border-color:#f3c78b;
+ background:linear-gradient(135deg,#edc993,#bd8f56);color:#23180e;
+ box-shadow:inset 0 0 0 1px #f9deac55}
+.case-quick-nav button[data-unread="true"]::after,
+.tool-tab[data-unread="true"]::after{content:"";position:absolute;top:4px;right:4px;
+ width:7px;height:7px;border-radius:50%;background:#ffd69a;
+ border:1px solid #3b2510;box-shadow:0 0 0 2px #292018}
+.tool-tab{position:relative}
+@media(max-width:359px){
+ .case-quick-nav{gap:2px}
+ .case-quick-nav button{padding-inline:1px;font-size:.7rem}
+ .hero-selection-status{font-size:.74rem;margin-bottom:12px}
+}
+
+/* At 320–359px, six equal thumb targets in a single row force Cyrillic
+   labels to break. A 3×2 deck keeps the same navigation with readable type.
+   Reserve corresponding space for iPhone Safari and Telegram safe areas. */
+@media(max-width:359px){
+ .case-quick-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .case-quick-nav button{min-height:48px}
+ #game{padding-bottom:calc(160px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ #notice{bottom:calc(138px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ html{scroll-padding-bottom:calc(180px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+ .tool-tab,#backToLaunch{scroll-margin-bottom:calc(170px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom)))}
+}
+
+/* Stage 9: earned-only clue receipts remain in the scene even after the
+   transient notice is dismissed. Calm paper chips, never an art overlay. */
+.scene-finds{margin:8px 0 13px;padding:11px 11px 12px;
+ border:1px solid #997044;border-left:3px solid #e5b776;border-radius:5px;
+ background:linear-gradient(125deg,#38291b,#201811 85%);
+ box-shadow:inset 0 1px 0 #edc28b24}
+.scene-finds[hidden]{display:none!important}
+.scene-finds-title{display:block;margin:0 0 8px;color:#f1cb94;
+ font:800 .67rem/1.35 system-ui,sans-serif;letter-spacing:.065em}
+.scene-finds-links{display:flex;gap:7px;flex-wrap:wrap}
+.scene-finds-link{flex:1 1 140px;min-width:0;min-height:44px;
+ border:1px solid #aa8250;background:#292014;color:#f3dbc0;
+ text-align:left;padding:9px 10px;font:600 .79rem/1.3 system-ui,sans-serif;
+ overflow-wrap:anywhere}
+.scene-finds-link:focus-visible{outline:3px solid #f9ddae;outline-offset:2px}
+#toolContent:focus-visible{outline:2px solid #dbb47b;outline-offset:-4px}
+
+/* Stage 10: an unobtrusive reading-to-decision bridge, after the full prose.
+   Original art remains untouched and the controls never commit game choices. */
+.reader-bridge{display:block;margin:18px 0 2px;padding:9px;
+ border-top:1px solid #8d6940;border-bottom:1px solid #644a32;
+ background:linear-gradient(145deg,#34261b,#211911 85%);border-radius:5px}
+.reader-bridge-button{width:100%;min-height:51px;
+ background:linear-gradient(125deg,#d9b885,#9d713d);color:#24180e;
+ border:1px solid #f2d1a0;border-radius:5px;font:800 .79rem/1.35 system-ui,sans-serif;
+ letter-spacing:.04em;text-align:center}
+.reader-bridge-button:focus-visible,.reader-return:focus-visible{
+ outline:3px solid #ffe5b1;outline-offset:2px}
+#game .reader-return{width:100%;min-height:44px;display:block;margin:-1px 0 12px;
+ padding:8px 10px;background:#241b15;border:1px solid #6b533a;border-radius:5px;
+ color:#dec095;text-align:center;font:700 .73rem/1.35 system-ui,sans-serif;
+ letter-spacing:.035em}
+@media(max-width:359px){.reader-bridge{padding:7px}
+ .reader-bridge-button{font-size:.75rem;letter-spacing:.01em}}
+@media(prefers-reduced-motion:reduce){
+ .reader-bridge,.reader-bridge-button,.reader-return{animation:none!important;transition:none!important}}
+
+/* Stage 11: present real decisions first; put locked choices into a clear
+   voluntary disclosure. Nothing in this layer changes engine eligibility. */
+#game .choice-available,#game .choice-locked{
+ display:grid;gap:9px;min-width:0}
+#game .choice-locked[hidden]{display:none!important}
+#game .choice-locked{padding:10px 0 3px;border-top:1px solid #664e35}
+#game .choice-locked .choice{opacity:.87}
+#game .choice-locked-toggle{
+ width:100%;min-height:48px;margin:11px 0 0;padding:11px 10px;
+ border:1px solid #8d7256;background:#251e18;color:#dbc6a9;
+ border-radius:5px;text-align:center;font:700 .72rem/1.35 system-ui,sans-serif;
+ letter-spacing:.035em;overflow-wrap:anywhere}
+#game .choice-locked-toggle[aria-expanded="true"]{
+ border-color:#cfaa77;color:#f0d4a8;background:#35281c}
+#game .choice-locked-toggle:focus-visible{outline:3px solid #ffe6bd;outline-offset:2px}
+#game .choice-risk-note,#game .choice-visited-note{
+ grid-column:2;display:inline-block;width:fit-content;
+ border:1px solid #a9775a;border-radius:3px;padding:3px 6px;
+ font:800 .65rem/1.35 system-ui,sans-serif;letter-spacing:.03em}
+#game .choice-risk-note{color:#ffd1b8;background:#52291f}
+#game .choice-visited-note{color:#dfc7a3;background:#2d241b;border-color:#756048}
+@media(max-width:359px){
+ #game .choice-locked-toggle{font-size:.69rem;letter-spacing:0}
+ #game .choice-availability{font-size:.69rem}
+}
+
+/* Stage 12: a read-only event receipt attached to a scene rather than
+   another floating panel. Last verified consequences remain accessible. */
+.last-decision-receipt{margin:9px 0 12px;border:1px solid #866644;
+ border-radius:5px;background:linear-gradient(120deg,#332619,#211912);
+ box-shadow:inset 0 1px 0 #ecc69616;overflow:hidden}
+.last-decision-receipt[hidden],.last-decision-body[hidden]{display:none!important}
+.last-decision-toggle{display:flex;flex-wrap:wrap;align-items:center;
+ justify-content:space-between;gap:4px 9px;width:100%;min-height:46px;
+ padding:9px 12px;background:transparent;border:0;color:#f2d5ab;
+ text-align:left;cursor:pointer}
+.last-decision-toggle[aria-expanded="true"]{background:#403020}
+.last-decision-label{font:800 .64rem/1.4 system-ui,sans-serif;letter-spacing:.09em}
+.last-decision-count{font:600 .69rem/1.3 system-ui,sans-serif;color:#e8c590}
+.last-decision-body{padding:4px 11px 12px;border-top:1px solid #705535}
+.last-decision-list{margin:6px 0 10px;padding:0 0 0 21px;
+ color:#f1dfc6;font:.82rem/1.48 system-ui,sans-serif}
+.last-decision-list li{margin:7px 0;overflow-wrap:anywhere}
+.last-decision-list li::marker{color:#cc9d62}
+.last-decision-open{width:100%;min-height:44px;padding:8px 11px;
+ color:#f3d6af;background:#35291d;border:1px solid #ab875d;
+ font:800 .71rem/1.3 system-ui,sans-serif;letter-spacing:.025em}
+.last-decision-toggle:focus-visible,.last-decision-open:focus-visible{
+ outline:3px solid #f7d5a4;outline-offset:-3px}
+@media(max-width:359px){
+ .last-decision-toggle{padding-inline:8px}
+ .last-decision-label{letter-spacing:.035em}
+}
+@media(prefers-reduced-motion:reduce){
+ .last-decision-receipt,.last-decision-toggle{animation:none!important;transition:none!important}
+}
+
+/* Stage 13: direct, read-only return to the previous reading location. */
+#game .dossier-return{display:block;width:100%;min-height:46px;margin:0 0 12px;
+ padding:10px 11px;background:linear-gradient(115deg,#493320,#291f17);
+ border:1px solid #b68b56;border-left:3px solid #e0ba83;border-radius:5px;
+ color:#f3d6ae;text-align:left;font:800 .73rem/1.35 system-ui,sans-serif;
+ letter-spacing:.035em;overflow-wrap:anywhere}
+#game .dossier-return[hidden]{display:none!important}
+#game .dossier-return:focus-visible{outline:3px solid #ffe0b2;outline-offset:2px}
+@media(max-width:359px){#game .dossier-return{
+ font-size:.70rem;letter-spacing:0;padding-inline:9px}}
+
+/* Stage 14: one calm earned-only update rail shared by witnesses and proofs.
+   Text is derived from the actual engine; it never advertises hidden cases. */
+.scene-dossier-updates{margin:9px 0 12px;padding:11px;
+ border:1px solid #8f7252;border-left:3px solid #d5b27b;border-radius:5px;
+ background:linear-gradient(135deg,#32271d,#211a14 85%)}
+.scene-dossier-updates[hidden]{display:none!important}
+.scene-dossier-updates-title{display:block;color:#efd2a6;margin-bottom:9px;
+ font:800 .66rem/1.4 system-ui,sans-serif;letter-spacing:.09em}
+.scene-dossier-updates-links{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+.scene-dossier-update{display:block;min-height:45px;width:100%;min-width:0;
+ text-align:left;padding:10px 11px;border-radius:4px;
+ border:1px solid #92734e;background:#241c15;color:#f5d9b1;
+ font:700 .77rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+.scene-dossier-update:focus-visible{outline:3px solid #f9d7a7;outline-offset:2px}
+#game .deduction-card:focus-visible,#game .person-entry:focus-visible{
+ outline:3px solid #f5cc8d;outline-offset:3px}
+@media(max-width:359px){.scene-dossier-updates{padding:9px}
+ .scene-dossier-update{padding-inline:8px;font-size:.74rem}}
+
+/* Stage 15: coherent aftermath below the approved 720x900 scene image
+   and the actors, never an overlay or a stack ahead of cinema. */
+#game .scene-update-group{margin:13px 0 17px;padding:11px;
+ border:1px solid #98754c;border-top:2px solid #ddb27a;
+ border-radius:6px;background:linear-gradient(140deg,#2e241b,#19140f 90%)}
+#game .scene-update-group[hidden]{display:none!important}
+#game .scene-update-group-head{display:grid;gap:5px;
+ padding:0 1px 9px;margin-bottom:9px;border-bottom:1px solid #65482f}
+#game .scene-update-group-kicker{font:800 .68rem/1.35 system-ui,sans-serif;
+ letter-spacing:.12em;color:#f2d19c}
+#game .scene-update-group-summary{font:600 .69rem/1.4 system-ui,sans-serif;
+ color:#c9af91;overflow-wrap:anywhere}
+#game .scene-update-group-content{display:grid;gap:9px}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates,
+#game .scene-update-group-content>.last-decision-receipt{
+ margin:0;box-shadow:none;border-color:#695137;background:#241b14}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates{padding:9px}
+#game .scene-update-group-read{display:block;min-height:46px;width:100%;
+ margin-top:10px;padding:10px;border-radius:5px;border:1px solid #b58d5e;
+ background:#3a2a1b;color:#f8dcaf;
+ font:800 .74rem/1.35 system-ui,sans-serif;letter-spacing:.025em}
+#game .scene-update-group-read:focus-visible{outline:3px solid #f6d4a1;outline-offset:2px}
+@media(max-width:359px){#game .scene-update-group{padding:9px}
+ #game .scene-update-group-kicker{letter-spacing:.06em}
+ #game .scene-update-group-read{font-size:.71rem;letter-spacing:0}}
+
+/* Cycle 1, stage 1: low-noise location cues after the portrait, at the
+   decision threshold, and inside the dossier. They share one visual rhythm
+   without inserting interactive controls or changing scroll bookmarks. */
+#game .scene-context{min-width:0;display:flex;align-items:baseline;
+ flex-wrap:wrap;gap:4px 11px;color:#c7b08f;font:600 .69rem/1.45 system-ui,sans-serif}
+#game .scene-context span,#game .scene-context strong{min-width:0;overflow-wrap:anywhere}
+#game .scene-context span:first-child{letter-spacing:.11em;color:#d3ad77;font-size:.66rem}
+#game .scene-reading-context{border-top:1px solid #5d472e;
+ margin:0 0 15px;padding:11px 2px 0;justify-content:space-between}
+#game .scene-reading-context span:last-child{font-weight:500;color:#bcaa91}
+#game .scene-decision-context{border-bottom:1px solid #674c31;
+ padding:0 1px 11px;margin:0 0 13px;display:grid;gap:4px}
+#game .scene-decision-context strong{color:#edd6b3;
+ font:600 clamp(.91rem,3.5vw,1.02rem)/1.35 Georgia,serif}
+#game .scene-tools-context{padding:11px 13px 10px;
+ justify-content:space-between;gap:5px 12px;
+ border-bottom:1px solid #4f3b29;background:#1c1612}
+#game .scene-tools-context strong{color:#eed3ab;
+ font:800 .68rem/1.4 system-ui,sans-serif;letter-spacing:.1em}
+#game .choices-hint{max-width:50ch;line-height:1.5;color:#c1a98a}
+@media(max-width:359px){
+ #game .scene-tools-context{padding:9px 10px}
+ #game .scene-reading-context{gap:2px 8px}
+ #game .scene-context span:first-child{letter-spacing:.045em}
+}
+
+/* Cycle 1, stage 2: reader-first aftermath. All earned actions remain
+   available; players may fold the visually dense report without losing it.
+   The approved art and narrative ordering stay unchanged. */
+#game .scene-update-group{padding:7px 9px 9px;margin:12px 0 17px;
+ background:linear-gradient(145deg,#292017,#19140f 88%);border-color:#816447}
+#game .scene-update-group-head{display:block;margin:0;padding:0;border:0}
+#game .scene-update-group-toggle{display:grid;
+ grid-template-columns:minmax(0,1fr) auto;gap:4px 9px;align-items:center;
+ width:100%;min-width:0;min-height:51px;padding:9px 8px;
+ color:#f2d19c;background:transparent;border:0;border-radius:4px;
+ text-align:left;overflow-wrap:anywhere}
+#game .scene-update-group-toggle:focus-visible{outline:3px solid #f6d4a1;outline-offset:-2px}
+#game .scene-update-group-toggle[aria-expanded="false"]{background:#2d241b}
+#game .scene-update-group-kicker{grid-column:1;font-size:.66rem;
+ letter-spacing:.085em}
+#game .scene-update-group-summary{grid-column:1;font-size:.68rem;line-height:1.4;
+ color:#d4bb9d}
+#game .scene-update-group-state{grid-column:2;grid-row:1 / span 2;
+ align-self:center;white-space:nowrap;color:#e4bd87;
+ font:800 .64rem/1.4 system-ui,sans-serif;letter-spacing:.015em}
+#game .scene-update-group-content{gap:3px;padding:9px 0 2px;
+ border-top:1px solid #65503a}
+#game .scene-update-group-content[hidden]{display:none!important}
+#game .scene-update-group-content>.scene-finds,
+#game .scene-update-group-content>.scene-dossier-updates{
+ margin:0;padding:8px 9px;border:0;border-left:2px solid #b38958;
+ border-radius:0;background:transparent;box-shadow:none}
+#game .scene-update-group-content>.scene-dossier-updates{
+ border-left-color:#9e8461}
+#game .scene-update-group-content>.last-decision-receipt{
+ margin:5px 0 1px;background:#221b15;border:1px solid #675038;
+ border-radius:4px}
+#game .scene-update-group-read{margin-top:5px;border-color:#886a47;
+ background:#322619;color:#e9cca3;min-height:45px}
+#game .scene-finds-title,#game .scene-dossier-updates-title{
+ font-size:.67rem;letter-spacing:.045em}
+#game .scene-finds-links,#game .scene-dossier-updates-links{gap:6px}
+
+/* Longer episodes are typeset as a story rather than a dense control grid.
+   Dialogue and choices keep their touch targets and high-contrast labels. */
+#game .story-content{line-height:1.69;letter-spacing:.002em}
+#game .story-content .story-paragraph{margin-bottom:17px;max-width:64ch}
+#game .story-content .scene-spoken-line[data-speaker]{
+ margin:12px 0 13px;padding:12px 12px 13px;line-height:1.65;
+ overflow-wrap:anywhere}
+#game .story-content .scene-spoken-line[data-speaker]:before{
+ margin-bottom:7px}
+#game .narrative-divider{margin-bottom:19px}
+#game .reader-bridge{margin-top:18px;padding:9px}
+#game .choice{min-height:56px;row-gap:7px;padding:14px 11px}
+#game .choice-label{line-height:1.43}
+#game .choice-risk-note{font-size:.68rem;line-height:1.45}
+#game .choices-hint{margin-top:7px;line-height:1.5}
+@media(max-width:359px){
+ #game .scene-update-group{padding:6px 7px 8px}
+ #game .scene-update-group-toggle{padding:8px 6px;gap:3px 5px}
+ #game .scene-update-group-state{font-size:.61rem;letter-spacing:0}
+ #game .story-content{line-height:1.63}
+ #game .story-content .scene-spoken-line[data-speaker]{padding:10px 9px}
+ #game .reader-bridge{padding:7px}
+ #game .choice{padding:12px 9px}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .scene-update-group-toggle{transition:none!important}
+}
+
+/* Cycle 1, stage 3: the six-button thumb dock identifies the available
+   return point without creating another fixed overlay or reducing hitboxes. */
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]{
+ border-color:#deba80;background:linear-gradient(135deg,#5a4128,#302319);
+ color:#ffe1ac;box-shadow:inset 0 0 0 1px #d1ab7140}
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]:focus-visible{
+ outline:3px solid #ffe4bd;outline-offset:-3px}
+#game .case-quick-nav button[data-go="scene"][data-return-point="true"]:active{
+ background:#88633d;color:#1c140d}
+#game .story-content:focus-visible,#game .choices:focus-visible{
+ outline:2px solid #e5bc82;outline-offset:4px}
+
+/* Cycle 1, stage 4: earned-only two-way case-file navigation.
+   Evidence cards disclose only leads projected from already held items;
+   no unknown character, uncollected clue or future endpoint is rendered. */
+#game .dossier-cross-return{display:block;width:100%;min-width:0;
+ min-height:48px;margin:0 0 15px;padding:11px 12px;
+ text-align:left;overflow-wrap:anywhere;border:1px solid #c49a62;
+ border-left:3px solid #e9bf82;border-radius:5px;
+ background:linear-gradient(110deg,#47311e,#261d15);color:#f6d8a9;
+ font:800 .74rem/1.45 system-ui,sans-serif}
+#game .dossier-cross-return:focus-visible{outline:3px solid #ffe2b0;outline-offset:2px}
+#game .deduction-map-summary{margin:16px 0 13px!important;
+ padding:10px 11px;color:#e4c498;border:1px solid #7d5d3e;
+ border-radius:4px;background:#2e231a;
+ font:800 .70rem/1.55 system-ui,sans-serif;
+ letter-spacing:.035em;overflow-wrap:anywhere}
+#game .evidence-connections{flex:1 0 100%;min-width:0;margin-top:4px;
+ border-top:1px solid #624b32}
+#game .evidence-connections-summary{padding:11px 2px 9px;
+ cursor:pointer;color:#e9c593;line-height:1.4;
+ font:800 .70rem/1.5 system-ui,sans-serif;
+ letter-spacing:.045em;list-style-position:inside;overflow-wrap:anywhere}
+#game .evidence-connections-summary::marker{color:#e1b677}
+#game .evidence-connections-summary:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:2px}
+#game .evidence-connected-leads{display:grid;grid-template-columns:minmax(0,1fr);
+ gap:7px;padding:2px 0 10px}
+#game .evidence-linked-lead{width:100%;min-width:0;min-height:46px;
+ padding:9px 11px;text-align:left;overflow-wrap:anywhere;
+ color:#f0d9b5;background:#33271b;border:1px solid #8c6e4a;
+ border-radius:5px;font:700 .76rem/1.45 system-ui,sans-serif}
+#game .evidence-linked-lead[data-verified="true"]{
+ border-left:3px solid #e0ba7d;background:#40301e}
+#game .evidence-linked-lead:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:2px}
+@media(max-width:359px){
+ #game .dossier-cross-return{font-size:.71rem;padding:9px}
+ #game .deduction-map-summary{font-size:.67rem;letter-spacing:0}
+ #game .evidence-connections-summary{font-size:.67rem;letter-spacing:0}
+ #game .evidence-linked-lead{padding:9px;font-size:.72rem}
+}
+
+/* Cycle 1, stage 5: earned-only attention hierarchy. No new overlay,
+   notification timer, gameplay telemetry or permanent read state. The dock
+   now displays real counts while the screen-reader label already names them. */
+#game .case-quick-nav button[data-unread="true"]::after,
+#game .tool-tab[data-unread="true"]::after{
+ content:attr(data-unread-count);display:grid;place-items:center;
+ width:19px;height:19px;top:2px;right:2px;
+ border-radius:50%;background:#f1c78b;color:#24180e;
+ font:900 10px/1 system-ui,sans-serif;letter-spacing:0;
+ border:1px solid #3d2a17;box-shadow:0 0 0 2px #22180f}
+#game .scene-update-group[data-needs-review="true"]{
+ border-top-color:#eac38c}
+#game .scene-update-group-urgency{
+ grid-column:1;display:inline-block;width:fit-content;
+ border:1px solid #ad8251;border-radius:3px;
+ padding:3px 7px;color:#ffe0ad;background:#51341e;
+ font:800 .65rem/1.4 system-ui,sans-serif;
+ letter-spacing:.025em}
+#game .scene-update-group-urgency[hidden]{display:none!important}
+#game .scene-update-group-state{grid-row:1 / span 3}
+#game .scene-update-kind{
+ display:block;margin:6px 0 1px;padding:0 1px;
+ color:#e1bd8b;font:800 .63rem/1.4 system-ui,sans-serif;
+ letter-spacing:.065em}
+#game .scene-witness-update{
+ display:grid;gap:4px;padding-block:10px;
+ border-left:3px solid #c49d6d}
+#game .scene-witness-name{
+ font:700 .77rem/1.35 Georgia,serif;color:#f4d9ae}
+#game .scene-witness-status{
+ display:block;color:#d9bda0;
+ font:600 .73rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .scene-witness-update[data-status="detained"] .scene-witness-status,
+#game .scene-witness-update[data-status="deceased"] .scene-witness-status{
+ color:#ffb5a6}
+#game .scene-witness-update[data-status="protected"] .scene-witness-status,
+#game .scene-witness-update[data-status="evacuated"] .scene-witness-status{
+ color:#ffe0a2}
+@media(max-width:359px){
+ #game .scene-update-group-urgency{font-size:.61rem;padding:3px 5px}
+ #game .scene-update-kind{font-size:.61rem;letter-spacing:.02em}
+ #game .case-quick-nav button[data-unread="true"]::after{
+  width:18px;height:18px;top:1px;right:2px;font-size:9px}
+}
+
+/* Cycle 1, stage 6: current earned facts above the immutable decision
+   ledger. Journal notes link only to held evidence or discovered people. */
+#game .journal-compass{padding:12px 11px 11px;margin:0 0 19px;
+ border:1px solid #94704b;border-top:2px solid #e2bd86;
+ border-radius:5px;background:linear-gradient(140deg,#30251b,#19140f)}
+#game .journal-compass-kicker{display:block;color:#ebc999;
+ font:800 .64rem/1.45 system-ui,sans-serif;letter-spacing:.065em}
+#game .journal-compass-stats{display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:11px 0}
+#game .journal-compass-stat{display:flex;flex-direction:column;
+ gap:4px;align-items:center;justify-content:center;min-height:63px;
+ padding:7px 3px;background:#251d16;border:1px solid #6f5135;
+ border-radius:4px;text-align:center;min-width:0}
+#game .journal-compass-stat strong{color:#f1d7a5;
+ font:700 1.25rem/1.1 Georgia,serif}
+#game .journal-compass-stat span{color:#d7b995;
+ font:600 .63rem/1.25 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .journal-compass-actions{display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#game .journal-compass-action{min-height:46px;min-width:0;
+ padding:9px 7px;border:1px solid #aa8558;border-radius:4px;
+ background:#3c2b1b;color:#f5d9aa;
+ font:800 .69rem/1.3 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .journal-compass-action[data-go="choices"]{grid-column:1 / -1;
+ background:linear-gradient(110deg,#b99565,#80603c);color:#21180f;
+ border-color:#d9b47e}
+#game .journal-compass-note{margin:10px 0 0!important;
+ color:#cdb395;font:.73rem/1.5 system-ui,sans-serif}
+#game .journal-source{display:block;width:fit-content;max-width:100%;
+ min-height:44px;margin:7px 0 2px;padding:9px 11px;
+ border:1px solid #ae8655;background:#382719;color:#f4d6a8;
+ text-align:left;overflow-wrap:anywhere;
+ font:800 .70rem/1.35 system-ui,sans-serif}
+#game .journal-source[data-source-kind="witness"]{
+ border-left:3px solid #bb9a72}
+#game .journal-source:focus-visible,
+#game .journal-compass-action:focus-visible{
+ outline:3px solid #f7d8a5;outline-offset:2px}
+@media(max-width:359px){
+ #game .journal-compass{padding:9px 8px}
+ #game .journal-compass-stat span{font-size:.60rem}
+ #game .journal-compass-action{font-size:.67rem;letter-spacing:0}
+ #game .journal-source{font-size:.67rem}
+}
+
+/* Cycle 1, stage 7: character dossiers only display introduced cast and
+   recorded status transitions; no spoilers or invented character biography. */
+#game .scene-participant-open{display:block;margin-top:5px;
+ width:fit-content;max-width:100%;min-height:44px;padding:8px 10px;
+ text-align:left;background:#312417;border:1px solid #a58150;
+ border-radius:4px;color:#f5d9a9;
+ font:800 .69rem/1.35 system-ui,sans-serif}
+#game .scene-participant-open:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+#game .people-status-compass{display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 8px}
+#game .people-status-count{display:flex;min-width:0;
+ align-items:center;gap:10px;padding:8px 9px;
+ background:linear-gradient(115deg,#382819,#201811);
+ border:1px solid #896740;border-radius:5px}
+#game .people-status-count strong{flex:0 0 29px;color:#f2d7aa;
+ font:700 1.25rem/1 Georgia,serif;text-align:center}
+#game .people-status-count span{min-width:0;overflow-wrap:anywhere;
+ color:#e0c099;font:800 .64rem/1.35 system-ui,sans-serif;
+ letter-spacing:.025em}
+#game .people-status-count[data-kind="unprotected"],
+#game .people-status-count[data-kind="deceased"]{border-left:3px solid #bb7865}
+#game .people-status-count[data-kind="protected"],
+#game .people-status-count[data-kind="evacuated"]{border-left:3px solid #d5b07a}
+#game .people-status-caption{margin:0 0 17px!important;color:#bda689;
+ font:.72rem/1.45 system-ui,sans-serif}
+#game .people-dossier-gallery .person-entry{flex-wrap:wrap;align-content:start}
+#game .person-case-history{flex:1 0 100%;min-width:0;margin:1px 0 0;
+ padding-top:2px;border-top:1px solid #664c32}
+#game .person-case-history-toggle{cursor:pointer;padding:12px 0 10px;
+ color:#efcb97;font:800 .72rem/1.45 system-ui,sans-serif;
+ letter-spacing:.035em;list-style-position:inside;overflow-wrap:anywhere}
+#game .person-case-history-toggle:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+#game .person-history-list{list-style:none;display:grid;gap:8px;
+ padding:0!important;margin:3px 0 9px!important}
+#game .person-history-entry{min-width:0;border-left:2px solid #a98353;
+ padding:5px 9px;margin:0!important;background:#241c15}
+#game .person-history-entry[data-kind="status"]{border-left-color:#c09b6b}
+#game .person-history-kicker{display:block;color:#d9b78a;
+ font:800 .64rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .person-history-description{display:block;margin-top:5px;color:#ead5b5;
+ font:.80rem/1.45 Georgia,serif;overflow-wrap:anywhere}
+#game .person-history-journal{width:100%;min-width:0;min-height:46px;
+ padding:10px 9px;margin:3px 0 9px;border:1px solid #ad8758;
+ border-radius:4px;background:#37281b;text-align:left;color:#f5d8ae;
+ overflow-wrap:anywhere;font:800 .7rem/1.4 system-ui,sans-serif}
+#game .person-history-journal:focus-visible{outline:3px solid #f5d9ab;outline-offset:2px}
+@media(max-width:359px){
+ #game .scene-participant-open{font-size:.66rem;padding-inline:8px}
+ #game .people-status-count{gap:5px;padding:7px}
+ #game .people-status-count span{font-size:.60rem;letter-spacing:0}
+ #game .person-case-history-toggle{font-size:.68rem;letter-spacing:0}
+ #game .person-history-kicker{font-size:.62rem}
+ #game .person-history-journal{font-size:.67rem}
+}
+
+/* Cycle 1, stage 8: factual pre-decision checklist. The same filtered
+   action list drives counts; unearned finale routes remain invisible. */
+#game .decision-preflight{display:grid;gap:7px;min-width:0;
+ margin:0 0 12px;padding:11px 12px;border:1px solid #876742;
+ border-top:2px solid #ddb680;border-radius:5px;
+ background:linear-gradient(135deg,#302319,#211911)}
+#game .decision-preflight-kicker{display:block;color:#edcc99;
+ font:800 .68rem/1.4 system-ui,sans-serif;letter-spacing:.09em}
+#game .decision-preflight-metrics{display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(82px,1fr));gap:7px}
+#game .decision-preflight-metric{display:flex;align-items:center;
+ justify-content:center;gap:7px;min-height:50px;padding:7px 5px;
+ border-radius:4px;border:1px solid #725336;background:#251b14;min-width:0}
+#game .decision-preflight-metric strong{color:#f4d3a1;
+ font:700 1.25rem/1 Georgia,serif}
+#game .decision-preflight-metric span{color:#dfc7a8;
+ font:800 .64rem/1.25 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .decision-preflight-metric[data-kind="danger"]{
+ border-color:#bd806a;background:#40241e}
+#game .decision-preflight-metric[data-kind="danger"] strong{color:#ffbea6}
+#game .decision-preflight-metric[data-kind="blocked"]{
+ border-color:#6e5b49;background:#231d18}
+#game .decision-preflight-note{margin:0!important;
+ color:#ddc7a9;font:.80rem/1.5 system-ui,sans-serif}
+#game .decision-check-evidence{display:block;min-width:0;
+ width:100%;min-height:46px;padding:10px 9px;
+ border:1px solid #bd9764;border-radius:5px;
+ background:#45301e;color:#f3d2a1;text-align:center;
+ font:800 .72rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .decision-check-evidence:focus-visible{outline:3px solid #f6d9ab;outline-offset:2px}
+#game .choice[data-decision-state="danger"]{
+ border:2px solid #ce8870;background:linear-gradient(110deg,#5a2c25,#321c19)}
+#game .choice[data-decision-state="visited"]:not([disabled]){
+ border-color:#8d795c;background:linear-gradient(105deg,#3f3428,#29221c)}
+#game .choice-locked-note{grid-column:2;
+ color:#ddc09a;font:800 .65rem/1.4 system-ui,sans-serif;letter-spacing:.035em}
+#game .choice-risk-explainer{grid-column:2;color:#f0bda9;line-height:1.5}
+#game .choice-locked-explanation{margin:0 0 5px!important;
+ color:#cbb59a;font:.76rem/1.45 system-ui,sans-serif}
+@media(max-width:359px){
+ #game .decision-preflight{padding:10px 8px}
+ #game .decision-preflight-metrics{grid-template-columns:repeat(auto-fit,minmax(73px,1fr));gap:5px}
+ #game .decision-preflight-metric{gap:4px;padding:6px 4px}
+ #game .decision-preflight-metric span{font-size:.61rem}
+ #game .decision-preflight-note{font-size:.77rem}
+ #game .decision-preflight-kicker{letter-spacing:.035em}
+ #game .decision-check-evidence{font-size:.70rem}
+}
+
+/* Cycle 1, stage 9: factual ending overview, separate witness outcomes
+   and two independently read archive records; no save or reward changes. */
+#game .finale-metric-note{margin:-4px 0 15px!important;color:#cfb79a;
+ font:.73rem/1.48 system-ui,sans-serif}
+#game .finale-people-note,#game .finale-history-note{
+ margin:0 0 10px!important;color:#c9b398;font:.73rem/1.5 system-ui,sans-serif}
+#game .finale-witness-statuses{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+#game .finale-witness-status{padding:5px 7px;border:1px solid #9e7e56;
+ border-radius:4px;background:#38271b;color:#efd1a5;
+ font:800 .62rem/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .finale-witness-status[data-status="deceased"],
+#game .finale-witness-status[data-status="detained"]{
+ border-color:#ad685b;color:#ffbdad;background:#49281f}
+#game .finale-people li{align-items:center}
+#game .finale-people li strong{flex:1 1 125px;min-width:0}
+#game .finale-people li span{flex:0 1 auto}
+#game .finale-person-open{flex:1 0 100%;width:100%;min-height:44px;
+ padding:9px;border:1px solid #916e49;border-radius:4px;
+ background:#35261b;color:#f0d1a0;
+ font:800 .7rem/1.3 system-ui,sans-serif}
+#game .finale-person-open:focus-visible{outline:3px solid #ffdcaa;outline-offset:2px}
+#game .finale-history-event{display:grid;gap:3px;padding:10px 0 11px 11px;
+ margin:0 0 5px;border-left:2px solid #9c794e;border-bottom:1px solid #634a30}
+#game .finale-history-event:before{display:none}
+#game .finale-history-scene{font:800 .64rem/1.45 system-ui,sans-serif;
+ letter-spacing:.06em;color:#d5b285}
+#game .finale-history-name{font:700 .93rem/1.32 Georgia,serif;color:#f2d6b0}
+#game .finale-history-description{font:.76rem/1.52 system-ui,sans-serif;
+ color:#d5c3a7;overflow-wrap:anywhere}
+#game .finale-archive-status{display:block;margin:0 0 7px;
+ font:800 .78rem/1.3 system-ui,sans-serif;color:#f1d3a8}
+#game .finale-archive[data-status="verified"]{border-left:3px solid #d6ad73}
+#game .finale-archive[data-status="damaged"],
+#game .finale-archive[data-status="unconfirmed"],
+#game .finale-archive[data-status="partial"]{border-left:3px solid #c7836c}
+#game .finale-archive[data-status="damaged"] .finale-archive-status,
+#game .finale-archive[data-status="unconfirmed"] .finale-archive-status,
+#game .finale-archive[data-status="partial"] .finale-archive-status{color:#ffbbaa}
+#game .finale-archive-checks{display:grid;gap:7px;margin:12px 0 10px}
+#game .finale-archive-check{display:flex;align-items:center;
+ justify-content:space-between;flex-wrap:wrap;gap:5px 12px;padding:8px 9px;
+ border:1px solid #6f563b;border-radius:4px;background:#2b2119}
+#game .finale-archive-check span{color:#dfc29a;
+ font:800 .65rem/1.35 system-ui,sans-serif}
+#game .finale-archive-check strong{color:#ecd19f;
+ font:800 .67rem/1.35 system-ui,sans-serif}
+#game .finale-archive-check[data-verified="false"] strong{color:#ffbeaa}
+#game .finale-archive-note{display:block;color:#c9b095;
+ font:.70rem/1.45 system-ui,sans-serif;overflow-wrap:anywhere}
+@media(max-width:359px){
+ #game .finale-witness-status{font-size:.59rem}
+ #game .finale-archive-check{padding:8px 7px}
+ #game .finale-archive-check span,#game .finale-archive-check strong{font-size:.62rem}
+ #game .finale-person-open{font-size:.67rem}
+}
+
+/* Cycle 1, stage 10: read-only earned-only award shelf, no locked endings
+   or unverified achievement claims. The 001 gallery remains untouched. */
+#launch .case-reward-archive{margin:12px 0 15px;
+ border:1px solid #94734c;border-left:3px solid #dcb782;border-radius:6px;
+ background:linear-gradient(110deg,#34271c,#211911)}
+#launch .case-reward-archive>summary{min-height:49px;padding:13px 12px;
+ cursor:pointer;color:#f3d09b;font:800 .72rem/1.4 system-ui,sans-serif;
+ letter-spacing:.055em;list-style-position:inside;overflow-wrap:anywhere}
+#launch .case-reward-archive>summary span{display:inline-grid;
+ min-width:25px;min-height:22px;place-items:center;
+ margin-left:5px;padding:2px 5px;border:1px solid #c8a06a;border-radius:3px;
+ background:#4d3622;color:#ffe0a6;font:800 .73rem/1 system-ui,sans-serif}
+#launch .case-reward-archive>summary:focus-visible{
+ outline:3px solid #ffdeab;outline-offset:2px}
+#launch .case-reward-list{padding:0 12px 12px;border-top:1px solid #6b4f33}
+#launch .case-reward-note{margin:10px 0 9px!important;color:#d7bd9d;
+ font:.77rem/1.55 system-ui,sans-serif}
+#launch .case-reward-gallery{display:grid;gap:7px;list-style:none;
+ padding:0!important;margin:0!important}
+#launch .case-reward-entry{display:flex;gap:10px;align-items:center;
+ min-width:0;margin:0!important;padding:10px;border:1px solid #8c6b48;
+ border-radius:5px;background:#291f17}
+#launch .case-reward-seal{display:grid;flex:0 0 41px;place-items:center;
+ width:41px;height:41px;border-radius:50%;border:2px solid #cfa66b;
+ color:#ffe0a5;background:radial-gradient(circle,#76542e,#302217);
+ font:700 1.35rem/1 Georgia,serif}
+#launch .case-reward-description{min-width:0;display:grid;gap:5px;
+ overflow-wrap:anywhere}
+#launch .case-reward-description strong{color:#f6ddb1;
+ font:700 .95rem/1.3 Georgia,serif}
+#launch .case-reward-description span{color:#dabd99;
+ font:.77rem/1.3 system-ui,sans-serif}
+#launch .case-reward-description small{color:#d9b98c;
+ font:800 .63rem/1.35 system-ui,sans-serif;letter-spacing:.02em}
+#launch .case-reward-entry[data-verified="false"]{border-color:#a97966}
+#launch .case-reward-entry[data-verified="false"] small{color:#ffbfa8}
+#launch .case-reward-archive[data-status="damaged"]{border-left-color:#c37f6b}
+#game .finale-new-reward{margin:12px 0 16px;padding:13px 11px;
+ border:1px solid #d2ad73;border-left:4px solid #ffdc99;
+ border-radius:5px;background:linear-gradient(130deg,#493321,#2a2018)}
+#game .finale-new-reward-title{display:block;color:#ffe2ab;
+ font:800 .72rem/1.45 system-ui,sans-serif;letter-spacing:.06em}
+#game .finale-new-reward p{margin:8px 0 0!important;
+ color:#f2d8b5;font:.79rem/1.5 system-ui,sans-serif}
+@media(max-width:359px){
+ #launch .case-reward-archive>summary{padding:11px 9px;font-size:.68rem}
+ #launch .case-reward-list{padding-inline:9px}
+ #launch .case-reward-entry{padding:8px;gap:7px}
+ #launch .case-reward-seal{width:36px;height:36px;flex-basis:36px}
+ #game .finale-new-reward-title{font-size:.68rem}
+}
+
+/* Cycle 1, stage 11: eighteen genuinely earned investigation milestones,
+   distinct from the thirty-five hero×ending seals. Locked titles remain
+   redacted. The scene receipt sits before the portrait, not over artwork. */
+#launch .case-achievement-archive{margin:12px 0 15px;border:1px solid #816a4b;
+ border-left:3px solid #b6a17e;border-radius:6px;
+ background:linear-gradient(120deg,#302519,#1d1913)}
+#launch .case-achievement-archive>summary{min-height:49px;padding:12px;
+ color:#edcfaa;cursor:pointer;list-style-position:inside;
+ font:800 .72rem/1.4 system-ui,sans-serif;letter-spacing:.05em;overflow-wrap:anywhere}
+#launch .case-achievement-archive>summary span{display:inline-grid;
+ place-items:center;padding:3px 7px;margin-left:5px;min-width:45px;
+ border:1px solid #ad8e61;border-radius:3px;background:#473522;
+ color:#ffe1b0;font:800 .72rem/1.3 system-ui,sans-serif;letter-spacing:0}
+#launch .case-achievement-archive>summary:focus-visible{outline:3px solid #ffdfa8;outline-offset:2px}
+#launch .case-achievement-list{padding:0 12px 12px;border-top:1px solid #6b5136}
+#launch .case-achievement-note{margin:11px 0!important;color:#cfb89a;
+ font:.75rem/1.52 system-ui,sans-serif}
+#launch .case-achievement-gallery{display:grid;gap:7px;
+ grid-template-columns:repeat(2,minmax(0,1fr))}
+#launch .case-achievement-item{display:flex;gap:7px;align-items:center;
+ min-width:0;min-height:79px;padding:8px 7px;border:1px solid #816646;
+ border-radius:4px;background:#2c2119}
+#launch .case-achievement-item[data-unlocked="false"]{
+ border-color:#4e4134;background:#201b16}
+#launch .case-achievement-sigil{display:grid;place-items:center;
+ flex:0 0 31px;width:31px;height:31px;border-radius:50%;
+ border:1px solid #c9a571;background:#4a3320;
+ color:#ffdeaa;font:700 1.1rem/1 Georgia,serif}
+#launch .case-achievement-item[data-unlocked="false"] .case-achievement-sigil{
+ border-color:#655646;background:#27221c;color:#877663}
+#launch .case-achievement-copy{display:grid;gap:5px;min-width:0;overflow-wrap:anywhere}
+#launch .case-achievement-copy strong{color:#f0d6aa;
+ font:700 .77rem/1.34 Georgia,serif}
+#launch .case-achievement-copy small{color:#ceb496;
+ font:.66rem/1.38 system-ui,sans-serif}
+#launch .case-achievement-item[data-unlocked="false"] .case-achievement-copy strong{
+ color:#b9a58a;font-size:.68rem}
+#game .case-achievement-receipt{margin:13px 0 16px;padding:12px;
+ border:1px solid #dec08b;border-left:4px solid #ffe1a4;border-radius:5px;
+ background:linear-gradient(125deg,#483321,#241b14);
+ box-shadow:0 5px 15px #0006}
+#game .case-achievement-receipt-kicker{color:#ffe0ad;
+ font:800 .72rem/1.42 system-ui,sans-serif;letter-spacing:.055em;margin:0 0 10px!important}
+#game .case-achievement-receipt-list{list-style:none;padding:0!important;
+ margin:0 0 10px!important;display:grid;gap:9px}
+#game .case-achievement-receipt-list li{display:grid;gap:4px;
+ padding:0 0 7px;border-bottom:1px solid #806143}
+#game .case-achievement-receipt-list strong{color:#ffe2b8;
+ font:700 .95rem/1.36 Georgia,serif}
+#game .case-achievement-receipt-list span{color:#e2c5a3;
+ font:.74rem/1.47 system-ui,sans-serif}
+#game .case-achievement-receipt-dismiss{width:100%;min-height:44px;
+ padding:9px;background:#302319;color:#f1d4a7;border:1px solid #a58355;
+ font:800 .7rem/1.35 system-ui,sans-serif}
+#game .case-achievement-receipt-dismiss:focus-visible{
+ outline:3px solid #ffdea8;outline-offset:2px}
+@media(max-width:359px){
+ #launch .case-achievement-list{padding-inline:8px}
+ #launch .case-achievement-gallery{gap:5px}
+ #launch .case-achievement-item{padding:6px 5px;gap:5px}
+ #launch .case-achievement-sigil{width:24px;height:24px;flex-basis:24px}
+ #launch .case-achievement-copy strong{font-size:.69rem}
+ #launch .case-achievement-copy small{font-size:.63rem}
+ #launch .case-achievement-archive>summary{font-size:.67rem;padding:10px 8px}
+}
+
+/* Cycle 1 stage 12: single visible-on-arrival, nonmodal unlock flyout.
+   It is fixed at the safe top; existing evidence receipts remain at bottom
+   above the navigation. No timer: a player must not silently miss a reward. */
+#game .case-unlock-toast{
+ position:fixed;z-index:15;
+ top:calc(9px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)));
+ left:50%;
+ width:min(480px,calc(100% - 24px - var(--case002-safe-left) - var(--case002-safe-right)));
+ max-height:min(30dvh,220px);overflow-y:auto;overscroll-behavior:contain;
+ display:grid;grid-template-columns:42px minmax(0,1fr);
+ grid-template-rows:auto auto;align-items:center;column-gap:10px;row-gap:7px;
+ padding:12px 12px 10px;border:1px solid #f5ce90;border-left:4px solid #ffda91;
+ border-radius:9px;background:linear-gradient(125deg,#594025,#2b2119 76%);
+ color:#fce5c3;box-shadow:0 5px 12px #000b,0 20px 54px #000a;
+ pointer-events:none;
+ animation:case002-unlock-fly-in .34s cubic-bezier(.17,.75,.3,1) both;
+}
+#game .case-unlock-toast[hidden]{display:none!important}
+#game .case-unlock-toast-seal{display:grid;place-items:center;
+ width:42px;height:42px;border:2px solid #ffdb9f;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#aa7a43,#49321e);
+ color:#fff0c7;box-shadow:inset 0 0 0 3px #6b4825;
+ font:700 1.45rem/1 Georgia,serif}
+#game .case-unlock-toast-copy{display:grid;min-width:0;gap:4px;overflow-wrap:anywhere}
+#game .case-unlock-toast-kicker{color:#ffde9e;letter-spacing:.045em;
+ font:800 .64rem/1.34 system-ui,sans-serif}
+#game .case-unlock-toast-name{color:#fff0d1;
+ font:700 1.05rem/1.19 Georgia,serif;text-wrap:balance}
+#game .case-unlock-toast-note{color:#ecd0a9;
+ font:.72rem/1.35 system-ui,sans-serif}
+#game .case-unlock-toast-actions{display:grid;grid-template-columns:1fr 1fr;
+ gap:7px;grid-column:1/-1}
+#game .case-unlock-toast-actions button{min-width:0;min-height:50px;
+ padding:8px 6px;border-radius:5px;overflow-wrap:anywhere;
+ font:800 .70rem/1.26 system-ui,sans-serif;pointer-events:auto}
+#game .case-unlock-toast-details{background:#e8bf7f;color:#2c1c0f;border:1px solid #ffe2ae}
+#game .case-unlock-toast-close{background:#3a2b20;color:#ffe2b8;border:1px solid #a78455}
+#game .case-unlock-toast-actions button:focus-visible{
+ outline:3px solid #fff2cb;outline-offset:2px}
+#game .case-achievement-receipt:focus-visible,
+#game .finale-new-reward:focus-visible{
+ outline:3px solid #f4d3a4;outline-offset:3px}
+#game .case-achievement-receipt,
+#game .finale-new-reward{
+ scroll-margin-top:calc(18px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)))}
+@keyframes case002-unlock-fly-in{
+ from{opacity:0;transform:translate(-50%,-22px) scale(.99)}
+ to{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+@media(max-width:359px){
+ #game .case-unlock-toast{grid-template-columns:35px minmax(0,1fr);
+  column-gap:7px;padding:8px 9px 7px;row-gap:5px;
+  max-height:min(32dvh,190px)}
+ #game .case-unlock-toast-seal{width:35px;height:35px;font-size:1.2rem}
+ #game .case-unlock-toast-name{font-size:.94rem}
+ #game .case-unlock-toast-note{font-size:.67rem}
+ #game .case-unlock-toast-kicker{font-size:.60rem}
+ #game .case-unlock-toast-actions button{font-size:.68rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .case-unlock-toast{animation:none!important;transform:translateX(-50%)}
+}
+
+/* Cycle 1 stage 13: trustworthy, reversible archive navigation. A finale
+ * report can open either earned-only shelf and come back without load/save.
+ * The return control appears only when launched from a committed ending. */
+#launch .collection-return-bar{margin:12px 0;padding:10px 11px;
+ display:grid;gap:7px;border:1px solid #aa875c;border-left:3px solid #e2bb82;
+ border-radius:6px;background:linear-gradient(125deg,#40301f,#201a14)}
+#launch .collection-return-bar[hidden]{display:none!important}
+#launch .collection-return-bar span{font:800 .65rem/1.3 system-ui,sans-serif;
+ color:#d9bb8b;letter-spacing:.08em}
+#launch .collection-return-bar button,
+#launch .collection-return-inline{display:block;width:100%;min-height:48px;
+ padding:10px 9px;border:1px solid #c09a62;border-radius:5px;
+ background:#3d2b1c;color:#fbe0b3;text-align:center;
+ font:800 .72rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#launch .collection-return-inline{margin-top:12px}
+#launch #caseRewardArchive,#launch #caseAchievementArchive{
+ scroll-margin-top:calc(18px + max(env(safe-area-inset-top,0px),var(--case002-safe-top)))}
+#game .finale-collection-compass{margin:17px 0 12px;padding:13px 11px;
+ border:1px solid #97734c;border-top:2px solid #e0b87b;
+ border-radius:6px;background:linear-gradient(140deg,#3b2a1d,#211a14);
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#game .finale-collection-compass h5,#game .finale-collection-note{
+ grid-column:1/-1}
+#game .finale-collection-compass h5{margin:0;color:#f2d4aa;
+ font:700 1.1rem/1.3 Georgia,serif}
+#game .finale-collection-note{margin:0 0 2px!important;color:#d5bfa3;
+ font:.76rem/1.48 system-ui,sans-serif}
+#game .finale-collection-slot{display:grid;grid-template-rows:auto auto 1fr;
+ min-width:0;gap:7px;padding:10px 8px;border:1px solid #7c5b3b;
+ border-radius:5px;background:#251d17;align-content:start}
+#game .finale-collection-count{font:700 1.25rem/1.18 Georgia,serif;
+ color:#ffe0ab;overflow-wrap:anywhere}
+#game .finale-collection-slot[data-status="damaged"] .finale-collection-count,
+#game .finale-collection-slot[data-status="unavailable"] .finale-collection-count{
+ color:#efb59f;font-size:.77rem}
+#game .finale-collection-label{font:800 .67rem/1.35 system-ui,sans-serif;
+ letter-spacing:.02em;color:#d8bb97}
+#game .finale-collection-open{align-self:end;min-height:48px;width:100%;
+ padding:9px 6px;border:1px solid #b99461;
+ background:linear-gradient(150deg,#63472c,#37271c);
+ border-radius:4px;color:#ffe0af;text-align:center;
+ font:800 .69rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#game .finale-collection-open:focus-visible,
+#launch .collection-return-inline:focus-visible,
+#launch #collectionReturnFromLaunch:focus-visible{
+ outline:3px solid #ffe0a8;outline-offset:2px}
+#game #finalePanel:focus-visible{outline:2px solid #d6b281;outline-offset:3px}
+@media(max-width:359px){
+ #game .finale-collection-compass{gap:6px;padding:10px 7px}
+ #game .finale-collection-slot{padding:8px 6px;gap:6px}
+ #game .finale-collection-count{font-size:1.08rem}
+ #game .finale-collection-open{font-size:.63rem;padding:7px 5px}
+ #launch .collection-return-bar button,#launch .collection-return-inline{
+ font-size:.68rem}
+}
+
+/* Cycle 1 stage 14: safe one-thumb reading and long-scene typography.
+   Progress measures only the player's document scroll through current
+   prose, never claims they read it and never changes any game record.
+   It fits INSIDE the six-action mobile dock, not as another overlay. */
+#game .case-quick-nav{isolation:isolate}
+#game .case-reading-progress{
+ position:absolute;left:8px;right:8px;top:1px;height:3px;
+ overflow:hidden;pointer-events:none;z-index:1;
+ border-radius:999px;background:#756044}
+#game .case-reading-progress[hidden]{display:none!important}
+#game .case-reading-progress-fill{
+ display:block;height:100%;width:0;border-radius:inherit;
+ background:linear-gradient(90deg,#e2b474,#ffdd9f);
+ box-shadow:0 0 5px #f3d29b88}
+#game .case-quick-nav[data-reading="true"] button[data-go="choices"]:not([aria-current="location"]){
+ border-top-color:#d4aa6a;box-shadow:inset 0 2px 0 #b9935b36}
+#game .story-read-button{
+ padding:10px 13px;border:1px solid #b18d5d;border-radius:5px;
+ background:linear-gradient(120deg,#45321f,#2b2118);
+ text-decoration:none;color:#ffe0ae;letter-spacing:.04em;
+ min-height:48px;max-width:100%;text-align:center}
+#game .story-read-button:focus-visible{
+ outline:3px solid #ffe2b0;outline-offset:3px}
+#game .scene-reading-context{padding-bottom:10px}
+#game .story-content{font-size:clamp(1.055rem,4.15vw,1.13rem);
+ line-height:1.72;text-wrap:pretty}
+#game .story-content .story-paragraph{margin-bottom:19px}
+#game .story-content .scene-spoken-line[data-speaker]{
+ line-height:1.67;padding:12px 13px 14px;margin:13px 0 15px;
+ text-wrap:pretty}
+#game .reader-bridge-button{min-height:54px;
+ box-shadow:inset 0 1px 0 #ffe7b655}
+#game .choices h3{line-height:1.36}
+#game .choice-label{font-size:clamp(.98rem,4.0vw,1.05rem);
+ line-height:1.45;text-wrap:pretty}
+#game .choice-detail,#game .lock-reason{line-height:1.5}
+@media(max-width:359px){
+ #game .case-reading-progress{left:4px;right:4px}
+ #game .story-content{font-size:1.055rem;line-height:1.67}
+ #game .story-content .scene-spoken-line[data-speaker]{
+  padding:10px 9px 12px;line-height:1.64}
+ #game .story-read-button{font-size:.72rem;padding:9px 10px}
+ #game .reader-bridge-button{min-height:52px}
+}
+@media(max-height:610px){
+ #game .case-unlock-toast{max-height:min(26dvh,148px)}
+ #game #notice{max-height:min(28dvh,165px)}
+ #game .case-unlock-toast-note{font-size:.67rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #game .case-reading-progress-fill{transition:none!important}
+}
+
+/* Cycle 1, stage 15: one accessible link between simultaneous earned
+   achievement and ending-reward receipts, with no extra overlay. */
+#game .case-achievement-reward-link{
+ display:block;width:100%;min-height:48px;margin:0 0 10px;
+ padding:10px 9px;border:1px solid #e1b883;border-radius:5px;
+ color:#ffe5b7;background:linear-gradient(130deg,#5f4428,#342519);
+ text-align:center;font:800 .72rem/1.4 system-ui,sans-serif;
+ overflow-wrap:anywhere}
+#game .case-achievement-reward-link:focus-visible{
+ outline:3px solid #ffe4b9;outline-offset:2px}
+@media(max-width:359px){
+ #game .case-achievement-reward-link{font-size:.69rem}
+}
+
+/* Earned receipt navigation: returning to the source is optional, and does
+ * not alter a decision, archive record or achievement. */
+#game .case-unlock-detail-return{
+ display:block;width:100%;min-height:48px;margin-top:12px;
+ padding:10px 12px;border:1px solid #d3ae78;border-radius:5px;
+ background:#34271c;color:#ffdfaf;
+ font:800 .72rem/1.35 system-ui,sans-serif;
+}
+#game .case-unlock-detail-return:focus-visible{
+ outline:3px solid #ffdea8;outline-offset:2px;
+}
+
+/* Stage III: proven findings belong to the earned report, not an appended
+   technical appendix at the end of every cinematic closing scene. */
+#game .finale-proved-summary{
+ display:grid;gap:5px;padding:10px 11px;margin:0 0 15px!important;
+ border-left:3px solid #b99560;background:#2b2118;
+ border-radius:0 5px 5px 0;overflow-wrap:anywhere;
+}
+#game .finale-proved-summary strong{
+ color:#edc58b;font:800 .66rem/1.35 system-ui,sans-serif;
+ letter-spacing:.08em;
+}
+#game .finale-proved-summary span{
+ color:#efdec5;font:.81rem/1.5 system-ui,sans-serif;
+}
+
+/* The campaign map exit is a normal-flow 44px control, never a scene overlay. */
+.case002-map-return-bar[hidden]{display:none!important}
+.case002-map-return-bar{position:relative;z-index:11;width:min(100%,640px);margin:0 auto;padding:max(7px,env(safe-area-inset-top,0px)) 14px 5px;background:#17110de8}
+.case002-map-return-bar a{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;border:1px solid #a68150;border-radius:6px;background:#2a1e14;color:#f1d0a0;text-decoration:none;font:700 .76rem/1.3 system-ui,sans-serif;letter-spacing:.025em}
+.case002-map-return-bar a:focus-visible{outline:3px solid #f3d4a6;outline-offset:3px}
+
+/* Same-origin archive access from Case 002. Never show the shared-game links
+   on a standalone beta entry (the nav is hidden by the existing app logic). */
+.case002-map-return-bar:not([hidden]){
+ display:flex;flex-wrap:wrap;gap:7px;align-items:center
+}
+.case002-map-return-bar a{flex:1 1 220px;text-align:center}
+.case002-map-return-bar #case002SharedArchiveLink{
+ border-color:#cab07c;background:#372617;color:#fff1ce
+}
+@media(max-width:380px){
+ .case002-map-return-bar:not([hidden]){gap:5px}
+ .case002-map-return-bar a{flex-basis:100%;min-height:44px;padding:8px 9px}
+}
+
+
+/* Connected-campaign navigation: on portrait phones the two equally-sized
+   actions occupy one accessible row, preserving room for scene/hero content.
+   This bar is normal flow, never sticky and never covers the reading dock. */
+.case002-map-return-bar .map-nav-compact{display:none}
+@media(max-width:500px){
+ .case002-map-return-bar:not([hidden]){
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+  align-items:stretch
+ }
+ .case002-map-return-bar a{
+  flex:none;min-width:0;min-height:48px;
+  padding:10px 7px;line-height:1.25;
+  white-space:nowrap;font-size:clamp(.69rem,2.9vw,.76rem)
+ }
+ .case002-map-return-bar .map-nav-wide{display:none}
+ .case002-map-return-bar .map-nav-compact{display:inline}
+}
+@media(max-width:359px){
+ .case002-map-return-bar:not([hidden]){gap:5px}
+ .case002-map-return-bar a{padding:9px 4px}
+}
+
+/* V18: retain the existing persistent achievement receipt, with the same
+   muted brass treatment as the common archive. No timer or award change. */
+@media(orientation:portrait) and (max-width:700px){
+ #game .case-unlock-toast{box-sizing:border-box;border-radius:6px;background:linear-gradient(125deg,#594025,#211a14 80%)}
+ #game .case-unlock-toast-copy{min-width:0}
+ #game .case-unlock-toast-name{overflow-wrap:anywhere}
+ #game .case-unlock-toast-actions button{min-height:44px}
+}
+
+/* V30: same reading rhythm and action hierarchy as the first investigation. */
+@media(orientation:portrait) and (max-width:700px){
+ .case002-briefing .briefing-rules{gap:7px;padding-top:12px}
+ .case002-briefing .briefing-rule{
+  box-sizing:border-box;grid-template-columns:26px minmax(0,1fr);gap:9px;padding:10px 9px;
+  border:1px solid #755737;border-radius:3px;background:#171411;
+ }
+ .case002-briefing .briefing-rule>span{font:700 16px/1.4 Georgia,serif;letter-spacing:0;text-align:center}
+ .case002-briefing .briefing-rule p{font:400 13px/1.5 system-ui,sans-serif;color:#dfceb6}
+ .case002-briefing .briefing-enter{
+  min-height:54px;box-sizing:border-box;border:1px solid #d9ab6e;border-radius:4px;
+  background:linear-gradient(145deg,#654326,#302115);color:#fff0d1;
+  font:700 13px/1.4 system-ui,sans-serif;letter-spacing:.02em;
+ }
+}
+
+/* V34: keep the two actionable buttons inside the smallest portrait flyout.
+   Full descriptions are always available in the persistent scene receipt. */
+@media(max-height:610px){
+ #game .case-unlock-toast{grid-template-columns:34px minmax(0,1fr);padding:7px 9px;row-gap:5px;max-height:none;overflow:visible}
+ #game .case-unlock-toast-note{display:none}
+ #game .case-unlock-toast-seal{width:34px;height:34px;font-size:1.1rem}
+ #game .case-unlock-toast-name{font-size:.91rem;line-height:1.15}
+ #game .case-unlock-toast-actions button{min-height:44px;padding:5px 4px}
+}

@@ -9,8 +9,8 @@ root.innerHTML=`<div class="case001-briefing-panel" role="dialog" aria-modal="tr
  <div class="case001-briefing-points">
   <section><span class="briefing-number">I</span><div><h3>Ищи и сопоставляй</h3><p>Осматривай места, собирай улики. В инвентаре выбери два предмета, чтобы проверить возможную связь.</p></div></section>
   <section><span class="briefing-number">II</span><div><h3>Решения имеют цену</h3><p>Разговоры, маршруты и действия влияют на расследование. Опасные варианты могут отнять здоровье.</p></div></section>
-  <section><span class="briefing-number">III</span><div><h3>Шесть исходов</h3><p>Спасение, доказательства, сделка, разоблачение, власть или гибель. Не все пути доступны при одинаковых решениях.</p></div></section>
-  <section><span class="briefing-number">IV</span><div><h3>Помни о попытке</h3><p>Прогресс сохраняется в браузере. Возврат к карте позволяет продолжить, а выход из игры во время незавершённого дела сбрасывает попытку.</p></div></section>
+  <section><span class="briefing-number">III</span><div><h3>Шесть исходов</h3><p>Расследование может закончиться шестью разными способами. Какие из них доступны, зависит от твоих действий.</p></div></section>
+  <section><span class="briefing-number">IV</span><div><h3>Помни о попытке</h3><p>Если браузер разрешает хранение, прогресс сохраняется. Возврат к карте или закрытие страницы не сбрасывает попытку. Не очищай данные браузера.</p></div></section>
  </div>
  <div class="case001-briefing-footer"><label><input id="case001BriefingRemember" type="checkbox" checked> Не показывать перед следующей новой попыткой</label><div class="case001-briefing-actions"><button class="briefing-cancel" type="button">НАЗАД</button><button class="briefing-start" type="button">ВСЁ ПОНЯТНО · НАЧАТЬ →</button></div></div>
 </div>`;
@@ -32,7 +32,7 @@ start.addEventListener('click',()=>{
  close();cb?.();
 });
 root.addEventListener('keydown',e=>{
- if(e.key==='Escape'){e.preventDefault();close();return}
+ if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close();return}
  if(e.key!=='Tab')return;
  const focusable=[...root.querySelectorAll('button,input')];
  const i=focusable.indexOf(document.activeElement);

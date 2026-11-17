@@ -1,0 +1,19 @@
+/* Standalone preview shell. The shipping criminal CSS is loaded unchanged. */
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html { background: #111819; min-height:100%; }
+body { background:#111819; color:#efe2ca; margin:0; min-height:100vh; font:16px/1.55 Georgia,serif; }
+.shell { width:100%; max-width:600px; margin:0 auto; padding:0 12px 36px; }
+.screen[hidden], [hidden] { display:none!important; }
+#home { max-width:540px; margin:0 auto; padding:34px 4px max(36px, env(safe-area-inset-bottom, 0px)); }
+.cr-preview-kicker { letter-spacing:2px; color:#cfaf7b; font:600 11px/1.5 system-ui,sans-serif; text-align:center; }
+.cr-preview-art { width:100%; aspect-ratio:1/0.85; margin:18px 0 22px; border:1px solid #856941; background:linear-gradient(to bottom, #10181900 52%, #111819e8),url('../../assets/criminal/cr01-arrival.webp') center 44%/cover; }
+#home header h1 { font:normal clamp(30px,8vw,43px)/1.1 Georgia,serif; color:#ffe8c6; margin:8px 0 18px; }
+.cr-preview-subline { font-size:14px; color:#cfad79; margin:0; }
+.cr-preview-intro { max-width:45ch; font-size:18px; line-height:1.65; color:#e4dac8; }
+.cr-preview-start { width:100%; min-height:64px; display:flex; justify-content:space-between; align-items:center; gap:15px; margin:28px 0 18px; background:#655032; border:1px solid #e0bd80; color:#fff0d2; padding:16px; font:600 17px/1.3 Georgia,serif; cursor:pointer; border-radius:3px; touch-action:manipulation; }
+.cr-preview-start:focus-visible { outline:3px solid #e9c784; outline-offset:3px; }
+.cr-preview-note { color:#ae9e87; font:12px/1.65 system-ui,sans-serif; }
+#homeBtn,#profileBtn,#storyStart { display:none!important; }
+body[data-criminal='active'] .shell { padding:0 0 32px; }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after {scroll-behavior:auto!important; animation:none!important;} }

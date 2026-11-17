@@ -56,9 +56,12 @@ def classify(event, action, head, before, manual_full):
         return True, True, True, 'unrecognized event; full regression'
 
     try:
-        # Use the webhook's previous head when supplied. GitHub PR synchronize
-        # events may omit it; in our single-commit art workflow use HEAD^.
-        base = before if re.fullmatch('[0-9a-f]{40}', before or '') else git('rev-parse', f'{head}^')
+        # A synchronize event may contain more than one commit. Never infer
+        # the previous tested revision from HEAD^; it can hide gameplay edits.
+        # The workflow supplies the PR base if the webhook omits before.
+        if not re.fullmatch('[0-9a-f]{40}', before or ''):
+            return True, True, True, 'missing verified change range; fail closed'
+        base = before
         git('merge-base', '--is-ancestor', base, head)
         paths = git('diff', '--name-only', '--diff-filter=ACDMRT', base, head).splitlines()
     except subprocess.CalledProcessError:
@@ -99,9 +102,6 @@ def classify(event, action, head, before, manual_full):
             'tests/case001/mobile_layout_tests.py',
             'tests/case001/mobile_safety_tests.py',
             'tests/case001/campaign_browser_tests.py',
-            '.github/workflows/case001-tests.yml',
-            'tests/case001/ci_scope.py',
-            'tests/case001/ci_scope_tests.py',
         ):
             # Browser UI/test infrastructure changes are quick-QA, not story logic.
             ui = True

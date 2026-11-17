@@ -45,8 +45,8 @@ def route(target, required=frozenset()):
  raise AssertionError('No route to '+target)
 class Game:
  def __init__(self,browser,hero='jack',roll=.99,mobile=False):
-  self.hero=hero;self.errors=[];self.console=[];self.requests=[]
-  self.ctx=browser.new_context(viewport={'width':812,'height':375} if mobile else {'width':1440,'height':1000},reduced_motion='reduce',is_mobile=mobile,has_touch=mobile)
+  self.hero=hero;self.mobile=mobile;self.errors=[];self.console=[];self.requests=[]
+  self.ctx=browser.new_context(viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},reduced_motion='reduce',is_mobile=mobile,has_touch=mobile)
   self.ctx.add_init_script(f'window.__qaRoll={roll}; Math.random=()=>window.__qaRoll;')
   self.p=self.ctx.new_page(); self.p.set_default_timeout(10000)
   self.p.on('pageerror',lambda e:(self.errors.append(str(e)),ERRORS.append(str(e))))
@@ -64,9 +64,12 @@ class Game:
   NODES.add(self.state()['node'])
  def state(self):return self.p.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',BASE+self.hero)
  def meta(self):return self.p.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',META+self.hero)
+ def choice(self,dest):
+  return self.p.locator(f'#caseChoices button[data-choice-target="{dest}"]')
  def go(self,dest):
   before=self.state();n=before['node']; c=next(c for c in SCENES[n]['choices'] if c[1]==dest)
-  self.p.locator('#caseChoices button').filter(has_text=c[0]).click()
+  # Scene destinations are stable; story-aware labels may change on revisits.
+  self.choice(dest).click()
   after=self.state();actual=after['node'];assert actual in (dest,'endingDeath'),(n,dest,actual)
   EDGES.add((n,dest));NODES.add(actual)
   for item in SCENES[actual].get('give',[]):assert item in after['items'],(actual,item)
@@ -75,8 +78,11 @@ class Game:
   return after
  def path(self,path):
   for dest in path:self.go(dest)
+ def open_inventory(self):
+  selector='#case001QuickNav [data-go="evidence"]' if self.mobile else '.v34-open-inventory'
+  self.p.locator(selector).click()
  def combine(self,a,b):
-  self.p.locator('.v34-open-inventory').click();self.p.locator(f'.v33-tile[data-id="{a}"]').click();self.p.locator(f'.v33-tile[data-id="{b}"]').click()
+  self.open_inventory();self.p.locator(f'.v33-tile[data-id="{a}"]').click();self.p.locator(f'.v33-tile[data-id="{b}"]').click()
   assert self.p.locator('.v33-result-layer').is_visible()
   self.p.locator('.v33-result button').click()
  def close(self):
@@ -130,7 +136,7 @@ def inventory(browser,mobile=False):
  m=g.meta();assert len(m['deductions'])==6
  for a,b in PAIRS:g.combine(a,b)
  assert g.meta()==m,'Repeated combinations changed rewards/findings'
- g.p.locator('.v34-open-inventory').click(); assert g.p.locator('.v33-tile').count()==11
+ g.open_inventory(); assert g.p.locator('.v33-tile').count()==11
  g.p.locator('.v33-tile[data-id="key"]').click();g.p.locator('.v33-tile[data-id="ledger"]').click()
  assert g.p.locator('.v33-result-layer').count()==0
  g.p.keyboard.press('Escape');assert not g.p.locator('.v33-shade').is_visible()
@@ -142,7 +148,9 @@ def healing(browser,hero):
  g.p.locator('#caseChoices button').filter(has_text='Использовать перевязочный пакет').click()
  assert g.state()['health']==(100 if hero=='jack' else 90)
  assert g.state()['medicalKits']==initial-1
- g.path(['reed','canal','sneak']);assert g.state()['health']==(100 if hero=='jack' else 90),'Repeated danger damage'
+ g.path(['reed','canal'])
+ assert 'знакомый проход' in g.choice('sneak').inner_text()
+ g.go('sneak');assert g.state()['health']==(100 if hero=='jack' else 90),'Repeated danger damage'
  assert g.state()['items'].count('receipt')==1
  return {'initial_kits':initial,'healed_health':g.state()['health']}
 def resume(browser,mode):
@@ -158,7 +166,7 @@ def restart(browser,hero):
  g.p.once('dialog',lambda d:d.dismiss());g.p.locator('#caseRestart').click();assert g.state()==before
  g.p.once('dialog',lambda d:d.accept());g.p.locator('#caseRestart').click();s=g.state()
  assert s['node']=='intro' and s['items']==[] and s['health']==100 and s['trail']==[] and s['ending'] is None
- assert s['started']!=before['started'];g.p.locator('.v34-open-inventory').click();assert '0 / 6' in g.p.locator('.v33-stats').inner_text()
+ assert s['started']!=before['started'];g.open_inventory();assert '0 / 6' in g.p.locator('.v33-stats').inner_text()
  return {'old_metadata_still_stored':g.meta(),'new_started':s['started']}
 def gate_refresh(browser,source):
  g=game(browser);full(g);g.path(['confront',source]);g.combine('ash','ledger')

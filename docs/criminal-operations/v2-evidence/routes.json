@@ -1,0 +1,2490 @@
+{
+  "runtimeCommit": "2d3016f924e3de0f8b97e6813fd4b562d26da8d0",
+  "method": "2000 deterministic synthetic policies per mission, seeds 0..1999. routes counts distinct visited sceneId sequences, excludes terminal IDs; this is a witnessed lower bound, not player statistics.",
+  "missions": {
+    "CR01": {
+      "sceneCount": 21,
+      "visitedScenes": [
+        "order",
+        "street",
+        "courier",
+        "door",
+        "parley",
+        "counter",
+        "vault",
+        "backroom",
+        "bargain",
+        "fight",
+        "oldDebt",
+        "debtTalk",
+        "handoff",
+        "eli",
+        "stairs",
+        "ambush",
+        "refuge",
+        "lastStreet",
+        "scout",
+        "yard",
+        "decoy"
+      ],
+      "distinctSceneRoutes": 449,
+      "choicesTotal": 45,
+      "choicesReached": 45,
+      "endings": {
+        "costly": 358,
+        "failed": 867,
+        "dead": 762,
+        "clean": 13
+      },
+      "terminalProofs": {
+        "costly": {
+          "seed": 0,
+          "attemptId": "explore_CR01_0",
+          "startedAt": 1,
+          "terminalId": "costly",
+          "hp": 45,
+          "objective": true,
+          "stats": {
+            "time": 13,
+            "alert": 35,
+            "trust": 40
+          },
+          "inventory": {
+            "gun": 1,
+            "ammo": 4,
+            "bandage": 2,
+            "receipt": 1,
+            "coins": 2,
+            "case": 1
+          },
+          "flags": {
+            "promised": true,
+            "pledged": true,
+            "receiptUsed": true,
+            "secured": true,
+            "violence": true,
+            "eliAbandoned": true,
+            "oldDebt": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "order",
+              "choiceId": "accept"
+            },
+            {
+              "from": "street",
+              "choiceId": "courier"
+            },
+            {
+              "from": "courier",
+              "choiceId": "receipt"
+            },
+            {
+              "from": "door",
+              "choiceId": "promise"
+            },
+            {
+              "from": "parley",
+              "choiceId": "pledge"
+            },
+            {
+              "from": "counter",
+              "choiceId": "show"
+            },
+            {
+              "from": "vault",
+              "choiceId": "take"
+            },
+            {
+              "from": "backroom",
+              "choiceId": "talk"
+            },
+            {
+              "from": "bargain",
+              "choiceId": "fightBack"
+            },
+            {
+              "from": "fight",
+              "choiceId": "leave"
+            },
+            {
+              "from": "oldDebt",
+              "choiceId": "memory"
+            },
+            {
+              "from": "debtTalk",
+              "choiceId": "letGo"
+            },
+            {
+              "from": "handoff",
+              "choiceId": "deliver"
+            }
+          ]
+        },
+        "failed": {
+          "seed": 1,
+          "attemptId": "explore_CR01_1",
+          "startedAt": 1,
+          "terminalId": "failed",
+          "hp": 15,
+          "objective": false,
+          "stats": {
+            "time": 12,
+            "alert": 60,
+            "trust": 0
+          },
+          "inventory": {
+            "gun": 1,
+            "ammo": 4
+          },
+          "flags": {
+            "violence": true,
+            "secured": true,
+            "eliSafe": true,
+            "shortCash": true,
+            "lost": true
+          },
+          "path": [
+            {
+              "from": "order",
+              "choiceId": "accept"
+            },
+            {
+              "from": "street",
+              "choiceId": "courier"
+            },
+            {
+              "from": "courier",
+              "choiceId": "decline"
+            },
+            {
+              "from": "door",
+              "choiceId": "threat"
+            },
+            {
+              "from": "counter",
+              "choiceId": "argue"
+            },
+            {
+              "from": "vault",
+              "choiceId": "take"
+            },
+            {
+              "from": "backroom",
+              "choiceId": "talk"
+            },
+            {
+              "from": "bargain",
+              "choiceId": "fightBack"
+            },
+            {
+              "from": "fight",
+              "choiceId": "follow"
+            },
+            {
+              "from": "eli",
+              "choiceId": "dress"
+            },
+            {
+              "from": "stairs",
+              "choiceId": "run"
+            },
+            {
+              "from": "ambush",
+              "choiceId": "giveUp"
+            },
+            {
+              "from": "refuge",
+              "choiceId": "withdraw"
+            }
+          ]
+        },
+        "dead": {
+          "seed": 3,
+          "attemptId": "explore_CR01_3",
+          "startedAt": 1,
+          "terminalId": "dead",
+          "hp": 0,
+          "objective": false,
+          "stats": {
+            "time": 8,
+            "alert": 40,
+            "trust": 0
+          },
+          "inventory": {
+            "gun": 1,
+            "ammo": 4,
+            "bandage": 1,
+            "case": 1
+          },
+          "flags": {
+            "violence": true,
+            "secured": true,
+            "eliAbandoned": true
+          },
+          "path": [
+            {
+              "from": "order",
+              "choiceId": "accept"
+            },
+            {
+              "from": "street",
+              "choiceId": "front"
+            },
+            {
+              "from": "door",
+              "choiceId": "threat"
+            },
+            {
+              "from": "counter",
+              "choiceId": "argue"
+            },
+            {
+              "from": "vault",
+              "choiceId": "take"
+            },
+            {
+              "from": "backroom",
+              "choiceId": "talk"
+            },
+            {
+              "from": "bargain",
+              "choiceId": "surrenderEli"
+            },
+            {
+              "from": "oldDebt",
+              "choiceId": "rush"
+            }
+          ]
+        },
+        "clean": {
+          "seed": 146,
+          "attemptId": "explore_CR01_146",
+          "startedAt": 1,
+          "terminalId": "clean",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 17,
+            "alert": 0,
+            "trust": 30
+          },
+          "inventory": {
+            "gun": 1,
+            "ammo": 4,
+            "bandage": 2,
+            "case": 1
+          },
+          "flags": {
+            "scouted": true,
+            "promised": true,
+            "pledged": true,
+            "secured": true,
+            "keptWord": true,
+            "eliSafe": true,
+            "oldDebt": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "order",
+              "choiceId": "accept"
+            },
+            {
+              "from": "street",
+              "choiceId": "recon"
+            },
+            {
+              "from": "scout",
+              "choiceId": "mark"
+            },
+            {
+              "from": "door",
+              "choiceId": "promise"
+            },
+            {
+              "from": "parley",
+              "choiceId": "pledge"
+            },
+            {
+              "from": "counter",
+              "choiceId": "argue"
+            },
+            {
+              "from": "vault",
+              "choiceId": "take"
+            },
+            {
+              "from": "backroom",
+              "choiceId": "talk"
+            },
+            {
+              "from": "bargain",
+              "choiceId": "protect"
+            },
+            {
+              "from": "eli",
+              "choiceId": "carry"
+            },
+            {
+              "from": "stairs",
+              "choiceId": "laundry"
+            },
+            {
+              "from": "oldDebt",
+              "choiceId": "decoy"
+            },
+            {
+              "from": "decoy",
+              "choiceId": "slip"
+            },
+            {
+              "from": "handoff",
+              "choiceId": "deliver"
+            }
+          ]
+        }
+      },
+      "careful": {
+        "seed": 0,
+        "attemptId": "playthrough_CR01_care",
+        "startedAt": 1,
+        "terminalId": "clean",
+        "hp": 75,
+        "objective": true,
+        "stats": {
+          "time": 17,
+          "alert": 0,
+          "trust": 30
+        },
+        "inventory": {
+          "gun": 1,
+          "ammo": 4,
+          "bandage": 2,
+          "case": 1
+        },
+        "flags": {
+          "scouted": true,
+          "promised": true,
+          "pledged": true,
+          "secured": true,
+          "eliSafe": true,
+          "oldDebt": true,
+          "delivered": true
+        },
+        "path": [
+          {
+            "from": "order",
+            "choiceId": "accept"
+          },
+          {
+            "from": "street",
+            "choiceId": "recon"
+          },
+          {
+            "from": "scout",
+            "choiceId": "mark"
+          },
+          {
+            "from": "door",
+            "choiceId": "promise"
+          },
+          {
+            "from": "parley",
+            "choiceId": "pledge"
+          },
+          {
+            "from": "counter",
+            "choiceId": "argue"
+          },
+          {
+            "from": "vault",
+            "choiceId": "take"
+          },
+          {
+            "from": "backroom",
+            "choiceId": "yard"
+          },
+          {
+            "from": "yard",
+            "choiceId": "vouch"
+          },
+          {
+            "from": "eli",
+            "choiceId": "carry"
+          },
+          {
+            "from": "stairs",
+            "choiceId": "laundry"
+          },
+          {
+            "from": "oldDebt",
+            "choiceId": "decoy"
+          },
+          {
+            "from": "decoy",
+            "choiceId": "slip"
+          },
+          {
+            "from": "handoff",
+            "choiceId": "deliver"
+          }
+        ]
+      },
+      "risky": {
+        "seed": 1,
+        "attemptId": "playthrough_CR01_risk",
+        "startedAt": 1,
+        "terminalId": "dead",
+        "hp": 0,
+        "objective": false,
+        "stats": {
+          "time": 9,
+          "alert": 70,
+          "trust": 0
+        },
+        "inventory": {
+          "gun": 1,
+          "ammo": 3,
+          "bandage": 1,
+          "case": 1
+        },
+        "flags": {
+          "violence": true,
+          "secured": true,
+          "eliAbandoned": true
+        },
+        "path": [
+          {
+            "from": "order",
+            "choiceId": "accept"
+          },
+          {
+            "from": "street",
+            "choiceId": "front"
+          },
+          {
+            "from": "door",
+            "choiceId": "threat"
+          },
+          {
+            "from": "counter",
+            "choiceId": "argue"
+          },
+          {
+            "from": "vault",
+            "choiceId": "take"
+          },
+          {
+            "from": "backroom",
+            "choiceId": "break"
+          },
+          {
+            "from": "fight",
+            "choiceId": "follow"
+          },
+          {
+            "from": "eli",
+            "choiceId": "abandon"
+          },
+          {
+            "from": "oldDebt",
+            "choiceId": "rush"
+          }
+        ]
+      },
+      "itemCounterfactual": {
+        "mission": "CR01",
+        "item": "receipt",
+        "seed": 0,
+        "action": "argue",
+        "scene": "counter",
+        "withItem": 2,
+        "withoutItem": 10,
+        "withHp": 100,
+        "withoutHp": 75
+      }
+    },
+    "CR02": {
+      "sceneCount": 20,
+      "visitedScenes": [
+        "orders",
+        "fog",
+        "oscar",
+        "gangway",
+        "nora",
+        "deck",
+        "hold",
+        "ben",
+        "rescue",
+        "boat",
+        "bank",
+        "landing",
+        "coat",
+        "empty",
+        "planks",
+        "warehouse",
+        "locker",
+        "water",
+        "quiet",
+        "seal"
+      ],
+      "distinctSceneRoutes": 284,
+      "choicesTotal": 49,
+      "choicesReached": 49,
+      "endings": {
+        "failed": 1048,
+        "dead": 833,
+        "costly": 85,
+        "clean": 34
+      },
+      "terminalProofs": {
+        "failed": {
+          "seed": 0,
+          "attemptId": "explore_CR02_0",
+          "startedAt": 1,
+          "terminalId": "failed",
+          "hp": 2,
+          "objective": false,
+          "stats": {
+            "time": 13,
+            "alert": 45,
+            "cargo": 65
+          },
+          "inventory": {
+            "picks": 1,
+            "shiv": 1,
+            "bandage": 1,
+            "chest": 1
+          },
+          "flags": {
+            "noraDistracted": true,
+            "benSaved": true
+          },
+          "path": [
+            {
+              "from": "orders",
+              "choiceId": "go"
+            },
+            {
+              "from": "fog",
+              "choiceId": "watchman"
+            },
+            {
+              "from": "oscar",
+              "choiceId": "threat"
+            },
+            {
+              "from": "gangway",
+              "choiceId": "ask"
+            },
+            {
+              "from": "nora",
+              "choiceId": "delay"
+            },
+            {
+              "from": "deck",
+              "choiceId": "distract"
+            },
+            {
+              "from": "hold",
+              "choiceId": "feel"
+            },
+            {
+              "from": "ben",
+              "choiceId": "free"
+            },
+            {
+              "from": "rescue",
+              "choiceId": "boatPath"
+            },
+            {
+              "from": "boat",
+              "choiceId": "fast"
+            },
+            {
+              "from": "bank",
+              "choiceId": "sprint"
+            },
+            {
+              "from": "landing",
+              "choiceId": "withdraw"
+            }
+          ]
+        },
+        "dead": {
+          "seed": 3,
+          "attemptId": "explore_CR02_3",
+          "startedAt": 1,
+          "terminalId": "dead",
+          "hp": 0,
+          "objective": false,
+          "stats": {
+            "time": 2,
+            "alert": 0,
+            "cargo": 100
+          },
+          "inventory": {
+            "picks": 1,
+            "shiv": 1,
+            "bandage": 1
+          },
+          "flags": {},
+          "path": [
+            {
+              "from": "orders",
+              "choiceId": "go"
+            },
+            {
+              "from": "fog",
+              "choiceId": "planks"
+            },
+            {
+              "from": "gangway",
+              "choiceId": "jump"
+            }
+          ]
+        },
+        "costly": {
+          "seed": 31,
+          "attemptId": "explore_CR02_31",
+          "startedAt": 1,
+          "terminalId": "costly",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 10,
+            "alert": 0,
+            "cargo": 100
+          },
+          "inventory": {
+            "picks": 1,
+            "shiv": 1,
+            "bandage": 1,
+            "chest": 1
+          },
+          "flags": {
+            "noraDeal": true,
+            "benSaved": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "orders",
+              "choiceId": "go"
+            },
+            {
+              "from": "fog",
+              "choiceId": "planks"
+            },
+            {
+              "from": "gangway",
+              "choiceId": "ask"
+            },
+            {
+              "from": "nora",
+              "choiceId": "deal"
+            },
+            {
+              "from": "hold",
+              "choiceId": "feel"
+            },
+            {
+              "from": "ben",
+              "choiceId": "free"
+            },
+            {
+              "from": "rescue",
+              "choiceId": "quay"
+            },
+            {
+              "from": "planks",
+              "choiceId": "balance"
+            },
+            {
+              "from": "bank",
+              "choiceId": "sprint"
+            },
+            {
+              "from": "landing",
+              "choiceId": "deliver"
+            }
+          ]
+        },
+        "clean": {
+          "seed": 33,
+          "attemptId": "explore_CR02_33",
+          "startedAt": 1,
+          "terminalId": "clean",
+          "hp": 60,
+          "objective": true,
+          "stats": {
+            "time": 15,
+            "alert": 0,
+            "cargo": 90
+          },
+          "inventory": {
+            "picks": 1,
+            "shiv": 1,
+            "bandage": 1,
+            "chest": 1
+          },
+          "flags": {
+            "noraDistracted": true,
+            "benSaved": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "orders",
+              "choiceId": "go"
+            },
+            {
+              "from": "fog",
+              "choiceId": "warehouse"
+            },
+            {
+              "from": "warehouse",
+              "choiceId": "none"
+            },
+            {
+              "from": "locker",
+              "choiceId": "picks"
+            },
+            {
+              "from": "gangway",
+              "choiceId": "ask"
+            },
+            {
+              "from": "nora",
+              "choiceId": "delay"
+            },
+            {
+              "from": "deck",
+              "choiceId": "shade"
+            },
+            {
+              "from": "hold",
+              "choiceId": "feel"
+            },
+            {
+              "from": "ben",
+              "choiceId": "free"
+            },
+            {
+              "from": "rescue",
+              "choiceId": "quay"
+            },
+            {
+              "from": "planks",
+              "choiceId": "balance"
+            },
+            {
+              "from": "bank",
+              "choiceId": "sprint"
+            },
+            {
+              "from": "landing",
+              "choiceId": "deliver"
+            }
+          ]
+        }
+      },
+      "careful": {
+        "seed": 0,
+        "attemptId": "playthrough_CR02_care",
+        "startedAt": 1,
+        "terminalId": "clean",
+        "hp": 100,
+        "objective": true,
+        "stats": {
+          "time": 17,
+          "alert": 0,
+          "cargo": 100
+        },
+        "inventory": {
+          "picks": 1,
+          "shiv": 1,
+          "bandage": 1,
+          "lamp": 1,
+          "chest": 1
+        },
+        "flags": {
+          "noraDistracted": true,
+          "lampUsed": true,
+          "benSaved": true,
+          "delivered": true
+        },
+        "path": [
+          {
+            "from": "orders",
+            "choiceId": "go"
+          },
+          {
+            "from": "fog",
+            "choiceId": "warehouse"
+          },
+          {
+            "from": "warehouse",
+            "choiceId": "lamp"
+          },
+          {
+            "from": "locker",
+            "choiceId": "picks"
+          },
+          {
+            "from": "gangway",
+            "choiceId": "ask"
+          },
+          {
+            "from": "nora",
+            "choiceId": "delay"
+          },
+          {
+            "from": "deck",
+            "choiceId": "distract"
+          },
+          {
+            "from": "hold",
+            "choiceId": "light"
+          },
+          {
+            "from": "ben",
+            "choiceId": "free"
+          },
+          {
+            "from": "rescue",
+            "choiceId": "boatPath"
+          },
+          {
+            "from": "boat",
+            "choiceId": "row"
+          },
+          {
+            "from": "quiet",
+            "choiceId": "check"
+          },
+          {
+            "from": "seal",
+            "choiceId": "intact"
+          },
+          {
+            "from": "landing",
+            "choiceId": "deliver"
+          }
+        ]
+      },
+      "risky": {
+        "seed": 0,
+        "attemptId": "playthrough_CR02_risk",
+        "startedAt": 1,
+        "terminalId": "dead",
+        "hp": 0,
+        "objective": false,
+        "stats": {
+          "time": 6,
+          "alert": 40,
+          "cargo": 100
+        },
+        "inventory": {
+          "picks": 1,
+          "shiv": 1,
+          "bandage": 1,
+          "chest": 1
+        },
+        "flags": {
+          "benLeft": true
+        },
+        "path": [
+          {
+            "from": "orders",
+            "choiceId": "go"
+          },
+          {
+            "from": "fog",
+            "choiceId": "planks"
+          },
+          {
+            "from": "gangway",
+            "choiceId": "jump"
+          },
+          {
+            "from": "deck",
+            "choiceId": "brawl"
+          },
+          {
+            "from": "hold",
+            "choiceId": "feel"
+          },
+          {
+            "from": "ben",
+            "choiceId": "leave"
+          },
+          {
+            "from": "planks",
+            "choiceId": "balance"
+          }
+        ]
+      },
+      "itemCounterfactual": {
+        "mission": "CR02",
+        "item": "rope",
+        "seed": 1,
+        "action": "balance",
+        "scene": "planks",
+        "withItem": 28,
+        "withoutItem": 62,
+        "withHp": 82,
+        "withoutHp": 37
+      }
+    },
+    "CR03": {
+      "sceneCount": 21,
+      "visitedScenes": [
+        "letter",
+        "legend",
+        "gate",
+        "kitchen",
+        "ruth",
+        "cloak",
+        "library",
+        "cabinet",
+        "original",
+        "discovery",
+        "ruthChoice",
+        "serviceExit",
+        "delivery",
+        "foyer",
+        "ball",
+        "audience",
+        "exchange",
+        "corridor",
+        "photo",
+        "carriages",
+        "conservatory"
+      ],
+      "distinctSceneRoutes": 244,
+      "choicesTotal": 52,
+      "choicesReached": 52,
+      "endings": {
+        "costly": 289,
+        "failed": 956,
+        "dead": 747,
+        "clean": 8
+      },
+      "terminalProofs": {
+        "costly": {
+          "seed": 0,
+          "attemptId": "explore_CR03_0",
+          "startedAt": 1,
+          "terminalId": "costly",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 16,
+            "suspicion": 45,
+            "trust": 40
+          },
+          "inventory": {
+            "camera": 1,
+            "contacts": 1,
+            "bandage": 1,
+            "key": 1,
+            "original": 1
+          },
+          "flags": {
+            "legend": true,
+            "protectRuth": true,
+            "keyUsed": true,
+            "secured": true,
+            "exposed": true,
+            "ruthSafe": true,
+            "ruthBlamed": false,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "letter",
+              "choiceId": "prepare"
+            },
+            {
+              "from": "legend",
+              "choiceId": "learn"
+            },
+            {
+              "from": "gate",
+              "choiceId": "service"
+            },
+            {
+              "from": "kitchen",
+              "choiceId": "listen"
+            },
+            {
+              "from": "ruth",
+              "choiceId": "promise"
+            },
+            {
+              "from": "cloak",
+              "choiceId": "key"
+            },
+            {
+              "from": "library",
+              "choiceId": "cabinet"
+            },
+            {
+              "from": "cabinet",
+              "choiceId": "unlock"
+            },
+            {
+              "from": "original",
+              "choiceId": "secure"
+            },
+            {
+              "from": "discovery",
+              "choiceId": "public"
+            },
+            {
+              "from": "ruthChoice",
+              "choiceId": "trust"
+            },
+            {
+              "from": "serviceExit",
+              "choiceId": "garden"
+            },
+            {
+              "from": "delivery",
+              "choiceId": "original"
+            }
+          ]
+        },
+        "failed": {
+          "seed": 1,
+          "attemptId": "explore_CR03_1",
+          "startedAt": 1,
+          "terminalId": "failed",
+          "hp": 100,
+          "objective": false,
+          "stats": {
+            "time": 16,
+            "suspicion": 10,
+            "trust": 40
+          },
+          "inventory": {
+            "camera": 1,
+            "contacts": 1,
+            "bandage": 1,
+            "card": 1
+          },
+          "flags": {
+            "legend": true,
+            "invited": true,
+            "protectRuth": true
+          },
+          "path": [
+            {
+              "from": "letter",
+              "choiceId": "prepare"
+            },
+            {
+              "from": "legend",
+              "choiceId": "learn"
+            },
+            {
+              "from": "gate",
+              "choiceId": "name"
+            },
+            {
+              "from": "foyer",
+              "choiceId": "pass"
+            },
+            {
+              "from": "ball",
+              "choiceId": "committee"
+            },
+            {
+              "from": "audience",
+              "choiceId": "warn"
+            },
+            {
+              "from": "ruth",
+              "choiceId": "promise"
+            },
+            {
+              "from": "cloak",
+              "choiceId": "card"
+            },
+            {
+              "from": "library",
+              "choiceId": "cabinet"
+            },
+            {
+              "from": "cabinet",
+              "choiceId": "ask"
+            },
+            {
+              "from": "exchange",
+              "choiceId": "retreat"
+            },
+            {
+              "from": "corridor",
+              "choiceId": "ruthDoor"
+            },
+            {
+              "from": "serviceExit",
+              "choiceId": "garden"
+            },
+            {
+              "from": "delivery",
+              "choiceId": "report"
+            }
+          ]
+        },
+        "dead": {
+          "seed": 2,
+          "attemptId": "explore_CR03_2",
+          "startedAt": 1,
+          "terminalId": "dead",
+          "hp": 0,
+          "objective": false,
+          "stats": {
+            "time": 13,
+            "suspicion": 60,
+            "trust": 40
+          },
+          "inventory": {
+            "camera": 1,
+            "contacts": 1,
+            "bandage": 1,
+            "card": 1,
+            "copy": 1,
+            "original": 1
+          },
+          "flags": {
+            "protectRuth": true,
+            "secured": true,
+            "exposed": true,
+            "ruthBlamed": true
+          },
+          "path": [
+            {
+              "from": "letter",
+              "choiceId": "improvise"
+            },
+            {
+              "from": "gate",
+              "choiceId": "service"
+            },
+            {
+              "from": "kitchen",
+              "choiceId": "listen"
+            },
+            {
+              "from": "ruth",
+              "choiceId": "promise"
+            },
+            {
+              "from": "cloak",
+              "choiceId": "card"
+            },
+            {
+              "from": "library",
+              "choiceId": "portrait"
+            },
+            {
+              "from": "photo",
+              "choiceId": "copy"
+            },
+            {
+              "from": "cabinet",
+              "choiceId": "force"
+            },
+            {
+              "from": "original",
+              "choiceId": "secure"
+            },
+            {
+              "from": "discovery",
+              "choiceId": "public"
+            },
+            {
+              "from": "ruthChoice",
+              "choiceId": "abandon"
+            },
+            {
+              "from": "corridor",
+              "choiceId": "run"
+            }
+          ]
+        },
+        "clean": {
+          "seed": 50,
+          "attemptId": "explore_CR03_50",
+          "startedAt": 1,
+          "terminalId": "clean",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 19,
+            "suspicion": 5,
+            "trust": 40
+          },
+          "inventory": {
+            "camera": 1,
+            "contacts": 1,
+            "bandage": 1,
+            "card": 1,
+            "key": 1,
+            "copy": 1,
+            "original": 1
+          },
+          "flags": {
+            "legend": true,
+            "helpedGuest": true,
+            "protectRuth": true,
+            "keyUsed": true,
+            "secured": true,
+            "ruthSafe": true,
+            "ruthBlamed": false,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "letter",
+              "choiceId": "prepare"
+            },
+            {
+              "from": "legend",
+              "choiceId": "learn"
+            },
+            {
+              "from": "gate",
+              "choiceId": "name"
+            },
+            {
+              "from": "foyer",
+              "choiceId": "card"
+            },
+            {
+              "from": "ball",
+              "choiceId": "maid"
+            },
+            {
+              "from": "ruth",
+              "choiceId": "promise"
+            },
+            {
+              "from": "cloak",
+              "choiceId": "key"
+            },
+            {
+              "from": "library",
+              "choiceId": "portrait"
+            },
+            {
+              "from": "photo",
+              "choiceId": "copy"
+            },
+            {
+              "from": "cabinet",
+              "choiceId": "unlock"
+            },
+            {
+              "from": "original",
+              "choiceId": "secure"
+            },
+            {
+              "from": "discovery",
+              "choiceId": "rescue"
+            },
+            {
+              "from": "ruthChoice",
+              "choiceId": "trust"
+            },
+            {
+              "from": "serviceExit",
+              "choiceId": "garden"
+            },
+            {
+              "from": "delivery",
+              "choiceId": "original"
+            }
+          ]
+        }
+      },
+      "careful": {
+        "seed": 0,
+        "attemptId": "playthrough_CR03_care",
+        "startedAt": 1,
+        "terminalId": "clean",
+        "hp": 100,
+        "objective": true,
+        "stats": {
+          "time": 19,
+          "suspicion": 5,
+          "trust": 40
+        },
+        "inventory": {
+          "camera": 1,
+          "contacts": 1,
+          "bandage": 1,
+          "card": 1,
+          "key": 1,
+          "copy": 1,
+          "original": 1
+        },
+        "flags": {
+          "legend": true,
+          "helpedGuest": true,
+          "protectRuth": true,
+          "keyUsed": true,
+          "secured": true,
+          "ruthSafe": true,
+          "ruthBlamed": false,
+          "delivered": true
+        },
+        "path": [
+          {
+            "from": "letter",
+            "choiceId": "prepare"
+          },
+          {
+            "from": "legend",
+            "choiceId": "learn"
+          },
+          {
+            "from": "gate",
+            "choiceId": "name"
+          },
+          {
+            "from": "foyer",
+            "choiceId": "card"
+          },
+          {
+            "from": "ball",
+            "choiceId": "maid"
+          },
+          {
+            "from": "ruth",
+            "choiceId": "promise"
+          },
+          {
+            "from": "cloak",
+            "choiceId": "key"
+          },
+          {
+            "from": "library",
+            "choiceId": "portrait"
+          },
+          {
+            "from": "photo",
+            "choiceId": "copy"
+          },
+          {
+            "from": "cabinet",
+            "choiceId": "unlock"
+          },
+          {
+            "from": "original",
+            "choiceId": "secure"
+          },
+          {
+            "from": "discovery",
+            "choiceId": "rescue"
+          },
+          {
+            "from": "ruthChoice",
+            "choiceId": "trust"
+          },
+          {
+            "from": "serviceExit",
+            "choiceId": "garden"
+          },
+          {
+            "from": "delivery",
+            "choiceId": "original"
+          }
+        ]
+      },
+      "risky": {
+        "seed": 1,
+        "attemptId": "playthrough_CR03_risk",
+        "startedAt": 1,
+        "terminalId": "dead",
+        "hp": 0,
+        "objective": false,
+        "stats": {
+          "time": 9,
+          "suspicion": 50,
+          "trust": 0
+        },
+        "inventory": {
+          "camera": 1,
+          "contacts": 1,
+          "bandage": 1,
+          "original": 1
+        },
+        "flags": {
+          "exposed": true,
+          "secured": true,
+          "ruthBlamed": true
+        },
+        "path": [
+          {
+            "from": "letter",
+            "choiceId": "improvise"
+          },
+          {
+            "from": "gate",
+            "choiceId": "bluff"
+          },
+          {
+            "from": "foyer",
+            "choiceId": "pass"
+          },
+          {
+            "from": "ball",
+            "choiceId": "library"
+          },
+          {
+            "from": "library",
+            "choiceId": "cabinet"
+          },
+          {
+            "from": "cabinet",
+            "choiceId": "force"
+          },
+          {
+            "from": "original",
+            "choiceId": "secure"
+          },
+          {
+            "from": "discovery",
+            "choiceId": "leaveBlame"
+          },
+          {
+            "from": "corridor",
+            "choiceId": "run"
+          }
+        ]
+      },
+      "itemCounterfactual": {
+        "mission": "CR03",
+        "item": "card",
+        "seed": 52,
+        "action": "composure",
+        "scene": "carriages",
+        "withItem": 6,
+        "withoutItem": 16,
+        "withHp": 100,
+        "withoutHp": 70
+      }
+    },
+    "CR04": {
+      "sceneCount": 23,
+      "visitedScenes": [
+        "house",
+        "prepare",
+        "barricade",
+        "daniel",
+        "message",
+        "falseCar",
+        "knock",
+        "firstAttack",
+        "courier",
+        "watcher",
+        "trap",
+        "fire",
+        "lastStand",
+        "signal",
+        "negotiation",
+        "boughtTime",
+        "carSignal",
+        "evacuation",
+        "alone",
+        "corridorDeal",
+        "garden",
+        "receipt",
+        "gardenExit"
+      ],
+      "distinctSceneRoutes": 571,
+      "choicesTotal": 54,
+      "choicesReached": 54,
+      "endings": {
+        "dead": 265,
+        "failed": 1621,
+        "clean": 48,
+        "costly": 66
+      },
+      "terminalProofs": {
+        "dead": {
+          "seed": 0,
+          "attemptId": "explore_CR04_0",
+          "startedAt": 1,
+          "terminalId": "dead",
+          "hp": 0,
+          "objective": false,
+          "stats": {
+            "time": 19,
+            "witness": 5,
+            "cover": 60,
+            "trust": 25,
+            "siege": 90
+          },
+          "inventory": {
+            "papers": 1,
+            "cash": 3,
+            "ammo": 1,
+            "bandage": 2
+          },
+          "flags": {
+            "preparedCover": true,
+            "betrayed": true,
+            "marthaHurt": true,
+            "houseBurned": true
+          },
+          "path": [
+            {
+              "from": "house",
+              "choiceId": "arrive"
+            },
+            {
+              "from": "prepare",
+              "choiceId": "barricade"
+            },
+            {
+              "from": "barricade",
+              "choiceId": "cover"
+            },
+            {
+              "from": "daniel",
+              "choiceId": "truth"
+            },
+            {
+              "from": "message",
+              "choiceId": "trustCall"
+            },
+            {
+              "from": "falseCar",
+              "choiceId": "retreat"
+            },
+            {
+              "from": "knock",
+              "choiceId": "threat"
+            },
+            {
+              "from": "firstAttack",
+              "choiceId": "cover"
+            },
+            {
+              "from": "courier",
+              "choiceId": "none"
+            },
+            {
+              "from": "watcher",
+              "choiceId": "pay"
+            },
+            {
+              "from": "trap",
+              "choiceId": "back"
+            },
+            {
+              "from": "fire",
+              "choiceId": "hold"
+            },
+            {
+              "from": "lastStand",
+              "choiceId": "shot"
+            }
+          ]
+        },
+        "failed": {
+          "seed": 1,
+          "attemptId": "explore_CR04_1",
+          "startedAt": 1,
+          "terminalId": "failed",
+          "hp": 100,
+          "objective": false,
+          "stats": {
+            "time": 12,
+            "witness": 0,
+            "cover": 70,
+            "trust": 10,
+            "siege": 30
+          },
+          "inventory": {
+            "papers": 1,
+            "cash": 3,
+            "ammo": 1,
+            "bandage": 2,
+            "password": 1
+          },
+          "flags": {
+            "preparedCover": true,
+            "verified": true,
+            "marthaHurt": true,
+            "abandoned": true
+          },
+          "path": [
+            {
+              "from": "house",
+              "choiceId": "arrive"
+            },
+            {
+              "from": "prepare",
+              "choiceId": "barricade"
+            },
+            {
+              "from": "barricade",
+              "choiceId": "cover"
+            },
+            {
+              "from": "daniel",
+              "choiceId": "command"
+            },
+            {
+              "from": "message",
+              "choiceId": "verify"
+            },
+            {
+              "from": "signal",
+              "choiceId": "learn"
+            },
+            {
+              "from": "knock",
+              "choiceId": "threat"
+            },
+            {
+              "from": "firstAttack",
+              "choiceId": "ammo"
+            },
+            {
+              "from": "courier",
+              "choiceId": "none"
+            },
+            {
+              "from": "watcher",
+              "choiceId": "pay"
+            },
+            {
+              "from": "trap",
+              "choiceId": "alone"
+            }
+          ]
+        },
+        "clean": {
+          "seed": 25,
+          "attemptId": "explore_CR04_25",
+          "startedAt": 1,
+          "terminalId": "clean",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 15,
+            "witness": 100,
+            "cover": 60,
+            "trust": 45,
+            "siege": 0
+          },
+          "inventory": {
+            "papers": 1,
+            "ammo": 3,
+            "bandage": 2
+          },
+          "flags": {
+            "preparedCover": true,
+            "bought": true,
+            "negotiated": true,
+            "trueCar": true,
+            "evacuated": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "house",
+              "choiceId": "arrive"
+            },
+            {
+              "from": "prepare",
+              "choiceId": "barricade"
+            },
+            {
+              "from": "barricade",
+              "choiceId": "cover"
+            },
+            {
+              "from": "daniel",
+              "choiceId": "truth"
+            },
+            {
+              "from": "message",
+              "choiceId": "ignore"
+            },
+            {
+              "from": "knock",
+              "choiceId": "talk"
+            },
+            {
+              "from": "negotiation",
+              "choiceId": "papersCash"
+            },
+            {
+              "from": "boughtTime",
+              "choiceId": "doorDeal"
+            },
+            {
+              "from": "corridorDeal",
+              "choiceId": "buy"
+            },
+            {
+              "from": "carSignal",
+              "choiceId": "check"
+            },
+            {
+              "from": "evacuation",
+              "choiceId": "trust"
+            },
+            {
+              "from": "receipt",
+              "choiceId": "deliver"
+            }
+          ]
+        },
+        "costly": {
+          "seed": 70,
+          "attemptId": "explore_CR04_70",
+          "startedAt": 1,
+          "terminalId": "costly",
+          "hp": 47,
+          "objective": true,
+          "stats": {
+            "time": 16,
+            "witness": 45,
+            "cover": 20,
+            "trust": 10,
+            "siege": 25
+          },
+          "inventory": {
+            "papers": 1,
+            "cash": 4,
+            "ammo": 2,
+            "bandage": 3,
+            "password": 1
+          },
+          "flags": {
+            "verified": true,
+            "marthaHurt": true,
+            "watcherExposed": true,
+            "houseBurned": true,
+            "trueCar": true,
+            "evacuated": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "house",
+              "choiceId": "arrive"
+            },
+            {
+              "from": "prepare",
+              "choiceId": "medical"
+            },
+            {
+              "from": "daniel",
+              "choiceId": "command"
+            },
+            {
+              "from": "message",
+              "choiceId": "verify"
+            },
+            {
+              "from": "signal",
+              "choiceId": "learn"
+            },
+            {
+              "from": "knock",
+              "choiceId": "wait"
+            },
+            {
+              "from": "firstAttack",
+              "choiceId": "ammo"
+            },
+            {
+              "from": "courier",
+              "choiceId": "none"
+            },
+            {
+              "from": "watcher",
+              "choiceId": "check"
+            },
+            {
+              "from": "fire",
+              "choiceId": "hold"
+            },
+            {
+              "from": "lastStand",
+              "choiceId": "run"
+            },
+            {
+              "from": "carSignal",
+              "choiceId": "gamble"
+            },
+            {
+              "from": "evacuation",
+              "choiceId": "persuade"
+            },
+            {
+              "from": "receipt",
+              "choiceId": "deliver"
+            }
+          ]
+        }
+      },
+      "careful": {
+        "seed": 0,
+        "attemptId": "playthrough_CR04_care",
+        "startedAt": 1,
+        "terminalId": "clean",
+        "hp": 100,
+        "objective": true,
+        "stats": {
+          "time": 17,
+          "witness": 100,
+          "cover": 0,
+          "trust": 65,
+          "siege": 0
+        },
+        "inventory": {
+          "papers": 1,
+          "cash": 2,
+          "ammo": 3,
+          "bandage": 1,
+          "gardenKey": 1,
+          "password": 1
+        },
+        "flags": {
+          "gardenPrepared": true,
+          "verified": true,
+          "bought": true,
+          "marthaSaved": true,
+          "gardenUsed": true,
+          "trueCar": true,
+          "evacuated": true,
+          "delivered": true
+        },
+        "path": [
+          {
+            "from": "house",
+            "choiceId": "arrive"
+          },
+          {
+            "from": "prepare",
+            "choiceId": "garden"
+          },
+          {
+            "from": "garden",
+            "choiceId": "takeKey"
+          },
+          {
+            "from": "daniel",
+            "choiceId": "truth"
+          },
+          {
+            "from": "message",
+            "choiceId": "verify"
+          },
+          {
+            "from": "signal",
+            "choiceId": "learn"
+          },
+          {
+            "from": "knock",
+            "choiceId": "talk"
+          },
+          {
+            "from": "negotiation",
+            "choiceId": "papersCash"
+          },
+          {
+            "from": "boughtTime",
+            "choiceId": "healGroup"
+          },
+          {
+            "from": "courier",
+            "choiceId": "martha"
+          },
+          {
+            "from": "watcher",
+            "choiceId": "reject"
+          },
+          {
+            "from": "fire",
+            "choiceId": "garden"
+          },
+          {
+            "from": "gardenExit",
+            "choiceId": "unlock"
+          },
+          {
+            "from": "carSignal",
+            "choiceId": "verified"
+          },
+          {
+            "from": "evacuation",
+            "choiceId": "trust"
+          },
+          {
+            "from": "receipt",
+            "choiceId": "deliver"
+          }
+        ]
+      },
+      "risky": {
+        "seed": 0,
+        "attemptId": "playthrough_CR04_risk",
+        "startedAt": 1,
+        "terminalId": "dead",
+        "hp": 0,
+        "objective": false,
+        "stats": {
+          "time": 19,
+          "witness": 0,
+          "cover": 70,
+          "trust": 0,
+          "siege": 80
+        },
+        "inventory": {
+          "papers": 1,
+          "cash": 3,
+          "bandage": 2
+        },
+        "flags": {
+          "preparedCover": true,
+          "betrayed": true,
+          "marthaHurt": true,
+          "houseBurned": true
+        },
+        "path": [
+          {
+            "from": "house",
+            "choiceId": "arrive"
+          },
+          {
+            "from": "prepare",
+            "choiceId": "barricade"
+          },
+          {
+            "from": "barricade",
+            "choiceId": "cover"
+          },
+          {
+            "from": "daniel",
+            "choiceId": "command"
+          },
+          {
+            "from": "message",
+            "choiceId": "trustCall"
+          },
+          {
+            "from": "falseCar",
+            "choiceId": "retreat"
+          },
+          {
+            "from": "knock",
+            "choiceId": "threat"
+          },
+          {
+            "from": "firstAttack",
+            "choiceId": "ammo"
+          },
+          {
+            "from": "courier",
+            "choiceId": "none"
+          },
+          {
+            "from": "watcher",
+            "choiceId": "pay"
+          },
+          {
+            "from": "trap",
+            "choiceId": "back"
+          },
+          {
+            "from": "fire",
+            "choiceId": "hold"
+          },
+          {
+            "from": "lastStand",
+            "choiceId": "shot"
+          }
+        ]
+      },
+      "itemCounterfactual": {
+        "mission": "CR04",
+        "item": "password",
+        "seed": 1,
+        "action": "gamble",
+        "scene": "carSignal",
+        "withItem": 22,
+        "withoutItem": 62,
+        "withHp": 100,
+        "withoutHp": 52
+      }
+    },
+    "CR05": {
+      "sceneCount": 20,
+      "visitedScenes": [
+        "garageOrder",
+        "inspection",
+        "spares",
+        "fuelStop",
+        "route",
+        "market",
+        "passenger",
+        "detour",
+        "lastRoad",
+        "onFoot",
+        "fastRoad",
+        "industrial",
+        "repair",
+        "checkpoint",
+        "lastRepair",
+        "harry",
+        "gate",
+        "freddie",
+        "chase",
+        "friendGate"
+      ],
+      "distinctSceneRoutes": 416,
+      "choicesTotal": 51,
+      "choicesReached": 51,
+      "endings": {
+        "failed": 1568,
+        "dead": 321,
+        "clean": 69,
+        "costly": 42
+      },
+      "terminalProofs": {
+        "failed": {
+          "seed": 0,
+          "attemptId": "explore_CR05_0",
+          "startedAt": 1,
+          "terminalId": "failed",
+          "hp": 100,
+          "objective": false,
+          "stats": {
+            "time": 13,
+            "car": 65,
+            "fuel": 70,
+            "cargo": 100,
+            "alert": 0
+          },
+          "inventory": {
+            "tools": 1,
+            "smoke": 1,
+            "bandage": 1,
+            "cash": 2
+          },
+          "flags": {
+            "loaded": true,
+            "checked": true,
+            "longRoute": true,
+            "passengerLeft": true,
+            "fuelUsed": true
+          },
+          "path": [
+            {
+              "from": "garageOrder",
+              "choiceId": "inspect"
+            },
+            {
+              "from": "inspection",
+              "choiceId": "quick"
+            },
+            {
+              "from": "spares",
+              "choiceId": "none"
+            },
+            {
+              "from": "fuelStop",
+              "choiceId": "takeFuel"
+            },
+            {
+              "from": "route",
+              "choiceId": "long"
+            },
+            {
+              "from": "market",
+              "choiceId": "stop"
+            },
+            {
+              "from": "passenger",
+              "choiceId": "leave"
+            },
+            {
+              "from": "detour",
+              "choiceId": "refuel"
+            },
+            {
+              "from": "lastRoad",
+              "choiceId": "leave"
+            },
+            {
+              "from": "onFoot",
+              "choiceId": "withdraw"
+            }
+          ]
+        },
+        "dead": {
+          "seed": 3,
+          "attemptId": "explore_CR05_3",
+          "startedAt": 1,
+          "terminalId": "dead",
+          "hp": 0,
+          "objective": false,
+          "stats": {
+            "time": 4,
+            "car": 0,
+            "fuel": 43,
+            "cargo": 40,
+            "alert": 30
+          },
+          "inventory": {
+            "tools": 1,
+            "smoke": 1,
+            "bandage": 1,
+            "cash": 2
+          },
+          "flags": {
+            "loaded": true,
+            "industrialRoute": true,
+            "exposed": true
+          },
+          "path": [
+            {
+              "from": "garageOrder",
+              "choiceId": "leaveNow"
+            },
+            {
+              "from": "route",
+              "choiceId": "industrial"
+            },
+            {
+              "from": "industrial",
+              "choiceId": "pushOn"
+            },
+            {
+              "from": "checkpoint",
+              "choiceId": "ram"
+            }
+          ]
+        },
+        "clean": {
+          "seed": 5,
+          "attemptId": "explore_CR05_5",
+          "startedAt": 1,
+          "terminalId": "clean",
+          "hp": 70,
+          "objective": true,
+          "stats": {
+            "time": 20,
+            "car": 65,
+            "fuel": 67,
+            "cargo": 100,
+            "alert": 0
+          },
+          "inventory": {
+            "tools": 1,
+            "smoke": 1,
+            "belt": 1,
+            "manifest": 1
+          },
+          "flags": {
+            "loaded": true,
+            "checked": true,
+            "toolsUsed": true,
+            "longRoute": true,
+            "passengerLeft": false,
+            "paidFreddie": true,
+            "passengerSaved": true,
+            "harryContact": true,
+            "fuelUsed": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "garageOrder",
+              "choiceId": "inspect"
+            },
+            {
+              "from": "inspection",
+              "choiceId": "tune"
+            },
+            {
+              "from": "spares",
+              "choiceId": "belt"
+            },
+            {
+              "from": "fuelStop",
+              "choiceId": "takeFuel"
+            },
+            {
+              "from": "route",
+              "choiceId": "long"
+            },
+            {
+              "from": "market",
+              "choiceId": "leave"
+            },
+            {
+              "from": "checkpoint",
+              "choiceId": "cash"
+            },
+            {
+              "from": "passenger",
+              "choiceId": "help"
+            },
+            {
+              "from": "harry",
+              "choiceId": "promise"
+            },
+            {
+              "from": "detour",
+              "choiceId": "refuel"
+            },
+            {
+              "from": "lastRoad",
+              "choiceId": "dark"
+            },
+            {
+              "from": "gate",
+              "choiceId": "deliver"
+            }
+          ]
+        },
+        "costly": {
+          "seed": 13,
+          "attemptId": "explore_CR05_13",
+          "startedAt": 1,
+          "terminalId": "costly",
+          "hp": 100,
+          "objective": true,
+          "stats": {
+            "time": 18,
+            "car": 70,
+            "fuel": 65,
+            "cargo": 100,
+            "alert": 0
+          },
+          "inventory": {
+            "tools": 1,
+            "smoke": 1,
+            "manifest": 1
+          },
+          "flags": {
+            "loaded": true,
+            "checked": true,
+            "toolsUsed": true,
+            "longRoute": true,
+            "passengerLeft": false,
+            "paidFreddie": true,
+            "passengerSaved": true,
+            "harryContact": true,
+            "fuelUsed": true,
+            "exposed": true,
+            "delivered": true
+          },
+          "path": [
+            {
+              "from": "garageOrder",
+              "choiceId": "inspect"
+            },
+            {
+              "from": "inspection",
+              "choiceId": "tune"
+            },
+            {
+              "from": "spares",
+              "choiceId": "papersOnly"
+            },
+            {
+              "from": "fuelStop",
+              "choiceId": "takeFuel"
+            },
+            {
+              "from": "route",
+              "choiceId": "long"
+            },
+            {
+              "from": "market",
+              "choiceId": "leave"
+            },
+            {
+              "from": "checkpoint",
+              "choiceId": "cash"
+            },
+            {
+              "from": "passenger",
+              "choiceId": "help"
+            },
+            {
+              "from": "harry",
+              "choiceId": "promise"
+            },
+            {
+              "from": "detour",
+              "choiceId": "refuel"
+            },
+            {
+              "from": "lastRoad",
+              "choiceId": "force"
+            },
+            {
+              "from": "gate",
+              "choiceId": "deliver"
+            }
+          ]
+        }
+      },
+      "careful": {
+        "seed": 0,
+        "attemptId": "playthrough_CR05_care",
+        "startedAt": 1,
+        "terminalId": "clean",
+        "hp": 100,
+        "objective": true,
+        "stats": {
+          "time": 19,
+          "car": 85,
+          "fuel": 70,
+          "cargo": 100,
+          "alert": 0
+        },
+        "inventory": {
+          "tools": 1,
+          "smoke": 1,
+          "cash": 2,
+          "belt": 1,
+          "manifest": 1
+        },
+        "flags": {
+          "loaded": true,
+          "checked": true,
+          "toolsUsed": true,
+          "longRoute": true,
+          "passengerSaved": true,
+          "passengerLeft": false,
+          "harryContact": true,
+          "fuelUsed": true,
+          "helpedByHarry": true,
+          "delivered": true
+        },
+        "path": [
+          {
+            "from": "garageOrder",
+            "choiceId": "inspect"
+          },
+          {
+            "from": "inspection",
+            "choiceId": "tune"
+          },
+          {
+            "from": "spares",
+            "choiceId": "belt"
+          },
+          {
+            "from": "fuelStop",
+            "choiceId": "takeFuel"
+          },
+          {
+            "from": "route",
+            "choiceId": "long"
+          },
+          {
+            "from": "market",
+            "choiceId": "stop"
+          },
+          {
+            "from": "passenger",
+            "choiceId": "help"
+          },
+          {
+            "from": "harry",
+            "choiceId": "promise"
+          },
+          {
+            "from": "detour",
+            "choiceId": "refuel"
+          },
+          {
+            "from": "lastRoad",
+            "choiceId": "harry"
+          },
+          {
+            "from": "friendGate",
+            "choiceId": "enter"
+          },
+          {
+            "from": "gate",
+            "choiceId": "deliver"
+          }
+        ]
+      },
+      "risky": {
+        "seed": 3,
+        "attemptId": "playthrough_CR05_risk",
+        "startedAt": 1,
+        "terminalId": "dead",
+        "hp": 0,
+        "objective": false,
+        "stats": {
+          "time": 4,
+          "car": 5,
+          "fuel": 10,
+          "cargo": 65,
+          "alert": 30
+        },
+        "inventory": {
+          "tools": 1,
+          "smoke": 1,
+          "bandage": 1,
+          "cash": 2
+        },
+        "flags": {
+          "loaded": true,
+          "fastRoute": true,
+          "exposed": true
+        },
+        "path": [
+          {
+            "from": "garageOrder",
+            "choiceId": "leaveNow"
+          },
+          {
+            "from": "route",
+            "choiceId": "fast"
+          },
+          {
+            "from": "fastRoad",
+            "choiceId": "speed"
+          },
+          {
+            "from": "chase",
+            "choiceId": "race"
+          }
+        ]
+      },
+      "itemCounterfactual": {
+        "mission": "CR05",
+        "item": "belt",
+        "seed": 7,
+        "action": "improvise",
+        "scene": "repair",
+        "withItem": 3,
+        "withoutItem": 36,
+        "withHp": 100,
+        "withoutHp": 75
+      }
+    }
+  }
+}

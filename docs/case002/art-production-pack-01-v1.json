@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "waveId": "opening-01",
+  "caseId": "002",
+  "status": "BRIEFS_ONLY_NOT_GENERATED_NOT_APPROVED",
+  "sceneCount": 16,
+  "portraitCount": 5,
+  "shots": [
+    {
+      "sceneId": "P01",
+      "title": "Ночной тормоз",
+      "location": "private-siding",
+      "filename": "case002-p01-scene.webp",
+      "mobileFilename": "case002-p01-scene--mobile.webp",
+      "cast": [
+        "hale",
+        "unidentified-guard"
+      ],
+      "characterReferences": [
+        {
+          "id": "hale",
+          "name": "Эдвард Хейл",
+          "appearance": "37 лет; старая рабочая кепка, тёмное грузовое пальто"
+        }
+      ],
+      "directorFocus": "Видимая разомкнутая сцепка F-4182 на частном отводе, мокрые шпалы после дождя, один фонарь",
+      "canonicalStoryboardShot": "Один фонарь на мокрой шпале; расцепленный F-4182 скользит в туман; убийца неузнаваем",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "узнаваемое лицо человека у сцепки",
+        "ливень во время отцепки",
+        "убийство Хейла в 23:31",
+        "Лондон, пассажирский поезд"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "P02",
+      "title": "Гостья под дождём",
+      "location": "detective-office",
+      "filename": "case002-p02-scene.webp",
+      "mobileFilename": "case002-p02-scene--mobile.webp",
+      "cast": [
+        "mabel"
+      ],
+      "characterReferences": [
+        {
+          "id": "mabel",
+          "name": "Мэйбл Кросс",
+          "appearance": "28 лет; узкое угловатое лицо, нос с горбинкой, клиновидный подбородок, близко посаженные серо-зелёные глаза, короткий прямой тёмно-каштановый боб, строгое серое пальто"
+        }
+      ],
+      "directorFocus": "Мэйбл в строгом сером пальто у двери конторы с согнутой ведомостью, усталость и страх за Томми",
+      "canonicalStoryboardShot": "Мэйбл в мокром сером пальто держит сложенную ведомость у двери; герой в полутьме",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "лицо Эвелин №001 вместо Мэйбл",
+        "подпись злодея на документе",
+        "раскрытие первой подделки",
+        "современная одежда"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A01",
+      "title": "Два следа",
+      "location": "detective-office",
+      "filename": "case002-a01-scene.webp",
+      "mobileFilename": "case002-a01-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Две неразгаданные возможности расследования на столе: адрес и зарисовка виадука",
+      "canonicalStoryboardShot": "Два адреса на столе: мост и дом Мэйбл; рука героя над дорогой картой",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "отмеченный правильный путь",
+        "список доказанных преступлений",
+        "готовый портрет злодея"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A02",
+      "title": "Время Мэйбл",
+      "location": "detective-office",
+      "filename": "case002-a02-scene.webp",
+      "mobileFilename": "case002-a02-scene--mobile.webp",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "characterReferences": [
+        {
+          "id": "mabel",
+          "name": "Мэйбл Кросс",
+          "appearance": "28 лет; узкое угловатое лицо, нос с горбинкой, клиновидный подбородок, близко посаженные серо-зелёные глаза, короткий прямой тёмно-каштановый боб, строгое серое пальто"
+        }
+      ],
+      "directorFocus": "Неловкое молчание Мэйбл у окна и отражение циферблата",
+      "canonicalStoryboardShot": "Неловкое молчание Мэйбл, блики складских часов в окне; лицо не в лоб",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "Мэйбл как доказанная убийца",
+        "известные игроку имена перехватчиков",
+        "пассажирский маршрут 1920 года"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A03",
+      "title": "Виадук",
+      "location": "bridge-viaduct",
+      "filename": "case002-a03-scene.webp",
+      "mobileFilename": "case002-a03-scene--mobile.webp",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "characterReferences": [
+        {
+          "id": "rowan",
+          "name": "Констебль Роуэн",
+          "appearance": "24 года; широкий нос, внимательные глаза, форменный китель"
+        }
+      ],
+      "directorFocus": "Под аркой кирпичного виадука следы волочения у мостовой; Роуэн держит фонарь",
+      "canonicalStoryboardShot": "Свежие следы волочения у кирпичной арки, констебль светит фонарём вниз",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "тело, падающее с моста",
+        "доказанное лицо убийцы",
+        "полиция уже предъявила обвинение"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A04",
+      "title": "Строка в журнале",
+      "location": "freight-office",
+      "filename": "case002-a04-scene.webp",
+      "mobileFilename": "case002-a04-scene--mobile.webp",
+      "cast": [
+        "hero",
+        "clerk"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Неполная копия железнодорожной ведомости с пустой колонкой сопровождения",
+      "canonicalStoryboardShot": "Косой взгляд на лист с подписью Мэйбл и пустой графой сопровождения",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "физический оригинал в руках героя",
+        "имя Брэкетта в качестве уже найденного доказательства",
+        "готовый вывод о мотиве Мэйбл"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A05",
+      "title": "Билет на мертвеца",
+      "location": "bridge-viaduct",
+      "filename": "case002-a05-scene.webp",
+      "mobileFilename": "case002-a05-scene--mobile.webp",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "characterReferences": [
+        {
+          "id": "rowan",
+          "name": "Констебль Роуэн",
+          "appearance": "24 года; широкий нос, внимательные глаза, форменный китель"
+        }
+      ],
+      "directorFocus": "Полицейский пакет с потёртым старым семейным пассажирским билетом из Курзон-стрит",
+      "canonicalStoryboardShot": "Полицейский пакет с потёртым старым билетом Curzon Street; чёткая предметная композиция",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "билет как действительный на 1920 год",
+        "билет уже у героя на руках",
+        "готовая разгадка оборота билета"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A06",
+      "title": "Полицейская версия",
+      "location": "police-desk",
+      "filename": "case002-a06-scene.webp",
+      "mobileFilename": "case002-a06-scene--mobile.webp",
+      "cast": [
+        "rowan",
+        "hero"
+      ],
+      "characterReferences": [
+        {
+          "id": "rowan",
+          "name": "Констебль Роуэн",
+          "appearance": "24 года; широкий нос, внимательные глаза, форменный китель"
+        }
+      ],
+      "directorFocus": "Поспешный протокол о несчастном случае на столе участка; чернильница и мутное стекло",
+      "canonicalStoryboardShot": "Участковый стол и незаполненный протокол, силуэт героя против мутного стекла",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "официально доказанное убийство",
+        "украденная оригинальная шинель у героя",
+        "современные полицейские предметы"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A07",
+      "title": "Старая касса",
+      "location": "old-ticket-counter",
+      "filename": "case002-a07-scene.webp",
+      "mobileFilename": "case002-a07-scene--mobile.webp",
+      "cast": [
+        "retired-clerk",
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Бывший кассир листает старый альбом образцов пассажирских билетов в пыльном луче",
+      "canonicalStoryboardShot": "Старый кассир открывает альбом пассажирских билетов конца XIX века, пыль в луче",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "касса продаёт пассажирские билеты 1920 года",
+        "новый поезд отправляется с платформы",
+        "ответ на судьбу вагона"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A08",
+      "title": "Оттиск у моста",
+      "location": "bridge-viaduct",
+      "filename": "case002-a08-scene.webp",
+      "mobileFilename": "case002-a08-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Слепок повреждённого каблука в мокром камне, след ещё без владельца",
+      "canonicalStoryboardShot": "Макрослед повреждённой подошвы на мокром камне рядом со слепком",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "Брэкетт уже опознан по одному отпечатку",
+        "крупный портрет охранника",
+        "подмена судебным доказательством без контекста"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A09",
+      "title": "Архивная заметка",
+      "location": "archive-room",
+      "filename": "case002-a09-scene.webp",
+      "mobileFilename": "case002-a09-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Увеличительное стекло над старой газетой и карандашный знак на билете",
+      "canonicalStoryboardShot": "Газетная вырезка под латунной лупой и на обороте билета карандашный знак",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "раскрыто новое тайное место как надёжная улика",
+        "фальшивая современная газета",
+        "полная публикация фабричного скандала"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "A10",
+      "title": "Три двери",
+      "location": "detective-office",
+      "filename": "case002-a10-scene.webp",
+      "mobileFilename": "case002-a10-scene--mobile.webp",
+      "cast": [
+        "mabel",
+        "hero"
+      ],
+      "characterReferences": [
+        {
+          "id": "mabel",
+          "name": "Мэйбл Кросс",
+          "appearance": "28 лет; узкое угловатое лицо, нос с горбинкой, клиновидный подбородок, близко посаженные серо-зелёные глаза, короткий прямой тёмно-каштановый боб, строгое серое пальто"
+        }
+      ],
+      "directorFocus": "Мэйбл у окна конторы; тревожная пауза перед выбором одного из трёх направлений",
+      "canonicalStoryboardShot": "Мэйбл у окна; за стеклом три направления города сквозь дождь",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "Томми уже спасён",
+        "все три ветки завершены",
+        "предрешённый лучший маршрут"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "B01",
+      "title": "Карта интересов",
+      "location": "map-table",
+      "filename": "case002-b01-scene.webp",
+      "mobileFilename": "case002-b01-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Три разных бумажных карты: железная дорога, канал Дигбета и завод Астона; без правильного выбора",
+      "canonicalStoryboardShot": "Три бумажные карты и восковые печати: железная дорога, канал, завод, без текста поверх",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "вычеркнутые недоступные направления",
+        "выдача новых доказательств самой картой",
+        "надпись подсказки поверх изображения"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "B02",
+      "title": "Грузовая контора",
+      "location": "freight-office",
+      "filename": "case002-b02-scene.webp",
+      "mobileFilename": "case002-b02-scene--mobile.webp",
+      "cast": [
+        "clerk",
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Грузовая контора, уставший клерк, ночные лампы и стопки ведомостей",
+      "canonicalStoryboardShot": "Уставший клерк за барьером грузовой конторы, стопки листов и ночные лампы",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "клерк прямо называет убийцу",
+        "оригинальная ведомость уже найдена",
+        "раскрытие убежища Ады"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "B03",
+      "title": "Первая запись",
+      "location": "freight-office",
+      "filename": "case002-b03-scene.webp",
+      "mobileFilename": "case002-b03-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Подлинная запись отправления о F-4182; подмена груза подписана Мэйбл, не доказательство убийства",
+      "canonicalStoryboardShot": "Рука в перчатке раскрывает подлинную запись F-4182 и ложные запасные части",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "первую запись приписали Брэкетту",
+        "вторая фальсификация уже объяснена",
+        "виновность Мэйбл в гибели Хейла"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    },
+    {
+      "sceneId": "B04",
+      "title": "Замятый угол",
+      "location": "freight-office",
+      "filename": "case002-b04-scene.webp",
+      "mobileFilename": "case002-b04-scene--mobile.webp",
+      "cast": [
+        "hero"
+      ],
+      "characterReferences": [],
+      "directorFocus": "Углублённый оттиск иной бумаги на обороте ведомости при косом свете",
+      "canonicalStoryboardShot": "Косой свет на продавленный оттиск другой бумаги на обороте ведомости",
+      "constraints": [
+        "1920s industrial Birmingham, original cinematic noir; realistic period materials and costume",
+        "compose TWO separate masters: 16:9 landscape and 9:16 portrait; never crop a horizontal master blindly",
+        "keep every clue and character legible on 360px phone, with narrative action inside central 60%",
+        "leave lower 25% free of crucial clues for the HTML dialogue and decision controls",
+        "naturalistic sepia-gold and coal-blue light; no modern props, captions, readable AI-generated labels or UI",
+        "no likeness of actors or copyrighted TV characters; do not reveal future evidence or villains"
+      ],
+      "forbidden": [
+        "вторая подделка уже полностью доказана",
+        "броский текст подсказки",
+        "новая улика без события движка"
+      ],
+      "output": {
+        "landscape": "16:9",
+        "mobile": "9:16",
+        "format": "WebP",
+        "review": "manual visual+technical review before approval"
+      }
+    }
+  ],
+  "portraits": [
+    {
+      "id": "mabel",
+      "name": "Мэйбл Кросс",
+      "role": "Железнодорожная служащая",
+      "appearance": "28 лет; узкое угловатое лицо, нос с горбинкой, клиновидный подбородок, близко посаженные серо-зелёные глаза, короткий прямой тёмно-каштановый боб, строгое серое пальто",
+      "filename": "case002-mabel-portrait.webp",
+      "constraints": [
+        "same face and distinguishing traits in every scene; no substitutions with Case 001 people",
+        "neutral front, three-quarter and profile reference before scene rendering",
+        "1920 Birmingham, period-accurate clothes, no captions, no copyrighted actor likeness",
+        "separate original 4:5 portrait master, 9:16 phone-safe version when used in a scene"
+      ],
+      "output": {
+        "aspect": "4:5",
+        "format": "WebP",
+        "review": "identity match across all scene art"
+      }
+    },
+    {
+      "id": "tommy",
+      "name": "Томми Кросс",
+      "role": "Рабочий, брат Мэйбл",
+      "appearance": "19 лет; светло-каштановые короткие волосы, фамильная узкая переносица с горбинкой как у Мэйбл, рабочая тёмно-синяя куртка, бинт на руке",
+      "filename": "case002-tommy-portrait.webp",
+      "constraints": [
+        "same face and distinguishing traits in every scene; no substitutions with Case 001 people",
+        "neutral front, three-quarter and profile reference before scene rendering",
+        "1920 Birmingham, period-accurate clothes, no captions, no copyrighted actor likeness",
+        "separate original 4:5 portrait master, 9:16 phone-safe version when used in a scene"
+      ],
+      "output": {
+        "aspect": "4:5",
+        "format": "WebP",
+        "review": "identity match across all scene art"
+      }
+    },
+    {
+      "id": "ada",
+      "name": "Ада Уэбб",
+      "role": "Работница котельной",
+      "appearance": "34 года; широкая квадратная челюсть, короткий широкий нос, прямые густые брови, карие глаза, шрам на подбородке, тёмно-рыжие волосы под рабочим платком, сажа и грубый фабричный фартук",
+      "filename": "case002-ada-portrait.webp",
+      "constraints": [
+        "same face and distinguishing traits in every scene; no substitutions with Case 001 people",
+        "neutral front, three-quarter and profile reference before scene rendering",
+        "1920 Birmingham, period-accurate clothes, no captions, no copyrighted actor likeness",
+        "separate original 4:5 portrait master, 9:16 phone-safe version when used in a scene"
+      ],
+      "output": {
+        "aspect": "4:5",
+        "format": "WebP",
+        "review": "identity match across all scene art"
+      }
+    },
+    {
+      "id": "rowan",
+      "name": "Констебль Роуэн",
+      "role": "Молодой полицейский",
+      "appearance": "24 года; широкий нос, внимательные глаза, форменный китель",
+      "filename": "case002-rowan-portrait.webp",
+      "constraints": [
+        "same face and distinguishing traits in every scene; no substitutions with Case 001 people",
+        "neutral front, three-quarter and profile reference before scene rendering",
+        "1920 Birmingham, period-accurate clothes, no captions, no copyrighted actor likeness",
+        "separate original 4:5 portrait master, 9:16 phone-safe version when used in a scene"
+      ],
+      "output": {
+        "aspect": "4:5",
+        "format": "WebP",
+        "review": "identity match across all scene art"
+      }
+    },
+    {
+      "id": "hale",
+      "name": "Эдвард Хейл",
+      "role": "Погибший на железнодорожной ветке",
+      "appearance": "37 лет; старая рабочая кепка, тёмное грузовое пальто",
+      "filename": "case002-hale-portrait.webp",
+      "constraints": [
+        "same face and distinguishing traits in every scene; no substitutions with Case 001 people",
+        "neutral front, three-quarter and profile reference before scene rendering",
+        "1920 Birmingham, period-accurate clothes, no captions, no copyrighted actor likeness",
+        "separate original 4:5 portrait master, 9:16 phone-safe version when used in a scene"
+      ],
+      "output": {
+        "aspect": "4:5",
+        "format": "WebP",
+        "review": "identity match across all scene art"
+      }
+    }
+  ]
+}

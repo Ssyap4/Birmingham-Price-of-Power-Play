@@ -1,0 +1,57 @@
+/* Read-only chapter of the existing combined detective campaign archive. */
+.campaign-hub .campaign-criminal-section{
+ margin:30px 0 14px;padding:22px 17px;border:1px solid #94734a;
+ border-left:4px solid #c7a577;border-radius:7px;
+ background:linear-gradient(135deg,#27302c,#1b1e1d 62%,#271f18);
+ color:#ecd8b5;overflow-wrap:anywhere;
+}
+.campaign-hub .campaign-criminal-kicker{color:#d0ab78;font:600 10px/1.5 system-ui,sans-serif;letter-spacing:.12em;}
+.campaign-hub .campaign-criminal-section h3{margin:10px 0 8px;}
+.campaign-hub .campaign-criminal-intro{font:14px/1.55 Georgia,serif;color:#dbc7a9;margin:8px 0 17px;}
+.campaign-hub .campaign-criminal-alert{padding:12px;border:1px solid #ba8c65;color:#f7dac2;background:#37251e;border-radius:4px;}
+.campaign-hub .campaign-criminal-heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;}
+.campaign-hub .campaign-criminal-hero,.campaign-hub .campaign-criminal-attempt{padding:13px;border:1px solid #695942;background:#182322;border-radius:5px;}
+.campaign-hub .campaign-criminal-hero h4,.campaign-hub .campaign-criminal-attempt h4{margin:6px 0;color:#f3d7ab;font:700 19px/1.25 Georgia,serif;}
+.campaign-hub .campaign-criminal-hero small,.campaign-hub .campaign-criminal-attempt small{color:#cba87a;font:600 11px/1.45 system-ui,sans-serif;}
+.campaign-hub .campaign-criminal-hero p,.campaign-hub .campaign-criminal-attempt p{margin:6px 0;color:#e5d0b2;font:13px/1.5 system-ui,sans-serif;}
+.campaign-hub .campaign-criminal-hero strong{color:#f0d1a0;}
+.campaign-hub .campaign-criminal-hero-folds{display:grid;gap:9px;}
+.campaign-hub .campaign-criminal-fold{border:1px solid #90704b;border-radius:5px;background:#172120;overflow:hidden;}
+.campaign-hub .campaign-criminal-fold summary{
+ min-height:52px;display:flex;align-items:center;cursor:pointer;padding:12px 15px;
+ color:#f0d2a7;font:700 16px/1.4 Georgia,serif;touch-action:manipulation;
+}
+.campaign-hub .campaign-criminal-fold summary:focus-visible,
+.campaign-hub .campaign-criminal-jump:focus-visible{outline:3px solid #f3c984;outline-offset:2px;}
+.campaign-hub .campaign-criminal-seals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:12px;border-top:1px solid #7b6245;}
+.campaign-hub .campaign-criminal-seal{min-height:58px;padding:10px;border:1px solid #62523e;border-radius:4px;color:#baa88d;font:13px/1.4 Georgia,serif;}
+.campaign-hub .campaign-criminal-seal.earned{border-color:#b48d58;background:#393225;color:#f0d7ad;}
+.campaign-hub .campaign-criminal-seal small{display:block;margin-top:7px;color:#ddbe8d;font:12px/1.4 system-ui,sans-serif;}
+.campaign-hub .campaign-criminal-memory{margin:5px 0;color:#e0c59e;font:13px/1.5 system-ui,sans-serif;}
+.campaign-hub .campaign-criminal-history{display:grid;gap:9px;}
+.campaign-hub .campaign-criminal-jump{
+ display:block;box-sizing:border-box;width:100%;min-height:49px;margin-top:19px;padding:12px;
+ border:1px solid #d0a36b;border-radius:4px;
+ background:linear-gradient(125deg,#4e3b26,#28271f);color:#f7ddb2;
+ cursor:pointer;font:700 14px/1.35 Georgia,serif;
+}
+@media(max-width:520px) {
+ .campaign-hub .campaign-criminal-section{margin:23px 0 12px;padding:16px 10px;}
+ .campaign-hub .campaign-criminal-seals{grid-template-columns:minmax(0,1fr);padding:9px;}
+ .campaign-hub .campaign-criminal-heroes{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .campaign-hub .campaign-criminal-fold summary{font-size:15px;padding:11px;}
+}
+@media(max-width:345px){.campaign-hub .campaign-criminal-heroes{grid-template-columns:minmax(0,1fr);}}
+
+/* Archive navigation is direct UI, not a cutscene. The old .screen keyframe
+   starts by painting all achievements at opacity 0, creating a black flash
+   on iPhone and unreadable first screenshots. Match the corrected Profile. */
+#campaignAchievements.screen:not([hidden]),
+#campaignHistory.screen:not([hidden]),
+#campaignDossiers.screen:not([hidden]) {
+  animation:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  filter:none!important;
+}

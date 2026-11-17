@@ -1,0 +1,481 @@
+/* V16: iPhone portrait scroll repair and legible living noir atmosphere. */
+@media(max-width:700px),(hover:none) and (pointer:coarse){
+ html{scroll-behavior:auto!important}
+ #home.cinema-home,#profile.screen,.campaign-hub.screen{overflow-anchor:none}
+}
+#home .cinema-hero::before{
+ background:
+  radial-gradient(ellipse 27% 24% at 19% 48%,rgba(255,211,133,.48),rgba(231,151,64,.12) 60%,transparent 100%),
+  radial-gradient(ellipse 39% 16% at 32% 70%,rgba(255,191,104,.22),transparent 100%);
+ mix-blend-mode:screen;filter:blur(5px);opacity:.78;
+ animation:cinema-v16-lamplight 6.4s ease-in-out infinite;
+}
+/* Droplets on glass, not the old diagonal repeating-linear stripe overlay. */
+#home .cinema-rain{
+ opacity:.48;clip-path:polygon(18% 0,81% 0,81% 27%,69% 35%,66% 53%,32% 55%,31% 37%,18% 35%);
+ mix-blend-mode:screen;filter:none;
+ background-image:
+  radial-gradient(ellipse 2px 7px at 23% 21%,rgba(227,239,238,.88) 34%,transparent 90%),
+  radial-gradient(ellipse 1.5px 5px at 71% 32%,rgba(224,239,238,.79) 20%,transparent 91%),
+  radial-gradient(ellipse 2px 10px at 56% 51%,rgba(218,233,231,.65) 20%,transparent 92%),
+  radial-gradient(ellipse 1.5px 4px at 39% 64%,rgba(228,242,242,.78) 34%,transparent 92%),
+  radial-gradient(ellipse 2px 6px at 86% 80%,rgba(222,240,239,.64) 33%,transparent 91%);
+ background-size:220px 315px,280px 390px,335px 470px,250px 355px,390px 525px;
+ background-repeat:repeat;
+ animation:cinema-v16-raindrops 8.2s linear infinite;
+}
+#home .cinema-rain::after{
+ content:"";position:absolute;inset:-180px 0 0;opacity:.66;pointer-events:none;
+ background-image:
+  radial-gradient(ellipse 1.5px 4.5px at 33% 45%,rgba(230,242,237,.95),transparent 88%),
+  radial-gradient(ellipse 1px 3.5px at 66% 73%,rgba(234,244,241,.85),transparent 88%),
+  radial-gradient(ellipse 2px 6px at 82% 11%,rgba(226,240,237,.8),transparent 89%);
+ background-size:110px 180px,137px 180px,181px 180px;
+ animation:cinema-v16-small-drops 6.8s linear infinite;
+}
+#home .cinema-smoke{
+ left:17%;bottom:27%;width:22%;height:29%;z-index:0;
+ opacity:.48;filter:blur(4px);mix-blend-mode:screen;
+ transform-origin:35% 92%;
+ background:
+  radial-gradient(ellipse 10% 31% at 29% 79%,rgba(255,232,193,.52),transparent 100%),
+  radial-gradient(ellipse 16% 32% at 46% 53%,rgba(227,219,208,.48),transparent 100%),
+  radial-gradient(ellipse 20% 20% at 63% 27%,rgba(229,226,216,.30),transparent 100%);
+ animation:cinema-v16-smoke 8.8s ease-in-out infinite;
+}
+#home .cinema-smoke.second{
+ left:18%;bottom:27%;width:25%;height:30%;opacity:.34;
+ animation-duration:11.2s;animation-delay:-5.4s;
+}
+@keyframes cinema-v16-lamplight{
+ 0%,34%,69%,100%{opacity:.75}
+ 20%,51%,86%{opacity:.98}
+ 57%{opacity:.38}59%{opacity:.87}
+}
+@keyframes cinema-v16-raindrops{
+ 0%,100%{opacity:.43}
+ 50%{opacity:.56}
+}
+@keyframes cinema-v16-small-drops{
+ from{transform:translate3d(0,0,0)}
+ to{transform:translate3d(0,180px,0)}
+}
+@keyframes cinema-v16-smoke{
+ 0%{transform:translate3d(-2px,12px,0) rotate(-5deg) scale(.75);opacity:0}
+ 20%{opacity:.48}
+ 65%{opacity:.33}
+ 100%{transform:translate3d(14px,-50px,0) rotate(11deg) scale(1.28);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-hero::before,#home .cinema-rain,
+ #home .cinema-rain::after,#home .cinema-smoke{
+  animation:none!important;transform:none!important;
+ }
+}
+
+/* V17: stable document geometry on portrait Safari and Telegram WebView.
+   Only the shell/menu/archive presentation is affected, not gameplay. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(#home.cinema-home:not([hidden]))>.shell{min-height:100svh}
+ #home .cinema-menu{
+  padding-left:max(12px,var(--bh-inset-left,0px));
+  padding-right:max(12px,var(--bh-inset-right,0px));
+ }
+ #home .cinema-crest{top:max(22px,var(--bh-inset-top,0px))}
+ #home .cinema-legal{padding-bottom:max(95px,calc(80px + var(--bh-inset-bottom,0px)))}
+ body:has(> .shell > :is(#profile,.campaign-hub,#districts):not([hidden]))>.shell{
+  padding-bottom:max(18px,var(--bh-inset-bottom,0px))!important;
+ }
+ .campaign-hub summary{min-height:44px;box-sizing:border-box;touch-action:manipulation}
+}
+@media(hover:none) and (pointer:coarse){
+ #home .cabinet-entry:hover:not(:active):not(:focus-visible){transform:none;filter:none}
+}
+/* Pause the nested V16 droplets too, including while the app is backgrounded. */
+#home.cinema-still .cinema-rain::after{animation-play-state:paused!important}
+
+/* V18: shared visual language, with the light mapped to the approved V12
+   photograph. No new images, remote fonts, canvas, or gameplay changes. */
+#home .cinema-vinyl-glint{left:75%;top:52%;width:20%;transform-origin:center}
+#home .cinema-crest h1{text-shadow:0 2px 3px #140e08,0 4px 18px #000}
+#home .cinema-epigraph p{text-shadow:0 2px 4px #000,0 4px 12px #000}
+@media(orientation:portrait) and (max-width:700px){
+ :root{--bh-v18-paper:#ead3ad;--bh-v18-edge:#b18a57;--bh-v18-ink:#191510}
+ #districts .districts-heading,#criminalScreen .cr-heading,.campaign-hub .campaign-head{
+  position:relative;box-sizing:border-box;border-bottom:1px solid #9a754b;
+  padding:15px 9px 18px!important;background:radial-gradient(ellipse at 50% 0,#563a232e,transparent 80%);
+ }
+ #districts .districts-heading::after,#criminalScreen .cr-heading::after,.campaign-hub .campaign-head::after{
+  content:"";position:absolute;bottom:-1px;left:36%;right:36%;height:1px;background:#f0c788;pointer-events:none;
+ }
+ #districts .districts-heading h2,#criminalScreen .cr-heading h1,.campaign-hub .campaign-head h2{
+  text-shadow:0 2px 8px #0009;overflow-wrap:break-word;
+ }
+ #districts .map-topline,#districts .map-bottomline{font-size:clamp(9px,2.5vw,11px);color:#d7b78d;letter-spacing:.025em}
+ #districts .map-pin[aria-pressed="true"] .pin-name{color:#fff0ce;border-color:#e6bb81;background:#382719}
+ .campaign-hub .campaign-portrait{
+  height:clamp(260px,83vw,375px)!important;object-fit:contain!important;object-position:center!important;
+  background:radial-gradient(ellipse at 50% 30%,#3b2a1e,#100e0d 74%)!important;
+ }
+ .campaign-hub .campaign-card-body{border-top-color:var(--bh-v18-edge)}
+ .campaign-hub .campaign-reward-group>summary,.campaign-hub .campaign-criminal-fold>summary,
+ .campaign-hub .campaign-attempt>summary{position:relative;padding-right:38px!important;list-style:none}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)>summary::-webkit-details-marker{display:none}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)>summary::after{
+  content:"+";position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font:700 22px/1 Georgia,serif;color:#e7bc7d;pointer-events:none;
+ }
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)[open]>summary::after{content:"−"}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)[open]>summary{
+  background:linear-gradient(110deg,#4a3320,#201b15);color:#ffebc9;
+ }
+ .campaign-hub .campaign-award.locked,.campaign-hub .campaign-reward-card.locked{opacity:1!important;background:#191713!important}
+ .campaign-hub .campaign-award.locked strong,.campaign-hub .campaign-reward-card.locked strong{color:#dec8a6}
+ .campaign-hub .campaign-award.unlocked,.campaign-hub .campaign-reward-card.earned{border-color:#abb079!important;background:linear-gradient(130deg,#333923,#1a211b)!important}
+ #profile .player-overview-card{padding:14px 12px;border-left:3px solid #b28b58}
+ #profile .player-overview-card[data-status="damaged"]{border-left-color:#a5736c}
+}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-rain::after{transform:none!important}
+}
+
+/* V19: local integrity / incomplete archive notice, no invented progress. */
+.campaign-hub .campaign-001-alert{margin:12px 0;padding:12px 14px;border:1px solid #b78c61;border-left:4px solid #d2a472;background:#352419;color:#ffe0b5;font:14px/1.55 system-ui,sans-serif;overflow-wrap:anywhere}
+#profile .player-overview-card[data-status="partial"]{border-left-color:#c19a63}
+#profile .player-overview-card[data-status="unavailable"]{border-left-color:#8e8980}
+
+/* V21: visible, source-anchored motion instead of a flat fog blob.
+   The original photograph is untouched; moving rain and refracted light
+   remain lightweight decorative layers, not a second image or video. */
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 26% 22% at 19% 46%,rgba(255,216,137,.72),rgba(231,151,64,.17) 58%,transparent 100%),
+ radial-gradient(ellipse 39% 16% at 32% 70%,rgba(255,191,104,.34),transparent 100%);
+ filter:blur(4px);
+ animation-duration:5.2s;
+}
+@keyframes cinema-v16-lamplight{
+ 0%,25%,74%,100%{opacity:.64}
+ 12%,39%,85%{opacity:1}
+ 48%{opacity:.29}51%{opacity:.88}53%{opacity:.42}56%{opacity:.94}
+}
+#home .cinema-rain{opacity:.6}
+#home .cinema-rain::after{
+ opacity:.88;
+ background-image:
+ radial-gradient(ellipse 1.4px 10px at 33% 45%,rgba(230,242,237,.96),rgba(193,217,226,.27) 60%,transparent 100%),
+ radial-gradient(ellipse 1px 7px at 66% 73%,rgba(234,244,241,.85),transparent 94%),
+ radial-gradient(ellipse 1.5px 12px at 82% 11%,rgba(226,240,237,.9),rgba(193,217,226,.22) 62%,transparent 100%);
+ animation-duration:3.8s;
+}
+#home .cinema-smoke{
+ left:17%;bottom:30%;width:25%;height:28%;background:none;filter:blur(1.5px);
+ opacity:.7;transform-origin:28% 97%;animation-duration:8.2s;
+}
+#home .cinema-smoke svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+#home .cinema-smoke.second{left:18%;bottom:30%;width:25%;height:28%;filter:blur(3px);animation-duration:11s;animation-delay:-4s}
+@keyframes cinema-v16-smoke{
+ 0%{transform:translate3d(0,7px,0) rotate(-4deg) scale(.83);opacity:0}
+ 22%{opacity:.84}
+ 62%{opacity:.62}
+ 100%{transform:translate3d(7px,-27px,0) rotate(9deg) scale(1.14);opacity:0}
+}
+#home .cinema-vinyl-glint{left:74%;top:52%;width:21%;background:conic-gradient(from 25deg,transparent 0deg,rgba(255,225,183,.48) 33deg,transparent 70deg,transparent 196deg,rgba(255,225,183,.24) 228deg,transparent 270deg)}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.42}
+@media(prefers-reduced-motion:reduce){#home .cinema-smoke{opacity:0!important}#home .cinema-vinyl-glint{opacity:0!important}}
+
+/* The current profile does not need a second Profile button in its header. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top #profileBtn{display:none!important}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .brand{flex:1;min-width:0;max-width:100%;overflow:hidden}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .top-actions{flex:none;min-width:0}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .brand strong{font-size:clamp(14px,4.3vw,20px)!important;letter-spacing:.06em!important;white-space:normal!important}
+}
+
+/* V24: refine existing V21 scene layers from the V23 mobile browser frames.
+   Lamp highlights are anchored to the shade and desk; rain remains behind the
+   original props. The record is an animated reflection, not a duplicate prop. */
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 24% 8% at 17% 46.8%,rgba(255,230,160,.9),rgba(247,183,93,.23) 62%,transparent 100%),
+ radial-gradient(ellipse 26% 24% at 19% 48%,rgba(255,205,120,.55),rgba(231,151,64,.15) 58%,transparent 100%),
+ radial-gradient(ellipse 35% 14% at 31% 65%,rgba(255,192,110,.35),transparent 100%);
+ filter:blur(3px);
+}
+@keyframes cinema-v16-lamplight{
+ 0%,25%,74%,100%{opacity:.68}
+ 12%,39%,85%{opacity:1}
+ 48%{opacity:.28}49.5%{opacity:.91}51%{opacity:.38}54%{opacity:.91}
+}
+#home .cinema-rain{clip-path:polygon(18% 0,81% 0,81% 27%,69% 35%,66% 53%,32% 55%,31% 37%,18% 35%);opacity:.72}
+#home .cinema-rain::after{
+ opacity:.92;
+ background-image:
+ radial-gradient(ellipse 1.15px 12px at 28% 28%,rgba(230,242,237,.88),rgba(193,217,226,.3) 56%,transparent 100%),
+ radial-gradient(ellipse 1px 8px at 64% 73%,rgba(234,244,241,.78),transparent 94%),
+ radial-gradient(ellipse 1.25px 15px at 82% 11%,rgba(226,240,237,.83),rgba(193,217,226,.22) 62%,transparent 100%),
+ radial-gradient(ellipse .9px 6px at 12% 56%,rgba(221,236,241,.72),transparent 98%);
+ background-size:83px 180px,107px 180px,151px 180px,69px 180px;
+ animation-duration:3.2s;
+}
+/* Keep both wisps narrow; the baked-in photographic smoke stays visible. */
+#home .cinema-smoke{filter:blur(1.8px)}
+#home .cinema-smoke.second{filter:blur(3.5px)}
+#home .cinema-vinyl-glint{
+ left:73%;top:54%;width:23%;transform:translateY(-50%) rotateX(79deg);
+ background:conic-gradient(from 15deg,transparent 0deg,rgba(255,225,183,.68) 22deg,transparent 46deg,transparent 176deg,rgba(235,193,132,.32) 196deg,transparent 226deg);
+}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.50;animation:cinema-vinyl 1.5s linear infinite}
+@keyframes cinema-vinyl{from{transform:translateY(-50%) rotateX(79deg) rotate(0deg)}to{transform:translateY(-50%) rotateX(79deg) rotate(360deg)}}
+@media(max-width:355px){#home .cinema-vinyl-glint{left:76%;width:24%}}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-vinyl-glint{animation:none!important;opacity:0!important}
+}
+
+/* V26: anchor the existing decorative layers to the original photograph,
+   not to guessed screen percentages. Source: cinema-home-art-v12, 720×900. */
+#home .cinema-hero{
+ --cabinet-scale:.55;--cabinet-x:0px;--cabinet-y:0px;
+}
+#home .cinema-hero::before,#home .cinema-rain{
+ inset:auto;left:var(--cabinet-x);top:var(--cabinet-y);
+ width:calc(720px * var(--cabinet-scale));height:calc(900px * var(--cabinet-scale));
+}
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 15% 4% at 18.4% 46.5%,rgba(255,230,160,.77),rgba(247,183,93,.16) 70%,transparent 100%),
+ radial-gradient(ellipse 21% 20% at 18% 49%,rgba(255,205,120,.41),rgba(231,151,64,.09) 62%,transparent 100%),
+ radial-gradient(ellipse 32% 12% at 31% 65%,rgba(255,192,110,.24),transparent 100%);
+}
+/* Central clear pane only: exclude lamp shade, horn and the wooden sill. */
+#home .cinema-rain{
+ clip-path:polygon(21% 0,79% 0,79% 27.8%,76.5% 30%,73% 34%,70% 39%,69.5% 45%,71.3% 48.8%,65% 51%,60% 52%,60% 54.7%,32% 56%,32% 45.3%,29.5% 42%,25% 38.8%,21% 37%);
+}
+#home .cinema-rain::after{
+ opacity:.82;
+ background-image:
+ radial-gradient(ellipse .85px 13px at 28% 28%,rgba(220,239,241,.83),rgba(193,217,226,.26) 48%,transparent 100%),
+ radial-gradient(ellipse .65px 8px at 64% 73%,rgba(234,244,241,.78),transparent 94%),
+ radial-gradient(ellipse 1px 17px at 82% 11%,rgba(226,240,237,.78),rgba(193,217,226,.22) 54%,transparent 100%),
+ radial-gradient(ellipse .8px 6px at 12% 56%,rgba(221,236,241,.65),transparent 98%);
+ background-size:61px 180px,83px 180px,109px 180px,47px 180px;
+ animation-duration:3.6s;
+}
+/* The glowing cigar tip sits at source (176,636). Anchor both paths there. */
+#home .cinema-smoke,#home .cinema-smoke.second{
+ left:calc(var(--cabinet-x) + 146px * var(--cabinet-scale));
+ top:calc(var(--cabinet-y) + 435px * var(--cabinet-scale));bottom:auto;
+ width:calc(118px * var(--cabinet-scale));height:calc(207px * var(--cabinet-scale));
+ transform-origin:27% 98%;
+}
+#home .cinema-smoke{filter:blur(1px);animation-duration:7.4s}
+#home .cinema-smoke.second{filter:blur(2.2px);animation-duration:10.3s;animation-delay:-4.7s}
+@keyframes cinema-v16-smoke{
+ 0%{transform:rotate(-5deg) scale(.82,.85);opacity:0}
+ 19%{opacity:.55}
+ 60%{opacity:.46}
+ 100%{transform:rotate(8deg) scale(1.12,1.15);opacity:0}
+}
+/* Turntable top plane: center (609,480), 146×20 source pixels.
+   Rotate a projected groove/label reflection inside that exact ellipse.
+   The horn, arm, wooden case and original record remain untouched. */
+#home .cinema-vinyl-glint{
+ left:calc(var(--cabinet-x) + 536px * var(--cabinet-scale));
+ top:calc(var(--cabinet-y) + 470px * var(--cabinet-scale));
+ width:calc(146px * var(--cabinet-scale));height:calc(20px * var(--cabinet-scale));
+ aspect-ratio:auto;border-radius:50%;overflow:hidden;transform:none;
+ background:none;opacity:0;isolation:isolate;
+}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.64;animation:none}
+#home .cinema-vinyl-glint::before{
+ content:"";position:absolute;left:0;top:50%;width:100%;aspect-ratio:1;
+ border-radius:50%;transform-origin:center;
+ background:radial-gradient(circle at 50% 50%,rgba(245,220,169,.65) 0 1%,transparent 2%),
+ conic-gradient(from 26deg,transparent 0 12deg,rgba(218,192,148,.62) 24deg,transparent 43deg,transparent 151deg,rgba(170,196,204,.39) 176deg,transparent 200deg,transparent 280deg,rgba(218,192,148,.22) 298deg,transparent 315deg),
+ repeating-radial-gradient(circle,transparent 0 4px,rgba(187,176,156,.14) 4px 4.5px,transparent 5px 7px),
+ radial-gradient(circle,rgba(115,36,27,.58) 0 23%,rgba(38,31,27,.21) 25% 69%,transparent 70%);
+ transform:translateY(-50%) scaleY(.137) rotate(0deg);
+}
+body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .77s linear infinite}
+@keyframes cinema-vinyl{
+ from{transform:translateY(-50%) scaleY(.137) rotate(0deg)}
+ to{transform:translateY(-50%) scaleY(.137) rotate(360deg)}
+}
+#home.cinema-still .cinema-vinyl-glint::before{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-vinyl-glint::before{animation:none!important}
+}
+
+/* V28: unify atlas, archive and dossier with the portrait cabinet.
+   Layout/typography only. No state, routes, art manifests or reward changes. */
+@media(orientation:portrait) and (max-width:700px){
+ #districts .districts-heading .district-atlas-title{
+  font:700 clamp(27px,7.8vw,39px)/1.12 Georgia,serif!important;
+  letter-spacing:.015em!important;overflow-wrap:normal!important;
+  text-wrap:normal;max-width:100%;margin:12px auto!important;
+ }
+ #districts .district-atlas-title span{display:block;white-space:nowrap}
+ #districts .districts-heading p{max-width:39ch;margin:12px auto 0}
+ #districts .districts-heading .eyebrow{
+  font:700 10px/1.45 system-ui,sans-serif!important;letter-spacing:.12em!important;color:#d4ae79;
+ }
+ .campaign-hub .campaign-head h2{font-size:clamp(26px,7.4vw,34px)!important;line-height:1.14!important;letter-spacing:.015em!important;overflow-wrap:normal!important}
+ .campaign-hub .campaign-head p,.campaign-hub .campaign-intro{
+  font:400 14px/1.6 system-ui,Arial,sans-serif!important;color:#dfcbb0!important;
+  overflow-wrap:break-word;
+ }
+ .campaign-hub .campaign-head p{margin:9px 0 0!important}
+ .campaign-hub .campaign-tabs{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;margin:0 0 16px!important;
+ }
+ .campaign-hub .campaign-tabs button,.campaign-hub .campaign-tabs button:last-child:nth-child(odd){
+  grid-column:auto!important;min-height:48px!important;padding:8px 4px!important;
+  font:600 clamp(10px,2.8vw,12px)/1.32 system-ui,Arial,sans-serif!important;
+  letter-spacing:0!important;overflow-wrap:normal!important;text-transform:none;
+  border-radius:4px!important;
+ }
+ .campaign-hub .campaign-002-overview{
+  padding:13px 10px!important;margin:0 0 17px!important;border-radius:5px;
+  background:linear-gradient(140deg,#352315,#171411 78%)!important;
+ }
+ .campaign-hub .campaign-002-overview .campaign-group-title{
+  font:700 clamp(19px,5.5vw,25px)/1.2 Georgia,serif!important;
+  margin:0 0 12px!important;letter-spacing:.025em!important;overflow-wrap:normal;
+ }
+ .campaign-hub .campaign-002-metrics{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;
+ }
+ .campaign-hub .campaign-002-metric,.campaign-hub .campaign-002-metric:last-child:nth-child(odd){
+  grid-column:auto!important;box-sizing:border-box;padding:10px 3px!important;min-height:78px;
+  border-radius:4px;
+ }
+ .campaign-hub .campaign-002-metric small{
+  font:600 clamp(9px,2.65vw,11px)/1.35 system-ui,Arial,sans-serif!important;
+  letter-spacing:0!important;white-space:normal;overflow-wrap:normal!important;
+ }
+ .campaign-hub .campaign-002-metric strong{font:700 clamp(14px,4.2vw,19px)/1.3 Georgia,serif!important;overflow-wrap:normal}
+ #campaignDossiers .campaign-002-jumps{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #campaignDossiers .campaign-002-jumps>button:last-child:nth-child(odd){grid-column:1/-1}
+ #campaignDossiers .campaign-002-jump{
+  min-height:48px!important;padding:9px 6px!important;font:600 12px/1.35 system-ui,Arial,sans-serif!important;
+  letter-spacing:0!important;border-radius:4px;background:linear-gradient(145deg,#352319,#171411 78%);
+  overflow-wrap:normal;
+ }
+ #campaignDossiers .campaign-card{border-radius:5px!important}
+ #campaignDossiers .campaign-portrait{background:radial-gradient(ellipse at 50% 35%,#3b2a1e,#100e0d 78%)!important}
+}
+
+/* V29: compact internal header and readable entry points.
+   All existing routes/state/data-progress values remain owned by their engines. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top{
+  display:flex!important;align-items:center!important;gap:8px!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand{
+  flex:1 1 auto!important;min-width:0!important;gap:7px!important;max-width:none!important;overflow:visible!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand>div{
+  display:block!important;min-width:0!important;overflow:visible!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand small{
+  display:block!important;font:600 8px/1.35 system-ui,sans-serif!important;letter-spacing:.04em!important;white-space:normal!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand strong{
+  display:block!important;font:700 clamp(12px,3.5vw,17px)/1.15 Georgia,serif!important;
+  letter-spacing:.02em!important;white-space:normal!important;overflow-wrap:normal!important;
+  text-overflow:clip!important;color:#f3d8af!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand strong i{
+  display:block!important;font:600 9px/1.35 Georgia,serif!important;letter-spacing:.08em!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .top-actions{
+  flex:0 0 auto!important;min-width:0!important;gap:5px!important;align-items:center!important;
+ }
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top :is(#profileBtn,#homeBtn){
+  box-sizing:border-box!important;min-width:0!important;min-height:44px!important;max-width:none!important;
+  width:auto!important;padding:8px 9px!important;flex:0 0 auto!important;white-space:nowrap!important;
+  font:600 11px/1.25 system-ui,sans-serif!important;letter-spacing:0!important;
+  text-align:center!important;border-radius:4px!important;
+ }
+ #districts .district-detail-inner :is(#launchFirstCase,#launchSecondCase):not([hidden]){
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  min-height:60px!important;padding:13px 12px!important;margin:12px 0 6px!important;
+  text-align:center!important;white-space:normal!important;overflow-wrap:break-word!important;
+  font:700 13px/1.5 system-ui,sans-serif!important;letter-spacing:.015em!important;
+  color:#fff0d1!important;border:1px solid #d9ab6e!important;border-radius:5px!important;
+  background:linear-gradient(145deg,#654326,#302115)!important;
+ }
+ #districts .campaign-district-state{
+  border-radius:4px;background:linear-gradient(125deg,#342317,#171411 78%);
+ }
+ #criminalScreen .cr-mission-list{gap:9px;margin:16px 0}
+ #criminalScreen .cr-mission-list button{
+  box-sizing:border-box;min-width:0;width:100%;min-height:98px;padding:13px 12px;
+  display:grid;gap:5px;text-align:left;white-space:normal;overflow-wrap:break-word;
+  border:1px solid #af8756;border-left:4px solid #a88354;border-radius:5px;
+  background:linear-gradient(135deg,#352319,#171411 78%);
+ }
+ #criminalScreen .cr-mission-list button small{
+  font:600 11px/1.4 system-ui,sans-serif;color:#d0aa74;letter-spacing:.03em;
+ }
+ #criminalScreen .cr-mission-list button b{
+  display:block;font:700 clamp(19px,5.3vw,24px)/1.2 Georgia,serif;color:#f3d6ad;
+ }
+ #criminalScreen .cr-mission-list button span{
+  margin:0;font:400 13px/1.45 system-ui,sans-serif;color:#e3c9a4;
+ }
+ #criminalScreen .cr-mission-list .cr-mission-action{
+  margin:3px 0 0;font:600 12px/1.4 system-ui,sans-serif;color:#ecc58b;
+ }
+ #criminalScreen .cr-mission-list button[data-progress="active"]{border-left-color:#efc887}
+ #criminalScreen .cr-mission-list button:is([data-progress="clean"],[data-progress="costly"]){border-left-color:#a4b17b}
+ #criminalScreen .cr-mission-list button:is([data-progress="dead"],[data-progress="failed"]){border-left-color:#b77e6c}
+ #criminalScreen .cr-mission-list button:focus-visible,
+ #districts :is(#launchFirstCase,#launchSecondCase):focus-visible{outline:3px solid #f4cd91;outline-offset:2px}
+}
+@media(orientation:portrait) and (max-width:430px){
+ body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen,#choose,#play,#result):not([hidden]))>.shell>.top .brand-mark{display:none!important}
+}
+
+/* V30: criminal briefing uses the same primary/secondary reading rhythm. */
+@media(orientation:portrait) and (max-width:700px){
+ #criminalScreen .cr-hero{padding:10px;border:1px solid #997750;border-radius:4px;background:linear-gradient(135deg,#352319,#171411 78%)}
+ #criminalScreen .cr-hero>div{min-width:0}
+ #criminalScreen .cr-hero img{flex:0 0 58px}
+ #criminalScreen .cr-hero b{font:700 18px/1.25 Georgia,serif}
+ #criminalScreen .cr-hero small{font:400 12px/1.45 system-ui,sans-serif;color:#d9c0a0}
+ #criminalScreen .cr-actions button{min-height:48px}
+ #criminalScreen .cr-actions .cr-primary{min-height:54px;border-color:#d9ab6e;background:linear-gradient(145deg,#654326,#302115)}
+}
+
+/* V39: browser review found a translucent first frame in the trial results
+   and legacy pseudo-art extending past its parent. Use the same immediate
+   portrait screen presentation as the archive. The approved art is retained. */
+@media(orientation:portrait) and (max-width:700px){
+ :is(#choose,#play,#result).screen:not([hidden]){
+  animation:none!important;opacity:1!important;visibility:visible!important;
+  transform:none!important;filter:none!important;
+  min-width:0!important;max-width:100%!important;
+ }
+ #choose.screen::before{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  height:clamp(100px,35vw,160px)!important;margin:0 0 16px!important;
+  border:1px solid #8d704e;border-radius:4px;
+ }
+ #play.screen::before{content:none!important;display:none!important}
+ #play .fate-banner{
+  min-height:0!important;padding:12px 13px!important;
+  background:linear-gradient(140deg,#35271b,#1c1713)!important;
+ }
+ #play .fate-banner h2{font:700 clamp(19px,5.4vw,25px)/1.18 Georgia,serif!important;margin:6px 0 5px!important}
+ #play .fate-banner p{font:13px/1.45 system-ui,sans-serif!important}
+ #play .quiz-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:7px!important}
+ #play #modeName{min-width:0;overflow-wrap:normal;letter-spacing:.04em}
+ #play #questionNumber{white-space:nowrap;letter-spacing:.035em}
+ #choose #difficultyList .mode:hover:not(.upcoming),#play #answers .answer:hover:not(:disabled){transform:none!important}
+ #result .fate-result-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:16px 0}
+ #result .fate-result-stat{padding:10px 3px!important;min-width:0!important;max-width:100%;overflow-wrap:anywhere}
+ #result .fate-result-stat b{font:700 clamp(12px,3.9vw,19px)/1.3 system-ui,sans-serif!important}
+ #result .fate-result-stat small{font:600 9px/1.4 system-ui,sans-serif!important;letter-spacing:0}
+ #result #retryBtn,#result #resultHomeBtn{box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin:8px 0!important;padding:12px 8px!important;white-space:normal;overflow-wrap:anywhere}
+ #result .fate-result-seal{font-size:42px;margin-bottom:7px}
+ #result #resultScore{font-size:clamp(40px,14vw,62px)!important}
+}

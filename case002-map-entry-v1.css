@@ -1,0 +1,5 @@
+/* An available second investigation in Digbeth; original Case 001 is untouched. */
+.campaign-case002-launch{display:block;width:100%;min-height:50px;margin:14px 0 6px;padding:12px 14px;border:1px solid #e0b679;border-radius:7px;background:linear-gradient(135deg,#6b4a29,#332417);color:#fff0d1;text-align:center;font:700 clamp(.76rem,2.6vw,.91rem)/1.4 system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;white-space:normal}
+.campaign-case002-launch:focus-visible{outline:3px solid #f3d4a6;outline-offset:3px}
+.campaign-case002-launch[hidden],.campaign-case002-future[hidden]{display:none!important}
+.campaign-case002-future{margin:5px 0 18px!important;color:#bd9d72!important;font:600 .67rem/1.5 system-ui,sans-serif;letter-spacing:.055em}

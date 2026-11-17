@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 2,
+  "chapter": "HERO-GAPS",
+  "source": "Seven independently reviewed personal scene images HJ01, HF01, HE01, HV01, HS01, HF02, HS02 are installed as exact mobile-only art entries in the Case002 feature branch; runtime visual and story checks are separately required before release acceptance.",
+  "scenes": [
+    {
+      "id": "HJ01",
+      "sceneKind": "dialogue",
+      "focus": "a broad-shouldered private detective in a rain-dark overcoat stands with his back to the viewer in a tense quiet exchange with a weary mustached private railway watchman who lowers his eyes instead of challenging him",
+      "camera": "intimate vertical over-the-shoulder view from behind the detective on the right; watchman under the oil lantern on the left and the wet rail siding and lock gate receding in the fog",
+      "location": "an old canal lock beside the private industrial railway siding and a timber guard booth in Birmingham in the 1920s",
+      "required": [
+        "one silent broad-shouldered detective in a dark soaked overcoat and flat cap viewed from behind, no identifiable facial features",
+        "one weary mustached railway watchman in a period uniform coat and service cap looking down, his rifle safely slung across the shoulder",
+        "one illuminated old wooden guard booth, wet rail siding, cold canal water and a weathered timber lock gate in one continuous space"
+      ],
+      "background": "wet cobbles and railway rails curving past the guard booth, a canal-lock wheel and gate, soot-dark factories and smoking chimneys fading into industrial mist",
+      "light": "warm lantern light on the watchman's downturned face and damp wooden booth, contrasting with cold blue-grey night fog on the canal and rails",
+      "npc": "Jack is visible only from behind and cannot be mistaken for a new protagonist; the unnamed railway guard is seen in guarded three-quarter view, no additional participants",
+      "knowledgeBoundary": "This character-specific confrontation occurs before the outcome of the player's decision. Neither a threat nor Jack's reference to Hale has necessarily gained the passage. Guard's averted gaze is hesitation, not a signed confession, a completed bribe, a physical attack or an earned witness statement. Jack's face remains unestablished and his chosen identity is preserved.",
+      "avoid": [
+        "identifiable portrait of Jack or invented close-up face, additional civilian or Tommy appearing at the gate",
+        "the watchman pointing, firing or swinging the rifle at anyone, a fight or visible injury",
+        "an open unlocked gate, the detective already granted passage or a written guard confession",
+        "readable railway timetable, fabricated stamped evidence or an anachronistic modern security booth"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HF01",
+      "sceneKind": "transition",
+      "focus": "an observant man in a heavy rain-dark wool coat and tweed cap pauses on a steep narrow exterior iron staircase, his face concealed as he looks through an open freight-office window at shipping documents illuminated by a desk lamp",
+      "camera": "vertical close-medium composition from behind the detective at stair level, a diagonal iron railing in the foreground and an open wooden-paned window leading the eye into the desk inside",
+      "location": "the second-storey back wall of a late-night 1920s Birmingham private railway freight office beside a dark industrial siding",
+      "required": [
+        "one man in a dark wool coat and flat cap with only the back of his head and hand on a wet iron railing visible",
+        "one open weathered wooden window above the narrow outdoor metal steps, with raindrops catching the light",
+        "one period office desk inside with a closed leather ledger, a single loose shipping paper, an inkstand and pigeonhole files"
+      ],
+      "background": "damp brickwork, black wrought-iron stairs, old railway wagons and wet tracks receding toward factory smokestacks under a smoky night sky",
+      "light": "a warm desk lamp inside the office contrasts with cold blue-grey rain and a few distant amber railway lamps",
+      "npc": "only the anonymous rear-view detective on the stairs; no other person is identifiable",
+      "knowledgeBoundary": "Finn is using an opportunistic open window and exterior stairs to learn where a clean copy of the shipping ledger may be found. He is not shown stealing it, entering by force, opening any safe, acquiring the original document or proving which clerk forged it. The selected hero's approved facial appearance must not be invented.",
+      "avoid": [
+        "Finn's identifiable face, a substituted player portrait, a uniformed second person at the window",
+        "bent safe door, picklock, broken window, forced entry or destroyed office furniture",
+        "shipping papers with readable false names, invented dates, forged signatures or a completed proof of guilt",
+        "an original ledger already in Finn's possession, a heroic getaway or discovered alarm"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HE01",
+      "sceneKind": "evidence",
+      "focus": "a careful investigator in dark 1920s sleeves and black leather gloves holds the back of a worn archival freight-office document directly beneath an angled brass desk lamp, revealing faint shallow impressions from an earlier rubbed-out written entry, with a folding bellows camera ready on the desk to photograph the trace",
+      "camera": "vertical close over-the-shoulder view of hands supporting the single sheet near the foreground, raking lamplight brushing across embossed paper and a period folding bellows camera on the right; only a fragment of the observer's coat enters the frame",
+      "location": "a 1920s railway freight-office records room overlooking a rainy Birmingham industrial goods yard",
+      "required": [
+        "one large pale sheet held delicately in two black leather-gloved hands with subtle indentation traces visible as non-readable relief under raking light",
+        "one brass articulated period desk lamp pointed obliquely along the surface of the document",
+        "one vintage folding bellows plate camera on the desk prepared for a careful photographic record beside a closed leather notebook and inkstand"
+      ],
+      "background": "a scuffed wooden records table, timber pigeonhole shelves, a rain-streaked multi-paned window looking over freight wagons and smoking brick factory chimneys",
+      "light": "warm focused amber desk-lamp light revealing the paper texture against cool rainy industrial twilight through the window",
+      "npc": "the selected investigator's shoulder and both hands only; no exposed face or identifiable clerk or other witness",
+      "knowledgeBoundary": "The trace appears when the paper is viewed in side light and can later be photographed with documented provenance. This is the same physical document, not an independently corroborating second source. No fabricated readable confession, suspect, date, or clerk identity may be established by the art. The camera standing ready does not imply that the documentary photo has already been officially admitted as proof.",
+      "avoid": [
+        "a legible accusation or invented signature on the paper or an invented identifiable witness",
+        "an identifiable heroine face, full portrait or newly established costume identity",
+        "two independent original documents or a second confession, solved corruption or arrested suspect",
+        "a completed passport, modern digital camera or modern office electronics"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HV01",
+      "sceneKind": "dialogue",
+      "focus": "a quiet negotiation across a carved wooden tea table between a reserved industrial proprietor with short carefully groomed silver beard and a dark-clad visiting gentleman seen only from behind; the proprietor has laid one unmarked folded inspector's report on the table without overtly handing it across",
+      "camera": "intimate vertical medium interior view from just behind the visiting gentleman's left shoulder; the powerful older proprietor sits facing him, a document between porcelain teacups in the foreground, a heavy iron safe and rain-streaked factory windows beyond",
+      "location": "a prosperous but soot-dark 1920s Birmingham factory manager's private office overlooking the industrial rail yard",
+      "required": [
+        "one prosperous industrial proprietor of about fifty-five, broad-shouldered with carefully trimmed silver beard, heavy charcoal wool suit and dark waistcoat, seated with restrained expression",
+        "one visiting man in a dark elegant 1920s coat visible only from behind across an intimate tea table, his face and distinguishing features concealed",
+        "one unobtrusive folded inspector's report with indistinct printing resting beside an ornate china tea set on the polished wooden table",
+        "one heavy vintage iron safe in the background, framed by a wet multi-paned window and industrial smokestacks"
+      ],
+      "background": "wood-panelled office, carved leather chairs, old filing cabinets, framed factory painting, coal hearth and a misty railway-side factory yard beyond the glass",
+      "light": "restrained warm fire and oil-lamp illumination grazes the report and the older man's silver beard while cool rain-dark daylight pours through the industrial office window",
+      "npc": "one older silver-bearded factory proprietor and one visiting investigator seen strictly from behind; no distinguishable secretary or other person",
+      "knowledgeBoundary": "This scene shows diplomatic access and a copy of an inspection document left on the manager's table, not a signed bargain, unearned independent evidence, a confirmed admission, or a completed retrieval. The cost of negotiations is resolved only in player actions and story state. The five selectable protagonists retain their independent identities.",
+      "avoid": [
+        "an identifiable close-up face of the visitor or an invented permanent portrait of the selectable hero",
+        "a signed confession, guarantee of witness safety, contract, handcuffs or explicit victory gesture",
+        "readable charges, fabricated signatures, dates or evidence in the paper",
+        "an opened or emptied safe, stolen original records or a visible threat with a weapon"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HS01",
+      "sceneKind": "evidence",
+      "focus": "a railway mechanic wearing old black leather working gloves examines a massive rain-wet carriage coupling, one gloved fingertip pointing at a narrow scuffed tool impression beside two differently toned traces of black tar grease and pale yellow factory oil on the iron",
+      "camera": "vertical close-up from the side of the coupling at the mechanic's shoulder height, two working hands and a single rail coupling filling the foreground, the lockside freight yard disappearing into cold mist behind",
+      "location": "a weathered goods wagon coupling on a canal-side industrial railway siding in 1920s Birmingham",
+      "required": [
+        "one heavy worn early-20th-century railway coupling with a large iron hook and linked shackles, rivets and rusted bolts",
+        "two different visible lubricant traces along the same coupling: glossy dark grease and a narrow dull-yellow oily smear beside a short fresh scraping mark",
+        "only the mechanic's thick old leather gloves and wool working sleeves, one fingertip carefully touching the greasy trace, a brass oil lantern beside the coupling"
+      ],
+      "background": "wet railway tracks fading toward a narrow canal basin, old brick factories, distant industrial cranes, smoke plumes and rain-dimmed freight wagons",
+      "light": "warm focused kerosene lantern light grazes the fresh scratch and oil smears while cool grey-blue drizzle and smoke envelop the rails and industrial skyline",
+      "npc": "an anonymous mechanic's gloved hands and cropped working sleeves only; no visible protagonist face or other identifiable person",
+      "knowledgeBoundary": "This scene visualizes Samuel spotting nonstandard factory workshop lubrication and a tool impression on the old coupling. The pictured traces do not establish which person interfered, that guilt has been proven or that the mechanic has acquired a new signed witness statement. Samuel is the game's mechanic, distinct from any police sergeant who shares his surname in the earlier case.",
+      "avoid": [
+        "identifiable male face or a portrait assigned to the selectable mechanic, a police uniform or detective badge",
+        "readable factory labels, fabricated signed confession, numbered weapon or clear perpetrator identity",
+        "an uncoupled train rolling away, a deliberate crash, explosion or already arrested saboteur",
+        "modern locomotive mechanisms, contemporary instruments or shiny unused industrial machinery"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HF02",
+      "sceneKind": "evidence",
+      "focus": "a resourceful investigator in a 1920s tweed coat and cap carefully holds a thin sheet of paper against a fixed wooden shift marker on the old signal box door, rubbing graphite across it with a small pencil to transfer the relief without removing the marker",
+      "camera": "intimate vertical over-the-shoulder view from behind the detective at the signal box threshold, with two gloved hands, the graphite rubbing and the weathered mounted timber marker in crisp foreground focus",
+      "location": "the wooden door frame of a rain-damp industrial railway signal box in Birmingham during the 1920s",
+      "required": [
+        "one old carved wooden shift marker firmly screwed to a dark rain-wet signal box doorframe",
+        "one thin cream paper held flat against the marker by the detective's left leather-gloved hand, with a pencil in the right hand shading a faint pattern",
+        "a row of heavy mechanical railway point levers, a burning old oil lantern and a rain-streaked window looking onto converging railway tracks"
+      ],
+      "background": "aged varnished timber, brass fittings and metal switch handles inside the signal cabin; smoky factory chimneys and wet railway junction outside",
+      "light": "focused warm kerosene lamplight on the graphite rubbing and coarse wood grain, with cold blue-grey rainy industrial twilight beyond the panes",
+      "npc": "one covert investigator seen only from behind in thick period gloves and dark wool coat, his face concealed, with no other character visible",
+      "knowledgeBoundary": "Finn leaves the original shift marker screwed in place and copies its raised marking with a graphite rubbing. The scene does not imply theft or destruction of the original, a forged timetable, confirmed culprit, already signed witness statement or independent confirmation of the complete points log. The copy is a potential lead whose provenance and meaning remain in the interactive text and later deductions.",
+      "avoid": [
+        "the wooden marker detached from its post, stolen, snapped or hidden in someone's pocket",
+        "identifiable playable hero face or a different character in police uniform",
+        "readable invented shift dates or names, signed confession, proven guilty official or finished case",
+        "modern station control computer, contemporary photography or automatic electronic signalling"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "HS02",
+      "sceneKind": "evidence",
+      "focus": "a railway mechanic in old gloves at a wooden signal-box desk traces an unmarked connecting section between rail lines on a weathered paper junction diagram with a graphite pencil while an elderly mustached signalman in period cap holds a fountain pen poised above the same page, considering the request",
+      "camera": "vertical over-the-shoulder view from behind the mechanic at left and close medium three-quarter view of the older signalman at right, the paper route diagram dominates the foreground between their gloved and bare hands",
+      "location": "a cramped 1920s Birmingham railway signal box beside a rain-wet junction overlooking industrial warehouses",
+      "required": [
+        "a single large aged paper rail junction diagram with branching tracks and one fresh pencil connecting stroke being added by a gloved working hand",
+        "an elderly signalman with a brown waistcoat, old railway service cap and lined mustached face, fountain pen hovering over a blank part of the paper",
+        "a row of heavy iron mechanical signal levers and one warm kerosene lantern near the desk with a rainy junction visible through the panes"
+      ],
+      "background": "scarred wooden tabletop, ink bottle, metal signal levers, rain-beaded window, converging rail lines outside and distant soot-dark factory chimneys",
+      "light": "amber oil-lamp light across pencil marks, hands and old paper with cold blue-grey wet industrial night through the signal-box window",
+      "npc": "the mechanic shown only from behind with dark gloves and wool sleeves; the signalman is an older non-playable railway worker with visible weathered face and cap, not a detective or a policeman",
+      "knowledgeBoundary": "Samuel's mechanical reasoning has revealed a possible bypass connection on the map, but the railway signalman has not signed or authenticated it; the actual switch operator's identity and any connection to Brackett remain unproven. Drawing the missing line does not by itself establish criminal culpability, actual train movement or a verified source. No playable hero face may be invented.",
+      "avoid": [
+        "a signed verified witness statement, signed map, proven culprit or completed case resolution",
+        "an identifiable face of the selectable mechanic, police uniform or a character borrowed from another case",
+        "an already diverted train, collision, fire or a mechanical alteration underway outside",
+        "readable invented personal names or fabricated dates, digital controllers or modern railway electronics"
+      ],
+      "intendedVariant": "default"
+    }
+  ]
+}

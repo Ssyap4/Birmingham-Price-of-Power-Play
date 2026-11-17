@@ -18,7 +18,13 @@ def penalty(browser,level):
  elif level=='serious':
   g.go('yard');g.p.evaluate('window.__qaRoll=.30');before=g.state()['health'];g.go('rescue');expected=35
  else:
-  g.path(['yard','rescue','confront']);g.p.evaluate('window.__qaRoll=.45');before=g.state()['health'];g.go('yard');expected=10 # lethal damage clamped at zero
+  g.path(['yard','rescue'])
+  # Jack has 10 HP; .45 exceeds the healthy risk (.40-.12) but
+  # is below the critical risk (.40-.12+.20). A real final action remains.
+  g.p.evaluate('window.__qaRoll=.45');before=g.state()['health']
+  assert before==10
+  g.go('endingEvidence');expected=10
+  assert g.state()['ending']=='endingDeath' and g.state()['health']==0
  assert before-g.state()['health']==expected,(level,before,g.state())
  return {'before':before,'after':g.state()['health']}
 

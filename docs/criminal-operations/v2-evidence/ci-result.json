@@ -1,0 +1,44 @@
+{
+  "testedCommit": "61766d4a84122cf4ff4bb17ee884a054b6586345",
+  "engineAndAppCommit": "2d3016f924e3de0f8b97e6813fd4b562d26da8d0",
+  "runId": 43920014801,
+  "runUrl": "https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43920014801",
+  "status": "success",
+  "engines": [
+    "Chromium 151.0.7922.34 (Playwright 1234)",
+    "WebKit 26.5 (Playwright 2336)"
+  ],
+  "widths": [
+    320,
+    360,
+    390,
+    430
+  ],
+  "artifactLinks": [
+    {
+      "id": 14254071856,
+      "name": "criminal-v2-acceptance",
+      "sizeBytes": 9405228,
+      "url": "https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43920014801/artifacts/14254071856"
+    },
+    {
+      "id": 14253197037,
+      "name": "criminal-v2-unified-package",
+      "sizeBytes": 44175519,
+      "url": "https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/43920014801/artifacts/14253197037"
+    }
+  ],
+  "checks": [
+    "2026-11-16T17:36:11.9940188Z ℹ tests 20",
+    "2026-11-16T17:36:11.9941015Z ℹ pass 20",
+    "2026-11-16T17:36:11.9941368Z ℹ fail 0",
+    "2026-11-16T17:36:12.2227120Z PASS unified campaign release: 89 scenes / 102 reviewed WebPs, 10 NPCs, Cases 001+002, 481 files, 273 staged references, 43.35 MiB",
+    "2026-11-16T17:36:12.2899175Z PASS unified campaign package: two independent save namespaces, original 001 map, 002 Digbeth entry, 102 hashed scenes, 10 NPCs, 5 heroes, no drafts; root entries 110",
+    "2026-11-16T17:37:11.9969203Z PASS WebP decode/SHA/720x900/package: {'CR01': 8, 'CR02': 8, 'CR03': 8, 'CR04': 8, 'CR05': 8}",
+    "2026-11-16T17:38:49.5462649Z PASS chromium private/quota/corrupt/archive/inset browser checks",
+    "2026-11-16T17:40:21.8226950Z PASS webkit private/quota/corrupt/archive/inset browser checks",
+    "2026-11-16T17:40:23.1099945Z [{\"browser\": \"chromium\", \"width\": 320, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"chromium\", \"width\": 360, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"chromium\", \"width\": 390, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"chromium\", \"width\": 430, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"webkit\", \"width\": 320, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"webkit\", \"width\": 360, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"webkit\", \"width\": 390, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}, {\"browser\": \"webkit\", \"width\": 430, \"touch\": true, \"legacyBytes\": \"unchanged\", \"errors\": []}]",
+    "2026-11-16T17:40:30.6042152Z PASS chromium same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive, slots unchanged",
+    "2026-11-16T17:40:47.5612427Z PASS webkit same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive, slots unchanged"
+  ]
+}

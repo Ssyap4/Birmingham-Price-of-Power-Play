@@ -1,0 +1,99 @@
+/* CINEMA HOME v1: one self-contained, portrait-first menu. No legacy cabinet layouts.
+ * Images are approved, text-free assets. Motion is decorative and disabled for users
+ * who request reduced motion; no canvas, video, network or persistent timers. */
+#home.cinema-home{box-sizing:border-box;width:100%;max-width:none;margin:0;padding:0!important;isolation:isolate;animation:none!important;opacity:1!important;transform:none!important;filter:none!important;color:#ead6b2}
+#home.cinema-home[hidden]{display:none!important}
+body:has(#home.cinema-home:not([hidden])){background:#0e0b0a!important;overflow-x:hidden!important}
+body:has(#home.cinema-home:not([hidden]))>.shell{box-sizing:border-box;width:100%!important;max-width:none!important;min-height:100dvh;margin:0!important;padding:0!important}
+body:has(#home.cinema-home:not([hidden]))>.shell>.top{display:none!important}
+body:has(#home.cinema-home:not([hidden])) #gameExitBtn{display:none!important}
+#home.cinema-home .cinema-scene{box-sizing:border-box;position:relative;width:min(100%,540px);min-height:100svh;margin:0 auto;background:#100d0b;box-shadow:0 0 0 1px #74543844,0 22px 60px #000b}
+#home .cinema-hero{box-sizing:border-box;height:clamp(330px,61svh,550px);min-height:330px;position:relative;overflow:hidden;isolation:isolate;background:#130f0d}
+#home .cinema-art{position:absolute;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(7,7,8,.72) 0%,rgba(7,7,8,.18) 38%,rgba(7,7,8,.04) 52%,rgba(9,7,7,.88) 100%),url('assets/cabinet/cinema-home-art-v12.webp') 50% 54%/cover no-repeat;filter:brightness(.97) contrast(1.04)}
+#home .cinema-hero::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(244,176,86,.20),rgba(206,135,51,.045) 20%,transparent 47%);opacity:.82;animation:cinema-lamp 9.5s linear infinite}
+#home .cinema-rain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.23;clip-path:polygon(12% 0,91% 0,97% 57%,13% 57%);background:repeating-linear-gradient(104deg,transparent 0 13px,rgba(219,229,235,.29) 14px,transparent 15px 29px),repeating-linear-gradient(104deg,transparent 0 40px,rgba(193,203,211,.17) 41px,transparent 43px 67px);background-size:280px 400px,390px 520px;animation:cinema-rainfall 2.7s linear infinite}
+#home .cinema-smoke{position:absolute;z-index:0;left:17%;bottom:21%;width:28%;height:35%;pointer-events:none;opacity:.2;filter:blur(13px);background:radial-gradient(ellipse at 35% 67%,rgba(214,204,184,.43),transparent 40%),radial-gradient(ellipse at 53% 32%,rgba(179,185,175,.23),transparent 47%);animation:cinema-smoke 11s ease-in-out infinite alternate}
+#home .cinema-smoke.second{left:11%;bottom:24%;width:22%;height:30%;opacity:.14;animation-duration:14.5s;animation-delay:-6s}
+#home .cinema-crest{position:absolute;z-index:2;left:16px;right:16px;top:max(22px,env(safe-area-inset-top,0px));text-align:center;text-shadow:0 3px 15px #000,0 2px 4px #000}
+#home .cinema-crest .eyeline{display:block;font:600 10px/1.4 Georgia,serif;letter-spacing:.34em;color:#deb77b;margin-bottom:13px}
+#home .cinema-crest h1{margin:0;font:700 clamp(42px,10vw,64px)/.88 Georgia,serif;letter-spacing:.065em;color:#f6d9a2}
+#home .cinema-crest h1 span{display:block;margin-top:10px;font-size:clamp(24px,6.9vw,37px);letter-spacing:.12em}
+#home .cinema-crest .crest-rule{display:block;margin:19px auto 0;width:126px;height:1px;background:linear-gradient(90deg,transparent,#d8b482,transparent)}
+#home .cinema-epigraph{position:absolute;z-index:2;left:18px;right:18px;bottom:25px;text-align:center;text-shadow:0 2px 8px #000,0 4px 18px #000}
+#home .cinema-epigraph small{display:block;margin-bottom:8px;letter-spacing:.24em;font:700 9px/1.5 Georgia,serif;color:#dcaf70}
+#home .cinema-epigraph p{max-width:350px;margin:0 auto;font:italic 15px/1.55 Georgia,serif;color:#efd8b6}
+/* The approved photograph already contains a gramophone. No duplicate instrument. */
+#home .cinema-vinyl-glint{position:absolute;left:74%;top:51.3%;z-index:0;width:20%;aspect-ratio:1;pointer-events:none;opacity:0;background:conic-gradient(from 25deg,transparent 0deg,rgba(255,225,183,.28) 35deg,transparent 63deg,transparent 196deg,rgba(255,225,183,.12) 228deg,transparent 260deg);border-radius:50%;transform:rotateX(79deg)}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vinyl 2.65s linear infinite}
+#home .cinema-menu{box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:20px max(12px,var(--bh-inset-left,12px)) 12px max(12px,var(--bh-inset-right,12px));background:radial-gradient(ellipse at 50% 0,rgba(98,66,43,.38),transparent 64%),linear-gradient(180deg,#20150f 0%,#0f1010 64%,#100d0b 100%);border-top:2px solid #a98050}
+#home .cinema-menu-heading{text-align:center;margin:0 0 9px;color:#d7b17b;font:700 10px/1.4 Georgia,serif;letter-spacing:.24em}
+/* V21: actual, independently lit image panels. No icon substitute or dark
+   text scrim over the artwork. All six actions retain their original IDs. */
+#home .cabinet-entry{box-sizing:border-box;appearance:none;position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,43%) minmax(0,1fr);align-items:stretch;gap:0;min-width:0;width:100%;min-height:116px;height:auto;flex:none;margin:0;padding:0;text-align:left;cursor:pointer;overflow:hidden;border:1px solid #b18a57;border-radius:5px;background:linear-gradient(145deg,#352319,#171411 78%);color:#efd7b1;box-shadow:0 5px 14px #0007,inset 0 0 0 1px #b39b7424;transition:border-color .2s;touch-action:manipulation}
+#home .cabinet-entry::before,#home .cabinet-entry::after{content:none!important;background:none!important}
+#home .cabinet-entry-primary,#home #criminalEntry{min-height:142px;border-color:#d0a367}
+#home .cabinet-entry-art{position:relative;display:block;min-width:0;min-height:114px;overflow:hidden;isolation:isolate;align-self:stretch;border-right:1px solid #ac8055;background:#282019;pointer-events:none}
+#home .cabinet-entry-art img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;filter:brightness(1.08) contrast(1.02);opacity:1;pointer-events:none}
+#home #districtsCard .cabinet-entry-art img{object-position:66% 55%}
+#home #criminalEntry .cabinet-entry-art img{object-position:50% 58%;filter:brightness(1.04)}
+#home .cabinet-art-clock img{object-position:54% 52%;filter:brightness(1.02)}
+/* V24: original award collection, normal image fitting, no banner crop or distortion. */
+#home .cabinet-art-medal img{object-position:50% 57%;filter:brightness(1.02)}
+#home .cabinet-art-profile img{object-position:55% 63%;filter:brightness(1.04)}
+/* V26: the real protagonists, with full-bleed portraits and a single divider.
+   No artificial frame, new face or misleading fifth character. */
+#home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:0;background:#ae8658}
+#home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:0;box-sizing:border-box;filter:brightness(1.04)}
+#home .cabinet-entry-copy{box-sizing:border-box;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 20px 14px 12px;opacity:1;pointer-events:none}
+#home .cabinet-entry-copy strong{font:700 clamp(17px,5.25vw,28px)/1.12 Georgia,serif;color:#ffe8c0;text-shadow:0 2px 3px #0009;overflow-wrap:normal}
+#home .cabinet-entry-copy small{font:400 12px/1.4 system-ui,Arial,sans-serif;color:#dfcbb0;text-shadow:none;overflow-wrap:break-word}
+#home .cabinet-entry-primary .cabinet-entry-copy strong,#home #criminalEntry .cabinet-entry-copy strong{font-size:clamp(20px,6vw,31px)}
+#home .cabinet-entry-arrow{position:absolute;right:7px;top:50%;transform:translateY(-50%);color:#c6a16e;font:23px/1 Georgia,serif;pointer-events:none}
+#home .cabinet-entry:active{border-color:#ffe3ab;box-shadow:inset 0 0 0 2px #d9b779,0 5px 14px #0007}
+#home .cabinet-entry:focus-visible{outline:3px solid #f4d09a;outline-offset:2px}
+@media(max-width:355px){
+ #home .cabinet-entry{grid-template-columns:minmax(0,40%) minmax(0,1fr)}
+ #home .cabinet-entry-copy{padding:11px 16px 11px 9px;gap:5px}
+ #home .cabinet-entry-copy small{font-size:11px}
+}
+#home .cinema-afterword{text-align:center;padding:14px 15px 0;font:10px/1.7 Georgia,serif;letter-spacing:.12em;color:#a58a67}
+#home .cinema-stats{margin:0;padding:0 16px 12px;background:#100d0b}
+#home .cinema-stats summary{width:max-content;max-width:100%;margin:0 auto;cursor:pointer;text-align:center;padding:9px 13px;font:11px/1.4 Georgia,serif;color:#caa976;min-height:44px;box-sizing:border-box}
+#home .atelier-dashboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:none;padding:8px 0 12px;margin:0}
+#home .atelier-dashboard div{padding:10px 4px;text-align:center;min-width:0}
+#home .atelier-dashboard .dashboard-seal{display:none}
+#home .atelier-dashboard span{display:block;font-size:9px}
+#home .atelier-dashboard b{font-size:21px}
+#home .cinema-legal{padding:7px 20px max(95px,calc(80px + env(safe-area-inset-bottom,0px)));margin:0 auto;text-align:center;background:#100d0b;color:#8c7d6e;font:10px/1.6 system-ui,Arial,sans-serif;max-width:none}
+/* Music belongs to the scene, never floats over an interactive story card. */
+#home .cinema-audio-strip{box-sizing:border-box;padding:10px 12px 12px;background:linear-gradient(90deg,#130e0b,#322015,#130e0b);border-top:1px solid #ad875a;border-bottom:1px solid #7b5938}
+#home .cinema-audio-strip>small{display:block;margin:0 auto 8px;text-align:center;font:700 9px/1.5 Georgia,serif;letter-spacing:.19em;color:#d2aa72}
+#home .cinema-audio-dock{display:block;min-height:54px;max-width:100%}
+#home .cinema-audio-dock .bh-audio-controls{box-sizing:border-box;position:static!important;inset:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;z-index:auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:0 auto;padding:5px;width:100%;max-width:440px;background:rgba(13,12,12,.82);border:1px solid #8d6b42;border-radius:5px;box-shadow:inset 0 0 0 1px #c8a47618;pointer-events:auto}
+#home .cinema-audio-dock .bh-audio-controls button{box-sizing:border-box;display:block;min-height:48px;min-width:0;max-width:100%;padding:8px 4px;font-size:10px;line-height:1.35;white-space:normal;overflow-wrap:break-word;text-align:center}
+#home .cinema-audio-dock .bh-audio-controls #bhMenuTrack{display:block!important}
+.bh-audio-controls #bhMenuTrack{display:none}
+/* WebKit Cyrillic fallback is wider than Chromium near 360px. */
+@media(min-width:356px) and (max-width:380px){
+ #home .cinema-crest h1{font-size:38px;letter-spacing:.04em}
+ #home .cinema-crest h1 span{font-size:25px;letter-spacing:.08em}
+}
+@media(max-width:355px){
+ #home .cinema-crest h1{font-size:34px;letter-spacing:.04em}
+ #home .cinema-crest h1 span{font-size:24px;letter-spacing:.08em}
+ #home .cinema-audio-dock .bh-audio-controls button{font-size:9px;padding:7px 3px}
+}
+@media(min-width:701px){
+ #home .cinema-hero{height:min(67svh,570px)}
+ #home .cinema-scene{border-left:1px solid #8d6d4850;border-right:1px solid #8d6d4850}
+}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-hero::before,#home .cinema-rain,#home .cinema-smoke,#home .cinema-vinyl-glint{animation:none!important}
+ #home .cabinet-entry{transition:none!important;transform:none!important}
+}
+@keyframes cinema-lamp{0%,19%,20.5%,22%,100%{opacity:.84}19.6%,21.2%{opacity:.53}21.7%{opacity:1}}
+@keyframes cinema-rainfall{from{background-position:0 0,0 0}to{background-position:-80px 420px,-120px 560px}}
+@keyframes cinema-smoke{from{transform:translate(-4px,14px) scale(.87);opacity:.18}to{transform:translate(13px,-44px) scale(1.19);opacity:.33}}
+@keyframes cinema-vinyl{to{transform:rotateX(79deg) rotate(360deg)}}
+
+#home.cinema-still .cinema-hero::before,#home.cinema-still .cinema-rain,#home.cinema-still .cinema-smoke,#home.cinema-still .cinema-vinyl-glint{animation-play-state:paused!important}

@@ -1,0 +1,120 @@
+name: Case 002 scoped quality checks (draft only)
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - 'ARCHITECTURE.md'
+      - 'Architecture.md'
+      - 'CHANGELOG.md'
+      - 'docs/decisions/**'
+      - 'docs/case002/**'
+      - 'deployment/case002-safari-preview.js'
+      - 'tests/case002/**'
+      - 'src/case002/**'
+      - 'assets/case002/scenes/**'
+      - 'assets/case002/portraits/**'
+      - 'tools/case002/**'
+      - 'preview/case002-prototype/**'
+      - '.github/workflows/case002-story-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: case002-story-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  case002-scoped:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Choose checks based on actual changed files
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: node tools/case002/ci-scope-v1.js --github-output
+      - name: Validate the scope selector (including fail-closed behavior)
+        run: node tests/case002/ci-scope-v1.test.js
+      - name: Validate architecture, change history and decision record links
+        run: node tools/case002/docs-guard-v1.js
+      - name: Syntax-check all small modules and browser entrypoint
+        run: |
+          node --check tools/case002/ci-scope-v1.js
+          for src in src/case002/*.js preview/case002-prototype/app.js; do node --check "$src"; done
+      - name: Verify offline scene bundle only when its sources may have changed
+        if: steps.scope.outputs.run_bundle == 'true'
+        run: node tools/case002/build-browser-data.js --check
+      - name: Validate isolated Safari package only when exporter changes
+        if: steps.scope.outputs.run_package == 'true'
+        run: |
+          node --check deployment/case002-safari-preview.js
+          node deployment/case002-safari-preview.js
+          node tests/case002/safari-package-integrity.test.js
+      - name: Deep contract, transitions, persistence and 400 seeded routes
+        if: steps.scope.outputs.run_full == 'true'
+        run: |
+          node tests/case002/validate-contract.js
+          node tests/case002/validate-beat-graph.js
+          node tests/case002/simulate-story-model-v2.js
+          node tests/case002/validate-canon-v2.js
+          node tests/case002/engine-v3.test.js
+          node tests/case002/hero-v3.test.js
+          node tests/case002/explore-v3.test.js
+          node tests/case002/evidence-custody-v3.test.js
+      - name: Targeted narrative variants and 35 epilogues
+        if: steps.scope.outputs.run_story == 'true'
+        run: |
+          node tests/case002/story-variants-v4.test.js
+          node tests/case002/narrative-production-v1.test.js
+      - name: Targeted visual story, cast, approved assets and state-specific shots
+        if: steps.scope.outputs.run_art == 'true'
+        run: |
+          node tests/case002/validate-storyboard-v1.js
+          node tests/case002/cast-registry-v1.test.js
+          node tests/case002/identity-and-portrait-brief-v1.test.js
+          node tests/case002/scene-cast-v1.test.js
+          node tests/case002/approved-art-v1.test.js
+          node tests/case002/art-wave-prompt-builder-v1.test.js
+          node tests/case002/art-wave-17-shotcards-v1.test.js
+          node tests/case002/art-wave-17-status-v1.test.js
+          node tests/case002/art-wave-18-shotcards-v1.test.js
+          node tests/case002/art-wave-19-shotcards-v1.test.js
+          node tests/case002/art-wave-20-shotcards-v1.test.js
+          node tests/case002/art-wave-21-shotcards-v1.test.js
+          node tests/case002/art-wave-22-hero-gap-shotcards-v1.test.js
+          node tests/case002/art-feedback-v1.test.js
+          node tests/case002/art-shot-types-v2.test.js
+          node tests/case002/art-binary-bridge-v1.test.js
+          node tools/case002/art-audit-v1.js
+          node tests/case002/art-audit-v1.test.js
+          node tests/case002/scene-art-v1.test.js
+          node tools/case002/validate-art-wave-v1.js --check
+          node tests/case002/art-wave-v1.test.js
+          node tools/case002/build-art-production-pack-v1.js --check
+          node tests/case002/art-production-pack-v1.test.js
+      - name: Targeted evidence icon and deduction integrity
+        if: steps.scope.outputs.run_evidence == 'true'
+        run: |
+          node tests/case002/evidence-icons-v1.test.js
+          node tests/case002/deduction-board-v1.test.js
+      - name: Targeted decision notifications and historical journal
+        if: steps.scope.outputs.run_reporting == 'true'
+        run: |
+          node tests/case002/consequences-v1.test.js
+          node tests/case002/journal-v1.test.js
+      - name: Targeted mobile UI assets and cinematic dialogue fidelity
+        if: steps.scope.outputs.run_ui == 'true'
+        run: |
+          node tests/case002/approved-hero-portraits.test.js
+          node tests/case002/scene-prose-v1.test.js
+          node tests/case002/ui-events-v1.test.js
+          node tests/case002/ending-recap-v1.test.js
+          node tests/case002/achievements-v1.test.js
+          node tests/case002/telegram-safe-area-v1.test.js

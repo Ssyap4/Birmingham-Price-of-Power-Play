@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "chapter": "END",
+  "source": "Original Case002 ending narrative and art director; one new independently reviewed passenger document-check illustration in a single author turn",
+  "variants": [
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-present-neutral",
+      "shotCard": {
+        "id": "Z02",
+        "sceneKind": "dialogue",
+        "focus": "an old railway conductor quietly checks a small weathered folded train pass offered by the black leather-gloved hand of an unidentified traveler across a polished wooden compartment table",
+        "camera": "tight close-up within a vintage passenger compartment focused on the pass between the conductor's hands and the unseen traveler's one gloved hand, the faces and bodies out of frame",
+        "location": "a traditional wooden passenger railway carriage in industrial Birmingham in the 1920s",
+        "required": [
+          "one old railway conductor's two bare weathered hands carefully holding a small folded period train pass with indistinct markings",
+          "one black leather-gloved anonymous traveler's hand touching the offered pass over a dark wooden carriage table",
+          "one warm brass oil lamp and rain-streaked railway carriage window showing smoke-darkened brick factory buildings at dawn"
+        ],
+        "background": "dark tufted leather carriage seat, wooden wall panels, brass fittings, a leather-bound folio and an old pocket watch on the narrow table",
+        "light": "warm amber oil lamp on weathered hands and paper against cold misty industrial sunrise through the rain-covered carriage window",
+        "npc": "the conductor is seen only by uniformed sleeves, torso and bare hands; the anonymous traveler by one gloved hand, without identifiable faces or physique",
+        "knowledgeBoundary": "The ticket inspection is compatible with one or more independently recorded evacuated-witness states. It does not establish which witnesses boarded, how many travelers are elsewhere in the carriage, or whether they arrived safely. The unaccompanied-departure state remains a separate scene, and game status is determined only by witness flags.",
+        "avoid": [
+          "a full recognizable playable hero body or face, or an invented face for Ada, Tommy or Mercer",
+          "multiple identifiable witnesses implying that all three were evacuated together",
+          "legible passenger names, new identities, private addresses or guaranteed safe-arrival stamp",
+          "celebration, arrival at a protected destination, or a conclusive resolution of all witness fates"
+        ],
+        "intendedVariant": "evacuated-present-neutral"
+      }
+    }
+  ]
+}

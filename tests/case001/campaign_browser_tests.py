@@ -17,8 +17,10 @@ with sync_playwright() as p:
  page.locator("#storyStart").click()
  assert page.locator("#campaignAchievements").is_visible()
  page.screenshot(path=str(OUT/'achievements-desktop.png'),full_page=True)
- assert page.locator("#campaignAchievements .campaign-award").count()==18
- assert page.locator("#campaignAchievements .campaign-reward-card").count()==30
+ assert page.locator("#campaignFirstCaseAchievements .campaign-award").count()==18
+ assert page.locator("#campaignSecondCaseAchievements .campaign-award").count()==18
+ assert page.locator("#campaignFirstCaseAchievements .campaign-reward-card").count()==30
+ assert page.locator("#campaignSecondCaseAchievements .campaign-reward-card").count()==35
  page.locator("#homeBtn").click()
  page.evaluate("""() => {
    const data={node:'endingPower',items:['envelope','key','invoice','route','ledger'],flags:{},trail:['intro','office','pump'],ending:'endingPower',started:987654321,health:75,riskSeen:[]};
@@ -98,5 +100,5 @@ with sync_playwright() as p:
  after=panel.evaluate("(el)=>el.scrollTop")
  assert after>before, f"Inventory wheel scrolling broken: {before}->{after}"
  assert not errors,errors
- print("OK: three campaign screens, five heroes, 42 awards, unique outcomes, solved evidence and wheel scroll")
+ print("OK: three campaign screens, five heroes, 36 detective achievements, 65 detective reward cards, unique outcomes, solved evidence and wheel scroll")
  browser.close()

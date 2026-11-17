@@ -1,0 +1,119 @@
+/* Shared portrait status language across the unified Birmingham campaign.
+   Display-only: health calculations, saving, rewards and notification timing
+   remain owned by the original case engines. */
+@media (orientation:portrait) and (max-width:700px){
+ /* Make every illustrated campaign button a stable hit target on re-entry.
+    Its original transform animation moves the tap target under WebKit. The
+    appearance still fades in with the established timing and stagger. */
+ #home.cabinet-art-ready .cabinet-entry{
+  animation-name:bh-menu-entry-opacity!important;
+  transform:none!important;
+  transition:filter .22s ease,box-shadow .22s ease!important;
+ }
+ @keyframes bh-menu-entry-opacity{
+  from{opacity:0}
+  to{opacity:1}
+ }
+ #home.cabinet-art-ready .cabinet-entry:active{
+  transform:none!important;filter:brightness(1.25)!important;
+ }
+ #caseGame #caseHealthStatus{
+  box-sizing:border-box!important;
+  margin:18px 0 18px!important;padding:15px 13px 14px!important;
+  border:1px solid #a38053!important;border-left:3px solid #d3a46e!important;
+  border-radius:6px!important;
+  background:linear-gradient(125deg,#34281c,#1b1712 82%)!important;
+  box-shadow:inset 0 1px #ffe1b626,0 5px 16px #0007!important;
+  color:#ead6b5!important;
+ }
+ #caseGame .case-health-head{
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:center!important;justify-content:space-between!important;
+  gap:8px 12px!important;
+  color:#e9c597!important;
+  font:700 clamp(.73rem,3.15vw,.85rem)/1.45 system-ui,sans-serif!important;
+  letter-spacing:.025em!important;
+ }
+ #caseGame .case-health-head span{min-width:0!important;overflow-wrap:anywhere!important}
+ #caseGame .case-health-head b{
+  flex:none!important;font:800 .9rem/1.35 system-ui,sans-serif!important;
+  color:#ffddad!important;white-space:nowrap!important;
+ }
+ #caseGame .case-health-track{
+  box-sizing:border-box!important;
+  height:9px!important;margin-top:12px!important;
+  border:1px solid #796040!important;border-radius:999px!important;
+  background:#130f0e!important;overflow:hidden!important;
+ }
+ #caseGame .case-health-track i{
+  border-radius:999px!important;box-shadow:inset 0 0 0 1px #fff4d12a!important;
+ }
+ #caseGame .case-health-supplies{
+  display:block!important;margin-top:12px!important;
+  color:#e1c8a6!important;font:.78rem/1.5 system-ui,sans-serif!important;
+  overflow-wrap:anywhere!important;
+ }
+ /* Achievement and injury feedback occupy opposite safe corners and never
+    cover controls: both are non-interactive, fixed to the phone viewport. */
+ body:has(#caseGame:not([hidden])) #caseHealthToasts{
+  box-sizing:border-box!important;position:fixed!important;
+  z-index:650!important;
+  left:max(10px,env(safe-area-inset-left,0px))!important;
+  right:auto!important;
+  bottom:max(83px,calc(65px + env(safe-area-inset-bottom,0px)))!important;
+  top:auto!important;
+  width:min(360px,calc(100vw - 20px))!important;
+  max-height:46dvh!important;overflow:hidden!important;
+  pointer-events:none!important;
+ }
+ #caseHealthToasts .case-health-toast{
+  box-sizing:border-box!important;
+  max-width:100%!important;min-width:0!important;
+  border:1px solid #a37d4d!important;
+  border-left:4px solid #c4a26c!important;
+  border-radius:6px!important;
+  background:linear-gradient(125deg,#392b1e,#191611 82%)!important;
+  box-shadow:0 12px 28px #000b!important;
+  padding:12px 14px!important;
+  overflow-wrap:anywhere!important;
+ }
+ #caseHealthToasts .case-health-toast.wound,
+ #caseHealthToasts .case-health-toast.fatal{border-left-color:#df8469!important}
+ #caseHealthToasts .case-health-toast.heal,
+ #caseHealthToasts .case-health-toast.safe{border-left-color:#88bf9c!important}
+ #caseHealthToasts .case-health-toast strong{
+  display:block!important;color:#f6d4a5!important;
+  font:800 .81rem/1.4 system-ui,sans-serif!important;
+  letter-spacing:.055em!important;
+ }
+ #caseHealthToasts .case-health-toast p{
+  margin:7px 0 0!important;color:#e8d3b7!important;
+  font:400 .85rem/1.52 Georgia,serif!important;
+ }
+ #caseHealthToasts .case-health-duration{
+  color:#d0b18c!important;font:.7rem/1.4 system-ui,sans-serif!important;
+ }
+ .campaign-unlock-tray{
+  top:max(12px,env(safe-area-inset-top,0px))!important;
+  width:min(410px,calc(100% - 22px))!important;
+  z-index:10500!important;pointer-events:none!important;
+ }
+ .campaign-unlock-popup{
+  min-height:78px!important;padding:12px 13px!important;
+  border:1px solid #ddb27a!important;border-radius:7px!important;
+  background:linear-gradient(125deg,#3e2b1d,#1c1612 82%)!important;
+  box-shadow:inset 0 1px #ffe0b72d,0 12px 28px #000d!important;
+ }
+ .campaign-unlock-copy strong{
+  font:700 clamp(1.06rem,4.8vw,1.35rem)/1.2 Georgia,serif!important;
+ }
+}
+@media (orientation:portrait) and (max-width:359px){
+ #caseGame #caseHealthStatus{padding:12px 10px!important}
+ #caseHealthToasts .case-health-toast{padding:11px 12px!important}
+ .campaign-unlock-popup{gap:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #home.cabinet-art-ready .cabinet-entry{animation:none!important;transition:none!important}
+ #caseHealthToasts .case-health-toast,.campaign-unlock-popup{animation:none!important}
+}

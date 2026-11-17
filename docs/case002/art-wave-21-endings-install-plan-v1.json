@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "chapter": "END",
+  "status": "installed-feature-branch-ci-verified",
+  "sourceHead": "55d2c89758ab415360654d8451dbe7b6c8a2400e",
+  "summary": "Seven distinct ending scenes; eight separately accepted artwork sources; 14 exact mobile-only runtime mappings, including eight Z02 evacuations. Main and gameplay untouched.",
+  "rules": {
+    "heroNeutral": "Five selectable heroes; no approved end-card may add a visible sex-specific or identifiable player portrait.",
+    "witnessNeutral": "Only the zero-evacuee Z02 art depicts an empty platform. The seven nonzero Z02 states reuse a separate conductor/pass inspection frame without depicting any identifiable witness.",
+    "narrativeOverlay": "Witness counts, identities, protections and results remain in story-variants-v4.js; no illustrations may imply universal rescue or convictions.",
+    "reuseMechanics": "Current art gate requires exact variant suffix and real matching file for each registered Z02 entry; install seven separate byte-identical copies of the neutral candidate with verified per-target SHA256, not an unapproved wildcard or resolver rewrite.",
+    "installation": "Installed in feature-branch with 14 exact canonical paths and explicit manifest entries. Require full visual CI and Chromium/WebKit mobile smoke.",
+    "mainSafety": "No merge to main; no changes to Case001, engine, story flags, rewards, save records or profiles."
+  },
+  "entries": [
+    {
+      "sceneId": "Z01",
+      "variantKey": "default",
+      "candidateFile": "case002-z01-scene--mobile.webp",
+      "targetMobileFile": "case002-z01-scene--mobile.webp",
+      "sha256": "9f334ef145ec231b15c23fbcf3017035e41d83aac55f5993003c9ddf926bd606",
+      "bytes": 99830,
+      "cast": [
+        "nora"
+      ],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "default"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-ada",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-ada--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "ada"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-ada-mercer",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-ada-mercer--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "ada",
+        "mercer"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-ada-tommy",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-ada-tommy--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "ada",
+        "tommy"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-ada-tommy-mercer",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-ada-tommy-mercer--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "ada",
+        "tommy",
+        "mercer"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-mercer",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-mercer--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "mercer"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-none",
+      "candidateFile": "case002-z02-scene--evacuated-none--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-none--mobile.webp",
+      "sha256": "94242a297c0bef84bfcad18ee960c9c2e93a119ab16616afb2dcee518137f2cf",
+      "bytes": 137846,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-none"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-tommy",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-tommy--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "tommy"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z02",
+      "variantKey": "evacuated-tommy-mercer",
+      "candidateFile": "case002-z02-scene--evacuated-present-neutral--mobile.webp",
+      "targetMobileFile": "case002-z02-scene--evacuated-tommy-mercer--mobile.webp",
+      "sha256": "20b4e9d317132ac586dfa7f0dcb9cd73bf7dabc2b0b5c88386ea3e104af9188c",
+      "bytes": 109012,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [
+        "tommy",
+        "mercer"
+      ],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "evacuated-present-neutral"
+    },
+    {
+      "sceneId": "Z03",
+      "variantKey": "default",
+      "candidateFile": "case002-z03-scene--mobile.webp",
+      "targetMobileFile": "case002-z03-scene--mobile.webp",
+      "sha256": "4f9d9a16c0ccaa422b5c75094f23b8827b4a58fae7c1c1ee9fbc06ab2bdf4816",
+      "bytes": 87886,
+      "cast": [
+        "brackett",
+        "rowan"
+      ],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "default"
+    },
+    {
+      "sceneId": "Z04",
+      "variantKey": "guarantee-signed",
+      "candidateFile": "case002-z04-scene--guarantee-signed--mobile.webp",
+      "targetMobileFile": "case002-z04-scene--guarantee-signed--mobile.webp",
+      "sha256": "9ade4ea113c8af2234cfde624c006ecd02025ffd3f3caf1abbf140b22c4a723a",
+      "bytes": 105296,
+      "cast": [
+        "vale"
+      ],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "guarantee-signed"
+    },
+    {
+      "sceneId": "Z05",
+      "variantKey": "empty-safe-siding",
+      "candidateFile": "case002-z05-scene--empty-safe-siding--mobile.webp",
+      "targetMobileFile": "case002-z05-scene--empty-safe-siding--mobile.webp",
+      "sha256": "a083adbcd3bd71c363a08ed457bb48f4676f557a08e490bfd922e3f7a46fa608",
+      "bytes": 161568,
+      "cast": [
+        "worker"
+      ],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "empty-safe-siding"
+    },
+    {
+      "sceneId": "Z06",
+      "variantKey": "accounts-hero",
+      "candidateFile": "case002-z06-scene--accounts-hero--mobile.webp",
+      "targetMobileFile": "case002-z06-scene--accounts-hero--mobile.webp",
+      "sha256": "3608cc5ba32e33f97b4ff96181f326c0f308bd445a88a9aa26aee87df5ce4b3b",
+      "bytes": 62096,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "accounts-hero"
+    },
+    {
+      "sceneId": "Z07",
+      "variantKey": "after-danger",
+      "candidateFile": "case002-z07-scene--after-danger--mobile.webp",
+      "targetMobileFile": "case002-z07-scene--after-danger--mobile.webp",
+      "sha256": "e57c4b9228c957483166a843c513aa8794dc8541d4eef9b885c28c1082e09064",
+      "bytes": 92030,
+      "cast": [],
+      "visibleEvacuatedWitnesses": [],
+      "requiresRuntimeText": true,
+      "sourceVariantKey": "after-danger"
+    }
+  ],
+  "installedFromHead": "2ebc73b70f735c0ea8d4d29fd012b7ca6af2aa87",
+  "validation": {
+    "checkedCommit": "925edaa64da294c4f85641a3e87b30e7f3844d3b",
+    "artCI": {
+      "runId": 43641619721,
+      "conclusion": "success"
+    },
+    "mobileCI": {
+      "runId": 43641619715,
+      "conclusion": "success",
+      "browsers": [
+        "chromium",
+        "webkit"
+      ]
+    },
+    "checks": [
+      "14 exact ending-state manifest registrations",
+      "7 distinct main-ending artworks; 8 unique approved source WebPs",
+      "WebP 720x900 full decoding",
+      "Z02 safe variants and one real mobile ending route",
+      "Telegram safe-area 64px and responsive inset events"
+    ]
+  }
+}

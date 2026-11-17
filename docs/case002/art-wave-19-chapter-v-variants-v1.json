@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "chapter": "V",
+  "purpose": "Reviewed Chapter V state-specific art retained as candidates and installed by exact digest; E03 neutral archive visually covers both unpublished states.",
+  "variants": [
+    {
+      "sceneId": "E07",
+      "variantKey": "signed",
+      "candidateFile": "case002-e07-scene--signed--mobile.webp",
+      "sha256": "6a5bbae1c2795701ce4a9bb9b5061e02f64121a23bd7442edb4944e2848f782b",
+      "gitBlobSha1": "eab338c8c49e4debec77c65972e503aa9c5d39ae",
+      "bytes": 79680,
+      "status": "installed-approved-in-feature",
+      "renderCountInThisTurn": 2,
+      "acceptedRendering": 2,
+      "firstRenderingNotStaged": true,
+      "shotCard": {
+        "id": "E07",
+        "sceneKind": "evidence",
+        "focus": "a single aged industrial protection-terms letter bearing an illegible ink signature and dark red wax seal is lifted by an investigator wearing black leather gloves directly above a separate open factory verification ledger, while an older proprietor's signet-ringed hand rests nearby without a pen",
+        "camera": "low medium-close three-quarter viewpoint centered on the signed paper suspended in gloved hands above the thick verification register, with both people's faces outside the frame",
+        "location": "a wealthy factory owner's dark wood-paneled private office in industrial Birmingham during the 1920s",
+        "required": [
+          "one weathered formal paper held up in dark leather gloves, visibly bearing a single flowing illegible ink signature and a small red wax seal near its lower edge",
+          "a separate open bound register flat on the wooden table with another decorative red wax impression and neat archival lines",
+          "a mature bare hand with a gold signet ring resting away from the paper on the opposite side of the desk"
+        ],
+        "background": "worn dark oak table, brass lamp, tall rain-streaked window with smoking brick factory chimneys beyond, burgundy curtains and an old leather chair",
+        "light": "warm amber brass-lamp light on yellowed paper and wax against cool blue rain-lit industrial skyline",
+        "npc": "only the investigator's black-gloved hands and the older industrial owner's hand; no new visible facial likeness",
+        "knowledgeBoundary": "This image is for the signed scene state only after the scenario has separately verified backing of a pledge and a safe place for at least one witness. A signed paper does not itself prove all witnesses rescued, the owner personally signed it, or guilt admitted.",
+        "avoid": [
+          "any readable signature identifying a real person or invented witness address",
+          "the seated proprietor holding the pen or personally signing the paper",
+          "a signed confession of murder, court verdict or triumphant handshake",
+          "witnesses shown rescued or protected simply because a page has a wax seal",
+          "a face replacing the established proprietor or the playable investigator"
+        ]
+      }
+    },
+    {
+      "sceneId": "E03",
+      "variantKey": "still-unverified",
+      "candidateFile": "case002-e03-scene--still-unverified--mobile.webp",
+      "sha256": "ca73a2e402558e7cd2229a8e37679ea1e1ab42af26ddac373745911f70ce294e",
+      "gitBlobSha1": "d8cd5856df95e673f06986448f6084ca03994fb3",
+      "bytes": 73582,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "shotCard": {
+        "id": "E03",
+        "sceneKind": "evidence",
+        "focus": "a dark-haired newspaper editor uses an unmarked cover sheet to hide identifying signatures while checking two physically separate archives of documents on a narrow oak sorting table",
+        "camera": "near-vertical overhead view, hands and back of pinned hair coming in from the lower edge, diagonal arrangement of documents on a dark sorting counter",
+        "location": "a secluded records alcove behind a Birmingham newspaper office in the 1920s",
+        "required": [
+          "one stack of twine-tied handwritten letters and folded envelopes at the left side",
+          "one independent stack of typed factory extracts and ledger leaves at the right side",
+          "a completely plain protective paper sheet sliding over the signatures between the editor's ink-smudged hands"
+        ],
+        "background": "aged wooden pigeonhole shelves and drawers, bundles of old paper, polished dark wood and a large overhead enamel-shaded reading lamp",
+        "light": "warm focused lamp on archive papers with the surrounding pigeonholes receding into shadow",
+        "npc": "one dark-haired woman editor seen only from above and behind, no visible face and no other figures",
+        "knowledgeBoundary": "This image shows confidentiality screening before independent-source verification and no publication. It cannot by itself establish independent corroboration or participant protection.",
+        "avoid": [
+          "readable witness names, addresses, identities or child data",
+          "a completed public newspaper headline, published page or certified independent provenance",
+          "recognizable invented detective or alternate editor face",
+          "a factory printing machine, low shoulder-height desk tableau, or celebratory investigative conclusion"
+        ]
+      }
+    },
+    {
+      "sceneId": "E05",
+      "variantKey": "cleared",
+      "candidateFile": "case002-e05-scene--cleared--mobile.webp",
+      "sha256": "d1a42ae6dbf288112b6d79cbd241bd2fcd4290a637eb8df941d03a9dd4330d7f",
+      "gitBlobSha1": "764d0168fda05e0085f63e9bd31254534622e5da",
+      "bytes": 111852,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "shotCard": {
+        "id": "E05",
+        "sceneKind": "aftermath",
+        "focus": "wet empty industrial siding rails lead toward a closed iron yard gate, with a group of factory laborers standing together on the far side while a shift watchman checks his ledger by lamplight",
+        "camera": "low railway-track-level wide depth view along the free foreground rails toward the iron gate and the watchman at the right edge",
+        "location": "a private rail freight siding at brick factories in rainy Birmingham in the 1920s",
+        "required": [
+          "unoccupied intact wet railway rails and an iron hand-operated switch in the foreground",
+          "multiple anonymous mill laborers safely gathered beyond an iron gate and fence, seen from the track side",
+          "a middle-aged shift watchman beside the barrier holding a plain shift ledger under a hanging oil lantern"
+        ],
+        "background": "old soot-blackened red-brick mill buildings, heavy chimneys, mist and narrow high factory windows",
+        "light": "cold blue early-morning rain haze and small amber lamps reflected in rail steel and wet cobblestones",
+        "npc": "anonymous tired workers in period caps behind the fence, with a watchman in a rolled-sleeved waistcoat; no identified playable hero",
+        "knowledgeBoundary": "The cleared view is only valid when scenario state workersCleared is already true. Visible empty rails do not alone certify every worker's safety, paid wages, safeSidingAccess, or completed sabotage.",
+        "avoid": [
+          "people working on or standing in the foreground rail corridor",
+          "broken switch, derailment or emergency accident",
+          "a legible formal clearance order, payments or signatures",
+          "a recognizable playable detective, hero victory or violent act"
+        ]
+      }
+    },
+    {
+      "sceneId": "E09",
+      "variantKey": "accounts-hero",
+      "candidateFile": "case002-e09-scene--accounts-hero--mobile.webp",
+      "sha256": "2c2fefc3e326f4e8344e2dcacd95552566c1e9ecafb0106b4a0852acf94eac95",
+      "gitBlobSha1": "d7f73e0898768394d0c5ca0e55cdc4db942a412b",
+      "bytes": 147544,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E09",
+        "sceneKind": "evidence",
+        "focus": "a dark leather account ledger is being placed safely inside the satchel of an anonymous investigator in black gloves, at a rainy iron factory gate, while a distant worker remains empty handed",
+        "camera": "low medium-close three-quarter view from behind the investigator's left shoulder, sharply framing gloved hands, cracked ledger cover and open leather case while the factory worker remains across the gate in the soft-focus distance",
+        "location": "outside a soot-darkened red brick factory entrance in rainy 1920s Aston, Birmingham",
+        "required": [
+          "one single battered leather-bound financial ledger with old ruled accounting pages, held and lowered by the investigator's gloved hands",
+          "one open deep brown weathered leather satchel receiving the ledger with brass buckle visible",
+          "one ordinary factory worker in a flat cap positioned behind the wrought iron gate with hands away from the ledger"
+        ],
+        "background": "wet industrial brick gate pillar, spiked iron railings, rain-dappled cobblestones, gas lantern and distant smoke-filled factory buildings",
+        "light": "a warm amber factory gaslight lighting the wet leather and cracked ledger binding, with cold blue-gray rain and smoke in the background",
+        "npc": "no face visible on the investigator, only cropped gloved hands and rain-dark wool sleeve; a single anonymous worker seen at distance behind the gate",
+        "knowledgeBoundary": "Use only when flags.brackettAccountsHeld is true and flags.accountsGivenToWorkers is false. The investigator holds the account book; the worker has not been given records. This visual cannot establish independent verification, a paid pension, worker safety or a protected intermediary.",
+        "avoid": [
+          "a worker taking the ledger or a completed hand-to-hand transfer",
+          "specific legible accounting numbers, witness names, claims of a widow's pension payment or fabricated legal text",
+          "a visible identifiable playable character face or replacement portrait of an established character",
+          "celebration, confirmed closure of the factory or a settled union agreement"
+        ]
+      }
+    },
+    {
+      "sceneId": "E09",
+      "variantKey": "accounts-workers",
+      "candidateFile": "case002-e09-scene--accounts-workers--mobile.webp",
+      "sha256": "08d41e5dd364e051352b21fc778ac1f88091a521a4cedd2dd3d3523488575492",
+      "gitBlobSha1": "1b02127baacc17e1edca2592e7e2bd104f430745",
+      "bytes": 119850,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "dhashDistanceVsAccountsHero": 30,
+      "shotCard": {
+        "id": "E09",
+        "sceneKind": "action",
+        "focus": "an anonymous soot-marked factory worker receives a bundle of bound accounting extracts from the gloved hands of an unseen investigator at the factory's rainy iron gate",
+        "camera": "intimate eye-level side-on medium-close shot centered on the precise handover; worker's worn hands securely hold one end of the tied document bundle while black-gloved hands still touch the other end, with the investigator's face outside the frame",
+        "location": "the brick entrance of an industrial factory in rain-soaked Aston, Birmingham in the 1920s",
+        "required": [
+          "one bundle of yellowed handwritten accounting extracts with twine around its middle physically passing into the worker's bare soot-stained hands",
+          "the anonymous factory worker in a worn flat cap and threadbare dark coat receiving the pages while a black-gloved investigator remains cropped at the right edge",
+          "a few other anonymous workers visible farther back behind wet wrought iron gate posts and glowing lantern"
+        ],
+        "background": "rain-darkened factory brickwork, vertical wrought iron railings, cold puddles, smoke-stack silhouettes and dim old industrial windows",
+        "light": "warm amber gas lantern illuminating the bundle and tense hands against cold slate-blue rain and factory smoke",
+        "npc": "one anonymous mustachioed factory worker in period flat cap and coat; other background workers indistinct; investigator represented only by a cropped dark sleeve and black gloves without a recognizable face",
+        "knowledgeBoundary": "This variant depicts an accounting-document transfer to workers only after the game has set accountsGivenToWorkers. It does not prove the accounting entries correct, a widow's pension paid, protected intermediary arranged, workers rescued, or a factory shutdown.",
+        "avoid": [
+          "the original factory accounts ledger visibly kept by the investigator instead of the worker receiving records",
+          "readable personal names, monetary amounts or fabricated accounting conclusions on the papers",
+          "identifiable face or canonical appearance for any selectable player character",
+          "celebration, completed pension compensation, official verdict or protected worker status"
+        ]
+      }
+    },
+    {
+      "sceneId": "E10",
+      "variantKey": "intermediary",
+      "candidateFile": "case002-e10-scene--intermediary--mobile.webp",
+      "sha256": "6bffb76ffeaf2c00c52531d826ee7b4e544c8e1296722f70383fffd233c3beaf",
+      "gitBlobSha1": "c1b0b3af0001e41c75f680b73f861742d90ec7fe",
+      "bytes": 90030,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E10",
+        "sceneKind": "dialogue",
+        "focus": "an ordinary local industrial intermediary cautiously reviews a plain accounting extract at a cramped wooden table while an unseen investigator in a black glove indicates a separate tied bundle of copies",
+        "camera": "intimate low medium three-quarter side view from the cropped investigator's elbow toward the intermediary's careful hands and the papers on the table",
+        "location": "a modest private records room near Birmingham factory yards in the 1920s",
+        "required": [
+          "one wary middle-aged local worker in worn period flat cap and dark wool coat reading a single aged report in both hands",
+          "one black leather-gloved anonymous investigator hand indicating a twine-bound stack of old papers on the tabletop",
+          "a dark wooden table with loose unreadable accounting sheets and an amber metal lampshade overhead"
+        ],
+        "background": "wet factory brickwork and smoky chimneys glimpsed through a rain-streaked doorway, plain shelves and old crates in shadow",
+        "light": "warm focused amber pendant lamp on the documents and hands against blue-gray rainy industrial daylight at the open doorway",
+        "npc": "one unnamed working-class local man looking downward; investigator shown only as a black-gloved hand and shoulder with no identifiable playable character face",
+        "knowledgeBoundary": "This image may represent the intermediary scene variant only when the game has independently set localIntermediary. It does not itself verify any financial records, guarantee witness protection or wages, prove accountsGivenToWorkers, or announce an investigation success.",
+        "avoid": [
+          "legible witness names, monetary figures, official certification or detailed accusations",
+          "a handshake, completed contract, celebratory agreement or public publication",
+          "visible face of a selectable player hero or a replacement canonical named character",
+          "a completed payment, proven factory guilt, or witnesses visibly rescued"
+        ]
+      }
+    },
+    {
+      "sceneId": "E10",
+      "variantKey": "accounts-workers",
+      "candidateFile": "case002-e10-scene--accounts-workers--mobile.webp",
+      "sha256": "1d023b24931b86a039bff04c6ce6194d1f79c41ae1247b3cfb781673900ea309",
+      "gitBlobSha1": "54ed5de7e4b7ca422ba519baf9e6a7d7b024f4ab",
+      "bytes": 105586,
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "shotCard": {
+        "id": "E10",
+        "sceneKind": "evidence",
+        "focus": "an investigator in black gloves makes a restrained update in a private leather-bound interim report while a factory worker seated across the table studies the separately delivered bundle of accounting papers in his own hands",
+        "camera": "oblique elevated side view down a long wooden records table: a gloved pen and open report in the near foreground, the worker with his own twine-bound bundle behind it, no recognizable investigator face",
+        "location": "a modest industrial records room overlooking a rainy brick factory yard in 1920s Birmingham",
+        "required": [
+          "an anonymous weary worker in a worn period flat cap and rain-darkened coat holding a tied bundle of accounting-copy pages entirely in his own hands",
+          "a separate open, undecorated investigator's interim-report notebook in the foreground as black-gloved hands write on one page",
+          "a warm oil lamp, old timber table, and second indistinct laborer observing from further back without touching the documents"
+        ],
+        "background": "wooden shelves with worn ledgers, rain-streaked factory window, smoking chimney silhouettes and old industrial brickwork",
+        "light": "warm amber oil-lamp glow on the owned copy and report, cold blue-gray rainy daylight behind the worker",
+        "npc": "the document-holding worker is an anonymous factory laborer; optional shadowed anonymous companion; only the gloved hands and dark sleeve of the playable detective are visible",
+        "knowledgeBoundary": "Only show this scene when the story has already set accountsGivenToWorkers=true. A worker reviewing his own document copies does not establish correctness of all accounting entries, protected witnesses, a paid widow's pension, published proof, or success of the investigation.",
+        "avoid": [
+          "the detective still possessing the only copy or handing the entire bundle again as in the earlier gate scene",
+          "a readable financial conclusion, recognizable witness, exact wage sum or fabricated official clearance",
+          "an identifiable face of any of the five playable heroes, a signing official or celebrated victory",
+          "any proof of witness safety, factory closure, paid compensation or conclusive court decision"
+        ]
+      }
+    }
+  ]
+}

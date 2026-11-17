@@ -29,8 +29,13 @@ session_exit=suites['session_exit_tests.py']['results']
 regressions+=session_exit
 assert len(suites['regression_tests.py']['results'])==14,'Incomplete earlier regression suite'
 assert len(suites['issue3_tests.py']['results'])==29,'Incomplete Issue #3 regression suite'
-assert len(session_exit)==5,'Incomplete session exit regression suite'
-assert len({r['name'] for r in regressions})==48,'Duplicate regression IDs'
+assert len(session_exit)==6,'Incomplete session exit regression suite'
+assert {r['name'] for r in session_exit}=={
+ 'session_exit/active_jack_keeps_finn','session_exit/active_finn_keeps_jack',
+ 'session_exit/active_menu_preserves_save','session_exit/from_menu_preserves_save',
+ 'session_exit/completed_report_preserved','session_exit/cancel_preserves_everything',
+},'Missing or changed session exit scenario IDs'
+assert len({r['name'] for r in regressions})==49,'Duplicate regression IDs'
 actual=[r['name'] for r in baseline]
 assert len(actual)==154 and len(set(actual))==154 and set(actual)==expected,{'missing':sorted(expected-set(actual)),'unexpected':sorted(set(actual)-expected),'count':len(actual)}
 errors=[e for d in suites.values() for e in d['page_errors']]

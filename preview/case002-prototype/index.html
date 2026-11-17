@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e0b0a">
+<title>Дело №002 — Последний поезд из Бирмингема</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../../audio-v1.css">
+</head>
+<body>
+<nav id="case002MapReturnBar" class="case002-map-return-bar" aria-label="Навигация между делом и картой" hidden>
+  <a id="case002MapReturn" href="../../index.html#district-digbeth" aria-label="К карте Бирмингема">
+    <span class="map-nav-wide" aria-hidden="true">← К КАРТЕ БИРМИНГЕМА</span>
+    <span class="map-nav-compact" aria-hidden="true">← К КАРТЕ</span>
+  </a>
+  <a id="case002SharedArchiveLink" href="../../index.html#campaignAchievements" aria-label="Общий архив достижений и наград двух дел">
+    <span class="map-nav-wide" aria-hidden="true">✦ ОБЩИЙ АРХИВ ДВУХ ДЕЛ</span>
+    <span class="map-nav-compact" aria-hidden="true">✦ ОБЩИЙ АРХИВ</span>
+  </a>
+</nav>
+<div id="app" class="app-shell" data-screen="briefing">
+  <div id="case002AudioDock" aria-label="Управление музыкой расследования"></div>
+  <header class="masthead">
+    <small>БИРМИНГЕМ • 1920</small>
+    <h1>Последний поезд из Бирмингема</h1>
+    <p>Дело №002 · Материалы ближнего круга</p>
+  </header>
+  <section class="case002-briefing" id="caseBriefing" aria-labelledby="briefTitle" aria-describedby="briefPremise" tabindex="-1">
+    <div class="briefing-visual">
+      <img src="../../assets/case002/briefing/case002-briefing-viaduct--mobile.webp" alt="Ночной железнодорожный виадук Бирмингема: паровоз появляется из тумана" width="720" height="900" decoding="async" fetchpriority="high">
+      <div class="briefing-visual-stamp" aria-hidden="true">BIRMINGHAM · 1920</div>
+    </div>
+    <div class="briefing-copy">
+      <span class="briefing-index">ДОСЬЕ №002 · ПЕРЕД НАЧАЛОМ</span>
+      <h2 id="briefTitle">Последний поезд из Бирмингема</h2>
+      <p class="briefing-premise" id="briefPremise">У железнодорожного виадука находят мёртвого человека. Вскоре женщина просит найти пропавшего брата. Записи в путевых книгах противоречат друг другу — и кто-то очень не хочет, чтобы их сравнили.</p>
+      <div class="briefing-rules" aria-label="Краткие правила расследования">
+        <h3>Как играть</h3>
+        <div class="briefing-rule"><span aria-hidden="true">01</span><p>Читайте сцены и выбирайте действия. Решения влияют на судьбы людей и исход дела.</p></div>
+        <div class="briefing-rule"><span aria-hidden="true">02</span><p>Собирайте улики. В «Выводах» можно сопоставить две находки; подсказки доступны по нажатию, ошибок не бойтесь.</p></div>
+        <div class="briefing-rule"><span aria-hidden="true">03</span><p>Прогресс сохраняется после решений, если браузер разрешает хранение. Продолжайте за тем, кому доверили дело.</p></div>
+      </div>
+      <button id="briefContinue" type="button" class="briefing-enter">ВЫБРАТЬ СВОЕГО <span aria-hidden="true">→</span></button>
+      <p class="briefing-note">Второе расследование не изменяет историю №001. Связь с прежним исходом выбирается отдельно.</p>
+    </div>
+  </section>
+  <section class="launch" id="launch" hidden aria-labelledby="launchTitle">
+    <p class="launch-eyebrow">ДЕЛО №002 · АРХИВ РАССЛЕДОВАНИЙ</p>
+    <h2 id="launchTitle">Кому доверить дело?</h2>
+    <p class="launch-intro">Пятеро своих. Пять способов добраться до правды. Выберите, кто возьмётся за это дело.</p>
+    <div id="heroGallery" class="hero-gallery" role="group" aria-label="Выбор человека ближнего круга">
+      <button type="button" class="hero-card" data-hero="jack" aria-pressed="true"><img src="../../assets/heroes/jack.webp" alt="" width="88" height="110"><span>Джек Харпер<small>Сила</small></span></button>
+      <button type="button" class="hero-card" data-hero="finn" aria-pressed="false"><img src="../../assets/heroes/finn.webp" alt="" width="88" height="110"><span>Финн О’Коннор<small>Скрытность</small></span></button>
+      <button type="button" class="hero-card" data-hero="eleanor" aria-pressed="false"><img src="../../assets/heroes/eleanor.webp" alt="" width="88" height="110"><span>Элеонора Блэквуд<small>Дедукция</small></span></button>
+      <button type="button" class="hero-card" data-hero="victor" aria-pressed="false"><img src="../../assets/heroes/victor.webp" alt="" width="88" height="110"><span>Виктор Мэллоу<small>Переговоры</small></span></button>
+      <button type="button" class="hero-card" data-hero="samuel" aria-pressed="false"><img src="../../assets/heroes/samuel.webp" alt="" width="88" height="110"><span>Сэмюэл Рид<small>Механика</small></span></button>
+    </div>
+    <input id="hero" type="hidden" value="jack">
+    <p id="selectedHeroStatus" class="hero-selection-status" role="status" aria-live="polite"></p>
+    <div id="collectionReturnBar" class="collection-return-bar" hidden>
+      <span>АРХИВ · ДЕЛО №002</span>
+      <button id="collectionReturnFromLaunch" type="button">← К ИТОГУ РАССЛЕДОВАНИЯ</button>
+    </div>
+    <details id="caseRewardArchive" class="case-reward-archive">
+      <summary>НАГРАДЫ ДЕЛА №002 <span id="caseRewardCount">0</span></summary>
+      <div id="caseRewardList" class="case-reward-list" aria-label="Уже полученные награды этого дела"></div>
+    </details>
+    <details id="caseAchievementArchive" class="case-achievement-archive">
+      <summary>ДОСТИЖЕНИЯ ДЕЛА №002 <span id="caseAchievementCount">0 / 18</span></summary>
+      <div id="caseAchievementList" class="case-achievement-list" aria-label="Достижения расследования"></div>
+    </details>
+    <details id="priorDetails" class="prior-details" hidden>
+      <summary>Связать с Делом №001 <span>необязательно</span></summary>
+      <label for="prior">Сохранённый исход предыдущего дела</label>
+      <select id="prior"><option value="">Начать отдельно · без исхода №001</option></select>
+      <p class="muted">Выбор повлияет только на новую попытку. Старые прохождения не изменяются.</p>
+    </details>
+    <div class="launch-actions">
+      <button id="begin" type="button">НАЧАТЬ НОВОЕ ДЕЛО</button>
+      <button id="resume" type="button" class="secondary">ПРОДОЛЖИТЬ СОХРАНЕНИЕ</button>
+    </div>
+    <button id="backToBriefing" class="launch-brief-back" type="button">← ОПИСАНИЕ ДЕЛА И ПРАВИЛА</button>
+    <p class="error" id="launchError" role="alert" hidden></p>
+  </section>
+  <main id="game" hidden>
+    <div class="chapter-row">
+      <span id="chapterLabel">ГЛАВА</span><span id="sceneId">P01</span>
+    </div>
+    <section id="chapterIntertitle" class="chapter-intertitle" aria-label="Начало главы" hidden>
+      <div id="intertitleName" class="chapter-intertitle-name"></div>
+      <p id="intertitleLine" class="chapter-intertitle-line"></p>
+    </section>
+    <div class="notice" id="notice" role="status" aria-live="polite" hidden>
+      <div class="notice-kicker" id="noticeKicker">ИЗМЕНЕНИЯ В ДЕЛЕ</div>
+      <div id="noticeContent" class="notice-content"></div>
+      <div class="notice-actions">
+        <button id="noticeExpand" type="button" class="notice-expand" aria-expanded="false" hidden>ВСЕ ИЗМЕНЕНИЯ</button>
+        <button id="noticeJump" type="button" class="notice-open" hidden>ОТКРЫТЬ В ДОСЬЕ</button>
+        <button id="noticeExit" type="button" class="notice-open" hidden>К ВЫБОРУ ГЕРОЯ</button>
+        <button id="noticeDismiss" type="button" class="notice-close">ПОНЯТНО</button>
+      </div>
+    </div>
+    <aside id="caseUnlockToast" class="case-unlock-toast"
+      role="status" aria-live="polite" aria-atomic="true"
+      aria-label="Награда или достижение Дела номер два" aria-relevant="additions text"
+      hidden></aside>
+    <div class="case-pulse" id="casePulse" aria-label="Состояние расследования">
+      <span id="pulseEvidence">Улик: 0</span>
+      <span id="pulseProof">Выводов: 0</span>
+      <span id="pulseSafe">В безопасности: 0</span>
+    </div>
+    <article class="story" id="storyPanel" aria-labelledby="sceneTitle" tabindex="-1">
+      <div class="scene-heading">
+        <img id="heroPortrait" class="hero-portrait" alt="" width="80" height="100" decoding="async">
+        <div class="scene-heading-title"><span class="portrait-label">ИСТОРИЯ ГЕРОЯ</span><h2 id="sceneTitle"></h2><span id="heroName" class="hero-name"></span></div>
+      </div>
+      <div id="sceneLocation" class="scene-location"></div>
+      <section id="caseAchievementReceipt" class="case-achievement-receipt"
+        aria-label="Новые достижения" tabindex="-1" hidden></section>
+      <div class="story-read-action"><button id="readScene" class="story-read-button" type="button">К ТЕКСТУ СЦЕНЫ ↓</button></div>
+      <figure id="sceneArtwork" class="scene-artwork" hidden>
+        <img id="sceneArtworkImage" alt="" decoding="async" loading="eager">
+        <figcaption class="scene-art-caption" aria-label="Подпись кадра">
+          <span id="sceneArtChapter">КАДР</span><span id="sceneArtPlace">Место расследования</span>
+        </figcaption>
+      </figure>
+      <div id="artRecovery" class="art-recovery" role="status" hidden>
+        <p>Иллюстрация временно недоступна. Текст и решения можно читать дальше.</p>
+        <button id="artRetry" type="button" class="art-retry">ПОВТОРИТЬ ЗАГРУЗКУ</button>
+      </div>
+      <section id="sceneCast" class="scene-cast" aria-label="Участники текущей сцены" hidden></section>
+      <div class="narrative-divider" aria-hidden="true"><span>✦</span> ДЕЛО №002 <span>✦</span></div>
+      <div class="scene-context scene-reading-context" aria-label="Место в расследовании">
+        <span id="readingSceneMarker"></span><span id="readingScenePlace"></span>
+      </div>
+      <div class="story-content" id="sceneText" role="region" aria-label="Текст текущей сцены" tabindex="-1"></div>
+    </article>
+    <section class="choices" id="choicesPanel" aria-label="Действия" tabindex="-1">
+      <div class="scene-context scene-decision-context" aria-label="Сцена, для которой принимается решение">
+        <span id="decisionSceneMarker"></span><strong id="decisionSceneTitle"></strong>
+      </div>
+      <h3><span id="choicesHeading">Ваше решение</span> <span class="choices-hint" id="choicesHint">Каждый выбор имеет последствия</span></h3>
+      <div id="choiceList" class="choice-list"></div>
+    </section>
+    <section class="case-tools" id="caseTools" aria-label="Досье расследования" tabindex="-1">
+      <div class="scene-context scene-tools-context" aria-label="Текущая глава и раздел досье">
+        <span id="toolsSceneMarker"></span><strong id="toolsSectionLabel"></strong>
+      </div>
+      <div class="tool-tabs" role="group" aria-label="Вспомогательные разделы">
+        <button class="tool-tab" data-tab="evidence" aria-pressed="true">УЛИКИ</button>
+        <button class="tool-tab" data-tab="deductions" aria-pressed="false">ВЫВОДЫ</button>
+        <button class="tool-tab" data-tab="witnesses" aria-pressed="false">ЛЮДИ</button>
+        <button class="tool-tab" data-tab="journal" aria-pressed="false">ХОД ДЕЛА</button>
+      </div>
+      <div id="toolContent" class="tool-content"></div>
+    </section>
+    <nav id="quickNav" class="case-quick-nav" aria-label="Быстрый переход по делу">
+      <div id="readingProgress" class="case-reading-progress" hidden aria-hidden="true">
+        <span id="readingProgressFill" class="case-reading-progress-fill"></span>
+      </div>
+      <button type="button" data-go="scene">СЦЕНА</button>
+      <button type="button" data-go="choices">ВЫБОР</button>
+      <button type="button" data-go="evidence">УЛИКИ</button>
+      <button type="button" data-go="deductions">ДОСКА</button>
+      <button type="button" data-go="witnesses">ЛЮДИ</button>
+      <button type="button" data-go="journal">АРХИВ</button>
+    </nav>
+    <div class="underbar">
+      <span id="saveStatus">Автосохранение после каждого решения</span>
+      <button id="backToLaunch" type="button" class="text-button">К ВЫБОРУ ГЕРОЯ</button>
+    </div>
+  </main>
+</div>
+<!-- Browsers cannot lock physical rotation consistently. A landscape phone
+     shows this pause screen; the running game and saved choices are untouched. -->
+<div id="portraitGate" class="portrait-gate" role="status" aria-live="polite">
+  <div class="portrait-gate-content">
+    <span class="portrait-gate-mark" aria-hidden="true">◈</span>
+    <strong>Верните телефон в вертикальное положение</strong>
+    <p>Расследование создано для вертикального экрана. Ваш прогресс сохранён.</p>
+  </div>
+</div>
+<script src="../../src/case002/browser-data-v3.js"></script>
+<script src="../../src/case002/engine-v3.js"></script>
+<script src="../../src/case002/story-variants-v4.js"></script>
+<script src="../../src/case002/scene-art-v1.js"></script>
+<script src="../../src/case002/cast-registry-v1.js"></script>
+<script src="../../src/case002/scene-cast-v1.js"></script>
+<script src="../../src/case002/approved-art-v1.js"></script>
+<script src="../../src/case002/telegram-safe-area-v1.js"></script>
+<script src="../../src/case002/consequences-v1.js"></script>
+<script src="../../src/case002/journal-v1.js"></script>
+<script src="../../src/case002/evidence-icons-v1.js"></script>
+<script src="../../src/case002/deduction-board-v1.js"></script>
+<script src="../../src/case002/scene-prose-v1.js"></script>
+<script src="../../src/case002/ui-events-v1.js"></script>
+<script src="../../src/case002/ending-recap-v1.js"></script>
+<script src="../../src/case002/achievements-v1.js"></script>
+<script src="app.js"></script>
+<script src="../../src/audio/playlist-v27.js"></script>
+<script src="../../audio-v1.js" data-soundtrack="detective"></script>
+</body>
+</html>

@@ -128,6 +128,7 @@ def hero_action(browser,hero):
  else:assert s['items']==before['items']
  assert s['health']==before['health'] and s['medicalKits']==before['medicalKits'] and s['riskSeen']==before['riskSeen']
  assert g.meta() is None,'hero actions must not fabricate deductions'
+ if hero=='eleanor':assert 'полицейском участке' in g.choice('reed').inner_text()
  g.path(path);assert g.state()['ending']=='endingRescue'
  return {'hero':hero,'action':target,'clue':item,'ending':'endingRescue'}
 

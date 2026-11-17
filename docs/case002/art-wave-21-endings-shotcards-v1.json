@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 2,
+  "chapter": "END",
+  "source": "Original Case002 ending screenplay and storyboard; Z01–Z07 are seven distinct accepted main-ending candidate image turns, plus an additional neutral evacuated Z02 variant; all remain uninstalled.",
+  "scenes": [
+    {
+      "id": "Z01",
+      "sceneKind": "action",
+      "focus": "a serious dark-haired woman newspaper editor inspects a newly printed broadsheet with two distinct columns of dense newspaper type, standing close beside an old heavy printing press during the first daylight hours",
+      "camera": "intimate medium vertical view from behind and slightly over the editor's shoulder, emphasizing the single printed page in both hands, the cast-iron press, and her pinned-up dark hair; no full face or other character visible",
+      "location": "a compact soot-stained Birmingham newspaper printing room in the 1920s",
+      "required": [
+        "one woman newspaper editor with dark hair pinned up, rolled cream blouse sleeves and dark period waistcoat holding a fresh broadsheet in both hands",
+        "one full broadsheet displaying two separate dense columns of small indistinct period newspaper print, without a legible personal name or headline",
+        "one large worn cast-iron newspaper letterpress with ink-dark rollers and stacked news sheets on a wooden bench"
+      ],
+      "background": "letterpress type racks, inking pot and rags, soot-dark old brick walls, rain-dimmed tall workshop window and industrial chimney silhouettes beyond",
+      "light": "early cool grey daylight through the printing-room window with a warm amber gas lamp grazing the press metal and paper fibers",
+      "npc": "Nora, the serious dark-haired newspaper editor, seen from the back or hidden three-quarter profile; no visible witness faces, no identifiable playable detective",
+      "knowledgeBoundary": "The finished printed page may represent publication of two independently checked chains of evidence in this particular ending. No real witness names, home addresses or a child's identity may be read. The image does not specify which two or three witnesses are protected and does not imply that Vale has been convicted, that Mercer testified, or that justice is complete. Those details belong to the actual story state and narrative overlay.",
+      "avoid": [
+        "real or invented legible witness names, identifying signatures, private addresses, child's details or sensational accusation headline",
+        "Vale in custody, a police verdict, courtroom conviction, or a crowd celebrating a completed prosecution",
+        "three people shown as universally rescued when their individual witness statuses can vary",
+        "recognizable faces of the five selectable heroes or a substitute canonical face for Nora"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "Z02",
+      "sceneKind": "transition",
+      "focus": "a solitary black leather-gloved hand in the close foreground holds one closed worn brown document folio near the open doorway of an empty dark red passenger train at dawn, while the deserted rain-soaked platform stretches toward Birmingham's smoke stacks",
+      "camera": "first-person close view angled toward the carriage's empty entrance and iron step, with only the lower edge of one black glove and the plain folio in the foreground, no visible body or face",
+      "location": "a rain-wet railway platform outside industrial Birmingham in the 1920s",
+      "required": [
+        "one black leather-gloved hand alone at the bottom of the scene holding one fully closed weathered brown document folio with a brass clasp",
+        "a stationary old dark burgundy riveted railway carriage with open doorway, empty amber-lit compartment and wet iron boarding step",
+        "a deserted stone platform with empty benches, vintage station lanterns and distant smoky factory chimneys in pale morning light"
+      ],
+      "background": "a cast-iron platform canopy, reflective puddles on old stone pavement, dark brick railway buildings and smoke-dimmed industrial rooftops",
+      "light": "soft grey-orange dawn behind the chimneys and amber gas-lamp glow inside the empty carriage reflecting across the wet platform",
+      "npc": "only a small cropped anonymous gloved hand is present; no full silhouette, head, face, body or other person appears",
+      "knowledgeBoundary": "Only the zero-evacuee ending state is represented: the investigator departs with the closed folio but no witness is shown or implied to have been evacuated. The hand does not identify any playable hero by gender, appearance or body shape. Routes with evacuated witnesses require their own state-appropriate artwork or separately verified neutral coverage.",
+      "avoid": [
+        "a visible male or female protagonist, full body, shoulders, face, cap or recognizable hero silhouette",
+        "any protected or evacuated witness waiting on the platform or inside the carriage",
+        "a visible new identity, readable document, name, station label or confirmed outcome for absent witnesses",
+        "a crowd, safe-house arrival, triumphant rescue or guarantee that all witnesses are protected"
+      ],
+      "intendedVariant": "evacuated-none"
+    },
+    {
+      "id": "Z03",
+      "sceneKind": "aftermath",
+      "focus": "a defeated private factory security chief with carefully combed dark hair sits stiffly at an old police desk with hands held close together while a young uniformed constable watches attentively beside him, a somber moment of partial accountability",
+      "camera": "three-quarter medium interior view from behind the seated chief and slightly to his left, with the officer in dark uniform in partial profile at the right edge, avoiding an unverified full facial likeness",
+      "location": "a modest municipal police records office in industrial Birmingham in the 1920s",
+      "required": [
+        "one stockily built private factory security chief in a heavy dark wool overcoat, carefully slicked dark hair, seated at a wooden police desk and viewed mainly from behind",
+        "one young police constable in a period dark buttoned tunic and domed police helmet standing close to the table, his face in partial shadow and turned aside",
+        "one open handwritten police case ledger on the desk beneath a brass desk lamp, with no readable accusation or named factory manager"
+      ],
+      "background": "weathered brick police office, dark wooden filing cabinets, stacked plain archive folders, large rain-streaked window overlooking industrial chimneys",
+      "light": "warm amber brass desk lamp on the open register, cool wet blue-gray daylight through the high multi-pane window",
+      "npc": "Brackett is identifiable by role, stout coat and groomed dark hair, shown from behind without a decisive invented face; Rowan is a young constable shown in side profile and shadow, matching their period roles",
+      "knowledgeBoundary": "Brackett is under police attention for the proved death of Hale in a limited-accountability ending, but the image depicts neither a court conviction nor wider factory-management responsibility. It does not imply official publication of factory-death lists, legal guilt of Vale or any witness's fate. The scenario remains the sole source of evidentiary and legal states.",
+      "avoid": [
+        "a judge, jury, jail sentence, signed confession or legible guilt verdict",
+        "Vale or factory management behind bars, or an allegation that the factory directors were charged",
+        "readable witness identities, published casualty lists, invented named testimony or extra story evidence",
+        "recognizable face of a selectable hero, fabricated precise scar depiction or mismatched named character portrait"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "Z04",
+      "sceneKind": "evidence",
+      "focus": "the older industrial factory owner's veined hand has just put down a black and gold fountain pen alongside one signed parchment agreement bearing a small red wax seal on a polished wooden office desk",
+      "camera": "intimate angled close-up across the paper, hand and fountain pen with the factory office window above, showing no face of the owner or the anonymous playable investigator",
+      "location": "the private office of an industrial factory owner overlooking Birmingham factories in the 1920s",
+      "required": [
+        "one weathered older man's hand with a gold signet ring and heavy dark wool suit cuff just releasing a fountain pen onto the desk",
+        "one aged signed agreement paper with a red wax seal, illegible cursive strokes and no readable witness names or listed beneficiaries",
+        "a warm brass desk lamp illuminating the document with rain-streaked window and smoking industrial chimneys beyond"
+      ],
+      "background": "dark timber desk, glass ink vessel, deep red curtains, rain-streaked multi-pane window, soot-covered brick factory buildings and working smokestacks",
+      "light": "warm amber desk lamp on wax seal and paper fibers against cold blue-gray rainy factory daylight",
+      "npc": "Vale's aged hand and tailored heavy suit cuff are shown in close-up only, without his face, and no visible selectable detective",
+      "knowledgeBoundary": "This signed guarantee is authentic only in the signed-agreement ending. It secures only the particular witnesses actually included in the deal, as determined by dynamic narrative flags; it cannot imply that all three witnesses were released or protected. The factory continues operating and the previously recorded two dead remain unremedied; no public prosecution or broader justice is announced.",
+      "avoid": [
+        "readable witness names, detailed protected-person lists, invented signatures or fabricated addresses",
+        "a group of rescued witnesses, a broad pardon, universal protection or a completed public conviction",
+        "a visible identifiable playable hero, an invented full face of Vale or a replacement canonical portrait",
+        "a courtroom verdict, newly signed contract by the hero or a public announcement ending the investigation"
+      ],
+      "intendedVariant": "guarantee-signed"
+    },
+    {
+      "id": "Z05",
+      "sceneKind": "aftermath",
+      "focus": "an old mechanical railway switch stands still in the foreground of a rain-soaked freight siding, while a few exhausted factory workers wait silently away from the tracks beyond a locked crossing gate, one holding an unmarked folded wage envelope",
+      "camera": "low vertical view along the empty rain-glossed rails and rusted switch lever toward the closed iron crossing gate and small distant group of workers, without a close recognizable face",
+      "location": "a closed private factory railway siding at dawn in industrial Birmingham in the 1920s",
+      "required": [
+        "one motionless old hand-operated railway switch with intact rails and wet sleepers in the clear unoccupied foreground",
+        "one chained and padlocked weathered red-and-cream railway crossing gate cutting off access to the siding",
+        "several weary anonymous workers standing together well clear of the tracks, one holding an unmarked folded paper envelope"
+      ],
+      "background": "a stationary dark goods wagon, smoke-dark brick factories, rain-slick stone pavement, a warm gas lantern and distant chimney smoke in the grey morning",
+      "light": "cold misty dawn and hard rain over wet iron rails, with warm amber lantern and scattered factory-window reflections",
+      "npc": "anonymous factory shift workers seen mostly from behind behind the boundary gate, no faces of selectable investigators, no injuries or missing witnesses pictured",
+      "knowledgeBoundary": "This is the aftermath of a halted private railway branch once workersCleared is true. The image must not imply harm to innocent workers, a train crash, a blast, proof that anyone remains on the track, or a financial resolution. The workers' delayed pay and loss of employment opportunity are shown by posture and context; no exact wages or headcount are established.",
+      "avoid": [
+        "injured people, bodies, burning freight cars, exploded tracks or active sabotage",
+        "workers standing in the train's path, a moving locomotive or a fatal accident",
+        "readable wage amounts, invented employer notices, names or a guarantee of future compensation",
+        "a recognizable playable hero or previously established witness appearing without story permission"
+      ],
+      "intendedVariant": "empty-safe-siding"
+    },
+    {
+      "id": "Z06",
+      "sceneKind": "evidence",
+      "focus": "several real copied account sheets from a security chief's ledger lie under one anonymous black leather-gloved hand on an investigator's desk, while the door into the office remains dark",
+      "camera": "intimate vertical over-the-desk viewpoint, anonymous single gloved hand entering only from the bottom margin, duplicated accounting sheets dominating the foreground and the menacing empty doorway behind",
+      "location": "a private investigator's shadowy office in industrial Birmingham at night in the 1920s",
+      "required": [
+        "one anonymous leather-gloved hand with no visible face or body holding down loose separate copied accounting sheets",
+        "multiple physical duplicate account pages filled with indistinct handwritten columns, without legible names or meaningful figures",
+        "a heavy brass desk lamp over the papers and a half-open dark wooden door revealing only blue-black empty shadow"
+      ],
+      "background": "rain-streaked industrial window with smoking factory chimneys, dark brick, worn books, closed leather folder, and discreet desk clutter",
+      "light": "warm localized amber brass lamp against cold rainy slate-blue nighttime shadows, restrained smoke and deep chiaroscuro",
+      "npc": "only one anonymous neutral gloved hand in frame; no visible protagonist face or full silhouette and no other recognizable characters",
+      "knowledgeBoundary": "The real copies of Brackett's accounts belong physically to the playable hero only in the ending where flags.brackettAccountsHeld is true. Their control gives leverage but public justice is consciously postponed. There is no newspaper, trial, established conviction or confirmed outcome for Ada, Tommy, or Mercer; the art must not imply gender, age or appearance of any of the five selectable heroes.",
+      "avoid": [
+        "recognizable or full-body playable protagonist, masculine or feminine facial features, age or identifiable silhouette",
+        "a published newspaper, courtroom scene, police sentence, victory celebration or public revelation",
+        "readable names, detailed invented account figures, visible witness lists or proven witness outcomes",
+        "Brackett or Vale signing a confession, appearing as a new face or voluntarily handing over the ledger"
+      ],
+      "intendedVariant": "accounts-hero"
+    },
+    {
+      "id": "Z07",
+      "sceneKind": "aftermath",
+      "focus": "an extinguished rain-wet brass-and-iron storm lantern beside one tightly closed worn dark leather notebook case on mossy stone at an empty industrial canal lock just after dawn",
+      "camera": "intimate low vertical composition along the canal-side stones; the closed case and cold unlit lantern fill the near foreground, while empty lock gates, water and brick mills recede into the morning mist without a human figure",
+      "location": "the old industrial Birmingham canal lock and warehouse district in the 1920s",
+      "required": [
+        "one unlit, water-speckled vintage storm lantern with its wick flame fully extinguished standing upright on the damp canal stone",
+        "one closed weathered dark leather notes case with clasp shut and no visible handwritten note, names, documents, hand or personal identity",
+        "still black canal water and timber lock gates beyond the mossy wet stone edge at a deserted canal lock"
+      ],
+      "background": "soot-dark brick warehouses, industrial chimney smoke, distant iron bridge, dripping stonework and rainwater reflections in the shallow grey-orange dawn mist",
+      "light": "pale blue-grey early dawn and subtle orange industrial window glow, with no active flame inside the nearby lantern; muted film noir contrast",
+      "npc": "empty aftermath view only; no hero or NPC present, no body, no face, no gender-identifiable clothing or person",
+      "knowledgeBoundary": "The fatal ending occurs only after the player knowingly chooses a warned dangerous action and health <= 0. The unlit lantern and closed notes case signify the deserted lock's aftermath; the narrative alone confirms the player's death. An unknown person later removes the case before police arrive, but this later act is not depicted. No outcome for Ada, Tommy, Mercer or other witnesses is inferred; the selectable hero has no prescribed sex, age or appearance.",
+      "avoid": [
+        "visible corpse, blood, gunshot impact, active shooter, weapon, crime reenactment or glamorized fatal violence",
+        "gender-specific or recognizable playable protagonist, full or cropped body, face, silhouette, boots or identifying clothing",
+        "readable notes, victim identification, police report, named witness, identifying case inscription or opened papers",
+        "a rescuer or thief taking the case, police arriving at the lock, new witness outcomes or celebratory resolution"
+      ],
+      "intendedVariant": "after-danger"
+    }
+  ]
+}

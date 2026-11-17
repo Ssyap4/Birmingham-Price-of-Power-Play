@@ -1,25 +1,89 @@
 (()=>{'use strict';
-const base='assets/audio/';
-// Menu track supplied for this project.
-const playlists={menu:['night-on-the-docks.mp3'],case:['case-fog.ogg','case-ledger.ogg','case-shadows.ogg']};
+const core=window.BirminghamPlaylistV27,script=document.currentScript;
+if(!core||!script)return;
+const casePage=script.dataset.soundtrack==='detective';
+const base=new URL('assets/audio/soundtrack/',script.src).href;
+const rotation=core.createRotation();
+const credits=[{"title":"Covert Affair","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100795","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},{"title":"Just As Soon","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100185","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},{"title":"Spy Glass","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500058","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},{"title":"Moil","author":"Ruskerdax","license":"CC0 1.0","source":"https://opengameart.org/content/moil","licenseUrl":"https://creativecommons.org/publicdomain/zero/1.0/"},{"title":"Hard Boiled","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700076","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},{"title":"Dances and Dames","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100595","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},{"title":"Deadly Roulette","author":"Kevin MacLeod","license":"CC BY 4.0","source":"https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600033","licenseUrl":"https://creativecommons.org/licenses/by/4.0/"}];
 const saved=(key,def)=>{try{const v=localStorage.getItem(key);return v===null?def:v==='true'}catch{return def}};
-let musicOn=saved('bh_music_enabled',true),effectsOn=saved('bh_effects_enabled',true),ctx=null,mode='',index=0,active=0,transitioning=false,started=false;
-const players=[new Audio(),new Audio()];players.forEach(p=>{p.preload='none';p.volume=0;p.addEventListener('error',()=>{if(musicOn&&started)console.warn('Аудиофайл недоступен:',p.src)})});
-const wrap=document.createElement('div');wrap.className='bh-audio-controls';wrap.innerHTML='<button id="bhMusic" type="button" aria-label="Включить или выключить музыку"></button><button id="bhEffects" type="button" aria-label="Включить или выключить звуковые эффекты"></button>';
-document.body.append(wrap);
-const mBtn=wrap.querySelector('#bhMusic'),sBtn=wrap.querySelector('#bhEffects');
-function paint(){mBtn.textContent=musicOn?'♫ Музыка: вкл':'♫ Музыка: выкл';sBtn.textContent=effectsOn?'♧ Эффекты: вкл':'♧ Эффекты: выкл';mBtn.setAttribute('aria-pressed',String(musicOn));sBtn.setAttribute('aria-pressed',String(effectsOn))}paint();
-const volume=.19;let fadeToken=0;
-function ramp(p,from,to,duration,token,done){const began=performance.now();function tick(now){if(token!==fadeToken)return;const x=Math.min(1,(now-began)/duration);p.volume=Math.max(0,Math.min(1,from+(to-from)*(x*x*(3-2*x))));if(x<1)requestAnimationFrame(tick);else if(done)done()}requestAnimationFrame(tick)}
-function changeTrack(nextMode,nextIndex,fade=1900){if(!musicOn||!started)return;const next=1-active,old=players[active],fresh=players[next],token=++fadeToken;transitioning=true;fresh.pause();fresh.src=base+playlists[nextMode][nextIndex];fresh.currentTime=0;fresh.volume=0;fresh.play().then(()=>{ramp(fresh,0,volume,fade,token,()=>{transitioning=false});ramp(old,old.volume,0,fade,token,()=>old.pause());active=next;mode=nextMode;index=nextIndex}).catch(()=>{transitioning=false;old.pause()})}
-function contextMode(){if(!document.querySelector('#heroSelection[hidden]')&&document.querySelector('#heroSelection'))return 'menu';const c=document.querySelector('#caseGame');return c&&!c.hidden?'case':'menu'}
-function sync(){const target=contextMode();if(!started||!musicOn)return;if(mode!==target){changeTrack(target,0,1600);return}const p=players[active];if(!transitioning&&p.duration&&p.duration-p.currentTime<2.6){changeTrack(mode,(index+1)%playlists[mode].length,2200)}}
-function start(){if(started||!musicOn)return;started=true;mode=contextMode();index=0;const p=players[active];p.src=base+playlists[mode][0];p.volume=0;p.play().then(()=>{ramp(p,0,volume,1800,++fadeToken)}).catch(()=>{started=false})}
-function resume(){if(musicOn&&!started)start();else sync()}
-mBtn.addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem('bh_music_enabled',musicOn)}catch{};paint();if(musicOn){started=false;start()}else{started=false;++fadeToken;players.forEach(p=>p.pause())}});
-sBtn.addEventListener('click',()=>{effectsOn=!effectsOn;try{localStorage.setItem('bh_effects_enabled',effectsOn)}catch{};paint();if(effectsOn)beep('click')});
+let musicOn=saved('bh_music_enabled',true),effectsOn=saved('bh_effects_enabled',true),ctx=null;
+const players=[new Audio(),new Audio()],gains=[null,null],levels=[0,0];
+players.forEach(p=>{p.preload='metadata';p.volume=0});
+const volume=.075,fadeMs=3400;
+let active=-1,mode=null,trackId=null,phase='idle',token=0,unlocked=false,pending=null,blocked=false;
+const wrap=document.createElement('div');wrap.className='bh-audio-controls';
+wrap.innerHTML='<button id="bhMusic" type="button" aria-label="Включить или выключить музыку"></button><button id="bhEffects" type="button" aria-label="Включить или выключить звуковые эффекты"></button><button id="bhMenuTrack" type="button" aria-label="Следующая композиция"></button>';
+(casePage?document.getElementById('case002AudioDock')||document.body:document.body).append(wrap);
+const mBtn=wrap.querySelector('#bhMusic'),sBtn=wrap.querySelector('#bhEffects'),trackBtn=wrap.querySelector('#bhMenuTrack');
+function paintTrack(){const busy=phase!=='idle';trackBtn.disabled=!musicOn||busy;trackBtn.textContent=busy?'♪ Смена записи…':'♪ Следующая запись';}
+function paint(){paintTrack();mBtn.textContent=musicOn?'♫ Музыка: вкл':'♫ Музыка: выкл';sBtn.textContent=effectsOn?'♧ Эффекты: вкл':'♧ Эффекты: выкл';mBtn.setAttribute('aria-pressed',String(musicOn));sBtn.setAttribute('aria-pressed',String(effectsOn))}
+function addCredits(){
+ const host=casePage?document.getElementById('case002AudioDock'):document.getElementById('profile');
+ if(!host)return;const details=document.createElement('details');details.className='bh-music-credits';
+ const summary=document.createElement('summary');summary.textContent='Музыка и авторы';details.append(summary);
+ for(const item of credits){const p=document.createElement('p');p.append(document.createTextNode(item.title+' — '+item.author+' · '));
+ const license=document.createElement('a');license.href=item.licenseUrl;license.textContent=item.license;license.rel='noopener noreferrer';license.target='_blank';
+ const source=document.createElement('a');source.href=item.source;source.textContent='источник';source.rel='noopener noreferrer';source.target='_blank';p.append(license,document.createTextNode(' · '),source);details.append(p)}
+ const note=document.createElement('p');note.textContent='Записи перекодированы в MP3 96 кбит/с; метаданные удалены. Изменена громкость воспроизведения.';details.append(note);host.append(details);
+}paint();addCredits();
+function audioContext(){
+ // file:// media may be opaque to Web Audio. Leave its native output connected.
+ if(location.protocol==='file:')return;
+ try{
+  ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==='suspended')ctx.resume().catch(()=>{});
+  for(let i=0;i<2;i++)if(!gains[i]){
+   const gain=ctx.createGain();gain.gain.value=levels[i];
+   const source=ctx.createMediaElementSource(players[i]);source.connect(gain);gain.connect(ctx.destination);gains[i]=gain;players[i].volume=1;
+  }
+ }catch{}
+}
+function setLevel(i,v){if(i<0)return;levels[i]=Math.max(0,Math.min(1,v));if(gains[i])gains[i].gain.value=levels[i];else players[i].volume=levels[i]}
+function mark(){paintTrack();document.body.classList.toggle('bh-music-playing',musicOn&&active>=0&&!players[active].paused&&!document.hidden)}
+function halt(keepPlan=false){const resume=keepPlan?(pending|| (trackId?{mode,id:trackId}:null)):null;++token;phase='idle';active=-1;mode=null;trackId=null;pending=resume;blocked=false;players.forEach((p,i)=>{p.pause();setLevel(i,0)});mark()}
+function targetMode(){return core.resolveContext(document,{casePage})}
+function planFor(target){if(pending?.mode===target)return pending;return {mode:target,id:rotation.mode===target?rotation.next():rotation.enter(target)}}
+function playPlan(plan){
+ if(!plan?.id||!musicOn||!unlocked||document.hidden||phase!=='idle')return;
+ const old=active,next=old===0?1:0,p=players[next],epoch=++token,oldLevel=old>=0?levels[old]:0;
+ pending=plan;phase='loading';paintTrack();p.pause();setLevel(next,0);p.src=base+plan.id+'.mp3';
+ function failed(){if(epoch!==token)return;phase='idle';blocked=true;p.pause();setLevel(next,0);mark()}
+ let playing;try{playing=p.play()}catch{failed();return}
+ Promise.resolve(playing).then(()=>{
+  if(epoch!==token)return;
+  active=next;mode=plan.mode;trackId=plan.id;pending=null;blocked=false;phase='fading';mark();
+  const begin=performance.now();
+  function tick(now){
+   if(epoch!==token)return;
+   const t=Math.min(1,Math.max(0,(now-begin)/fadeMs)),[out,inc]=core.fadeGains(t);
+   setLevel(next,volume*inc);if(old>=0)setLevel(old,oldLevel*out);
+   if(t<1)requestAnimationFrame(tick);
+   else{if(old>=0){players[old].pause();setLevel(old,0)}phase='idle';paintTrack();sync()}
+  }requestAnimationFrame(tick);
+ }).catch(failed);
+}
+function sync(){
+ if(!musicOn||!unlocked||document.hidden)return;
+ const target=targetMode();
+ // On a rapid route change, cancel stale loading/fading rather than playing an obsolete context.
+ if((phase==='loading'&&pending?.mode!==target)||(phase==='fading'&&mode!==target)||(blocked&&pending?.mode!==target))halt();
+ if(phase!=='idle'||blocked)return;
+ const p=active>=0?players[active]:null;
+ if(!p||mode!==target||p.ended||p.paused||Number.isFinite(p.duration)&&p.duration>0&&p.duration-p.currentTime<=fadeMs/1000+.4)playPlan(planFor(target));
+}
+function gesture(){if(!musicOn||document.hidden)return;unlocked=true;audioContext();blocked=false;sync()}
+players.forEach((p,i)=>{p.addEventListener('ended',()=>{mark();sync()});p.addEventListener('pause',mark);p.addEventListener('playing',mark);p.addEventListener('error',()=>{if(i===active){halt();blocked=true}})});
+mBtn.addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem('bh_music_enabled',musicOn)}catch{}paint();if(musicOn)gesture();else halt()});
+trackBtn.addEventListener('click',()=>{if(musicOn&&phase==='idle'){gesture();if(phase==='idle')playPlan({mode:targetMode(),id:rotation.mode===targetMode()?rotation.next():rotation.enter(targetMode())})}});
+sBtn.addEventListener('click',()=>{effectsOn=!effectsOn;try{localStorage.setItem('bh_effects_enabled',effectsOn)}catch{}paint();if(effectsOn)beep('click')});
 function beep(type){if(!effectsOn)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();const now=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter();o.type=type==='evidence'?'sine':'triangle';o.frequency.setValueAtTime(type==='evidence'?540:type==='open'?370:260,now);o.frequency.exponentialRampToValueAtTime(type==='evidence'?740:145,now+.085);f.type='lowpass';f.frequency.value=1300;o.connect(f);f.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(type==='evidence'?.085:.045,now+.012);g.gain.exponentialRampToValueAtTime(.0001,now+(type==='evidence'?.3:.13));o.start(now);o.stop(now+.32)}catch{}}
-document.addEventListener('pointerdown',e=>{resume();const b=e.target.closest('button,[role="button"],.case-evidence-card,.inventory-card');if(!b||wrap.contains(b))return;const label=(b.textContent||'').toLowerCase();beep(/улика|сопостав|инвентар/.test(label)?'evidence':/откры|начать|дело|выбр/.test(label)?'open':'click')},{passive:true});
-document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){resume();if(e.target.matches('button'))beep('click')}});
-setInterval(sync,450);window.BirminghamAudio={sync,playEffect:beep};
+
+document.addEventListener('pointerdown',e=>{if(wrap.contains(e.target))return;gesture();const btn=e.target.closest('button,[role="button"],.case-evidence-card,.inventory-card');if(!btn)return;const label=(btn.textContent||'').toLowerCase();beep(/улика|сопостав|инвентар/.test(label)?'evidence':/откры|начать|дело|выбр/.test(label)?'open':'click')},{passive:true});
+document.addEventListener('click',e=>{if(!wrap.contains(e.target))gesture()},{capture:true,passive:true});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!wrap.contains(e.target)){gesture();if(e.target.matches('button'))beep('click')}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)halt(true);else sync()});
+window.addEventListener('pagehide',()=>halt(true));
+window.addEventListener('pageshow',()=>{musicOn=saved('bh_music_enabled',musicOn);effectsOn=saved('bh_effects_enabled',effectsOn);paint();if(!musicOn)halt();else sync()});
+setInterval(sync,450);
+window.BirminghamAudio={sync,playEffect:beep,getState:()=>({mode,trackId,phase,musicOn,effectsOn,levels:[...levels],playing:active>=0&&!players[active].paused,currentTime:active>=0?players[active].currentTime:0,activeCount:players.filter(p=>!p.paused&&!p.ended).length,blocked,webAudio:gains.every(Boolean)})};
 })();

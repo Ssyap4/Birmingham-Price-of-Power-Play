@@ -1,0 +1,89 @@
+name: Case 002 scoped mobile smoke (draft only)
+# A scene-installation or browser-adapter validation change triggers full WebKit + Chromium; candidate art stays quick.
+# This milestone also validates approved discovered-people portraits and the
+# persisted journal expansion in full iPhone WebKit and Chromium.
+# Ensure approved hidden portraits are decoded eagerly on WebKit.
+# Also verify receipt touch-through navigation and long journal expansion in WebKit.
+# Case 002 finale gate: browser test must follow committed Z02, read archive
+# truthfully, reopen terminal save and return to hero selection without writes.
+# This revision explicitly rechecks Telegram inset pixel fallback in WebKit.
+# Stage 8: final portrait acceptance checks saved-hero cues, unread evidence,
+# direct journal access and narrow phone safe areas in Chromium AND WebKit.
+# This version verifies that the six-action dock uses two readable rows on 320px phones.
+on:
+  push:
+    branches: [feat/case002-story-bible-v1]
+    paths:
+      - 'preview/case002-prototype/**'
+      - 'src/case002/**'
+      - 'assets/case002/scenes/**'
+      - 'assets/case002/portraits/**'
+      - 'assets/heroes/*.webp'
+      - 'tests/case002/mobile_browser_smoke.py'
+      - 'tools/case002/ci-scope-v1.js'
+      - 'tests/case002/ci-scope-v1.test.js'
+      - '.github/workflows/case002-mobile-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case002-mobile-smoke
+  cancel-in-progress: true
+jobs:
+  phone-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Select quick or full mobile QA according to changes
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: node tools/case002/ci-scope-v1.js --github-output
+      - uses: actions/setup-python@v5
+        if: steps.scope.outputs.run_browser == 'true'
+        with:
+          python-version: '3.12'
+      - name: Install only the needed test browsers
+        if: steps.scope.outputs.run_browser == 'true'
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
+          if [ "${{ steps.scope.outputs.browser_full }}" = 'true' ]; then
+            python -m playwright install --with-deps chromium webkit
+          else
+            python -m playwright install --with-deps chromium
+          fi
+      # A full release-class mobile gate must test not only the source UI
+      # but the exact independent portrait-only web package it distributes.
+      # Quick UI commits still skip this package and expensive WebKit.
+      - name: Verify isolated Safari package when full mobile QA is required
+        if: steps.scope.outputs.browser_full == 'true'
+        run: |
+          node deployment/case002-safari-preview.js
+          node tests/case002/safari-package-integrity.test.js
+      - name: Fast local mobile QA of changed scene presentation
+        if: steps.scope.outputs.run_browser == 'true' && steps.scope.outputs.browser_full != 'true'
+        run: python tests/case002/mobile_browser_smoke.py --quick
+      - name: Full WebKit iPhone and Chromium story UI QA
+        if: steps.scope.outputs.browser_full == 'true'
+        run: python tests/case002/mobile_browser_smoke.py
+
+      - name: Capture mobile presentation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case002-mobile-visual-check
+          path: case002-qa-screens/
+          if-no-files-found: ignore
+          retention-days: 7
+
+# Finale archive text is neutral on iOS privacy mode: never claim persistence without storage.
+
+# Successful terminal scene uses its dedicated outcome panel, not a blocking duplicate receipt;
+# a post-commit archive error must still display its warning toast.

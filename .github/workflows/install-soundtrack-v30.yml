@@ -1,0 +1,52 @@
+name: V30 install pinned licensed soundtrack files
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths: ['.github/workflows/install-soundtrack-v30.yml']
+permissions:
+  actions: read
+  contents: write
+jobs:
+  install:
+    if: github.ref == 'refs/heads/feat/criminal-operations-polish-v3'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: soundtrack-v27-verified-candidate
+          run-id: 44113443377
+          github-token: ${{ github.token }}
+          path: work/soundtrack-install
+      - name: Verify exact approved bytes and copy only seven MP3 files
+        run: |
+          set -euo pipefail
+          cd work/soundtrack-install
+          sha256sum --check ../../docs/criminal-operations/soundtrack-v27.sha256
+          cd ../..
+          mkdir -p assets/audio/soundtrack
+          while read -r checksum file; do
+            test ! -e "$file"
+            cp -- "work/soundtrack-install/$file" "$file"
+          done < docs/criminal-operations/soundtrack-v27.sha256
+          sha256sum --check docs/criminal-operations/soundtrack-v27.sha256
+          cp work/soundtrack-install/MUSIC-CREDITS.txt docs/criminal-operations/MUSIC-CREDITS-v30.txt
+          cp work/soundtrack-install/soundtrack-proof.json docs/criminal-operations/soundtrack-proof-v30.json
+      - name: Verify package remains valid before committing
+        run: |
+          node --test tests/audio-v27-playlist.test.js
+          node deployment/campaign-unified-release.js
+          node tests/case002/unified-package-integrity.test.js
+      - name: Commit only verified files to the exact feature branch
+        run: |
+          set -euo pipefail
+          git fetch origin feat/criminal-operations-polish-v3
+          test "$(git rev-parse FETCH_HEAD)" = "$(git rev-parse HEAD)"
+          git add assets/audio/soundtrack/*.mp3 docs/criminal-operations/MUSIC-CREDITS-v30.txt docs/criminal-operations/soundtrack-proof-v30.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "V30: install seven independently verified local soundtrack recordings"
+          git push origin HEAD:refs/heads/feat/criminal-operations-polish-v3

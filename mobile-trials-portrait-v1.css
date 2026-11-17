@@ -91,3 +91,33 @@
 @media(prefers-reduced-motion:reduce){
  #difficultyList .mode,#play #answers .answer{transition:none!important}
 }
+
+/* V32: surface the two existing trial modes without a seventh home card. */
+.trial-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 18px}
+.trial-mode button{min-width:0;min-height:65px;display:grid;align-content:center;gap:4px;text-align:left;padding:10px 11px;border:1px solid #806340;border-radius:4px;background:#211811;color:#e1c6a1;touch-action:manipulation}
+.trial-mode button[aria-pressed=true]{border-color:#e0b578;background:linear-gradient(135deg,#57391f,#281c13);box-shadow:inset 0 0 0 1px #dfb77d44;color:#ffe4bc}
+.trial-mode b{font:700 16px/1.25 Georgia,serif}
+.trial-mode small{font:11px/1.35 system-ui,sans-serif;color:#ddc2a0;overflow-wrap:normal}
+.trial-mode button:focus-visible{outline:2px solid #ffe2ac;outline-offset:2px}
+.trial-audio-dock:empty{display:none}
+.trial-audio-dock:not(:empty){margin:16px 0 0;padding:8px;border:1px solid #866641;border-radius:5px;background:linear-gradient(120deg,#271c13,#131618)}
+.trial-audio-dock .bh-audio-controls{position:static!important;inset:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%;margin:0;transform:none!important;pointer-events:auto}
+.trial-audio-dock .bh-audio-controls button{min-height:44px;min-width:0;white-space:normal;overflow-wrap:anywhere}
+.trial-audio-dock #bhMenuTrack,.trial-audio-dock #gameExitBtn{display:none!important}
+
+/* V38: reserve image space while decoding; avoid a stale frame on slow WebViews. */
+#play .question-image[data-image-status=loading]{background-color:#251b13;background-image:linear-gradient(135deg,#35261b,#151410)!important}
+#play .question-image[data-image-status=unavailable]{display:none!important}
+@media(orientation:portrait) and (max-width:700px){
+ #play .question-card,#play .question-image{overflow-anchor:none}
+ #play #answers .answer.correct{border-color:#a6b986!important;background:linear-gradient(125deg,#34432d,#1a241c)!important;color:#e3efcf!important}
+ #play #answers .answer.wrong{border-color:#c38a76!important;background:linear-gradient(125deg,#572f25,#291b18)!important;color:#f7d1bc!important}
+}
+
+/* V39: the portrait question picture is a frame, never a stretched image. */
+@media(orientation:portrait) and (max-width:700px){
+ #play .question-image{background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;background-color:#151411!important}
+ #play .question-card{min-width:0!important}
+ #play .question-card .quiz-corner{pointer-events:none}
+ #play .quiz-actions{min-width:0!important}
+}

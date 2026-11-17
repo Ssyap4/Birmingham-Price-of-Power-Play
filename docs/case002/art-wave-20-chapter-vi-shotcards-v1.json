@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 2,
+  "chapter": "VI",
+  "source": "Chapter VI screenplay and canonical storyboard, F01–F09; F09 re-rendered one time in a new author turn after the earlier rejected wrong-number artwork.",
+  "scenes": [
+    {
+      "id": "F01",
+      "sceneKind": "evidence",
+      "focus": "one miniature enclosed railway freight wagon is positioned by a dark-gloved investigator's hand on a weathered railway route drawing with three distinct marked locations, visually comparing known observations with an unresolved branch",
+      "camera": "tight angled overhead shot of the paper rail plan on a detective's wooden table, with the one wagon token and three marked locations in sharp focus, face of the investigator completely unseen",
+      "location": "a rain-shadowed private detective's office in industrial Birmingham in the 1920s",
+      "required": [
+        "exactly one small dark brass freight-wagon model held between gloved fingers on the paper route",
+        "a single hand-drawn rail map with three distinct circular stop marks connected by one branching railway line, two checked points and one uncertain mark",
+        "a metal engineer's ruler and a plain mechanical drafting pen near the bottom of the map"
+      ],
+      "background": "old wooden worktable, worn railway ledgers, cast-metal desk lamp and rain-streaked window with distant smoke-blackened brick mills",
+      "light": "focused warm amber desk-lamp illumination across aged paper and dark gloves against cool blue rainy industrial dusk",
+      "npc": "one anonymous investigator visible only by dark wool sleeves and black leather gloves, no face and no other people",
+      "knowledgeBoundary": "The map distinguishes recorded observations from assumptions. Only one wagon and one rail journey exist. The image never proves disappearance, witness movements, a final wagon location, or completion of the investigation.",
+      "avoid": [
+        "multiple wagons, a train arriving at a documented destination, or witnesses physically appearing on the map",
+        "a stamped official declaration that the wagon disappeared or reached a secret station",
+        "recognizable face or altered canonical appearance of any selectable hero",
+        "readable invented station names, routes, times, or new witness addresses"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "F02",
+      "sceneKind": "evidence",
+      "focus": "an anonymous gloved investigator compares two separate old freight documents, one with flowing cursive and a light seal, the other with a tightly ruled arrival ledger and a different official seal, without joining the pages together",
+      "camera": "an oblique close overhead view across a dark desk, both weathered sheets held separately in each gloved hand with the center gap clearly visible, face of the investigator fully out of frame",
+      "location": "the rain-facing worktable of a modest railway investigator in industrial Birmingham during the 1920s",
+      "required": [
+        "one aged left-hand freight paper dominated by flowing cursive pen strokes and a low round stamp",
+        "one separate right-hand train arrival ledger sheet dominated by tight ruled columns, a different script and its own stamp impression",
+        "two black-gloved hands keeping both paper sheets physically separate above a scratched oak table"
+      ],
+      "background": "a heavy brass oil desk lamp, old ink bottle, magnifying glass, closed railway ledger and a rain-wet window overlooking smoke-belching brick factories",
+      "light": "an intense warm amber desk lamp across the two independent papers, contrasting with the cold blue industrial rain beyond the window",
+      "npc": "only the investigator's black leather gloves and dark sleeves appear; no identifiable face or other human figures",
+      "knowledgeBoundary": "These are two independent suspected falsifications, not one merged forged document. The image does not prove either account false, confirm a second forgery, establish which witness signed, reveal the whereabouts of the wagon, or identify a culprit.",
+      "avoid": [
+        "readable invented signatures, witness names, fabricated station names, amounts or dates",
+        "one single joint forged sheet replacing the two materially distinct documents",
+        "an official verdict, celebratory conclusion, verified guilty party or definitive forensic proof",
+        "recognizable face or altered canonical appearance of any selectable investigator"
+      ],
+      "intendedVariant": "neutral-review-before-verification"
+    },
+    {
+      "id": "F03",
+      "sceneKind": "evidence",
+      "focus": "the black-gloved hand of an investigator uses metal tweezers to examine a ragged dark wool coat fiber over a shallow evidence tray, beside an old police accident report and two separate telegram and witness-account papers",
+      "camera": "tight angled close-up from desk height, cropped to the hand, frayed textile fragment, evidence tray and old documents, with all human faces out of frame",
+      "location": "a small police evidence and records desk beside the railway district in 1920s industrial Birmingham",
+      "required": [
+        "a single frayed dark wool fabric fragment gently gripped in narrow metal tweezers above a worn metal evidence tray",
+        "one aged police accident report on a leather writing board physically separate from the evidence tray",
+        "one folded telegram form beside another handwritten account sheet, both illegible, on scratched oak"
+      ],
+      "background": "a dark wooden police records counter with old filing cabinets, a closed ledger and the edge of a heavy shaded lamp",
+      "light": "warm amber lamplight emphasizing torn fabric strands and paper edges, with cooler rainy urban light beyond the desk",
+      "npc": "only one black-gloved investigator's hand and part of a dark wool coat are visible, without any identifiable face",
+      "knowledgeBoundary": "The scene juxtaposes conflicting clues about Hale's death; the police accident report remains an earlier claim. The image cannot independently set provedHaleMurder, establish a suspect, or decide whether the death was criminal.",
+      "avoid": [
+        "depicting Hale alive, a body, a reenacted attack, a murderer, or a decisive confession",
+        "an official proven-homicide ruling, a named suspect or concluded investigation",
+        "readable witness names, telegram destinations, detailed fabricated forensic findings, or signatures",
+        "an identifiable selectable hero's face or an unauthorized replacement portrait"
+      ],
+      "intendedVariant": "neutral-accident-report-and-counterevidence"
+    },
+    {
+      "id": "F04",
+      "sceneKind": "evidence",
+      "focus": "a detective's black-gloved index finger pauses beside the sixth entry in a battered factory ledger, comparing its six separate numbered lines with a distinct official registry sheet bearing only two numbered handwritten entries",
+      "camera": "moderately elevated three-quarter close shot diagonally across the factory archive desk, emphasizing the distinct two-line official paper on the left and the longer six-line open ledger on the right",
+      "location": "a dusty factory record-keeping room in Birmingham in the 1920s",
+      "required": [
+        "one small aged official-looking sheet with only two handwritten numbered entries and an old ink seal, resting by itself to the left",
+        "one open thick worn bound factory register displaying precisely six individually numbered entries in one column",
+        "one anonymous investigator's black leather gloved forefinger indicating the lowest sixth ledger line while keeping all character faces outside the frame"
+      ],
+      "background": "weathered factory filing cabinets, tied paper bundles, an old clerk's ink-stamp press, a scratched dark oak table and a large window overlooking smoking industrial chimneys",
+      "light": "dry soft grey industrial daylight across the two lists with a restrained warm reflection off faded brown paper and dark polished wood",
+      "npc": "only the unseen investigator's hand and dark wool sleeve enter the frame; no visible faces or other people",
+      "knowledgeBoundary": "The discrepancy between two official entries and six factory ledger entries is only a comparison. The image does not establish provedFactoryCoverup, verified wrongdoing, a court judgment, or a legally confirmed list of implicated people.",
+      "avoid": [
+        "legible or invented surnames, dates, addresses, witness identities, or additional names",
+        "a seventh person, extra numbered ledger entry, or more than two entries on the official notice",
+        "a guilty verdict, signed confession, celebratory discovery, or certified conclusion",
+        "an identifiable selectable hero's face or a replacement portrait of a known character"
+      ],
+      "intendedVariant": "neutral-document-comparison"
+    },
+    {
+      "id": "F05",
+      "sceneKind": "evidence",
+      "focus": "one black-gloved detective opens a worn leather folio containing exactly three separate clipped witness dossiers, pausing the pen beside the last as if checking each person's unresolved circumstances rather than declaring a rescue",
+      "camera": "a three-quarter close overhead view focused on the three parallel dossier slots in the leather folio and the gloved hands, no readable faces",
+      "location": "a private detective's modest rain-darkened office in 1920s industrial Birmingham",
+      "required": [
+        "exactly three separate aged witness cards held in adjacent compartments of an open brown leather folio",
+        "an intentionally indistinct silhouette cameo clipped to each card, without recognizable likeness, beneath each a few unreadable handwritten lines",
+        "one black-gloved hand holding a pencil near the rightmost dossier while another steadies the folio"
+      ],
+      "background": "weathered oak desk, old closed ledgers and an ink bottle, an overhanging shaded brass lamp and rainy window overlooking smoking brick factory stacks",
+      "light": "warm lamplight falling on the leather folio and three paper records, contrasting with cold blue-gray rain through the window",
+      "npc": "only the investigator's gloved hands and dark wool sleeves are shown; the three cameo silhouettes contain no identifiable individual or visible person in the room",
+      "knowledgeBoundary": "The three dossier records correspond to the three witnesses whose individual story states must be checked separately. The illustration does not show anyone rescued, evacuated, dead, under protection or safe. Real statuses remain dynamic HTML-driven facts from witnesses.ada, witnesses.tommy and witnesses.mercer.",
+      "avoid": [
+        "three real recognizable witness portrait faces presented together or fabricated identities",
+        "a legible name, fabricated address, explicit rescued/protected/dead label, or assigned outcome",
+        "an achievement, final witness count or assurance that every person survived",
+        "a selectable detective's visible face or an invented canonical portrait"
+      ],
+      "intendedVariant": "statuses-in-html"
+    },
+    {
+      "id": "F06",
+      "sceneKind": "environment",
+      "focus": "one narrow factory siding divides at a dark brick warehouse corner into two visibly distinct ways: an empty curved pedestrian lane to the left and a straight lamplit railway passage guarded by two distant men to the right, with a single spent cartridge on wet stones in the foreground",
+      "camera": "low three-quarter eye-level point of view from just behind the shoulder of an unidentifiable observer at the fork, both lanes fully visible and the brass cartridge in the near foreground",
+      "location": "a private rail siding and adjacent brick factory passages in rainy industrial Birmingham in the 1920s",
+      "required": [
+        "a clearly open pedestrian bypass curving left around crates and an iron gate, without any people blocking it",
+        "a narrow railway passage to the right between brick factory buildings with two dark uniformed guards visible at a distance under amber gas lanterns",
+        "one empty brass cartridge case lying on wet cobblestones near the rail track in the foreground"
+      ],
+      "background": "soot-dark red-brick industrial warehouse, wet cobblestone pavement and rails, wooden barrels, iron yard gate, tall chimneys and smoky rain-blue factory skyline",
+      "light": "warm amber old-fashioned gas lantern on the brick corner and guarded rail corridor with cold blue-gray rainfall over the open bypass",
+      "npc": "two indistinct anonymous distant factory guards at the rail passage; only an unidentified dark coat shoulder of the investigator in the near foreground without face",
+      "knowledgeBoundary": "This is an explicit choice between a safer bypass and a guarded dangerous passage, not the consequence of either choice. The spent casing does not confirm anyone has just been shot, harmed or killed. No playable character has taken a risky action yet.",
+      "avoid": [
+        "a person wounded, killed, captured or being fired upon, or any blood on stones",
+        "the dangerous guarded passage shown as the only possible route",
+        "a recognizable playable hero face or a forged named witness appearance",
+        "a written final outcome, completed escape or declaration of investigative victory"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "F07",
+      "sceneKind": "dialogue",
+      "focus": "a rain-soaked factory guard steps into the narrow railway service passage and raises one open hand in a final warning to an unseen detective, while a second guard waits behind him and a nearby side opening remains unblocked",
+      "camera": "tight three-quarter eye-level view from just behind the detective's shoulder toward the two guards, closer than the earlier wide railway junction, with the first guard's raised stopping hand clearly framed",
+      "location": "the narrow service passage between a soot-dark brick warehouse and a railway freight siding in industrial Birmingham in the 1920s",
+      "required": [
+        "one stern middle-aged private factory guard in a period dark uniform and peaked cap raising an empty open palm at shoulder height as a warning",
+        "a second private guard in matching weathered coat standing slightly back by wet railway tracks, with a holstered pistol at the first guard's belt",
+        "an open side archway leading away beside the brick wall, visible behind the cropped dark shoulder of the unidentifiable investigator"
+      ],
+      "background": "tall soot-stained warehouse walls, slick paving stones, freight wagons and crates beside the railway, iron bridge gantries and distant smoking factory chimneys",
+      "light": "strong amber gas lamps casting long reflections in rain on dark brick and stone, with cold blue-grey smoke and night sky beyond the yard",
+      "npc": "two anonymous factory security men in period peaked caps; the playable detective is visible from behind only as a near-foreground dark coat shoulder and silhouette without identifiable facial features",
+      "knowledgeBoundary": "The guards are issuing a final warning before the player chooses what to do. Weapons may be holstered; no shot is fired, no injury or death is established, and the open side way is still an available possibility. The image cannot grant trainDeath or determine whether the detective survives.",
+      "avoid": [
+        "a shot being fired, a dead or wounded person, blood, a completed defeat or a foretold fatal ending",
+        "a guard physically holding the detective captive or an already blocked side exit",
+        "an invented recognizable protagonist face or a named witness present in this confrontation",
+        "modern security equipment, modern cars, tactical armor or fabricated visible dialogue text"
+      ],
+      "intendedVariant": "default"
+    },
+    {
+      "id": "F08",
+      "sceneKind": "dialogue",
+      "focus": "a stern railway worker in a severe grey wool coat and short dark chestnut bob stands square-shouldered with arms crossed at an open industrial office doorway, facing the unseen investigator who rests two black-gloved hands on a closed plain brown leather folder before a difficult final decision",
+      "camera": "medium three-quarter view from behind the detective's gloved hands and closed folder, looking toward the resolute railway woman whose angular face and unwavering gaze are visible beside the doorway",
+      "location": "a modest detective office overlooking factory streets in industrial Birmingham in the 1920s",
+      "required": [
+        "one ordinary closed brown leather document folder on a scratched oak desk under two black leather-gloved investigator hands, without visible contents",
+        "one determined angular-faced woman with a short dark chestnut bob, squared shoulders, crossed arms and a heavy tailored grey coat standing upright in the doorway",
+        "one strong amber desk lamp in the foreground contrasting with a cold rain-soaked industrial street beyond the open door"
+      ],
+      "background": "rough brick office interior, scratched oak table, old dark coat on a hook, a rain-streaked warehouse window and distant smoke-stacked factory buildings",
+      "light": "amber table-lamp glow across the closed folder and gloves, deep blue-grey rain twilight filling the doorway behind the woman",
+      "npc": "a singular resolute railway woman with strong facial structure and a short dark chestnut bob, in a severe grey wool coat; the playable detective is anonymous black-gloved hands and partial sleeves only",
+      "knowledgeBoundary": "The scene is a conversation before the final decision. The closed folder is neutral and does not show original factory accounts, imply accountsGivenToWorkers or brackettAccountsHeld, or reveal Tommy's status. Which records are held or transferred and who can speak remain determined only by the narrative flags.",
+      "avoid": [
+        "an opened, legible or transferred factory account book; any visual claim about ledger ownership",
+        "Tommy, other conditional witnesses or a crowd beside the woman",
+        "a timid, slight or passive posture for the railway woman or a fully visible selectable detective face",
+        "a signed verdict, celebratory ending, protected witness status or published charges"
+      ],
+      "intendedVariant": "neutral-conversation-all-three-account-states"
+    },
+    {
+      "id": "F09",
+      "sceneKind": "evidence",
+      "focus": "an anonymous detective, seen from behind at an old industrial office desk at early dawn, pauses with a fountain pen held over a completely blank unsigned sheet next to one plain unmarked closed brown leather folder, hesitating before a consequential decision",
+      "camera": "intimate oblique over-the-shoulder close shot from behind the solitary detective, with pen tip suspended over a blank loose sheet in sharp focus, simple closed folder to the left and rainwashed dawn industrial skyline beyond the window",
+      "location": "a modest early-morning railway investigation office overlooking smoky red brick Birmingham factories in the 1920s",
+      "required": [
+        "one completely blank unsigned sheet of aged paper in the foreground beneath a hovering black-gloved fountain-pen hand",
+        "one plain closed unlettered brown leather folder resting apart from the blank sheet on a scratched dark oak desk",
+        "one rain-streaked factory office window showing smoke-stack silhouettes in pale blue-pink early dawn, with an amber old-fashioned shaded desk lamp"
+      ],
+      "background": "old brass lamp, dark books, plain timber desk and rain-speckled multi-pane factory window overlooking soot-blackened mill buildings",
+      "light": "soft pale industrial dawn through rain-streaked windows balanced by an amber desk lamp, casting contemplative low-contrast shadows on the unwritten page",
+      "npc": "a single anonymous playable investigator seen only from behind and in black-gloved hands, no recognizable features or other people",
+      "knowledgeBoundary": "The sheet remains blank and unsigned. This is a pause before deciding, not an accusation, a signed agreement, evidence of a specific ending, public publication, a transfer of factory accounts, or a guarantee that every ending is available. Only the scenario's endingAvailable conditions determine subsequent options.",
+      "avoid": [
+        "any printed case number, case title, names, legal verdict or readable writing on the blank sheet or folder",
+        "a signed agreement, seal attesting completion, public newspaper exposé or an already-chosen final outcome",
+        "a display or symbol catalog of all seven endings or implied access to unavailable decisions",
+        "an identifiable face of a selectable detective or a dramatic action already deciding the outcome"
+      ],
+      "intendedVariant": "available-options-in-html"
+    }
+  ]
+}

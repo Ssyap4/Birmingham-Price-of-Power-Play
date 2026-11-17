@@ -1,0 +1,148 @@
+[
+  {
+    "mode": "menu",
+    "id": "covert-affair",
+    "title": "Covert Affair",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100795",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Covert%20Affair.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Covert%20Affair%20(ISRC%20USUAN1100795).mp3"
+    ],
+    "duration": 194,
+    "file": "assets/audio/soundtrack/covert-affair.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Covert%20Affair.mp3",
+    "sourceSha256": "279be47ea7880460be1393d66a83bcc7bee18e10d73537420098e4e1b1c0646f",
+    "sha256": "4129e13e6ef13171978448df865b47c11b386de433c32d2fc688fdf0804f1895",
+    "bytes": 2331002,
+    "durationSeconds": 194.194,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "menu",
+    "id": "just-as-soon",
+    "title": "Just As Soon",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100185",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Just%20As%20Soon.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Just%20As%20Soon%20(ISRC%20USUAN1100185).mp3"
+    ],
+    "duration": 228,
+    "file": "assets/audio/soundtrack/just-as-soon.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Just%20As%20Soon.mp3",
+    "sourceSha256": "12018b3314e61df5df9f078f9b5415f55b7d553520641eaaa202ee6ae98ba5f6",
+    "sha256": "74ffacdc4027bce0c6d47efbaf06b5968fb3015099a17c15cf123e32d9478d6c",
+    "bytes": 2737885,
+    "durationSeconds": 228.101,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "detective",
+    "id": "spy-glass",
+    "title": "Spy Glass",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500058",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Spy%20Glass.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Spy%20Glass%20(ISRC%20USUAN1500058).mp3"
+    ],
+    "duration": 227,
+    "file": "assets/audio/soundtrack/spy-glass.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Spy%20Glass.mp3",
+    "sourceSha256": "e790c5ceb0b64eed48d83ee3aa458daebc246d751bf7cf12c87231faadb5f6f1",
+    "sha256": "494bac9b6809bae13dbc8893af5897d711ea2fd8f20c89e396bd5e477be8844c",
+    "bytes": 2724406,
+    "durationSeconds": 226.978,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "detective",
+    "id": "moil",
+    "title": "Moil",
+    "author": "Ruskerdax",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://opengameart.org/content/moil",
+    "downloads": [
+      "https://opengameart.org/sites/default/files/ruskerdax_-_moil.mp3"
+    ],
+    "duration": null,
+    "file": "assets/audio/soundtrack/moil.mp3",
+    "downloadedFrom": "https://opengameart.org/sites/default/files/ruskerdax_-_moil.mp3",
+    "sourceSha256": "d496edafbca02a2a84ae1150e11b2e4d46b8a15e2ee081a676d1ae3ce996dc25",
+    "sha256": "4f9f2027a69465bc0ce473de81da9a576160f4675095f0c62ba4d9de4973b799",
+    "bytes": 2221601,
+    "durationSeconds": 185.078,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "criminal",
+    "id": "hard-boiled",
+    "title": "Hard Boiled",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700076",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Hard%20Boiled.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Hard%20Boiled%20(ISRC%20USUAN1700076).mp3"
+    ],
+    "duration": 181,
+    "file": "assets/audio/soundtrack/hard-boiled.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Hard%20Boiled.mp3",
+    "sourceSha256": "447df744a4cf9c3b18974c7d96750523a843db3970eb6fa69147d21c64366d79",
+    "sha256": "b1d1899c47a8eb99077bcb50dc594cd2d35f14f8b6822c398a7d97ae512369b9",
+    "bytes": 2173013,
+    "durationSeconds": 181.029,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "criminal",
+    "id": "dances-and-dames",
+    "title": "Dances and Dames",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100595",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dances%20and%20Dames.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Dances%20and%20Dames%20(ISRC%20USUAN1100595).mp3"
+    ],
+    "duration": 147,
+    "file": "assets/audio/soundtrack/dances-and-dames.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dances%20and%20Dames.mp3",
+    "sourceSha256": "54d9b282e0340041458911c91810181639f05d87c6782e93aa2c3ac40708f006",
+    "sha256": "91aeba92e18428a0d905156f744ec0cf41c29f9f82f89451398a95a11cf7f051",
+    "bytes": 1762682,
+    "durationSeconds": 146.834,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  },
+  {
+    "mode": "criminal",
+    "id": "deadly-roulette",
+    "title": "Deadly Roulette",
+    "author": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600033",
+    "downloads": [
+      "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Deadly%20Roulette.mp3",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Deadly%20Roulette%20(ISRC%20USUAN1600033).mp3"
+    ],
+    "duration": 159,
+    "file": "assets/audio/soundtrack/deadly-roulette.mp3",
+    "downloadedFrom": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Deadly%20Roulette.mp3",
+    "sourceSha256": "ef6aae97cd50a21b36e2a3694619ae2263c5630e40c68d3a43490425ccd2bf11",
+    "sha256": "0d5a48333e42c3c02fa8a3cdfb99df80e1359767240f66d7019762ffdc996396",
+    "bytes": 1912207,
+    "durationSeconds": 159.295,
+    "changes": "MP3 re-encoded at 96 kbps; metadata removed"
+  }
+]

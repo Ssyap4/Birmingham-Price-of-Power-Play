@@ -1,4 +1,4 @@
-"""Session exit must only discard the active hero's unfinished attempt."""
+"""Safe menu exit preserves saves; explicit discard affects only its active hero."""
 import json
 import run_tests as q
 from playwright.sync_api import sync_playwright
@@ -12,23 +12,34 @@ def active_exit_keeps_other_hero(browser,hero):
  own=g.state();ownmeta=g.meta()
  g.p.evaluate('([k,v])=>localStorage.setItem(k,JSON.stringify(v))',[q.BASE+other,{'node':'office','items':['note'],'flags':{},'trail':['intro'],'started':123,'health':75,'medicalKits':0}])
  other_save=g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+other)
- g.p.once('dialog',lambda d:d.accept());g.p.locator('#gameExitBtn').click()
+ g.p.once('dialog',lambda d:d.accept());g.p.locator('#caseDiscardBtn').click()
  assert g.p.locator('#home').is_visible() and g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+hero) is None
  assert g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+other)==other_save
  assert g.p.evaluate('(k)=>localStorage.getItem(k)',q.META+hero) is None
  return {'active_hero':hero,'other_hero_preserved':True,'own_findings_removed':ownmeta is not None}
 
+def active_menu_exit_preserves(browser):
+ g=q.game(browser);g.path(['envelope','widow']);before=keys(g)
+ g.p.once('dialog',lambda d:d.accept());g.p.locator('#gameExitBtn').click()
+ assert g.p.locator('#home').is_visible() and keys(g)==before
+ return {'active_save_preserved':True}
+
 def menu_exit_preserves(browser):
- g=q.game(browser);g.path(['envelope','widow']);state=g.state()
- settle_state=state
- g.p.locator('#caseBack').click();saved=g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+'jack')
+ g=q.game(browser);g.path(['envelope','widow']);g.combine('key','envelope')
+ state=g.state();before=keys(g)
+ g.p.locator('#caseBack').click()
+ assert g.p.locator('#districts').is_visible() and keys(g)==before
+ # The atlas has its own safe exit; confirmation belongs to the active case.
+ # The shared audio-dock exit is intentionally hidden on the atlas.
+ assert g.p.locator('#gameExitBtn').is_hidden()
  prompts=[]
- g.p.once('dialog',lambda d:(prompts.append(d.message),d.accept()))
- g.p.locator('#gameExitBtn').click()
- assert prompts and 'останутся' in prompts[0],prompts
- assert g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+'jack')==saved
- assert g.p.locator('#home').is_visible()
- return {'menu_save_preserved':True,'node':settle_state['node']}
+ g.p.on('dialog',lambda d:(prompts.append(d.message),d.dismiss()))
+ g.p.locator('#districtBack').click()
+ assert g.p.locator('#home').is_visible() and not prompts,prompts
+ assert keys(g)==before,'Returning through the atlas changed stored data'
+ g.p.locator('#districtsCard').click();g.launch()
+ assert g.state()==state and keys(g)==before,'Atlas return did not preserve the exact attempt'
+ return {'menu_save_preserved':True,'all_storage_preserved':True,'resumed':True,'node':state['node']}
 
 def completed_report_exit_preserves(browser):
  g=q.game(browser);g.path(['envelope','canal','bribe','pump','confront','endingDeal']);before=g.state()
@@ -48,6 +59,7 @@ def settle(browser):
   b=q.launch_browser(p)
   q.test('session_exit/active_jack_keeps_finn',lambda:active_exit_keeps_other_hero(b,'jack'))
   q.test('session_exit/active_finn_keeps_jack',lambda:active_exit_keeps_other_hero(b,'finn'))
+  q.test('session_exit/active_menu_preserves_save',lambda:active_menu_exit_preserves(b))
   q.test('session_exit/from_menu_preserves_save',lambda:menu_exit_preserves(b))
   q.test('session_exit/completed_report_preserved',lambda:completed_report_exit_preserves(b))
   q.test('session_exit/cancel_preserves_everything',lambda:cancelled_exit_preserves(b))

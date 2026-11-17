@@ -1,0 +1,3 @@
+# Read-only canonical face comparison, corrected accepted F08 candidate.
+assets/case002/portraits/case002-mabel-portrait.webp
+assets/case002/candidates/case002-f08-scene--revised--mobile.webp

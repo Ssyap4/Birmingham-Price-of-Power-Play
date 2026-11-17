@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "chapter": "VI",
+  "candidates": [
+    {
+      "sceneId": "F01",
+      "variantKey": "default",
+      "candidateFile": "case002-f01-scene--mobile.webp",
+      "sha256": "9f305f44e4500bfd657df31ddf806753210c95b380d0ecf36c9689a654fc4d82",
+      "gitBlobSha1": "4ff4d81a8d772828ad30ff1d47b49076b7bddd2e",
+      "bytes": 137224,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: one gloved investigator, one miniature freight wagon and three stop marks on a rainlit railway drawing; no evidence of disappearance or final destination",
+      "knowledgeBoundary": "This is a conjecture/observation board, not proof of the actual wagon route or of witness safety.",
+      "installedFile": "case002-f01-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f01-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F02",
+      "variantKey": "default",
+      "candidateFile": "case002-f02-scene--mobile.webp",
+      "sha256": "6a364b1db449ab5716f16b16d4e458442a9613e8bf4cf0bb32b1b160bcb6995b",
+      "gitBlobSha1": "6df5f42f10edce32c9484079e1ac813472800966",
+      "bytes": 136574,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: two physically distinct record sheets, different handwritten layouts, separate stamps and gloved investigator hands; no confirmed forgery or revealed identity",
+      "knowledgeBoundary": "The game determines incomplete versus both-proven status from the evidence flags; image remains deliberately neutral and does not establish the actual provenance of either document.",
+      "installedFile": "case002-f02-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f02-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F03",
+      "variantKey": "default",
+      "candidateFile": "case002-f03-scene--mobile.webp",
+      "sha256": "50dbe293ee05e4acb718625f4f266287300a45818c1e399bf2a95362672a5e25",
+      "gitBlobSha1": "1cdf20dd22f7b2809af768da25f0c8c97b476b2a",
+      "bytes": 128148,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted after a single mobile crop excluding the generated detective face: tweezers examine dark wool cloth over an evidence tray, while the earlier police protocol, telegram and witness notes remain separate and unreadable",
+      "knowledgeBoundary": "An evidence comparison does not independently confirm murder, name a culprit or set provedHaleMurder.",
+      "installedFile": "case002-f03-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f03-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F04",
+      "variantKey": "default",
+      "candidateFile": "case002-f04-scene--mobile.webp",
+      "sha256": "a9a99d31c1a219c94859d0f277df003132ce1b35b69e6b745e1218d6002568fa",
+      "gitBlobSha1": "9a3a2146e74ff7f2703e7c8b393cba4adb9dea6c",
+      "bytes": 114252,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: a visually separate two-line official sheet versus six numbered ledger entries, with the investigator's hand at entry six; no invented legible names or court verdict",
+      "knowledgeBoundary": "No graphic establishes guilt or the provedFactoryCoverup game fact; both legal and evidentiary conclusions remain driven by the narrative state.",
+      "installedFile": "case002-f04-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f04-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F05",
+      "variantKey": "default",
+      "candidateFile": "case002-f05-scene--mobile.webp",
+      "sha256": "692ec595e6f5639da1d1f1a993127a147d0b8973452a6485bc32f9cc223834c4",
+      "gitBlobSha1": "bb3dfae49e216c8af5a8a8256659786b94eee845",
+      "bytes": 114910,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: three distinct paper files in one leather folio, with deliberately indistinct cameo silhouettes and no legible names, safety labels or implied collective rescue; investigator's face not visible",
+      "knowledgeBoundary": "Three visual records alone cannot confirm any witness's fate. Ada, Tommy and Daniel Mercer keep independently determined HTML state labels.",
+      "installedFile": "case002-f05-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f05-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F06",
+      "variantKey": "default",
+      "candidateFile": "case002-f06-scene--mobile.webp",
+      "sha256": "90d26046c10b6266c994ba3c2ea66fc480e9947511f195787c7ad26fba7a49b5",
+      "gitBlobSha1": "ac39046d5cefcc3448caae50fd4cc24ecd644316",
+      "bytes": 135438,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: clearly separate open left bypass and guarded narrow railway passage on the right, a lone brass cartridge case near foreground, no face, violence or decided fate",
+      "knowledgeBoundary": "The illustration depicts the pending choice, not any risky action, death, forced confrontation or guaranteed safe outcome.",
+      "installedFile": "case002-f06-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f06-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F07",
+      "variantKey": "default",
+      "candidateFile": "case002-f07-scene--mobile.webp",
+      "sha256": "82ce110782312f6ad8c13965f5a386460183fb2db028a682ae80c26ce124cc9d",
+      "gitBlobSha1": "52ce8bd14044c7eae29e3bbcf22e98514cde4ae5",
+      "bytes": 128704,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: one guard raises empty open palm as a final warning, second guard waits beside rain-wet railway, anonymous protagonist seen only from behind, side passage remains open; no injury or decided outcome",
+      "knowledgeBoundary": "The drawing depicts the confrontation before a further player choice; neither death nor survival follows from the image alone.",
+      "installedFile": "case002-f07-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f07-scene--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F08",
+      "variantKey": "default",
+      "candidateFile": "case002-f08-scene--revised--mobile.webp",
+      "sha256": "e4b5c0eb67b050516a656d233fe8d496d1e2c413829cd573a2bfb4354da1dbeb",
+      "gitBlobSha1": "5505f3bf7e391ea1ad5a3112322e066fc4e6b2c2",
+      "bytes": 144068,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "ACCEPTED revised F08 after canonical Mabel visual comparison: stern angular face, strong squared shoulders, crossed arms, short dark chestnut bob, severe grey coat, woman facing anonymous detective; closed neutral folder, no other witness or resolved account custody.",
+      "knowledgeBoundary": "A conversation before final decision: closed neutral folder cannot establish who possesses the factory accounts, whether workers received copies, Tommy's whereabouts, or the final verdict. These states remain controlled by the game.",
+      "initialReview": "accepted before exact canonical portrait comparison; superseded by the 2026-11-14 follow-up review",
+      "canonicalReference": "assets/case002/portraits/case002-mabel-portrait.webp",
+      "needsReplacement": false,
+      "previousRejectedCandidate": {
+        "candidateFile": "case002-f08-scene--mobile.webp",
+        "sha256": "555beadcb5c17fb05780c051b90c7893b85999a505fc431d7d5aaabbb29f2fe4",
+        "gitBlobSha1": "33cb0da1b9adfd3b2488f23b36b3d45b700a77fd",
+        "bytes": 106420,
+        "status": "art-review-hold-not-installed",
+        "review": "REVOKED: canonical Mabel Cross portrait shows angular, imposing facial structure and firm posture; the F08 doorway figure has a notably delicate silhouette and gives insufficient confidence in her established character despite matching grey coat and dark bob"
+      },
+      "replacedAfterCanonicalReview": true,
+      "installedFile": "case002-f08-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f08-scene--revised--mobile.webp",
+      "installedBytesIdentical": true
+    },
+    {
+      "sceneId": "F09",
+      "variantKey": "default",
+      "candidateFile": "case002-f09-scene--mobile.webp",
+      "sha256": "dce1030fa1ddf854635ea0c0c276b3fce13868d82657efd0b15a866003ce37b9",
+      "gitBlobSha1": "86d7d685a687c9ee6ccf4e4d48d3513a2600b598",
+      "bytes": 98288,
+      "dimensions": [
+        720,
+        900
+      ],
+      "status": "installed-approved-in-feature",
+      "renderCountInArtworkTurn": 1,
+      "acceptedRendering": 1,
+      "visualReview": "accepted: detective seen indistinctly from behind at rainy industrial dawn, pen suspended over wholly blank page, entirely unlettered closed leather folder, no case number, no seal, no selected ending or invented evidence",
+      "knowledgeBoundary": "Neutral decision moment, future options and consequences determined only from available ending state, never implied by the artwork.",
+      "previousRejectedGeneratorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46",
+      "installedFile": "case002-f09-scene--mobile.webp",
+      "installedFromCandidateFile": "case002-f09-scene--mobile.webp",
+      "installedBytesIdentical": true
+    }
+  ],
+  "rejectedGenerations": [
+    {
+      "sceneId": "F09",
+      "sceneTitle": "Цена власти",
+      "date": "2026-11-14",
+      "attemptedGenerations": 1,
+      "imageApproved": false,
+      "status": "rejected-not-staged",
+      "generatorImageId": "5793fb98-b45a-4170-b7bf-38fb5e84ca46",
+      "reasonCode": "wrong-case-number",
+      "reason": "On the document cover the generated artwork explicitly says 'ДЕЛО №001' and misspells the title, while F09 belongs to Case №002. A sealed, stamped cover also risks signaling an already finalized outcome.",
+      "candidateFile": null,
+      "installed": false,
+      "nextStep": "Render one newly composed F09 moment in the next separate author turn: before the final choice, anonymous detective at a modest dawn office desk; plain unlettered folder and unsigned paper, one open question rather than an announced resolution."
+    }
+  ],
+  "purpose": "Chapter VI physically verified candidates installed in the Case002 feature branch; conditional text and facts remain driven by story state."
+}

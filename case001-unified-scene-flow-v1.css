@@ -1,0 +1,158 @@
+/* Align Case 001's mobile reading order with Case 002.
+   Presentation only: approved wide art retains its intrinsic proportions. */
+@media (orientation:portrait) and (max-width:700px){
+ #heroSelection .case001-unified-premise{
+  padding:12px 13px;margin:8px 0 13px;
+  border:1px solid #96754b;border-left:3px solid #d4ab71;
+  border-radius:0 6px 6px 0;
+  background:linear-gradient(120deg,#322518,#1c1712);color:#ead6b8;
+ }
+ #heroSelection .case001-unified-premise strong{
+  display:block;margin:0 0 7px;color:#f0cb96;
+  font:800 .66rem/1.4 system-ui,sans-serif;letter-spacing:.115em;
+ }
+ #heroSelection .case001-unified-premise p{
+  margin:0;font:400 .9rem/1.54 Georgia,serif;
+  color:#efddc6;overflow-wrap:anywhere;
+ }
+ /* Case 002 reads: protagonist and title, scene artwork, dialogue,
+    investigation prose and decisions. Use that order in Case 001. */
+ #caseGame #caseScene .case-scene-inner{
+  order:-1!important;border-top:0!important;
+  border-bottom:1px solid #947044!important;
+  padding:13px 14px 14px!important;
+ }
+ #caseGame #caseArt.case-art{
+  order:1!important;display:flex!important;
+  flex-direction:column!important;gap:8px!important;
+  padding:10px 8px 8px!important;
+  /* Approved 16:9 originals were getting 50–75px empty letterboxing.
+     Reduce the surrounding frame, never crop or stretch the artwork. */
+  height:clamp(196px,61vw,322px)!important;
+ }
+ #caseGame #caseArt .case001-portrait-image{
+  /* Width:auto allows the browser to preserve 16:9 proportions when the
+     reduced art frame constrains the image by height instead of width. */
+  flex:0 1 auto!important;min-height:0!important;
+  width:auto!important;height:auto!important;max-width:100%!important;
+  max-height:calc(100% - 34px)!important;
+ }
+ #caseGame #caseScene .case-scene-inner::before{
+  margin-bottom:11px!important;
+ }
+ #caseGame #caseScene .case001-scene-hero{
+  display:grid;grid-template-columns:62px minmax(0,1fr);
+  gap:12px;align-items:center;min-width:0;
+ }
+ #caseGame #caseScene .case001-scene-hero img{
+  display:block;width:62px;height:78px;
+  object-fit:cover;object-position:center 23%;
+  border:1px solid #bd935d;border-radius:4px;
+  box-shadow:0 0 0 2px #18120e,0 4px 14px #0008;
+ }
+ #caseGame #caseScene .case001-scene-hero-info{
+  min-width:0;
+ }
+ #caseGame #caseScene .case001-scene-hero-info .case001-hero-kicker{
+  display:block;margin-bottom:4px;color:#cfab79;
+  font:750 .61rem/1.4 system-ui,sans-serif;letter-spacing:.09em;
+ }
+ #caseGame #caseScene .case001-scene-hero-info .case-place{
+  font:.68rem/1.4 system-ui,sans-serif!important;
+  color:#d8b886!important;letter-spacing:.065em!important;
+ }
+ #caseGame #caseScene .case001-scene-hero-info h2{
+  margin:5px 0 0!important;
+  font:700 clamp(1.26rem,5vw,1.65rem)/1.18 Georgia,serif!important;
+  color:#f4d7aa!important;
+ }
+ #caseGame #caseScene .case001-hero-name{
+  display:block;margin-top:7px;color:#d7bd98;
+  font:600 .76rem/1.42 system-ui,sans-serif;
+  overflow-wrap:anywhere;
+ }
+ #caseGame #caseScene .case001-read-scene{
+  margin-top:12px!important;margin-bottom:0!important;
+ }
+ #caseGame #caseArt .case001-art-caption{
+  box-sizing:border-box!important;z-index:1;position:relative;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;width:100%;min-height:28px;padding:2px 3px 1px;
+  color:#e2c296;font:750 .61rem/1.35 system-ui,sans-serif;
+  letter-spacing:.055em;
+ }
+ #caseGame #caseArt .case001-art-caption span{
+  min-width:0;overflow-wrap:anywhere;
+ }
+ #caseGame #caseArt .case001-art-caption span:last-child{
+  font-weight:500;text-align:right;color:#ccb392;letter-spacing:0;
+ }
+ #caseGame #caseScene .case001-scene-hero img[hidden]{
+  visibility:hidden!important;
+ }
+}
+@media (orientation:portrait) and (max-width:359px){
+ #caseGame #caseScene .case-scene-inner{
+  padding:12px 10px 13px!important;
+ }
+ #caseGame #caseScene .case001-scene-hero{
+  grid-template-columns:55px minmax(0,1fr);gap:9px;
+ }
+ #caseGame #caseScene .case001-scene-hero img{
+  width:55px;height:72px;
+ }
+ #caseGame #caseScene .case001-hero-name{
+  font-size:.72rem;
+ }
+ #caseGame #caseArt .case001-art-caption{
+  font-size:.56rem;gap:6px;
+ }
+}
+@media (prefers-reduced-motion:reduce){
+ #caseGame #caseScene .case001-scene-hero img{
+  transition:none!important;
+ }
+}
+
+/* The original hero dossier is ~1,700px tall on a 320px phone. Keep the
+   primary action reachable while reading biographies and switching heroes. */
+@media (orientation:portrait) and (max-width:700px){
+ #heroSelection .hero-panel{
+  scroll-padding-bottom:130px!important;
+ }
+ #heroSelection .hero-footer{
+  box-sizing:border-box!important;position:sticky!important;
+  bottom:0!important;z-index:8!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;align-items:stretch!important;
+  margin:14px -12px -18px!important;
+  padding:10px 12px max(12px,env(safe-area-inset-bottom,0px))!important;
+  border-top:1px solid #ad8755!important;
+  background:linear-gradient(170deg,#302217,#14110e 80%)!important;
+  box-shadow:0 -10px 26px #000b!important;
+ }
+ #heroSelection .hero-footer>span{
+  display:none!important;
+ }
+ #heroSelection .hero-footer>.hero-rules{
+  grid-column:1!important;min-height:44px!important;
+ }
+ #heroSelection .hero-footer>.hero-new:not([hidden]){
+  grid-column:2!important;min-height:44px!important;
+ }
+ #heroSelection .hero-footer>.hero-begin{
+  grid-column:1/-1!important;min-height:52px!important;
+  margin:0!important;
+ }
+ #heroSelection .hero-footer button{
+  min-width:0!important;white-space:normal!important;
+  overflow-wrap:anywhere!important;
+ }
+}
+@media (orientation:portrait) and (max-width:359px){
+ #heroSelection .hero-footer{
+  margin-inline:-12px!important;
+  padding-inline:10px!important;
+ }
+}

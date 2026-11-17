@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "principle": "Один кадр — один сюжетный момент",
+  "scope": "Improvement of prompt orchestration, quality gates and human review; NOT image model training.",
+  "policy": {
+    "maxFailuresPerContext": 2,
+    "humanReviewMandatory": true,
+    "autoApproveNever": true,
+    "isolatedRenderOnly": true
+  },
+  "failureTypes": {
+    "wrong_scene": {
+      "signal": "A different episode, person or location is rendered",
+      "correction": "Stop after two misses in the same context; issue a single-scene physical render from an isolated visual context"
+    },
+    "missing_required_marker": {
+      "signal": "The important clue or geometric relationship is absent",
+      "correction": "Make the required visual geometry dominant and spatially explicit; keep review checklist separate"
+    },
+    "invented_readable_fact": {
+      "signal": "The image contains invented document IDs or exact clock times",
+      "correction": "Fold documents to hide text; show exact narrative facts through deterministic game text"
+    },
+    "identity_mismatch": {
+      "signal": "Existing NPC facial features disagree with approved portrait",
+      "correction": "Use approved portrait as real image reference or show only hands/rear silhouette"
+    },
+    "panel_contamination": {
+      "signal": "Result contains grid, captions or production storyboard",
+      "correction": "Remove other scene IDs and discussion of workflow from rendering context"
+    },
+    "near_duplicate": {
+      "signal": "New scene composition is nearly identical to another reviewed image",
+      "correction": "Change focal event, foreground dominance, camera and verify perceptual hashes"
+    }
+  },
+  "lessons": [
+    {
+      "scene": "C06",
+      "category": "invented_readable_fact",
+      "previous": "Wrong clock hands for 23:47",
+      "remedy": "Time belongs in authored prose; wet service report and viaduct carry the image",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "C07",
+      "category": "identity_mismatch",
+      "previous": "Old signalman had a face unlike canonical approved portrait",
+      "remedy": "View seated railway worker from behind with face hidden",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "C08",
+      "category": "invented_readable_fact",
+      "previous": "Telegram displayed fictional number 4738",
+      "remedy": "Fold envelope and show back/sealed flap facing viewer",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "C09",
+      "category": "wrong_scene",
+      "previous": "Multiple attempts returned C07 rail worker instead of empty goods yard",
+      "remedy": "Single isolated ground-level composition; no people",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "C09",
+      "category": "missing_required_marker",
+      "previous": "Railway yard had tyre ruts but no three independent boot trajectories",
+      "remedy": "Describe left, centre and right trails distinctly, occupy majority of portrait with muddy ground",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "C09",
+      "category": "panel_contamination",
+      "previous": "Four-panel collage replaced single illustration",
+      "remedy": "One physical moment only, no scene labels or production descriptions in render input",
+      "outcome": "resolved"
+    },
+    {
+      "scene": "D02",
+      "category": "wrong_scene",
+      "previous": "Two attempted visual handoffs intended for the old boiler-house meeting produced a railway schedule confrontation and then a freight-wagon inspection; both images rejected.",
+      "remedy": "Before any tool call, compare the actual single-scene image request against the prepared render card. If its place, character or focus drifts into an unrelated railway scene, do not send it. Stop after two misses; change to a clean, independent scene-only context rather than repeat.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D02",
+      "category": "invented_readable_fact",
+      "previous": "An off-scene railway image introduced an unsolicited train number and a clock time not in this scene.",
+      "remedy": "Exclude all readable dates, vehicle codes and timed railway paperwork from the boiler-house visual request; keep canonical facts in authored game text.",
+      "outcome": "rejected-and-recorded"
+    },
+    {
+      "scene": "D03",
+      "category": "panel_contamination",
+      "previous": "After producing an on-story D02 boiler-house candidate, the next attempted illustration twice produced decorative Russian-language process-acknowledgment posters instead of a pressure-register tabletop frame.",
+      "remedy": "Quarantine both generated posters and never use them as game imagery. Halt that visual context after two misses; in a clean isolated session run only the scene-specific RENDER with no development-status or conversational acknowledgments.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D03",
+      "category": "wrong_scene",
+      "previous": "The generated output followed the user's workflow/cadence discussion rather than the scheduled pressure-register moment; exact scene intent was lost.",
+      "remedy": "Confirm the generator's actual rendering request describes hands, logbook and boiler room before submitting; current internal prompt-builder cannot guarantee isolation of image generation context.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "panel_contamination",
+      "previous": "A later new-scene render attempt also produced a decorative agreement-status page rather than the detained worker at a guarded factory gate. Three off-story posters across two scene targets confirmed persistent visual-context drift.",
+      "remedy": "Do not accept images because of attractive typography or matching project title; pause image production entirely in this conversation and move to clean separate scene-only visual requests with direct image QA before continuing. Rendering a project-update poster is not an art asset.",
+      "outcome": "unresolved-global-render-blocker"
+    },
+    {
+      "scene": "D03",
+      "category": "wrong_scene",
+      "previous": "On resuming the prior per-wave user confirmation cadence, two image-generation handoffs requested the pressure-register moment but the actual generation inputs were railway-yard scenes, producing off-story railway artwork. Both rejected.",
+      "remedy": "Distinguish image model mistakes from upstream orchestration mistakes. Inspect the actual scene description sent to the image tool; it must say boiler-house workbench, hands of Ada, original pressure log, pressure gauge and period factory pipes. If the image tool inferred unrelated railway characters/yard, stop after two errors. Preserve the canonical isolated scene request and seek a fresh image-intent message/context before trying again.",
+      "outcome": "unresolved-context-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "wrong_scene",
+      "previous": "Two consecutive attempts to generate D04 'Tommy behind the factory gate' actually sent the image system scene descriptions about Ada's boiler-house pressure ledger. It faithfully rendered those wrong descriptions, including invented readable dates and values. Both images rejected.",
+      "remedy": "Before invoking image generation, verify the ACTUAL image request payload corresponds to D04: detained young man, barred gatehouse, bandaged forearm, watchman, no journal or boiler. Stop if the payload mentions pressure log, Ada or a boiler room. Do not attribute prompt handoff mismatch to image-model quality; stop after two context misses.",
+      "outcome": "unresolved-visual-handoff-stopped"
+    },
+    {
+      "scene": "D04",
+      "category": "wrong_scene",
+      "previous": "Earlier D04 attempts sent D03 boiler-house descriptions and produced wrong art. On the next fresh D04 scene request, its first image correctly showed Tommy detained at the barred factory guardhouse, bandaged arm and watchman.",
+      "remedy": "Try one scene per user turn and inspect the actual rendering request for scene-specific cast/location/props. Crop away an invented factory sign while retaining clear detained status. Keep RENDER/REVIEW separate; do not promise a statistically proven first-shot success rate.",
+      "outcome": "resolved-for-D04-one-shot-trial"
+    },
+    {
+      "scene": "D05",
+      "category": "wrong_scene",
+      "previous": "Earlier conversational context sometimes caused image requests for a future scene to reproduce previous scene's location and props.",
+      "remedy": "Single-shot per user turn with preflight checking of D05 narrative focus and strict REVIEW before staging. First D05 request depicted the correct industrial service gate with guard, shift relief worker and driver; no second image requested in that turn.",
+      "outcome": "first-shot-candidate-pass"
+    },
+    {
+      "scene": "HF03",
+      "category": "workflow_cadence_violation",
+      "previous": "Two image generation calls were made in one user-response cycle, despite ART-ONE-IMAGE-CADENCE.md allowing exactly one.",
+      "remedy": "A hard one-call stop after first returned image: perform REVIEW, then either stage it or reject it; no regeneration until a new user message.",
+      "outcome": "logged; enforce in following turns"
+    },
+    {
+      "scene": "E07:signed",
+      "category": "workflow_cadence_violation",
+      "previous": "Generator invoked twice within one user turn despite accepted first output.",
+      "remedy": "Hard STOP immediately after the first successful image; do not retry, improve or generate another until a new user message; stage the first if acceptable or mark rejected.",
+      "outcome": "one chosen candidate staged; two-call violation recorded"
+    }
+  ],
+  "observedSuccess": {
+    "scene": "C09",
+    "sha256": "6d43714b19d674780b528f84495e1de56e05aa45817ea3eff38a4a0c4e5dbbf8",
+    "installedFile": "assets/case002/scenes/case002-c09-scene--mobile.webp",
+    "visualStrategy": "Foreground muddy tyre ruts plus boot-print chains spreading left, centre and right",
+    "referenceBrief": "docs/case002/isolated-render-c09-v1.txt",
+    "caveat": "Observed successful result; cannot guarantee future image generation accuracy or erase conversation context."
+  },
+  "observedSingleShotTrials": [
+    {
+      "scene": "D06",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Rear view of Mabel awaiting alone, folded note and wet factory alley; no reunion invented."
+    },
+    {
+      "scene": "D07",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Prior user turn: boarding-house door held by iron safety chain and a concealed resident hand; scene staged in subsequent turn."
+    },
+    {
+      "scene": "D08",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "One image generated this turn: earlier factory inspection form, a generic family photograph and hesitant inspector hand. No protected sworn testimony depicted."
+    },
+    {
+      "scene": "D09",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Inspector seen from back, sealed letter on table, silhouette of messenger beyond rainy boarding-house window. An unresolved choice, no revealed hiding address."
+    },
+    {
+      "scene": "D10",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Three unmarked pinned slips on notice board, pencil, map fragments; status and witness names reserved for dynamic UI. No people, confirmed outcomes or readable witness statuses."
+    },
+    {
+      "scene": "D11",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Mabel shown from rear/side holding twine-bound family appeals in rainy detective-office doorway. No hero face, premature conclusion or legible victim names."
+    },
+    {
+      "scene": "HJ02",
+      "attempt": 1,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Jack shown rear/side with one protective arm at guarded Aston factory gate; Tommy bandaged and still under watchman's control. No freed/protected state or substituted playable-hero portrait."
+    },
+    {
+      "scene": "HF03",
+      "attempt": 2,
+      "generatedThisTurn": 2,
+      "cadenceCompliant": false,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Two image generation calls occurred for the same scene in one user turn; first not staged; only second preserved. Final image shows gloved hands, opening Mercer safe, intact family photo, anonymous playable hero, no protected sworn statement."
+    },
+    {
+      "scene": "HE02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Eleanor's gloved hand rests by a closed face-down leather notebook on the grimy boiler-house workbench; Ada's soot-marked hand and wrench nearby. No canonical faces, pressure log transfer, formal witness statement, or protected status depicted."
+    },
+    {
+      "scene": "HV02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "acceptedAs": "candidate",
+      "cadenceCompliant": true,
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Rendered in previous user turn; technical staging performed on user's next 'дальше'. Male hand hands a folded sealed paper to female receiver in a rainy Aston factory alley; faces cropped, no freed Tommy or guaranteed protection."
+    },
+    {
+      "scene": "E01",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Three separately sealed envelopes, tea, railway sketch and rainy detective office; no protagonist portrait, legible identifiers, chosen tactic, guarantee or premature publication."
+    },
+    {
+      "scene": "E02",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Nora from behind, inked hand pushes away newspaper proof, press wheel, typesetting tray and visiting detective cropped; never depicts verified publication, protected witnesses or canonical face replacement."
+    },
+    {
+      "scene": "E03",
+      "attempt": 1,
+      "generatedThisTurn": 0,
+      "renderedPreviousUserTurn": true,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Previously rendered newsroom papers and Nora's privacy-sheet gesture; image saved without regeneration on next user turn. dHash distance from E02 = 12/64, additional art comparison required before batch install."
+    },
+    {
+      "scene": "E04",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Low angle intact iron railway switch, split rail line, operating crew by crates and misty locomotive; no derailment, evacuated workers, completed sabotage or impossible actor portrait."
+    },
+    {
+      "scene": "E05",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Watchman at industrial gate and two laborers discuss ledger/shift pay in cold rain; no confirmed evacuation of all tracks, worker clearance flag, sabotage or identifiable playable-hero face. Variant safety to be audited before installation."
+    },
+    {
+      "scene": "E06",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Silver-bearded industrial proprietor in dark wool suit seen in chiaroscuro beside founder portrait and rainlit factory window. No admissions or signed guarantee; exact facial continuity with approved Vale portrait must be checked prior to final batch installation."
+    },
+    {
+      "scene": "E07",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Close-up unverified protection terms, no legible signature or enforceable guarantee, proprietor's signet-ring hand and cropped visitor; intended for E07 variant 'unsigned' only. Signed state requires separate reviewed art."
+    },
+    {
+      "scene": "E08",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Brackett from rear/side guards a thick closed accounts ledger beneath his hand; visitor cropped, boot partly visible but heel-chip evidence not proven, no readable entries, custody transfer, confession or automatic evidence flag."
+    },
+    {
+      "scene": "E09",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Night-shift worker at the rainy Aston factory gate pleads over wages with both soot-darkened open hands. Worn factory notice unreadable; no pension payout, stopped factory, ledger transfer, obtained evidence or revealed detective identity. Only accounts-brackett variant safe."
+    },
+    {
+      "scene": "E10",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Anonymous gloved detective compares two archival factory sheets, clipped index cards, ledgers and magnifier; no identifiable witness statuses, rescue, completed outcome, mediator or accounts transfer. Staged for default audit variant only."
+    },
+    {
+      "scene": "E11",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Mabel pauses at half-open rainy office door, photographed from back in dark grey coat and short chestnut bob, detective blurred from behind; no confirmed departure, chosen outcome or witness rescue."
+    },
+    {
+      "scene": "HJ03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Jack rear view with open hand flat on desk, handgun still in leather hip holster; Brackett opposite in shade; mourning portrait of a soldier. No shooting, confession, ledger transfer or automatic intermediary. Check partially visible Brackett face against canonical portrait before final install."
+    },
+    {
+      "scene": "HE03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Eleanor from rear with a dark glove gently stops Nora's upper arm while Nora holds unfinished metal type; both faces hidden, shift ledger and folders on desk, no headline, no proof of dual independent origin or publicContactSecured. dHash from E02 and E03 each 27/64."
+    },
+    {
+      "scene": "HV03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Victor seen strictly from behind pointing to blank contract signature line, Vale silver-bearded and shadowed, unused pen; no signature, proven safe witness custody or valeGuarantee. Verify Vale partial facial continuity before batch install."
+    },
+    {
+      "scene": "HS03",
+      "attempt": 1,
+      "generatedThisTurn": 1,
+      "cadenceCompliant": true,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Samuel from behind guides three workers out through gate before using intact switch; stationary freight wagons; no verified full clearance, safeSidingAccess, thrown switch or sabotage."
+    },
+    {
+      "scene": "E07:signed",
+      "attempt": 2,
+      "generatedThisTurn": 2,
+      "cadenceCompliant": false,
+      "acceptedAs": "candidate",
+      "matchedLocation": true,
+      "matchedFocus": true,
+      "noInventedNarrativeStatus": true,
+      "approvedInGame": false,
+      "note": "Two successful image-generation calls occurred in one reply, violating single-call cadence. Only second selected: sealed signed paper (not personally signed by Vale) checked against separate ledger, no rescued witnesses, fake identifiable names or automatic valeGuarantee. Old unsigned image retained for other route."
+    }
+  ]
+}

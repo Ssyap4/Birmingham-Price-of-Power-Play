@@ -1,0 +1,41 @@
+name: V27 soundtrack acquisition and playlist core QA
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - 'docs/criminal-operations/soundtrack-v27.json'
+      - 'scripts/fetch-soundtrack-v27.py'
+      - 'src/audio/playlist-v27.js'
+      - 'tests/audio-v27-playlist.test.js'
+      - '.github/workflows/soundtrack-v27-acquire.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  soundtrack:
+    if: github.ref == 'refs/heads/feat/criminal-operations-polish-v3'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test approved shuffle and mode isolation
+        run: node --test tests/audio-v27-playlist.test.js
+      - name: Install and check audio codecs
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          ffmpeg -version
+          ffprobe -version
+      - name: Acquire and validate approved music
+        run: python3 scripts/fetch-soundtrack-v27.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: soundtrack-v27-verified-candidate
+          path: soundtrack-v27-review/
+          if-no-files-found: error
+          retention-days: 14

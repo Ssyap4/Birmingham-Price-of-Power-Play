@@ -1,0 +1,98 @@
+name: V16 iPhone scroll, atmosphere and archive route QA
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - '**.js'
+      - '**.css'
+      - '**.html'
+      - 'assets/**'
+      - 'tests/iphone-v16-mobile.py'
+      - '.github/workflows/iphone-v16-ui.yml'
+      - '.github/workflows/case001-tests.yml'
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - iphone-ux-v16.css
+      - audio-v1.js
+      - audio-v1.css
+      - game.js
+      - cinema-home-v1.js
+      - case001-portrait-stage-v1.js
+      - index.html
+      - trial-progress-v1.js
+      - profile-page.js
+      - campaign-hub-v1.js
+      - campaign-case002-archive-v1.js
+      - session-controls-v1.js
+      - dossier-v12.js
+      - player-overview-cinema-v1.css
+      - tests/trial-progress-v1.test.js
+      - mobile-trials-portrait-v1.css
+      - case-controls-mobile-v1.js
+      - src/audio/playlist-v27.js
+      - tests/iphone-v16-static.test.js
+      - tests/iphone-v16-mobile.py
+      - .github/workflows/iphone-v16-ui.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: iphone-v16-ui-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  iphone-v16:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check static contracts and syntax
+        run: |
+          node --test tests/iphone-v16-static.test.js
+          node --check audio-v1.js
+          node --check game.js
+          node --check cinema-home-v1.js
+          node --check case001-portrait-stage-v1.js
+          node --check preview/case002-prototype/app.js
+          node --test tests/audio-v27-playlist.test.js
+          sha256sum --check docs/criminal-operations/soundtrack-v27.sha256
+          node --check profile-page.js
+          node --check session-controls-v1.js
+          node --test tests/trial-progress-v1.test.js
+          node --check campaign-hub-v1.js
+          node --check campaign-bridge-v13.js
+          node --check case-v14.js
+          node --check src/case002/story-variants-v4.js
+          node deployment/campaign-unified-release.js
+          node tests/case002/unified-package-integrity.test.js
+          node tests/case002/unified-archive-v1.test.js
+          node tests/case002/engine-v3.test.js
+          node tests/case002/hero-v3.test.js
+          node tests/case002/evidence-custody-v3.test.js
+          node tests/case002/story-variants-v4.test.js
+          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js
+          python -m py_compile tests/iphone-v16-mobile.py
+      - name: Install only portrait browser runtimes
+        run: |
+          python -m pip install 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Safari/WebKit and Chromium scroll, motion and archive links
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python tests/iphone-v16-mobile.py
+      - name: Save screenshots and compact report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iphone-v16-mobile-proof
+          path: work/iphone-v16/
+          retention-days: 14

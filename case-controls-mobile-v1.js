@@ -17,3 +17,14 @@
  window.addEventListener('orientationchange',arrange,{passive:true});
  arrange();
 })();
+/* V32: retain the single shared player, but place it below trial content.
+   The global Menu button remains the only exit during an active attempt. */
+(()=>{'use strict';
+ const controls=document.querySelector('.bh-audio-controls');
+ const screens=['choose','play','result'].map(id=>document.getElementById(id)).filter(Boolean);
+ if(!controls||screens.length!==3)return;
+ const docks=screens.map(screen=>{const dock=document.createElement('div');dock.className='trial-audio-dock';dock.setAttribute('aria-label','Звук испытания');screen.append(dock);return dock});
+ const sync=()=>{const index=screens.findIndex(screen=>!screen.hidden);if(index>=0){if(controls.parentElement!==docks[index])docks[index].append(controls)}else if(docks.includes(controls.parentElement)){document.body.append(controls)}};
+ const queue=()=>queueMicrotask(sync);
+ const observer=new MutationObserver(queue);screens.forEach(screen=>observer.observe(screen,{attributes:true,attributeFilter:['hidden']}));sync();
+})();
