@@ -54,3 +54,54 @@
 | endingDeath | assets/case-scenes/endingDeath.webp | Сохранить исход и не добавлять выбранного героя в нейтральный финал; особая ручная приёмка. |
 
 Готовность: реестр создан, проверка исходных файлов и галерея должны пройти в отдельном CI; ни один вертикальный вариант пока не принят/установлен.
+
+
+## V55 — визуальная диагностика всех 37 кадров (17.11.2026)
+
+Просмотрены все семь сравнительных JPG из CI 44158204733, artifact 14362156735 (`case001-portrait-art-inventory`). Видны исходные композиции и диагностический центральный кроп 4:5. Это просмотр уменьшенных галерей, не попиксельная приёмка исходных WebP, не скриншоты реального интерфейса и не утверждение новых вариантов.
+
+Решение перед техническим проходом: safe-reframe: 12; outpaint: 18; keep-portrait: 2; keep-wide: 5. Для outpaint сохранять оригинал в игре до принятия отдельного варианта; генерация не обязательна для текущего релиза. Для safe-reframe подобрать индивидуальный кроп в оригинальном разрешении и перепроверить сюжетные метки, руки, лица, количество людей, предметы и контекст; не считать центральную пробу готовым файлом. Если кандидат не проходит, keep-wide/outpaint. Keep-portrait сохранять исходное соотношение, не превращать подходящие портреты 3:4 в 4:5 только ради стандарта. Ни один исходный файл не менялся.
+
+| Scene ID | Решение | Composition review (en) |
+|---|---|---|
+| intro | safe-reframe | Woman, envelope and doorway stay in frame; retain enough wet street/industrial setting. |
+| envelope | safe-reframe | Preserve whole D-17 seal/mark; bias to envelope, not background; check all plot-bearing marks. |
+| widow | safe-reframe | Evelyn's face, extended hand and D-17 tag remain visible; protect hand and tag. |
+| interview | safe-reframe | Center test cuts Evelyn at the left. Shift left to preserve face, hands and meaningful table items; fall back wide if needed. |
+| warn | outpaint | Empty chair, window, stove and letter establish the altered kitchen; do not cut to only the letter. |
+| heroJack | keep-portrait | Original 900×1200 already portrait. Keep full cap/face; no compulsory 4:5 crop. |
+| heroFinn | outpaint | Ledger and D-17 warehouse label extend across the frame. Center test cuts ledger and side context. |
+| heroEleanor | safe-reframe | Try individualized bias toward invoice and D-17 lettering; center test cuts document edge. Require full key marks/stamps. |
+| heroVictor | keep-portrait | Original 900×1200 already portrait. Keep full cap/face and coat. |
+| heroSamuel | outpaint | Valve and access doorway both relevant; center crop cuts valve and surrounding mechanics. |
+| office | outpaint | Document and office environment are split sideways; retain both, avoid cutting D-17 markings. |
+| searchOffice | outpaint | Charred papers, fire and surrounding desk matter; central trial truncates document context. |
+| canal | keep-wide | Canal, industrial skyline and D-17 entrance establish geography; wide composition is intentional. |
+| bribe | safe-reframe | Shift toward man, map and purse; retain face, both hands and exchange context. Reject if cropped. |
+| sneak | outpaint | Paper in foreground and D-17 facade span width; maintain both. |
+| unlock | keep-wide | Door, lock, D-17 facade and nearby crate/entry context spread horizontally; keep original until a better variant is justified. |
+| warehouse | outpaint | Preserve both ledgers and loose document, not only the centered book. |
+| listen | outpaint | Center trial cuts the second conversational participant; retain both and the listening vantage. |
+| reed | safe-reframe | Face, clasped hands, desk dossier readable together; preserve uniform and hands. |
+| reedProof | outpaint | Reed and document both essential; center trial cuts right side of paper. |
+| accuse | outpaint | Center trial removes background person and extended hand; maintain the full action. |
+| pretend | safe-reframe | Reed and handwritten note in center; preserve gesture and note as legible plot element. |
+| confession | outpaint | Face, extended hand and held document span image; center trial loses most of document. |
+| escort | keep-wide | Escort at station entrance and surrounding route; keep station signage/setting. |
+| pump | outpaint | Wide two-person composition shows bound Arthur and armed Crane. Central crop removes Arthur's face. |
+| yard | keep-wide | Establish the yard and stairs/entrance; do not lose the location geography. |
+| rescue | outpaint | Arthur and Crane, gun and physical movement must survive; center trial cuts both sides. |
+| confront | outpaint | Arthur, Crane and document need to remain in one frame; central crop removes Arthur's face. |
+| trade | outpaint | Center trial drops background Arthur; keep both people and document exchange. |
+| expose | safe-reframe | Crane reading documents is dominant; bias toward face, both hands and full plot-bearing dossier. |
+| pressure | outpaint | Reaching hand, documents and Crane are parts of one action; central frame trims papers. |
+| endingRescue | safe-reframe | The 4:3 original centers Evelyn and Arthur's reunion; preserve both faces, embrace and enough kitchen. |
+| endingEvidence | outpaint | Sealed papers, photographs and stained cloth form one evidence still life; center crop cuts side objects. |
+| endingDeal | outpaint | Keep Arthur, Crane, burning D-17 document and the fire; center crop loses Arthur and part of Crane. |
+| endingTruth | keep-wide | Public scene, press/documents and multiple people collectively establish ending; original width helps. |
+| endingPower | safe-reframe | Preserve complete evidence folder, title, stamp and photograph; adjust crop to avoid clipping folder. |
+| endingDeath | safe-reframe | Shift toward the full cap and pool, retaining industrial background; center sample cuts cap's right side. No added people. |
+
+### Пакет Codex: первая волна
+- Отдельная ветка от актуальной проверенной рабочей базы, никакого merge/publish. Считать данный реестр художественными направлениями, а не утверждением кандидатов. Сохранить SHA всех оригиналов. Подготовить индивидуальные координаты и кандидаты только для safe-reframe, начать с intro/envelope/widow/endingRescue, затем остальные. На каждой паре показать оригинал целиком и вариант в реальном масштабе 320/390/430; скачать/декодировать реально доступные оригиналы. Для outpaint оформить индивидуальное ТЗ без подмены кадра, оставлять оригинал до дальнейшей работы. Не обещать генератор при отсутствии доступа; не массово генерировать. Для keep-wide и keep-portrait не создавать бессмысленные дубликаты.
+- Не трогать активный ART, screenplay, engines, progress/rewards, V50 main и V39. Отчёт с индивидуальными координатами и хешами, сравнительные PNG/JPG, кандидаты отдельно; только после художественной приёмки отдельный интеграционный PR с fallback и Chromium/WebKit. Читаемость документов оценивать по оригиналам, уменьшенные галереи не доказательство читаемости.
