@@ -10,15 +10,15 @@ function safe(rel){
  return rel;
 }
 let files=0,bytes=0;
-function copy(rel,expectedHash){
- rel=safe(rel);
+function copy(rel,expectedHash,output=rel){
+ rel=safe(rel);output=safe(output);
  const data=fs.readFileSync(path.join(ROOT,rel));
  if(expectedHash&&crypto.createHash("sha256").update(data).digest("hex")!==expectedHash)
    throw Error("Approved SHA-256 mismatch: "+rel);
  if(rel.endsWith(".webp")&&(data.length<1000||
    data.toString("ascii",0,4)!=="RIFF"||data.toString("ascii",8,12)!=="WEBP"))
    throw Error("Invalid approved WebP: "+rel);
- const dest=path.join(OUT,rel);
+ const dest=path.join(OUT,output);
  fs.mkdirSync(path.dirname(dest),{recursive:true});
  fs.writeFileSync(dest,data);
  files++;bytes+=data.length;
@@ -51,7 +51,8 @@ for(const id of ["jack","finn","eleanor","victor","samuel"])
  copy("assets/heroes/"+id+".webp");
 for(const name of fs.readdirSync(path.join(ROOT,"src/case002")))
  if(name.endsWith(".js"))copy("src/case002/"+name);
-for(const name of ["audio-v1.js","audio-v1.css","src/audio/playlist-v27.js","docs/criminal-operations/MUSIC-CREDITS-v30.txt"])copy(name);
+for(const name of ["audio-v1.js","audio-v1.css","src/audio/playlist-v27.js"])copy(name);
+copy("docs/criminal-operations/MUSIC-CREDITS-v30.txt",null,"MUSIC-CREDITS.txt");
 for(const id of require("../src/audio/playlist-v27.js").groups.detective)copy("assets/audio/soundtrack/"+id+".mp3");
 for(const name of ["index.html","app.js","style.css"])
  copy("preview/case002-prototype/"+name);

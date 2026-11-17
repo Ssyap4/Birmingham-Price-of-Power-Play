@@ -26,6 +26,8 @@ function addCredits(){
  const note=document.createElement('p');note.textContent='Записи перекодированы в MP3 96 кбит/с; метаданные удалены. Изменена громкость воспроизведения.';details.append(note);host.append(details);
 }paint();addCredits();
 function audioContext(){
+ // file:// media may be opaque to Web Audio. Leave its native output connected.
+ if(location.protocol==='file:')return;
  try{
   ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
   if(ctx.state==='suspended')ctx.resume().catch(()=>{});
@@ -37,7 +39,7 @@ function audioContext(){
 }
 function setLevel(i,v){if(i<0)return;levels[i]=Math.max(0,Math.min(1,v));if(gains[i])gains[i].gain.value=levels[i];else players[i].volume=levels[i]}
 function mark(){document.body.classList.toggle('bh-music-playing',musicOn&&active>=0&&!players[active].paused&&!document.hidden)}
-function halt(){++token;phase='idle';active=-1;mode=null;trackId=null;pending=null;blocked=false;players.forEach((p,i)=>{p.pause();setLevel(i,0)});mark()}
+function halt(keepPlan=false){const resume=keepPlan?(pending|| (trackId?{mode,id:trackId}:null)):null;++token;phase='idle';active=-1;mode=null;trackId=null;pending=resume;blocked=false;players.forEach((p,i)=>{p.pause();setLevel(i,0)});mark()}
 function targetMode(){return core.resolveContext(document,{casePage})}
 function planFor(target){if(pending?.mode===target)return pending;return {mode:target,id:rotation.mode===target?rotation.next():rotation.enter(target)}}
 function playPlan(plan){
@@ -60,9 +62,13 @@ function playPlan(plan){
  }).catch(failed);
 }
 function sync(){
- if(!musicOn||!unlocked||document.hidden||phase!=='idle'||blocked)return;
- const target=targetMode(),p=active>=0?players[active]:null;
- if(!p||mode!==target||p.ended||Number.isFinite(p.duration)&&p.duration>0&&p.duration-p.currentTime<=fadeMs/1000+.4)playPlan(planFor(target));
+ if(!musicOn||!unlocked||document.hidden)return;
+ const target=targetMode();
+ // On a rapid route change, cancel stale loading/fading rather than playing an obsolete context.
+ if((phase==='loading'&&pending?.mode!==target)||(phase==='fading'&&mode!==target)||(blocked&&pending?.mode!==target))halt();
+ if(phase!=='idle'||blocked)return;
+ const p=active>=0?players[active]:null;
+ if(!p||mode!==target||p.ended||p.paused||Number.isFinite(p.duration)&&p.duration>0&&p.duration-p.currentTime<=fadeMs/1000+.4)playPlan(planFor(target));
 }
 function gesture(){if(!musicOn||document.hidden)return;unlocked=true;audioContext();blocked=false;sync()}
 players.forEach((p,i)=>{p.addEventListener('ended',()=>{mark();sync()});p.addEventListener('pause',mark);p.addEventListener('playing',mark);p.addEventListener('error',()=>{if(i===active){halt();blocked=true}})});
@@ -74,8 +80,9 @@ function beep(type){if(!effectsOn)return;try{ctx=ctx||new (window.AudioContext||
 document.addEventListener('pointerdown',e=>{if(wrap.contains(e.target))return;gesture();const btn=e.target.closest('button,[role="button"],.case-evidence-card,.inventory-card');if(!btn)return;const label=(btn.textContent||'').toLowerCase();beep(/улика|сопостав|инвентар/.test(label)?'evidence':/откры|начать|дело|выбр/.test(label)?'open':'click')},{passive:true});
 document.addEventListener('click',e=>{if(!wrap.contains(e.target))gesture()},{capture:true,passive:true});
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!wrap.contains(e.target)){gesture();if(e.target.matches('button'))beep('click')}});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)halt();else sync()});
-window.addEventListener('pagehide',halt);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)halt(true);else sync()});
+window.addEventListener('pagehide',()=>halt(true));
+window.addEventListener('pageshow',()=>{musicOn=saved('bh_music_enabled',musicOn);effectsOn=saved('bh_effects_enabled',effectsOn);paint();if(!musicOn)halt();else sync()});
 setInterval(sync,450);
-window.BirminghamAudio={sync,playEffect:beep,getState:()=>({mode,trackId,phase,musicOn,levels:[...levels],playing:active>=0&&!players[active].paused})};
+window.BirminghamAudio={sync,playEffect:beep,getState:()=>({mode,trackId,phase,musicOn,levels:[...levels],playing:active>=0&&!players[active].paused,currentTime:active>=0?players[active].currentTime:0,activeCount:players.filter(p=>!p.paused&&!p.ended).length,blocked,webAudio:gains.every(Boolean)})};
 })();

@@ -4,6 +4,8 @@ on:
     branches: [feat/criminal-operations-polish-v3]
     paths:
       - iphone-ux-v16.css
+      - audio-v1.js
+      - src/audio/playlist-v27.js
       - tests/iphone-v16-static.test.js
       - tests/iphone-v16-mobile.py
       - .github/workflows/iphone-v16-ui.yml

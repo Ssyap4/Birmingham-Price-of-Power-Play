@@ -27,9 +27,9 @@ function safe(name){
   throw Error("Unsafe campaign path: "+name);
  return name;
 }
-function copy(name,hash){
- safe(name);
- if(copied.has(name))throw Error("Duplicate staged resource: "+name);
+function copy(name,hash,output=name){
+ safe(name);safe(output);
+ if(copied.has(output))throw Error("Duplicate staged resource: "+name);
  const source=path.join(ROOT,name);
  const stat=fs.lstatSync(source);
  if(!stat.isFile()||stat.isSymbolicLink())
@@ -41,10 +41,10 @@ function copy(name,hash){
    (payload.length<1000||payload.toString("ascii",0,4)!=="RIFF"||
     payload.toString("ascii",8,12)!=="WEBP"))
   throw Error("Invalid WebP: "+name);
- const dest=path.join(DIST,name);
+ const dest=path.join(DIST,output);
  fs.mkdirSync(path.dirname(dest),{recursive:true});
  fs.writeFileSync(dest,payload);
- copied.add(name);bytes+=payload.length;
+ copied.add(output);bytes+=payload.length;
 }
 function recurseAssets(relative){
  const abs=path.join(ROOT,relative);
@@ -99,8 +99,16 @@ for(const name of fs.readdirSync(ROOT)){
 // dynamically constructed scene/image/audio paths. Never ship drafts.
 recurseAssets("assets");
 copy("src/audio/playlist-v27.js");
-copy("docs/criminal-operations/MUSIC-CREDITS-v30.txt");
-for(const id of Object.values(require("../src/audio/playlist-v27.js").groups).flat()){if(!copied.has("assets/audio/soundtrack/"+id+".mp3"))throw Error("Missing approved soundtrack "+id)}
+copy("docs/criminal-operations/MUSIC-CREDITS-v30.txt",null,"MUSIC-CREDITS.txt");
+const soundtrack=require("../docs/criminal-operations/soundtrack-proof-v30.json");
+const approvedAudio=Object.values(require("../src/audio/playlist-v27.js").groups).flat().map(id=>"assets/audio/soundtrack/"+id+".mp3").sort();
+const stagedAudio=[...copied].filter(name=>name.startsWith("assets/audio/")).sort();
+if(JSON.stringify(stagedAudio)!==JSON.stringify(approvedAudio))throw Error("Unexpected soundtrack paths: "+stagedAudio.join(", "));
+if(soundtrack.length!==approvedAudio.length)throw Error("Incomplete soundtrack proof");
+for(const name of approvedAudio){
+ const proof=soundtrack.find(row=>row.file===name);
+ if(!proof||crypto.createHash("sha256").update(fs.readFileSync(path.join(DIST,name))).digest("hex")!==proof.sha256)throw Error("Packaged soundtrack mismatch "+name);
+}
 // Remove any Case 002 directory copied by the general enumerator if present.
 // The recursive call is intentionally excluded for that directory below.
 if(approved.schemaVersion!==1||approved.sceneImages.length!==102||

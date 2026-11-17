@@ -106,10 +106,17 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     was_playing=page.evaluate("document.body.classList.contains('bh-music-playing')")
     page.evaluate("document.body.classList.add('bh-music-playing')")
     assert page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').animationName==='cinema-vinyl' && parseFloat(getComputedStyle(el).opacity)>=.4")
-    before=page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').transform")
-    page.wait_for_timeout(170)
-    after=page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').transform")
-    assert before!=after,(before,after,"stationary record overlay")
+    # WebKit may report the underlying pseudo-element transform rather than
+    # its animated value. Verify actual painted pixels in the record area.
+    vinyl=page.locator("#home .cinema-vinyl-glint")
+    page.evaluate("window.scrollTo(0,0)")
+    page.wait_for_function("!document.querySelector('#home').classList.contains('cinema-still')")
+    assert vinyl.evaluate("el=>getComputedStyle(el,'::before').animationPlayState==='running'")
+    frames=[]
+    for _ in range(4):
+     frames.append(vinyl.screenshot(animations="allow"))
+     page.wait_for_timeout(137)
+    assert len(set(frames))>1,"stationary record overlay: identical painted frames"
     for frame in range(2):
      page.wait_for_timeout(470)
      page.locator("#home .cinema-hero").screenshot(path=str(OUT/f"webkit-390-v24-vinyl-{frame}.png"),animations="allow")
@@ -315,6 +322,35 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
     tap(page,"#homeBtn")
     page.locator("#home").wait_for(state="visible")
+   if engine=="chromium" and width==390:
+    # Test real local MP3 playback, not only animation or playlist mathematics.
+    page.goto(url,wait_until="domcontentloaded")
+    page.locator("#home").wait_for(state="visible")
+    if page.locator("#bhMusic").get_attribute("aria-pressed")=="false":tap(page,"#bhMusic")
+    else:tap(page,"#bhMenuTrack")
+    page.wait_for_function("BirminghamAudio.getState().mode==='menu' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
+    tap(page,"#criminalEntry")
+    page.wait_for_function("BirminghamAudio.getState().mode==='criminal' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
+    tap(page,"#homeBtn")
+    page.wait_for_function("BirminghamAudio.getState().mode==='menu'",timeout=15000)
+    tap(page,"#bhMusic")
+    page.wait_for_function("BirminghamAudio.getState().activeCount===0 && BirminghamAudio.getState().levels.every(x=>x===0)")
+    assert page.evaluate("localStorage.getItem('bh_music_enabled')")=="false"
+    tap(page,"#bhMusic")
+    page.wait_for_function("BirminghamAudio.getState().mode==='menu' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
+    tap(page,"#districtsCard")
+    tap(page,'.map-pin[data-district="digbeth"]')
+    tap(page,"#launchSecondCase")
+    page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+    # Opening a new document requires a fresh user interaction on that document.
+    tap(page,"#briefContinue")
+    page.wait_for_function("BirminghamAudio.getState().mode==='detective' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
+    assert page.locator("#case002AudioDock .bh-audio-controls").count()==1
+    tap(page,"#bhMusic")
+    page.wait_for_function("BirminghamAudio.getState().activeCount===0")
+    assert page.evaluate("localStorage.getItem('bh_music_enabled')")=="false"
+    page.goto(url,wait_until="domcontentloaded")
+    assert page.locator("#bhMusic").get_attribute("aria-pressed")=="false"
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
    report.append({"engine":engine,"width":width,"status":"PASS",

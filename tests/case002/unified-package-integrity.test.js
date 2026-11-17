@@ -27,6 +27,13 @@ for(const name of ["index.html","districts-v13.js","case-v14.js","heroes-v1.js",
  "src/case002/achievements-v1.js","assets/districts/digbeth.webp",
  "assets/districts/small-heath.webp","assets/audio/soundtrack/covert-affair.mp3","assets/audio/soundtrack/just-as-soon.mp3","assets/audio/soundtrack/spy-glass.mp3","assets/audio/soundtrack/moil.mp3","assets/audio/soundtrack/hard-boiled.mp3","assets/audio/soundtrack/dances-and-dames.mp3","assets/audio/soundtrack/deadly-roulette.mp3","src/audio/playlist-v27.js"])
  exists(name);
+exists("MUSIC-CREDITS.txt");
+assert.deepEqual(fs.readFileSync(entry("MUSIC-CREDITS.txt")),fs.readFileSync(path.join(root,"docs/criminal-operations/MUSIC-CREDITS-v30.txt")));
+const soundtrack=require("../../docs/criminal-operations/soundtrack-proof-v30.json");
+assert.equal(soundtrack.length,7);
+assert.deepEqual(fs.readdirSync(entry("assets/audio")).sort(),["soundtrack"]);
+assert.deepEqual(fs.readdirSync(entry("assets/audio/soundtrack")).sort(),soundtrack.map(row=>path.basename(row.file)).sort());
+for(const row of soundtrack)assert.equal(crypto.createHash("sha256").update(fs.readFileSync(entry(row.file))).digest("hex"),row.sha256,"Packaged soundtrack differs: "+row.file);
 const shell=fs.readFileSync(entry("index.html"),"utf8"),
  map=fs.readFileSync(entry("case002-map-entry-v1.js"),"utf8"),
  old=fs.readFileSync(entry("case-v14.js"),"utf8"),
