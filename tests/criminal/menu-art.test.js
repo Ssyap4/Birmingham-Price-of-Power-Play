@@ -28,6 +28,10 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
  assert.equal(photo.length,136048);
  assert.equal(photo.toString("ascii",0,4),"RIFF");
  assert.equal(photo.toString("ascii",8,12),"WEBP");
+ assert.equal(photo.toString("ascii",12,16),"VP8 ");
+ assert.equal(photo.readUInt16LE(26)&0x3fff,720);
+ assert.equal(photo.readUInt16LE(28)&0x3fff,900);
+
  assert.equal(crypto.createHash("sha256").update(photo).digest("hex"),"173dc43614f1870fb21e48ac5f40de89ecf69f8a8fbef4a96f2446ef29958799");
 
  assert.match(css,/assets\/original-art\/profile\.webp/);
