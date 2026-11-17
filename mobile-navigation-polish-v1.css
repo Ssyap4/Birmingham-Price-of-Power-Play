@@ -134,3 +134,21 @@ body[data-criminal='active']>.bh-audio-controls #gameExitBtn{display:none!import
 @media(prefers-reduced-motion:reduce){
  #districts .map-pin,.campaign-hub .campaign-tabs button{transition:none!important}
 }
+/* On narrow Safari chrome the global header must not break “Меню” into
+   vertical letters or squeeze the personal profile. Keep the city crest. */
+@media(orientation:portrait) and (max-width:355px){
+ body>.shell>.top .brand{flex:0 0 40px!important;min-width:0!important;max-width:40px!important;gap:0!important}
+ body>.shell>.top .brand>div{display:none!important}
+ body>.shell>.top .top-actions{display:flex!important;flex:1 1 auto!important;justify-content:flex-end!important;gap:7px!important;min-width:0!important}
+ body>.shell>.top #profileBtn,body>.shell>.top #homeBtn{
+  box-sizing:border-box!important;flex:0 0 auto!important;min-height:44px!important;
+  white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;
+  text-align:center!important;padding:9px 7px!important;font-size:12px!important;
+ }
+ body>.shell>.top #profileBtn{min-width:96px!important}
+ body>.shell>.top #homeBtn{min-width:76px!important}
+ /* The Case001+002 summary needs two readable columns at 320px. */
+ .campaign-hub .campaign-002-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ .campaign-hub .campaign-002-metric:last-child:nth-child(odd){grid-column:1/-1!important}
+ .campaign-hub .campaign-002-metric small{font-size:11px!important;line-height:1.4!important;overflow-wrap:normal!important}
+}

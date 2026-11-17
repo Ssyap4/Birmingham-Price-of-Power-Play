@@ -45,6 +45,9 @@ with socketserver.TCPServer(('127.0.0.1',0),Handler) as server:
                 assert atlas['opacity']=='1' and atlas['animation']=='none', (engine,width,atlas)
                 assert atlas['audioBeforeMap'] and not atlas['exitVisible'] and atlas['buttons']>=3, (engine,width,atlas)
                 assert atlas['overflow']<=1, (engine,width,atlas)
+                if width==320:
+                    header=page.locator('#homeBtn').bounding_box()
+                    assert header is not None and header['width']>=70 and header['height']<=64, (engine,header)
                 page.screenshot(path=str(OUT/f'{engine}-{width}-atlas-v14.png'),full_page=True)
                 page.locator('#districts [data-campaign-jump="archive"]').tap()
                 page.wait_for_function("!document.getElementById('campaignAchievements').hidden")
@@ -58,6 +61,13 @@ with socketserver.TCPServer(('127.0.0.1',0),Handler) as server:
                 }""")
                 assert archive['rows']==1 and archive['layout']=='grid', (engine,width,archive)
                 assert archive['opacity']=='1' and archive['animation']=='none' and archive['overflow']<=1, (engine,width,archive)
+                if width==320:
+                    metrics=page.evaluate("""() => [...document.querySelectorAll(
+                        '#campaignAchievements .campaign-002-metrics .campaign-002-metric'
+                    )].map(el => ({width:el.getBoundingClientRect().width,
+                        top:Math.round(el.getBoundingClientRect().top)}))""")
+                    assert len(metrics)==3 and len(set(m['top'] for m in metrics))==2, (engine,metrics)
+                    assert all(m['width']>125 for m in metrics), (engine,metrics)
                 page.screenshot(path=str(OUT/f'{engine}-{width}-archive-v14.png'),full_page=False)
                 page.locator('#campaignAchievements [data-campaign-jump="criminal"]').tap()
                 page.wait_for_function("!document.getElementById('criminalScreen').hidden")

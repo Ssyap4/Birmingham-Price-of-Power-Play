@@ -42,4 +42,6 @@ test('V14 keeps atlas and archive fully readable from the FIRST frame and compre
   assert.match(css,/animation:none!important;opacity:1!important;visibility:visible!important/);
   assert.match(css,/\.campaign-hub \.campaign-tabs\{\s*display:grid!important;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)!important/);
   assert.match(css,/prefers-reduced-motion:reduce/);
+  assert.match(css,/body>\.shell>\.top #homeBtn\{min-width:76px!important\}/);
+  assert.match(css,/\.campaign-hub \.campaign-002-metrics\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
 });
