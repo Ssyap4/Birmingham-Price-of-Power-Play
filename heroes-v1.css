@@ -3,3 +3,8 @@
 #heroSelection .hero-case-progress{display:block;margin-top:auto;padding:6px 5px;border:1px solid #93764e;border-radius:4px;background:#342719;color:#ebce9d;font:750 clamp(.57rem,2.1vw,.69rem)/1.35 Arial,sans-serif;letter-spacing:.035em;text-align:center;overflow-wrap:anywhere}
 #heroSelection .hero-case-progress[data-status="active"]{color:#e6f1d9;border-color:#77946b;background:#283527}
 @media(max-width:359px){#heroSelection .hero-case-progress{font-size:.61rem;padding:5px 3px}}
+
+#heroSelection .hero-case-progress[data-status="damaged"],#heroSelection .hero-case-progress[data-status="unavailable"]{color:#f1cd9e;border-color:#b18a52;background:#39281e}
+#heroSelection .hero-slot-note{font:600 .83rem/1.5 system-ui,sans-serif;color:#f1cd9e;background:#302319;border-left:3px solid #b18a52;margin:14px 0 0;padding:10px 12px;overflow-wrap:anywhere}
+#heroSelection .hero-begin:disabled{opacity:.62;cursor:not-allowed}
+#heroSelection .hero-new{white-space:normal;overflow-wrap:anywhere}

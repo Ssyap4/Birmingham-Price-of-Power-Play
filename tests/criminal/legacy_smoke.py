@@ -91,6 +91,17 @@ def run():
                 second_other=episode_material(page,'#heroGallery .hero-card[aria-pressed="false"]','--campaign-work-card')
                 assert second_hero["background"]!=second_other["background"]
                 page.locator("#heroGallery").screenshot(path=str(OUT / (name + "-v55-case002-hero-picker.png")))
+                # An existing empty string is damaged, not a missing slot.
+                page.evaluate("localStorage.setItem('birmingham_case002_draft_v3_finn','')")
+                tap(page,"#heroGallery [data-hero=finn]")
+                assert page.locator("#heroGallery [data-hero=finn]").get_attribute("data-save-status")=="damaged"
+                assert page.locator("#resume").is_hidden()
+                page.once("dialog",lambda d:d.dismiss())
+                tap(page,"#begin")
+                assert page.locator("#launch").is_visible()
+                assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_finn')")==""
+                page.evaluate("localStorage.removeItem('birmingham_case002_draft_v3_finn')")
+                tap(page,"#heroGallery [data-hero=jack]")
                 tap(page, "#begin")
                 assert page.locator("#game").is_visible()
                 assert page.locator("#sceneId").inner_text().startswith("P01")
@@ -126,8 +137,23 @@ def run():
                 assert first_hero["background"]==second_hero["background"],(first_hero,second_hero)
                 assert first_other["background"]==second_other["background"],(first_other,second_other)
                 page.locator("#heroCards").screenshot(path=str(OUT / (name + "-v55-case001-hero-picker.png")))
+                page.evaluate("localStorage.setItem('birmingham_case_smol_heath_v1_finn','null')")
+                tap(page,"#heroCards [data-hero=finn]")
+                assert page.locator("#heroCards [data-hero=finn]").get_attribute("data-save-status")=="damaged"
+                assert page.locator("#heroSelection .hero-begin").is_disabled()
+                assert page.locator("#heroSelection .hero-slot-note").is_visible()
+                tap(page,"#heroSelection .hero-new")
+                assert page.locator("#case001Briefing").is_visible()
+                page.locator("#case001BriefingRemember").uncheck()
+                page.once("dialog",lambda d:d.dismiss())
+                tap(page,"#case001Briefing .briefing-start")
+                assert page.locator("#heroSelection").is_visible()
+                assert page.evaluate("localStorage.getItem('birmingham_case_smol_heath_v1_finn')")=="null"
+                page.evaluate("localStorage.removeItem('birmingham_case_smol_heath_v1_finn')")
+                tap(page,"#heroCards [data-hero=jack]")
                 tap(page, "#heroSelection .hero-begin")
                 assert page.locator("#case001Briefing").is_visible()
+                page.locator("#case001BriefingRemember").check()
                 first_rule=episode_material(page,"#case001Briefing .case001-briefing-points section","--campaign-episode-rule")
                 assert first_rule["color"]==second_rule["color"],(first_rule,second_rule)
                 tap(page, "#case001Briefing .briefing-start")
@@ -384,6 +410,19 @@ def run():
                     window.dispatchEvent(new StorageEvent('storage',{key:null}))}""",slot_fixture["old"])
                 tap(page,"#profile .campaign-profile-links [data-open-section='campaignDossiers']")
                 assert page.locator("#campaignDossiers .campaign-live").first.inner_text().startswith("Расследование в работе")
+                tap(page,"#homeBtn")
+                tap(page,".cabinet-entry-quiz")
+                assert page.locator(".screen:not([hidden])").evaluate_all("els=>els.map(e=>e.id)")==["choose"]
+                tap(page,"#difficultyList button.mode")
+                assert page.locator(".screen:not([hidden])").evaluate_all("els=>els.map(e=>e.id)")==["play"]
+                page.once("dialog",lambda d:d.dismiss())
+                tap(page,"#homeBtn")
+                assert page.locator("#play").is_visible()
+                page.once("dialog",lambda d:d.accept())
+                tap(page,"#homeBtn")
+                assert page.locator(".screen:not([hidden])").evaluate_all("els=>els.map(e=>e.id)")==["home"]
+                assert page.evaluate("localStorage.getItem('birmingham_case_smol_heath_v1_jack')")==first
+                assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==second
                 assert not errors, errors
                 print(
                     "PASS",

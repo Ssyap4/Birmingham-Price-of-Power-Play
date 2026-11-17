@@ -1003,7 +1003,7 @@ function grantCommittedAchievements(){
 }
 function refreshResume(){
  const hero=$("hero").value;
- let available=false,selectedDamaged=false;
+ let available=false,selectedDamaged=false,selectedFinished=false;
  try{
   for(const card of document.querySelectorAll("#heroGallery [data-hero]")){
    const selected=card.dataset.hero===hero;
@@ -1019,8 +1019,8 @@ function refreshResume(){
     card.querySelector("span")?.append(badge);
    }
    badge.hidden=!hasSave;
-   badge.textContent=canResume?"СОХРАНЕНО":"ПОВРЕЖДЕНО";
-   if(selected){available=canResume;selectedDamaged=hasSave&&!canResume;}
+   badge.textContent=canResume?(slot.state.finished?"ОТЧЁТ СОХРАНЁН":"СОХРАНЕНО"):"ПОВРЕЖДЕНО";
+   if(selected){available=canResume;selectedDamaged=hasSave&&!canResume;selectedFinished=canResume&&slot.state.finished;}
   }
  }catch(e){
   appError("Не удалось прочитать сохранение. Проверьте доступность хранилища браузера.");
@@ -1028,8 +1028,9 @@ function refreshResume(){
  }
  $("resume").disabled=!available;
  $("resume").hidden=!available;
+ $("resume").textContent=selectedFinished?"ОТКРЫТЬ ОТЧЁТ":"ПРОДОЛЖИТЬ СОХРАНЕНИЕ";
  setText($("selectedHeroStatus"),"Выбран: "+heroNames[hero]+
-  (available?" · Можно продолжить сохранённое расследование":
+  (selectedFinished?" · Можно открыть заключительный отчёт":available?" · Можно продолжить сохранённое расследование":
    selectedDamaged?" · Сохранение повреждено: продолжение недоступно. Новая попытка заменит этот слот после подтверждения.":
    " · Готов к новому расследованию"));
  renderRewardArchive();
@@ -1080,7 +1081,7 @@ function leaveCollectionAfterLaunch(){
 function start(){
  try{
   const hero=$("hero").value;
-  if(store&&store.getItem(api.SAVE_PREFIX+hero)&&
+  if(store&&store.getItem(api.SAVE_PREFIX+hero)!==null&&
      !window.confirm("Начать новую попытку? Текущее сохранение этого героя будет заменено, но история завершённых попыток останется."))return;
   const candidate=beginGame();
   candidate.reset("002-"+Date.now()+"-"+Math.random().toString(36).slice(2,9));

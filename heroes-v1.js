@@ -12,16 +12,39 @@ const api={get selectedId(){return currentHero},heroes};window.BirminghamHero=ap
 const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР УЧАСТНИКА КРУГА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-rules" type="button">ПРАВИЛА ДЕЛА</button><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
 document.body.append(modal);
 const cards=modal.querySelector('#heroCards'),detail=modal.querySelector('#heroDetails');
-function draw(){cards.replaceChildren();heroes.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='hero-card'+(h.id===chosen?' active':'');b.setAttribute('aria-pressed',String(h.id===chosen));b.innerHTML=`<img src="assets/heroes/${h.id}.webp" alt=""><strong>${h.name}</strong><small>${h.role}</small>`;const hasSaved=window.BirminghamCase.hasSavedCase(h.id);
-if(hasSaved){
+const slotNote=document.createElement('p');slotNote.className='hero-slot-note';slotNote.setAttribute('role','status');slotNote.hidden=true;
+modal.querySelector('.hero-footer').before(slotNote);
+const finalNodes=new Set(['endingRescue','endingEvidence','endingDeal','endingTruth','endingPower','endingDeath']);
+function readSlot(id){
+ let raw;try{raw=localStorage.getItem('birmingham_case_smol_heath_v1_'+id)}catch{return {status:'unavailable'}}
+ if(raw===null)return {status:'empty',raw};
+ try{
+  const s=JSON.parse(raw);
+  if(Number.isFinite(s?.started)&&window.BirminghamCase.hasSavedCase(id)){
+   if(finalNodes.has(s.node))return {status:'finished',raw};
+   if(window.BirminghamCase.hasProgress(id))return {status:'active',raw};
+  }
+ }catch{}
+ return {status:'damaged',raw};
+}
+function draw(){cards.replaceChildren();heroes.forEach(h=>{const b=document.createElement('button');b.type='button';b.className='hero-card'+(h.id===chosen?' active':'');b.setAttribute('aria-pressed',String(h.id===chosen));b.dataset.hero=h.id;b.innerHTML=`<img src="assets/heroes/${h.id}.webp" alt=""><strong>${h.name}</strong><small>${h.role}</small>`;const slot=readSlot(h.id);
+b.dataset.saveStatus=slot.status;
+if(slot.status!=='empty'){
  const mark=document.createElement('span');
- const active=window.BirminghamCase.hasProgress(h.id);
  mark.className='hero-case-progress';
- mark.dataset.status=active?'active':'finished';
- mark.textContent=active?'СОХРАНЕНО · ПРОДОЛЖИТЬ':'ОТЧЁТ СОХРАНЁН';
+ mark.dataset.status=slot.status;
+ mark.textContent={active:'СОХРАНЕНО · ПРОДОЛЖИТЬ',finished:'ОТЧЁТ СОХРАНЁН',damaged:'ТРЕБУЕТ ПРОВЕРКИ',unavailable:'НЕДОСТУПНО'}[slot.status];
  b.append(mark);
 }
-b.onclick=()=>{chosen=h.id;draw();cards.querySelector('.hero-card.active')?.focus({preventScroll:true})};cards.append(b)});const h=heroes.find(x=>x.id===chosen);detail.innerHTML=`<img class="hero-detail-photo" src="assets/heroes/${h.id}.webp" alt=""><div class="hero-biography"><span class="hero-eyebrow">${h.alias.toUpperCase()} · ${h.role.toUpperCase()}</span><h3>${h.name}</h3><p>${h.bio}</p><h4>Стартовое снаряжение</h4><div class="hero-gear">${h.items.map(x=>`<span>✦ ${x}</span>`).join('')}</div></div><div class="hero-traits"><h4>Специализация</h4><p>${h.trait}</p><h4>Стиль игры</h4><p>${h.style}</p><small>На канале доступно личное действие героя. Оно открывает свой путь или даёт улику и используется один раз за расследование.</small></div>`;const resumable=window.BirminghamCase.hasProgress(chosen);modal.querySelector('.hero-begin').textContent=resumable?'ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ →':window.BirminghamCase.hasSavedCase(chosen)?'ОТКРЫТЬ ОТЧЁТ →':'НАЧАТЬ РАССЛЕДОВАНИЕ →';modal.querySelector('.hero-new').hidden=!window.BirminghamCase.hasSavedCase(chosen)}
+b.onclick=()=>{chosen=h.id;draw();cards.querySelector('.hero-card.active')?.focus({preventScroll:true})};cards.append(b)});const h=heroes.find(x=>x.id===chosen);detail.innerHTML=`<img class="hero-detail-photo" src="assets/heroes/${h.id}.webp" alt=""><div class="hero-biography"><span class="hero-eyebrow">${h.alias.toUpperCase()} · ${h.role.toUpperCase()}</span><h3>${h.name}</h3><p>${h.bio}</p><h4>Стартовое снаряжение</h4><div class="hero-gear">${h.items.map(x=>`<span>✦ ${x}</span>`).join('')}</div></div><div class="hero-traits"><h4>Специализация</h4><p>${h.trait}</p><h4>Стиль игры</h4><p>${h.style}</p><small>На канале доступно личное действие героя. Оно открывает свой путь или даёт улику и используется один раз за расследование.</small></div>`;const slot=readSlot(chosen),beginButton=modal.querySelector('.hero-begin'),newButton=modal.querySelector('.hero-new');
+ const blocked=slot.status==='damaged'||slot.status==='unavailable';
+ beginButton.textContent=slot.status==='active'?'ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ →':slot.status==='finished'?'ОТКРЫТЬ ОТЧЁТ →':blocked?'ПРОДОЛЖЕНИЕ НЕДОСТУПНО':'НАЧАТЬ РАССЛЕДОВАНИЕ →';
+ beginButton.disabled=blocked;
+ newButton.hidden=slot.status==='empty'||slot.status==='unavailable';
+ newButton.textContent=slot.status==='damaged'?'ЗАМЕНИТЬ ПОВРЕЖДЁННУЮ ПОПЫТКУ':'НОВОЕ РАССЛЕДОВАНИЕ';
+ slotNote.hidden=!blocked;
+ slotNote.textContent=slot.status==='damaged'?'Сохранение требует проверки. Оно не будет заменено без твоего отдельного подтверждения.':slot.status==='unavailable'?'Хранилище недоступно. Проверь настройки браузера перед продолжением.':'';
+}
 let openedFrom=null;
 function close(restoreFocus=true){
  modal.hidden=true;
@@ -36,7 +59,7 @@ function open(){
  // Presentation only: no save slot or preferred hero is overwritten.
  let persisted='jack';
  try{persisted=api.selectedId}catch{}
- const active=heroes.filter(h=>window.BirminghamCase.hasProgress(h.id));
+ const active=heroes.filter(h=>readSlot(h.id).status==='active');
  if(active.length&&!active.some(h=>h.id===persisted)){
   let last=-Infinity;
   for(const hero of active){
@@ -54,6 +77,7 @@ function open(){
  modal.querySelector('.hero-close').focus();
 }
 api.openSelection=open;modal.querySelector('.hero-close').onclick=close;
+window.addEventListener('storage',e=>{if(!modal.hidden&&(e.key===null||e.key.startsWith('birmingham_case_smol_heath_v1_')))draw()});
 modal.addEventListener('click',e=>{if(e.target===modal)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
 modal.addEventListener('keydown',e=>{
@@ -71,12 +95,24 @@ modal.addEventListener('keydown',e=>{
 const launch=document.getElementById('launchFirstCase');if(!launch)return;
 launch.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open()},true);
 function begin(newAttempt,briefed=false){
- if(!briefed&&(newAttempt||!window.BirminghamCase.hasSavedCase(chosen))&&window.BirminghamCaseRules){window.BirminghamCaseRules.open(()=>begin(newAttempt,true));return}
- if(newAttempt&&window.BirminghamCase.hasSavedCase(chosen)&&!confirm('Начать новое расследование? Сохранённая попытка этого героя будет заменена.'))return;
+ if(modal.hidden)return;
+ const slot=readSlot(chosen);
+ if(slot.status==='unavailable'||(!newAttempt&&slot.status==='damaged')){draw();return}
+ if(!briefed&&(newAttempt||slot.status==='empty')&&window.BirminghamCaseRules){
+  const hero=chosen,raw=slot.raw;
+  window.BirminghamCaseRules.open(()=>{
+   if(modal.hidden||chosen!==hero||readSlot(hero).raw!==raw){draw();return}
+   begin(newAttempt,true);
+  });return
+ }
+ if(newAttempt&&slot.raw!==null&&!confirm(slot.status==='damaged'?
+  'Заменить повреждённое сохранение этого героя новой попыткой? Исходная запись будет перезаписана. Архив наград останется.':
+  'Начать новое расследование? Сохранённая попытка этого героя будет заменена.'))return;
+ if(readSlot(chosen).raw!==slot.raw){draw();return}
  const h=chosen,key='birmingham_case_smol_heath_v1_'+h;
  currentHero=h;
  try{
-  if(!localStorage.getItem(key)&&!localStorage.getItem('birmingham_legacy_case_migrated_v1')){const old=localStorage.getItem('birmingham_case_smol_heath_v1');if(old){localStorage.setItem(key,old);localStorage.setItem('birmingham_legacy_case_migrated_v1',h)}}
+  if(slot.status==='empty'&&!localStorage.getItem('birmingham_legacy_case_migrated_v1')){const old=localStorage.getItem('birmingham_case_smol_heath_v1');if(old){localStorage.setItem(key,old);localStorage.setItem('birmingham_legacy_case_migrated_v1',h)}}
   localStorage.setItem(STORE,h);
  }catch(e){console.warn('Сохранение персонажа недоступно',e)}
  close(false);
