@@ -113,3 +113,20 @@ test("V24 achievement card uses independent verified artwork without a stretched
  assert.equal(art.readUInt16LE(28)&0x3fff,720);
  assert.equal(crypto.createHash("sha256").update(art).digest("hex"),"75ec252d844485b031d1fe767137e099f9bf0f693fe3428b5cb35e8182ab3aa7");
 });
+
+test("V25 trials card has independent pocket-watch artwork with natural proportions",()=>{
+ const h=read("index.html"),css=read("cinema-home-v1.css");
+ const card=h.match(/<button[^>]+data-mode="classic"[\s\S]*?<\/button>/)?.[0]||"";
+ assert.ok(card.includes("assets/cabinet/trials-menu-v25.webp"));
+ assert.ok(!card.includes("assets/original-art/clock.webp"));
+ assert.match(card,/width="960" height="720"/);
+ assert.match(css,/\.cabinet-art-clock img\{object-position:54% 52%/);
+ const art=fs.readFileSync(path.join(root,"assets/cabinet/trials-menu-v25.webp"));
+ assert.equal(art.length,158850);
+ assert.equal(art.toString("ascii",0,4),"RIFF");
+ assert.equal(art.toString("ascii",8,12),"WEBP");
+ assert.equal(art.toString("ascii",12,16),"VP8 ");
+ assert.equal(art.readUInt16LE(26)&0x3fff,960);
+ assert.equal(art.readUInt16LE(28)&0x3fff,720);
+ assert.equal(crypto.createHash("sha256").update(art).digest("hex"),"616d77c0811645c026a4ba8e87d3c71544d9018478307e7e5d962e517a677098");
+});

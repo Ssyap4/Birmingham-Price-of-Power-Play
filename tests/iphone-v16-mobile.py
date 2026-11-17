@@ -60,6 +60,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    page.wait_for_function("Array.from(document.querySelectorAll('#home .cabinet-entry-art img')).every(i=>i.complete && i.naturalWidth>0)")
    assert page.locator("#criminalEntry .cabinet-entry-art img").evaluate("i=>i.getAttribute('src')==='assets/cabinet/criminal-menu-v23.webp' && i.naturalWidth===792 && i.naturalHeight===720")
    assert page.locator("#storyStart .cabinet-entry-art img").evaluate("i=>i.getAttribute('src')==='assets/cabinet/achievements-menu-v24.webp' && i.naturalWidth===788 && i.naturalHeight===720 && getComputedStyle(i).objectFit==='cover' && getComputedStyle(i).transform==='none'")
+   assert page.locator(".cabinet-entry-quiz .cabinet-entry-art img").evaluate("i=>i.getAttribute('src')==='assets/cabinet/trials-menu-v25.webp' && i.naturalWidth===960 && i.naturalHeight===720 && getComputedStyle(i).objectFit==='cover' && getComputedStyle(i).transform==='none'")
    assert page.evaluate("""async () => {
     const images=[...document.querySelectorAll('#home .cabinet-entry-art img')];
     await Promise.all(images.map(i=>i.decode()));

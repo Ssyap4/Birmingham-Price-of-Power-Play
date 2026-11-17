@@ -173,7 +173,7 @@ def run():
                     for selector, sources in (
                         ("#districtsCard", ["assets/districts/centre.webp"]),
                         ("#criminalEntry", ["assets/cabinet/criminal-menu-v23.webp"]),
-                        (".cabinet-entry-quiz", ["assets/original-art/clock.webp"]),
+                        (".cabinet-entry-quiz", ["assets/cabinet/trials-menu-v25.webp"]),
                         ("#storyStart", ["assets/cabinet/achievements-menu-v24.webp"]),
                         ("#profileCard", ["assets/heroes/jack.webp", "assets/heroes/eleanor.webp"]),
                         ("#cabinetProfile", ["assets/cabinet/profile-v21.webp"]),
