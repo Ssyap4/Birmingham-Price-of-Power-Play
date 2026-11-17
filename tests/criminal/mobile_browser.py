@@ -283,8 +283,11 @@ def run():
                         assert value(page, "CR01") == saved
                         touch(page, '[data-action="ack"]')
                         bounds(page)
+                        touch(page, '[data-action="choices"]')
+                        assert page.locator("#crDecisionHeading").evaluate("e=>document.activeElement===e")
                         touch(page, ".cr-inventory summary")
                         assert page.locator(".cr-inventory[open]").count() == 1
+                        assert page.locator(".cr-equipment-grid").evaluate("e=>getComputedStyle(e).maxHeight")== "none"
                         assert page.locator(".cr-gear-illustration").count() >= 2
                         page.wait_for_function("() => [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].every(i=>i.complete&&i.naturalWidth===96)")
                         page.screenshot(
@@ -342,11 +345,14 @@ def run():
                                 # Ending has a story-specific afterword, grounded in saved flags.
                                 assert page.locator(".cr-epilogue-card").count() >= 1
                                 assert page.locator(".cr-epilogue h2").inner_text() == "После этой ночи"
+                                assert page.locator(".cr-final-consequence .cr-hp-delta").is_visible()
+                                assert page.locator(".cr-final-receipt").is_visible()
                                 # The first confirmed ending raises a one-time toast.
                                 assert page.locator(".cr-reward-toast").is_visible()
                                 assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
                                 touch(page, '[data-action="dismissReward"]')
                                 assert not page.locator(".cr-reward-toast").count()
+                                assert page.locator(".cr-final-receipt").is_visible()
                                 ledger = page.evaluate(
                                     "(k)=>JSON.parse(localStorage.getItem(k))",
                                     PREFIX + "ledger",
@@ -395,6 +401,7 @@ def run():
                         touch(page, '[data-archive-mission="CR01"]')
                         assert page.locator(".cr-record").count() == 2
                         assert page.locator('[data-archive-mission="CR01"]').get_attribute("aria-pressed") == "true"
+                        assert page.locator('[data-archive-mission="CR01"]').evaluate("e=>document.activeElement===e")
                         touch(page, '[data-archive-mission="all"]')
                         assert page.locator(".cr-record").count() == 10
                         assert page.locator('[data-action="archiveNext"]').is_disabled()
@@ -469,6 +476,12 @@ def run():
                 assert "Игра без сохранения" in page.locator(".cr-warning").inner_text()
                 touch(page, '[data-choice="accept"]')
                 assert not page.locator(".cr-save-status").count()
+                page.once("dialog",lambda d:d.dismiss())
+                touch(page,'[data-action="map"]')
+                assert page.locator(".cr-consequence").is_visible()
+                page.once("dialog",lambda d:d.dismiss())
+                touch(page,'[data-action="chronicle"]')
+                assert page.locator(".cr-consequence").is_visible()
                 ctx.close()
                 # Corrupt slot cannot be replaced by an ordinary Start.
                 ctx = browser.new_context(
@@ -556,7 +569,11 @@ def run():
                 )
                 touch(page, "#criminalEntry")
                 touch(page, '.cr-pin[data-mission="CR03"]')
-                touch(page, '[data-action="resume"]')
+                # Direct restart from briefing must not erase an unarchived final.
+                page.once("dialog",lambda d:d.accept())
+                touch(page, '[data-action="restart"]')
+                assert value(page,"CR03")==PLANS["CR03"]["care"]
+                assert not page.locator(".cr-reward-toast").count()
                 assert (
                     "Финал не объявляется награждённым"
                     in page.locator(".cr-warning").inner_text()
@@ -577,6 +594,15 @@ def run():
                     )
                     == 1
                 )
+                # A second tab edits a slot after the briefing opens.
+                touch(page,'[data-action="map"]')
+                touch(page,'.cr-pin[data-mission="CR03"]')
+                newer=page.evaluate("()=>CriminalEngine.create('CR03',123,'qa-newer-attempt',Date.now())")
+                page.evaluate("(s)=>localStorage.setItem('birmingham_criminal_v2_save_CR03',JSON.stringify(s))",newer)
+                page.once("dialog",lambda d:d.accept())
+                touch(page,'[data-action="restart"]')
+                assert value(page,"CR03")==newer
+                assert "Новая попытка не начата" in page.locator("#criminalScreen h1").inner_text()
                 ctx.close()
                 # Telegram supplied insets are scoped to the new screen and update live.
                 ctx = browser.new_context(

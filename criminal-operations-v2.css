@@ -701,3 +701,23 @@ body[data-criminal="active"] > .bh-audio-controls button {
  #criminalScreen .cr-reward-toast .cr-reward-symbol{width:32px;height:32px;font-size:24px}
  #criminalScreen .cr-reward-toast b{font-size:14px}
 }
+
+/* V35: the same scene/receipt reading order as the detective campaign. */
+#criminalScreen .cr-reader-jump{margin:14px 0 20px}
+#criminalScreen .cr-reader-jump button{width:100%;text-align:center;min-height:48px}
+#criminalScreen #crDecisionHeading,#criminalScreen .cr-consequence,#criminalScreen .cr-archive-count{scroll-margin-top:calc(12px + max(env(safe-area-inset-top,0px),var(--cr-safe-top,0px)))}
+#criminalScreen .cr-consequence .cr-primary{display:block;width:100%;text-align:center;margin-top:12px}
+#criminalScreen .cr-final-consequence,#criminalScreen .cr-final-receipt{margin:18px 0;padding:14px;border:1px solid #aa8755;border-left:3px solid #d1ad76;border-radius:6px;background:linear-gradient(145deg,#30291f,#192120);overflow-wrap:anywhere}
+#criminalScreen .cr-final-receipt h2,#criminalScreen .cr-final-consequence h2{margin:6px 0 10px;font-size:22px}
+#criminalScreen .cr-final-receipt small{font:750 11px/1.4 system-ui,sans-serif;color:#e4bc7d}
+#criminalScreen .cr-hp-delta[data-change="loss"]{color:#ffb5a1}
+#criminalScreen .cr-hp-delta[data-change="gain"]{color:#d1e7b5}
+#criminalScreen .cr-choices{counter-reset:cr-choice}
+#criminalScreen .cr-choices button{counter-increment:cr-choice;padding-left:43px}
+#criminalScreen .cr-choices button::before{content:counter(cr-choice,decimal-leading-zero);position:absolute;left:12px;top:13px;color:#d5ad71;font:700 15px/1.4 Georgia,serif}
+#criminalScreen .cr-story p{overflow-wrap:anywhere}
+#criminalScreen .cr-story .cr-dialogue span{line-height:1.6}
+#criminalScreen .cr-inventory>div,#criminalScreen .cr-journal>ol{max-height:none;overflow:visible;overscroll-behavior:auto}
+#criminalScreen .cr-inventory>summary:focus-visible,#criminalScreen .cr-journal>summary:focus-visible{outline:2px solid #f2d19c;outline-offset:-3px}
+#criminalScreen .cr-final-receipt:focus-visible,#criminalScreen #crDecisionHeading:focus-visible{outline:2px solid #f2d19c;outline-offset:2px}
+@media(max-width:355px){#criminalScreen .cr-choices button{padding-left:36px}#criminalScreen .cr-choices button::before{left:9px}#criminalScreen .cr-story{padding-inline:11px}}

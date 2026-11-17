@@ -66,10 +66,8 @@
   }
   function confirmPendingLeave() {
     return (
-      !pending ||
-      confirm(
-        "Последний ход рассчитан, но не сохранён. Выход потеряет этот результат. Покинуть поручение?",
-      )
+      pending ? confirm("Последний ход рассчитан, но не сохранён. Выход потеряет этот результат. Покинуть поручение?") :
+      memory && state?.status === "active" ? confirm("Эта попытка не сохраняется. При выходе весь её прогресс будет потерян. Покинуть поручение?") : true
     );
   }
   function close() {
@@ -95,8 +93,10 @@
         img.replaceWith(f);
       });
     });
-    root.querySelector("h1,h2")?.setAttribute("tabindex", "-1");
-    window.scrollTo(0, 0);
+    const heading=root.querySelector("h1");
+    heading?.setAttribute("tabindex", "-1");
+    heading?.focus({preventScroll:true});
+    window.scrollTo({top:0,left:0,behavior:"instant"});
   }
   function art(m, sceneId) {
     const M = globalThis.CriminalArt;
@@ -338,7 +338,7 @@
           `<span>${names[id]} ${delta > 0 ? "+" : ""}${delta}</span>`,
         );
     }
-    return `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>`;
+    return changes.length ? `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>` : '<p class="cr-small">Снаряжение и другие показатели не изменились.</p>';
   }
   function journal() {
     return `<details class="cr-journal"><summary>Журнал решений · ${state.revision}</summary><ol>${state.history
@@ -357,6 +357,9 @@
       .map((act) => `<span class="${act <= current ? "is-reached" : ""}" aria-hidden="true"></span>`)
       .join("")}</div>`;
   }
+  function resultDetails(m,e){
+    return `<small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p class="cr-hp-delta" data-change="${e.hpDelta<0?"loss":e.hpDelta>0?"gain":"none"}">HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}`;
+  }
   function scene(showResult) {
     mode = "scene";
     const m = C.missions[state.missionId];
@@ -366,7 +369,7 @@
     let result = "";
     if (showResult && state.lastEvent) {
       const e = state.lastEvent;
-      result = `<section class="cr-consequence" aria-live="polite"><small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p>HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}${btn("ack", "Продолжить →", "cr-primary")}</section>`;
+      result = `<section class="cr-consequence" aria-live="polite" tabindex="-1">${resultDetails(m,e)}${btn("ack", "Продолжить →", "cr-primary")}</section>`;
     }
     const choiceViews = E.choices(state);
     const choicesHtml = choiceViews
@@ -384,7 +387,7 @@
     render(
       `<header class="cr-heading"><span>${m.id} · АКТ ${n.act}/3 · ${esc(m.acts[n.act - 1])}</span><h1>${esc(n.title)}</h1>${actProgress(n.act)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
         result ||
-        `${art(m, state.sceneId)}<article class="cr-story"><p>${esc(n.text)}</p><div class="cr-dialogue">${n.lines
+        `${art(m, state.sceneId)}<article class="cr-story" id="crStory" tabindex="-1"><p>${esc(n.text)}</p><div class="cr-dialogue">${n.lines
           .filter((l) => !l[2] || E.test(state, l[2]))
           .map(
             ([name, text]) =>
@@ -392,9 +395,14 @@
           )
           .join(
             "",
-          )}</div></article><h2>Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b class="cr-heal-label">${gearArt("bandage", "cr-heal-icon")} Перевязать раны · +35 HP</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
+          )}</div></article><div class="cr-reader-jump">${btn("choices", "К решениям ↓", "cr-primary")}</div><h2 id="crDecisionHeading" tabindex="-1">Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b class="cr-heal-label">${gearArt("bandage", "cr-heal-icon")} Перевязать раны · +35 HP</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
       }${journal()}`,
     );
+    if(result){
+      const receipt=root.querySelector(".cr-consequence");
+      receipt?.focus({preventScroll:true});
+      receipt?.scrollIntoView({block:"start",behavior:"instant"});
+    }
   }
   function advance(choiceId, revision) {
     if (!state || pending) return;
@@ -451,6 +459,12 @@
       ${btn("dismissReward", "Закрыть ×")}
     </aside>`;
   }
+  function finalReceipt(m,a){
+    if(!a.ok)return "";
+    const key=[state.missionId,state.heroId,state.terminalId].join(":");
+    const first=a.value.rewards[key]===state.attemptId;
+    return `<section class="cr-final-receipt" tabindex="-1"><small>ПОДТВЕРЖДЁННАЯ НАГРАДА</small><h2>${esc(C.awardName(m.id,state.terminalId))}</h2><p>${first?"Эта попытка открыла уникальный знак. Он сохранён в коллекции.":"Этот знак уже был получен раньше. Новая попытка записана без повторной награды."}</p></section>`;
+  }
   function ending() {
     mode = "ending";
     const m = C.missions[state.missionId],
@@ -472,10 +486,10 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
+      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${finalReceipt(m,a)}${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
     );
   }
-  function chronicle() {
+  function chronicle(returnTo = null) {
     selectedMissionId = null;
     rewardNotice = null;
     mode = "chronicle";
@@ -517,6 +531,10 @@
           .join("") || "<p>Завершённых попыток пока нет.</p>"
       }${pager}${btn("commonArchive", "Открыть общие достижения кампании")}`,
     );
+    if(returnTo){
+      const target=root.querySelector(returnTo)||root.querySelector(".cr-archive-count");
+      if(target){if(!target.matches("button"))target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:"center",behavior:"instant"})}
+    }
   }
   function currentId() {
     return state?.missionId || selectedMissionId || location.hash.split("/")[1];
@@ -528,7 +546,7 @@
     if (b.dataset.archiveMission) {
       archiveMission = b.dataset.archiveMission;
       archivePage = 0;
-      return chronicle();
+      return chronicle('[data-archive-mission="'+archiveMission+'"]');
     }
     if (b.dataset.choice)
       return advance(b.dataset.choice, Number(b.dataset.revision));
@@ -543,16 +561,24 @@
       case "dismissReward":
         rewardNotice = null;
         root.querySelector(".cr-reward-toast")?.remove();
+        root.querySelector(".cr-heading h1")?.focus({preventScroll:true});
         return;
       case "chronicle":
-        if (pending) return;
+        if (!confirmPendingLeave()) return;
+        pending=null;state=null;memory=false;
         return chronicle();
       case "archivePrev":
         archivePage = Math.max(0, archivePage - 1);
-        return chronicle();
+        return chronicle(".cr-archive-count");
       case "archiveNext":
         archivePage += 1;
-        return chronicle();
+        return chronicle(".cr-archive-count");
+      case "choices": {
+        const target=root.querySelector("#crDecisionHeading");
+        target?.focus({preventScroll:true});
+        target?.scrollIntoView({block:"start",behavior:"instant"});
+        return;
+      }
       case "retryBrief":
         return brief(id);
       case "start":
@@ -570,14 +596,24 @@
           )
         )
           return;
-        if (state?.status === "finished" && !memory) {
-          const r = A.recover(store, state);
-          if (!r.ok) {
-            notice = r.error;
+        // A memory-only run must never become a persisted replacement.
+        if(memory&&state)return start(id,true,raw);
+        const existing=A.load(store,id);
+        // Protect the exact slot that the player saw, not a newer tab's value.
+        if(existing.kind!=="valid"||existing.raw!==raw){
+          notice="Слот изменён или недоступен. Сначала откройте актуальное сохранение.";
+          return render(`<h1>Новая попытка не начата</h1>${warning(notice)}${btn("retryBrief","Вернуться к приказу","cr-primary")}`);
+        }
+        // Even when Restart is pressed directly on the briefing, a saved
+        // final must be archived successfully before its slot is replaced.
+        if(existing.state.status==="finished"){
+          const recovered=A.recover(store,existing.state);
+          if(!recovered.ok){
+            state=existing.state;memory=false;raw=existing.raw;
             return ending();
           }
         }
-        return start(id, false, A.load(store, id).raw);
+        return start(id,false,existing.raw);
       case "retryWrite": {
         const w = A.save(store, pending, raw);
         if (w.ok) {
