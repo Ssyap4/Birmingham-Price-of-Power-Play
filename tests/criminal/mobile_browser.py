@@ -352,6 +352,12 @@ def run():
                                 assert page.locator(".cr-final-receipt").is_visible()
                                 # The first confirmed ending raises a one-time toast.
                                 assert page.locator(".cr-reward-toast").is_visible()
+                                assert page.locator(".cr-final-receipt").evaluate("""el=>{
+                                  const t=document.querySelector('.cr-reward-toast'),a=getComputedStyle(el),b=getComputedStyle(t);
+                                  return a.borderTopLeftRadius==='7px' && b.borderTopLeftRadius==='7px' &&
+                                    a.backgroundImage===b.backgroundImage && a.getPropertyValue('--campaign-episode-receipt').trim().startsWith('linear-gradient(')
+                                }"""),(name,id,"receipt and fly-in visual parity")
+                                assert page.locator(".cr-result").evaluate("e=>getComputedStyle(e).borderTopLeftRadius==='7px'")
                                 assert "Новый знак получен" in page.locator(".cr-reward-toast").inner_text()
                                 touch(page, '[data-action="dismissReward"]')
                                 assert not page.locator(".cr-reward-toast").count()

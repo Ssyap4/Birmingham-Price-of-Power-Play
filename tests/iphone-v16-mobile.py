@@ -308,6 +308,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,"#launchSecondCase")
     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
     assert page.locator("#caseBriefing .briefing-rule").count()==3
+    assert page.locator("#caseBriefing .briefing-rule").evaluate_all("els=>els.every(e=>getComputedStyle(e).borderTopLeftRadius==='7px'&&getComputedStyle(e).backgroundColor==='rgb(23, 20, 17)')")
     assert page.locator("#briefContinue").evaluate("el=>el.getBoundingClientRect().height>=54&&el.scrollWidth<=el.clientWidth+1")
     page.locator("#caseBriefing .briefing-rules").screenshot(path=str(OUT/f"{engine}-{width}-v30-briefing-rules.png"))
     tap(page,"#briefContinue")

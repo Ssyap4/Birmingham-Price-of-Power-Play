@@ -176,3 +176,86 @@
     font-variant-numeric:tabular-nums;
   }
 }
+
+/* V54 — common episode ritual: instructions, earned receipts and final
+   reports. No new overlays, timing, archive writes or navigation handlers. */
+@media (orientation:portrait) and (max-width:700px) {
+  #case001Briefing, #caseBriefing, #caseGame, #game, #criminalScreen {
+    --campaign-episode-radius: 7px;
+    --campaign-episode-edge: #b48c59;
+    --campaign-episode-rule: #171411;
+    --campaign-episode-receipt: linear-gradient(145deg,#594025,#211a14 80%);
+    --campaign-episode-report: linear-gradient(145deg,#38291c,#18130e 78%);
+    --campaign-episode-primary: linear-gradient(145deg,#654326,#302115);
+  }
+  #case001Briefing .case001-briefing-panel,
+  #caseBriefing {
+    border-radius: var(--campaign-episode-radius) !important;
+  }
+  #case001Briefing .case001-briefing-points section,
+  #caseBriefing .briefing-rule {
+    background:var(--campaign-episode-rule) !important;
+    border-radius:var(--campaign-episode-radius) !important;
+  }
+  #case001Briefing .briefing-start, #caseBriefing #briefContinue,
+  #criminalScreen .cr-actions[data-brief] .cr-primary {
+    min-height:54px;
+    border-radius:var(--campaign-episode-radius) !important;
+    background:var(--campaign-episode-primary) !important;
+    border-color:#d9ab6e !important;
+    color:#fff0d1 !important;
+  }
+  /* The forensic briefing already has four rules and Case002 three; the
+     operation-specific prose remains separate instead of cloning either. */
+  #criminalScreen:has(.cr-actions[data-brief]) > h2 {
+    color:#f2d5a7;
+    margin:18px 0 8px;
+    font:700 clamp(1.2rem,5.5vw,1.45rem)/1.25 Georgia,serif;
+  }
+  #criminalScreen:has(.cr-actions[data-brief]) > h2+p {
+    margin:0 0 12px;
+    padding:13px 12px;
+    border:1px solid #755737;
+    border-left:3px solid #bd945f;
+    border-radius:var(--campaign-episode-radius);
+    background:var(--campaign-episode-rule);
+    color:#efddc6;
+    font:400 var(--campaign-reading-size)/1.65 Georgia,serif;
+  }
+  #caseGame #case001UnlockReceipt:not([hidden]),
+  #game #caseAchievementReceipt:not([hidden]),
+  #game .finale-new-reward,
+  #criminalScreen .cr-final-receipt {
+    border-radius:var(--campaign-episode-radius) !important;
+    border-color:var(--campaign-episode-edge) !important;
+    background:var(--campaign-episode-receipt) !important;
+  }
+  #caseGame #case001UnlockReceipt button,
+  #game .case-achievement-receipt-dismiss {
+    min-height:48px !important;
+    border-radius:5px !important;
+  }
+  #game .case-unlock-toast,
+  #criminalScreen .cr-reward-toast {
+    border-radius:var(--campaign-episode-radius);
+    background:var(--campaign-episode-receipt);
+  }
+  #caseGame .v33-ending-report,
+  #game .finale-panel,
+  #criminalScreen .cr-result,
+  #criminalScreen .cr-final-consequence {
+    border-radius:var(--campaign-episode-radius) !important;
+    border-color:var(--campaign-episode-edge) !important;
+  }
+  /* Keep special ending-specific mood/texture in the two investigations. */
+  #criminalScreen .cr-result,
+  #criminalScreen .cr-final-consequence {
+    background:var(--campaign-episode-report);
+  }
+  #caseGame .case001-finale-actions button,
+  #game .finale-action,
+  #criminalScreen .cr-result~.cr-actions button {
+    min-height:50px;
+    border-radius:var(--campaign-episode-radius);
+  }
+}

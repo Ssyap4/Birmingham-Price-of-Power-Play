@@ -37,6 +37,15 @@ def reading_language(page, selector):
     assert metrics["size"]>=16.8 and metrics["line"]>=1.65, (selector,metrics)
     return metrics
 
+def episode_material(page, selector, token):
+    el=page.locator(selector).first
+    el.wait_for(state="visible")
+    m=el.evaluate("""(e,t)=>{const s=getComputedStyle(e);return {radius:s.borderTopLeftRadius,
+      background:s.backgroundImage,color:s.backgroundColor,token:s.getPropertyValue(t).trim()};}""",token)
+    assert m["radius"]=="7px", (selector,m)
+    assert m["token"], (selector,m)
+    return m
+
 def run():
     server = ThreadingHTTPServer(
         ("127.0.0.1", 0), partial(Quiet, directory=str(ROOT / "campaign-unified-dist"))
@@ -73,6 +82,8 @@ def run():
                 tap(page, "#launchSecondCase")
                 page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
                 assert page.locator("#caseBriefing").is_visible()
+                second_rule=episode_material(page,"#caseBriefing .briefing-rule","--campaign-episode-rule")
+                assert second_rule["color"]=="rgb(23, 20, 17)",second_rule
                 tap(page, "#briefContinue")
                 tap(page, "#begin")
                 assert page.locator("#game").is_visible()
@@ -90,6 +101,8 @@ def run():
                 assert page.locator("#heroSelection").is_visible()
                 tap(page, "#heroSelection .hero-begin")
                 assert page.locator("#case001Briefing").is_visible()
+                first_rule=episode_material(page,"#case001Briefing .case001-briefing-points section","--campaign-episode-rule")
+                assert first_rule["color"]==second_rule["color"],(first_rule,second_rule)
                 tap(page, "#case001Briefing .briefing-start")
                 assert page.locator("#caseGame").is_visible()
                 assert page.locator("#caseChoices button").count() > 0
@@ -157,6 +170,7 @@ def run():
                 }""",keys)
                 receipt=page.locator("#case001UnlockReceipt")
                 receipt.wait_for(state="visible")
+                first_receipt=episode_material(page,"#case001UnlockReceipt","--campaign-episode-receipt")
                 assert "Острый взгляд" in receipt.inner_text()
                 assert page.locator(".case001-board-guide").count()==0
                 stored_award=page.evaluate("k=>localStorage.getItem(k)",award_fixture["awardKey"])
@@ -251,6 +265,9 @@ def run():
                         toast=proof.locator("#caseUnlockToast")
                         if toast.is_visible():tap(proof,".case-unlock-toast-close")
                 assert verified,(name,"canonical route did not exercise unread receipt continuity")
+                second_receipt=episode_material(proof,"#caseAchievementReceipt","--campaign-episode-receipt")
+                assert second_receipt["background"]==first_receipt["background"],(first_receipt,second_receipt)
+                print("PASS common briefing and persistent receipt material",name,flush=True)
                 proof.locator("#caseAchievementReceipt").scroll_into_view_if_needed()
                 proof.screenshot(path=str(OUT/(name+"-v34-case002-unread-achievement.png")))
                 assert not proof_errors,proof_errors
