@@ -81,3 +81,18 @@ test("existing two menu compositions remain in one audio player and settings per
  for(const f of ["night-on-the-docks.mp3","menu-original.ogg","case-fog.ogg","case-ledger.ogg","case-shadows.ogg"])
   assert.ok(fs.statSync(path.join(root,"assets/audio",f)).size>1000,f);
 });
+
+test("V23 criminal menu uses independent verified artwork, never the CR01 scene",()=>{
+ const h=read("index.html");
+ const card=h.match(/<button[^>]+id="criminalEntry"[\s\S]*?<\/button>/)?.[0]||"";
+ assert.ok(card.includes("assets/cabinet/criminal-menu-v23.webp"));
+ assert.ok(!card.includes("assets/criminal/cr01-arrival.webp"));
+ const art=fs.readFileSync(path.join(root,"assets/cabinet/criminal-menu-v23.webp"));
+ assert.equal(art.length,132566);
+ assert.equal(art.toString("ascii",0,4),"RIFF");
+ assert.equal(art.toString("ascii",8,12),"WEBP");
+ assert.equal(art.toString("ascii",12,16),"VP8 ");
+ assert.equal(art.readUInt16LE(26)&0x3fff,792);
+ assert.equal(art.readUInt16LE(28)&0x3fff,720);
+ assert.equal(crypto.createHash("sha256").update(art).digest("hex"),"782ec1f2867afe471ea653e57e5b162aea6a79a31cc4ef4f3ee046d1cdcde86d");
+});

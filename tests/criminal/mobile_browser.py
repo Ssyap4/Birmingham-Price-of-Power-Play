@@ -172,7 +172,7 @@ def run():
                     # V21: verify decoded independent image panels, not obsolete CSS backgrounds.
                     for selector, sources in (
                         ("#districtsCard", ["assets/districts/centre.webp"]),
-                        ("#criminalEntry", ["assets/criminal/cr01-arrival.webp"]),
+                        ("#criminalEntry", ["assets/cabinet/criminal-menu-v23.webp"]),
                         (".cabinet-entry-quiz", ["assets/original-art/clock.webp"]),
                         ("#storyStart", ["assets/mobile-menu/approved-achievements.webp"]),
                         ("#profileCard", ["assets/heroes/jack.webp", "assets/heroes/eleanor.webp"]),
