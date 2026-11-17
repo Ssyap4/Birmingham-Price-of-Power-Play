@@ -248,6 +248,10 @@ def run():
                         assert page.evaluate("getComputedStyle(document.getElementById('profile')).opacity") == "1"
                         assert page.locator("#profile .profile-hero").is_visible()
                         assert page.locator("#profile .profile-hero h2").inner_text() == "ТВОЯ ИСТОРИЯ"
+                        profile_art=page.locator("#profile .profile-v21-art img")
+                        assert profile_art.get_attribute("loading")=="eager"
+                        page.wait_for_function("(()=>{const i=document.querySelector('#profile .profile-v21-art img');return i.complete&&i.naturalWidth===959&&i.naturalHeight===540})()")
+                        profile_art.evaluate("i=>i.decode()")
                         assert page.locator("#playerCampaignOverview").is_visible()
                         assert page.locator('#profile .campaign-portal-v13').count() == 0
                         assert page.locator(".player-overview-card").count() == 3

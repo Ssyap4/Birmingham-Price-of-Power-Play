@@ -332,12 +332,16 @@ def run():
                 assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="РЕШЕНИЯ"
                 # V37: the global exit no longer deletes the active investigation.
                 assert "Сбросить" in page.locator("#caseDiscardBtn").inner_text()
+                assert page.locator("#gameExitBtn").is_hidden()
+                assert page.locator("#caseHome").is_hidden()
+                assert page.locator("#homeBtn").is_visible()
+                assert page.locator("#caseGame > .bh-audio-controls button:visible").count()==2
                 page.once("dialog",lambda d:d.dismiss())
-                tap(page,"#gameExitBtn")
+                tap(page,"#homeBtn")
                 assert page.locator("#caseGame").is_visible()
                 assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==first
                 page.once("dialog",lambda d:d.accept())
-                tap(page,"#gameExitBtn")
+                tap(page,"#homeBtn")
                 assert page.locator("#home").is_visible()
                 assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==first
                 # Leaving old entry UI and playing a new intro must preserve both raw slots.

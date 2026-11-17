@@ -13,6 +13,16 @@
   $('homeBtn')?.click();
  });
  if(!game)return;
+ // The portrait Case001 header owns the one visible Menu action. Keep the
+ // confirmation on direct user activation; internal guarded redirects and
+ // the explicit discard action already handle their own confirmation.
+ const portrait=window.matchMedia('(orientation: portrait) and (max-width: 700px)');
+ $('homeBtn')?.addEventListener('click',e=>{
+  if(!e.isTrusted||game.hidden||!portrait.matches)return;
+  if(!confirm('Вернуться на главную? Сохранённые расследования и награды останутся.')){
+   e.preventDefault();e.stopImmediatePropagation();
+  }
+ },true);
  const discard=document.createElement('button');discard.id='caseDiscardBtn';discard.className='case-secondary';discard.type='button';discard.textContent='Сбросить попытку и выйти';discard.hidden=true;
  $('caseRestart')?.after(discard);
  const read=()=>{

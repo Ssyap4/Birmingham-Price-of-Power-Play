@@ -157,3 +157,12 @@
  /* The utility dock sits before story content; no artificial extra spacer
     is needed beyond the existing safe-area footer. */
 }
+
+/* V67: one ordinary Menu exit in the visible portrait Case001 UI. The top
+   header remains accessible; the two-part audio controls no longer carry a
+   duplicate exit. Keep desktop and the existing reset/map actions intact. */
+@media (orientation: portrait) and (max-width:700px){
+ #caseGame:not([hidden]) > .bh-audio-controls #gameExitBtn,
+ #caseGame:not([hidden]) #caseHome{display:none!important}
+ #caseGame:not([hidden]) > .bh-audio-controls{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
