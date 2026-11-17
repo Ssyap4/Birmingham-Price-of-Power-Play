@@ -63,6 +63,11 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 #home .cinema-audio-dock .bh-audio-controls button{box-sizing:border-box;display:block;min-height:48px;min-width:0;max-width:100%;padding:8px 4px;font-size:10px;line-height:1.35;white-space:normal;overflow-wrap:break-word;text-align:center}
 #home .cinema-audio-dock .bh-audio-controls #bhMenuTrack{display:block!important}
 .bh-audio-controls #bhMenuTrack{display:none}
+/* WebKit Cyrillic fallback is wider than Chromium near 360px. */
+@media(min-width:356px) and (max-width:380px){
+ #home .cinema-crest h1{font-size:38px;letter-spacing:.04em}
+ #home .cinema-crest h1 span{font-size:25px;letter-spacing:.08em}
+}
 @media(max-width:355px){
  #home .cinema-crest h1{font-size:34px;letter-spacing:.04em}
  #home .cinema-crest h1 span{font-size:24px;letter-spacing:.08em}
