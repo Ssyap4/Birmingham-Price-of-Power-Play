@@ -31,6 +31,7 @@
     selectedMissionId = null,
     archiveMission = "all",
     archivePage = 0,
+    finalReturn = null,
     mode = "map";
   const esc = (x) =>
     String(x ?? "").replace(
@@ -47,7 +48,7 @@
   const btn = (id, text, cls = "") =>
     `<button type="button" data-action="${id}" class="${cls}">${text}</button>`;
   function top() {
-    return `<div class="cr-top">${btn("map", "← Карта")}${btn("chronicle", "Хроника")}${btn("home", "Меню")}</div>`;
+    return `<div class="cr-top">${btn("map", "← Карта")}${mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${btn("home", "Меню")}</div>`;
   }
   function setHash(value) {
     try {
@@ -71,6 +72,7 @@
     );
   }
   function close() {
+    finalReturn = null;
     pending = null;
     state = null;
     rewardNotice = null;
@@ -141,6 +143,7 @@
     return { status: s.terminalId, label: outcomes[s.terminalId] || "Попытка завершена", action: "Посмотреть результат" };
   }
   function map() {
+    finalReturn = null;
     selectedMissionId = null;
     mode = "map";
     state = null;
@@ -183,6 +186,7 @@
     );
   }
   function brief(id) {
+    finalReturn = null;
     selectedMissionId = id;
     rewardNotice = null;
     mode = "brief";
@@ -492,10 +496,10 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${finalReceipt(m,a)}${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("chronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
+      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${finalReceipt(m,a)}${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
     );
   }
-  function chronicle(returnTo = null) {
+  function chronicle(returnTo = null, returnWarning = "") {
     selectedMissionId = null;
     rewardNotice = null;
     mode = "chronicle";
@@ -503,7 +507,7 @@
     const l = A.ledger(store);
     if (!l.ok)
       return render(
-        `<h1>Локальная хроника</h1>${warning(l.error + " Существующие байты хроники не изменены.")}`,
+        `<h1>Локальная хроника</h1>${returnWarning?warning(returnWarning):""}${warning(l.error + " Существующие байты хроники не изменены.")}`,
       );
     const history = l.value.attempts.slice().reverse().filter((s) => archiveMission === "all" || s.missionId === archiveMission);
     const pageSize = 10;
@@ -514,7 +518,7 @@
     const filters = `<nav class="cr-archive-filters" aria-label="Фильтр по поручению">${[["all", "Все"], ...Object.keys(C.missions).map((id) => [id, id])].map(([id, title]) => `<button type="button" data-archive-mission="${id}" aria-pressed="${archiveMission === id}">${title}</button>`).join("")}</nav>`;
     const pager = `<nav class="cr-archive-pager" aria-label="Страницы хроники"><button type="button" data-action="archivePrev" ${archivePage === 0 ? "disabled" : ""}>← Назад</button><span>Страница ${archivePage + 1} из ${pages}</span><button type="button" data-action="archiveNext" ${archivePage >= pages - 1 ? "disabled" : ""}>Далее →</button></nav>`;
     render(
-      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника криминальных дел</h1></header><p>${l.value.attempts.length} завершённых попыток · ${Object.keys(l.value.rewards).length} уникальных знаков · ${Object.keys(l.value.achievements).length} памятных отметок</p><p class="cr-small">Знак хранит ссылку на доказанный завершённый исход. Повтор того же финала тем же героем остаётся новой попыткой, но второго знака не даёт. Детективный архив не изменяется.</p><h2>Знаки этой ночи</h2><div class="cr-awards">${
+      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника криминальных дел</h1></header>${returnWarning?warning(returnWarning):""}${finalReturn?'<p class="cr-small">Открыта из завершённого поручения. К его итогу можно вернуться через верхнюю панель.</p>':""}<p>${l.value.attempts.length} завершённых попыток · ${Object.keys(l.value.rewards).length} уникальных знаков · ${Object.keys(l.value.achievements).length} памятных отметок</p><p class="cr-small">Знак хранит ссылку на доказанный завершённый исход. Повтор того же финала тем же героем остаётся новой попыткой, но второго знака не даёт. Детективный архив не изменяется.</p><h2>Знаки этой ночи</h2><div class="cr-awards">${
         Object.entries(l.value.rewards)
           .map(([key, attemptId]) => {
             const s = l.value.attempts.find((s) => s.attemptId === attemptId);
@@ -569,10 +573,30 @@
         root.querySelector(".cr-reward-toast")?.remove();
         root.querySelector(".cr-heading h1")?.focus({preventScroll:true});
         return;
+      case "finalChronicle":
       case "chronicle":
         if (!confirmPendingLeave()) return;
+        // Bookmark only a persisted, confirmed terminal slot. Never revive a
+        // memory-only attempt or overwrite a slot changed in another tab.
+        finalReturn=null;
+        if(mode==="ending"&&!memory&&state?.status==="finished"){
+          const slot=A.load(store,state.missionId);
+          if(slot.kind==="valid"&&slot.raw===raw&&slot.state.attemptId===state.attemptId){
+            finalReturn={id:state.missionId,attemptId:state.attemptId,raw:slot.raw};
+            archiveMission=state.missionId;archivePage=0;
+          }
+        }
         pending=null;state=null;memory=false;
         return chronicle();
+      case "returnFinal": {
+        const point=finalReturn;finalReturn=null;
+        if(!point||mode!=="chronicle")return chronicle();
+        const slot=A.load(store,point.id);
+        if(slot.kind!=="valid"||slot.raw!==point.raw||slot.state.attemptId!==point.attemptId||slot.state.status!=="finished"){
+          return chronicle(null,"Сохранение поручения изменилось или недоступно. Итог не открыт; текущие данные не изменены.");
+        }
+        return resume(point.id);
+      }
       case "archivePrev":
         archivePage = Math.max(0, archivePage - 1);
         return chronicle(".cr-archive-count");
@@ -692,6 +716,7 @@
         e.stopImmediatePropagation();
         return;
       }
+      finalReturn = null;
       pending = null;
       state = null;
       rewardNotice = null;

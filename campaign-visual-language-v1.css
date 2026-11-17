@@ -523,3 +523,43 @@
     touch-action:manipulation;
   }
 }
+
+
+/* V58 — final reports: distinguish verified archive records from warnings,
+   keep touch actions readable at the bottom of long endings. */
+@media (orientation:portrait) and (max-width:700px) {
+  #caseGame .case001-finale-archive-note,
+  #game .finale-archive {
+    box-sizing:border-box;
+    border:1px solid #947044 !important;
+    border-left:3px solid #d6ad73 !important;
+    border-radius:7px !important;
+    padding:12px !important;
+    background:#211911 !important;
+    font:600 .8rem/1.55 system-ui,sans-serif !important;
+    overflow-wrap:anywhere;
+  }
+  #caseGame .case001-finale-archive-note:not([data-status="verified"]),
+  #game .finale-archive:not([data-status="verified"]) {
+    border-left-color:#c7836c !important;
+    color:#ffcfb9 !important;
+  }
+  #caseGame .v33-ending-metrics strong,
+  #game .finale-metric strong,
+  #criminalScreen .cr-result b {
+    font-variant-numeric:tabular-nums;
+  }
+  #caseGame .case001-finale-actions button,
+  #game .finale-actions button,
+  #criminalScreen .cr-actions button {
+    min-height:50px;
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  #criminalScreen .cr-top [data-action="returnFinal"] {
+    border-color:#d6ad73;
+    color:#ffe0ad;
+    background:linear-gradient(135deg,#57402a,#2b2016);
+  }
+}

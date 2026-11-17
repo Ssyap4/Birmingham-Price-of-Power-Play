@@ -69,7 +69,7 @@
  clearReadingPoint();
  function markRead(){
   decisionButton.dataset.newDecision="false";
-  decisionButton.setAttribute("aria-label","Перейти к решениям");
+  decisionButton.setAttribute("aria-label",scene.dataset.ending?"Перейти к итогу":"Перейти к решениям");
  }
  function clearDecisionFeedback(){
   feedback.hidden=true;
@@ -124,6 +124,13 @@
  bridge.className="case001-board-bridge";
  game.append(bridge);
  const modal=game.querySelector(".v33-shade");
+ function syncEndingLabel(){
+  const label=scene.dataset.ending?"ИТОГ":"РЕШЕНИЯ";
+  if(decisionButton.textContent!==label)decisionButton.textContent=label;
+  if(scene.dataset.ending)markRead();
+ }
+ new MutationObserver(syncEndingLabel).observe(scene,{attributes:true,attributeFilter:["data-ending"]});
+ syncEndingLabel();
  let lastMode=null;
  let lastCount=null;
  let knownItems=null;

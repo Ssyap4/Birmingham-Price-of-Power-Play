@@ -1628,7 +1628,7 @@ function renderEndingRecap(target,view){
  panel.dataset.ending=recap.endingId;
  panel.append(make("p","БИРМИНГЕМ · ДЕЛО №002 ЗАКРЫТО","finale-eyebrow"));
  panel.append(make("h4",recap.title,"finale-title"));
- panel.append(make("p","История "+heroNames[recap.hero]+" · "+recap.sceneId+
+ panel.append(make("p","История "+heroNames[recap.hero]+
   " · Принято решений: "+recap.decisionCount,"finale-subtitle"));
  const currentReward="002:"+recap.hero+":"+recap.endingId;
  const achievementCheck=completionArchiveStatus(view.state);
@@ -1636,7 +1636,7 @@ function renderEndingRecap(target,view){
   const gain=make("section",undefined,"finale-new-reward");
   gain.setAttribute("role","status");
   gain.append(make("span","✦  ПОЛУЧЕНА НОВАЯ УНИКАЛЬНАЯ НАГРАДА","finale-new-reward-title"),
-   make("p","Ключ этого исхода впервые зарегистрирован в черновом архиве Дела №002. Жетон доступен в разделе наград при выборе своего."));
+   make("p","Этот исход впервые завершён за выбранного героя. Уникальный знак подтверждён в локальном архиве наград."));
   panel.append(gain);
  }
  const facts=make("div",undefined,"finale-metrics");
@@ -1708,7 +1708,7 @@ function renderEndingRecap(target,view){
     const li=make("li",undefined,"finale-history-event");
     li.dataset.scene=entry.to;
     const scene=data.graph.nodes.find(node=>node.id===entry.to);
-    li.append(make("small","СЦЕНА "+entry.to,"finale-history-scene"),
+    li.append(make("small","ЗАПИСЬ РАССЛЕДОВАНИЯ","finale-history-scene"),
      make("strong",scene?.title||"Запись дела","finale-history-name"),
      make("span",entry.notes.slice(0,2).join(" · "),"finale-history-description"));
     list.append(li);
@@ -1776,8 +1776,10 @@ function renderEndingRecap(target,view){
  const journalButton=make("button","ПРОСМОТРЕТЬ ХОД ДЕЛА","finale-action secondary");
  journalButton.type="button";
  journalButton.addEventListener("click",()=>openFinaleSection("journal"));
- const back=make("button","К ВЫБОРУ СВОЕГО","finale-action");
- back.type="button";back.addEventListener("click",returnToLaunch);
+ const mapLink=$("case002MapReturn");
+ const fromMap=mapLink&&!$("case002MapReturnBar").hidden;
+ const back=make("button",fromMap?"К КАРТЕ БИРМИНГЕМА":"К ВЫБОРУ ГЕРОЯ","finale-action");
+ back.type="button";back.addEventListener("click",()=>{if(fromMap)mapLink.click();else returnToLaunch();});
  actions.append(journalButton,back);
  panel.append(actions);
  target.append(panel);

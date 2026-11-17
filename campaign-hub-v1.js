@@ -357,5 +357,14 @@ const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(out
 awards(persistFinished(),false);
 const chapter=$('caseChapter');if(chapter)new MutationObserver(sync).observe(chapter,{childList:true});
 document.addEventListener('birmingham:case-findings-changed',sync);
-window.BirminghamCampaign={open,records:()=>persistFinished()};
+// Pure read-back for the final report; never writes or retries a reward.
+function completionStatus(heroId,started,ending){
+ const rec=recordArchive(),reward=rewardArchive();
+ const recorded=rec.status==='ready'&&rec.value.some(row=>row.key===[CASE_ID,heroId,started,ending].join(':')&&row.heroId===heroId&&row.started===started&&row.ending===ending);
+ const proven=rec.status==='ready'&&rec.value.some(row=>row.heroId===heroId&&row.ending===ending);
+ const rewarded=reward.status==='ready'&&proven&&!!reward.value[[CASE_ID,heroId,ending].join(':')];
+ const status=[rec.status,reward.status].includes('unavailable')?'unavailable':[rec.status,reward.status].includes('damaged')?'damaged':recorded&&rewarded?'verified':recorded||rewarded?'partial':'unconfirmed';
+ return {status,recorded,rewarded};
+}
+window.BirminghamCampaign={open,records:()=>persistFinished(),completionStatus};
 })();

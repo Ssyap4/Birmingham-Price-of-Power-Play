@@ -396,6 +396,16 @@ def run():
                                 assert not page.locator(".cr-reward-toast").count()
                                 bounds(page)
                                 if kind == "care":
+                                    if id=="CR01":
+                                        exact_slot=page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"save_"+id)
+                                        exact_ledger=page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"ledger")
+                                        touch(page,'[data-action="finalChronicle"]')
+                                        assert page.locator('[data-archive-mission="CR01"]').get_attribute("aria-pressed")=="true"
+                                        touch(page,'[data-action="returnFinal"]')
+                                        assert page.locator(".cr-final-receipt").is_visible()
+                                        assert not page.locator(".cr-reward-toast").count()
+                                        assert page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"save_"+id)==exact_slot
+                                        assert page.evaluate("(k)=>localStorage.getItem(k)",PREFIX+"ledger")==exact_ledger
                                     page.screenshot(
                                         path=str(
                                             OUT / (name + "-" + id + "-ending.png")

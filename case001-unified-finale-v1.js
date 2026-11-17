@@ -23,13 +23,25 @@
   const names=conclusions?.started===state.started&&Array.isArray(conclusions.deductions)
    ? [...new Set(conclusions.deductions.filter(x=>knownLinks.has(x)))]:[];
   const hero=window.BirminghamHero?.heroes?.find(h=>h.id===heroId);
-  return {state,hero,names};
+  return {state,hero,heroId,names};
  }
  function el(tag,cls,value){
   const e=document.createElement(tag);
   if(cls)e.className=cls;
   if(value!==undefined)e.textContent=value;
   return e;
+ }
+ function refreshArchive(report,data){
+  const note=report.querySelector(".case001-finale-archive-note");
+  if(!note)return;
+  const result=window.BirminghamCampaign?.completionStatus(data.heroId,data.state.started,data.state.node)||{status:"unconfirmed"};
+  note.dataset.status=result.status;
+  const message=result.status==="verified"?
+   "Итог и уникальный знак подтверждены в локальном архиве. Повторный исход не даёт второй награды.":
+   result.status==="damaged"?"Архив требует проверки. Итог или награда не подтверждены; данные не удалены.":
+   result.status==="unavailable"?"Хранилище недоступно. Запись итога и награды не подтверждена.":
+   "Расследование завершено, но запись итога или уникального знака пока не подтверждена.";
+  if(note.textContent!==message)note.textContent=message;
  }
  function decorate(){
   const report=paper.querySelector(":scope > .v33-ending-report");
@@ -40,8 +52,8 @@
   }
   if(choiceHeading&&choiceHeading.textContent!=="СЛЕДУЮЩИЙ ШАГ")
    choiceHeading.textContent="СЛЕДУЮЩИЙ ШАГ";
-  if(report.dataset.unifiedFinale==="true")return;
   const data=pickState();if(!data)return;
+  if(report.dataset.unifiedFinale==="true"){refreshArchive(report,data);return;}
   report.dataset.unifiedFinale="true";
   report.setAttribute("aria-label","Итог Дела №001");
   const kicker=report.querySelector(".v33-ending-head small");
@@ -77,8 +89,8 @@
   if(!evidence.length&&!data.names.length)
    body.append(el("p","","В этом прохождении не сохранены улики или подтверждённые связи."));
   materials.append(body);report.append(materials);
-  report.append(el("p","case001-finale-archive-note",
-   "Результаты этого прохождения доступны в общем архиве кампании. Уже полученные награды повторно не выдаются."));
+  const status=el("p","case001-finale-archive-note");
+  status.setAttribute("role","status");report.append(status);refreshArchive(report,data);
   const actions=el("nav","case001-finale-actions");
   actions.setAttribute("aria-label","После завершения Дела №001");
   const archive=el("button","","ОТКРЫТЬ АРХИВ ДОСТИЖЕНИЙ");
@@ -89,5 +101,10 @@
   actions.append(archive,map);report.append(actions);
  }
  new MutationObserver(decorate).observe(paper,{childList:true});
+ new MutationObserver(decorate).observe(game,{attributes:true,attributeFilter:["hidden"]});
+ document.addEventListener("birmingham:case-findings-changed",decorate);
+ window.addEventListener("storage",event=>{
+  if(event.key===null||event.key==="birmingham_campaign_records_v1"||event.key==="birmingham_campaign_unique_rewards_v1")decorate();
+ });
  decorate();
 })();

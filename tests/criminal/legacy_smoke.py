@@ -226,6 +226,27 @@ def run():
                   else localStorage.setItem(a.awardKey,a.old);
                   window.BirminghamCase.resume();
                 }""",{"k":keys,"a":award_fixture})
+                # Final-archive fixture: actual terminal screen, deliberately damaged archive.
+                # Not a claim that this fixture is a played ending.
+                final_fixture=page.evaluate("""k=>{
+                  const record='birmingham_campaign_records_v1',reward='birmingham_campaign_unique_rewards_v1',awards='birmingham_campaign_awards_v1';
+                  const originals=Object.fromEntries([record,reward,awards].map(key=>[key,localStorage.getItem(key)]));
+                  const s=JSON.parse(k.original);s.node='endingRescue';s.ending=s.node;
+                  localStorage.setItem(k.key,JSON.stringify(s));window.BirminghamCase.resume();
+                  return originals;
+                }""",keys)
+                page.wait_for_function("document.querySelector('.case001-finale-archive-note')?.dataset.status==='verified'")
+                assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="ИТОГ"
+                page.evaluate("""()=>{const key='birmingham_campaign_records_v1';localStorage.setItem(key,'{broken');window.dispatchEvent(new StorageEvent('storage',{key}));}""")
+                page.wait_for_function("document.querySelector('.case001-finale-archive-note')?.dataset.status==='damaged'")
+                assert page.evaluate("localStorage.getItem('birmingham_campaign_records_v1')")=="{broken"
+                page.evaluate("""({k,originals})=>{
+                  localStorage.setItem(k.key,k.original);
+                  if(k.originalMeta===null)localStorage.removeItem(k.meta);else localStorage.setItem(k.meta,k.originalMeta);
+                  for(const [key,v] of Object.entries(originals)){if(v===null)localStorage.removeItem(key);else localStorage.setItem(key,v);}
+                  window.BirminghamCase.resume();
+                }""",{"k":keys,"originals":final_fixture})
+                assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="РЕШЕНИЯ"
                 # V37: the global exit no longer deletes the active investigation.
                 assert "Сбросить" in page.locator("#caseDiscardBtn").inner_text()
                 page.once("dialog",lambda d:d.dismiss())
@@ -282,11 +303,11 @@ def run():
                 proof_errors=[]
                 proof.on("pageerror",lambda e:proof_errors.append(str(e)))
                 proof.on("dialog",lambda d:d.accept())
-                proof.goto(origin+"/preview/case002-prototype/index.html",wait_until="domcontentloaded")
+                proof.goto(origin+"/preview/case002-prototype/index.html?from=map",wait_until="domcontentloaded")
                 tap(proof,"#briefContinue")
                 tap(proof,"#begin")
                 known=None;verified=False
-                for source,target,action in route[:-1]:
+                for route_index,(source,target,action) in enumerate(route[:-1]):
                     choice=proof.locator(f'button.choice[data-to="{target}"][data-action="{action}"]')
                     assert choice.is_enabled(),(name,source,target)
                     choice.tap()
@@ -307,6 +328,19 @@ def run():
                 print("PASS common briefing and persistent receipt material",name,flush=True)
                 proof.locator("#caseAchievementReceipt").scroll_into_view_if_needed()
                 proof.screenshot(path=str(OUT/(name+"-v34-case002-unread-achievement.png")))
+                # Complete the same real route rather than simulate it a second time.
+                for source,target,action in route[route_index+1:]:
+                    choice=proof.locator(f'button.choice[data-to="{target}"][data-action="{action}"]')
+                    assert choice.is_enabled(),(name,source,target)
+                    choice.tap()
+                proof.locator("#finalePanel").wait_for(state="visible")
+                assert proof.locator("#finaleArchive").get_attribute("data-status")=="verified"
+                assert "черновом архиве" not in proof.locator("#finalePanel").inner_text()
+                final_save=proof.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")
+                with proof.expect_navigation(url="**/index.html#district-digbeth",wait_until="load",timeout=15000):
+                    tap(proof,"#finalePanel .finale-actions button:last-child")
+                proof.locator("#launchSecondCase").wait_for(state="visible")
+                assert proof.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==final_save
                 assert not proof_errors,proof_errors
                 proof_ctx.close()
                 browser.close()
