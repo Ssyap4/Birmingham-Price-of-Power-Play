@@ -645,3 +645,48 @@
     overflow-wrap:anywhere;
   }
 }
+
+
+/* V63: explicit textual selection states and consistent readable archives.
+   IDs and source order stay intact in the underlying saved history. */
+@media(orientation:portrait) and (max-width:700px){
+  #caseGame .v33-tile .v33-tile-state:not([hidden]){
+    display:block;margin:7px 0 0;padding:5px 4px;
+    text-align:center;background:#382619;color:#ffe1ab;
+    font:750 .68rem/1.3 system-ui,sans-serif;
+    border:1px solid #856136;border-radius:3px;overflow-wrap:anywhere;
+  }
+  #caseGame .v33-tile[data-selection="compatible"] .v33-tile-state{
+    background:#284630;color:#e0f1ca;border-color:#497951;
+  }
+  #caseGame .v33-tile[data-selection="selected"],
+  #game .pair-item[aria-pressed="true"]{
+    outline:2px solid #d9aa67;outline-offset:2px;
+  }
+  #game .pair-item .pair-item-state{
+    display:block;margin-top:6px;color:#5a3813;
+    font:800 .65rem/1.4 system-ui,sans-serif;letter-spacing:.025em;
+  }
+  #game .pair-item{border-radius:5px;min-height:80px}
+  #game .pair-result[data-kind="match"]{
+    border-left:3px solid #acc48a;background:linear-gradient(145deg,#30321f,#1a2017);
+  }
+  #game .pair-result[data-kind="match"] .pair-result-status{color:#d5e7b5}
+  #game .deduction-source,#game .journal-source,#game .evidence-to-board{
+    min-height:48px;max-width:100%;white-space:normal;overflow-wrap:anywhere;
+  }
+  #game .journal-compass-kicker{overflow-wrap:anywhere}
+  #criminalScreen .cr-journal-intro{
+    font:400 .8rem/1.5 system-ui,sans-serif;color:#ddc3a1;
+    margin:3px 12px 13px;
+  }
+  #criminalScreen .cr-journal>ol{padding:0 12px 13px 33px}
+  #criminalScreen .cr-journal>ol>li{
+    margin:0 0 9px;padding:10px;
+    border:1px solid #80623f;border-radius:5px;
+    background:var(--campaign-work-card);color:#e9d4b8;
+    font:400 .86rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere;
+  }
+  #criminalScreen .cr-journal>ol>li::marker{color:#dcb27b;font-weight:700}
+  #criminalScreen .cr-journal-action{display:block;margin-top:5px}
+}

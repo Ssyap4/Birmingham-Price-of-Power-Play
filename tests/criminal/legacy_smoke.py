@@ -181,6 +181,15 @@ def run():
                 tap(page, '.v33-tile[data-id="invoice"]')
                 assert "Совместимых улик: 1" in page.locator(".v33-selection-note").inner_text()
                 assert page.locator('.v33-tile[data-id="invoice"]').get_attribute("aria-pressed")=="true"
+                assert page.locator('.v33-tile[data-id="invoice"] .v33-tile-state').inner_text()=="Выбрана"
+                other=page.locator('.v33-tile[data-id="route"]')
+                assert other.get_attribute("data-selection")=="compatible"
+                assert "можно сопоставить" in other.get_attribute("aria-label")
+                assert other.locator(".v33-tile-state").is_visible()
+                tap(page,'.v33-tile[data-id="invoice"]')
+                assert other.get_attribute("data-selection")=="idle"
+                assert other.locator(".v33-tile-state").is_hidden()
+                tap(page,'.v33-tile[data-id="invoice"]')
                 page.evaluate("""key => {
                   const original=Storage.prototype.setItem;
                   window.__restoreV33=()=>{Storage.prototype.setItem=original;delete window.__restoreV33};
@@ -202,6 +211,7 @@ def run():
                 page.wait_for_function("document.activeElement?.matches('#case001QuickNav [data-go=evidence]')")
                 tap(page, "#case001QuickNav [data-go='evidence']")
                 assert page.locator(".v33-solved-board .v33-tile").count()==2
+                assert page.locator(".v33-solved-board .v33-tile").evaluate_all("els=>els.every(e=>e.dataset.linked==='true'&&e.getAttribute('aria-label').includes('связана с выводом'))")
                 page.screenshot(path=str(OUT / (name + "-v33-deduction-confirmed.png")))
                 tap(page, ".v33-close")
                 page.evaluate("""k => {
@@ -375,6 +385,21 @@ def run():
                 print("PASS common briefing and persistent receipt material",name,flush=True)
                 proof.locator("#caseAchievementReceipt").scroll_into_view_if_needed()
                 proof.screenshot(path=str(OUT/(name+"-v34-case002-unread-achievement.png")))
+                # Journal and evidence tools must not rewrite the actual route.
+                raw_before=proof.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")
+                tap(proof,"#quickNav [data-go='journal']")
+                assert proof.locator(".journal-compass-kicker").inner_text().startswith("ТЕКУЩАЯ СЦЕНА · ")
+                if proof.locator(".journal-event").count():
+                    assert proof.locator(".journal-event-scene").first.inner_text()=="ПОСЛЕДНЯЯ ЗАПИСЬ"
+                    assert proof.locator(".journal-event-title").count()==proof.locator(".journal-event").count()
+                tap(proof,"#quickNav [data-go='deductions']")
+                if proof.locator(".pair-item").count():
+                    clue=proof.locator(".pair-item").first
+                    clue.tap()
+                    assert proof.locator(".pair-item[aria-pressed='true'] .pair-item-state").inner_text()=="ВЫБРАНА · ПЕРВАЯ УЛИКА"
+                    proof.locator(".pair-item[aria-pressed='true']").tap()
+                    assert proof.locator(".pair-item[aria-pressed='true']").count()==0
+                assert proof.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==raw_before
                 # Complete the same real route rather than simulate it a second time.
                 for source,target,action in route[route_index+1:]:
                     choice=proof.locator(f'button.choice[data-to="{target}"][data-action="{action}"]')

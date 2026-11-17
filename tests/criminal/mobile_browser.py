@@ -296,6 +296,11 @@ def run():
                         assert page.locator(".cr-inventory").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                         assert page.locator(".cr-equipment-grid").evaluate("e=>getComputedStyle(e).maxHeight")== "none"
                         assert page.locator(".cr-gear-illustration").count() >= 2
+                        touch(page,".cr-journal summary")
+                        assert page.locator(".cr-journal ol").get_attribute("reversed") is not None
+                        assert page.locator(".cr-journal li").count()==saved["revision"]
+                        assert page.locator(".cr-journal li").first.get_attribute("data-journal-order")==str(saved["revision"])
+                        assert value(page,"CR01")==saved
                         page.wait_for_function("() => [...document.querySelectorAll('#criminalScreen .cr-gear-illustration')].every(i=>i.complete&&i.naturalWidth===96)")
                         page.screenshot(
                             path=str(OUT / (name + "-" + str(width) + "-scene.png")),
@@ -352,6 +357,10 @@ def run():
                                     assert page.locator('.cr-heading[data-phase="scene"] h1').inner_text()==next_title
                                     assert not page.locator(".cr-consequence").count()
                                     assert value(page,id)==next
+                                    if next["revision"]==2 and id=="CR01" and kind=="clean":
+                                        rows=page.locator(".cr-journal li")
+                                        assert rows.evaluate_all("els=>els.map(e=>e.dataset.journalOrder)")==["2","1"]
+                                        assert value(page,id)==next
                                 final = value(page, id)
                                 assert (
                                     final["status"] == "finished"

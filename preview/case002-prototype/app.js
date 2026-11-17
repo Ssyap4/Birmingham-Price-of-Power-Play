@@ -1880,7 +1880,10 @@ function renderTools(){
      icon.setAttribute("aria-hidden","true");
      const copy=make("span",undefined,"pair-item-copy");
      copy.append(make("strong",evidenceName(id)));
-     if(pairFirst===id)copy.append(make("small",evidenceHints[id]||"Сравните с независимым свидетельством.","pair-item-hint"));
+     if(pairFirst===id){
+       copy.append(make("small","ВЫБРАНА · ПЕРВАЯ УЛИКА","pair-item-state"));
+       copy.append(make("small",evidenceHints[id]||"Сравните с независимым свидетельством.","pair-item-hint"));
+     }
      btn.append(icon,copy);
      btn.addEventListener("click",()=>{
       const first=pairFirst;
@@ -1977,7 +1980,7 @@ function renderTools(){
    const verified=Object.values(v.facts).filter(Boolean).length;
    const compass=make("section",undefined,"journal-compass");
    compass.setAttribute("aria-label","Состояние расследования сейчас");
-   compass.append(make("span","НА ТЕКУЩИЙ МОМЕНТ · "+v.scene.id,"journal-compass-kicker"));
+   compass.append(make("span","ТЕКУЩАЯ СЦЕНА · "+v.scene.title,"journal-compass-kicker"));
    const figures=make("div",undefined,"journal-compass-stats");
    for(const [number,title] of [
     [held.length,"Улик в деле"],[verified,"Доказанных выводов"],
@@ -2019,10 +2022,10 @@ function renderTools(){
      const number=entries.length-index;
      const entryHeader=make("div",undefined,"journal-event-header");
      entryHeader.append(make("span","ЗАПИСЬ "+String(number).padStart(2,"0"),"journal-event-number"));
-     entryHeader.append(make("span","Сцена "+item.to,"journal-event-scene"));
      const scene=data.graph.nodes.find(node=>node.id===item.to);
+     if(index===0)entryHeader.append(make("span","ПОСЛЕДНЯЯ ЗАПИСЬ","journal-event-scene"));
      li.append(entryHeader);
-     if(scene)li.append(make("h4",scene.title,"journal-event-title"));
+     li.append(make("h4",scene?.title||"Событие расследования","journal-event-title"));
      const notes=make("ul",undefined,"journal-event-notes");
      for(const [noteIndex,line] of item.notes.entries()){
        const note=make("li",line,"journal-event-note");

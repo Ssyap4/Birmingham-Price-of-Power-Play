@@ -345,14 +345,15 @@
     return changes.length ? `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>` : '<p class="cr-small">Снаряжение и другие показатели не изменились.</p>';
   }
   function journal() {
-    return `<details class="cr-journal"><summary>Журнал решений · ${state.revision}</summary><ol>${state.history
-      .map((h) => {
+    const history=state.history;
+    return `<details class="cr-journal"><summary>Журнал решений · ${state.revision}</summary>${history.length?'<p class="cr-journal-intro">Новые события расположены первыми.</p>':'<p class="cr-journal-intro">Здесь появятся уже совершённые действия.</p>'}<ol reversed start="${history.length}">${[...history].reverse()
+      .map((h,index) => {
         const n = C.missions[state.missionId].scenes[h.from],
           label =
             h.choiceId === "heal"
               ? "Перевязать раны"
               : n.choices.find((c) => c.id === h.choiceId).label;
-        return `<li><b>${esc(n.title)}</b> — ${esc(label)}</li>`;
+        return `<li data-journal-order="${history.length-index}"><b>${esc(n.title)}</b><span class="cr-journal-action">${esc(label)}</span></li>`;
       })
       .join("")}</ol></details>`;
   }

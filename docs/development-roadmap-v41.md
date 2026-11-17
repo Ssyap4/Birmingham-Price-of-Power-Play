@@ -130,3 +130,10 @@
 - V61 mobile run 44170226435 SUCCESS; unified run 44170226352 still executing when candidate prepared. Do not cancel this run to submit the candidate.
 - Shared reader heading/speaker typography on portrait only, existing content and layouts preserved. Normal decisions stay bronze, already displayed injury risk gets amber edge, already signalled lethal risk in Case002/CR gets red edge. Disabled actions retain their own style; Case001 still warns of possible injury, not a fabricated accurate mortality estimate.
 - Tiny render-only metadata added from existing calculated risk in Case001 and CR; no altered engine values, decisions or probabilities. Case001 synthetic canal fixture verifies warning before/after riskSeen, CR existing route check compares visual border and metadata with actual engine risk. Tests not run for this candidate yet. Main/pinned Safari unchanged.
+
+
+## V63 — читаемая доска и единый порядок игрового журнала
+- V62 unified 44171260860 SUCCESS including legacy integrated reader and risk/route tests. V61 mobile 44170226435 SUCCESS. No new V62 mobile workflow (existing path filter).
+- Case001 tiles add explicit selected/compatible labels and accessible linked-clue names, alongside existing visual cues; repeat tap already clears selection and is now explained. Existing matched pairs, storage, deduction receipts unchanged.
+- Case002 selected pair token explicit, existing confirmed pair feedback distinct, journal uses actual scene titles rather than player-facing technical IDs. Reversible links/data IDs unchanged. CR journal renders a reversed copy of existing history, newest first with true ordinals and empty guidance; no mutation, revision or route changed.
+- Added existing-flow browser proofs for selection, clearing, linked cards, Case002 journal and selection without save change, CR ordinal and save equality. All styling scoped to portrait; test result pending. Main and pinned Safari untouched.
