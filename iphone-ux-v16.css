@@ -4,16 +4,16 @@
  #home.cinema-home,#profile.screen,.campaign-hub.screen{overflow-anchor:none}
 }
 #home .cinema-hero::before{
- background:radial-gradient(ellipse 49% 40% at 19% 43%,
-  rgba(255,209,122,.62) 0%,rgba(244,170,78,.32) 27%,
-  rgba(182,107,47,.12) 56%,transparent 88%);
- mix-blend-mode:screen;filter:blur(7px);opacity:.76;
+ background:
+  radial-gradient(ellipse 27% 24% at 19% 48%,rgba(255,211,133,.48),rgba(231,151,64,.12) 60%,transparent 100%),
+  radial-gradient(ellipse 39% 16% at 32% 70%,rgba(255,191,104,.22),transparent 100%);
+ mix-blend-mode:screen;filter:blur(5px);opacity:.78;
  animation:cinema-v16-lamplight 6.4s ease-in-out infinite;
 }
 /* Droplets on glass, not the old diagonal repeating-linear stripe overlay. */
 #home .cinema-rain{
- opacity:.54;clip-path:polygon(15% 0,85% 0,85% 58%,13% 58%);
- mix-blend-mode:screen;filter:drop-shadow(0 0 1px #a9c4c3);
+ opacity:.48;clip-path:polygon(18% 0,81% 0,81% 27%,69% 35%,66% 53%,32% 55%,31% 37%,18% 35%);
+ mix-blend-mode:screen;filter:none;
  background-image:
   radial-gradient(ellipse 2px 7px at 23% 21%,rgba(227,239,238,.88) 34%,transparent 90%),
   radial-gradient(ellipse 1.5px 5px at 71% 32%,rgba(224,239,238,.79) 20%,transparent 91%),
@@ -25,43 +25,46 @@
  animation:cinema-v16-raindrops 8.2s linear infinite;
 }
 #home .cinema-rain::after{
- content:"";position:absolute;inset:0;opacity:.54;pointer-events:none;
+ content:"";position:absolute;inset:-180px 0 0;opacity:.66;pointer-events:none;
  background-image:
   radial-gradient(ellipse 1.5px 4.5px at 33% 45%,rgba(230,242,237,.95),transparent 88%),
   radial-gradient(ellipse 1px 3.5px at 66% 73%,rgba(234,244,241,.85),transparent 88%),
   radial-gradient(ellipse 2px 6px at 82% 11%,rgba(226,240,237,.8),transparent 89%);
- background-size:310px 480px,260px 405px,390px 570px;
- animation:cinema-v16-small-drops 5.7s linear infinite;
+ background-size:110px 180px,137px 180px,181px 180px;
+ animation:cinema-v16-small-drops 6.8s linear infinite;
 }
 #home .cinema-smoke{
- left:17%;bottom:24%;width:31%;height:36%;z-index:0;
- opacity:.56;filter:blur(8px);mix-blend-mode:screen;
+ left:17%;bottom:27%;width:22%;height:29%;z-index:0;
+ opacity:.48;filter:blur(4px);mix-blend-mode:screen;
+ transform-origin:35% 92%;
  background:
-  radial-gradient(ellipse 17% 46% at 34% 74%,rgba(234,223,204,.72),transparent 100%),
-  radial-gradient(ellipse 20% 39% at 56% 42%,rgba(227,219,208,.56),transparent 100%),
-  radial-gradient(ellipse 12% 28% at 39% 18%,rgba(229,226,216,.40),transparent 100%);
- animation:cinema-v16-smoke 9s ease-in-out infinite alternate;
+  radial-gradient(ellipse 10% 31% at 29% 79%,rgba(255,232,193,.52),transparent 100%),
+  radial-gradient(ellipse 16% 32% at 46% 53%,rgba(227,219,208,.48),transparent 100%),
+  radial-gradient(ellipse 20% 20% at 63% 27%,rgba(229,226,216,.30),transparent 100%);
+ animation:cinema-v16-smoke 8.8s ease-in-out infinite;
 }
 #home .cinema-smoke.second{
- left:12%;bottom:27%;width:27%;height:36%;opacity:.43;
- animation-duration:12.3s;animation-delay:-4s;
+ left:18%;bottom:27%;width:25%;height:30%;opacity:.34;
+ animation-duration:11.2s;animation-delay:-5.4s;
 }
 @keyframes cinema-v16-lamplight{
- 0%,34%,69%,100%{opacity:.68;filter:blur(8px)}
- 20%,51%,86%{opacity:.96;filter:blur(5px)}
- 57%{opacity:.44}59%{opacity:.88}
+ 0%,34%,69%,100%{opacity:.75}
+ 20%,51%,86%{opacity:.98}
+ 57%{opacity:.38}59%{opacity:.87}
 }
 @keyframes cinema-v16-raindrops{
- from{background-position:0 -300px,0 -360px,0 -440px,0 -330px,0 -510px}
- to{background-position:0 320px,0 400px,0 475px,0 360px,0 525px}
+ 0%,100%{opacity:.43}
+ 50%{opacity:.56}
 }
 @keyframes cinema-v16-small-drops{
- from{background-position:0 -420px,0 -390px,0 -540px}
- to{background-position:0 485px,0 410px,0 575px}
+ from{transform:translate3d(0,0,0)}
+ to{transform:translate3d(0,180px,0)}
 }
 @keyframes cinema-v16-smoke{
- from{transform:translate3d(-8px,11px,0) rotate(-5deg) scale(.8);opacity:.35}
- to{transform:translate3d(17px,-52px,0) rotate(8deg) scale(1.25);opacity:.7}
+ 0%{transform:translate3d(-2px,12px,0) rotate(-5deg) scale(.75);opacity:0}
+ 20%{opacity:.48}
+ 65%{opacity:.33}
+ 100%{transform:translate3d(14px,-50px,0) rotate(11deg) scale(1.28);opacity:0}
 }
 @media(prefers-reduced-motion:reduce){
  #home .cinema-hero::before,#home .cinema-rain,
@@ -90,3 +93,51 @@
 }
 /* Pause the nested V16 droplets too, including while the app is backgrounded. */
 #home.cinema-still .cinema-rain::after{animation-play-state:paused!important}
+
+/* V18: shared visual language, with the light mapped to the approved V12
+   photograph. No new images, remote fonts, canvas, or gameplay changes. */
+#home .cinema-vinyl-glint{left:75%;top:52%;width:20%;transform-origin:center}
+#home .cinema-crest h1{text-shadow:0 2px 3px #140e08,0 4px 18px #000}
+#home .cinema-epigraph p{text-shadow:0 2px 4px #000,0 4px 12px #000}
+#home .cabinet-entry::before{
+ background:linear-gradient(90deg,#141210f5 0%,#171512e5 48%,#17151291 76%,#17151245 100%),var(--cinema-card) right center/cover no-repeat;
+}
+@media(orientation:portrait) and (max-width:700px){
+ :root{--bh-v18-paper:#ead3ad;--bh-v18-edge:#b18a57;--bh-v18-ink:#191510}
+ #districts .districts-heading,#criminalScreen .cr-heading,.campaign-hub .campaign-head{
+  position:relative;box-sizing:border-box;border-bottom:1px solid #9a754b;
+  padding:15px 9px 18px!important;background:radial-gradient(ellipse at 50% 0,#563a232e,transparent 80%);
+ }
+ #districts .districts-heading::after,#criminalScreen .cr-heading::after,.campaign-hub .campaign-head::after{
+  content:"";position:absolute;bottom:-1px;left:36%;right:36%;height:1px;background:#f0c788;pointer-events:none;
+ }
+ #districts .districts-heading h2,#criminalScreen .cr-heading h1,.campaign-hub .campaign-head h2{
+  text-shadow:0 2px 8px #0009;overflow-wrap:break-word;
+ }
+ #districts .map-topline,#districts .map-bottomline{font-size:clamp(9px,2.5vw,11px);color:#d7b78d;letter-spacing:.025em}
+ #districts .map-pin[aria-pressed="true"] .pin-name{color:#fff0ce;border-color:#e6bb81;background:#382719}
+ .campaign-hub .campaign-portrait{
+  height:clamp(260px,83vw,375px)!important;object-fit:contain!important;object-position:center!important;
+  background:radial-gradient(ellipse at 50% 30%,#3b2a1e,#100e0d 74%)!important;
+ }
+ .campaign-hub .campaign-card-body{border-top-color:var(--bh-v18-edge)}
+ .campaign-hub .campaign-reward-group>summary,.campaign-hub .campaign-criminal-fold>summary,
+ .campaign-hub .campaign-attempt>summary{position:relative;padding-right:38px!important;list-style:none}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)>summary::-webkit-details-marker{display:none}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)>summary::after{
+  content:"+";position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font:700 22px/1 Georgia,serif;color:#e7bc7d;pointer-events:none;
+ }
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)[open]>summary::after{content:"−"}
+ .campaign-hub :is(.campaign-reward-group,.campaign-criminal-fold,.campaign-attempt)[open]>summary{
+  background:linear-gradient(110deg,#4a3320,#201b15);color:#ffebc9;
+ }
+ .campaign-hub .campaign-award.locked,.campaign-hub .campaign-reward-card.locked{opacity:1!important;background:#191713!important}
+ .campaign-hub .campaign-award.locked strong,.campaign-hub .campaign-reward-card.locked strong{color:#dec8a6}
+ .campaign-hub .campaign-award.unlocked,.campaign-hub .campaign-reward-card.earned{border-color:#abb079!important;background:linear-gradient(130deg,#333923,#1a211b)!important}
+ #profile .player-overview-card{padding:14px 12px;border-left:3px solid #b28b58}
+ #profile .player-overview-card[data-status="damaged"]{border-left-color:#a5736c}
+}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-rain::after{transform:none!important}
+}

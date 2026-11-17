@@ -1638,3 +1638,12 @@ html[data-case002-telegram="true"] .tool-tab{
  .case002-map-return-bar:not([hidden]){gap:5px}
  .case002-map-return-bar a{padding:9px 4px}
 }
+
+/* V18: retain the existing persistent achievement receipt, with the same
+   muted brass treatment as the common archive. No timer or award change. */
+@media(orientation:portrait) and (max-width:700px){
+ #game .case-unlock-toast{box-sizing:border-box;border-radius:6px;background:linear-gradient(125deg,#594025,#211a14 80%)}
+ #game .case-unlock-toast-copy{min-width:0}
+ #game .case-unlock-toast-name{overflow-wrap:anywhere}
+ #game .case-unlock-toast-actions button{min-height:44px}
+}

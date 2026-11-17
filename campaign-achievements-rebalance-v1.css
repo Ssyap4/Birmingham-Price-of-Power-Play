@@ -13,3 +13,11 @@
 .hero-rules{min-height:44px;border:1px solid #947246;background:linear-gradient(135deg,#302116,#17130f);color:#e9ca99;padding:9px 12px;font:700 12px Arial,sans-serif;cursor:pointer}
 .hero-rules:focus-visible{outline:2px solid #ffe1a6;outline-offset:2px}
 @media(orientation:portrait) and (max-width:700px){.hero-rules{width:100%;min-height:48px}}
+
+/* V18: notifications are viewport-fixed and never block decisions. */
+@media(orientation:portrait) and (max-width:700px){
+ .campaign-unlock-tray{top:calc(10px + var(--bh-inset-top,env(safe-area-inset-top,0px)));width:min(calc(100% - 24px - var(--bh-inset-left,0px) - var(--bh-inset-right,0px)),410px)}
+ .campaign-unlock-popup{border-left:4px solid #f2ca86;min-width:0}
+ .campaign-unlock-copy strong{line-height:1.24}
+ .campaign-unlock-copy small{letter-spacing:.06em}
+}

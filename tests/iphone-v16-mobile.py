@@ -54,6 +54,16 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert "repeating-linear-gradient" not in effects["rainImage"]
    page.wait_for_timeout(350)
    page.screenshot(path=str(OUT/f"{engine}-{width}-home.png"),full_page=False)
+   if engine=="webkit" and width==390:
+    # Record the same cabinet at four moments for human visual comparison.
+    for seconds,delay in [(0,0),(1,1000),(3,2000),(6,3000)]:
+     page.wait_for_timeout(delay)
+     page.locator("#home .cinema-hero").screenshot(path=str(OUT/f"webkit-390-cabinet-t{seconds}.png"),animations="allow")
+   page.evaluate("window.scrollTo(0,document.documentElement.scrollHeight)")
+   page.wait_for_function("document.querySelector('#home').classList.contains('cinema-still')")
+   assert page.evaluate("getComputedStyle(document.querySelector('#home .cinema-rain'),'::after').animationPlayState")=="paused"
+   page.evaluate("window.scrollTo(0,0)")
+   page.wait_for_function("!document.querySelector('#home').classList.contains('cinema-still')")
    scroll=page.evaluate("""() => {
      const wanted=Math.min(355,document.documentElement.scrollHeight-innerHeight);
      window.scrollTo({top:wanted,behavior:'auto'});
@@ -115,6 +125,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#campaignAchievements .campaign-tabs [data-open-section='campaignDossiers']")
    page.locator("#campaignDossiers").wait_for(state="visible")
    current(page,"campaignDossiers")
+   assert page.locator("#campaignDossiers .campaign-portrait").first.evaluate("(el)=>getComputedStyle(el).objectFit")=="contain"
+   page.locator("#campaignDossiers .campaign-portrait").first.scroll_into_view_if_needed()
+   page.screenshot(path=str(OUT/f"{engine}-{width}-dossier.png"))
    tap(page,"#campaignDossiers .campaign-tabs [data-open-section='campaignHistory']")
    page.locator("#campaignHistory").wait_for(state="visible")
    current(page,"campaignHistory")

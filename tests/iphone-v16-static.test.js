@@ -73,3 +73,14 @@ test("V17 map return works even for the current URL fragment and avoids smooth a
  assert.ok(map.includes("Math.abs(window.scrollY-y)>2"));
  assert.ok(!map.includes('behavior:reduce?"auto":"smooth"'));
 });
+
+
+test("V18 decorative motion pauses offscreen and archive remains mobile safe",()=>{
+ const home=read("cinema-home-v1.js"),css=read("iphone-ux-v16.css");
+ assert.ok(home.includes("new IntersectionObserver"));
+ assert.ok(home.includes("||!heroVisible"));
+ assert.ok(css.includes("object-fit:contain!important"));
+ assert.ok(css.includes('content:"−"'));
+ assert.ok(css.includes("translate3d(0,180px,0)"));
+ assert.ok(read("campaign-achievements-rebalance-v1.css").includes("var(--bh-inset-top"));
+});
