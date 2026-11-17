@@ -9,7 +9,8 @@ const wrap=document.createElement('div');wrap.className='bh-audio-controls';wrap
 document.body.append(wrap);
 const mBtn=wrap.querySelector('#bhMusic'),sBtn=wrap.querySelector('#bhEffects'),trackBtn=wrap.querySelector('#bhMenuTrack');
 function paint(){trackBtn.textContent='♪ Запись '+(preferredMenuIndex+1)+' / '+playlists.menu.length;mBtn.textContent=musicOn?'♫ Музыка: вкл':'♫ Музыка: выкл';sBtn.textContent=effectsOn?'♧ Эффекты: вкл':'♧ Эффекты: выкл';mBtn.setAttribute('aria-pressed',String(musicOn));sBtn.setAttribute('aria-pressed',String(effectsOn))}paint();
-const volume=.19;let fadeToken=0;
+// V16: reduced background music loudness while keeping both original tracks.
+const volume=.075;let fadeToken=0;
 function ramp(p,from,to,duration,token,done){const began=performance.now();function tick(now){if(token!==fadeToken)return;const x=Math.min(1,(now-began)/duration);p.volume=Math.max(0,Math.min(1,from+(to-from)*(x*x*(3-2*x))));if(x<1)requestAnimationFrame(tick);else if(done)done()}requestAnimationFrame(tick)}
 function changeTrack(nextMode,nextIndex,fade=1900){if(!musicOn||!started)return;const next=1-active,old=players[active],fresh=players[next],token=++fadeToken;transitioning=true;fresh.pause();fresh.src=base+playlists[nextMode][nextIndex];fresh.currentTime=0;fresh.volume=0;fresh.play().then(()=>{ramp(fresh,0,volume,fade,token,()=>{transitioning=false});ramp(old,old.volume,0,fade,token,()=>old.pause());active=next;mode=nextMode;index=nextIndex;if(nextMode==='menu')preferredMenuIndex=nextIndex;document.body.classList.add('bh-music-playing');paint()}).catch(()=>{transitioning=false;fresh.pause()})}
 function contextMode(){if(!document.querySelector('#heroSelection[hidden]')&&document.querySelector('#heroSelection'))return 'menu';const c=document.querySelector('#caseGame');return c&&!c.hidden?'case':'menu'}

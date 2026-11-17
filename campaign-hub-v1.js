@@ -54,7 +54,17 @@ const screens=[
 const main=document.querySelector('main');if(!main)return;
 for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Общий локальный архив: Дела №001 и №002, «Работа для своих». Записи хранятся на этом устройстве.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
 const $=id=>document.getElementById(id),allScreens=()=>document.querySelectorAll('.screen');
-function open(id){if(id==='campaignHistory'||id==='campaignAchievements'||id==='campaignDossiers'){render(id)}allScreens().forEach(s=>s.hidden=s.id!==id);const top=$('homeBtn');if(top)top.hidden=id==='home';window.scrollTo(0,0)}
+function open(id){
+ if(id==='campaignHistory'||id==='campaignAchievements'||id==='campaignDossiers'){render(id)}
+ allScreens().forEach(s=>s.hidden=s.id!==id);
+ for(const section of ['campaignDossiers','campaignAchievements','campaignHistory']){
+  $(section)?.querySelectorAll('.campaign-tabs [data-open-section]').forEach(tab=>{
+   tab.setAttribute('aria-current',String(tab.dataset.openSection===id));
+  });
+ }
+ const top=$('homeBtn');if(top)top.hidden=id==='home';
+ window.scrollTo({top:0,behavior:'instant'});
+}
 document.addEventListener('click',e=>{
  const target=e.target.closest('#storyStart,#profileCard');
  if(!target)return;

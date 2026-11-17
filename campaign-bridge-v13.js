@@ -50,12 +50,15 @@
     criminal.querySelector('[data-action="home"]')?.click();
     if(!criminal.hidden)return;
    }
-   hub.open("home");
-   if(target==="detective")d.getElementById("districtsCard")?.click();
-   if(target==="criminal")d.getElementById("criminalEntry")?.click();
+   // Avoid an intermediate home page for archive/profile transitions.
    if(target==="archive")hub.open("campaignAchievements");
-   if(target==="profile")d.getElementById("cabinetProfile")?.click();
-   window.scrollTo(0,0);
+   else if(target==="profile")d.getElementById("cabinetProfile")?.click();
+   else{
+    hub.open("home");
+    if(target==="detective")d.getElementById("districtsCard")?.click();
+    if(target==="criminal")d.getElementById("criminalEntry")?.click();
+   }
+   window.scrollTo({top:0,behavior:"instant"});
    const title=target==="detective"?d.querySelector("#districts .districts-heading h2"):
     target==="criminal"?d.querySelector("#criminalScreen .cr-heading h1"):
     target==="archive"?d.querySelector("#campaignAchievements .campaign-head h2"):
