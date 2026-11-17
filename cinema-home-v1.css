@@ -9,11 +9,11 @@ body:has(#home.cinema-home:not([hidden]))>.shell>.top{display:none!important}
 body:has(#home.cinema-home:not([hidden])) #gameExitBtn{display:none!important}
 #home.cinema-home .cinema-scene{box-sizing:border-box;position:relative;width:min(100%,540px);min-height:100svh;margin:0 auto;background:#100d0b;box-shadow:0 0 0 1px #74543844,0 22px 60px #000b}
 #home .cinema-hero{box-sizing:border-box;height:clamp(330px,61svh,550px);min-height:330px;position:relative;overflow:hidden;isolation:isolate;background:#130f0d}
-#home .cinema-art{position:absolute;inset:-2%;z-index:-3;background:linear-gradient(180deg,rgba(9,7,7,.66) 0%,transparent 37%,rgba(10,8,7,.1) 49%,rgba(9,7,7,.94) 100%),linear-gradient(90deg,rgba(7,6,6,.29),transparent 60%),url('assets/original-art/profile.webp') 37% center/cover no-repeat;filter:brightness(.92) contrast(1.08);transform:scale(1.045)}
-#home .cinema-hero::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 43% 43%,rgba(244,174,91,.21) 0,rgba(206,135,51,.04) 17%,transparent 45%);opacity:.84;animation:cinema-lamp 9.5s linear infinite}
-#home .cinema-rain{position:absolute;inset:-40% 0 0;z-index:-1;pointer-events:none;opacity:.27;clip-path:polygon(45% 0,100% 0,100% 73%,58% 73%);background:repeating-linear-gradient(104deg,transparent 0 13px,rgba(226,225,208,.32) 14px,transparent 15px 29px),repeating-linear-gradient(104deg,transparent 0 40px,rgba(193,203,211,.21) 41px,transparent 43px 67px);background-size:280px 400px,390px 520px;animation:cinema-rainfall 2.7s linear infinite}
-#home .cinema-smoke{position:absolute;z-index:0;left:35%;bottom:3%;width:40%;height:41%;pointer-events:none;opacity:.3;filter:blur(14px);background:radial-gradient(ellipse at 30% 70%,rgba(206,194,172,.45),transparent 40%),radial-gradient(ellipse at 54% 42%,rgba(182,185,172,.29),transparent 45%);animation:cinema-smoke 11s ease-in-out infinite alternate}
-#home .cinema-smoke.second{left:8%;bottom:9%;height:31%;opacity:.18;animation-duration:14.5s;animation-delay:-6s}
+#home .cinema-art{position:absolute;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(7,7,8,.72) 0%,rgba(7,7,8,.18) 38%,rgba(7,7,8,.04) 52%,rgba(9,7,7,.88) 100%),url('assets/cabinet/cinema-home-art-v12.webp') 50% 54%/cover no-repeat;filter:brightness(.97) contrast(1.04)}
+#home .cinema-hero::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(244,176,86,.20),rgba(206,135,51,.045) 20%,transparent 47%);opacity:.82;animation:cinema-lamp 9.5s linear infinite}
+#home .cinema-rain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.23;clip-path:polygon(12% 0,91% 0,97% 57%,13% 57%);background:repeating-linear-gradient(104deg,transparent 0 13px,rgba(219,229,235,.29) 14px,transparent 15px 29px),repeating-linear-gradient(104deg,transparent 0 40px,rgba(193,203,211,.17) 41px,transparent 43px 67px);background-size:280px 400px,390px 520px;animation:cinema-rainfall 2.7s linear infinite}
+#home .cinema-smoke{position:absolute;z-index:0;left:17%;bottom:21%;width:28%;height:35%;pointer-events:none;opacity:.2;filter:blur(13px);background:radial-gradient(ellipse at 35% 67%,rgba(214,204,184,.43),transparent 40%),radial-gradient(ellipse at 53% 32%,rgba(179,185,175,.23),transparent 47%);animation:cinema-smoke 11s ease-in-out infinite alternate}
+#home .cinema-smoke.second{left:11%;bottom:24%;width:22%;height:30%;opacity:.14;animation-duration:14.5s;animation-delay:-6s}
 #home .cinema-crest{position:absolute;z-index:2;left:16px;right:16px;top:max(22px,env(safe-area-inset-top,0px));text-align:center;text-shadow:0 3px 15px #000,0 2px 4px #000}
 #home .cinema-crest .eyeline{display:block;font:600 10px/1.4 Georgia,serif;letter-spacing:.34em;color:#deb77b;margin-bottom:13px}
 #home .cinema-crest h1{margin:0;font:700 clamp(42px,10vw,64px)/.88 Georgia,serif;letter-spacing:.065em;color:#f6d9a2}
@@ -22,12 +22,9 @@ body:has(#home.cinema-home:not([hidden])) #gameExitBtn{display:none!important}
 #home .cinema-epigraph{position:absolute;z-index:2;left:18px;right:18px;bottom:25px;text-align:center;text-shadow:0 2px 8px #000,0 4px 18px #000}
 #home .cinema-epigraph small{display:block;margin-bottom:8px;letter-spacing:.24em;font:700 9px/1.5 Georgia,serif;color:#dcaf70}
 #home .cinema-epigraph p{max-width:350px;margin:0 auto;font:italic 15px/1.55 Georgia,serif;color:#efd8b6}
-#home .cinema-gramophone{position:absolute;right:15px;bottom:105px;width:77px;height:84px;z-index:1;opacity:.72;pointer-events:none;transform:rotate(-5deg)}
-#home .cinema-gramophone::before{content:"";position:absolute;left:5px;right:6px;bottom:4px;height:11px;background:linear-gradient(#754820,#20140e);border:1px solid #b5854e;border-radius:3px}
-#home .cinema-record{position:absolute;left:10px;top:5px;width:61px;height:61px;border-radius:50%;border:2px solid #9f7547;background:radial-gradient(circle at center,#d2b27e 0 5px,#202021 6px 14px,#48403b 15px 16px,#12171a 17px 20px,#393333 21px 22px,#111315 23px);box-shadow:0 3px 10px #000b,inset 0 0 0 3px #0b0e10}
-#home .cinema-record::after{content:"";position:absolute;inset:8px;border:1px solid #c2a77c3d;border-radius:50%}
-body.bh-music-playing #home .cinema-record{animation:cinema-record 2.5s linear infinite}
-#home .cinema-needle{position:absolute;right:0;top:13px;width:34px;height:3px;background:#be9e6d;border-radius:3px;transform:rotate(-48deg);transform-origin:right center;box-shadow:0 0 2px #000}
+/* The approved photograph already contains a gramophone. No duplicate instrument. */
+#home .cinema-vinyl-glint{position:absolute;left:74%;top:51.3%;z-index:0;width:20%;aspect-ratio:1;pointer-events:none;opacity:0;background:conic-gradient(from 25deg,transparent 0deg,rgba(255,225,183,.28) 35deg,transparent 63deg,transparent 196deg,rgba(255,225,183,.12) 228deg,transparent 260deg);border-radius:50%;transform:rotateX(79deg)}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vinyl 2.65s linear infinite}
 #home .cinema-menu{box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:20px max(12px,var(--bh-inset-left,12px)) 12px max(12px,var(--bh-inset-right,12px));background:radial-gradient(ellipse at 50% 0,rgba(98,66,43,.38),transparent 64%),linear-gradient(180deg,#20150f 0%,#0f1010 64%,#100d0b 100%);border-top:2px solid #a98050}
 #home .cinema-menu-heading{text-align:center;margin:0 0 9px;color:#d7b17b;font:700 10px/1.4 Georgia,serif;letter-spacing:.24em}
 #home .cabinet-entry{box-sizing:border-box;appearance:none;position:relative;isolation:isolate;display:grid;grid-template-columns:46px minmax(0,1fr) 18px;align-items:center;gap:11px;min-width:0;width:100%;min-height:69px;height:auto;flex:none;margin:0;padding:11px 12px;text-align:left;cursor:pointer;overflow:hidden;border:1px solid rgba(178,136,84,.55);border-left:3px solid #a88659;border-radius:5px;background:#1d1815;color:#efd7b1;box-shadow:0 7px 16px #0008,inset 0 0 0 1px #b39b7424;transition:filter .25s,transform .25s,border-color .25s;touch-action:manipulation}
@@ -78,10 +75,12 @@ body.bh-music-playing #home .cinema-record{animation:cinema-record 2.5s linear i
  #home .cinema-scene{border-left:1px solid #8d6d4850;border-right:1px solid #8d6d4850}
 }
 @media(prefers-reduced-motion:reduce){
- #home .cinema-hero::before,#home .cinema-rain,#home .cinema-smoke,#home .cinema-record{animation:none!important}
+ #home .cinema-hero::before,#home .cinema-rain,#home .cinema-smoke,#home .cinema-vinyl-glint{animation:none!important}
  #home .cabinet-entry{transition:none!important;transform:none!important}
 }
 @keyframes cinema-lamp{0%,19%,20.5%,22%,100%{opacity:.84}19.6%,21.2%{opacity:.53}21.7%{opacity:1}}
 @keyframes cinema-rainfall{from{background-position:0 0,0 0}to{background-position:-80px 420px,-120px 560px}}
 @keyframes cinema-smoke{from{transform:translate(-4px,14px) scale(.87);opacity:.18}to{transform:translate(13px,-44px) scale(1.19);opacity:.33}}
-@keyframes cinema-record{to{transform:rotate(360deg)}}
+@keyframes cinema-vinyl{to{transform:rotateX(79deg) rotate(360deg)}}
+
+#home.cinema-still .cinema-hero::before,#home.cinema-still .cinema-rain,#home.cinema-still .cinema-smoke,#home.cinema-still .cinema-vinyl-glint{animation-play-state:paused!important}
