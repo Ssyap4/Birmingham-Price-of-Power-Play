@@ -38,6 +38,14 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
  assert.equal(crypto.createHash("sha256").update(photo).digest("hex"),"173dc43614f1870fb21e48ac5f40de89ecf69f8a8fbef4a96f2446ef29958799");
 
  assert.match(h,/src="assets\/original-art\/profile\.webp"/);
+ assert.match(h,/src="assets\/cabinet\/profile-v21\.webp"/);
+ const profileArt=fs.readFileSync(path.join(root,"assets/cabinet/profile-v21.webp"));
+ assert.equal(profileArt.length,170164);
+ assert.equal(profileArt.toString("ascii",0,4),"RIFF");
+ assert.equal(profileArt.toString("ascii",8,12),"WEBP");
+ assert.equal(profileArt.readUInt16LE(26)&0x3fff,720);
+ assert.equal(profileArt.readUInt16LE(28)&0x3fff,900);
+ assert.equal(crypto.createHash("sha256").update(profileArt).digest("hex"),"d25ace6393253524b5457239e648a3f94946939b2323601a30e375e062537b46");
  assert.match(h,/src="assets\/cabinet\/profile-seal\.svg"/);
  assert.doesNotMatch(h,/class="cabinet-entry-icon/);
  assert.equal((h.match(/class="cabinet-entry-art(?: |")/g)||[]).length,6);

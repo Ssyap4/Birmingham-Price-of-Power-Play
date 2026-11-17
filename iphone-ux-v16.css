@@ -182,3 +182,11 @@
 #home .cinema-vinyl-glint{left:74%;top:52%;width:21%;background:conic-gradient(from 25deg,transparent 0deg,rgba(255,225,183,.48) 33deg,transparent 70deg,transparent 196deg,rgba(255,225,183,.24) 228deg,transparent 270deg)}
 body.bh-music-playing #home .cinema-vinyl-glint{opacity:.42}
 @media(prefers-reduced-motion:reduce){#home .cinema-smoke{opacity:0!important}#home .cinema-vinyl-glint{opacity:0!important}}
+
+/* The current profile does not need a second Profile button in its header. */
+@media(orientation:portrait) and (max-width:700px){
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top #profileBtn{display:none!important}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .brand{flex:1;min-width:0;max-width:100%;overflow:hidden}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .top-actions{flex:none;min-width:0}
+ body:has(>.shell>#profile:not([hidden]))>.shell>.top .brand strong{font-size:clamp(14px,4.3vw,20px)!important;letter-spacing:.06em!important;white-space:normal!important}
+}

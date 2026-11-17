@@ -32,13 +32,13 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 #home .cabinet-entry{box-sizing:border-box;appearance:none;position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,43%) minmax(0,1fr);align-items:stretch;gap:0;min-width:0;width:100%;min-height:116px;height:auto;flex:none;margin:0;padding:0;text-align:left;cursor:pointer;overflow:hidden;border:1px solid #b18a57;border-radius:5px;background:linear-gradient(145deg,#352319,#171411 78%);color:#efd7b1;box-shadow:0 5px 14px #0007,inset 0 0 0 1px #b39b7424;transition:border-color .2s;touch-action:manipulation}
 #home .cabinet-entry::before,#home .cabinet-entry::after{content:none!important;background:none!important}
 #home .cabinet-entry-primary,#home #criminalEntry{min-height:142px;border-color:#d0a367}
-#home .cabinet-entry-art{position:relative;display:block;min-width:0;overflow:hidden;isolation:isolate;align-self:stretch;border-right:1px solid #ac8055;background:#282019;pointer-events:none}
+#home .cabinet-entry-art{position:relative;display:block;min-width:0;min-height:114px;overflow:hidden;isolation:isolate;align-self:stretch;border-right:1px solid #ac8055;background:#282019;pointer-events:none}
 #home .cabinet-entry-art img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;filter:brightness(1.08) contrast(1.02);opacity:1;pointer-events:none}
 #home #districtsCard .cabinet-entry-art img{object-position:66% 55%}
 #home #criminalEntry .cabinet-entry-art img{object-position:48% 34%}
 #home .cabinet-art-clock img{object-position:92% 77%;filter:brightness(1.16)}
-#home .cabinet-art-medal img{inset:-15% auto auto -1%;height:130%;width:auto;max-width:none;object-fit:fill;filter:brightness(1.04)}
-#home .cabinet-art-profile img{object-position:0% 82%;filter:brightness(1.18)}
+#home .cabinet-art-medal img{inset:0 auto auto 50%;height:100%;width:auto;max-width:none;object-fit:fill;transform:translateX(-15%);filter:brightness(1.04)}
+#home .cabinet-art-profile img{object-position:55% 63%;filter:brightness(1.04)}
 #home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;padding:6px;background:#33251b}
 #home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:1px solid #b39570;box-sizing:border-box;filter:brightness(1.07)}
 #home .cabinet-entry-copy{box-sizing:border-box;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 20px 14px 12px;opacity:1;pointer-events:none}

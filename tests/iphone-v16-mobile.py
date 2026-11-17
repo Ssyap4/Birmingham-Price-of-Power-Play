@@ -58,10 +58,21 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert menu.locator(".cabinet-entry").count()==6
    assert menu.locator(".cabinet-entry-icon").count()==0
    page.wait_for_function("Array.from(document.querySelectorAll('#home .cabinet-entry-art img')).every(i=>i.complete && i.naturalWidth>0)")
+   assert page.evaluate("""async () => {
+    const images=[...document.querySelectorAll('#home .cabinet-entry-art img')];
+    await Promise.all(images.map(i=>i.decode()));
+    return images.every(i=>i.naturalWidth>0 && getComputedStyle(i).opacity==='1');
+   }""")
    cards=menu.locator(".cabinet-entry")
    for i in range(6):
     geometry=cards.nth(i).evaluate("""el=>{let a=el.querySelector('.cabinet-entry-art').getBoundingClientRect(), t=el.querySelector('.cabinet-entry-copy').getBoundingClientRect(), b=el.getBoundingClientRect();return {ratio:a.width/b.width,height:a.height,overlap:a.right>t.left+1,scrim:getComputedStyle(el,'::before').content}}""")
     assert .36<=geometry["ratio"]<=.46 and geometry["height"]>=105 and not geometry["overlap"] and geometry["scrim"]=="none",(engine,width,i,geometry)
+    # Scroll every actual art surface into the viewport before capture, then
+    # allow two rendering frames. The full-page screenshot alone hid a paint defect.
+    card=cards.nth(i)
+    card.scroll_into_view_if_needed()
+    page.evaluate("()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))")
+    card.screenshot(path=str(OUT/f"{engine}-{width}-v21-card-{i+1}.png"))
    menu.screenshot(path=str(OUT/f"{engine}-{width}-v21-menu.png"))
    page.evaluate("window.scrollTo(0,0)")
    if engine=="webkit" and width==390:

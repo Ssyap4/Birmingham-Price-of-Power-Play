@@ -169,34 +169,25 @@ def run():
                     assert "1 / 2" in page.locator("#bhMenuTrack").inner_text()
                     touch(page, "#bhMenuTrack")
                     assert "2 / 2" in page.locator("#bhMenuTrack").inner_text()
-                    for selector, image in (
-                        ("#districtsCard", "assets/original-art/city-card-clean.webp"),
-                        ("#criminalEntry", "assets/criminal/cr01-arrival.webp"),
-                        (".cabinet-entry-quiz", "assets/original-art/challenges.webp"),
-                        ("#storyStart", "assets/original-art/clock.webp"),
-                        ("#profileCard", "assets/original-art/city.webp"),
-                        ("#cabinetProfile", "assets/original-art/profile.webp"),
+                    # V21: verify decoded independent image panels, not obsolete CSS backgrounds.
+                    for selector, sources in (
+                        ("#districtsCard", ["assets/districts/centre.webp"]),
+                        ("#criminalEntry", ["assets/criminal/cr01-arrival.webp"]),
+                        (".cabinet-entry-quiz", ["assets/original-art/clock.webp"]),
+                        ("#storyStart", ["assets/mobile-menu/approved-achievements.webp"]),
+                        ("#profileCard", ["assets/heroes/jack.webp", "assets/heroes/eleanor.webp"]),
+                        ("#cabinetProfile", ["assets/cabinet/profile-v21.webp"]),
                     ):
-                        assert page.locator(selector + " .cabinet-entry-copy strong").is_visible()
-                        found=page.locator(selector).evaluate(
-                            "e => getComputedStyle(e,'::before').backgroundImage"
-                        )
-                        assert image in found, (selector, found)
-                    seal=page.locator("#cabinetProfile .cabinet-profile-seal")
-                    assert "assets/cabinet/profile-seal.svg" in seal.evaluate(
-                        "e => getComputedStyle(e).backgroundImage"
-                    )
-                    assert page.evaluate("""async () => {
-                        for(const src of [
-                            'assets/original-art/profile.webp',
-                            'assets/original-art/city-card-clean.webp',
-                            'assets/cabinet/profile-seal.svg']){
-                            const img=new Image();img.src=src;
-                            try{await img.decode()}catch{return false}
-                            if(img.naturalWidth<96)return false;
-                        }
-                        return true
-                    }"""), "cinema artwork did not decode"
+                        card=page.locator(selector)
+                        assert card.locator(".cabinet-entry-copy strong").is_visible()
+                        imgs=card.locator(".cabinet-entry-art img")
+                        assert imgs.count()==len(sources)
+                        for i,src in enumerate(sources):
+                            img=imgs.nth(i)
+                            assert img.get_attribute("src")==src
+                            assert img.evaluate("async e=>{try{await e.decode();return e.naturalWidth>0}catch{return false}}")
+                        assert card.evaluate("e=>getComputedStyle(e,'::before').content")=="none"
+                    assert page.locator("#home .cabinet-entry-icon").count()==0
                     assert page.evaluate("""() => {
                         const cards=[...document.querySelectorAll('#home .cabinet-menu > button')];
                         return cards.length===6 && cards.every(el=>{
@@ -226,8 +217,9 @@ def run():
                     assert page.locator("#campaignAchievements").is_visible()
                     archive_intro = page.locator("#campaignAchievements .campaign-head p").inner_text()
                     assert "№001 и №002" in archive_intro and "Работа для своих" in archive_intro, archive_intro
-                    assert page.locator('#campaignAchievements .campaign-portal-v13 [data-campaign-jump]').count() == 3
-                    touch(page, '#campaignAchievements [data-campaign-jump="criminal"]')
+                    assert page.locator('#campaignAchievements .campaign-portal-v13').count() == 0
+                    touch(page, "#homeBtn")
+                    touch(page, "#criminalEntry")
                     assert page.locator("#criminalScreen .cr-map").is_visible()
                     assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 3
                     touch(page, '#criminalScreen [data-campaign-jump="detective"]')
@@ -251,7 +243,7 @@ def run():
                         assert page.locator("#profile .profile-hero").is_visible()
                         assert page.locator("#profile .profile-hero h2").inner_text() == "ТВОЯ ИСТОРИЯ"
                         assert page.locator("#playerCampaignOverview").is_visible()
-                        assert page.locator('#profile .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                        assert page.locator('#profile .campaign-portal-v13').count() == 0
                         assert page.locator(".player-overview-card").count() == 3
                         assert page.locator("#profileBtn").inner_text().endswith("ПРОФИЛЬ")
                         if width == 390:
@@ -427,13 +419,15 @@ def run():
                         assert page.locator("#campaignCriminalHistory .campaign-criminal-attempt").count() == 8
                         touch(page, '#campaignHistory [data-open-section="campaignDossiers"]')
                         assert page.locator("#campaignDossiers").is_visible()
-                        assert page.locator('#campaignDossiers .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                        assert page.locator('#campaignDossiers .campaign-portal-v13').count() == 0
                         assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignDossiers") == "1"
                         assert page.locator("#campaignCriminalDossiers .campaign-criminal-hero").count() == 5
                         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                         assert saved_ledger == page.evaluate("localStorage.getItem('birmingham_criminal_v2_ledger')")
                         page.screenshot(path=str(OUT / (name + "-combined-archive.png")), full_page=True)
-                        touch(page, "#campaignCriminalDossiers .campaign-criminal-jump")
+                        assert page.locator("#campaignCriminalDossiers .campaign-criminal-jump").count()==0
+                        touch(page, "#homeBtn")
+                        touch(page, "#criminalEntry")
                         assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
                         touch(page, '[data-action="home"]')
                     assert (
