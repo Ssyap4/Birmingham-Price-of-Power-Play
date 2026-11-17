@@ -1,0 +1,106 @@
+/* V51 — shared visual material across the three story readers.
+   Portrait-only presentation. No engine, layout ordering or progress mutation.
+   Distinct artwork and danger/visited states are intentionally retained. */
+@media (orientation: portrait) and (max-width: 700px) {
+  #caseGame, #game, #criminalScreen {
+    --campaign-reading-ink: #efddc6;
+    --campaign-reading-size: clamp(1.055rem, 4.15vw, 1.13rem);
+    --campaign-reading-leading: 1.72;
+    --campaign-brass: #dcb27b;
+    --campaign-edge: #947044;
+    --campaign-paper: linear-gradient(145deg,#2d2118,#1a1510 68%,#15120f);
+    --campaign-choice: linear-gradient(110deg,#49341f,#2b2119 78%);
+    --campaign-radius: 7px;
+  }
+  #caseGame #caseText,
+  #game #sceneText,
+  #criminalScreen .cr-story > p {
+    font: 400 var(--campaign-reading-size)/var(--campaign-reading-leading) Georgia,serif !important;
+    color: var(--campaign-reading-ink) !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+  #caseGame .case-paper,
+  #criminalScreen .cr-story {
+    background: var(--campaign-paper) !important;
+    border-color: var(--campaign-edge) !important;
+    border-radius: var(--campaign-radius) !important;
+  }
+  #criminalScreen .cr-story {
+    padding: 5px 15px 17px;
+    box-shadow: inset 0 1px #f5d6a528, 0 9px 23px #0008;
+  }
+  #caseGame #caseDialogue,
+  #game #sceneText .scene-spoken-line[data-speaker],
+  #criminalScreen .cr-dialogue span {
+    color: var(--campaign-reading-ink) !important;
+    line-height: 1.67 !important;
+  }
+  #criminalScreen .cr-dialogue {
+    border-color: var(--campaign-brass);
+    background: linear-gradient(90deg,#c69f6312,transparent);
+  }
+  #criminalScreen .cr-dialogue strong {
+    color: #efc38b;
+    font: 800 .75rem/1.38 system-ui,sans-serif;
+    letter-spacing: .06em;
+  }
+  #criminalScreen .cr-dialogue span {
+    font-family: Georgia,serif;
+    font-size: var(--campaign-reading-size);
+  }
+  #caseGame #caseChoices>.case-choice,
+  #game .choice,
+  #criminalScreen .cr-choices button {
+    border-radius: var(--campaign-radius) !important;
+  }
+  #criminalScreen .cr-choices button:not(:disabled),
+  #game .choice:not(:disabled):not(.is-danger):not([data-decision-state="danger"]):not([data-decision-state="visited"]),
+  #caseGame #caseChoices>.case-choice:not(:disabled) {
+    background: var(--campaign-choice) !important;
+    border-color: #a27c4c !important;
+  }
+  #criminalScreen .cr-choices button {
+    min-height: 58px;
+    padding-block: 13px;
+  }
+  #criminalScreen .cr-choices button b {
+    font: 600 clamp(.98rem,4vw,1.05rem)/1.45 Georgia,serif;
+    color: #f3dfbd;
+  }
+  #criminalScreen .cr-choices button small {
+    color: #d8b995;
+    line-height: 1.5;
+  }
+  #criminalScreen .cr-choices button:disabled {
+    background: #252019;
+    border-color: #63503b;
+  }
+  #criminalScreen .cr-equipment-item {
+    border-radius: var(--campaign-radius);
+    border-color: #896944;
+    background: linear-gradient(145deg,#3b2c20,#1c1712 85%);
+  }
+  #criminalScreen .cr-gear-illustration {
+    background: #1b1511;
+    border: 1px solid #725637;
+  }
+  #criminalScreen .cr-frame {
+    border-color: var(--campaign-edge);
+    border-radius: var(--campaign-radius);
+    overflow: hidden;
+  }
+  #criminalScreen .cr-frame img { background: #17130f; }
+  #criminalScreen .cr-epilogue-card {
+    border-radius: var(--campaign-radius);
+    background: var(--campaign-paper);
+  }
+}
+@media (orientation: portrait) and (max-width:359px) {
+  #caseGame, #game, #criminalScreen {
+    --campaign-reading-size: 1.055rem;
+    --campaign-reading-leading: 1.67;
+  }
+  #criminalScreen .cr-story {padding-inline:11px;}
+}

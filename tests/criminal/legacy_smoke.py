@@ -25,6 +25,18 @@ def tap(page, selector):
     el.tap()
 
 
+def reading_language(page, selector):
+    target=page.locator(selector)
+    target.wait_for(state="visible")
+    metrics=target.evaluate("""e=>{const s=getComputedStyle(e);
+      return {color:s.color,font:s.fontFamily,line:parseFloat(s.lineHeight)/parseFloat(s.fontSize),
+        size:parseFloat(s.fontSize),token:s.getPropertyValue('--campaign-reading-ink').trim()};}""")
+    assert metrics["token"]=="#efddc6", (selector,metrics)
+    assert metrics["color"]=="rgb(239, 221, 198)", (selector,metrics)
+    assert "Georgia" in metrics["font"], (selector,metrics)
+    assert metrics["size"]>=16.8 and metrics["line"]>=1.65, (selector,metrics)
+    return metrics
+
 def run():
     server = ThreadingHTTPServer(
         ("127.0.0.1", 0), partial(Quiet, directory=str(ROOT / "campaign-unified-dist"))
@@ -67,6 +79,7 @@ def run():
                 assert page.locator("#sceneId").inner_text().startswith("P01")
                 tap(page, 'button.choice[data-to="P02"]')
                 assert page.locator("#sceneId").inner_text().startswith("P02")
+                second_visual=reading_language(page,"#sceneText")
                 second = page.evaluate(
                     "localStorage.getItem('birmingham_case002_draft_v3_jack')"
                 )
@@ -80,6 +93,7 @@ def run():
                 tap(page, "#case001Briefing .briefing-start")
                 assert page.locator("#caseGame").is_visible()
                 assert page.locator("#caseChoices button").count() > 0
+                first_visual=reading_language(page,"#caseText")
                 first = page.evaluate(
                     "localStorage.getItem('birmingham_case_smol_heath_v1_jack')"
                 )
@@ -175,6 +189,10 @@ def run():
                 tap(page, "#criminalEntry")
                 tap(page, '.cr-pin[data-mission="CR02"]')
                 tap(page, '[data-action="start"]')
+                criminal_visual=reading_language(page,"#crStory > p")
+                assert max(x["size"] for x in (first_visual,second_visual,criminal_visual))-min(x["size"] for x in (first_visual,second_visual,criminal_visual))<.1
+                print("PASS common narrative material and reading metrics",name,flush=True)
+                page.screenshot(path=str(OUT/(name+"-criminal-v51-reader.png")),full_page=True)
                 tap(page, '[data-choice="go"]')
                 tap(page, '[data-action="home"]')
                 tap(page, "#storyStart")

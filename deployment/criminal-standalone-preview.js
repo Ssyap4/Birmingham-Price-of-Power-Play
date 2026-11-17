@@ -18,7 +18,8 @@ const scripts = [
 ];
 const styles = [
   "criminal-operations-v2.css",
-  "preview/criminal/preview.css"
+  "preview/criminal/preview.css",
+  "campaign-visual-language-v1.css"
 ];
 const heroes = ["jack", "finn", "eleanor", "victor", "samuel"]
   .map(x => "assets/heroes/" + x + ".webp");
