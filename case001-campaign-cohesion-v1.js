@@ -91,7 +91,10 @@
   if(health&&choiceLabel&&health.parentElement===paper &&
     health.nextElementSibling!==choiceLabel)choiceLabel.before(health);
   const hp=health?.querySelector(".case-health-head b")?.textContent.trim();
-  pulse.querySelector("#case001PulseHealth").textContent=hp||"—";
+  const metric=pulse.querySelector("#case001PulseHealth");
+  metric.textContent=hp?.replace(/\s*\/\s*/,"/").replace(/\s*HP$/i,"")||"—";
+  if(hp)metric.setAttribute("aria-label","Состояние героя: "+hp);
+  else metric.removeAttribute("aria-label");
   const amount=Number.parseFloat(progress.style.width)||0;
   pulse.querySelector("#case001PulseProgress").style.width=Math.max(0,Math.min(amount,100))+"%";
  }

@@ -97,3 +97,7 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 @keyframes cinema-vinyl{to{transform:rotateX(79deg) rotate(360deg)}}
 
 #home.cinema-still .cinema-hero::before,#home.cinema-still .cinema-rain,#home.cinema-still .cinema-smoke,#home.cinema-still .cinema-vinyl-glint{animation-play-state:paused!important}
+
+/* Hidden cabinet owns no running decorative animation or retained will-change
+   hint. Visible menu retains its original rain, smoke, lamp and vinyl effects. */
+#home[hidden] .cinema-hero::before,#home[hidden] .cinema-rain,#home[hidden] .cinema-smoke,#home[hidden] .cinema-vinyl-glint{animation:none!important;will-change:auto!important}

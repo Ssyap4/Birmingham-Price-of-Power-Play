@@ -731,3 +731,13 @@
  #caseGame .case001-pulse-track{margin-top:6px!important}
  #caseGame > .bh-audio-controls{margin:10px 0 0!important}
 }
+
+
+/* V71: one chapter label, one location label, compact score; the detailed
+   injury/medicine block and all underlying health semantics stay untouched. */
+@media(orientation:portrait) and (max-width:700px){
+ #caseGame .case001-pulse-heading #case001PulseChapter{display:none!important}
+ #caseGame #caseArt .case001-art-caption span:last-child{display:none!important}
+ #caseGame #case001PulseHealth{font-size:clamp(.88rem,3.7vw,1.16rem)!important;white-space:nowrap!important;letter-spacing:-.015em}
+ #caseGame .case001-pulse-heading{letter-spacing:.065em!important}
+}
