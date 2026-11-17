@@ -420,8 +420,12 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.locator("#levelRecords .achievement").count()==4
     tap(page,"#profile .campaign-profile-links [data-open-section=campaignAchievements]")
     assert page.locator("#campaignTrialsAchievements").is_visible()
+    assert not page.locator("#campaignTrialsAchievements").evaluate("e=>!!e.closest('#campaignFirstCaseAchievements')")
+    tap(page,"#campaignAchievements [data-jump-to=campaignTrialsAchievements]")
+    assert page.locator("#campaignTrialsAchievements").evaluate("e=>document.activeElement===e")
     tap(page,"#campaignAchievements [data-open-section=campaignHistory]")
     assert page.locator("#campaignTrialsHistory").is_visible()
+    tap(page,"#campaignHistory [data-jump-to=campaignTrialsHistory]")
     tap(page,"#campaignTrialsHistory summary")
     assert page.locator("#campaignTrialsHistory .trial-history-row").count()>=1
     tap(page,"#homeBtn")

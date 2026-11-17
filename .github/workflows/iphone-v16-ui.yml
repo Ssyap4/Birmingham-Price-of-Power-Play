@@ -9,6 +9,9 @@ on:
       - game.js
       - trial-progress-v1.js
       - profile-page.js
+      - campaign-hub-v1.js
+      - campaign-case002-archive-v1.js
+      - session-controls-v1.js
       - dossier-v12.js
       - player-overview-cinema-v1.css
       - tests/trial-progress-v1.test.js
@@ -45,6 +48,8 @@ jobs:
           node --test tests/audio-v27-playlist.test.js
           sha256sum --check docs/criminal-operations/soundtrack-v27.sha256
           node --check profile-page.js
+          node --check session-controls-v1.js
+          node --test tests/trial-progress-v1.test.js
           node --check campaign-hub-v1.js
           node --check campaign-bridge-v13.js
           python -m py_compile tests/iphone-v16-mobile.py

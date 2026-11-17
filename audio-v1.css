@@ -22,3 +22,8 @@
 /* V32: temporary unavailable controls are visibly and semantically disabled. */
 .bh-audio-controls button:disabled{opacity:.62;cursor:default;box-shadow:none}
 .bh-audio-controls button:disabled:hover{outline:none;border-color:#8e7047}
+
+/* V37: reset is an explicit case action, not part of the sound controls. */
+#caseDiscardBtn[hidden]{display:none!important}
+#caseDiscardBtn:not([hidden]){display:block;min-height:44px;border-color:#a97863!important;color:#ecc4ad!important;white-space:normal;overflow-wrap:anywhere}
+#gameExitBtn{min-height:44px;white-space:normal;overflow-wrap:anywhere}

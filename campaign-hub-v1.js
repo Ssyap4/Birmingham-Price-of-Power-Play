@@ -311,6 +311,8 @@ function renderHistory(el,runs){
   if(id==='campaignAchievements')renderAchievements(box,runs);
   if(id==='campaignHistory')renderHistory(box,runs);
   document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}));
+  // Independent projections must append after Case002 has wrapped Case001 cards.
+  document.dispatchEvent(new CustomEvent('birmingham:campaign-render-complete',{detail:{id,box,runs}}));
   const badRecords=recordArchive().status!=='ready',badRewards=rewardArchive().status!=='ready',badAwards=awardArchive().status!=='ready';
   const confirmed=rewardArchive().value,combos=new Set(runs.map(r=>[r.caseId,r.heroId,r.ending].join(':')));
   const orphans=!badRecords&&!badRewards&&Object.keys(confirmed).some(k=>!combos.has(k));

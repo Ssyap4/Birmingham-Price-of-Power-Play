@@ -47,7 +47,7 @@ function hasSavedCase(heroId=window.BirminghamHero?.selectedId||'jack'){
  try{const s=JSON.parse(localStorage.getItem(BASE_KEY+'_'+heroId)||'null');return !!(s&&scenes[s.node]&&Array.isArray(s.items)&&s.flags&&typeof s.flags==='object'&&!Array.isArray(s.flags)&&Array.isArray(s.trail))}catch{return false}
 }
 function hasProgress(heroId=window.BirminghamHero?.selectedId||'jack'){
- if(!hasSavedCase(heroId))return false;const s=JSON.parse(localStorage.getItem(BASE_KEY+'_'+heroId));return !scenes[s.node].end&&!s.ending;
+ try{if(!hasSavedCase(heroId))return false;const s=JSON.parse(localStorage.getItem(BASE_KEY+'_'+heroId));return !!(s&&scenes[s.node]&&!scenes[s.node].end&&!s.ending)}catch{return false}
 }
 let state;const fresh=()=>({node:'intro',items:[],flags:{},trail:[],ending:null,started:Date.now(),health:100,riskSeen:[],bandaged:false,medicalKits:(window.BirminghamHero?.selectedId||'jack')==='jack'?1:0,medicalKitFound:false,deathCause:''});const save=()=>{try{localStorage.setItem(KEY(),JSON.stringify(state))}catch(e){console.warn('Не удалось сохранить дело',e)}};
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY())||'null');if(s&&scenes[s.node]&&Array.isArray(s.items)&&s.flags&&Array.isArray(s.trail)){s.health=Number.isFinite(s.health)?Math.max(0,Math.min(100,s.health)):100;s.riskSeen=Array.isArray(s.riskSeen)?s.riskSeen:[];s.bandaged=!!s.bandaged;s.medicalKits=Number.isInteger(s.medicalKits)?Math.max(0,Math.min(2,s.medicalKits)):(s.bandaged?0:((window.BirminghamHero?.selectedId||'jack')==='jack'?1:0));s.medicalKitFound=!!s.medicalKitFound;if(s.flags.traded)s.items=s.items.filter(item=>item!=='ledger');return s}}catch{}return fresh()}

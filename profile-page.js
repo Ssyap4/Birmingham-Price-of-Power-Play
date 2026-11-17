@@ -22,10 +22,20 @@ $('profileBtn').onclick=open;
 window.addEventListener('storage',e=>{if((e.key===P.KEY||e.key===null)&&!$('profile').hidden)update()});
 window.addEventListener('pageshow',()=>{if(!$('profile').hidden)update()});
 // Separate read-only projection in the common archive. No duplicate grants.
-document.addEventListener('birmingham:campaign-render',({detail})=>{
+document.addEventListener('birmingham:campaign-render-complete',({detail})=>{
  if(!detail?.box||!['campaignAchievements','campaignHistory'].includes(detail.id))return;
  const {status,value:s}=snapshot(),section=node('section','trial-archive-section');section.id='campaignTrials'+(detail.id==='campaignAchievements'?'Achievements':'History');
+ section.tabIndex=-1;
  section.append(node('small','campaign-criminal-kicker','ИСПЫТАНИЯ · ОТДЕЛЬНЫЙ ПРОГРЕСС'),node('h3','campaign-group-title','Испытания'));
+ const nav=detail.box.querySelector('.campaign-002-jumps');
+ if(nav){
+  nav.setAttribute('aria-label','Быстрый переход между игровыми разделами');
+  const criminal=detail.box.querySelector('#campaignCriminal'+(detail.id==='campaignAchievements'?'Achievements':'History'));
+  for(const [target,label] of [[criminal,'РАБОТА ДЛЯ СВОИХ'],[section,'ИСПЫТАНИЯ']]){
+   if(!target)continue;const b=node('button','campaign-002-jump',label);b.type='button';b.dataset.jumpTo=target.id;
+   b.onclick=()=>{target.tabIndex=-1;target.scrollIntoView({block:'start',behavior:'instant'});target.focus({preventScroll:true})};nav.append(b);
+  }
+ }
  if(status!=='ready'){section.append(node('p','trial-archive-warning',statusText(status)));detail.box.append(section);return}
  if(detail.id==='campaignAchievements'){const earned=P.awards(s).filter(a=>a.earned).length;section.append(node('p','campaign-intro',earned+' / 6 достижений · '+s.wins+' побед · '+s.played+' начатых попыток'));const fold=node('details','trial-archive-fold');fold.dataset.archiveFold='trials:awards';fold.append(node('summary','','Достижения испытаний'));const grid=node('div','achievement-grid');awardRows(grid,s);fold.append(grid);section.append(fold)}
  else{section.append(node('p','campaign-intro','Последние '+s.history.length+' завершённых попыток. Начатые, но брошенные испытания не входят в историю.'));const fold=node('details','trial-archive-fold');fold.dataset.archiveFold='trials:history';fold.append(node('summary','','История испытаний'));if(!s.history.length)fold.append(node('p','','Завершённых испытаний пока нет.'));for(const h of s.history){const row=node('article','trial-history-row');row.append(node('strong','',h.won?'Испытание пройдено':'Попытка завершена'),node('small','',(P.levels[h.difficulty]||'Испытание')+' · '+(h.mode==='timed'?'На время':'Классика')+' · '+new Date(h.date).toLocaleDateString('ru-RU')),node('span','',h.score+' очков · '+(Number.isInteger(h.answered)?h.answered+' / 50 вопросов':'Результат из архива')));fold.append(row)}section.append(fold)}

@@ -399,7 +399,7 @@ function append(id,box,oldRuns,root){
    "↗ К ДЕЛУ №002 · ДИГБЕТ");
   back.href="#district-digbeth";heading.append(back);
  }
- if(title)title.textContent="Детективные дела №001 и №002 · «Работа для своих». Общий архив этого устройства.";
+ if(title)title.textContent="Детективные дела №001 и №002 · «Работа для своих» · Испытания. Общий архив этого устройства.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
  if(id==="campaignAchievements")renderAchievements(doc,box,archive,
   [...box.querySelectorAll(".campaign-award")],heroes);

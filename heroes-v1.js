@@ -6,8 +6,9 @@ const heroes=[
 {id:'victor',name:'Виктор Мэллоу',alias:'Джентльмен',role:'Переговорщик',items:['Поддельное удостоверение','Конверт с наличными'],bio:'Сын разорившегося торговца, научившийся жить за счёт чужих слабостей и секретов. Однажды Виктор обыграл букмекера, работавшего против Шелби, и принёс семье записи о его махинациях. С тех пор ему доверяют разговоры, в которых оружие только мешает.',trait:'Убеждение, обман и подкуп. Не каждый противник готов слушать.',style:'Хитрость · сделки · влияние'},
 {id:'samuel',name:'Сэмюэл Рид',alias:'Механик',role:'Специалист по операциям',items:['Набор инструментов','Дымовая шашка'],bio:'Десять лет Сэмюэл обслуживал станки на заводах Астона. Когда из-за приказа владельца погибли трое рабочих, он сохранил документы, доказывавшие вину руководства. За ним пришли люди фабриканта. Шелби спрятали механика и помогли вывезти его семью. Теперь он открывает для них двери, которые не поддаются обычным ключам.',trait:'Разбирается в механизмах, сигнализации и отвлекающих манёврах. Не стремится к открытой драке.',style:'Техника · отвлечение · саботаж'}
 ];
-const STORE='birmingham_hero_selection_v1';let chosen='jack';
-const api={get selectedId(){return localStorage.getItem(STORE)||'jack'},heroes};window.BirminghamHero=api;
+const STORE='birmingham_hero_selection_v1';let chosen='jack',currentHero='jack';
+try{const persisted=localStorage.getItem(STORE);if(heroes.some(h=>h.id===persisted))currentHero=persisted}catch{}
+const api={get selectedId(){return currentHero},heroes};window.BirminghamHero=api;
 const modal=document.createElement('div');modal.id='heroSelection';modal.className='hero-selection';modal.hidden=true;modal.innerHTML=`<div class="hero-panel" role="dialog" aria-modal="true" aria-labelledby="heroHeading"><div class="hero-top"><div><div class="hero-eyebrow">ДЕЛО №001 · ВЫБОР УЧАСТНИКА КРУГА</div><h2 id="heroHeading">Ближний круг Шелби</h2><p>Выбери, за кого ты проведёшь расследование «Долг, который не прощают».</p></div><button class="hero-close" type="button" aria-label="Закрыть">×</button></div><div class="hero-cards" id="heroCards"></div><div class="hero-details" id="heroDetails"></div><div class="hero-footer"><span>Продолжи сохранённое расследование выбранного героя или начни новую попытку. Основной сюжет общий; личное действие доступно у складов на канале.</span><button class="hero-rules" type="button">ПРАВИЛА ДЕЛА</button><button class="hero-new nav-button" type="button" hidden>НОВОЕ РАССЛЕДОВАНИЕ</button><button class="hero-begin" type="button">НАЧАТЬ РАССЛЕДОВАНИЕ →</button></div></div>`;
 document.body.append(modal);
 const cards=modal.querySelector('#heroCards'),detail=modal.querySelector('#heroDetails');
@@ -73,6 +74,7 @@ function begin(newAttempt,briefed=false){
  if(!briefed&&(newAttempt||!window.BirminghamCase.hasSavedCase(chosen))&&window.BirminghamCaseRules){window.BirminghamCaseRules.open(()=>begin(newAttempt,true));return}
  if(newAttempt&&window.BirminghamCase.hasSavedCase(chosen)&&!confirm('Начать новое расследование? Сохранённая попытка этого героя будет заменена.'))return;
  const h=chosen,key='birmingham_case_smol_heath_v1_'+h;
+ currentHero=h;
  try{
   if(!localStorage.getItem(key)&&!localStorage.getItem('birmingham_legacy_case_migrated_v1')){const old=localStorage.getItem('birmingham_case_smol_heath_v1');if(old){localStorage.setItem(key,old);localStorage.setItem('birmingham_legacy_case_migrated_v1',h)}}
   localStorage.setItem(STORE,h);

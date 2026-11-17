@@ -161,8 +161,17 @@ def run():
                   else localStorage.setItem(a.awardKey,a.old);
                   window.BirminghamCase.resume();
                 }""",{"k":keys,"a":award_fixture})
+                # V37: the global exit no longer deletes the active investigation.
+                assert "Сбросить" in page.locator("#caseDiscardBtn").inner_text()
+                page.once("dialog",lambda d:d.dismiss())
+                tap(page,"#gameExitBtn")
+                assert page.locator("#caseGame").is_visible()
+                assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==first
+                page.once("dialog",lambda d:d.accept())
+                tap(page,"#gameExitBtn")
+                assert page.locator("#home").is_visible()
+                assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==first
                 # Leaving old entry UI and playing a new intro must preserve both raw slots.
-                tap(page, "#homeBtn")
                 tap(page, "#criminalEntry")
                 tap(page, '.cr-pin[data-mission="CR02"]')
                 tap(page, '[data-action="start"]')
@@ -172,6 +181,8 @@ def run():
                 assert page.locator("#campaignAchievements").is_visible()
                 assert page.locator("#campaignSecondCaseAchievements").is_visible()
                 assert page.locator("#campaignCriminalAchievements").is_visible()
+                assert page.locator("#campaignTrialsAchievements").is_visible()
+                assert not page.locator("#campaignTrialsAchievements").evaluate("e=>!!e.closest('#campaignFirstCaseAchievements')")
                 assert "Работа для своих" in page.locator("#campaignCriminalAchievements").inner_text()
                 assert (
                     page.evaluate(
