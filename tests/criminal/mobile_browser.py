@@ -224,7 +224,8 @@ def run():
                     assert page.locator("#campaignDistrictState").count() == 1
                     touch(page, '#districts [data-campaign-jump="archive"]')
                     assert page.locator("#campaignAchievements").is_visible()
-                    assert "Дела №001 и №002" in page.locator("#campaignAchievements .campaign-head p").inner_text()
+                    archive_intro = page.locator("#campaignAchievements .campaign-head p").inner_text()
+                    assert "№001 и №002" in archive_intro and "Работа для своих" in archive_intro, archive_intro
                     assert page.locator('#campaignAchievements .campaign-portal-v13 [data-campaign-jump]').count() == 3
                     touch(page, '#campaignAchievements [data-campaign-jump="criminal"]')
                     assert page.locator("#criminalScreen .cr-map").is_visible()
