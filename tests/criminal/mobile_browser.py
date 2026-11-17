@@ -321,7 +321,7 @@ def run():
                                     )
                                     # The actual rendered choice uses the same choiceId and risk as the engine.
                                     assert page.evaluate(
-                                        """s=>CriminalEngine.choices(s).every(c=>{const b=document.querySelector('[data-choice="'+c.id+'"]');return b&&Number(b.dataset.risk)===c.risk.probability&&b.textContent.includes(c.risk.level)&&b.disabled===!c.available;})""",
+                                        """s=>CriminalEngine.choices(s).every(c=>{const b=document.querySelector('[data-choice="'+c.id+'"]');return b&&Number(b.dataset.risk)===c.risk.probability&&b.textContent.includes(c.risk.level)&&b.disabled===!c.available&&b.dataset.riskKind===(c.risk.lethal?'lethal':c.risk.probability>0?'wound':'ordinary')&&(!c.available||b.dataset.riskKind==='ordinary'||getComputedStyle(b).borderLeftColor===(c.risk.lethal?'rgb(206, 136, 112)':'rgb(211, 160, 92)'));})""",
                                         s,
                                     )
                                     bounds(page)

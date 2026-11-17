@@ -598,3 +598,50 @@
     min-width:0;
   }
 }
+
+
+/* V62 candidate — visual distinction follows already computed warnings.
+   No odds, HP, available actions, costs or confirmation handling changed. */
+@media(orientation:portrait) and (max-width:700px){
+  #caseGame #caseScene .case001-scene-hero-info h2,
+  #game .scene-heading h2,
+  #criminalScreen .cr-heading[data-phase] h1{
+    font:700 clamp(1.3rem,5.2vw,1.72rem)/1.22 Georgia,serif!important;
+    color:#f4d7aa!important;
+    overflow-wrap:anywhere;
+    text-wrap:balance;
+  }
+  #caseGame #caseSpeaker,
+  #game .story-content .scene-spoken-line[data-speaker]::before,
+  #criminalScreen .cr-dialogue strong{
+    font:800 .75rem/1.4 system-ui,sans-serif!important;
+    letter-spacing:.065em!important;
+    color:#efc38b!important;
+  }
+  #caseGame #caseChoices>.case-choice:not(:disabled)[data-risk-kind="wound"],
+  #criminalScreen .cr-choices button:not(:disabled)[data-risk-kind="wound"]{
+    background:linear-gradient(120deg,#513921,#2c2117)!important;
+    border-color:#d3a05c!important;
+    border-left:3px solid #d3a05c!important;
+  }
+  #game .choice:not(:disabled)[data-decision-state="danger"],
+  #criminalScreen .cr-choices button:not(:disabled)[data-risk-kind="lethal"]{
+    background:linear-gradient(120deg,#572d25,#321c19)!important;
+    border-color:#ce8870!important;
+    border-left:3px solid #ce8870!important;
+  }
+  #criminalScreen .cr-choices button:not(:disabled)[data-risk-kind="lethal"] small:first-of-type{
+    color:#ffc5ae!important;
+  }
+  #caseGame #caseChoices>.case-choice:not(:disabled)[data-risk-kind="wound"]::before,
+  #criminalScreen .cr-choices button:not(:disabled)[data-risk-kind="wound"]::before{
+    color:#f1cd91!important;
+  }
+  #criminalScreen .cr-choices button:not(:disabled)[data-risk-kind="lethal"]::before{
+    color:#ffc5ae!important;
+  }
+  #game .choice-label,
+  #criminalScreen .cr-choices button b{
+    overflow-wrap:anywhere;
+  }
+}

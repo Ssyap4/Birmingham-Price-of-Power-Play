@@ -240,6 +240,28 @@ def run():
                   else localStorage.setItem(a.awardKey,a.old);
                   window.BirminghamCase.resume();
                 }""",{"k":keys,"a":award_fixture})
+                # Read-only presentation of a risky choice using a synthetic scene fixture.
+                page.evaluate("""k=>{
+                  const s=JSON.parse(k.original);s.node='canal';s.riskSeen=[];
+                  localStorage.setItem(k.key,JSON.stringify(s));window.BirminghamCase.resume();
+                }""",keys)
+                risky=page.locator("#caseChoices [data-choice-target='sneak']")
+                assert risky.is_enabled() and risky.get_attribute("data-risk-kind")=="wound"
+                assert "возможное ранение" in risky.inner_text()
+                assert risky.evaluate("e=>getComputedStyle(e).borderLeftColor")=="rgb(211, 160, 92)"
+                ordinary=page.locator("#caseChoices [data-risk-kind='ordinary']:not([disabled])").first
+                assert ordinary.evaluate("e=>getComputedStyle(e).backgroundImage")!=risky.evaluate("e=>getComputedStyle(e).backgroundImage")
+                page.evaluate("""k=>{
+                  const s=JSON.parse(localStorage.getItem(k.key));s.riskSeen=['sneak'];
+                  localStorage.setItem(k.key,JSON.stringify(s));window.BirminghamCase.resume();
+                }""",keys)
+                assert risky.get_attribute("data-risk-kind")=="ordinary"
+                assert "возможное ранение" not in risky.inner_text()
+                page.evaluate("""k=>{
+                  localStorage.setItem(k.key,k.original);
+                  if(k.originalMeta===null)localStorage.removeItem(k.meta);else localStorage.setItem(k.meta,k.originalMeta);
+                  window.BirminghamCase.resume();
+                }""",keys)
                 # Final-archive fixture: actual terminal screen, deliberately damaged archive.
                 # Not a claim that this fixture is a played ending.
                 final_fixture=page.evaluate("""k=>{

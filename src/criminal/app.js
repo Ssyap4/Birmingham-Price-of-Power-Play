@@ -379,7 +379,7 @@
     const choicesHtml = choiceViews
       .map(
         (c) =>
-          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small>${esc(c.risk.level)}${c.risk.probability ? " · " + c.risk.probability + "%" : ""}${c.risk.lethal ? " · Возможна гибель" : ""}: ${esc(c.risk.reason)}</small>${
+          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" data-risk-kind="${c.risk.lethal ? "lethal" : c.risk.probability>0 ? "wound" : "ordinary"}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small>${esc(c.risk.level)}${c.risk.probability ? " · " + c.risk.probability + "%" : ""}${c.risk.lethal ? " · Возможна гибель" : ""}: ${esc(c.risk.reason)}</small>${
             Object.keys(c.cost || {}).length
               ? `<small>Расход: ${Object.entries(c.cost)
                   .map(([k, v]) => esc(C.items[k][1]) + " ×" + v)
