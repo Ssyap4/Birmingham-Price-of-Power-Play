@@ -161,3 +161,11 @@
   font:800 .53rem/1.15 system-ui,sans-serif!important;
  }
 }
+
+/* V33: earned clue names remain visible beside decisions until opened. */
+#caseGame .case001-evidence-discovery{display:none}
+@media(orientation:portrait) and (max-width:700px){
+ #caseGame .case001-evidence-discovery:not([hidden]){display:grid;gap:8px;padding:11px;margin:8px 0 12px;border:1px solid #b48a52;border-left:3px solid #e2b979;border-radius:5px;background:#2d2117;color:#f2d3a3}
+ #caseGame .case001-evidence-discovery p{margin:0;font:650 .82rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere}
+ #caseGame .case001-evidence-discovery button{min-height:44px;padding:8px 10px;border:1px solid #ba935a;border-radius:4px;background:#46311f;color:#ffe0af;font:700 .75rem/1.4 system-ui,sans-serif;touch-action:manipulation}
+}

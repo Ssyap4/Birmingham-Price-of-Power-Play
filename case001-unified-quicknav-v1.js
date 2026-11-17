@@ -96,13 +96,29 @@
  const modal=game.querySelector(".v33-shade");
  let lastMode=null;
  let lastCount=null;
+ let knownItems=null;
+ const unreadItems=new Map();
  let unread=false;
+ const discovery=document.createElement('section');
+ discovery.className='case001-evidence-discovery';discovery.hidden=true;
+ const discoveryText=document.createElement('p');discoveryText.setAttribute('role','status');discoveryText.setAttribute('aria-live','polite');
+ const discoveryButton=document.createElement('button');discoveryButton.type='button';discoveryButton.textContent='ОТКРЫТЬ УЛИКИ ↗';
+ discovery.append(discoveryText,discoveryButton);feedback.before(discovery);
  let frame=0;
  function updateCount(){
   const parsed=Number.parseInt(counter.textContent.trim(),10);
   const count=Number.isFinite(parsed)?parsed:0;
-  if(lastCount!==null&&count>lastCount)unread=true;
   lastCount=count;
+  const items=new Map([...inventory.querySelectorAll('[data-evidence-id]')].map(el=>[el.dataset.evidenceId,el.querySelector('span')?.textContent.trim()||el.textContent.trim()]));
+  if(!game.hidden&&knownItems!==null){
+   // An attempt reset removes items; never carry unread clues into a new run.
+   if([...knownItems].some(id=>!items.has(id)))unreadItems.clear();
+   else for(const [id,name] of items)if(!knownItems.has(id))unreadItems.set(id,name);
+  }
+  knownItems=game.hidden?null:new Set(items.keys());
+  unread=unreadItems.size>0;discovery.hidden=!unread;
+  const message=unread?'НОВЫЕ УЛИКИ · '+[...unreadItems.values()].join(' · '):'';
+  if(discoveryText.textContent!==message)discoveryText.textContent=message;
   summary.textContent="СОБРАННЫЕ УЛИКИ · "+count+" · раскрыть список";
   const evidence=buttonBy("evidence");
   evidence.querySelector(".case001-quick-count").textContent=String(count);
@@ -178,16 +194,18 @@
    return;
   }
   if(go==="evidence"||go==="deduction"){
-   if(go==="evidence"){unread=false;updateCount()}
+   if(go==="evidence"){unreadItems.clear();updateCount()}
    bridge.dataset.tool=go==="deduction"?"deduction":"evidence";
    bridge.click();
    visibility();
   }
  });
+ discoveryButton.addEventListener('click',()=>{unreadItems.clear();updateCount();bridge.dataset.tool='evidence';bridge.click();visibility()});
+ new MutationObserver(updateCount).observe(inventory,{childList:true,subtree:true});
  new MutationObserver(updateCount).observe(counter,{
   childList:true,characterData:true,subtree:true
  });
- if(modal)new MutationObserver(scheduleActive).observe(modal,{
+ if(modal)new MutationObserver(()=>{if(!modal.hidden){unreadItems.clear();updateCount()}scheduleActive()}).observe(modal,{
   attributes:true,attributeFilter:["hidden","data-mode"]
  });
  // Entering or resuming a case is not a fresh clue discovery. The real
@@ -195,10 +213,11 @@
  // already visible investigation should set the NEW badge.
  new MutationObserver(()=>{
   if(!game.hidden){
+   unreadItems.clear();knownItems=null;
    unread=false;
    lastCount=null;
    updateCount();
-  }
+  }else{knownItems=null;unreadItems.clear();updateCount()}
   visibility();
  }).observe(game,{
   attributes:true,attributeFilter:["hidden"]

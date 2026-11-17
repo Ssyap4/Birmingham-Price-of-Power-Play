@@ -201,3 +201,8 @@
   animation:none!important;transform:none!important;
  }
 }
+
+/* V33: touch scroll is native; selected clues and storage failure are explicit. */
+#caseGame .v33-selection-note{margin:0 0 12px;padding:10px 11px;border:1px solid #8b6b45;border-radius:5px;background:#211913;color:#eed4ad;font:650 .8rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere}
+#caseGame .v33-result-status[data-saved=false]{color:#ffd1a1;background:#41271b;border:1px solid #b18156;border-radius:4px;padding:8px}
+@media(orientation:portrait) and (max-width:700px){#caseGame .v33-tile{touch-action:pan-y!important;cursor:pointer}}

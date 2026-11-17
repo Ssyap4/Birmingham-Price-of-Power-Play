@@ -6,39 +6,56 @@ const pairs=[['key','envelope','След склада D-17','Номер ключ
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY())||'null')}catch{return null}};
 function found(){const s=read();return s&&Array.isArray(s.items)?s.items.filter(x=>names[x]):[]}
 function saved(){const s=read();try{const f=JSON.parse(localStorage.getItem(META())||'null');if(f&&f.started===s?.started)return f}catch{}return {started:s?.started,deductions:[],reactions:[]}}
-function store(title){const f=saved();if((f.deductions||[]).includes(title))return;f.deductions=Array.from(new Set([...(f.deductions||[]),title]));try{localStorage.setItem(META(),JSON.stringify(f))}catch{return}
- document.dispatchEvent(new CustomEvent('birmingham:case-findings-changed',{detail:{heroId:window.BirminghamHero?.selectedId||'jack',started:f.started}}));
+function store(title){
+ const state=read(),key=META(),hero=window.BirminghamHero?.selectedId||'jack';
+ if(!state||state.started==null)return false;
+ try{
+  const raw=localStorage.getItem(key),existing=raw===null?null:JSON.parse(raw);
+  if(raw!==null&&(!existing||typeof existing!=='object'||Array.isArray(existing)))return false;
+  const f=existing?.started===state.started?existing:{started:state.started,deductions:[],reactions:[]};
+  if(!Array.isArray(f.deductions)||!Array.isArray(f.reactions))return false;
+  if(f.deductions.includes(title))return true;
+  const data=JSON.stringify({...f,deductions:[...f.deductions,title]});
+  localStorage.setItem(key,data);
+  if(localStorage.getItem(key)!==data)return false;
+ }catch{return false}
+ document.dispatchEvent(new CustomEvent('birmingham:case-findings-changed',{detail:{heroId:hero,started:state.started}}));
+ return true;
 }
 function photo(id){const img=document.createElement('img');img.src='assets/evidence-cinematic/'+id+'.webp';img.alt='';img.draggable=false;img.onerror=()=>{img.onerror=null;img.src='assets/case-v17/icon-'+id+'.svg'};return img}
-const shade=document.createElement('div');shade.className='v33-shade';shade.hidden=true;shade.innerHTML='<section class="v33-window" role="dialog" aria-modal="true" aria-label="Инвентарь расследования"><header class="v33-head"><div><small>ДЕЛО №001 · БЛИЖНИЙ КРУГ</small><h2>ИНВЕНТАРЬ УЛИК</h2><p>Перетащи улику на подсвеченный предмет. На телефоне — выбери две карточки по очереди.</p></div><button class="v33-close" type="button" aria-label="Закрыть инвентарь">✕</button></header><div class="v33-stats"></div><div class="v33-board"></div><div class="v33-solved"><h3>Разгаданные · собранные в выводы</h3><p>Они остаются доступными для повторного сопоставления.</p><div class="v33-solved-board"></div></div><div class="v33-findings"><h3>Установленные связи</h3><div class="v33-findings-list"></div></div></section>';
+const shade=document.createElement('div');shade.className='v33-shade';shade.hidden=true;shade.innerHTML='<section class="v33-window" role="dialog" aria-modal="true" aria-label="Инвентарь расследования"><header class="v33-head"><div><small>ДЕЛО №001 · БЛИЖНИЙ КРУГ</small><h2>ИНВЕНТАРЬ УЛИК</h2><p>Перетащи улику на подсвеченный предмет. На телефоне — выбери две карточки по очереди.</p></div><button class="v33-close" type="button" aria-label="Закрыть инвентарь">✕</button></header><div class="v33-stats"></div><p class="v33-selection-note" role="status" aria-live="polite"></p><div class="v33-board"></div><div class="v33-solved"><h3>Разгаданные · собранные в выводы</h3><p>Они остаются доступными для повторного сопоставления.</p><div class="v33-solved-board"></div></div><div class="v33-findings"><h3>Установленные связи</h3><div class="v33-findings-list"></div></div></section>';
 root.append(shade);
 const board=shade.querySelector('.v33-board'), solvedBoard=shade.querySelector('.v33-solved-board'), stats=shade.querySelector('.v33-stats'), findings=shade.querySelector('.v33-findings-list');
 const allTiles=()=>shade.querySelectorAll('.v33-tile');
 let selected=null,drag=null,suppressClick=false,opener=null;
 const match=(a,b)=>pairs.find(p=>(p.a===a&&p.b===b)||(p.a===b&&p.b===a));
-function clear(){selected=null;allTiles().forEach(t=>t.classList.remove('v33-selected','v33-compatible','v33-target'))}
-function illuminate(id){allTiles().forEach(t=>{const other=t.dataset.id;t.classList.toggle('v33-selected',other===id);t.classList.toggle('v33-compatible',other!==id&&!!match(id,other))})}
+const selectionNote=shade.querySelector('.v33-selection-note');
+function clear(){selected=null;allTiles().forEach(t=>{t.classList.remove('v33-selected','v33-compatible','v33-target','v33-dragging');t.setAttribute('aria-pressed','false')});selectionNote.textContent='Выберите улику, чтобы увидеть возможные связи.'}
+function illuminate(id){
+ let count=0;
+ allTiles().forEach(t=>{const other=t.dataset.id,compatible=other!==id&&!!match(id,other);t.classList.toggle('v33-selected',other===id);t.classList.toggle('v33-compatible',compatible);t.setAttribute('aria-pressed',String(other===id));if(compatible)count++});
+ selectionNote.textContent='Выбрано: '+names[id]+'. '+(count?'Совместимых улик: '+count+'. Выберите подсвеченную карточку.':'Пока нет совместимых найденных улик.');
+}
 function refreshFindings(){const done=new Set(saved().deductions||[]);findings.replaceChildren();for(const p of pairs){if(!done.has(p.title))continue;const article=document.createElement('article');article.innerHTML='<strong>✦ '+p.title+'</strong>';const desc=document.createElement('p');desc.textContent=p.text;article.append(desc);findings.append(article)}if(!findings.children.length){const empty=document.createElement('p');empty.textContent='Пока нет установленных связей. Совмести найденные доказательства.';findings.append(empty)}}
-function explain(p,already){const layer=document.createElement('div');layer.className='v33-result-layer';layer.innerHTML='<section class="v33-result" role="alertdialog" aria-modal="true"><div class="v33-seal">✦</div><small>ДЕДУКТИВНОЕ ЗАКЛЮЧЕНИЕ</small><h3></h3><div class="v33-result-photos"></div><p></p><div class="v33-result-status"></div><button type="button">ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ</button></section>';
-layer.querySelector('h3').textContent=p.title;layer.querySelector('p').textContent=p.text;layer.querySelector('.v33-result-status').textContent=already?'Связь уже внесена в досье':'Новая связь установлена и сохранена в досье';const photos=layer.querySelector('.v33-result-photos');photos.append(photo(p.a),photo(p.b));const closeResult=()=>close();layer.querySelector('button').onclick=closeResult;layer.addEventListener('click',e=>{if(e.target===layer)closeResult()});shade.append(layer);layer.querySelector('button').focus()}
-function combine(a,b){if(a===b){clear();return}const p=match(a,b);if(!p){clear();return}const already=(saved().deductions||[]).includes(p.title);if(!already)store(p.title);explain(p,already)}
+function explain(p,already,committed){const layer=document.createElement('div');layer.className='v33-result-layer';layer.innerHTML='<section class="v33-result" role="alertdialog" aria-modal="true" aria-labelledby="v33ResultTitle"><div class="v33-seal">✦</div><small>ДЕДУКТИВНОЕ ЗАКЛЮЧЕНИЕ</small><h3 id="v33ResultTitle"></h3><div class="v33-result-photos"></div><p></p><div class="v33-result-status"></div><button type="button">ПРОДОЛЖИТЬ РАССЛЕДОВАНИЕ</button></section>';
+layer.querySelector('h3').textContent=p.title;layer.querySelector('p').textContent=p.text;const status=layer.querySelector('.v33-result-status');status.dataset.saved=String(committed);status.textContent=!committed?'Не удалось сохранить вывод. Попробуйте сопоставить улики ещё раз.':already?'Связь уже внесена в досье':'Новая связь установлена и сохранена в досье';const photos=layer.querySelector('.v33-result-photos');photos.append(photo(p.a),photo(p.b));const closeResult=()=>close();const resultButton=layer.querySelector('button');if(!committed)resultButton.textContent='ВЕРНУТЬСЯ К УЛИКАМ';resultButton.onclick=committed?closeResult:dismissResult;layer.addEventListener('click',e=>{if(e.target===layer)closeResult()});shade.append(layer);layer.querySelector('button').focus()}
+function combine(a,b){if(a===b){clear();return}const p=match(a,b);if(!p){clear();return}const already=(saved().deductions||[]).includes(p.title);const committed=already||store(p.title);explain(p,already,committed)}
 function choose(id){if(selected===id){clear();return}if(selected){if(match(selected,id)){combine(selected,id);return}selected=id;illuminate(id);return}selected=id;illuminate(id)}
 function render(){const ids=found();board.replaceChildren();solvedBoard.replaceChildren();clear();const done=new Set(saved().deductions||[]);const solvedIds=new Set(pairs.filter(p=>done.has(p.title)).flatMap(p=>[p.a,p.b]));stats.textContent='Найдено предметов: '+ids.length+' / 11    ·    Установлено связей: '+pairs.filter(p=>done.has(p.title)).length+' / '+pairs.length;
-for(const id of ids){const tile=document.createElement('button');tile.type='button';tile.className='v33-tile';tile.dataset.id=id;tile.setAttribute('aria-label','Улика: '+names[id]);tile.append(photo(id));const label=document.createElement('span');label.textContent=names[id];tile.append(label);tile.addEventListener('click',()=>{if(suppressClick){suppressClick=false;return}choose(id)});
- tile.addEventListener('pointerdown',e=>{if(e.button!==0||e.pointerType==='touch'&&e.isPrimary===false)return;drag={id,x:e.clientX,y:e.clientY,moved:false,pointer:e.pointerId};tile.setPointerCapture?.(e.pointerId)});
+for(const id of ids){const tile=document.createElement('button');tile.type='button';tile.className='v33-tile';tile.dataset.id=id;tile.setAttribute('aria-label','Улика: '+names[id]);tile.setAttribute('aria-pressed','false');tile.append(photo(id));const label=document.createElement('span');label.textContent=names[id];tile.append(label);tile.addEventListener('click',()=>{if(suppressClick){suppressClick=false;return}choose(id)});
+ tile.addEventListener('pointerdown',e=>{if(e.button!==0||e.pointerType==='touch')return;drag={id,x:e.clientX,y:e.clientY,moved:false,pointer:e.pointerId};tile.setPointerCapture?.(e.pointerId)});
  tile.addEventListener('pointermove',e=>{if(!drag||drag.id!==id||drag.pointer!==e.pointerId)return;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>9){drag.moved=true;illuminate(id);tile.classList.add('v33-dragging');const over=document.elementFromPoint(e.clientX,e.clientY)?.closest('.v33-tile');allTiles().forEach(t=>t.classList.toggle('v33-target',t===over&&t.dataset.id!==id&&!!match(id,t.dataset.id)))}});
  tile.addEventListener('pointerup',e=>{if(!drag||drag.id!==id)return;const wasMoved=drag.moved;drag=null;tile.classList.remove('v33-dragging');if(wasMoved){suppressClick=true;const over=document.elementFromPoint(e.clientX,e.clientY)?.closest('.v33-tile');if(over&&over!==tile&&match(id,over.dataset.id))combine(id,over.dataset.id);else clear();setTimeout(()=>suppressClick=false,0)}});
  tile.addEventListener('pointercancel',()=>{drag=null;clear()});(solvedIds.has(id)?solvedBoard:board).append(tile)}
 shade.querySelector('.v33-solved').hidden=!solvedBoard.children.length;
 if(!ids.length){const p=document.createElement('p');p.className='v33-empty';p.textContent='Пока улик нет. Начни расследование — найденные предметы появятся здесь.';board.append(p)}else if(!board.children.length){const p=document.createElement('p');p.className='v33-empty';p.textContent='Все найденные улики уже участвуют в заключениях. Новые находки появятся здесь.';board.append(p)}refreshFindings()}
-function open(mode='inventory'){opener=document.activeElement;render();shade.dataset.mode=mode;shade.querySelector('.v33-head h2').textContent=mode==='deduction'?'ДЕДУКЦИЯ · СВЯЗИ УЛИК':'ИНВЕНТАРЬ УЛИК';shade.querySelector('.v33-head p').textContent=mode==='deduction'?'Выбери улику: все найденные совместимые доказательства сразу подсветятся зелёным. Нажми на подсвеченную карточку для заключения.':'Перетащи улику на подсвеченный предмет или нажми на две карточки по очереди.';shade.hidden=false;document.body.classList.add('v34-board-open');shade.querySelector('.v33-close').focus()}
+function open(mode='inventory',trigger=document.activeElement){opener=trigger;render();shade.dataset.mode=mode;shade.querySelector('.v33-head h2').textContent=mode==='deduction'?'ДЕДУКЦИЯ · СВЯЗИ УЛИК':'ИНВЕНТАРЬ УЛИК';shade.querySelector('.v33-head p').textContent=mode==='deduction'?'Выбери улику: все найденные совместимые доказательства сразу подсветятся зелёным. Нажми на подсвеченную карточку для заключения.':'Перетащи улику на подсвеченный предмет или нажми на две карточки по очереди.';shade.hidden=false;document.body.classList.add('v34-board-open');shade.querySelector('.v33-window').scrollTop=0;shade.querySelector('.v33-close').focus({preventScroll:true})}
 function close(){
  shade.querySelector('.v33-result-layer')?.remove();
  shade.hidden=true;document.body.classList.remove('v34-board-open');
  clear();drag=null;suppressClick=false;
  const target=opener;opener=null;
- if(target?.isConnected&&!target.closest('[hidden]'))
-  target.focus({preventScroll:true});
+ requestAnimationFrame(()=>{if(!root.hidden&&shade.hidden&&target?.isConnected&&!target.closest('[hidden]'))target.focus({preventScroll:true});});
 }
 function dismissResult(){
  const layer=shade.querySelector('.v33-result-layer');
@@ -73,9 +90,9 @@ new MutationObserver(()=>{
  if(root.hidden&&!shade.hidden)close();
 }).observe(root,{attributes:true,attributeFilter:['hidden']});
 // Capture existing menu actions before legacy dialogs open. Preserve all other tools.
-root.addEventListener('click',e=>{const button=e.target.closest('button[data-tool="evidence"],button[data-tool="deduction"]');if(!button)return;e.preventDefault();e.stopImmediatePropagation();open(button.dataset.tool==='deduction'?'deduction':'inventory')},true);
+root.addEventListener('click',e=>{const button=e.target.closest('button[data-tool="evidence"],button[data-tool="deduction"]');if(!button)return;e.preventDefault();e.stopImmediatePropagation();const mode=button.dataset.tool==='deduction'?'deduction':'inventory';const trigger=button.classList.contains('case001-board-bridge')?document.querySelector('#case001QuickNav [data-go="'+(mode==='deduction'?'deduction':'evidence')+'"]'):button;open(mode,trigger)},true);
 // Sidebar opens the same complete inventory, instead of only a single evidence detail.
-root.addEventListener('click',e=>{const tile=e.target.closest('#caseInventory .case-item');if(!tile)return;e.preventDefault();e.stopImmediatePropagation();open('inventory')},true);
+root.addEventListener('click',e=>{const tile=e.target.closest('#caseInventory .case-item');if(!tile)return;e.preventDefault();e.stopImmediatePropagation();open('inventory',tile)},true);
 // Persistent, discoverable button beneath the right-hand evidence collection.
 const evidence=document.getElementById('caseInventory');
 if(evidence){const bar=document.createElement('div');bar.className='v34-sidebar-actions';bar.innerHTML='<button type="button" class="v34-open-inventory">▤ &nbsp; ОТКРЫТЬ ИНВЕНТАРЬ</button>';evidence.insertAdjacentElement('afterend',bar);bar.querySelector('.v34-open-inventory').addEventListener('click',()=>open('inventory'));}

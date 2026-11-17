@@ -86,6 +86,52 @@ def run():
                 page.screenshot(
                     path=str(OUT / (name + "-case001-start.png")), full_page=True
                 )
+                # A temporary, isolated save fixture exercises the actual board.
+                keys=page.evaluate("""() => {
+                  const hero=window.BirminghamHero.selectedId;
+                  const key='birmingham_case_smol_heath_v1_'+hero;
+                  const meta='birmingham_case_v20_findings_'+hero;
+                  const original=localStorage.getItem(key),originalMeta=localStorage.getItem(meta);
+                  const state=JSON.parse(original);state.items=['invoice','route'];
+                  localStorage.setItem(key,JSON.stringify(state));
+                  localStorage.setItem(meta,JSON.stringify({started:state.started,deductions:[],reactions:[]}));
+                  window.BirminghamCase.resume();
+                  return {key,meta,original,originalMeta};
+                }""")
+                tap(page, "#case001QuickNav [data-go='evidence']")
+                assert page.locator(".v33-shade").is_visible()
+                tap(page, '.v33-tile[data-id="invoice"]')
+                assert "Совместимых улик: 1" in page.locator(".v33-selection-note").inner_text()
+                assert page.locator('.v33-tile[data-id="invoice"]').get_attribute("aria-pressed")=="true"
+                page.evaluate("""key => {
+                  const original=Storage.prototype.setItem;
+                  window.__restoreV33=()=>{Storage.prototype.setItem=original;delete window.__restoreV33};
+                  Storage.prototype.setItem=function(k,v){if(k===key)throw new Error('test storage refusal');return original.call(this,k,v)};
+                }""",keys["meta"])
+                tap(page, '.v33-tile[data-id="route"]')
+                assert page.locator(".v33-result-status").get_attribute("data-saved")=="false"
+                assert "Не удалось сохранить" in page.locator(".v33-result-status").inner_text()
+                assert page.evaluate("k=>JSON.parse(localStorage.getItem(k)).deductions",keys["meta"])==[]
+                page.evaluate("window.__restoreV33()")
+                tap(page, ".v33-result button")
+                assert page.locator(".v33-shade").is_visible()
+                tap(page, '.v33-tile[data-id="invoice"]')
+                tap(page, '.v33-tile[data-id="route"]')
+                assert page.locator(".v33-result-status").get_attribute("data-saved")=="true"
+                assert page.evaluate("k=>JSON.parse(localStorage.getItem(k)).deductions",keys["meta"])==["Путь груза"]
+                tap(page, ".v33-result button")
+                assert page.locator(".v33-shade").is_hidden()
+                page.wait_for_function("document.activeElement?.matches('#case001QuickNav [data-go=evidence]')")
+                tap(page, "#case001QuickNav [data-go='evidence']")
+                assert page.locator(".v33-solved-board .v33-tile").count()==2
+                page.screenshot(path=str(OUT / (name + "-v33-deduction-confirmed.png")))
+                tap(page, ".v33-close")
+                page.evaluate("""k => {
+                  localStorage.setItem(k.key,k.original);
+                  if(k.originalMeta===null)localStorage.removeItem(k.meta);
+                  else localStorage.setItem(k.meta,k.originalMeta);
+                  window.BirminghamCase.resume();
+                }""",keys)
                 # Leaving old entry UI and playing a new intro must preserve both raw slots.
                 tap(page, "#homeBtn")
                 tap(page, "#criminalEntry")
