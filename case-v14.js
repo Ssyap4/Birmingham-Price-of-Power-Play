@@ -233,7 +233,7 @@ function renderChoices(){const n=scenes[state.node];$('caseChoices').replaceChil
 // Each one-time scene grants a unique clue. Those existing permanent clues
 // survive the bounded journal and also cover old saves without a schema change.
 if(!storyAllows(target))continue;
-const gate=(target==='endingPower'||target==='endingTruth')?premiumGate():null;const has=(!requirement||state.items.includes(requirement))&&!gate;const riskKey=state.node==='confront'&&target==='yard'?'retreatCrane':target;const risky=!!danger[riskKey]&&!state.riskSeen.includes(riskKey);const b=button(choiceText(label,target)+(risky?' · ⚠ возможное ранение −'+danger[riskKey].damage+' HP':'')+(has?'':gate?' · 🔒 '+gate:' · нужна улика'),()=>move(target));b.disabled=!has;if(HERO_ACTIONS[target])b.dataset.heroAction=target;if(!has)b.title=gate||('Нужна улика: '+items[requirement]);$('caseChoices').append(b)}}
+const gate=(target==='endingPower'||target==='endingTruth')?premiumGate():null;const has=(!requirement||state.items.includes(requirement))&&!gate;const riskKey=state.node==='confront'&&target==='yard'?'retreatCrane':target;const risky=!!danger[riskKey]&&!state.riskSeen.includes(riskKey);const b=button(choiceText(label,target)+(risky?' · ⚠ возможное ранение −'+danger[riskKey].damage+' HP':'')+(has?'':gate?' · 🔒 '+gate:' · нужна улика'),()=>move(target));b.dataset.choiceTarget=target;b.disabled=!has;if(HERO_ACTIONS[target])b.dataset.heroAction=target;if(!has)b.title=gate||('Нужна улика: '+items[requirement]);$('caseChoices').append(b)}}
 // Refresh only decisions: discovering a link must not replay a scene, grant
 // supplies, roll danger again, or rewrite the investigation save.
 document.addEventListener('birmingham:case-findings-changed',({detail})=>{

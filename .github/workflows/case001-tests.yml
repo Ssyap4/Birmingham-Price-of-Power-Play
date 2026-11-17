@@ -139,6 +139,84 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check 'playwright==1.62.0'
           python -m playwright install chromium
+      - name: Preflight the ten V47 failures and story guards
+        run: |
+          CASE001_QA_FILTER='^healing/' CASE001_QA_ARTIFACTS="$RUNNER_TEMP/v48-preflight" python3 tests/case001/run_tests.py
+          CASE001_QA_FILTER='^(semantic/requirement_gates|reaction_once/evelyn)
+        run: python3 tests/case001/run_all.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          CASE001_QA_WORKERS: '1'
+      - name: Upload test logs, JSON results and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-playwright-results-${{ github.run_id }}
+          path: tests/case001/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  # Current portrait Chromium/WebKit QA is executed by iphone-v16-ui.yml.
+ CASE001_QA_ARTIFACTS="$RUNNER_TEMP/v48-preflight" python3 tests/case001/targeted_tests.py
+          CASE001_QA_FILTER='^health/risk_penalty/critical
+        run: python3 tests/case001/run_all.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          CASE001_QA_WORKERS: '1'
+      - name: Upload test logs, JSON results and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-playwright-results-${{ github.run_id }}
+          path: tests/case001/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  # Current portrait Chromium/WebKit QA is executed by iphone-v16-ui.yml.
+ CASE001_QA_ARTIFACTS="$RUNNER_TEMP/v48-preflight" python3 tests/case001/health_tests.py
+          CASE001_QA_FILTER='^regression/long_cycle_scenes_and_events
+        run: python3 tests/case001/run_all.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          CASE001_QA_WORKERS: '1'
+      - name: Upload test logs, JSON results and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-playwright-results-${{ github.run_id }}
+          path: tests/case001/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  # Current portrait Chromium/WebKit QA is executed by iphone-v16-ui.yml.
+ CASE001_QA_ARTIFACTS="$RUNNER_TEMP/v48-preflight" python3 tests/case001/regression_tests.py
+          CASE001_QA_FILTER='^issue3/hero_action/eleanor
+        run: python3 tests/case001/run_all.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          CASE001_QA_WORKERS: '1'
+      - name: Upload test logs, JSON results and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case001-playwright-results-${{ github.run_id }}
+          path: tests/case001/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  # Current portrait Chromium/WebKit QA is executed by iphone-v16-ui.yml.
+ CASE001_QA_ARTIFACTS="$RUNNER_TEMP/v48-preflight" python3 tests/case001/issue3_tests.py
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'v48-preflight'
+          expected={'results.json':5,'targeted-results.json':2,'health-results.json':1,'regression-results.json':1,'issue3-results.json':1}
+          for file,count in expected.items():
+              d=json.loads((root/file).read_text())
+              assert len(d['results'])==count and all(r['status']=='passed' for r in d['results']), file
+              assert not d['page_errors'] and not d['http_errors'], file
+          print('PASS all 10 previously failing scenarios')
+          PY
       - name: Run all 203 Case 001 scenarios
         run: python3 tests/case001/run_all.py
         env:

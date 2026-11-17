@@ -53,7 +53,11 @@ def other_attempt_event(browser):
 
 
 def long_cycle(browser):
- g=q.game(browser,roll=0);g.path(q.FULL[:-1]+['warn','office']);before=g.state()
+ g=q.game(browser,roll=0)
+ # Gather all clues before the single valid warning; never replay it.
+ g.path(q.FULL[:10]+['reed','canal','bribe','warehouse','reed','reedProof','confession','warn','office'])
+ before=g.state()
+ assert len(before['items'])==11 and before['flags']['widowSafe']
  for _ in range(45):g.path(['widow','office'])
  assert len(g.state()['trail'])==80
  assert 'searchOffice' not in g.state()['trail'] and 'interview' not in g.state()['trail']
@@ -64,6 +68,7 @@ def long_cycle(browser):
  g.go('sneak');assert g.state()['health']==before['health'],'repeat danger event'
  assert g.state()['items']==before['items'],'repeat evidence grant'
  assert g.state()['riskSeen']==before['riskSeen']
+ g.go('warehouse');assert g.choice('warn').count()==0
  return {'cyclic_transitions':90,'trail_length':80,'health':g.state()['health']}
 
 

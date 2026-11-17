@@ -64,9 +64,12 @@ class Game:
   NODES.add(self.state()['node'])
  def state(self):return self.p.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',BASE+self.hero)
  def meta(self):return self.p.evaluate('(k)=>JSON.parse(localStorage.getItem(k))',META+self.hero)
+ def choice(self,dest):
+  return self.p.locator(f'#caseChoices button[data-choice-target="{dest}"]')
  def go(self,dest):
   before=self.state();n=before['node']; c=next(c for c in SCENES[n]['choices'] if c[1]==dest)
-  self.p.locator('#caseChoices button').filter(has_text=c[0]).click()
+  # Scene destinations are stable; story-aware labels may change on revisits.
+  self.choice(dest).click()
   after=self.state();actual=after['node'];assert actual in (dest,'endingDeath'),(n,dest,actual)
   EDGES.add((n,dest));NODES.add(actual)
   for item in SCENES[actual].get('give',[]):assert item in after['items'],(actual,item)
@@ -145,7 +148,9 @@ def healing(browser,hero):
  g.p.locator('#caseChoices button').filter(has_text='Использовать перевязочный пакет').click()
  assert g.state()['health']==(100 if hero=='jack' else 90)
  assert g.state()['medicalKits']==initial-1
- g.path(['reed','canal','sneak']);assert g.state()['health']==(100 if hero=='jack' else 90),'Repeated danger damage'
+ g.path(['reed','canal'])
+ assert 'знакомый проход' in g.choice('sneak').inner_text()
+ g.go('sneak');assert g.state()['health']==(100 if hero=='jack' else 90),'Repeated danger damage'
  assert g.state()['items'].count('receipt')==1
  return {'initial_kits':initial,'healed_health':g.state()['health']}
 def resume(browser,mode):
