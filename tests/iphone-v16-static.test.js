@@ -70,7 +70,9 @@ test("V17 map return works even for the current URL fragment and avoids smooth a
  const entry=read("case002-map-entry-v1.js"),map=read("campaign-map-journey-v1.js");
  assert.ok(entry.includes('window.location.hash!=="#district-digbeth"'));
  assert.ok(entry.includes("e.preventDefault();openHash()"));
- assert.ok(map.includes('scrollIntoView({block:"center",behavior:"auto"})'));
+ assert.ok(map.includes('scrollIntoView({block:"center",behavior:"instant"})'));
+ assert.ok(map.includes("generation!==revealGeneration"));
+ assert.ok(map.includes('document.addEventListener("pointerdown",()=>{revealGeneration++}'));
  assert.ok(map.includes("Math.abs(window.scrollY-y)>2"));
  assert.ok(!map.includes('behavior:reduce?"auto":"smooth"'));
 });
