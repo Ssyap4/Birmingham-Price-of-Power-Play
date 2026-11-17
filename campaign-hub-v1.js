@@ -78,7 +78,7 @@ function open(id){
  const destination=$(id);
  if(destination&&!destination.hidden&&destination.classList.contains('campaign-hub'))return;
  if(id==='campaignHistory'||id==='campaignAchievements'||id==='campaignDossiers'){render(id)}
- allScreens().forEach(s=>s.hidden=s.id!==id);
+ allScreens().forEach(s=>{const hidden=s.id!==id;if(s.hidden!==hidden)s.hidden=hidden});
  for(const section of ['campaignDossiers','campaignAchievements','campaignHistory']){
   $(section)?.querySelectorAll('.campaign-tabs [data-open-section]').forEach(tab=>{
    tab.setAttribute('aria-current',String(tab.dataset.openSection===id));
@@ -99,7 +99,7 @@ for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(
  const target=$(tab.dataset.openSection)?.querySelector('.campaign-tabs [aria-current="true"]');
  target?.focus({preventScroll:true});
 });
-$('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>$(id).hidden=true)},true);
+$('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>{const screen=$(id);if(!screen.hidden)screen.hidden=true})},true);
 // Trial history and achievements have their own clearly labelled profile and archive sections.
 const profile=$('profile');if(profile){const link=document.createElement('div');link.className='campaign-profile-links';link.innerHTML='<button type="button" data-open-section="campaignDossiers">ДОСЬЕ ПЯТИ ГЕРОЕВ</button><button type="button" data-open-section="campaignAchievements">ДОСТИЖЕНИЯ</button><button type="button" data-open-section="campaignHistory">ИСТОРИЯ ДЕЛ</button>';profile.append(link);link.addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(b.dataset.openSection)})}
 function make(tag,cls,txt){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el}

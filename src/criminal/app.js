@@ -60,8 +60,11 @@
     } catch {}
   }
   function open() {
-    for (const el of document.querySelectorAll(".screen")) el.hidden = true;
-    root.hidden = false;
+    for (const el of document.querySelectorAll(".screen")) {
+      const hidden = el !== root;
+      if (el.hidden !== hidden) el.hidden = hidden;
+    }
+    if (root.hidden) root.hidden = false;
     document.body.dataset.criminal = "active";
     document.getElementById("homeBtn").hidden = false;
   }

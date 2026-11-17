@@ -130,8 +130,12 @@
       const top=root.document.getElementById("profileBtn");
       entry?.addEventListener("click",()=>top?.click());
       const refreshVisible=()=>{if(!root.document.getElementById("profile")?.hidden)render(root)};
-      root.addEventListener("pageshow",refreshVisible);
-      root.addEventListener("storage",refreshVisible);
+      // profile-page owns pageshow and trial/all-key refresh; avoid a second
+      // full rebuild of the same live list for those exact events.
+      root.addEventListener("storage",event=>{
+        if(event.key===null||event.key===root.BirminghamTrialProgress?.KEY)return;
+        refreshVisible();
+      });
     });
   }
   return {snapshot,render,attach};

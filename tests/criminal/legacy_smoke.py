@@ -426,8 +426,15 @@ def run():
                     assert board.is_hidden()
                     assert page.evaluate("keys=>Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]))",list(slot_fixture["values"]))==slot_fixture["values"]
                     print("TRACE return to profile after parity",name,flush=True)
+                    # Keep the exact failing real touch; prove hidden Case001 art
+                    # is released and its inactive screen is not mutated on exit.
+                    assert page.locator("#caseArt .case001-portrait-image").get_attribute("src") is None
+                    page.evaluate("""()=>{const el=document.querySelector('#caseGame');window.__inactiveCaseMutations=0;window.__inactiveCaseObserver=new MutationObserver(records=>{window.__inactiveCaseMutations+=records.length});window.__inactiveCaseObserver.observe(el,{attributes:true,attributeFilter:['hidden']})}""")
                     tap(page,"#homeBtn")
+                    assert page.locator("#home").is_visible()
                     tap(page,"#cabinetProfile")
+                    assert page.evaluate("window.__inactiveCaseMutations")==0
+                    page.evaluate("window.__inactiveCaseObserver.disconnect()")
                     print("TRACE profile re-entry completed",name,flush=True)
                 except Exception as exc:
                     slot_parity_failed=True

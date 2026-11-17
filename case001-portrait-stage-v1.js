@@ -3,7 +3,8 @@
 (()=>{
  "use strict";
  const stage=document.getElementById("caseArt");
- if(!stage)return;
+ const game=document.getElementById("caseGame");
+ if(!stage||!game)return;
  const photo=document.createElement("img");
  photo.className="case001-portrait-image";
  photo.alt="";
@@ -30,6 +31,16 @@
  heading?.append(readButton);
  let current="";
  function refresh(){
+  // Release the duplicate decoded display image when the case is closed.
+  // Keep the original CSS background and engine-selected source untouched.
+  if(game.hidden){
+   if(current||photo.hasAttribute("src")){
+    current="";photo.onload=null;photo.onerror=null;
+    photo.hidden=true;photo.removeAttribute("src");
+    stage.classList.remove("case001-art-fallback");
+   }
+   return;
+  }
   const urls=[...((stage.style.backgroundImage||"").matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/gi))];
   const url=urls.length?urls[urls.length-1][1]:"";
   if(url===current)return;
@@ -44,5 +55,6 @@
   if(photo.complete&&photo.naturalWidth>0)photo.hidden=false;
  }
  new MutationObserver(refresh).observe(stage,{attributes:true,attributeFilter:["style"]});
+ new MutationObserver(refresh).observe(game,{attributes:true,attributeFilter:["hidden"]});
  refresh();
 })();

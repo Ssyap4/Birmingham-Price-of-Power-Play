@@ -108,20 +108,22 @@
    second.setAttribute("aria-label","Дело №002: выбор героя и расследования");
   }
  }
+ let revealGeneration=0;
+ document.addEventListener("pointerdown",()=>{revealGeneration++},{capture:true,passive:true});
  function selectedFromTap(e){
   if(!e.isTrusted||e.detail===0||!compact.matches)return;
   // On a phone the map pins are above the fold; reveal the selected case
   // and its action rather than leaving the player looking at the old map.
   const district=e.target.closest(".map-pin")?.dataset.district;
-  const y=window.scrollY;
+  const y=window.scrollY,generation=++revealGeneration;
   requestAnimationFrame(()=>{
-   if(map.hidden||map.querySelector(".map-pin.selected")?.dataset.district!==district||
+   if(generation!==revealGeneration||map.hidden||map.querySelector(".map-pin.selected")?.dataset.district!==district||
       Math.abs(window.scrollY-y)>2)return;
    const target=document.getElementById("districtCase");
    if(!target||target.getBoundingClientRect().top<innerHeight-115)return;
    // One immediate reveal per genuine tap, never a smooth scroll that
    // can continue competing with the player's next swipe or map exit.
-   target.scrollIntoView({block:"center",behavior:"auto"});
+   target.scrollIntoView({block:"center",behavior:"instant"});
   });
  }
  map.addEventListener("click",e=>{

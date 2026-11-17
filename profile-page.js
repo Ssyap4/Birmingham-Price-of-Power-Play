@@ -17,7 +17,7 @@ function update(){
  else for(const id of ['achievementList','levelRecords'])$(id).append(node('p','trial-archive-warning',statusText(status)));
  window.BirminghamPlayerOverview?.render(window);
 }
-function open(){update();const target=$('profile');target.hidden=false;document.querySelectorAll('.screen').forEach(el=>{if(el!==target)el.hidden=true});$('homeBtn').hidden=false;window.scrollTo({top:0,behavior:'instant'});}
+function open(){update();const target=$('profile');if(target.hidden)target.hidden=false;document.querySelectorAll('.screen').forEach(el=>{if(el!==target&&!el.hidden)el.hidden=true});$('homeBtn').hidden=false;window.scrollTo({top:0,behavior:'instant'});}
 $('profileBtn').onclick=open;
 window.addEventListener('storage',e=>{if((e.key===P.KEY||e.key===null)&&!$('profile').hidden)update()});
 window.addEventListener('pageshow',()=>{if(!$('profile').hidden)update()});
