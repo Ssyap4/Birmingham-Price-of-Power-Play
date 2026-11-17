@@ -229,3 +229,76 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.50;animation:cinema-vin
 @media(prefers-reduced-motion:reduce){
  #home .cinema-vinyl-glint{animation:none!important;opacity:0!important}
 }
+
+/* V26: anchor the existing decorative layers to the original photograph,
+   not to guessed screen percentages. Source: cinema-home-art-v12, 720×900. */
+#home .cinema-hero{
+ --cabinet-scale:.55;--cabinet-x:0px;--cabinet-y:0px;
+}
+#home .cinema-hero::before,#home .cinema-rain{
+ inset:auto;left:var(--cabinet-x);top:var(--cabinet-y);
+ width:calc(720px * var(--cabinet-scale));height:calc(900px * var(--cabinet-scale));
+}
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 15% 4% at 18.4% 46.5%,rgba(255,230,160,.77),rgba(247,183,93,.16) 70%,transparent 100%),
+ radial-gradient(ellipse 21% 20% at 18% 49%,rgba(255,205,120,.41),rgba(231,151,64,.09) 62%,transparent 100%),
+ radial-gradient(ellipse 32% 12% at 31% 65%,rgba(255,192,110,.24),transparent 100%);
+}
+/* Central clear pane only: exclude lamp shade, horn and the wooden sill. */
+#home .cinema-rain{
+ clip-path:polygon(21% 0,79% 0,79% 27.8%,76.5% 30%,73% 34%,70% 39%,69.5% 45%,71.3% 48.8%,65% 51%,60% 52%,60% 54.7%,32% 56%,32% 45.3%,29.5% 42%,25% 38.8%,21% 37%);
+}
+#home .cinema-rain::after{
+ opacity:.82;
+ background-image:
+ radial-gradient(ellipse .85px 13px at 28% 28%,rgba(220,239,241,.83),rgba(193,217,226,.26) 48%,transparent 100%),
+ radial-gradient(ellipse .65px 8px at 64% 73%,rgba(234,244,241,.78),transparent 94%),
+ radial-gradient(ellipse 1px 17px at 82% 11%,rgba(226,240,237,.78),rgba(193,217,226,.22) 54%,transparent 100%),
+ radial-gradient(ellipse .8px 6px at 12% 56%,rgba(221,236,241,.65),transparent 98%);
+ background-size:61px 180px,83px 180px,109px 180px,47px 180px;
+ animation-duration:3.6s;
+}
+/* The glowing cigar tip sits at source (176,636). Anchor both paths there. */
+#home .cinema-smoke,#home .cinema-smoke.second{
+ left:calc(var(--cabinet-x) + 146px * var(--cabinet-scale));
+ top:calc(var(--cabinet-y) + 435px * var(--cabinet-scale));bottom:auto;
+ width:calc(118px * var(--cabinet-scale));height:calc(207px * var(--cabinet-scale));
+ transform-origin:27% 98%;
+}
+#home .cinema-smoke{filter:blur(1px);animation-duration:7.4s}
+#home .cinema-smoke.second{filter:blur(2.2px);animation-duration:10.3s;animation-delay:-4.7s}
+@keyframes cinema-v16-smoke{
+ 0%{transform:rotate(-5deg) scale(.82,.85);opacity:0}
+ 19%{opacity:.55}
+ 60%{opacity:.46}
+ 100%{transform:rotate(8deg) scale(1.12,1.15);opacity:0}
+}
+/* Turntable top plane: center (609,480), 146×20 source pixels.
+   Rotate a projected groove/label reflection inside that exact ellipse.
+   The horn, arm, wooden case and original record remain untouched. */
+#home .cinema-vinyl-glint{
+ left:calc(var(--cabinet-x) + 536px * var(--cabinet-scale));
+ top:calc(var(--cabinet-y) + 470px * var(--cabinet-scale));
+ width:calc(146px * var(--cabinet-scale));height:calc(20px * var(--cabinet-scale));
+ aspect-ratio:auto;border-radius:50%;overflow:hidden;transform:none;
+ background:none;opacity:0;isolation:isolate;
+}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.64;animation:none}
+#home .cinema-vinyl-glint::before{
+ content:"";position:absolute;left:0;top:50%;width:100%;aspect-ratio:1;
+ border-radius:50%;transform-origin:center;
+ background:radial-gradient(circle at 50% 50%,rgba(245,220,169,.65) 0 1%,transparent 2%),
+ conic-gradient(from 26deg,transparent 0 12deg,rgba(218,192,148,.62) 24deg,transparent 43deg,transparent 151deg,rgba(170,196,204,.39) 176deg,transparent 200deg,transparent 280deg,rgba(218,192,148,.22) 298deg,transparent 315deg),
+ repeating-radial-gradient(circle,transparent 0 4px,rgba(187,176,156,.14) 4px 4.5px,transparent 5px 7px),
+ radial-gradient(circle,rgba(115,36,27,.58) 0 23%,rgba(38,31,27,.21) 25% 69%,transparent 70%);
+ transform:translateY(-50%) scaleY(.137) rotate(0deg);
+}
+body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .77s linear infinite}
+@keyframes cinema-vinyl{
+ from{transform:translateY(-50%) scaleY(.137) rotate(0deg)}
+ to{transform:translateY(-50%) scaleY(.137) rotate(360deg)}
+}
+#home.cinema-still .cinema-vinyl-glint::before{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-vinyl-glint::before{animation:none!important}
+}

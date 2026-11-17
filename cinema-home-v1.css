@@ -40,8 +40,10 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 /* V24: original award collection, normal image fitting, no banner crop or distortion. */
 #home .cabinet-art-medal img{object-position:50% 57%;filter:brightness(1.02)}
 #home .cabinet-art-profile img{object-position:55% 63%;filter:brightness(1.04)}
-#home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;padding:6px;background:#33251b}
-#home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:1px solid #b39570;box-sizing:border-box;filter:brightness(1.07)}
+/* V26: the real protagonists, with full-bleed portraits and a single divider.
+   No artificial frame, new face or misleading fifth character. */
+#home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:0;background:#ae8658}
+#home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:0;box-sizing:border-box;filter:brightness(1.04)}
 #home .cabinet-entry-copy{box-sizing:border-box;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 20px 14px 12px;opacity:1;pointer-events:none}
 #home .cabinet-entry-copy strong{font:700 clamp(17px,5.25vw,28px)/1.12 Georgia,serif;color:#ffe8c0;text-shadow:0 2px 3px #0009;overflow-wrap:normal}
 #home .cabinet-entry-copy small{font:400 12px/1.4 system-ui,Arial,sans-serif;color:#dfcbb0;text-shadow:none;overflow-wrap:break-word}

@@ -8,9 +8,30 @@
  const controls=document.querySelector("body > .bh-audio-controls");
  const hero=home.querySelector(".cinema-hero");
  let heroVisible=true;
+ // Map the approved 720×900 photograph's coordinates through the exact
+ // background-size:cover and background-position:50% 54% transform.
+ // ResizeObserver also covers iPhone browser chrome / Telegram viewport changes.
+ let lastGeometry="";
+ const syncCabinetGeometry=()=>{
+  if(!hero||home.hidden)return;
+  const {width,height}=hero.getBoundingClientRect();
+  if(width<=0||height<=0)return;
+  const key=width+":"+height;
+  if(key===lastGeometry)return;
+  lastGeometry=key;
+  const scale=Math.max(width/720,height/900);
+  hero.style.setProperty("--cabinet-scale",String(scale));
+  hero.style.setProperty("--cabinet-x",((width-720*scale)*.5)+"px");
+  hero.style.setProperty("--cabinet-y",((height-900*scale)*.54)+"px");
+ };
+ if(hero&&"ResizeObserver" in window){
+  const geometryObserver=new ResizeObserver(syncCabinetGeometry);
+  geometryObserver.observe(hero);
+ }else window.addEventListener("resize",syncCabinetGeometry,{passive:true});
  const syncMotion=()=>home.classList.toggle("cinema-still",!!home.hidden||document.hidden||!heroVisible);
  const sync=()=>{
   syncMotion();
+  syncCabinetGeometry();
   if(!dock||!controls)return;
   // The district observer owns its dock. Never pull controls out of
   // that dock on visibilitychange, or move them twice during navigation.

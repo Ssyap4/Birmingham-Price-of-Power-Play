@@ -118,3 +118,16 @@ test("V22 profile artwork is shown in its natural aspect and detective copy scal
  assert.doesNotMatch(menu,/transform:translate\(-80%,-50%\)/);
  assert.match(menu,/\.cabinet-art-medal img\{object-position:50% 57%/);
 });
+
+test("V26 maps decorative motion to the approved photograph without touching gameplay",()=>{
+ const home=read("cinema-home-v1.js"),css=read("iphone-ux-v16.css"),menu=read("cinema-home-v1.css");
+ assert.ok(home.includes("Math.max(width/720,height/900)"));
+ assert.ok(home.includes("(height-900*scale)*.54"));
+ assert.ok(home.includes("new ResizeObserver(syncCabinetGeometry)"));
+ assert.ok(css.includes("536px * var(--cabinet-scale)"));
+ assert.ok(css.includes("470px * var(--cabinet-scale)"));
+ assert.ok(css.includes("146px * var(--cabinet-scale)"));
+ assert.ok(css.includes("cinema-vinyl-glint::before{animation-play-state:paused!important}"));
+ assert.match(menu,/cabinet-art-portraits\{[^}]*gap:1px;padding:0/);
+ assert.match(menu,/cabinet-art-portraits img\{[^}]*border:0/);
+});

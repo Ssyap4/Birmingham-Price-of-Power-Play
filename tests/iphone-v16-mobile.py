@@ -37,6 +37,23 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    page.route("https://**/*",lambda route:route.abort())
    page.goto(url,wait_until="domcontentloaded",timeout=45000)
    page.locator("#home.cinema-home").wait_for(state="visible")
+   # V26: the effects use the actual cropped source-image coordinate system.
+   geometry_check="""() => {
+    const hero=document.querySelector('#home .cinema-hero'),r=hero.getBoundingClientRect();
+    const s=getComputedStyle(hero),k=Math.max(r.width/720,r.height/900);
+    const x=(r.width-720*k)*.5,y=(r.height-900*k)*.54;
+    const record=hero.querySelector('.cinema-vinyl-glint').getBoundingClientRect();
+    const smoke=getComputedStyle(hero.querySelector('.cinema-smoke'));
+    const rain=hero.querySelector('.cinema-rain').getBoundingClientRect();
+    const near=(a,b)=>Math.abs(a-b)<1.2;
+    return Math.abs(parseFloat(s.getPropertyValue('--cabinet-scale'))-k)<.001
+      && near(record.left-r.left,x+536*k) && near(record.top-r.top,y+470*k)
+      && near(record.width,146*k) && near(record.height,20*k)
+      && near(parseFloat(smoke.left),x+146*k) && near(parseFloat(smoke.top),y+435*k)
+      && near(rain.left-r.left,x) && near(rain.top-r.top,y)
+      && near(rain.width,720*k) && near(rain.height,900*k);
+   }"""
+   page.wait_for_function(geometry_check)
    effects=page.evaluate("""() => {
     const root=getComputedStyle(document.documentElement);
     const hero=document.querySelector('#home .cinema-hero');
@@ -66,6 +83,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     await Promise.all(images.map(i=>i.decode()));
     return images.every(i=>i.naturalWidth>0 && getComputedStyle(i).opacity==='1');
    }""")
+   assert page.locator("#profileCard .cabinet-entry-art").evaluate("el=>getComputedStyle(el).padding==='0px' && el.querySelectorAll('img').length===2 && [...el.querySelectorAll('img')].every(i=>getComputedStyle(i).borderTopWidth==='0px')")
    cards=menu.locator(".cabinet-entry")
    for i in range(6):
     geometry=cards.nth(i).evaluate("""el=>{let a=el.querySelector('.cabinet-entry-art').getBoundingClientRect(), t=el.querySelector('.cabinet-entry-copy').getBoundingClientRect(), b=el.getBoundingClientRect();return {ratio:a.width/b.width,height:a.height,overlap:a.right>t.left+1,scrim:getComputedStyle(el,'::before').content}}""")
@@ -78,6 +96,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     card.screenshot(path=str(OUT/f"{engine}-{width}-v21-card-{i+1}.png"))
    menu.screenshot(path=str(OUT/f"{engine}-{width}-v21-menu.png"))
    page.evaluate("window.scrollTo(0,0)")
+   page.wait_for_function("!document.querySelector('#home').classList.contains('cinema-still')")
    if engine=="webkit" and width==390:
     # Record the same cabinet at four moments for human visual comparison.
     for seconds,delay in [(0,0),(1,1000),(3,2000),(6,3000)]:
@@ -86,15 +105,24 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     # Exercise the music-playing visual state independently of codec/autoplay support.
     was_playing=page.evaluate("document.body.classList.contains('bh-music-playing')")
     page.evaluate("document.body.classList.add('bh-music-playing')")
-    assert page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el).animationName==='cinema-vinyl' && parseFloat(getComputedStyle(el).opacity)>=.4")
+    assert page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').animationName==='cinema-vinyl' && parseFloat(getComputedStyle(el).opacity)>=.4")
+    before=page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').transform")
+    page.wait_for_timeout(170)
+    after=page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el,'::before').transform")
+    assert before!=after,(before,after,"stationary record overlay")
     for frame in range(2):
      page.wait_for_timeout(470)
      page.locator("#home .cinema-hero").screenshot(path=str(OUT/f"webkit-390-v24-vinyl-{frame}.png"),animations="allow")
     if not was_playing:
      page.evaluate("document.body.classList.remove('bh-music-playing')")
+   was_playing=page.evaluate("document.body.classList.contains('bh-music-playing')")
+   page.evaluate("document.body.classList.add('bh-music-playing')")
    page.evaluate("window.scrollTo(0,document.documentElement.scrollHeight)")
    page.wait_for_function("document.querySelector('#home').classList.contains('cinema-still')")
    assert page.evaluate("getComputedStyle(document.querySelector('#home .cinema-rain'),'::after').animationPlayState")=="paused"
+   assert page.evaluate("getComputedStyle(document.querySelector('#home .cinema-vinyl-glint'),'::before').animationPlayState")=="paused"
+   if not was_playing:
+    page.evaluate("document.body.classList.remove('bh-music-playing')")
    page.evaluate("window.scrollTo(0,0)")
    page.wait_for_function("!document.querySelector('#home').classList.contains('cinema-still')")
    scroll=page.evaluate("""() => {
@@ -108,14 +136,21 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3,(engine,width,scroll)
    # Resize is an approximation of browser chrome changing, not a physical swipe.
    page.set_viewport_size({"width":width,"height":780})
+   page.wait_for_function(geometry_check)
    page.wait_for_timeout(180)
    assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3,(engine,width,"viewport resize moved scroll")
    page.set_viewport_size({"width":width,"height":844})
+   page.wait_for_function(geometry_check)
    page.wait_for_timeout(180)
    assert abs(page.evaluate("scrollY")-scroll["wanted"])<=3
+   was_playing=page.evaluate("document.body.classList.contains('bh-music-playing')")
+   page.evaluate("document.body.classList.add('bh-music-playing')")
    page.emulate_media(reduced_motion="reduce")
+   assert page.evaluate("getComputedStyle(document.querySelector('#home .cinema-vinyl-glint'),'::before').animationName==='none'")
    assert page.evaluate("""() => ['.cinema-rain','.cinema-smoke'].every(s=>getComputedStyle(document.querySelector('#home '+s)).animationName==='none') && getComputedStyle(document.querySelector('#home .cinema-rain'),'::after').animationName==='none'""")
    page.emulate_media(reduced_motion="no-preference")
+   if not was_playing:
+    page.evaluate("document.body.classList.remove('bh-music-playing')")
    tap(page,"#districtsCard")
    page.locator("#districts").wait_for(state="visible")
    page.locator("#districtAudioDock .bh-audio-controls").wait_for(state="visible")
