@@ -1,0 +1,29 @@
+name: Case 001 portrait art inventory
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - 'tests/case001/portrait_art_audit.py'
+      - '.github/workflows/case001-portrait-art-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Decode and compare actual originals without modifying them
+        run: |
+          python -m pip install 'Pillow==11.3.0'
+          python tests/case001/portrait_art_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: case001-portrait-art-inventory
+          path: work/case001-portrait-audit/
+          retention-days: 14
