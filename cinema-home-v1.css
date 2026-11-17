@@ -57,7 +57,7 @@ body.bh-music-playing #home .cinema-record{animation:cinema-record 2.5s linear i
 #home .atelier-dashboard .dashboard-seal{display:none}
 #home .atelier-dashboard span{display:block;font-size:9px}
 #home .atelier-dashboard b{font-size:21px}
-#home .cinema-legal{padding:7px 20px 95px;margin:0 auto;text-align:center;background:#100d0b;color:#8c7d6e;font:10px/1.6 system-ui,Arial,sans-serif;max-width:none}
+#home .cinema-legal{padding:7px 20px max(95px,calc(80px + env(safe-area-inset-bottom,0px)));margin:0 auto;text-align:center;background:#100d0b;color:#8c7d6e;font:10px/1.6 system-ui,Arial,sans-serif;max-width:none}
 /* Music belongs to the scene, never floats over an interactive story card. */
 #home .cinema-audio-strip{box-sizing:border-box;padding:10px 12px 12px;background:linear-gradient(90deg,#130e0b,#322015,#130e0b);border-top:1px solid #ad875a;border-bottom:1px solid #7b5938}
 #home .cinema-audio-strip>small{display:block;margin:0 auto 8px;text-align:center;font:700 9px/1.5 Georgia,serif;letter-spacing:.19em;color:#d2aa72}
