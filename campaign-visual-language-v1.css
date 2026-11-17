@@ -468,3 +468,58 @@
     text-wrap:balance;
   }
 }
+
+
+/* V57 — consistent thumb targets and reversible reading navigation.
+   No new action buttons, duplicated destinations or storage keys. */
+@media (orientation:portrait) and (max-width:700px) {
+  .case001-quick-nav:not([hidden]), #game .case-quick-nav {
+    border-color:#aa8250;
+    background:linear-gradient(145deg,#312318,#120f0c);
+    box-shadow:0 -8px 25px #000b,inset 0 1px #f8dfb628;
+  }
+  .case001-quick-nav button, #game .case-quick-nav button {
+    border-radius:5px;
+    min-height:48px;
+    line-height:1.25;
+    touch-action:manipulation;
+  }
+  .case001-quick-nav button[data-go="scene"][data-return-point="true"] {
+    border-color:#deba80;
+    background:linear-gradient(135deg,#5a4128,#302319);
+    color:#ffe1ac;
+    box-shadow:inset 0 0 0 1px #d1ab7140;
+  }
+  .case001-quick-nav button[data-go="scene"][data-return-point="true"]::after {
+    content:"↰";
+    display:inline-block;
+    margin-left:3px;
+    color:#f6d6a3;
+    font:800 .77rem/1 system-ui,sans-serif;
+  }
+  #caseGame .case-dialogue[tabindex="-1"]:focus-visible,
+  #caseGame .case-paper[tabindex="-1"]:focus-visible,
+  #caseGame #caseText[tabindex="-1"]:focus-visible {
+    outline:2px solid #ffe1ac;
+    outline-offset:2px;
+  }
+  #caseGame .case-dialogue, #caseGame .case-paper {
+    scroll-margin-top:18px;
+    scroll-margin-bottom:calc(90px + env(safe-area-inset-bottom,0px));
+  }
+  #criminalScreen .cr-top {
+    gap:6px;
+    margin-bottom:16px;
+  }
+  #criminalScreen .cr-top button {
+    box-sizing:border-box;
+    min-height:48px;
+    min-width:0;
+    padding:9px 5px;
+    border-radius:5px;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    line-height:1.35;
+    touch-action:manipulation;
+  }
+}

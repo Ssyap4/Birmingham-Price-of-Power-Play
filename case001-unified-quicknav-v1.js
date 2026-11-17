@@ -37,6 +37,36 @@
  feedback.setAttribute("aria-live","polite");
  choices.before(feedback);
  const decisionButton=buttonBy("choices");
+ const sceneButton=buttonBy("scene");
+ let readingPoint=null;
+ function clearReadingPoint(){
+  readingPoint=null;
+  sceneButton.removeAttribute("data-return-point");
+  sceneButton.setAttribute("aria-label","Вернуться к началу сцены");
+ }
+ function rememberReadingPoint(){
+  // Only capture when leaving the scene, not on repeated decisions taps.
+  if(readingPoint||choices.getBoundingClientRect().top<=window.innerHeight*.43)return;
+  const anchors=[scene,game.querySelector(".case-dialogue:not([hidden])"),game.querySelector("#caseText")]
+   .filter(el=>el&&el.getClientRects().length);
+  const anchor=anchors.filter(el=>el.getBoundingClientRect().top<=24).pop()||scene;
+  readingPoint={anchor,offset:-anchor.getBoundingClientRect().top,hero:window.BirminghamHero?.selectedId,width:window.innerWidth};
+  sceneButton.dataset.returnPoint="true";
+  sceneButton.setAttribute("aria-label","Вернуться к месту чтения");
+ }
+ function restoreReadingPoint(){
+  const point=readingPoint;
+  clearReadingPoint();
+  if(!point||!point.anchor.isConnected||!point.anchor.getClientRects().length||
+     point.hero!==window.BirminghamHero?.selectedId||point.width!==window.innerWidth)return false;
+  const y=window.scrollY+point.anchor.getBoundingClientRect().top+point.offset;
+  point.anchor.tabIndex=-1;
+  point.anchor.focus({preventScroll:true});
+  window.scrollTo({top:Math.max(0,y),left:0,behavior:"instant"});
+  scheduleActive();
+  return true;
+ }
+ clearReadingPoint();
  function markRead(){
   decisionButton.dataset.newDecision="false";
   decisionButton.setAttribute("aria-label","Перейти к решениям");
@@ -47,7 +77,7 @@
   markRead();
  }
  document.getElementById("caseTitle") &&
-  new MutationObserver(clearDecisionFeedback).observe(
+  new MutationObserver(()=>{clearDecisionFeedback();clearReadingPoint();}).observe(
    document.getElementById("caseTitle"),{childList:true,characterData:true,subtree:true});
  // The Case 001 engine handles this event without replaying the scene.
  // Capture before its listener, then compare the updated DOM in a microtask.
@@ -163,11 +193,13 @@
  function visibility(){
   nav.hidden=game.hidden||!compact.matches||
    document.body.classList.contains("v34-board-open");
-  if(game.hidden)clearDecisionFeedback();
+  if(game.hidden){clearDecisionFeedback();clearReadingPoint();}
   scheduleActive();
  }
  function syncLayout(){
+  if(readingPoint&&readingPoint.width!==window.innerWidth)clearReadingPoint();
   if(lastMode!==compact.matches){
+   clearReadingPoint();
    detail.open=!compact.matches;
    lastMode=compact.matches;
   }
@@ -186,8 +218,9 @@
   const button=event.target.closest("button[data-go]");
   if(!button)return;
   const go=button.dataset.go;
-  if(go==="scene"){jump(scene);return}
+  if(go==="scene"){if(!restoreReadingPoint())jump(scene);return}
   if(go==="choices"){
+   rememberReadingPoint();
    const award=game.querySelector('#case001UnlockReceipt:not([hidden])');
    jump(!discovery.hidden?discovery:!feedback.hidden?feedback:award||choices);
    markRead();

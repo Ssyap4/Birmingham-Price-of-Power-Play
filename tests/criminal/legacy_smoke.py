@@ -135,6 +135,20 @@ def run():
                 page.screenshot(
                     path=str(OUT / (name + "-case001-start.png")), full_page=True
                 )
+                # V57: reading is a reversible detour, not a game decision.
+                tap(page, "#caseScene .case001-read-scene")
+                assert page.evaluate("document.activeElement.matches('.case-dialogue:not([hidden]),.case-paper')")
+                page.evaluate("""()=>{const r=document.querySelector('#caseScene').getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top+35,behavior:'instant'})}""")
+                before_read=page.evaluate("window.scrollY")
+                assert before_read>0
+                tap(page, "#case001QuickNav [data-go='choices']")
+                page.wait_for_function("document.querySelector('#case001QuickNav [data-go=scene]').dataset.returnPoint==='true'")
+                tap(page, "#case001QuickNav [data-go='choices']")
+                tap(page, "#case001QuickNav [data-go='scene']")
+                page.wait_for_function("y=>Math.abs(window.scrollY-y)<=4",arg=before_read)
+                assert page.locator("#case001QuickNav [data-go='scene']").get_attribute("data-return-point") is None
+                assert page.evaluate("localStorage.getItem('birmingham_case_smol_heath_v1_jack')")==first
+                tap(page, "#case001QuickNav [data-go='scene']")
                 # A temporary, isolated save fixture exercises the actual board.
                 keys=page.evaluate("""() => {
                   const hero=window.BirminghamHero.selectedId;

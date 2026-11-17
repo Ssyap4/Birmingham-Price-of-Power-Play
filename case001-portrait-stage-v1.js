@@ -22,7 +22,10 @@
   if(!game||game.hidden)return;
   const target=game.querySelector(".case-dialogue:not([hidden])")||
    game.querySelector(".case-paper");
-  target?.scrollIntoView({block:"start",behavior:"instant"});
+  if(!target)return;
+  target.tabIndex=-1;
+  target.focus({preventScroll:true});
+  target.scrollIntoView({block:"start",behavior:"instant"});
  });
  heading?.append(readButton);
  let current="";
