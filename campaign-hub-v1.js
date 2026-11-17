@@ -52,7 +52,7 @@ const screens=[
  ['campaignHistory','История прохождений','АРХИВ ДЕЛ']
 ];
 const main=document.querySelector('main');if(!main)return;
-for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Дело №001 · '+CASE_TITLE+'. Другие дела будут пополнять этот архив.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
+for(const [id,title,kicker] of screens){const section=document.createElement('section');section.id=id;section.className='screen campaign-hub';section.hidden=true;section.innerHTML='<div class="campaign-head"><small></small><h2></h2><p>Общий локальный архив: Дела №001 и №002, «Работа для своих». Записи хранятся на этом устройстве.</p></div><div class="campaign-content"></div><button class="campaign-return" type="button">← В ГЛАВНОЕ МЕНЮ</button>';section.querySelector('small').textContent=kicker;section.querySelector('h2').textContent=title;const tabs=document.createElement('nav');tabs.className='campaign-tabs';tabs.setAttribute('aria-label','Разделы архива');for(const [target,label] of [['campaignDossiers','ПЕРСОНАЖИ'],['campaignAchievements','ДОСТИЖЕНИЯ'],['campaignHistory','ПРОХОЖДЕНИЯ']]){const button=document.createElement('button');button.type='button';button.dataset.openSection=target;button.textContent=label;button.setAttribute('aria-current',String(target===id));tabs.append(button)}section.querySelector('.campaign-head').after(tabs);main.append(section);section.querySelector('.campaign-return').onclick=()=>open('home')}
 const $=id=>document.getElementById(id),allScreens=()=>document.querySelectorAll('.screen');
 function open(id){if(id==='campaignHistory'||id==='campaignAchievements'||id==='campaignDossiers'){render(id)}allScreens().forEach(s=>s.hidden=s.id!==id);const top=$('homeBtn');if(top)top.hidden=id==='home';window.scrollTo(0,0)}
 document.addEventListener('click',e=>{
@@ -79,7 +79,7 @@ function renderDossiers(el,runs){
   body.append(make('p','campaign-count','Дело №001: '+own.length+' прохождений · '+unique.length+' / 6 разных концовок'));
   if(s&&!Object.prototype.hasOwnProperty.call(ENDINGS,s.node))body.append(make('p','campaign-live','Продолжается: '+s.node+' · найдено '+s.items.length+' улик'));
   const tags=make('div','campaign-tags');for(const [id,name] of Object.entries(ENDINGS)){const t=make('span',unique.includes(id)?'earned':'locked',(unique.includes(id)?'✦ ':'◇ ')+name);tags.append(t)}body.append(tags);
-  body.append(make('p','campaign-future','Следующие сюжетные и побочные дела появятся здесь после их выпуска.'));card.append(body);grid.append(card);
+  card.append(body);grid.append(card);
  }el.append(grid);
 }
 /* Curated Case 001 achievements: no free entry or one-clue rewards.
@@ -210,7 +210,7 @@ function renderHistory(el,runs){
   if(r.cause)detail.append(make('p','', 'Причина гибели: '+r.cause));
   card.append(detail);list.append(card)
  }el.append(list);
- el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Основные, связанные и побочные дела будут добавляться в общий архив по их постоянным идентификаторам. Пока доступны только записи дела №001.'));
+ el.append(make('h3','campaign-group-title','Следующие дела'));el.append(make('p','campaign-intro','Выше — подтверждённые записи Дела №001. История Дела №002 и «Работы для своих» показана ниже отдельными разделами.'));
 }
 function render(id){const runs=persistFinished();const box=$(id)?.querySelector('.campaign-content');if(!box)return;box.replaceChildren();if(id==='campaignDossiers')renderDossiers(box,runs);if(id==='campaignAchievements')renderAchievements(box,runs);if(id==='campaignHistory')renderHistory(box,runs);document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}))}
 function sync(){const runs=persistFinished();awards(runs,true);const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}

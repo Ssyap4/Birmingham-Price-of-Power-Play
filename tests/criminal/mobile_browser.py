@@ -220,6 +220,22 @@ def run():
                     assert page.locator("#home").is_visible()
                     touch(page, "#districtsCard")
                     assert page.locator("#districts").is_visible()
+                    assert page.locator('#districts .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                    assert page.locator("#campaignDistrictState").count() == 1
+                    touch(page, '#districts [data-campaign-jump="archive"]')
+                    assert page.locator("#campaignAchievements").is_visible()
+                    assert "Дела №001 и №002" in page.locator("#campaignAchievements .campaign-head p").inner_text()
+                    assert page.locator('#campaignAchievements .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                    touch(page, '#campaignAchievements [data-campaign-jump="criminal"]')
+                    assert page.locator("#criminalScreen .cr-map").is_visible()
+                    assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 3
+                    touch(page, '#criminalScreen [data-campaign-jump="detective"]')
+                    assert page.locator("#districts").is_visible()
+                    assert not page.locator("body[data-criminal='active']").count()
+                    assert page.locator(".campaign-hub:not([hidden])").count() == 0
+                    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+                    if width == 390:
+                        page.screenshot(path=str(OUT / (name + "-unified-v13-detective-map.png")), full_page=True)
                     touch(page, "#districtBack")
                     assert page.locator("#home").is_visible()
                     if width == 390:
@@ -234,6 +250,7 @@ def run():
                         assert page.locator("#profile .profile-hero").is_visible()
                         assert page.locator("#profile .profile-hero h2").inner_text() == "ТВОЯ ИСТОРИЯ"
                         assert page.locator("#playerCampaignOverview").is_visible()
+                        assert page.locator('#profile .campaign-portal-v13 [data-campaign-jump]').count() == 3
                         assert page.locator(".player-overview-card").count() == 3
                         assert page.locator("#profileBtn").inner_text().endswith("ПРОФИЛЬ")
                         if width == 390:
@@ -244,6 +261,7 @@ def run():
                     bounds(page)
                     assert page.locator("#criminalScreen h1").inner_text() == "Работа для своих"
                     assert page.locator(".cr-pin").count() == 5
+                    assert page.locator("#criminalScreen .campaign-portal-v13").count() == 1
                     if width == 390:
                         page.screenshot(
                             path=str(OUT / (name + "-map.png")), full_page=True
@@ -408,6 +426,7 @@ def run():
                         assert page.locator("#campaignCriminalHistory .campaign-criminal-attempt").count() == 8
                         touch(page, '#campaignHistory [data-open-section="campaignDossiers"]')
                         assert page.locator("#campaignDossiers").is_visible()
+                        assert page.locator('#campaignDossiers .campaign-portal-v13 [data-campaign-jump]').count() == 3
                         assert page.evaluate("id => getComputedStyle(document.getElementById(id)).opacity", "campaignDossiers") == "1"
                         assert page.locator("#campaignCriminalDossiers .campaign-criminal-hero").count() == 5
                         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")

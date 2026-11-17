@@ -9,6 +9,18 @@ const ROOT=path.resolve(__dirname,"..");
 const DIST=path.join(ROOT,"campaign-unified-dist");
 const approved=require("../src/case002/approved-art-v1.js").manifest;
 const copied=new Set();let bytes=0;
+// The active menu is cinema-home-v1. Keep its retired cabinet sources in Git,
+// but never ship dead CSS/JS in the unified offline campaign.
+const RETIRED_CABINET_ROOT=new Set([
+ "home-lighting-v1.css","home-story-first-v1.css","home-story-first-v1.js",
+ "cabinet-menu-v1.css","mobile-approved-menu-v1.css",
+ "home-two-paths-v1.css","cabinet-profile-v2.css"
+]);
+const liveMarkup=fs.readFileSync(path.join(ROOT,"index.html"),"utf8");
+for(const retired of RETIRED_CABINET_ROOT)
+ if(liveMarkup.includes(retired))
+  throw Error("Cannot omit still-active menu dependency: "+retired);
+
 function safe(name){
  if(typeof name!=="string"||!name||path.isAbsolute(name)||
     name.split(/[\\/]/).includes("..")||name.includes("\\"))
@@ -80,7 +92,8 @@ if(fs.existsSync(DIST)&&fs.lstatSync(DIST).isSymbolicLink())
 fs.rmSync(DIST,{recursive:true,force:true});
 // First ship the original campaign shell, its 001 scripts and styles.
 for(const name of fs.readdirSync(ROOT)){
- if(name==="index.html"||/\.(?:js|css)$/.test(name))copy(name);
+ if((name==="index.html"||/\.(?:js|css)$/.test(name))&&
+    !RETIRED_CABINET_ROOT.has(name))copy(name);
 }
 // All historic Case 001 visual families remain available, including
 // dynamically constructed scene/image/audio paths. Never ship drafts.
