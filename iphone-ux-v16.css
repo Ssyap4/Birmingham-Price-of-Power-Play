@@ -434,3 +434,14 @@ body.bh-music-playing #home .cinema-vinyl-glint::before{animation:cinema-vinyl .
 @media(orientation:portrait) and (max-width:430px){
  body:has(>.shell>:is(#districts,.campaign-hub,#criminalScreen):not([hidden]))>.shell>.top .brand-mark{display:none!important}
 }
+
+/* V30: criminal briefing uses the same primary/secondary reading rhythm. */
+@media(orientation:portrait) and (max-width:700px){
+ #criminalScreen .cr-hero{padding:10px;border:1px solid #997750;border-radius:4px;background:linear-gradient(135deg,#352319,#171411 78%)}
+ #criminalScreen .cr-hero>div{min-width:0}
+ #criminalScreen .cr-hero img{flex:0 0 58px}
+ #criminalScreen .cr-hero b{font:700 18px/1.25 Georgia,serif}
+ #criminalScreen .cr-hero small{font:400 12px/1.45 system-ui,sans-serif;color:#d9c0a0}
+ #criminalScreen .cr-actions button{min-height:48px}
+ #criminalScreen .cr-actions .cr-primary{min-height:54px;border-color:#d9ab6e;background:linear-gradient(145deg,#654326,#302115)}
+}

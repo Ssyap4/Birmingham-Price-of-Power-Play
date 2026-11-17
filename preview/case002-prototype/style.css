@@ -1647,3 +1647,19 @@ html[data-case002-telegram="true"] .tool-tab{
  #game .case-unlock-toast-name{overflow-wrap:anywhere}
  #game .case-unlock-toast-actions button{min-height:44px}
 }
+
+/* V30: same reading rhythm and action hierarchy as the first investigation. */
+@media(orientation:portrait) and (max-width:700px){
+ .case002-briefing .briefing-rules{gap:7px;padding-top:12px}
+ .case002-briefing .briefing-rule{
+  box-sizing:border-box;grid-template-columns:26px minmax(0,1fr);gap:9px;padding:10px 9px;
+  border:1px solid #755737;border-radius:3px;background:#171411;
+ }
+ .case002-briefing .briefing-rule>span{font:700 16px/1.4 Georgia,serif;letter-spacing:0;text-align:center}
+ .case002-briefing .briefing-rule p{font:400 13px/1.5 system-ui,sans-serif;color:#dfceb6}
+ .case002-briefing .briefing-enter{
+  min-height:54px;box-sizing:border-box;border:1px solid #d9ab6e;border-radius:4px;
+  background:linear-gradient(145deg,#654326,#302115);color:#fff0d1;
+  font:700 13px/1.4 system-ui,sans-serif;letter-spacing:.02em;
+ }
+}

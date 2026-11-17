@@ -20,3 +20,22 @@
 .case001-briefing button:focus-visible{outline:3px solid #ffe1a3;outline-offset:2px}
 @media(max-width:380px){.case001-briefing{padding:7px}.case001-briefing-panel{padding:14px;max-height:calc(100dvh - 14px)}.case001-briefing-points{gap:6px}.case001-briefing-points section{padding:8px}.case001-briefing-points p{font-size:13px;line-height:1.35}.case001-briefing-points h3{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.case001-briefing{backdrop-filter:none}}
+
+/* V30: readable briefing with the same brass accents and action hierarchy. */
+@media(orientation:portrait) and (max-width:700px){
+ .case001-briefing{padding:max(9px,env(safe-area-inset-top,0px)) max(9px,env(safe-area-inset-right,0px)) max(9px,env(safe-area-inset-bottom,0px)) max(9px,env(safe-area-inset-left,0px))}
+ .case001-briefing-panel{
+  max-height:calc(100dvh - max(9px,env(safe-area-inset-top,0px)) - max(9px,env(safe-area-inset-bottom,0px)));
+  padding:16px 13px;border-radius:5px;background:linear-gradient(150deg,#352318,#171411 78%);
+ }
+ .case001-briefing-panel h2{font:700 clamp(25px,7.2vw,32px)/1.15 Georgia,serif;overflow-wrap:normal}
+ .case001-briefing-panel header p{font:600 13px/1.5 system-ui,sans-serif}
+ .case001-briefing-points section{grid-template-columns:26px minmax(0,1fr);gap:9px;padding:10px 9px;border-radius:3px;background:#171411}
+ .case001-briefing-points h3{font:700 17px/1.25 Georgia,serif}
+ .case001-briefing-points p{font:400 13px/1.5 system-ui,sans-serif}
+ .case001-briefing-footer label{min-height:44px;font:400 12px/1.45 system-ui,sans-serif}
+ .case001-briefing-footer input{flex:0 0 18px}
+ .case001-briefing-actions{grid-template-columns:minmax(0,1fr);gap:8px;margin-top:9px}
+ .case001-briefing-actions button{border-radius:4px;min-height:48px;font:600 12px/1.4 system-ui,sans-serif}
+ .case001-briefing-actions .briefing-start{background:linear-gradient(145deg,#654326,#302115);border-color:#d9ab6e;min-height:54px;grid-row:1}
+}
