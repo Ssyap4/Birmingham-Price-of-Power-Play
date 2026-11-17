@@ -208,7 +208,7 @@ function renderAchievements(doc,box,archive,oldAchievements,heroes){
  const originalRewards=box.querySelectorAll(".campaign-reward-card.earned").length;
  const top=make(doc,"section","campaign-002-overview");
  top.dataset.caseId="all";
- appendText(doc,top,"h3","campaign-group-title","СВОДКА ДВУХ ДЕЛ");
+ appendText(doc,top,"h3","campaign-group-title","СВОДКА РАССЛЕДОВАНИЙ");
  const total=make(doc,"div","campaign-002-metrics");
  for(const [label,value] of [
   ["ДОСТИЖЕНИЯ",oldOpen+archive.earned.items.length+" / "+(oldCount+18)],
@@ -399,7 +399,7 @@ function append(id,box,oldRuns,root){
    "↗ К ДЕЛУ №002 · ДИГБЕТ");
   back.href="#district-digbeth";heading.append(back);
  }
- if(title)title.textContent="Детективные дела №001 и №002 · «Работа для своих». Три игровые линии — общий архив.";
+ if(title)title.textContent="Расследования и «Работа для своих». Общий архив этого устройства.";
  if(id==="campaignDossiers")renderDossiers(doc,box,archive,heroes);
  if(id==="campaignAchievements")renderAchievements(doc,box,archive,
   [...box.querySelectorAll(".campaign-award")],heroes);

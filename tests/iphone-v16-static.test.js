@@ -131,3 +131,12 @@ test("V26 maps decorative motion to the approved photograph without touching gam
  assert.match(menu,/cabinet-art-portraits\{[^}]*gap:1px;padding:0/);
  assert.match(menu,/cabinet-art-portraits img\{[^}]*border:0/);
 });
+
+test("V28 atlas heading and archive visual refinements preserve routes",()=>{
+ const h=read("index.html"),css=read("iphone-ux-v16.css"),archive=read("campaign-case002-archive-v1.js");
+ assert.ok(h.includes('<h2 class="district-atlas-title"><span>ТЕНИ</span> <span>БИРМИНГЕМА</span></h2>'));
+ assert.ok(css.includes(".district-atlas-title span{display:block;white-space:nowrap}"));
+ assert.ok(css.includes("#campaignDossiers .campaign-002-jumps>button:last-child:nth-child(odd){grid-column:1/-1}"));
+ assert.ok(archive.includes("СВОДКА РАССЛЕДОВАНИЙ"));
+ assert.ok(archive.includes('back.href="#district-digbeth"'));
+});

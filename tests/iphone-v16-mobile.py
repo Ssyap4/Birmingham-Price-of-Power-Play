@@ -153,6 +153,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.evaluate("document.body.classList.remove('bh-music-playing')")
    tap(page,"#districtsCard")
    page.locator("#districts").wait_for(state="visible")
+   title=page.locator("#districts .district-atlas-title")
+   assert title.evaluate("""el=>{const bounds=el.getBoundingClientRect(), words=[...el.querySelectorAll('span')];return words.length===2&&words.every(w=>{const range=document.createRange();range.selectNodeContents(w);const rects=[...range.getClientRects()];return rects.length===1&&rects[0].left>=bounds.left-1&&rects[0].right<=bounds.right+1})}"""),(engine,width,"atlas heading wraps or clips")
+   page.locator("#districts .districts-heading").screenshot(path=str(OUT/f"{engine}-{width}-v28-atlas-heading.png"))
    page.locator("#districtAudioDock .bh-audio-controls").wait_for(state="visible")
    # The real event is approximated; verify neither observer steals the dock.
    page.evaluate("document.dispatchEvent(new Event('visibilitychange'))")
@@ -175,6 +178,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#profile .campaign-profile-links [data-open-section='campaignAchievements']")
    page.locator("#campaignAchievements").wait_for(state="visible")
    current(page,"campaignAchievements")
+   assert page.locator("#campaignAchievements .campaign-002-overview").evaluate("""el=>{const cells=[...el.querySelectorAll('.campaign-002-metric')];const boxes=cells.map(c=>c.getBoundingClientRect());return cells.length===3&&boxes.every(b=>Math.abs(b.top-boxes[0].top)<2)&&cells.every(c=>c.scrollWidth<=c.clientWidth+1)}"""),(engine,width,"archive metric layout")
+   assert page.locator("#campaignAchievements .campaign-tabs").evaluate("el=>[...el.querySelectorAll('button')].every(b=>b.getBoundingClientRect().height>=48&&b.scrollWidth<=b.clientWidth+1)")
+   page.locator("#campaignAchievements .campaign-002-overview").screenshot(path=str(OUT/f"{engine}-{width}-v28-archive-summary.png"))
    assert page.locator("#profile").is_hidden()
    assert page.evaluate("scrollY")<12,(engine,width,"achievements entry scrolled unexpectedly")
    # Expand two independent folds and preserve explicit closure of a nested one.
@@ -199,6 +205,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    page.locator("#campaignDossiers").wait_for(state="visible")
    current(page,"campaignDossiers")
    assert page.locator("#campaignDossiers .campaign-portrait").first.evaluate("(el)=>getComputedStyle(el).objectFit")=="contain"
+   assert page.locator("#campaignDossiers .campaign-002-jumps").evaluate("""el=>{const buttons=[...el.querySelectorAll('button')];return buttons.length===5&&buttons.every(b=>b.getBoundingClientRect().height>=48)&&Math.abs(buttons[4].getBoundingClientRect().width-el.getBoundingClientRect().width)<2}""")
+   page.locator("#campaignDossiers .campaign-002-jumps").screenshot(path=str(OUT/f"{engine}-{width}-v28-dossier-index.png"))
    page.locator("#campaignDossiers .campaign-portrait").first.scroll_into_view_if_needed()
    page.screenshot(path=str(OUT/f"{engine}-{width}-dossier.png"))
    tap(page,"#campaignDossiers .campaign-tabs [data-open-section='campaignHistory']")
