@@ -117,14 +117,20 @@ def run():
                     # New home is independent of the historic illustrated cabinet.
                     assert page.locator("#home.cinema-home").count() == 1
                     assert page.locator("#home .cinema-hero").is_visible()
-                    assert page.evaluate("""() => {
+                    heading = page.evaluate("""() => {
                         const h=document.querySelector('#home .cinema-crest h1');
-                        if(!h||!h.firstChild)return false;
+                        if(!h||!h.firstChild)return {ok:false,reason:'missing heading'};
                         const range=document.createRange();
                         range.selectNodeContents(h.firstChild);
                         const bounds=range.getBoundingClientRect();
-                        return bounds.width>0 && bounds.left>=-1 && bounds.right<=innerWidth+1;
-                    }"""), "320px cinematic heading spills outside viewport"
+                        return {ok:bounds.width>0 && bounds.left>=-1 &&
+                          bounds.right<=innerWidth+1,
+                          left:bounds.left,right:bounds.right,width:bounds.width,
+                          viewport:innerWidth,font:getComputedStyle(h).fontSize,
+                          childType:h.firstChild.nodeType,
+                          text:h.firstChild.textContent};
+                    }""")
+                    assert heading["ok"], f"Cinematic title bounds on {name} {width}px: {heading}"
 
                     assert "assets/cabinet/cinema-home-art-v12.webp" in page.locator("#home .cinema-art").evaluate(
                         "e => getComputedStyle(e).backgroundImage"
