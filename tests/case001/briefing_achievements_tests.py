@@ -34,8 +34,10 @@ with sync_playwright() as p:
  if page.locator('#districts').is_visible():
   page.locator('#districtBack').click()
  page.locator('#storyStart').click()
- assert page.locator('#campaignAchievements .campaign-award').count()==18
- assert page.locator('#campaignAchievements .campaign-reward-card').count()==30
+ assert page.locator('#campaignFirstCaseAchievements .campaign-award').count()==18
+ assert page.locator('#campaignSecondCaseAchievements .campaign-award').count()==18
+ assert page.locator('#campaignFirstCaseAchievements .campaign-reward-card').count()==30
+ assert page.locator('#campaignSecondCaseAchievements .campaign-reward-card').count()==35
  assert page.locator('.campaign-unlock-popup').count()==0
  page.locator('#homeBtn').click()
  page.locator('#districtsCard').click()
@@ -64,4 +66,4 @@ with sync_playwright() as p:
  assert page.locator('.campaign-unlock-popup').count()==0,'Old rewards should not replay on load'
  assert not errors,errors
  context.close();browser.close()
- print('PASS briefing, opt-out, manual reread, 18 achievements, 30 seals, genuine one-time fly-ins')
+ print('PASS briefing, opt-out, manual reread, 36 detective achievements, 65 seals, genuine one-time fly-ins')

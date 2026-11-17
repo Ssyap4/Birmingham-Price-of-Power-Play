@@ -45,8 +45,8 @@ def route(target, required=frozenset()):
  raise AssertionError('No route to '+target)
 class Game:
  def __init__(self,browser,hero='jack',roll=.99,mobile=False):
-  self.hero=hero;self.errors=[];self.console=[];self.requests=[]
-  self.ctx=browser.new_context(viewport={'width':812,'height':375} if mobile else {'width':1440,'height':1000},reduced_motion='reduce',is_mobile=mobile,has_touch=mobile)
+  self.hero=hero;self.mobile=mobile;self.errors=[];self.console=[];self.requests=[]
+  self.ctx=browser.new_context(viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},reduced_motion='reduce',is_mobile=mobile,has_touch=mobile)
   self.ctx.add_init_script(f'window.__qaRoll={roll}; Math.random=()=>window.__qaRoll;')
   self.p=self.ctx.new_page(); self.p.set_default_timeout(10000)
   self.p.on('pageerror',lambda e:(self.errors.append(str(e)),ERRORS.append(str(e))))
@@ -75,8 +75,11 @@ class Game:
   return after
  def path(self,path):
   for dest in path:self.go(dest)
+ def open_inventory(self):
+  selector='#case001QuickNav [data-go="evidence"]' if self.mobile else '.v34-open-inventory'
+  self.p.locator(selector).click()
  def combine(self,a,b):
-  self.p.locator('.v34-open-inventory').click();self.p.locator(f'.v33-tile[data-id="{a}"]').click();self.p.locator(f'.v33-tile[data-id="{b}"]').click()
+  self.open_inventory();self.p.locator(f'.v33-tile[data-id="{a}"]').click();self.p.locator(f'.v33-tile[data-id="{b}"]').click()
   assert self.p.locator('.v33-result-layer').is_visible()
   self.p.locator('.v33-result button').click()
  def close(self):
@@ -130,7 +133,7 @@ def inventory(browser,mobile=False):
  m=g.meta();assert len(m['deductions'])==6
  for a,b in PAIRS:g.combine(a,b)
  assert g.meta()==m,'Repeated combinations changed rewards/findings'
- g.p.locator('.v34-open-inventory').click(); assert g.p.locator('.v33-tile').count()==11
+ g.open_inventory(); assert g.p.locator('.v33-tile').count()==11
  g.p.locator('.v33-tile[data-id="key"]').click();g.p.locator('.v33-tile[data-id="ledger"]').click()
  assert g.p.locator('.v33-result-layer').count()==0
  g.p.keyboard.press('Escape');assert not g.p.locator('.v33-shade').is_visible()
@@ -158,7 +161,7 @@ def restart(browser,hero):
  g.p.once('dialog',lambda d:d.dismiss());g.p.locator('#caseRestart').click();assert g.state()==before
  g.p.once('dialog',lambda d:d.accept());g.p.locator('#caseRestart').click();s=g.state()
  assert s['node']=='intro' and s['items']==[] and s['health']==100 and s['trail']==[] and s['ending'] is None
- assert s['started']!=before['started'];g.p.locator('.v34-open-inventory').click();assert '0 / 6' in g.p.locator('.v33-stats').inner_text()
+ assert s['started']!=before['started'];g.open_inventory();assert '0 / 6' in g.p.locator('.v33-stats').inner_text()
  return {'old_metadata_still_stored':g.meta(),'new_started':s['started']}
 def gate_refresh(browser,source):
  g=game(browser);full(g);g.path(['confront',source]);g.combine('ash','ledger')

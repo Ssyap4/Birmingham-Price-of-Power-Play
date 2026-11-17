@@ -41,3 +41,8 @@
 
 - V45 follow-up: F09 preserves already evacuated witnesses, distinguishes prepared routes and no-evacuation. Restored heroine-specific F07 phrasing; added assertion for protected/not yet evacuated witness. Existing narrative variant script executed against actual engine in isolated JS with in-memory file and assert adapters. First V45 run 44142612820 failed before browser launch on F09 expectation; rerun needed.
 - Rollback branch backup/main-before-unified-v45 created from 3dbadc9cf0f60fd5f5fb209fba9c573e7be6c595; main unchanged.
+
+## V46 — согласование QA с действующей объединённой игрой
+- V45 PR #8, run 44143038476 SUCCESS: Chromium/WebKit, экспорт, JS и проверки №002/криминального режима. Run 44143038460: быстрый контроль SUCCESS, архивный smoke FAIL на старом глобальном счётчике 18; полный прогон ещё не подтверждён.
+- Архивные проверки теперь требуют отдельно 18 достижений/30 знаков №001 и 18/35 №002. Полный агрегатор сохраняет 154 исходных сценария и 49 регрессий, включая все шесть существующих проверок выхода/изоляции сохранений (203, а не 202). Мобильный инвентарь проверяется в актуальном портрете 390×844 через нижнюю навигацию, desktop проверка сохранена.
+- Только QA и документация, игровые файлы не изменены. Слияние PR #8 в main разрешено автором только после успешной финальной проверки; стабильный Safari V39 не перезаписывать. Новый CI пока не подтверждён.
