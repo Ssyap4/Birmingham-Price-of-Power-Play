@@ -99,11 +99,21 @@ test("V21 uses image panels and removes redundant profile/archive portals",()=>{
  const h=read("index.html"),css=read("cinema-home-v1.css"),bridge=read("campaign-bridge-v13.js");
  assert.equal((h.match(/class="cabinet-entry-art(?: |")/g)||[]).length,6);
  assert.doesNotMatch(h,/class="cabinet-entry-icon/);
- for(const file of ["assets/districts/centre.webp","assets/criminal/cr01-arrival.webp","assets/original-art/clock.webp","assets/mobile-menu/approved-achievements.webp","assets/heroes/jack.webp","assets/heroes/eleanor.webp","assets/cabinet/profile-v21.webp","assets/original-art/profile.webp"]){
+ for(const file of ["assets/districts/centre.webp","assets/criminal/cr01-arrival.webp","assets/original-art/clock.webp","assets/mobile-menu/approved-achievements.webp","assets/heroes/jack.webp","assets/heroes/eleanor.webp","assets/cabinet/profile-v21.webp","assets/cabinet/profile-header-v22.webp"]){
   assert.ok(h.includes(file));assert.ok(fs.statSync(path.join(root,file)).size>1000);
  }
  assert.match(css,/\.cabinet-entry::before,#home \.cabinet-entry::after\{content:none!important/);
  assert.ok(!bridge.includes('makeBar("archive")'));assert.ok(!bridge.includes('makeBar("profile")'));
  assert.ok(!read("campaign-criminal-archive-v1.js").includes('doc.getElementById("criminalEntry")?.click()'));
  assert.match(h,/class="profile-v21-art"/);
+});
+
+
+test("V22 profile artwork is shown in its natural aspect and detective copy scales to future cases",()=>{
+ const h=read("index.html"),css=read("player-overview-cinema-v1.css"),menu=read("cinema-home-v1.css");
+ assert.match(h,/<strong>Детективные дела<\/strong><small>Расследования<\/small>/);
+ assert.match(h,/class="profile-v21-art"><img src="assets\/cabinet\/profile-header-v22\.webp"/);
+ assert.match(css,/aspect-ratio:959\/540/);
+ assert.match(css,/object-fit:contain;object-position:center;max-width:none;transform:none/);
+ assert.match(menu,/transform:translate\(-80%,-50%\)/);
 });

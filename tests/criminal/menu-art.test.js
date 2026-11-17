@@ -37,7 +37,18 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
 
  assert.equal(crypto.createHash("sha256").update(photo).digest("hex"),"173dc43614f1870fb21e48ac5f40de89ecf69f8a8fbef4a96f2446ef29958799");
 
- assert.match(h,/src="assets\/original-art\/profile\.webp"/);
+ assert.match(h,/src="assets\/cabinet\/profile-header-v22\.webp"/);
+ const header=fs.readFileSync(path.join(root,"assets/cabinet/profile-header-v22.webp"));
+ assert.equal(header.length,118550);
+ assert.equal(header.toString("ascii",0,4),"RIFF");
+ assert.equal(header.toString("ascii",8,12),"WEBP");
+ assert.equal(header.toString("ascii",12,16),"VP8 ");
+ assert.equal(header.readUInt16LE(26)&0x3fff,959);
+ assert.equal(header.readUInt16LE(28)&0x3fff,540);
+ assert.equal(crypto.createHash("sha256").update(header).digest("hex"),"4a83d9b7496b741879d970932c24483d4c7f447690a8b8b3137478c0bcaa2d91");
+ const detective=h.match(/<button[^>]+id="districtsCard"[\s\S]*?<\/button>/)?.[0]||"";
+ assert.match(detective,/<small>Расследования<\/small>/);
+ assert.doesNotMatch(detective,/№00[1-9]/);
  assert.match(h,/src="assets\/cabinet\/profile-v21\.webp"/);
  const profileArt=fs.readFileSync(path.join(root,"assets/cabinet/profile-v21.webp"));
  assert.equal(profileArt.length,170164);

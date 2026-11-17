@@ -119,7 +119,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert page.locator("#home").is_hidden()
    assert page.locator("#profile .campaign-profile-links [data-open-section]").count()==3
    assert page.locator("#profile .campaign-portal-v13").count()==0
-   page.wait_for_function("document.querySelector('#profile .profile-v21-art img').naturalWidth>0")
+   page.wait_for_function("document.querySelector('#profile .profile-v21-art img').naturalWidth===959")
+   assert page.locator("#profile .profile-v21-art img").evaluate("el=>el.naturalHeight===540 && getComputedStyle(el).objectFit==='contain'")
+   page.locator("#profile .profile-v21-art").screenshot(path=str(OUT/f"{engine}-{width}-v22-profile-art.png"))
    assert page.locator("#profile .player-overview-card").count()==3
    assert page.evaluate("scrollY")<12,(engine,width,"profile unexpectedly scrolled to middle")
    page.screenshot(path=str(OUT/f"{engine}-{width}-profile.png"),full_page=False)
