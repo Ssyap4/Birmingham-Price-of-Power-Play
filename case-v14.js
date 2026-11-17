@@ -6,7 +6,7 @@ intro:{chapter:'ПРОЛОГ · 21:15',place:'Смолл-Хит · улица У
 envelope:{chapter:'ГЛАВА I · ПЕРВАЯ УЛИКА',place:'Контора Прайса',title:'Чернила и пепел',text:'Конверт пахнет машинным маслом. На внутреннем сгибе — крошечная отметка «D-17», а сургучная печать снята аккуратно, словно отправитель не хотел оставить следов. Эвелин узнаёт бумагу: такую использует складской управляющий на канале.',give:['envelope'],choices:[['Расспросить Эвелин','widow'],['Отправиться к складам','canal']]},
 widow:{chapter:'ГЛАВА I · СВИДЕТЕЛЬ',place:'Дом Прайсов',title:'То, о чём молчат дома',text:'Эвелин признаётся: перед исчезновением Артур спорил с управляющим складов Уолтером Крейном. Но был и другой посетитель — полицейский сержант Рид. Артур сказал жене: «Если я исчезну, ищи не деньги, а вторую книгу». Эвелин вручает тебе старый ключ с цифрой 17.',give:['key'],choices:[['Осмотреть кабинет Артура','office'],['Подробно расспросить Эвелин о последнем вечере','interview'],['Пойти к складам на канале','canal'],['Найти сержанта Рида','reed']]},
 office:{chapter:'ГЛАВА I · КАБИНЕТ',place:'Контора Прайса',title:'Пустое место на полке',text:'В кабинете всё слишком аккуратно. За фальшивой стенкой книжного шкафа — копия накладной с двумя печатями: «D-17» и «Муниципальные поставки». На обороте карандашом написано: «Не верь Крейну. Не верь форме».',give:['invoice'],choices:[['Проверить склад D-17','canal'],['Осмотреть следы в задней комнате','searchOffice'],['Расспросить сержанта Рида','reed'],['Вернуться к Эвелин','widow']]},
-canal:{chapter:'ГЛАВА II · НА КАНАЛЕ',place:'Дигбет · складские причалы',title:'Склад без света',text:'У причала сторож дремлет под навесом. Склад D-17 закрыт, но за дверью слышен стук металлических ящиков. Есть три пути: договориться, обойти здание или рискнуть и воспользоваться ключом.',choices:[['Подкупить сторожа обещанием доли','bribe'],['Пробраться через боковую дверь','sneak'],['Открыть дверь ключом №17','unlock','key'],['Сначала поговорить с Ридом','reed'],['Подслушать разговоры за стеной склада','listen'],['Джек: потребовать у сторожа платёжную запись','heroJack'],['Финн: вскрыть склад отмычками','heroFinn'],['Элеонора: сфотографировать накладную у причала','heroEleanor'],['Виктор: предъявить поддельное удостоверение','heroVictor'],['Сэмюэл: открыть служебный проход инструментами','heroSamuel']]},
+canal:{chapter:'ГЛАВА II · НА КАНАЛЕ',place:'Дигбет · складские причалы',title:'Склад без света',text:'У причала сторож дремлет под навесом. Склад D-17 закрыт, но за дверью слышен стук металлических ящиков. Можно договориться со сторожем, поискать другой вход или проверить дополнительные следы.',choices:[['Подкупить сторожа обещанием доли','bribe'],['Пробраться через боковую дверь','sneak'],['Открыть дверь ключом №17','unlock','key'],['Поговорить с Ридом','reed'],['Подслушать разговоры за стеной склада','listen'],['Джек: потребовать у сторожа платёжную запись','heroJack'],['Финн: вскрыть склад отмычками','heroFinn'],['Элеонора: сфотографировать накладную у причала','heroEleanor'],['Виктор: предъявить поддельное удостоверение','heroVictor'],['Сэмюэл: открыть служебный проход инструментами','heroSamuel']]},
 bribe:{chapter:'ГЛАВА II · СДЕЛКА',place:'Дигбет · складские причалы',title:'Цена молчания',text:'Сторож соглашается пропустить тебя, но требует слово: его имя не появится в деле. Он шепчет, что вчера ночью Крейн увёз кого-то на старую насосную станцию. За обещание сторож даёт тебе маршрут.',flags:{guard:true},give:['route'],choices:[['Проверить склад изнутри','warehouse'],['Пойти на насосную станцию','pump']]},
 sneak:{chapter:'ГЛАВА II · ОБХОД',place:'Дигбет · задний двор',title:'Следы на сырой земле',text:'Ты перелезаешь через низкую ограду. Под окном склада лежит разбитая бутылка и обрывок ведомости с подписью сержанта Рида. Кто-то торопился уничтожить бумаги. В темноте хлопает дверь — тебя могли заметить.',give:['receipt'],flags:{spotted:true},choices:[['Войти на склад, пока не поздно','warehouse'],['Уйти к сержанту с находкой','reed']]},
 unlock:{chapter:'ГЛАВА II · КЛЮЧ',place:'Дигбет · склад D-17',title:'Семнадцатая дверь',text:'Ключ поворачивается без усилий. За дверью — пустые ящики, счётные листы и чужая шинель. На столе лежит двойная ведомость: последняя доставка в ночь исчезновения Артура отмечена у старой насосной станции.',give:['ledger'],choices:[['Осмотреть склад подробнее','warehouse'],['Проверить насосную станцию','pump']]},
@@ -21,8 +21,8 @@ warn:{chapter:'ГЛАВА III · ПРЕДУПРЕЖДЕНИЕ',place:'Дом П�
 pump:{chapter:'ГЛАВА III · ПОЛУНОЧЬ',place:'Старая насосная станция',title:'За железной дверью',text:'Часы бьют без четверти двенадцать. Сквозь грязное стекло ты видишь Артура, привязанного к стулу. Рядом Крейн с револьвером и кожаной папкой. На улице есть боковой вход, а внутри — шанс заговорить. От твоих доказательств зависит, кто уйдёт отсюда живым.',choices:[['Осмотреть двор и найти тихий путь','yard'],['Войти и потребовать освободить Артура','confront'],['Предложить обмен документов на пленника','trade','ledger']]},
 yard:{chapter:'ГЛАВА III · ТИХИЙ ПУТЬ',place:'Насосная станция · двор',title:'Сломанная решётка',text:'За зданием обнаруживается вентиляционный проход. Внутри слышен разговор: Крейн требует назвать имя человека из городской управы, который заказал подлог. Артур отказывается. Ты можешь войти незаметно или выждать.',flags:{secretEntry:true},choices:[['Пробраться через решётку','rescue'],['Выйти к Крейну и заговорить','confront']]},
 rescue:{chapter:'ФИНАЛ · РИСК',place:'Насосная станция · подвал',title:'Выход через тьму',text:'Ты отвязываешь Артура, но Крейн замечает движение. Артур шепчет, что документы докажут участие Рида и городской управы. У тебя несколько секунд: спасать человека или пытаться захватить всю папку.',choices:[['Увести Артура через подвал','endingRescue'],['Схватить папку и рискнуть','endingEvidence'],['Остановить Крейна разговором','confront']]},
-confront:{chapter:'ФИНАЛ · ПЕРЕГОВОРЫ',place:'Насосная станция · машинный зал',title:'Правда имеет цену',text:'Крейн усмехается: «Ты думаешь, Артур невиновен? Он сам вёл счета». Артур признаёт, что помогал скрывать незаконные выплаты, пока не понял, кого подставляют. Крейн требует все доказательства. Можно разоблачить схему, договориться или спасать человека.',choices:[['Предъявить двойную ведомость','expose','ledger'],['Потребовать признание, сославшись на Рида','pressure','testimony'],['Согласиться уничтожить бумаги ради Артура','endingDeal'],['Отступить и искать другой вход','yard']]},
-trade:{chapter:'ФИНАЛ · ОБМЕН',place:'Насосная станция',title:'Бумага за жизнь',text:'Крейн забирает ведомость и отпускает Артура, но не отдаёт папку. Артур жив, однако преступная сеть останется в тени. Ты успеваешь запомнить номер машины, на которой уезжает Крейн.',flags:{traded:true},choices:[['Уйти вместе с Артуром','endingDeal'],['Попытаться перехватить папку','endingEvidence']]},
+confront:{chapter:'ФИНАЛ · ПЕРЕГОВОРЫ',place:'Насосная станция · машинный зал',title:'Правда имеет цену',text:'Крейн усмехается: «Ты думаешь, Артур невиновен? Он сам вёл счета». Артур признаёт, что помогал скрывать незаконные выплаты, пока не понял, кого подставляют. Крейн требует все доказательства. Можно разоблачить схему, договориться или спасать человека.',choices:[['Предъявить двойную ведомость','expose','ledger'],['Потребовать признание, сославшись на Рида','pressure','testimony'],['Согласиться на уничтожение документов ради Артура','endingDeal'],['Отступить и искать другой вход','yard']]},
+trade:{chapter:'ФИНАЛ · ОБМЕН',place:'Насосная станция',title:'Бумага за жизнь',text:'Крейн забирает ведомость и отпускает Артура, но не отдаёт папку. Артур жив, однако преступная сеть останется в тени. Крейн направляется к ожидающей машине с папкой в руках. Ты запоминаешь её номер; он ещё не успел уехать.',flags:{traded:true},choices:[['Уйти вместе с Артуром','endingDeal'],['Попытаться перехватить папку','endingEvidence']]},
 expose:{chapter:'ФИНАЛ · РАЗОБЛАЧЕНИЕ',place:'Насосная станция',title:'Имена на бумаге',text:'Ты читаешь вслух номера платежей. Крейн понимает, что подделать все копии не успеет. Он отпускает Артура и пытается выторговать своё молчание. Теперь нужно решить, кому достанется правда.',choices:[['Передать документы независимому журналисту','endingTruth'],['Оставить документы себе для будущего давления','endingPower'],['Спрятать документы и вывести Артура','endingRescue']]},
 pressure:{chapter:'ФИНАЛ · ДВОЙНОЙ АГЕНТ',place:'Насосная станция',title:'Слабое звено',text:'Услышав о словах Рида, Крейн понимает, что союзники начали сдавать друг друга. Он бросает папку на пол и отступает. Артур свободен, но Рид наверняка узнает о случившемся.',choices:[['Сохранить документы и обнародовать их','endingTruth'],['Укрыть Артура и сохранить секрет','endingPower'],['Спрятать документы и вывести Артура','endingRescue']]},
 interview:{chapter:'ГЛАВА I · РАЗГОВОР',place:'Дом Прайсов · кухня',title:'Три вопроса Эвелин',text:'Эвелин долго смотрит на холодный чай. «Артур боялся не Крейна. Он боялся, что я узнаю, кому он помогал». Она вспоминает серый автомобиль возле дома и имя, произнесённое шёпотом: Рид.',give:['witness'],choices:[['Попросить показать последнее письмо','envelope'],['Проверить кабинет и записи Артура','office'],['Поговорить с сержантом Ридом','reed']]},
@@ -48,6 +48,7 @@ function storyAllows(target){
  if(!scenes[target]||!heroActionAvailable(target))return false;
  if(oneTime.has(target)&&(scenes[target].give.every(item=>state.items.includes(item))||state.trail.includes(target)||state.node===target))return false;
  if(target==='warn'&&state.flags.widowSafe)return false;
+ if(target==='accuse'&&state.flags.reedAlert)return false;
  // Arthur is already untied after rescue; never return to the pre-rescue yard.
  // Preserve one retreat before rescue.
  if(state.node==='confront'&&target==='yard'&&(state.trail.includes('rescue')||state.riskSeen.includes('retreatCrane')))return false;
@@ -146,16 +147,84 @@ function premiumGate(){
  if(!independent)missing.push('независимое подтверждение заговора');
  return missing.length?'Требуется: '+missing.join('; '):null;
 }
+// Departed-scene marks survive the bounded trail; older saves still use the trail.
+function visited(id){return !!state.flags['seen_'+id]||state.trail.includes(id)}
 function sceneText(n){
- if(state.node==='warehouse'&&!state.trail.includes('unlock')&&!state.trail.includes('heroFinn')&&state.trail.filter(x=>x==='warehouse').length===0)return 'Под доской пола обнаруживается двойная ведомость. '+n.text;
+ const seen=visited(state.node);
+ switch(state.node){
+ case 'widow':
+  if(state.flags.widowSafe){
+   return 'Ты находишь Эвелин у соседки, где укрылись дети. '+(seen?'Она напоминает, что Артур говорил о второй книге. Ключ уже у тебя.':'Она рассказывает о споре Артура с Крейном и визите Рида. Перед расставанием вручает старый ключ №17.')+' Возвращаться к себе семья пока не собирается.';
+  }
+  if(seen)return 'Эвелин снова принимает тебя в доме. Ключ №17 уже у тебя; она ждёт новостей об Артуре. Можно уточнить детали или продолжить расследование.';
+  break;
+ case 'office':
+  if(seen)return 'Ты возвращаешься в кабинет Артура. Копия накладной уже у тебя. Можно проверить оставшиеся следы или вернуться к свидетелям.';
+  break;
+ case 'canal':
+  if(seen)return 'Ты снова у причалов D-17. '+(state.flags.guard?'Сторож помнит договорённость и не требует новой платы. ':state.flags.spotted?'После прошлой тревоги здесь приходится двигаться осторожнее. ':'У склада всё ещё неспокойно. ')+'Оцени, какие следы и пути ещё стоит проверить.';
+  break;
+ case 'bribe':
+  if(seen)return 'Сторож узнаёт тебя и помнит уговор. Путь к складу остаётся открытым; маршрут до насосной станции уже у тебя.';
+  break;
+ case 'sneak':
+  if(seen)return 'Ты возвращаешься знакомым путём на задний двор. Обрывок ведомости уже забран. Можно пройти дальше или отнести находку Риду.';
+  if(visited('heroJack'))return 'Ты обходишь склад по низкой ограде. У окна видны следы уничтоженных бумаг; найденный ранее обрывок с подписью Рида уже у тебя. В темноте хлопает дверь.';
+  break;
+ case 'unlock':
+  if(seen||visited('heroFinn')||visited('warehouse'))return 'Ты проверяешь знакомый вход ключом №17. Двойная ведомость уже у тебя; отметка о насосной станции позволяет продолжить поиски.';
+  break;
+ case 'warehouse':
+  if(seen)return 'Ты вновь осматриваешь склад D-17. Ведомость уже у тебя; запись о насосной станции остаётся главным направлением поисков. Не задерживайся здесь без необходимости.';
+  if(!visited('unlock')&&!visited('heroFinn'))return 'Под доской пола обнаруживается двойная ведомость. '+n.text;
+  break;
+ case 'reed':
+  if(state.flags.reedAlert)return 'Ты снова пришёл в участок после открытого обвинения. Рид узнаёт тебя и держится настороженно. Он согласен выслушать новые сведения, но прежнего доверия уже нет.';
+  if(seen)return 'Рид узнаёт тебя. Он по-прежнему требует документы в обмен на помощь. Можно предъявить найденное или уйти, не раскрывая карты.';
+  if(!state.items.includes('witness')&&!state.items.includes('key'))return 'Ты находишь сержанта Рида по имени, указанному на складском документе или услышанному у причала. Он слишком быстро узнаёт о пропавшей книге и предлагает защиту семьи в обмен на бумаги.';
+  break;
+ case 'heroJack':
+  if(visited('sneak'))return 'Джек требует запись о ночной смене. Сторож подтверждает происхождение уже найденного обрывка с подписью Рида и уступает проход. Обрывок остаётся у тебя в единственном экземпляре.';
+  break;
+ case 'heroFinn':
+  if(visited('warehouse')||visited('unlock'))return 'Финн проверяет боковой замок отмычками и открывает запасной путь. Ведомость уже у тебя, повторно забирать её не нужно.';
+  break;
+ case 'heroEleanor':
+  if(visited('office'))return 'Элеонора фотографирует накладную у причала. Снимок подтверждает печати на уже найденной копии; это тот же документ, а не новая улика.';
+  break;
+ case 'heroVictor':
+  if(visited('bribe'))return 'Виктор предъявляет поддельное удостоверение. Сторож подтверждает известный маршрут ночного рейса до насосной станции. Фамилия остаётся в журнале: повторять прикрытие нельзя.';
+  break;
+ case 'confront':
+  if(visited('rescue'))return 'Артур уже освобождён, но Крейн преграждает выход. Он требует доказательства и напоминает, что Артур сам вёл счета. Теперь нужно добиться безопасного ухода или предъявить улики.';
+  if(seen)return 'Ты снова выходишь к Крейну после отступления. Он начеку, Артур всё ещё пленник. Повторять манёвр опасно; решай, как закончить переговоры.';
+  break;
+ case 'expose':
+  if(visited('rescue'))return 'Ты читаешь вслух номера платежей. Крейн понимает, что не успеет уничтожить все копии, и больше не препятствует уходу уже освобождённого Артура. Теперь нужно решить, кому достанутся доказательства.';
+  break;
+ }
  return n.text;
 }
-function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=n.place||'СМОЛЛ-ХИТ · АРХИВ';$('caseTitle').textContent=n.title;$('caseText').textContent=sceneText(n);$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';verifySceneArt(ART[state.node]||'intro-meeting');$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=ACTORS[state.node]||null;const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
+function sceneActor(){
+ const actor=ACTORS[state.node];
+ if(state.node==='reed'&&state.flags.reedAlert)return ['СЕРЖАНТ РИД','«Снова вы. Если у вас появились документы, я выслушаю».','reed'];
+ if(state.node==='widow'&&state.flags.widowSafe)return ['ЭВЕЛИН ПРАЙС','«Дети здесь в безопасности. Пожалуйста, найдите Артура».','evelyn'];
+ return actor||null;
+}
+function choiceText(label,target){
+ if(target==='bribe'&&visited('bribe'))return 'Напомнить сторожу об уговоре';
+ if(target==='sneak'&&visited('sneak'))return 'Вернуться через знакомый проход';
+ if(target==='unlock'&&(visited('unlock')||visited('heroFinn')||visited('warehouse')))return 'Проверить знакомый вход ключом №17';
+ if(target==='widow'&&state.flags.widowSafe)return 'Найти Эвелин у соседки';
+ if(target==='endingDeal'&&state.node==='confront'&&visited('rescue'))return 'Договориться об уничтожении документов и безопасном уходе';
+ return label;
+}
+function render(){const n=scenes[state.node];healthStatus();$('caseChapter').textContent=n.chapter||'ДЕЛО ЗАКРЫТО';$('casePlace').textContent=n.place||'СМОЛЛ-ХИТ · АРХИВ';$('caseTitle').textContent=n.title;$('caseText').textContent=sceneText(n);$('caseScene').classList.toggle('case-ending',!!n.end);$('caseScene').dataset.ending=n.end?state.node:'';verifySceneArt(ART[state.node]||'intro-meeting');$('caseArt').style.backgroundImage='linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 46%,rgba(5,5,5,.08) 100%),url("'+sceneArt(ART[state.node]||'intro-meeting')+'")';const actor=sceneActor();const dialogue=document.querySelector('.case-dialogue');dialogue.hidden=!actor;if(actor){$('caseSpeaker').textContent=actor[0];$('caseDialogue').textContent=actor[1];const portrait=actor[2]||'investigator';$('casePortrait').style.backgroundImage=portraitArt(portrait)?'url("'+portraitArt(portrait)+'")':'none';$('casePortrait').textContent=portraitArt(portrait)?'':actor[0].split(' ').map(x=>x[0]).join('');}$('caseProgressBar').style.width=Math.min(100,Math.round((new Set(state.trail).size+1)/26*100))+'%';$('caseJournalCount').textContent=String(state.items.length);$('caseInventory').replaceChildren();for(const item of state.items){const el=document.createElement('span');el.className='case-item';el.dataset.evidenceId=item;const pic=document.createElement('img');pic.src='assets/evidence-cinematic/'+item+'.webp';pic.className='case-evidence-photo';pic.onerror=()=>{pic.onerror=null;pic.src='assets/case-v17/icon-'+item+'.svg'};pic.alt='';pic.width=34;pic.height=34;const caption=document.createElement('span');caption.textContent=items[item]||item;el.append(pic,caption);el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Рассмотреть улику: '+(items[item]||item));el.addEventListener('click',()=>window.caseOpenEvidence?.(item,items[item]||item));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.caseOpenEvidence?.(item,items[item]||item)}});$('caseInventory').append(el)}if(!state.items.length)$('caseInventory').textContent='Пока нет улик';renderChoices();if(!n.end)save()}
 function renderChoices(){const n=scenes[state.node];$('caseChoices').replaceChildren();$('caseOutcome').hidden=!n.end;if(n.end){state.ending=state.node;$('caseOutcome').textContent=n.outcome+(state.node==='endingDeath'?' · Причина: '+(state.deathCause||'опасное столкновение'):' · Репутация +'+n.reputation);save();const b=button('ПЕРЕИГРАТЬ ДЕЛО С НАЧАЛА',()=>{if(confirm('Начать дело заново? Текущие решения будут заменены.')){state=fresh();save();render()}});$('caseChoices').append(b);return}healChoice();for(const [label,target,requirement] of n.choices){
 // Each one-time scene grants a unique clue. Those existing permanent clues
 // survive the bounded journal and also cover old saves without a schema change.
 if(!storyAllows(target))continue;
-const gate=(target==='endingPower'||target==='endingTruth')?premiumGate():null;const has=(!requirement||state.items.includes(requirement))&&!gate;const riskKey=state.node==='confront'&&target==='yard'?'retreatCrane':target;const risky=!!danger[riskKey]&&!state.riskSeen.includes(riskKey);const b=button(label+(risky?' · ⚠ возможное ранение −'+danger[riskKey].damage+' HP':'')+(has?'':gate?' · 🔒 '+gate:' · нужна улика'),()=>move(target));b.disabled=!has;if(HERO_ACTIONS[target])b.dataset.heroAction=target;if(!has)b.title=gate||('Нужна улика: '+items[requirement]);$('caseChoices').append(b)}}
+const gate=(target==='endingPower'||target==='endingTruth')?premiumGate():null;const has=(!requirement||state.items.includes(requirement))&&!gate;const riskKey=state.node==='confront'&&target==='yard'?'retreatCrane':target;const risky=!!danger[riskKey]&&!state.riskSeen.includes(riskKey);const b=button(choiceText(label,target)+(risky?' · ⚠ возможное ранение −'+danger[riskKey].damage+' HP':'')+(has?'':gate?' · 🔒 '+gate:' · нужна улика'),()=>move(target));b.disabled=!has;if(HERO_ACTIONS[target])b.dataset.heroAction=target;if(!has)b.title=gate||('Нужна улика: '+items[requirement]);$('caseChoices').append(b)}}
 // Refresh only decisions: discovering a link must not replay a scene, grant
 // supplies, roll danger again, or rewrite the investigation save.
 document.addEventListener('birmingham:case-findings-changed',({detail})=>{
@@ -164,7 +233,7 @@ document.addEventListener('birmingham:case-findings-changed',({detail})=>{
  renderChoices();
 });
 function button(label,fn){const b=document.createElement('button');b.type='button';b.className='case-choice';b.textContent=label;b.addEventListener('click',fn);return b}
-function move(target){if(!storyAllows(target))return;const previous=scenes[state.node];const edge=previous.choices?.find(c=>c[1]===target);if(!edge||(edge[2]&&!state.items.includes(edge[2]))||((target==='endingPower'||target==='endingTruth')&&premiumGate()))return;state.trail.push(state.node);if(state.trail.length>80)state.trail.shift();state.node=target;if(previous===scenes.confront&&target==='yard'){applyDanger('retreatCrane');if(!state.riskSeen.includes('yard'))state.riskSeen.push('yard')}else applyDanger(target);const next=scenes[state.node];for(const x of next.give||[])if(!state.items.includes(x))state.items.push(x);Object.assign(state.flags,next.flags||{});if(state.node==='trade')state.items=state.items.filter(item=>item!=='ledger');if(state.node!=='endingDeath')collectMedicalKit(state.node);render();window.scrollTo({top:0,behavior:'smooth'})}
+function move(target){if(!storyAllows(target))return;const previous=scenes[state.node];const edge=previous.choices?.find(c=>c[1]===target);if(!edge||(edge[2]&&!state.items.includes(edge[2]))||((target==='endingPower'||target==='endingTruth')&&premiumGate()))return;state.flags['seen_'+state.node]=true;state.trail.push(state.node);if(state.trail.length>80)state.trail.shift();state.node=target;if(previous===scenes.confront&&target==='yard'){applyDanger('retreatCrane');if(!state.riskSeen.includes('yard'))state.riskSeen.push('yard')}else applyDanger(target);const next=scenes[state.node];for(const x of next.give||[])if(!state.items.includes(x))state.items.push(x);Object.assign(state.flags,next.flags||{});if(state.node==='trade')state.items=state.items.filter(item=>item!=='ledger');if(state.node!=='endingDeath')collectMedicalKit(state.node);render();window.scrollTo({top:0,behavior:'smooth'})}
 function show(newAttempt=false){const section=$('caseGame');if(!section)return;state=newAttempt||!hasSavedCase()?fresh():load();document.querySelectorAll('.screen').forEach(x=>x.hidden=x!==section);$('homeBtn').hidden=false;render();window.scrollTo(0,0)}
 window.BirminghamCase={hasSavedCase,hasProgress,startNew:()=>show(true),resume:()=>show(false)};
 function backToMap(){const section=$('districts');document.querySelectorAll('.screen').forEach(x=>x.hidden=x!==section);$('homeBtn').hidden=false;window.scrollTo(0,0)}

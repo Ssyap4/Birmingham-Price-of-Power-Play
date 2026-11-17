@@ -180,3 +180,33 @@ test("V41 Case001 irreversible transitions for all heroes and resumed saves",()=
   api.fresh();go("widow","interview","envelope","widow");assert.equal(api.storyAllows("interview"),false);api.move("interview");assert.equal(api.state().node,"widow");
  }
 });
+
+
+test("V42 revisit continuity and all six endings remain reachable for every hero",()=>{
+ const vm=require("node:vm"),source=read("case-v14.js");
+ const injected=source.slice(0,source.indexOf("window.BirminghamCase={"))+"render=()=>save();notify=()=>{};window.audit={fresh:()=>{state=fresh();return state},load:()=>{state=load();return state},state:()=>state,move,storyAllows,text:()=>sceneText(scenes[state.node])};})();";
+ const run=function(factory,assert){
+ let count=0;
+ for(const hero of ["jack","finn","eleanor","victor","samuel"]){
+  const store=new Map(),window={BirminghamHero:{selectedId:hero},scrollTo(){}},math=Object.create(Math); math.random=()=>.99;
+  factory(window,{addEventListener(){}},{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},math);
+  const api=window.audit;
+  const start=()=>{store.clear();math.random=()=>.99;api.fresh()};
+  const go=(...nodes)=>{for(const node of nodes){api.move(node);assert(api.state().node===node,hero+" -> "+node+" actual "+api.state().node);count++}};
+  start();go("widow","office","widow");assert(api.text().includes("уже у тебя"),"key repeated");go("office","canal","bribe","warehouse","reed","accuse","canal","bribe");assert(api.text().includes("помнит уговор"),"bribe repeated");go("warehouse","reed");assert(api.text().includes("настороженно"),"Reed forgot accusation");assert(!api.storyAllows("accuse"),"repeat accusation");go("canal","bribe","warehouse","warn","office","widow");assert(api.text().includes("у соседки"),"Evelyn location");api.load();assert(api.text().includes("у соседки"),"Evelyn resume");
+  go("canal","bribe","warehouse","pump","yard","rescue","confront");assert(!api.storyAllows("yard"),"rescue rewind");assert(api.text().includes("уже освобождён"),"Arthur status");go("endingDeal");
+  start();go("widow","office","searchOffice","office","canal","bribe","warehouse","reed","reedProof","confession","pump","confront","expose");
+  const key="birmingham_case_v20_findings_"+hero;store.set(key,JSON.stringify({started:api.state().started,deductions:["Уничтоженные записи"]}));go("endingTruth");
+  start();go("widow","office","searchOffice","office","canal","bribe","warehouse","reed","reedProof","confession","pump","confront","expose");store.set(key,JSON.stringify({started:api.state().started,deductions:["Уничтоженные записи"]}));go("endingPower");
+  start();go("widow","canal","bribe","pump","yard","rescue","endingRescue");
+  start();go("widow","canal","bribe","warehouse","pump","trade");assert(!api.state().items.includes("ledger"),"ledger not traded");go("endingEvidence");
+  start();go("widow","canal");math.random=()=>0;go("sneak","warehouse","pump","yard","rescue");api.move("endingEvidence");assert(api.state().node==="endingDeath","death route");count++;
+ }
+ return count;
+};
+ run((window,document,localStorage,Math)=>vm.runInNewContext(injected,{window,document,localStorage,Math,console}),assert.ok);
+ const reactions=read("case-v20-reactions.js");
+ assert.match(reactions,/nodes:\['confront'\]/);
+ assert.doesNotMatch(reactions,/nodes:\['confront','trade'/);
+ assert.ok(reactions.includes("e.requires.every(item=>current.items.includes(item))"));
+});
