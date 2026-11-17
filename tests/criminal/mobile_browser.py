@@ -130,6 +130,16 @@ def run():
                     assert page.locator("#bhMusic").is_visible()
                     assert page.locator("#bhEffects").is_visible()
                     assert page.locator("#bhMenuTrack").is_visible()
+                    assert page.locator("#cinemaAudioDock > .bh-audio-controls").count() == 1
+                    assert page.evaluate("""() => {
+                        const audio=document.querySelector('#cinemaAudioDock .bh-audio-controls');
+                        const a=audio.getBoundingClientRect();
+                        const cards=[...document.querySelectorAll('#home .cabinet-menu > button')];
+                        return a.width>240 && a.height>=44 && cards.every(el=>{
+                            const c=el.getBoundingClientRect();
+                            return a.bottom<=c.top || a.top>=c.bottom;
+                        })
+                    }"""), "music controls overlap a main-menu card"
                     assert "1 / 2" in page.locator("#bhMenuTrack").inner_text()
                     touch(page, "#bhMenuTrack")
                     assert "2 / 2" in page.locator("#bhMenuTrack").inner_text()
@@ -174,8 +184,10 @@ def run():
                     page.screenshot(path=str(OUT / (name + "-" + str(width) + "-cinema-menu.png")), full_page=True)
                     touch(page, "#storyStart")
                     assert page.locator("#campaignAchievements").is_visible()
+                    assert page.locator("body > .bh-audio-controls").count() == 1
                     touch(page, "#homeBtn")
                     assert page.locator("#home").is_visible()
+                    assert page.locator("#cinemaAudioDock > .bh-audio-controls").count() == 1
                     touch(page, "#profileCard")
                     assert page.locator("#campaignDossiers").is_visible()
                     touch(page, "#homeBtn")

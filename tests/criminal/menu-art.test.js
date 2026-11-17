@@ -17,6 +17,9 @@ test("portrait cinema home has exactly two narrative entrances and four utilitie
   assert.ok(!h.includes(old),"old live dependency: "+old);
  assert.match(h,/player-overview-cinema-v1\.css/);
  assert.match(h,/cinema-home-v1\.js/);
+ assert.match(h,/id="cinemaAudioDock"/);
+ assert.match(read("cinema-home-v1.js"),/destination=home.hidden\?document.body:dock/);
+ assert.match(css,/#home \.cinema-audio-dock \.bh-audio-controls/);
  assert.match(css,/assets\/original-art\/city-card-clean\.webp/);
  assert.match(css,/assets\/original-art\/profile\.webp/);
  assert.match(css,/assets\/cabinet\/profile-seal\.svg/);
