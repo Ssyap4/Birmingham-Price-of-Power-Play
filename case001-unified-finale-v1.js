@@ -97,7 +97,13 @@
   archive.type="button";
   archive.addEventListener("click",()=>window.BirminghamCampaign?.open("campaignAchievements"));
   const map=el("button","secondary","ВЕРНУТЬСЯ К КАРТЕ");
-  map.type="button";map.addEventListener("click",()=>document.getElementById("caseBack")?.click());
+  map.type="button";map.addEventListener("click",()=>{
+   document.getElementById("caseBack")?.click();
+   const district=document.querySelector('#districts:not([hidden]) .map-pin[data-district="small-heath"]');
+   if(!district)return;
+   if(!district.classList.contains("selected"))district.click();
+   district.focus({preventScroll:true});
+  });
   actions.append(archive,map);report.append(actions);
  }
  new MutationObserver(decorate).observe(paper,{childList:true});

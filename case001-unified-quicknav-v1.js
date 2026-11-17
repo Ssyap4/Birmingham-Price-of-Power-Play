@@ -44,9 +44,13 @@
   sceneButton.removeAttribute("data-return-point");
   sceneButton.setAttribute("aria-label","Вернуться к началу сцены");
  }
+ function outcomeTarget(){
+  return scene.dataset.ending?game.querySelector(".v33-ending-report")||game.querySelector("#caseOutcome:not([hidden])"):null;
+ }
+ function decisionTarget(){return outcomeTarget()||choices;}
  function rememberReadingPoint(){
   // Only capture when leaving the scene, not on repeated decisions taps.
-  if(readingPoint||choices.getBoundingClientRect().top<=window.innerHeight*.43)return;
+  if(readingPoint||decisionTarget().getBoundingClientRect().top<=window.innerHeight*.43)return;
   const anchors=[scene,game.querySelector(".case-dialogue:not([hidden])"),game.querySelector("#caseText")]
    .filter(el=>el&&el.getClientRects().length);
   const anchor=anchors.filter(el=>el.getBoundingClientRect().top<=24).pop()||scene;
@@ -186,7 +190,7 @@
    current=modal.dataset.mode==="deduction"?"deduction":"evidence";
   }else{
    const threshold=window.innerHeight*.43;
-   current=choices.getBoundingClientRect().top<=threshold?"choices":"scene";
+   current=decisionTarget().getBoundingClientRect().top<=threshold?"choices":"scene";
   }
   for(const b of buttons){
    if(b.dataset.go===current)b.setAttribute("aria-current","location");
@@ -229,7 +233,11 @@
   if(go==="choices"){
    rememberReadingPoint();
    const award=game.querySelector('#case001UnlockReceipt:not([hidden])');
-   jump(!discovery.hidden?discovery:!feedback.hidden?feedback:award||choices);
+   // A terminal jump must reveal the actual report, not the replay button.
+   // Any unread discoveries/awards retain their own existing controls.
+   const report=outcomeTarget();
+   if(report)report.tabIndex=-1;
+   jump(report||(!discovery.hidden?discovery:!feedback.hidden?feedback:award||choices));
    markRead();
    return;
   }

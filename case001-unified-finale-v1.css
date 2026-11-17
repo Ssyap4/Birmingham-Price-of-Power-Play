@@ -165,3 +165,13 @@
 @media(prefers-reduced-motion:reduce){
  #caseGame .case001-finale-actions button{transition:none!important}
 }
+
+/* V64: the outcome target is the closing report, never the replay action. */
+@media(orientation:portrait) and (max-width:700px){
+ #caseGame .v33-ending-report,#caseGame #caseOutcome{
+  scroll-margin-top:16px;scroll-margin-bottom:calc(94px + env(safe-area-inset-bottom,0px));
+ }
+ #caseGame .v33-ending-report:focus-visible,#caseGame #caseOutcome:focus-visible{
+  outline:2px solid #ffe1ac;outline-offset:2px;
+ }
+}

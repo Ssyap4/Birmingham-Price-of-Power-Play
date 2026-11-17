@@ -137,3 +137,8 @@
 - Case001 tiles add explicit selected/compatible labels and accessible linked-clue names, alongside existing visual cues; repeat tap already clears selection and is now explained. Existing matched pairs, storage, deduction receipts unchanged.
 - Case002 selected pair token explicit, existing confirmed pair feedback distinct, journal uses actual scene titles rather than player-facing technical IDs. Reversible links/data IDs unchanged. CR journal renders a reversed copy of existing history, newest first with true ordinals and empty guidance; no mutation, revision or route changed.
 - Added existing-flow browser proofs for selection, clearing, linked cards, Case002 journal and selection without save change, CR ordinal and save equality. All styling scoped to portrait; test result pending. Main and pinned Safari untouched.
+
+## V64 — точный переход к итогу и карте
+- Case001 terminal quick deck's existing outcome action seeks the actual final report (or visible outcome fallback), not unread notices/replay below it. Active section follows that same target; retain existing temporary reading return and independent evidence/award controls. No new in-game navigation.
+- Final map action delegates to existing Case001 back action and focuses the correct district pin, explicitly selects Small Heath only if necessary. No saved progress or reward changes.
+- Existing synthetic terminal proof now checks focus and active tab on report and exact raw slot through direct map return, restores all fixtures. New screenshot at the outcome. V63 remote acceptance was still running at candidate preparation; do not supersede unfinished QA. Main/pinned Safari unchanged.

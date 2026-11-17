@@ -283,9 +283,20 @@ def run():
                 }""",keys)
                 page.wait_for_function("document.querySelector('.case001-finale-archive-note')?.dataset.status==='verified'")
                 assert page.locator("#case001QuickNav [data-go='choices']").inner_text()=="ИТОГ"
+                terminal_bytes=page.evaluate("k=>localStorage.getItem(k)",keys["key"])
+                tap(page,"#case001QuickNav [data-go='choices']")
+                assert page.evaluate("document.activeElement.matches('.v33-ending-report')")
+                page.wait_for_function("document.querySelector('#case001QuickNav [data-go=choices]').getAttribute('aria-current')==='location'")
+                assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==terminal_bytes
+                page.screenshot(path=str(OUT/(name+"-v64-case001-outcome.png")))
                 page.evaluate("""()=>{const key='birmingham_campaign_records_v1';localStorage.setItem(key,'{broken');window.dispatchEvent(new StorageEvent('storage',{key}));}""")
                 page.wait_for_function("document.querySelector('.case001-finale-archive-note')?.dataset.status==='damaged'")
                 assert page.evaluate("localStorage.getItem('birmingham_campaign_records_v1')")=="{broken"
+                tap(page,".case001-finale-actions button:last-child")
+                assert page.locator("#districts").is_visible() and page.locator("#caseGame").is_hidden()
+                assert page.locator('.map-pin[data-district="small-heath"]').get_attribute("aria-pressed")=="true"
+                assert page.evaluate("document.activeElement.matches('.map-pin[data-district=small-heath]')")
+                assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==terminal_bytes
                 page.evaluate("""({k,originals})=>{
                   localStorage.setItem(k.key,k.original);
                   if(k.originalMeta===null)localStorage.removeItem(k.meta);else localStorage.setItem(k.meta,k.originalMeta);
