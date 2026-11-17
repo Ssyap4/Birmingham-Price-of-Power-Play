@@ -21,3 +21,14 @@
  .campaign-unlock-copy strong{line-height:1.24}
  .campaign-unlock-copy small{letter-spacing:.06em}
 }
+
+/* V34: scene receipt outlives the transient flyout; never covers a choice. */
+#case001UnlockReceipt[hidden]{display:none!important}
+#case001UnlockReceipt:not([hidden]){display:grid;gap:9px;margin:10px 0 14px;padding:12px;border:1px solid #cba269;border-left:4px solid #edc68d;border-radius:6px;background:linear-gradient(125deg,#47321e,#201914);color:#f5d8ad;overflow-wrap:anywhere}
+#case001UnlockReceipt>strong{font:800 .77rem/1.4 system-ui,sans-serif;letter-spacing:.04em}
+#case001UnlockReceipt .case001-unlock-list{list-style:none;padding:0!important;margin:0!important;display:grid;gap:7px}
+#case001UnlockReceipt li{display:grid;gap:3px;padding:8px 9px;border:1px solid #896541;background:#241b14;border-radius:4px}
+#case001UnlockReceipt li small{font:700 .67rem/1.4 system-ui,sans-serif;color:#d9af77}
+#case001UnlockReceipt li strong{font:700 1rem/1.35 Georgia,serif;color:#ffe4b6}
+#case001UnlockReceipt button{min-height:46px;padding:9px;border:1px solid #d5ad75;border-radius:5px;background:#52391f;color:#ffe4ba;font:750 .75rem/1.4 system-ui,sans-serif;touch-action:manipulation}
+#case001UnlockReceipt button:focus-visible{outline:3px solid #ffe0a8;outline-offset:2px}

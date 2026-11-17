@@ -103,7 +103,7 @@
  discovery.className='case001-evidence-discovery';discovery.hidden=true;
  const discoveryText=document.createElement('p');discoveryText.setAttribute('role','status');discoveryText.setAttribute('aria-live','polite');
  const discoveryButton=document.createElement('button');discoveryButton.type='button';discoveryButton.textContent='ОТКРЫТЬ УЛИКИ ↗';
- discovery.append(discoveryText,discoveryButton);feedback.before(discovery);
+ discovery.tabIndex=-1;discovery.append(discoveryText,discoveryButton);feedback.before(discovery);
  let frame=0;
  function updateCount(){
   const parsed=Number.parseInt(counter.textContent.trim(),10);
@@ -175,9 +175,8 @@
  }
  function jump(target){
   if(!target)return;
-  const behavior=window.matchMedia("(prefers-reduced-motion: reduce)").matches?
-   "auto":"smooth";
-  target.scrollIntoView({behavior,block:"start"});
+  // Direct scroll avoids Safari's animated repositioning during scene layout.
+  target.scrollIntoView({behavior:"instant",block:"start"});
   target.focus({preventScroll:true});
   scheduleActive();
  }
@@ -189,7 +188,8 @@
   const go=button.dataset.go;
   if(go==="scene"){jump(scene);return}
   if(go==="choices"){
-   jump(feedback.hidden?choices:feedback);
+   const award=game.querySelector('#case001UnlockReceipt:not([hidden])');
+   jump(!discovery.hidden?discovery:!feedback.hidden?feedback:award||choices);
    markRead();
    return;
   }
@@ -201,6 +201,7 @@
   }
  });
  discoveryButton.addEventListener('click',()=>{unreadItems.clear();updateCount();bridge.dataset.tool='evidence';bridge.click();visibility()});
+ detail.addEventListener('toggle',()=>{if(detail.open&&!game.hidden){unreadItems.clear();updateCount()}});
  new MutationObserver(updateCount).observe(inventory,{childList:true,subtree:true});
  new MutationObserver(updateCount).observe(counter,{
   childList:true,characterData:true,subtree:true

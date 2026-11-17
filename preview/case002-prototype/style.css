@@ -1663,3 +1663,13 @@ html[data-case002-telegram="true"] .tool-tab{
   font:700 13px/1.4 system-ui,sans-serif;letter-spacing:.02em;
  }
 }
+
+/* V34: keep the two actionable buttons inside the smallest portrait flyout.
+   Full descriptions are always available in the persistent scene receipt. */
+@media(max-height:610px){
+ #game .case-unlock-toast{grid-template-columns:34px minmax(0,1fr);padding:7px 9px;row-gap:5px;max-height:none;overflow:visible}
+ #game .case-unlock-toast-note{display:none}
+ #game .case-unlock-toast-seal{width:34px;height:34px;font-size:1.1rem}
+ #game .case-unlock-toast-name{font-size:.91rem;line-height:1.15}
+ #game .case-unlock-toast-actions button{min-height:44px;padding:5px 4px}
+}

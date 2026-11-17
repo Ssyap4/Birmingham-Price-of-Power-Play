@@ -850,7 +850,7 @@ function renderAchievementReceipt(){
   "case-achievement-receipt-kicker"));
  const list=make("ul",undefined,"case-achievement-receipt-list");
  for(const milestone of newAchievements){
-  const li=make("li");
+  const li=make("li");li.dataset.achievementId=milestone.id;
   li.append(make("strong",milestone.name),make("span",milestone.description));
   list.append(li);
  }
@@ -2295,8 +2295,12 @@ function select(choice,fromScene){
   }
   // The committed transition is the ONLY source of newly granted achievements.
   // A storage failure cannot invalidate or replay the already saved action.
-  newAchievements=grantCommittedAchievements();
-  unlockToastDismissed=false; // A committed action may reveal new keys.
+  const freshAchievements=grantCommittedAchievements();
+  // Keep unread, already verified achievements until explicit acknowledgement.
+  // Ordinary decisions must not replace them or reopen a dismissed flyout.
+  const known=new Set(newAchievements.map(a=>a.id));
+  newAchievements.push(...freshAchievements.filter(a=>!known.has(a.id)));
+  if(freshAchievements.length||newRewardOnFinish)unlockToastDismissed=false;
   recordNewDossierChanges(before,next);
   const event=window.BirminghamCase002UIEvents.plan(
     before,next,choice.action,window.BirminghamCase002Consequences,evidenceName);
@@ -2319,8 +2323,8 @@ function select(choice,fromScene){
   const current=engine.snapshot();
   const committed=current.history.length>before.history.length;
   if(committed){
-   newRewardOnFinish=null;newAchievements=[]; // No false reward on archive errors.
-   unlockToastDismissed=true;
+   newRewardOnFinish=null; // No false reward on archive errors.
+   // Previously confirmed, unread achievements remain valid; no new ones granted here.
    recordNewDossierChanges(before,current);
    lastDecisionReceipt=null;
    render();

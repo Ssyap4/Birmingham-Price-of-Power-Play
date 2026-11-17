@@ -152,8 +152,44 @@ const unlockQueue=[];let unlockBusy=false;
 const toastRoot=document.createElement('div');toastRoot.className='campaign-unlock-tray';
 toastRoot.setAttribute('role','status');toastRoot.setAttribute('aria-live','polite');
 document.body.append(toastRoot);
-function celebrate(title,group){
- unlockQueue.push({title,group});
+// V34: verified openings remain readable in the current investigation after
+// the non-interactive flyout expires. No new storage or award rules.
+const receiptGame=$('caseGame'),receiptChoices=$('caseChoices');
+const receipt=make('section','case001-unlock-receipt');
+receipt.id='case001UnlockReceipt';receipt.hidden=true;
+receipt.setAttribute('aria-label','Новые подтверждённые открытия Дела №001');
+receipt.tabIndex=-1;
+const receiptTitle=make('strong','','НОВЫЕ ОТКРЫТИЯ');
+const receiptList=make('ul','case001-unlock-list');
+const receiptDismiss=make('button','','ПОНЯТНО');receiptDismiss.type='button';
+receipt.append(receiptTitle,receiptList,receiptDismiss);
+if(receiptChoices)receiptChoices.before(receipt);
+const pendingNotices=new Map();
+function currentAttempt(){
+ const hero=window.BirminghamHero?.selectedId||'jack',s=state(hero);
+ return s?hero+':'+s.started:null;
+}
+let receiptAttempt=null;
+function resetReceipt(){
+ pendingNotices.clear();receiptList.replaceChildren();receipt.hidden=true;receiptAttempt=null;
+}
+function addReceipt(title,group,kind){
+ if(!receiptGame||receiptGame.hidden)return;
+ const attempt=currentAttempt();if(!attempt)return;
+ if(receiptAttempt!==attempt){resetReceipt();receiptAttempt=attempt}
+ const key=kind+'|'+group+'|'+title;if(pendingNotices.has(key))return;
+ pendingNotices.set(key,true);
+ const row=make('li','');row.append(make('small','',kind+' · '+group),make('strong','',title));
+ receiptList.append(row);receiptTitle.textContent='НОВЫЕ ОТКРЫТИЯ · '+pendingNotices.size;
+ receipt.hidden=false;
+}
+receiptDismiss.onclick=()=>{resetReceipt();if(receiptChoices){receiptChoices.tabIndex=-1;receiptChoices.focus({preventScroll:true})}};
+if(receiptGame)new MutationObserver(()=>{
+ if(receiptGame.hidden){resetReceipt();unlockQueue.length=0;toastRoot.replaceChildren()}
+}).observe(receiptGame,{attributes:true,attributeFilter:['hidden']});
+function celebrate(title,group,kind='ДОСТИЖЕНИЕ ОТКРЫТО'){
+ addReceipt(title,group,kind);
+ unlockQueue.push({title,group,kind});
  if(unlockBusy)return;
  function next(){
   if(!unlockQueue.length){unlockBusy=false;return}
@@ -162,7 +198,7 @@ function celebrate(title,group){
   const card=make('div','campaign-unlock-popup');
   card.append(make('span','campaign-unlock-star','✦'));
   const text=make('div','campaign-unlock-copy');
-  text.append(make('small','','ДОСТИЖЕНИЕ ОТКРЫТО · '+prize.group),make('strong','',prize.title));
+  text.append(make('small','',prize.kind+' · '+prize.group),make('strong','',prize.title));
   card.append(text);toastRoot.replaceChildren(card);
   // Never intercept taps or leave a modal in the player’s way.
   setTimeout(()=>{card.classList.add('leaving');setTimeout(()=>{card.remove();next()},350)},2900);
@@ -301,7 +337,21 @@ function renderHistory(el,runs){
   const target=rect&&rect.height>0?window.scrollY+rect.top-anchorTop:oldY;
   if(Math.abs(target-window.scrollY)>2)window.scrollTo({top:Math.max(0,target),behavior:'instant'});
  }
-function sync(){const runs=persistFinished();awards(runs,true);const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')}
+function sync(){
+ const attempt=currentAttempt();if(receiptAttempt&&attempt!==receiptAttempt)resetReceipt();
+ const before=rewardArchive(),runs=persistFinished();awards(runs,true);
+ // Only a newly confirmed combination from the currently visible attempt
+ // may trigger a reward ceremony. Historic backfill remains silent.
+ if(receiptGame&&!receiptGame.hidden&&before.status==='ready'){
+  const hero=window.BirminghamHero?.selectedId||'jack',s=state(hero);
+  if(s&&knownEnding(s.node)){
+   const key=[CASE_ID,hero,s.node].join(':'),after=rewardArchive();
+   if(after.status==='ready'&&!before.value[key]&&after.value[key]&&runs.some(row=>row.heroId===hero&&row.started===s.started&&row.ending===s.node))
+    celebrate(ENDINGS[s.node],'Дело №001','НОВАЯ УНИКАЛЬНАЯ НАГРАДА');
+  }
+ }
+ const achievements=$( 'campaignAchievements');if(achievements&&!achievements.hidden)render('campaignAchievements')
+}
 const outcome=$('caseOutcome');if(outcome)new MutationObserver(sync).observe(outcome,{childList:true,subtree:true});
 // Existing history is registered without retroactive celebrations on page load.
 awards(persistFinished(),false);

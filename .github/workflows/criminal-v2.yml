@@ -21,6 +21,10 @@ on:
       - "campaign-bridge-v13.js"
       - "campaign-bridge-v13.css"
       - "campaign-hub-v1.js"
+      - "campaign-achievements-rebalance-v1.css"
+      - "case001-campaign-cohesion-v1.js"
+      - "preview/case002-prototype/app.js"
+      - "preview/case002-prototype/style.css"
       - "campaign-hub-v1.css"
       - "player-overview-cinema-v1.css"
       - "cabinet-menu-v1.css"
@@ -55,6 +59,11 @@ jobs:
       - name: Pure engine, persistence, branch and resource proofs
         run: |
           node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js tests/criminal/campaign-archive-bridge.test.js tests/criminal/menu-art.test.js tests/criminal/unified-v13.test.js
+          node --check campaign-hub-v1.js
+          node --check case001-campaign-cohesion-v1.js
+          node --check case001-unified-quicknav-v1.js
+          node --check preview/case002-prototype/app.js
+          node --test tests/case002/achievements-v1.test.js
           node tests/criminal/playthroughs.js
           python tests/case001/story_first_home_tests.py
       - name: Build the unified offline package and verify unchanged Case002 contract

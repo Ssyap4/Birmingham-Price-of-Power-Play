@@ -103,53 +103,6 @@
  document.addEventListener("birmingham:case-findings-changed",update);
  window.addEventListener("resize",syncMode,{passive:true});
  window.addEventListener("orientationchange",syncMode,{passive:true});
- // The board is still owned by case-v33-inventory.js; this text only
- // explains its existing selected/compatible tile states for touch readers.
- const modal=game.querySelector(".v33-shade");
- if(modal){
-  const stats=modal.querySelector(".v33-stats");
-  const board=modal.querySelector(".v33-board");
-  const solved=modal.querySelector(".v33-solved-board");
-  if(stats&&board&&solved){
-   const help=document.createElement("p");
-   help.className="case001-board-guide";
-   help.setAttribute("role","status");
-   help.setAttribute("aria-live","polite");
-   stats.after(help);
-   const explain=()=>{
-    if(modal.hidden)return;
-    const selected=modal.querySelector(".v33-tile.v33-selected");
-    const matching=modal.querySelectorAll(".v33-tile.v33-compatible").length;
-    const label=selected?.querySelector("span")?.textContent.trim();
-    help.textContent=selected?
-     "ВЫБРАНО: "+(label||"улика")+". "+
-     (matching?"Подсвеченные доказательства можно сопоставить.":"Подходящих найденных пар пока нет."):
-     "Коснись улики: доступные пары подсветятся. Связанные выводы сохраняются в досье.";
-   };
-   const obs=new MutationObserver(explain);
-   for(const area of [board,solved])obs.observe(area,{
-    attributes:true,attributeFilter:["class"],childList:true,subtree:true
-   });
-   new MutationObserver(explain).observe(modal,{
-    attributes:true,attributeFilter:["hidden","data-mode"]
-   });
-  }
-  const nav=document.getElementById("case001QuickNav");
-  if(nav){
-   let returnTo=null,wasVisible=false;
-   nav.addEventListener("click",event=>{
-    const btn=event.target.closest('button[data-go="evidence"],button[data-go="deduction"]');
-    if(btn)returnTo=btn;
-   },true);
-   new MutationObserver(()=>{
-    const visible=!modal.hidden;
-    if(wasVisible&&!visible&&returnTo&&!game.hidden&&compact.matches){
-     returnTo.focus({preventScroll:true});
-     returnTo=null;
-    }
-    wasVisible=visible;
-   }).observe(modal,{attributes:true,attributeFilter:["hidden"]});
-  }
- }
+ // V33 board now owns its sole selection guide and focus restoration.
  update();
 })();

@@ -7,7 +7,7 @@ from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import sys, json
+import sys, json, subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "work/criminal/browser"
@@ -132,6 +132,35 @@ def run():
                   else localStorage.setItem(k.meta,k.originalMeta);
                   window.BirminghamCase.resume();
                 }""",keys)
+                # V34: an earned award survives its flyout and is read in the scene.
+                award_fixture=page.evaluate("""k => {
+                  const awardKey='birmingham_campaign_awards_v1';
+                  const old=localStorage.getItem(awardKey);
+                  const state=JSON.parse(k.original);
+                  state.items=['envelope','key','invoice','route','ledger','receipt','ash','testimony','note'];
+                  localStorage.setItem(k.key,JSON.stringify(state));window.BirminghamCase.resume();
+                  return {awardKey,old};
+                }""",keys)
+                receipt=page.locator("#case001UnlockReceipt")
+                receipt.wait_for(state="visible")
+                assert "Острый взгляд" in receipt.inner_text()
+                assert page.locator(".case001-board-guide").count()==0
+                stored_award=page.evaluate("k=>localStorage.getItem(k)",award_fixture["awardKey"])
+                assert "clue9" in json.loads(stored_award)
+                page.wait_for_function("!document.querySelector('.campaign-unlock-popup')",timeout=20000)
+                assert receipt.is_visible()
+                page.screenshot(path=str(OUT / (name + "-v34-case001-achievement.png")),full_page=True)
+                tap(page,"#case001UnlockReceipt button")
+                assert receipt.is_hidden()
+                assert page.evaluate("k=>localStorage.getItem(k)",award_fixture["awardKey"])==stored_award
+                page.evaluate("""({k,a}) => {
+                  localStorage.setItem(k.key,k.original);
+                  if(k.originalMeta===null)localStorage.removeItem(k.meta);
+                  else localStorage.setItem(k.meta,k.originalMeta);
+                  if(a.old===null)localStorage.removeItem(a.awardKey);
+                  else localStorage.setItem(a.awardKey,a.old);
+                  window.BirminghamCase.resume();
+                }""",{"k":keys,"a":award_fixture})
                 # Leaving old entry UI and playing a new intro must preserve both raw slots.
                 tap(page, "#homeBtn")
                 tap(page, "#criminalEntry")
@@ -162,6 +191,41 @@ def run():
                     name,
                     "same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive, slots unchanged",
                 )
+                # Fresh context: follow one canonical Case002 route until an
+                # actual earned achievement is followed by an ordinary decision.
+                # No fabricated achievement, engine or archive state.
+                route_source=("const m=require('./tests/case002/simulate-story-model-v2.js');"
+                              "console.log(JSON.stringify(m.goodRoute('jack','trainEscape').actionLog));")
+                route=json.loads(subprocess.check_output(["node","-e",route_source],cwd=ROOT,text=True).strip().splitlines()[-1])
+                proof_ctx=browser.new_context(viewport={"width":390,"height":844},is_mobile=True,has_touch=True)
+                proof=proof_ctx.new_page()
+                proof_errors=[]
+                proof.on("pageerror",lambda e:proof_errors.append(str(e)))
+                proof.on("dialog",lambda d:d.accept())
+                proof.goto(origin+"/preview/case002-prototype/index.html",wait_until="domcontentloaded")
+                tap(proof,"#briefContinue")
+                tap(proof,"#begin")
+                known=None;verified=False
+                for source,target,action in route[:-1]:
+                    choice=proof.locator(f'button.choice[data-to="{target}"][data-action="{action}"]')
+                    assert choice.is_enabled(),(name,source,target)
+                    choice.tap()
+                    earned=set(proof.locator("#caseAchievementReceipt li[data-achievement-id]").evaluate_all("els=>els.map(e=>e.dataset.achievementId)"))
+                    if known is not None:
+                        assert known.issubset(earned),(name,"unread achievements lost",known,earned)
+                        if earned==known:
+                            assert proof.locator("#caseUnlockToast").is_hidden()
+                            verified=True
+                            break
+                    if earned:
+                        known=earned
+                        toast=proof.locator("#caseUnlockToast")
+                        if toast.is_visible():tap(proof,".case-unlock-toast-close")
+                assert verified,(name,"canonical route did not exercise unread receipt continuity")
+                proof.locator("#caseAchievementReceipt").scroll_into_view_if_needed()
+                proof.screenshot(path=str(OUT/(name+"-v34-case002-unread-achievement.png")))
+                assert not proof_errors,proof_errors
+                proof_ctx.close()
                 browser.close()
     finally:
         server.shutdown()
