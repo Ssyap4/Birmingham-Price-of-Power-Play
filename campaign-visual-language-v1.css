@@ -563,3 +563,38 @@
     background:linear-gradient(135deg,#57402a,#2b2016);
   }
 }
+
+
+/* V60 — settled, legible first frame and warm shared cabinet materials.
+   Whole-screen arrival must not dim the reader underneath the opaque dock.
+   Individual scene effects, risk badges and artwork keep their own mood. */
+@media (orientation:portrait) and (max-width:700px) {
+  #caseGame.screen:not([hidden]){
+    animation:none!important;opacity:1!important;visibility:visible!important;
+    transform:none!important;filter:none!important;
+  }
+  body[data-criminal="active"], #criminalScreen {
+    background:#181410!important;
+  }
+  #criminalScreen .cr-top button:not(:disabled):not([data-action="returnFinal"]) {
+    background:var(--campaign-cabinet-action)!important;
+    color:var(--campaign-cabinet-ink)!important;
+    border-color:var(--campaign-cabinet-edge)!important;
+  }
+  #criminalScreen .cr-record,
+  #criminalScreen .cr-awards article {
+    background:var(--campaign-cabinet-surface);
+    border-color:var(--campaign-cabinet-edge);
+    border-radius:var(--campaign-cabinet-radius);
+  }
+  #criminalScreen .cr-frame{
+    background:#17130f;
+  }
+  #criminalScreen .cr-frame figcaption{
+    border-bottom:0;
+    background:#211911;
+  }
+  #caseGame .case001-scene-hero-info{
+    min-width:0;
+  }
+}

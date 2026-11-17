@@ -123,6 +123,9 @@ def run():
                 assert page.locator("#caseGame").is_visible()
                 assert page.locator("#caseChoices button").count() > 0
                 first_visual=reading_language(page,"#caseText")
+                assert page.locator("#caseGame").evaluate("e=>{const s=getComputedStyle(e);return s.opacity==='1'&&s.animationName==='none'}")
+                assert page.locator("body>.shell>.top").evaluate("""el=>{const b=el.querySelector('.brand').getBoundingClientRect(),a=el.querySelector('.top-actions').getBoundingClientRect(),w=el.querySelector('.brand strong');return b.right<=a.left+1&&w.scrollWidth<=w.clientWidth+1}""")
+                page.locator("body>.shell>.top").screenshot(path=str(OUT/(name+"-v60-case001-header.png")))
                 page.wait_for_function("""()=>{const i=document.querySelector('#caseArt .case001-portrait-image');return i&&!i.hidden&&i.complete&&i.naturalWidth>0}""")
                 art_geometry=page.locator("#caseArt .case001-portrait-image").evaluate("""i=>{const s=getComputedStyle(i),r=i.getBoundingClientRect(),stage=i.parentElement;return {ratio:(r.width-parseFloat(s.borderLeftWidth)-parseFloat(s.borderRightWidth))/(r.height-parseFloat(s.borderTopWidth)-parseFloat(s.borderBottomWidth)),original:i.naturalWidth/i.naturalHeight,fill:r.width/stage.clientWidth,fit:s.objectFit,stageHeight:stage.clientHeight,imageHeight:r.height}}""")
                 assert abs(art_geometry["ratio"]-art_geometry["original"])<.035,art_geometry
@@ -262,6 +265,8 @@ def run():
                 tap(page, '.cr-pin[data-mission="CR02"]')
                 tap(page, '[data-action="start"]')
                 criminal_visual=reading_language(page,"#crStory > p")
+                assert page.locator("#criminalScreen").evaluate("e=>getComputedStyle(e).backgroundColor")=="rgb(24, 20, 16)"
+                assert page.locator("#criminalScreen .cr-top button").first.evaluate("e=>getComputedStyle(e).backgroundImage")!="none"
                 assert max(x["size"] for x in (first_visual,second_visual,criminal_visual))-min(x["size"] for x in (first_visual,second_visual,criminal_visual))<.1
                 print("PASS common narrative material and reading metrics",name,flush=True)
                 page.screenshot(path=str(OUT/(name+"-criminal-v51-reader.png")),full_page=True)

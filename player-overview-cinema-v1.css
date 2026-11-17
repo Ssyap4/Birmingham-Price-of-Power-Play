@@ -57,3 +57,18 @@
 }
 #profile .player-overview-live[data-active]:not([data-active="0"]){color:#f2d5a4}
 #profile .player-overview-live:not([data-issues="0"]){border-top-color:#bd856c}
+
+
+/* V60: the personal archive is the primary section, trial rank belongs
+   with the existing trial statistics, not the identity/title artwork. */
+#profile .profile-v21-copy p{margin-bottom:0}
+#profile .profile-trial-rank{
+ box-sizing:border-box;margin:10px 0 12px;padding:13px 12px;
+ border:1px solid #947044;border-radius:7px;
+ background:linear-gradient(145deg,#2d2118,#1a1510 68%,#15120f);
+ color:#e7cba7;overflow-wrap:anywhere;
+}
+#profile .profile-trial-rank #rankName{
+ margin:6px 0 9px;color:#f6d7a6;font:750 .82rem/1.45 system-ui,sans-serif;
+}
+#profile .profile-trial-rank #rankInfo{display:block;font:600 .75rem/1.45 system-ui,sans-serif}

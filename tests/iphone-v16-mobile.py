@@ -228,6 +228,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    page.locator("#profile .profile-v21-art").screenshot(path=str(OUT/f"{engine}-{width}-v22-profile-art.png"))
    assert page.locator("#profile .player-overview-card").count()==3
    assert page.locator("#profile .player-overview-live").count()==3
+   assert page.locator("#profile").evaluate("""e=>{const a=e.querySelector('#playerCampaignOverview'),r=e.querySelector('.profile-trial-rank'),g=e.querySelector('.profile-grid');return !!(a.compareDocumentPosition(r)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(r.compareDocumentPosition(g)&Node.DOCUMENT_POSITION_FOLLOWING)&&r.contains(e.querySelector('#rankName'))}""")
    assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.every(e=>e.scrollWidth<=e.clientWidth+1)")
    assert cabinet_material(page,"#profile .player-campaign-overview")==cabinet_reference
    assert page.locator("#profile .player-overview-card").evaluate_all("els=>els.every(e=>getComputedStyle(e).borderTopLeftRadius==='7px')")
