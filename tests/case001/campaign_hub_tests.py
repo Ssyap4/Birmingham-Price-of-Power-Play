@@ -27,7 +27,12 @@ assert 'gameExitBtn' in content("session-controls-v1.js")
 assert "document.querySelector('.bh-audio-controls')" in content("session-controls-v1.js")
 assert all(x in chapter for x in ("intro.webp","office-approved.webp","canal-approved.webp","reed.webp","pump.webp"))
 assert all(x in game for x in ("campaignDossiers","campaignAchievements","campaignHistory"))
-assert all(x in profile for x in ("campaignDossiers","campaignAchievements","campaignHistory"))
+# Profile shortcuts are owned by campaign-hub-v1.js, not the trial profile renderer.
+assert "const profile=$('profile');if(profile)" in hub
+assert "profile.append(link)" in hub
+assert all(f'data-open-section="{x}"' in hub for x in ("campaignDossiers","campaignAchievements","campaignHistory"))
+assert "if(b)open(b.dataset.openSection)" in hub
+assert "$('profileBtn').onclick=open" in profile
 assert all((ROOT/x).is_file() for x in [
 "assets/case-scenes/intro.webp","assets/case-scenes/office-approved.webp",
 "assets/case-scenes/canal-approved.webp","assets/case-scenes/reed.webp",
