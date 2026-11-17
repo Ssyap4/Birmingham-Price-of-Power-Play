@@ -64,6 +64,14 @@ with sync_playwright() as p:
         tap(page,'.map-pin[data-district="digbeth"]')
         ready(page,"#launchSecondCase")
         assert "002" in page.locator("#launchSecondCase").inner_text()
+        assert "digbeth.webp" in page.locator("#districtImage").evaluate(
+            "e=>getComputedStyle(e).backgroundImage"), "District scene did not select Digbeth artwork"
+        assert page.evaluate("""async () => {
+            const image=new Image();
+            image.src='assets/districts/digbeth.webp';
+            try { await image.decode(); return image.naturalWidth>320; }
+            catch { return false; }
+        }"""), "Digbeth artwork was not decoded before visual review"
         page.screenshot(path=str(OUTPUT/f"{browser_name}-{width}-detective.png"),full_page=True)
         tap(page,"#launchSecondCase")
         page.wait_for_url("**/preview/case002-prototype/index.html?from=map",timeout=30000)
