@@ -1,5 +1,16 @@
 name: V16 iPhone scroll, atmosphere and archive route QA
 on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - '**.js'
+      - '**.css'
+      - '**.html'
+      - 'assets/**'
+      - 'tests/iphone-v16-mobile.py'
+      - '.github/workflows/iphone-v16-ui.yml'
+      - '.github/workflows/case001-tests.yml'
   push:
     branches: [feat/criminal-operations-polish-v3]
     paths:
@@ -28,7 +39,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: iphone-v16-ui
+  group: iphone-v16-ui-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   iphone-v16:
@@ -59,6 +70,16 @@ jobs:
           node --test tests/trial-progress-v1.test.js
           node --check campaign-hub-v1.js
           node --check campaign-bridge-v13.js
+          node --check case-v14.js
+          node --check src/case002/story-variants-v4.js
+          node deployment/campaign-unified-release.js
+          node tests/case002/unified-package-integrity.test.js
+          node tests/case002/unified-archive-v1.test.js
+          node tests/case002/engine-v3.test.js
+          node tests/case002/hero-v3.test.js
+          node tests/case002/evidence-custody-v3.test.js
+          node tests/case002/story-variants-v4.test.js
+          node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js
           python -m py_compile tests/iphone-v16-mobile.py
       - name: Install only portrait browser runtimes
         run: |

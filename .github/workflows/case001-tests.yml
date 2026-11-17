@@ -82,7 +82,7 @@ jobs:
           retention-days: 14
 
   cabinet-smoke:
-    name: Cabinet visual and navigation smoke test
+    name: Campaign archive, onboarding and exit regression
     needs: scope
     if: needs.scope.outputs.ui == 'true'
     runs-on: ubuntu-latest
@@ -96,22 +96,12 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check 'playwright==1.62.0'
           python -m playwright install chromium
-      - name: Check cabinet across desktop and phone widths
-        run: python3 tests/case001/story_home_browser_tests.py
       - name: Check campaign archive and inventory interactions
         run: python3 tests/case001/campaign_browser_tests.py
       - name: Check onboarding and meaningful achievement unlocks
         run: python3 tests/case001/briefing_achievements_tests.py
       - name: Verify exit confirmation and save isolation
         run: python3 tests/case001/session_exit_tests.py
-      - name: Check touchscreen navigation and landscape safe areas
-        run: python3 tests/case001/mobile_safety_tests.py
-      - name: Portrait-first mobile navigation and layout QA
-        run: python3 tests/case001/portrait_browser_tests.py
-      - name: Check Case 001 layouts at three phone widths
-        run: python3 tests/case001/mobile_layout_tests.py
-        env:
-          PYTHONUNBUFFERED: '1'
       - name: Upload browser screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -161,37 +151,4 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-  webkit-mobile:
-    name: WebKit iPhone landscape and touch smoke
-    needs: scope
-    if: needs.scope.outputs.ui == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install WebKit and native libraries
-        run: |
-          python -m pip install --disable-pip-version-check 'playwright==1.62.0'
-          python -m playwright install --with-deps webkit
-      - name: Check iPhone WebKit landscape navigation and tap targets
-        env:
-          BIRMINGHAM_MOBILE_BROWSER: webkit
-        run: python3 tests/case001/mobile_safety_tests.py
-      - name: Portrait-first mobile navigation and layout QA
-        env:
-          BIRMINGHAM_MOBILE_BROWSER: webkit
-        run: python3 tests/case001/portrait_browser_tests.py
-
-      - name: Upload WebKit phone screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: webkit-phone-screenshots-${{ github.run_id }}
-          path: |
-            tests/case001/artifacts/mobile-platform/
-            tests/case001/artifacts/portrait/
-          if-no-files-found: warn
-          retention-days: 14
+  # Current portrait Chromium/WebKit QA is executed by iphone-v16-ui.yml.

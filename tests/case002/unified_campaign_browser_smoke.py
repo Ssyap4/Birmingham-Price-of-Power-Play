@@ -155,14 +155,13 @@ def run():
                     assert page.locator("#campaignAchievements").is_visible()
                     assert page.locator("#campaignSecondCaseAchievements").is_visible()
                     assert page.locator(
-                        "#campaignAchievements .campaign-002-to-digbeth").is_visible()
-                    assert page.locator(
-                        "#campaignAchievements .campaign-002-to-digbeth").get_attribute(
-                        "href")=="#district-digbeth"
+                        "#campaignAchievements .campaign-002-to-digbeth").count()==0
                     assert page.evaluate("""() => localStorage.getItem(
                         'birmingham_case002_draft_v3_jack')""")==case2
-                    page.locator("#campaignAchievements .campaign-002-to-digbeth").click()
-                    page.wait_for_url("**/index.html#district-digbeth")
+                    page.locator("#homeBtn").click()
+                    page.locator("#home").wait_for(state="visible")
+                    page.locator("#districtsCard").click()
+                    page.locator('.map-pin[data-district="digbeth"]').click()
                     # Same-document hashchange follows URL update in the event
                     # loop, so is_visible() can race the router by one tick.
                     page.wait_for_function("""() => {

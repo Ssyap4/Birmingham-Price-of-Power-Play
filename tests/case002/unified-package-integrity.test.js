@@ -79,9 +79,9 @@ assert(case2App.includes("function readResumeSlot(hero)")&&
 assert(second.includes("Материалы ближнего круга")&&
  second.includes("не изменяет историю №001"),
  "Case 002 masthead and briefing must match connected campaign");
-assert(globalArchive.includes("campaign-002-to-digbeth")&&
- globalArchive.includes('back.href="#district-digbeth"'),
- "Shared archive must offer a direct Digbeth return");
+assert(!globalArchive.includes("campaign-002-to-digbeth")&&
+ !globalArchive.includes('back.href="#district-digbeth"'),
+ "Shared archive is not a case-specific launch screen");
 const hub=fs.readFileSync(entry("campaign-hub-v1.js"),"utf8");
 assert(hub.includes('return localStorage.getItem(k)===encoded')&&
  hub.includes('if(dirty&&!put(AWARD_KEY,a))return previous'),
