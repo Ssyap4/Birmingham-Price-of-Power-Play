@@ -118,8 +118,10 @@ jobs:
 
   case001:
     name: 203 story scenarios and mobile layout
-    needs: scope
-    if: needs.scope.outputs.full == 'true'
+    needs: [scope, quick, cabinet-smoke]
+    # Do not spend a full browser matrix on a known-red short regression.
+    # A skipped UI job is legitimate only for a scope that does not request it.
+    if: ${{ !cancelled() && needs.scope.result == 'success' && needs.scope.outputs.full == 'true' && needs.quick.result == 'success' && (needs.cabinet-smoke.result == 'success' || (needs.scope.outputs.ui == 'false' && needs.cabinet-smoke.result == 'skipped')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:

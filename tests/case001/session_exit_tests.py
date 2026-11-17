@@ -25,16 +25,21 @@ def active_menu_exit_preserves(browser):
  return {'active_save_preserved':True}
 
 def menu_exit_preserves(browser):
- g=q.game(browser);g.path(['envelope','widow']);state=g.state()
- settle_state=state
- g.p.locator('#caseBack').click();saved=g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+'jack')
+ g=q.game(browser);g.path(['envelope','widow']);g.combine('key','envelope')
+ state=g.state();before=keys(g)
+ g.p.locator('#caseBack').click()
+ assert g.p.locator('#districts').is_visible() and keys(g)==before
+ # The atlas has its own safe exit; confirmation belongs to the active case.
+ # The shared audio-dock exit is intentionally hidden on the atlas.
+ assert g.p.locator('#gameExitBtn').is_hidden()
  prompts=[]
- g.p.once('dialog',lambda d:(prompts.append(d.message),d.accept()))
- g.p.locator('#gameExitBtn').click()
- assert prompts and 'останутся' in prompts[0],prompts
- assert g.p.evaluate('(k)=>localStorage.getItem(k)',q.BASE+'jack')==saved
- assert g.p.locator('#home').is_visible()
- return {'menu_save_preserved':True,'node':settle_state['node']}
+ g.p.on('dialog',lambda d:(prompts.append(d.message),d.dismiss()))
+ g.p.locator('#districtBack').click()
+ assert g.p.locator('#home').is_visible() and not prompts,prompts
+ assert keys(g)==before,'Returning through the atlas changed stored data'
+ g.p.locator('#districtsCard').click();g.launch()
+ assert g.state()==state and keys(g)==before,'Atlas return did not preserve the exact attempt'
+ return {'menu_save_preserved':True,'all_storage_preserved':True,'resumed':True,'node':state['node']}
 
 def completed_report_exit_preserves(browser):
  g=q.game(browser);g.path(['envelope','canal','bribe','pump','confront','endingDeal']);before=g.state()

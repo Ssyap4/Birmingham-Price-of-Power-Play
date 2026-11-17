@@ -15,6 +15,26 @@ def tap(page,sel):
  el.scroll_into_view_if_needed()
  el.tap(timeout=15000)
 
+def return_from_case002(page,save,label):
+ # The return link is in normal flow above the scene. Resume scrolls to the
+ # story; finish scrolling back before issuing a real touchscreen gesture.
+ link=page.locator("#case002MapReturn")
+ assert link.get_attribute("href")=="../../index.html#district-digbeth"
+ page.evaluate("window.scrollTo({top:0,left:0,behavior:'instant'})")
+ page.wait_for_function("""()=>{const e=document.getElementById('case002MapReturn');
+  if(!e)return false;const r=e.getBoundingClientRect();
+  return scrollY<=1&&r.height>=44&&r.top>=0&&r.bottom<=innerHeight&&
+   e.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}""")
+ try:
+  with page.expect_navigation(url="**/index.html#district-digbeth",wait_until="load",timeout=15000):
+   link.tap(timeout=15000)
+ except Exception:
+  page.screenshot(path=str(OUT/f"{label}-case002-map-return-failure.png"))
+  print("CASE002 RETURN FAILED",label,page.url,flush=True)
+  raise
+ page.locator("#launchSecondCase").wait_for(state="visible")
+ assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+
 def trial_bounds(page,screen,width):
  page.wait_for_function("""({screen,width})=>{
   const el=document.getElementById(screen),r=el.getBoundingClientRect(),head=document.querySelector('.shell>.top'),h=head.getBoundingClientRect(),style=getComputedStyle(el);
@@ -281,9 +301,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.locator("#sceneId").inner_text().startswith("P02")
     save=page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")
     assert save and json.loads(save)["node"]=="P02"
-    tap(page,"#case002MapReturn")
-    page.wait_for_url("**/index.html#district-digbeth")
-    page.locator("#launchSecondCase").wait_for(state="visible")
+    return_from_case002(page,save,f"{engine}-{width}-first")
     assert "В РАБОТЕ: 1" in page.locator("#campaignDistrictState").inner_text()
     assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
     # The in-app archive leaves the existing Digbeth URL untouched.
@@ -304,9 +322,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,"#resume")
     assert page.locator("#sceneId").inner_text().startswith("P02")
     assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
-    tap(page,"#case002MapReturn")
-    page.wait_for_url("**/index.html#district-digbeth")
-    page.locator("#launchSecondCase").wait_for(state="visible")
+    return_from_case002(page,save,f"{engine}-{width}-resumed")
     page.screenshot(path=str(OUT/f"{engine}-{width}-digbeth-resume.png"))
     tap(page,"#homeBtn")
     page.locator("#home").wait_for(state="visible")
