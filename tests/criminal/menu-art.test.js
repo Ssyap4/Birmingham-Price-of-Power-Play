@@ -35,6 +35,7 @@ test("existing two menu compositions remain in one audio player and settings per
  assert.match(js,/bh_effects_enabled/);
  assert.match(js,/id="bhMenuTrack"/);
  assert.match(js,/trackBtn\.addEventListener/);
+ assert.match(js,/p\.src=base\+playlists\[mode\]\[index\]/);
  assert.match(h,/audio-v1\.js/);assert.match(h,/audio-v1\.css/);
  for(const f of ["night-on-the-docks.mp3","menu-original.ogg","case-fog.ogg","case-ledger.ogg","case-shadows.ogg"])
   assert.ok(fs.statSync(path.join(root,"assets/audio",f)).size>1000,f);
