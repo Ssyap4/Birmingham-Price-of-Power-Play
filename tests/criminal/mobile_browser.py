@@ -166,9 +166,11 @@ def run():
                             return a.bottom<=c.top || a.top>=c.bottom;
                         })
                     }"""), "music controls overlap a main-menu card"
-                    assert "1 / 2" in page.locator("#bhMenuTrack").inner_text()
-                    touch(page, "#bhMenuTrack")
-                    assert "2 / 2" in page.locator("#bhMenuTrack").inner_text()
+                    # V32 uses a randomized deck, not the retired fixed 1/2 label.
+                    assert page.locator("#bhMenuTrack").get_attribute("aria-label")=="Следующая композиция"
+                    assert page.locator("#bhMenuTrack").inner_text()=="♪ Следующая запись"
+                    assert page.evaluate("BirminghamAudio.getState().musicOn") is True
+                    # Actual decode, track change and mode playback are covered by the dedicated iPhone QA.
                     # V21: verify decoded independent image panels, not obsolete CSS backgrounds.
                     for selector, sources in (
                         ("#districtsCard", ["assets/districts/centre.webp"]),

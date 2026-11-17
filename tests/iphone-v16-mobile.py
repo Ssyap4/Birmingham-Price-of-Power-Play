@@ -329,6 +329,11 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     if page.locator("#bhMusic").get_attribute("aria-pressed")=="false":tap(page,"#bhMusic")
     else:tap(page,"#bhMenuTrack")
     page.wait_for_function("BirminghamAudio.getState().mode==='menu' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
+    page.wait_for_function("BirminghamAudio.getState().phase==='idle'",timeout=10000)
+    first_track=page.evaluate("BirminghamAudio.getState().trackId")
+    tap(page,"#bhMenuTrack")
+    page.wait_for_function("id=>BirminghamAudio.getState().mode==='menu' && BirminghamAudio.getState().trackId!==id && BirminghamAudio.getState().currentTime>.15",arg=first_track,timeout=15000)
+    assert {first_track,page.evaluate("BirminghamAudio.getState().trackId")}=={"covert-affair","just-as-soon"}
     tap(page,"#criminalEntry")
     page.wait_for_function("BirminghamAudio.getState().mode==='criminal' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
     tap(page,"#homeBtn")
@@ -342,8 +347,13 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,'.map-pin[data-district="digbeth"]')
     tap(page,"#launchSecondCase")
     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
-    # Opening a new document requires a fresh user interaction on that document.
-    tap(page,"#briefContinue")
+    # A saved P02 slot was created by the route test above. The briefing
+    # is intentionally skipped on re-entry; the actual resume button is the gesture.
+    page.locator("#launch").wait_for(state="visible")
+    assert page.locator("#caseBriefing").is_hidden()
+    assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+    tap(page,"#resume")
+    assert page.locator("#sceneId").inner_text().startswith("P02")
     page.wait_for_function("BirminghamAudio.getState().mode==='detective' && BirminghamAudio.getState().currentTime>.15",timeout=15000)
     assert page.locator("#case002AudioDock .bh-audio-controls").count()==1
     tap(page,"#bhMusic")
@@ -351,6 +361,58 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     assert page.evaluate("localStorage.getItem('bh_music_enabled')")=="false"
     page.goto(url,wait_until="domcontentloaded")
     assert page.locator("#bhMusic").get_attribute("aria-pressed")=="false"
+   if width==390:
+    # Both existing trial modes must be reachable from the single home card.
+    page.goto(url,wait_until="domcontentloaded")
+    tap(page,".cabinet-entry-quiz")
+    page.locator("#choose").wait_for(state="visible")
+    assert page.locator("#difficultyList button.mode").count()==4
+    assert page.locator("#difficultyList .mode.upcoming").count()==1
+    assert page.locator("#trialMode [data-trial-mode='classic']").get_attribute("aria-pressed")=="true"
+    assert page.locator("#choose .trial-audio-dock .bh-audio-controls").count()==1
+    tap(page,"#trialMode [data-trial-mode='timed']")
+    assert page.locator("#trialMode [data-trial-mode='timed']").get_attribute("aria-pressed")=="true"
+    assert "15 секунд" in page.locator("#chooseDescription").inner_text()
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trials-selector.png"),full_page=True)
+    tap(page,"#difficultyList button.mode")
+    page.locator("#play").wait_for(state="visible")
+    assert page.locator("#clockWrap").is_visible()
+    page.wait_for_function("Number(document.getElementById('clock').textContent)<15")
+    assert page.locator("#play .trial-audio-dock .bh-audio-controls").count()==1
+    assert page.locator("#gameExitBtn").is_hidden()
+    tap(page,"#fiftyBtn")
+    assert page.locator("#answers .answer:visible").count()==2
+    assert page.locator("#fiftyBtn").is_disabled()
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trial-question.png"),full_page=True)
+    tap(page,"#skipBtn")
+    assert page.locator("#skipBtn").is_disabled()
+    tap(page,"#nextBtn")
+    assert page.locator("#questionNumber").inner_text().startswith("02")
+    for _ in range(3):
+     wrong=page.evaluate("""() => {
+       const q=Object.values(window.BIRMINGHAM_QUESTIONS).flat().find(x=>x.question===document.getElementById('questionText').textContent);
+       return [...document.querySelectorAll('#answers .answer')].findIndex(b=>b.textContent!==q.correct);
+     }""")
+     assert wrong>=0
+     page.locator("#answers .answer").nth(wrong).tap()
+     tap(page,"#nextBtn")
+    page.locator("#result").wait_for(state="visible")
+    assert page.locator("#resultTitle").inner_text()=="ПОПЫТКА ЗАВЕРШЕНА"
+    assert page.locator("#result .trial-audio-dock .bh-audio-controls").count()==1
+    page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trial-result.png"),full_page=True)
+    tap(page,"#retryBtn")
+    assert page.locator("#trialMode [data-trial-mode='timed']").get_attribute("aria-pressed")=="true"
+    tap(page,"#trialMode [data-trial-mode='classic']")
+    tap(page,"#difficultyList button.mode")
+    assert page.locator("#clockWrap").is_hidden()
+    page.once("dialog",lambda d:d.dismiss())
+    tap(page,"#homeBtn")
+    assert page.locator("#play").is_visible()
+    page.once("dialog",lambda d:d.accept())
+    tap(page,"#homeBtn")
+    page.locator("#home").wait_for(state="visible")
+    page.locator("#cinemaAudioDock .bh-audio-controls").wait_for(state="visible")
+    assert page.locator(".bh-audio-controls").count()==1
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
    report.append({"engine":engine,"width":width,"status":"PASS",

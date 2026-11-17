@@ -5,6 +5,10 @@ on:
     paths:
       - iphone-ux-v16.css
       - audio-v1.js
+      - audio-v1.css
+      - game.js
+      - mobile-trials-portrait-v1.css
+      - case-controls-mobile-v1.js
       - src/audio/playlist-v27.js
       - tests/iphone-v16-static.test.js
       - tests/iphone-v16-mobile.py

@@ -18,3 +18,7 @@
 .bh-music-credits p{margin:7px 0;overflow-wrap:anywhere}
 #case002AudioDock .bh-music-credits{margin:5px 0 0;border:0;padding:0 5px}
 #case002AudioDock .bh-music-credits:not([open]) summary{min-height:31px;justify-content:center;font-size:11px}
+
+/* V32: temporary unavailable controls are visibly and semantically disabled. */
+.bh-audio-controls button:disabled{opacity:.62;cursor:default;box-shadow:none}
+.bh-audio-controls button:disabled:hover{outline:none;border-color:#8e7047}

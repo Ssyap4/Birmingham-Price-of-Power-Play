@@ -15,7 +15,8 @@ const wrap=document.createElement('div');wrap.className='bh-audio-controls';
 wrap.innerHTML='<button id="bhMusic" type="button" aria-label="Включить или выключить музыку"></button><button id="bhEffects" type="button" aria-label="Включить или выключить звуковые эффекты"></button><button id="bhMenuTrack" type="button" aria-label="Следующая композиция"></button>';
 (casePage?document.getElementById('case002AudioDock')||document.body:document.body).append(wrap);
 const mBtn=wrap.querySelector('#bhMusic'),sBtn=wrap.querySelector('#bhEffects'),trackBtn=wrap.querySelector('#bhMenuTrack');
-function paint(){trackBtn.textContent='♪ Следующая запись';mBtn.textContent=musicOn?'♫ Музыка: вкл':'♫ Музыка: выкл';sBtn.textContent=effectsOn?'♧ Эффекты: вкл':'♧ Эффекты: выкл';mBtn.setAttribute('aria-pressed',String(musicOn));sBtn.setAttribute('aria-pressed',String(effectsOn))}
+function paintTrack(){const busy=phase!=='idle';trackBtn.disabled=!musicOn||busy;trackBtn.textContent=busy?'♪ Смена записи…':'♪ Следующая запись';}
+function paint(){paintTrack();mBtn.textContent=musicOn?'♫ Музыка: вкл':'♫ Музыка: выкл';sBtn.textContent=effectsOn?'♧ Эффекты: вкл':'♧ Эффекты: выкл';mBtn.setAttribute('aria-pressed',String(musicOn));sBtn.setAttribute('aria-pressed',String(effectsOn))}
 function addCredits(){
  const host=casePage?document.getElementById('case002AudioDock'):document.getElementById('profile');
  if(!host)return;const details=document.createElement('details');details.className='bh-music-credits';
@@ -38,14 +39,14 @@ function audioContext(){
  }catch{}
 }
 function setLevel(i,v){if(i<0)return;levels[i]=Math.max(0,Math.min(1,v));if(gains[i])gains[i].gain.value=levels[i];else players[i].volume=levels[i]}
-function mark(){document.body.classList.toggle('bh-music-playing',musicOn&&active>=0&&!players[active].paused&&!document.hidden)}
+function mark(){paintTrack();document.body.classList.toggle('bh-music-playing',musicOn&&active>=0&&!players[active].paused&&!document.hidden)}
 function halt(keepPlan=false){const resume=keepPlan?(pending|| (trackId?{mode,id:trackId}:null)):null;++token;phase='idle';active=-1;mode=null;trackId=null;pending=resume;blocked=false;players.forEach((p,i)=>{p.pause();setLevel(i,0)});mark()}
 function targetMode(){return core.resolveContext(document,{casePage})}
 function planFor(target){if(pending?.mode===target)return pending;return {mode:target,id:rotation.mode===target?rotation.next():rotation.enter(target)}}
 function playPlan(plan){
  if(!plan?.id||!musicOn||!unlocked||document.hidden||phase!=='idle')return;
  const old=active,next=old===0?1:0,p=players[next],epoch=++token,oldLevel=old>=0?levels[old]:0;
- pending=plan;phase='loading';p.pause();setLevel(next,0);p.src=base+plan.id+'.mp3';
+ pending=plan;phase='loading';paintTrack();p.pause();setLevel(next,0);p.src=base+plan.id+'.mp3';
  function failed(){if(epoch!==token)return;phase='idle';blocked=true;p.pause();setLevel(next,0);mark()}
  let playing;try{playing=p.play()}catch{failed();return}
  Promise.resolve(playing).then(()=>{
@@ -57,7 +58,7 @@ function playPlan(plan){
    const t=Math.min(1,Math.max(0,(now-begin)/fadeMs)),[out,inc]=core.fadeGains(t);
    setLevel(next,volume*inc);if(old>=0)setLevel(old,oldLevel*out);
    if(t<1)requestAnimationFrame(tick);
-   else{if(old>=0){players[old].pause();setLevel(old,0)}phase='idle';sync()}
+   else{if(old>=0){players[old].pause();setLevel(old,0)}phase='idle';paintTrack();sync()}
   }requestAnimationFrame(tick);
  }).catch(failed);
 }
@@ -84,5 +85,5 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)halt(true);
 window.addEventListener('pagehide',()=>halt(true));
 window.addEventListener('pageshow',()=>{musicOn=saved('bh_music_enabled',musicOn);effectsOn=saved('bh_effects_enabled',effectsOn);paint();if(!musicOn)halt();else sync()});
 setInterval(sync,450);
-window.BirminghamAudio={sync,playEffect:beep,getState:()=>({mode,trackId,phase,musicOn,levels:[...levels],playing:active>=0&&!players[active].paused,currentTime:active>=0?players[active].currentTime:0,activeCount:players.filter(p=>!p.paused&&!p.ended).length,blocked,webAudio:gains.every(Boolean)})};
+window.BirminghamAudio={sync,playEffect:beep,getState:()=>({mode,trackId,phase,musicOn,effectsOn,levels:[...levels],playing:active>=0&&!players[active].paused,currentTime:active>=0?players[active].currentTime:0,activeCount:players.filter(p=>!p.paused&&!p.ended).length,blocked,webAudio:gains.every(Boolean)})};
 })();
