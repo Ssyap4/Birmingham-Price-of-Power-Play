@@ -50,5 +50,15 @@
    document.querySelector('.map-pin[data-district="digbeth"]')?.click();
    launch.focus({preventScroll:true});
  }
+ // The hash may still be Digbeth after a no-URL-change in-app transition
+ // to the archive. Clicking its return link then emits no hashchange.
+ // Handle that exact same-fragment activation, including keyboard clicks.
+ document.addEventListener("click",e=>{
+   const link=e.target.closest?.('a[href="#district-digbeth"]');
+   if(!link||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||
+      e.shiftKey||e.altKey||window.location.hash!=="#district-digbeth")return;
+   if(link.closest("[hidden]"))return;
+   e.preventDefault();openHash();
+ });
  refresh();openHash();window.addEventListener("hashchange",openHash);
 })();

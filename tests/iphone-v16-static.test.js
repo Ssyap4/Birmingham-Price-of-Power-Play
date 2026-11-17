@@ -63,3 +63,13 @@ test("V17 archive view state is restored by stable fold IDs, not save data",()=>
  assert.ok(read("campaign-case002-archive-v1.js").includes("002:attempt:"));
  assert.ok(read("campaign-criminal-archive-v1.js").includes("criminal:reward:"));
 });
+
+
+test("V17 map return works even for the current URL fragment and avoids smooth auto-scroll",()=>{
+ const entry=read("case002-map-entry-v1.js"),map=read("campaign-map-journey-v1.js");
+ assert.ok(entry.includes('window.location.hash!=="#district-digbeth"'));
+ assert.ok(entry.includes("e.preventDefault();openHash()"));
+ assert.ok(map.includes('scrollIntoView({block:"center",behavior:"auto"})'));
+ assert.ok(map.includes("Math.abs(window.scrollY-y)>2"));
+ assert.ok(!map.includes('behavior:reduce?"auto":"smooth"'));
+});

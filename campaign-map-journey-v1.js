@@ -99,12 +99,16 @@
   if(!e.isTrusted||e.detail===0||!compact.matches)return;
   // On a phone the map pins are above the fold; reveal the selected case
   // and its action rather than leaving the player looking at the old map.
+  const district=e.target.closest(".map-pin")?.dataset.district;
+  const y=window.scrollY;
   requestAnimationFrame(()=>{
-   if(map.hidden)return;
+   if(map.hidden||map.querySelector(".map-pin.selected")?.dataset.district!==district||
+      Math.abs(window.scrollY-y)>2)return;
    const target=document.getElementById("districtCase");
    if(!target||target.getBoundingClientRect().top<innerHeight-115)return;
-   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-   target.scrollIntoView({block:"center",behavior:reduce?"auto":"smooth"});
+   // One immediate reveal per genuine tap, never a smooth scroll that
+   // can continue competing with the player's next swipe or map exit.
+   target.scrollIntoView({block:"center",behavior:"auto"});
   });
  }
  map.addEventListener("click",e=>{

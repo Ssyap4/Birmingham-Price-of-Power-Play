@@ -139,6 +139,45 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#homeBtn")
    page.locator("#home").wait_for(state="visible")
    assert page.locator("#cinemaAudioDock .bh-audio-controls").count()==1
+   # Real same-origin navigation and an actual engine-created incomplete slot.
+   # One width per engine is sufficient; geometry is already tested above.
+   if width==390:
+    tap(page,"#districtsCard")
+    tap(page,'.map-pin[data-district="digbeth"]')
+    tap(page,"#launchSecondCase")
+    page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+    tap(page,"#briefContinue")
+    tap(page,'#heroGallery [data-hero="jack"]')
+    tap(page,"#begin")
+    page.locator("#game").wait_for(state="visible")
+    tap(page,'button.choice[data-to="P02"]')
+    assert page.locator("#sceneId").inner_text().startswith("P02")
+    save=page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")
+    assert save and json.loads(save)["node"]=="P02"
+    tap(page,"#case002MapReturn")
+    page.wait_for_url("**/index.html#district-digbeth")
+    page.locator("#launchSecondCase").wait_for(state="visible")
+    assert "В РАБОТЕ: 1" in page.locator("#campaignDistrictState").inner_text()
+    assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+    # The in-app archive leaves the existing Digbeth URL untouched.
+    tap(page,"#districts .campaign-portal-v13 [data-campaign-jump='archive']")
+    page.locator("#campaignAchievements").wait_for(state="visible")
+    assert page.url.endswith("#district-digbeth")
+    tap(page,"#campaignAchievements .campaign-002-to-digbeth")
+    page.locator("#launchSecondCase").wait_for(state="visible")
+    assert page.locator("#campaignAchievements").is_hidden()
+    assert "В РАБОТЕ: 1" in page.locator("#campaignDistrictState").inner_text()
+    tap(page,"#launchSecondCase")
+    page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
+    tap(page,"#resume")
+    assert page.locator("#sceneId").inner_text().startswith("P02")
+    assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+    tap(page,"#case002MapReturn")
+    page.wait_for_url("**/index.html#district-digbeth")
+    page.locator("#launchSecondCase").wait_for(state="visible")
+    page.screenshot(path=str(OUT/f"{engine}-{width}-digbeth-resume.png"))
+    tap(page,"#homeBtn")
+    page.locator("#home").wait_for(state="visible")
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
    report.append({"engine":engine,"width":width,"status":"PASS",
