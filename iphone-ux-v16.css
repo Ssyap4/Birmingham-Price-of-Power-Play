@@ -190,3 +190,42 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.42}
  body:has(>.shell>#profile:not([hidden]))>.shell>.top .top-actions{flex:none;min-width:0}
  body:has(>.shell>#profile:not([hidden]))>.shell>.top .brand strong{font-size:clamp(14px,4.3vw,20px)!important;letter-spacing:.06em!important;white-space:normal!important}
 }
+
+/* V24: refine existing V21 scene layers from the V23 mobile browser frames.
+   Lamp highlights are anchored to the shade and desk; rain remains behind the
+   original props. The record is an animated reflection, not a duplicate prop. */
+#home .cinema-hero::before{
+ background:radial-gradient(ellipse 24% 8% at 17% 46.8%,rgba(255,230,160,.9),rgba(247,183,93,.23) 62%,transparent 100%),
+ radial-gradient(ellipse 26% 24% at 19% 48%,rgba(255,205,120,.55),rgba(231,151,64,.15) 58%,transparent 100%),
+ radial-gradient(ellipse 35% 14% at 31% 65%,rgba(255,192,110,.35),transparent 100%);
+ filter:blur(3px);
+}
+@keyframes cinema-v16-lamplight{
+ 0%,25%,74%,100%{opacity:.68}
+ 12%,39%,85%{opacity:1}
+ 48%{opacity:.28}49.5%{opacity:.91}51%{opacity:.38}54%{opacity:.91}
+}
+#home .cinema-rain{clip-path:polygon(18% 0,81% 0,81% 27%,69% 35%,66% 53%,32% 55%,31% 37%,18% 35%);opacity:.72}
+#home .cinema-rain::after{
+ opacity:.92;
+ background-image:
+ radial-gradient(ellipse 1.15px 12px at 28% 28%,rgba(230,242,237,.88),rgba(193,217,226,.3) 56%,transparent 100%),
+ radial-gradient(ellipse 1px 8px at 64% 73%,rgba(234,244,241,.78),transparent 94%),
+ radial-gradient(ellipse 1.25px 15px at 82% 11%,rgba(226,240,237,.83),rgba(193,217,226,.22) 62%,transparent 100%),
+ radial-gradient(ellipse .9px 6px at 12% 56%,rgba(221,236,241,.72),transparent 98%);
+ background-size:83px 180px,107px 180px,151px 180px,69px 180px;
+ animation-duration:3.2s;
+}
+/* Keep both wisps narrow; the baked-in photographic smoke stays visible. */
+#home .cinema-smoke{filter:blur(1.8px)}
+#home .cinema-smoke.second{filter:blur(3.5px)}
+#home .cinema-vinyl-glint{
+ left:73%;top:54%;width:23%;transform:translateY(-50%) rotateX(79deg);
+ background:conic-gradient(from 15deg,transparent 0deg,rgba(255,225,183,.68) 22deg,transparent 46deg,transparent 176deg,rgba(235,193,132,.32) 196deg,transparent 226deg);
+}
+body.bh-music-playing #home .cinema-vinyl-glint{opacity:.50;animation:cinema-vinyl 1.5s linear infinite}
+@keyframes cinema-vinyl{from{transform:translateY(-50%) rotateX(79deg) rotate(0deg)}to{transform:translateY(-50%) rotateX(79deg) rotate(360deg)}}
+@media(max-width:355px){#home .cinema-vinyl-glint{left:76%;width:24%}}
+@media(prefers-reduced-motion:reduce){
+ #home .cinema-vinyl-glint{animation:none!important;opacity:0!important}
+}

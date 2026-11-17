@@ -96,3 +96,20 @@ test("V23 criminal menu uses independent verified artwork, never the CR01 scene"
  assert.equal(art.readUInt16LE(28)&0x3fff,720);
  assert.equal(crypto.createHash("sha256").update(art).digest("hex"),"782ec1f2867afe471ea653e57e5b162aea6a79a31cc4ef4f3ee046d1cdcde86d");
 });
+
+test("V24 achievement card uses independent verified artwork without a stretched banner",()=>{
+ const h=read("index.html"),css=read("cinema-home-v1.css");
+ const card=h.match(/<button[^>]+id="storyStart"[\s\S]*?<\/button>/)?.[0]||"";
+ assert.ok(card.includes("assets/cabinet/achievements-menu-v24.webp"));
+ assert.ok(!card.includes("assets/mobile-menu/approved-achievements.webp"));
+ assert.match(card,/width="788" height="720"/);
+ assert.doesNotMatch(css,/transform:translate\(-80%,-50%\)/);
+ const art=fs.readFileSync(path.join(root,"assets/cabinet/achievements-menu-v24.webp"));
+ assert.equal(art.length,145436);
+ assert.equal(art.toString("ascii",0,4),"RIFF");
+ assert.equal(art.toString("ascii",8,12),"WEBP");
+ assert.equal(art.toString("ascii",12,16),"VP8 ");
+ assert.equal(art.readUInt16LE(26)&0x3fff,788);
+ assert.equal(art.readUInt16LE(28)&0x3fff,720);
+ assert.equal(crypto.createHash("sha256").update(art).digest("hex"),"75ec252d844485b031d1fe767137e099f9bf0f693fe3428b5cb35e8182ab3aa7");
+});

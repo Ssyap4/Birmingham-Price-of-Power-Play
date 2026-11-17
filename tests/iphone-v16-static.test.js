@@ -99,7 +99,7 @@ test("V21 uses image panels and removes redundant profile/archive portals",()=>{
  const h=read("index.html"),css=read("cinema-home-v1.css"),bridge=read("campaign-bridge-v13.js");
  assert.equal((h.match(/class="cabinet-entry-art(?: |")/g)||[]).length,6);
  assert.doesNotMatch(h,/class="cabinet-entry-icon/);
- for(const file of ["assets/districts/centre.webp","assets/cabinet/criminal-menu-v23.webp","assets/original-art/clock.webp","assets/mobile-menu/approved-achievements.webp","assets/heroes/jack.webp","assets/heroes/eleanor.webp","assets/cabinet/profile-v21.webp","assets/cabinet/profile-header-v22.webp"]){
+ for(const file of ["assets/districts/centre.webp","assets/cabinet/criminal-menu-v23.webp","assets/original-art/clock.webp","assets/cabinet/achievements-menu-v24.webp","assets/heroes/jack.webp","assets/heroes/eleanor.webp","assets/cabinet/profile-v21.webp","assets/cabinet/profile-header-v22.webp"]){
   assert.ok(h.includes(file));assert.ok(fs.statSync(path.join(root,file)).size>1000);
  }
  assert.match(css,/\.cabinet-entry::before,#home \.cabinet-entry::after\{content:none!important/);
@@ -115,5 +115,6 @@ test("V22 profile artwork is shown in its natural aspect and detective copy scal
  assert.match(h,/class="profile-v21-art"><img src="assets\/cabinet\/profile-header-v22\.webp"/);
  assert.match(css,/aspect-ratio:959\/540/);
  assert.match(css,/object-fit:contain;object-position:center;max-width:none;transform:none/);
- assert.match(menu,/transform:translate\(-80%,-50%\)/);
+ assert.doesNotMatch(menu,/transform:translate\(-80%,-50%\)/);
+ assert.match(menu,/\.cabinet-art-medal img\{object-position:50% 57%/);
 });

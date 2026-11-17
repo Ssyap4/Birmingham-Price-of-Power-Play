@@ -59,6 +59,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert menu.locator(".cabinet-entry-icon").count()==0
    page.wait_for_function("Array.from(document.querySelectorAll('#home .cabinet-entry-art img')).every(i=>i.complete && i.naturalWidth>0)")
    assert page.locator("#criminalEntry .cabinet-entry-art img").evaluate("i=>i.getAttribute('src')==='assets/cabinet/criminal-menu-v23.webp' && i.naturalWidth===792 && i.naturalHeight===720")
+   assert page.locator("#storyStart .cabinet-entry-art img").evaluate("i=>i.getAttribute('src')==='assets/cabinet/achievements-menu-v24.webp' && i.naturalWidth===788 && i.naturalHeight===720 && getComputedStyle(i).objectFit==='cover' && getComputedStyle(i).transform==='none'")
    assert page.evaluate("""async () => {
     const images=[...document.querySelectorAll('#home .cabinet-entry-art img')];
     await Promise.all(images.map(i=>i.decode()));
@@ -81,6 +82,15 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     for seconds,delay in [(0,0),(1,1000),(3,2000),(6,3000)]:
      page.wait_for_timeout(delay)
      page.locator("#home .cinema-hero").screenshot(path=str(OUT/f"webkit-390-cabinet-t{seconds}.png"),animations="allow")
+    # Exercise the music-playing visual state independently of codec/autoplay support.
+    was_playing=page.evaluate("document.body.classList.contains('bh-music-playing')")
+    page.evaluate("document.body.classList.add('bh-music-playing')")
+    assert page.locator("#home .cinema-vinyl-glint").evaluate("el=>getComputedStyle(el).animationName==='cinema-vinyl' && parseFloat(getComputedStyle(el).opacity)>=.4")
+    for frame in range(2):
+     page.wait_for_timeout(470)
+     page.locator("#home .cinema-hero").screenshot(path=str(OUT/f"webkit-390-v24-vinyl-{frame}.png"),animations="allow")
+    if not was_playing:
+     page.evaluate("document.body.classList.remove('bh-music-playing')")
    page.evaluate("window.scrollTo(0,document.documentElement.scrollHeight)")
    page.wait_for_function("document.querySelector('#home').classList.contains('cinema-still')")
    assert page.evaluate("getComputedStyle(document.querySelector('#home .cinema-rain'),'::after').animationPlayState")=="paused"

@@ -174,7 +174,7 @@ def run():
                         ("#districtsCard", ["assets/districts/centre.webp"]),
                         ("#criminalEntry", ["assets/cabinet/criminal-menu-v23.webp"]),
                         (".cabinet-entry-quiz", ["assets/original-art/clock.webp"]),
-                        ("#storyStart", ["assets/mobile-menu/approved-achievements.webp"]),
+                        ("#storyStart", ["assets/cabinet/achievements-menu-v24.webp"]),
                         ("#profileCard", ["assets/heroes/jack.webp", "assets/heroes/eleanor.webp"]),
                         ("#cabinetProfile", ["assets/cabinet/profile-v21.webp"]),
                     ):

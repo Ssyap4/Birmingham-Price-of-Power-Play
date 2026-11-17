@@ -37,8 +37,8 @@ body.bh-music-playing #home .cinema-vinyl-glint{opacity:.25;animation:cinema-vin
 #home #districtsCard .cabinet-entry-art img{object-position:66% 55%}
 #home #criminalEntry .cabinet-entry-art img{object-position:50% 58%;filter:brightness(1.04)}
 #home .cabinet-art-clock img{object-position:92% 77%;filter:brightness(1.16)}
-/* V22: isolate the existing golden medal on its ribbon, not the baked-in banner typography or trophy frame. */
-#home .cabinet-art-medal img{inset:50% auto auto 50%;height:116%;width:auto;max-width:none;object-fit:fill;transform:translate(-80%,-50%);filter:brightness(1.06)}
+/* V24: original award collection, normal image fitting, no banner crop or distortion. */
+#home .cabinet-art-medal img{object-position:50% 57%;filter:brightness(1.02)}
 #home .cabinet-art-profile img{object-position:55% 63%;filter:brightness(1.04)}
 #home .cabinet-art-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;padding:6px;background:#33251b}
 #home .cabinet-art-portraits img{position:relative;inset:auto;min-width:0;height:100%;object-fit:cover;object-position:50% 24%;border:1px solid #b39570;box-sizing:border-box;filter:brightness(1.07)}
