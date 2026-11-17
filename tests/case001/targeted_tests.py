@@ -41,8 +41,14 @@ def reactions(browser,who):
 def reaction_precomputed(browser,who):
  g=q.game(browser)
  if who=='evelyn':
-  g.path(['widow','interview','office','canal','bribe','warehouse'])
-  g.combine('note','witness');g.go('warn')
+  # The note is awarded only by the first warning. Precompute the
+  # deduction in the office, then meet Evelyn at the neighbor's house.
+  g.path(['widow','interview','office','canal','bribe','warehouse','warn','office'])
+  assert {'note','witness'}<=set(g.state()['items'])
+  g.combine('note','witness')
+  assert g.p.locator('.v20-interrogate').count()==0
+  assert 'соседки' in g.choice('widow').inner_text()
+  g.go('widow')
  elif who=='reed':
   g.path(['envelope','widow','office','canal','listen','sneak','warehouse','reed','reedProof','confession','warn','office']);g.combine('testimony','overheard');g.go('reed')
  g.p.locator('.v20-interrogate').click();assert g.p.locator('.case-v18-overlay').is_visible();g.p.locator('.v18-close').click()
