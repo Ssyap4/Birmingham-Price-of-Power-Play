@@ -38,7 +38,7 @@
       const r=api.snapshot(store,data.contract,engine,achieves,data.graph);
       if(r.status!=="ready"||r.records.status==="unavailable"||r.rewards.status==="unavailable")return {status:"unavailable"};
       if(r.records.status!=="ready"||r.rewards.status!=="ready")return {status:"damaged"};
-      return {status:r.orphaned||r.withoutSeals?"partial":"ready",count:r.completed.length,unique:r.confirmed.size};
+      return {status:r.orphaned||r.withoutSeals||(r.earned&&r.earned.status!=="ready")?"partial":"ready",count:r.completed.length,unique:r.confirmed.size};
     }catch(_){return {status:"unavailable"};}
   }
   function criminal(root,store) {

@@ -399,6 +399,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.locator("#result").wait_for(state="visible")
     assert page.locator("#resultTitle").inner_text()=="ПОПЫТКА ЗАВЕРШЕНА"
     assert page.locator("#result .trial-audio-dock .bh-audio-controls").count()==1
+    assert page.locator("#trialSaveStatus").get_attribute("data-status")=="ready"
     page.screenshot(path=str(OUT/f"{engine}-{width}-v32-trial-result.png"),full_page=True)
     tap(page,"#retryBtn")
     assert page.locator("#trialMode [data-trial-mode='timed']").get_attribute("aria-pressed")=="true"
@@ -412,6 +413,18 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     tap(page,"#homeBtn")
     page.locator("#home").wait_for(state="visible")
     page.locator("#cinemaAudioDock .bh-audio-controls").wait_for(state="visible")
+    tap(page,"#cabinetProfile")
+    assert page.locator("#dossierHistory").is_visible()
+    assert page.locator("#dossierHistory .dossier-record").count()>=1
+    assert page.locator("#achievementList .achievement").count()==6
+    assert page.locator("#levelRecords .achievement").count()==4
+    tap(page,"#profile .campaign-profile-links [data-open-section=campaignAchievements]")
+    assert page.locator("#campaignTrialsAchievements").is_visible()
+    tap(page,"#campaignAchievements [data-open-section=campaignHistory]")
+    assert page.locator("#campaignTrialsHistory").is_visible()
+    tap(page,"#campaignTrialsHistory summary")
+    assert page.locator("#campaignTrialsHistory .trial-history-row").count()>=1
+    tap(page,"#homeBtn")
     assert page.locator(".bh-audio-controls").count()==1
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")

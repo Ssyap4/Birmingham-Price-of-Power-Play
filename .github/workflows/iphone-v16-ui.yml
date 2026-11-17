@@ -7,6 +7,11 @@ on:
       - audio-v1.js
       - audio-v1.css
       - game.js
+      - trial-progress-v1.js
+      - profile-page.js
+      - dossier-v12.js
+      - player-overview-cinema-v1.css
+      - tests/trial-progress-v1.test.js
       - mobile-trials-portrait-v1.css
       - case-controls-mobile-v1.js
       - src/audio/playlist-v27.js

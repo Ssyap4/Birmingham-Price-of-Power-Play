@@ -100,8 +100,7 @@ for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(
  target?.focus({preventScroll:true});
 });
 $('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>$(id).hidden=true)},true);
-// Legacy quiz achievements/history live only in the old quiz data; do not mislabel them as campaign awards.
-for(const id of ['achievementList','dossierHistory','levelRecords']){const el=$(id);if(el){const parent=el.closest('.profile-section');if(parent)parent.hidden=true}}
+// Trial history and achievements have their own clearly labelled profile and archive sections.
 const profile=$('profile');if(profile){const link=document.createElement('div');link.className='campaign-profile-links';link.innerHTML='<button type="button" data-open-section="campaignDossiers">ДОСЬЕ ПЯТИ ГЕРОЕВ</button><button type="button" data-open-section="campaignAchievements">ДОСТИЖЕНИЯ</button><button type="button" data-open-section="campaignHistory">ИСТОРИЯ ДЕЛ</button>';profile.append(link);link.addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(b.dataset.openSection)})}
 function make(tag,cls,txt){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el}
 function stat(run){return ENDINGS[run.ending]||run.ending}
