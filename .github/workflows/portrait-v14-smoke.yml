@@ -1,0 +1,48 @@
+name: Portrait V14 targeted mobile UI smoke
+on:
+  push:
+    branches: [feat/criminal-operations-polish-v3]
+    paths:
+      - mobile-runtime-v1.js
+      - mobile-navigation-polish-v1.css
+      - tests/portrait-v14-static.test.js
+      - tests/portrait-v14-smoke.py
+      - .github/workflows/portrait-v14-smoke.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portrait-v14-ui-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  mobile-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fast structural and audio-docking contracts
+        run: |
+          node --test tests/portrait-v14-static.test.js
+          node --check mobile-runtime-v1.js
+          python -m py_compile tests/portrait-v14-smoke.py
+      - name: Install focused mobile browser dependencies
+        run: |
+          python -m pip install 'playwright==1.62.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Chromium and WebKit mobile screen and route smoke
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: python tests/portrait-v14-smoke.py
+      - name: Preserve phone screenshots and compact report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portrait-v14-smoke
+          path: work/portrait-v14/
+          retention-days: 14

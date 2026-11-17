@@ -82,3 +82,54 @@
     transition:none!important;
   }
 }
+
+/* V14 — immediate readable atlas/archive, no translucent whole-screen first frame.
+   The story screens keep their own atmospheric transitions. */
+@media(orientation:portrait) and (max-width:700px){
+ #districts.screen:not([hidden]),
+ .campaign-hub.screen:not([hidden]){
+  animation:none!important;opacity:1!important;visibility:visible!important;
+  transform:none!important;filter:none!important;
+ }
+ .campaign-hub .campaign-tabs{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:6px!important;
+ }
+ .campaign-hub .campaign-tabs button{
+  box-sizing:border-box!important;min-width:0!important;width:100%!important;
+  min-height:48px!important;flex:none!important;
+  padding:10px 4px!important;
+  font-size:clamp(10px,2.65vw,12px)!important;line-height:1.32!important;
+  letter-spacing:0!important;overflow-wrap:anywhere!important;
+ }
+ #districts .map-pin .pin-name{
+  background:#100e0deb;border:1px solid #8867417e;
+  box-shadow:0 2px 8px #000a;
+ }
+ #districts .map-panel{background:radial-gradient(ellipse at 45% 40%,#34271c,#111415 80%)}
+}
+/* Rehome the EXISTING audio controls so no fixed overlay covers district art. */
+#districtAudioDock{
+ box-sizing:border-box;width:min(100%,540px);min-height:64px;
+ margin:0 auto 14px;padding:9px 10px;
+ border:1px solid #866641;background:linear-gradient(120deg,#271c13,#131618);
+ border-radius:6px;box-shadow:inset 0 1px #e9c48d1a;
+}
+#districtAudioDock .bh-audio-controls{
+ box-sizing:border-box;position:static!important;inset:auto!important;
+ transform:none!important;left:auto!important;right:auto!important;bottom:auto!important;
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:7px;align-items:stretch;width:100%;max-width:none;margin:0;padding:0;
+ background:transparent;border:0;box-shadow:none;pointer-events:auto;
+}
+#districtAudioDock .bh-audio-controls button{
+ box-sizing:border-box;min-width:0;min-height:44px;max-width:100%;
+ white-space:normal;overflow-wrap:anywhere;text-align:center;
+ padding:8px 5px;font-size:11px;letter-spacing:0;
+}
+#districtAudioDock #bhMenuTrack,#districtAudioDock #gameExitBtn{display:none!important}
+/* The criminal atlas already has an explicit safe Menu action; no second Exit. */
+body[data-criminal='active']>.bh-audio-controls #gameExitBtn{display:none!important}
+@media(prefers-reduced-motion:reduce){
+ #districts .map-pin,.campaign-hub .campaign-tabs button{transition:none!important}
+}
