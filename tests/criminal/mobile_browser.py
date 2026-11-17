@@ -218,7 +218,10 @@ def run():
                     touch(page, '#districts [data-campaign-jump="archive"]')
                     assert page.locator("#campaignAchievements").is_visible()
                     archive_intro = page.locator("#campaignAchievements .campaign-head p").inner_text()
-                    assert "№001 и №002" in archive_intro and "Работа для своих" in archive_intro, archive_intro
+                    assert archive_intro == "Расследования · «Работа для своих» · Испытания. Общий архив этого устройства.", archive_intro
+                    for group in ("campaignFirstCaseAchievements","campaignSecondCaseAchievements","campaignCriminalAchievements","campaignTrialsAchievements"):
+                        assert page.locator("#"+group).is_visible(), group
+                    assert page.locator("#campaignAchievements .campaign-002-to-digbeth").count()==0
                     assert page.locator('#campaignAchievements .campaign-portal-v13').count() == 0
                     touch(page, "#homeBtn")
                     touch(page, "#criminalEntry")

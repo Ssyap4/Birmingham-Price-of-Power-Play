@@ -22,8 +22,15 @@ test("V13 links two map screens and common archive without save writes",()=>{
 });
 test("shared archive copy reflects the three active story lines",()=>{
  const hub=read("campaign-hub-v1.js");
- assert.match(hub,/Общий локальный архив: Дела №001 и №002/);
- assert.match(hub,/Работа для своих/);
+ const second=read("campaign-case002-archive-v1.js");
+ const criminal=read("campaign-criminal-archive-v1.js");
+ for(const source of [hub,second]){
+  assert.match(source,/Расследования · «Работа для своих» · Испытания\. Общий архив этого устройства\./);
+  assert.doesNotMatch(source,/Общий локальный архив: Дела №001 и №002/);
+ }
+ assert.match(criminal,/Работа для своих/);
+ assert.match(second,/campaignSecondCaseAchievements/);
+ assert.match(criminal,/campaignCriminalAchievements/);
  assert.doesNotMatch(hub,/Пока доступны только записи дела №001/);
  assert.doesNotMatch(read("campaign-hub-v1.css"),/in cabinet settings/);
 });

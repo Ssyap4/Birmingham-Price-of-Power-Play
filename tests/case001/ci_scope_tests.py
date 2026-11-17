@@ -48,6 +48,9 @@ def main():
             css = commit('style')
             scope = ci_scope.classify('pull_request', 'synchronize', css, logic, True)
             assert scope[:3] == (False, True, False), scope
+            # A UI-only tip must not conceal the preceding gameplay commit.
+            assert ci_scope.classify('pull_request', 'synchronize', css, art, True)[0] is True
+            assert ci_scope.classify('pull_request', 'synchronize', css, '', True)[:3] == (True, True, True)
             write('tests/case001/portrait_browser_tests.py', '# visual test adjusted\n')
             visual_test = commit('visual QA only')
             scope = ci_scope.classify('pull_request', 'synchronize', visual_test, css, True)
@@ -65,6 +68,9 @@ def main():
             visual_preview = commit('visual preview')
             assert ci_scope.classify('push', '', visual_preview, preview_initial, True)[:3] == (False, True, True)
             assert ci_scope.classify('workflow_dispatch', '', css, logic, False)[0] is False
+            write('.github/workflows/case001-tests.yml', '# changed QA gate\n')
+            workflow = commit('QA configuration')
+            assert ci_scope.classify('pull_request', 'synchronize', workflow, visual_preview, True)[0] is True
         finally:
             os.chdir(old_cwd)
     print('OK: scope selector rejects gameplay edits and permits image-only changes')
