@@ -352,6 +352,36 @@ def run():
                 assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.every(e=>e.dataset.issues==='0')")
                 assert page.evaluate("localStorage.getItem('birmingham_case_smol_heath_v1_jack')")==first
                 assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==second
+                # V65 map/profile parity, including JSON null (not missing) and an
+                # inconsistent Case001 non-terminal state. Do not open or replace these slots.
+                slot_fixture=page.evaluate("""()=>{const values={
+                  birmingham_case_smol_heath_v1_finn:'null',
+                  birmingham_case002_draft_v3_finn:'null',
+                  birmingham_case_smol_heath_v1_samuel:JSON.stringify({...JSON.parse(localStorage.getItem('birmingham_case_smol_heath_v1_jack')),ending:'endingTruth'})
+                };const old=Object.fromEntries(Object.keys(values).map(k=>[k,localStorage.getItem(k)]));
+                for(const [k,v] of Object.entries(values))localStorage.setItem(k,v);
+                window.dispatchEvent(new StorageEvent('storage',{key:null}));return {values,old}}""")
+                try:
+                    assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.map(e=>[e.dataset.active,e.dataset.finished,e.dataset.issues])")==[["1","0","2"],["1","0","1"],["1","0","0"]]
+                    tap(page,"#homeBtn")
+                    tap(page,"#districtsCard")
+                    board=page.locator("#campaignDistrictState")
+                    page.wait_for_function("document.querySelector('#campaignDistrictState').dataset.issues==='2'")
+                    assert board.get_attribute("data-active")=="1"
+                    assert board.get_attribute("data-finished")=="0"
+                    assert "Требуют проверки: 2" in board.inner_text()
+                    tap(page,'.map-pin[data-district="digbeth"]')
+                    page.wait_for_function("document.querySelector('#campaignDistrictState').dataset.issues==='1'")
+                    assert board.get_attribute("data-active")=="1"
+                    assert board.get_attribute("data-finished")=="0"
+                    tap(page,'.map-pin[data-district="aston"]')
+                    assert board.is_hidden()
+                    assert page.evaluate("keys=>Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]))",list(slot_fixture["values"]))==slot_fixture["values"]
+                    tap(page,"#homeBtn")
+                    tap(page,"#cabinetProfile")
+                finally:
+                    page.evaluate("""old=>{for(const [k,v] of Object.entries(old)){if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}
+                    window.dispatchEvent(new StorageEvent('storage',{key:null}))}""",slot_fixture["old"])
                 tap(page,"#profile .campaign-profile-links [data-open-section='campaignDossiers']")
                 assert page.locator("#campaignDossiers .campaign-live").first.inner_text().startswith("Расследование в работе")
                 assert not errors, errors

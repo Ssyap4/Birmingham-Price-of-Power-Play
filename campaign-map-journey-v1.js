@@ -29,24 +29,30 @@
  const prefix002=window.BirminghamCase002Engine?.SAVE_PREFIX||
   "birmingham_case002_draft_v3_";
  function read(key){
-  try{const raw=localStorage.getItem(key);return raw===null?null:JSON.parse(raw);}
-  catch{return "damaged"}
+  let raw;
+  try{raw=localStorage.getItem(key)}catch{return {kind:"unavailable"}}
+  if(raw===null)return {kind:"empty"};
+  try{
+   const value=JSON.parse(raw);
+   return value&&typeof value==="object"&&!Array.isArray(value)?{kind:"value",value}:{kind:"damaged"};
+  }catch{return {kind:"damaged"}}
  }
  function case001(hero){
-  const s=read("birmingham_case_smol_heath_v1_"+hero);
-  if(s===null)return null;
-  if(s==="damaged"||!Number.isFinite(s?.started)||
-    !window.BirminghamCase?.hasSavedCase(hero))return "damaged";
-  return {hero,started:Number.isFinite(s.started)?s.started:0,
-   status:known001.has(s.node)?"finished":"active"};
+  const slot=read("birmingham_case_smol_heath_v1_"+hero);
+  if(slot.kind!=="value")return slot.kind==="empty"?null:slot.kind;
+  const s=slot.value;
+  if(!Number.isFinite(s.started)||!window.BirminghamCase?.hasSavedCase(hero))return "damaged";
+  const status=known001.has(s.node)?"finished":window.BirminghamCase.hasProgress(hero)?"active":"damaged";
+  return status==="damaged"?status:{hero,started:s.started,status};
  }
  function case002(hero){
-  const s=read(prefix002+hero);
-  if(s===null)return null;
+  const slot=read(prefix002+hero);
+  if(slot.kind!=="value")return slot.kind==="empty"?null:slot.kind;
+  const s=slot.value;
   const archive=window.BirminghamCase002CampaignArchive;
   const contract=window.BirminghamCase002Data?.contract;
-  if(s==="damaged"||!contract||
-    !archive?.validSave?.(s,hero,contract,known002))return "damaged";
+  if(!contract||!archive?.validSave)return "unavailable";
+  if(!archive.validSave(s,hero,contract,known002))return "damaged";
   return {hero,started:s.startedAt,status:s.finished?"finished":"active"};
  }
  function paint(){
@@ -56,14 +62,19 @@
   board.hidden=!id;
   if(!id)return;
   const rows=heroes.map(hero=>id==="001"?case001(hero):case002(hero));
-  const valid=rows.filter(row=>row&&row!=="damaged");
+  const valid=rows.filter(row=>row&&typeof row==="object");
   const active=valid.filter(row=>row.status==="active");
   const complete=valid.filter(row=>row.status==="finished");
   const damaged=rows.filter(row=>row==="damaged").length;
+  const unavailable=rows.filter(row=>row==="unavailable").length;
+  const issues=damaged+unavailable;
+  board.dataset.active=String(active.length);
+  board.dataset.finished=String(complete.length);
+  board.dataset.issues=String(issues);
   kicker.textContent="ТЕКУЩИЕ СОХРАНЕНИЯ · ДЕЛО №"+id;
   headline.textContent=valid.length?
    "В РАБОТЕ: "+active.length+" · ЗАВЕРШЁННЫХ СЛОТОВ: "+complete.length:
-   damaged?"СОХРАНЕНИЯ ТРЕБУЮТ ПРОВЕРКИ":"ЕЩЁ НЕТ СОХРАНЁННЫХ ПРОХОЖДЕНИЙ";
+   unavailable?"СОХРАНЕНИЯ НЕДОСТУПНЫ":damaged?"СОХРАНЕНИЯ ТРЕБУЮТ ПРОВЕРКИ":"ЕЩЁ НЕТ СОХРАНЁННЫХ ПРОХОЖДЕНИЙ";
   // The map and hero entry must agree: lead with an unfinished case even
   // when another hero's completed report was the last viewed slot.
   const selected=id==="001"?(window.BirminghamHero?.selectedId||"jack"):null;
@@ -79,19 +90,21 @@
    complete.length?
     "Отчёты доступны через выбор героя и общий архив.":
     "Выбери одного из пяти участников ближнего круга и начни дело.";
-  note.textContent=(damaged?"Не удалось прочитать сохранений: "+damaged+". Данные не изменены. ":"")+
-   (damaged&&!valid.length?"":message);
+  note.textContent=(damaged?"Требуют проверки: "+damaged+". ":"")+
+   (unavailable?"Недоступно сохранений: "+unavailable+". ":"")+
+   (issues?"Данные не изменены. ":"")+
+   (issues&&!valid.length?"Проверь сохранения перед началом новой попытки.":message);
   if(id==="001"){
    first.textContent=active.length?
     "ВЫБРАТЬ ГЕРОЯ · ПРОДОЛЖИТЬ №001 →":
     valid.length?"ВЫБРАТЬ ГЕРОЯ · ОТЧЁТ ИЛИ НОВОЕ ДЕЛО →":
-    "ОТКРЫТЬ ДЕЛО · ДОЛГ, КОТОРЫЙ НЕ ПРОЩАЮТ →";
+    issues?"ВЫБРАТЬ ГЕРОЯ · ДЕЛО №001 →":"ОТКРЫТЬ ДЕЛО · ДОЛГ, КОТОРЫЙ НЕ ПРОЩАЮТ →";
    first.setAttribute("aria-label","Дело №001: выбор героя и расследования");
   }else{
    second.textContent=active.length?
     "ВЫБРАТЬ ГЕРОЯ · ПРОДОЛЖИТЬ №002 →":
     valid.length?"ВЫБРАТЬ ГЕРОЯ · ОТЧЁТ ИЛИ НОВОЕ ДЕЛО №002 →":
-    "ОТКРЫТЬ ДЕЛО №002 · ПОСЛЕДНИЙ ПОЕЗД ИЗ БИРМИНГЕМА →";
+    issues?"ВЫБРАТЬ ГЕРОЯ · ДЕЛО №002 →":"ОТКРЫТЬ ДЕЛО №002 · ПОСЛЕДНИЙ ПОЕЗД ИЗ БИРМИНГЕМА →";
    second.setAttribute("aria-label","Дело №002: выбор героя и расследования");
   }
  }

@@ -142,3 +142,8 @@
 - Case001 terminal quick deck's existing outcome action seeks the actual final report (or visible outcome fallback), not unread notices/replay below it. Active section follows that same target; retain existing temporary reading return and independent evidence/award controls. No new in-game navigation.
 - Final map action delegates to existing Case001 back action and focuses the correct district pin, explicitly selects Small Heath only if necessary. No saved progress or reward changes.
 - Existing synthetic terminal proof now checks focus and active tab on report and exact raw slot through direct map return, restores all fixtures. New screenshot at the outcome. V63 remote acceptance was still running at candidate preparation; do not supersede unfinished QA. Main/pinned Safari unchanged.
+
+## V65 — согласованность карты и профиля (кандидат)
+- V63 run 44172753873 / job 134355919585 success. V64 fast-forward to work branch at 02edd4cc97f2b1d1de9bbb627ec5768201eefa84; acceptance 44174649735 started.
+- Map distinguishes missing raw slots from stored JSON null, malformed values and unavailable storage. Case001 active status now uses existing engine hasProgress, matching profile; a contradictory nonterminal ending is not an active route. Neutral entry wording where only problematic slots exist; no engine, save or reward changes.
+- Profile surfaces finished current slots separately from historical completions and unique rewards across all three story modes. Browser proof compares actual profile and Small Heath/Digbeth counters, hides summary for unavailable district, verifies stored fixture bytes and restores them; unit proof separates finished slots from history. Candidate only, no browser result yet. Main and pinned Safari untouched.

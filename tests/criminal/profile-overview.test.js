@@ -72,3 +72,15 @@ test("unfinished slots stay independent of confirmed completion totals and malfo
  assert.equal(r[1].status,"damaged");assert.equal(r[2].count,2);
  assert.equal(st.writes,0);
 });
+
+
+test("finished slots are not historical counts; stored null is not empty",()=>{
+ const st=store({birmingham_case_smol_heath_v1_jack:JSON.stringify({started:2,node:"endingTruth"}),
+   birmingham_case_smol_heath_v1_finn:"null",birmingham_case_smol_heath_v1_samuel:JSON.stringify({started:3,node:"intro",ending:"endingTruth"})});
+ const r=snapshot({localStorage:st,BirminghamCase:{hasSavedCase:id=>id==="jack"||id==="samuel",hasProgress:()=>false},
+  BirminghamCase002CampaignArchive:{snapshot:()=>({status:"ready",records:{status:"ready"},rewards:{status:"ready"},completed:[],confirmed:new Set(),saves:{jack:{status:"ready",finished:true},finn:{status:"damaged"}}})},
+  BirminghamCase002Data:{contract:{},graph:{}},BirminghamCase002Engine:{},BirminghamCase002Achievements:{},
+  CriminalContent:{missions:{CR01:{},CR02:{}}},CriminalArchive:{ledger:()=>({ok:true,value:{attempts:[],rewards:{}}}),load:(_,id)=>id==="CR01"?{kind:"valid",state:{status:"finished"}}:{kind:"empty"}}});
+ assert.deepEqual(r.map(x=>[x.active,x.finishedSlots,x.slotIssues,x.count]),[[0,1,2,0],[0,1,1,0],[0,1,0,0]]);
+ assert.equal(st.writes,0);
+});

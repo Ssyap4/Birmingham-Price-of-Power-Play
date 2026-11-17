@@ -14,6 +14,7 @@
   // A new active run can coexist with historical confirmed rewards.
   function slotSummary(states){
     return {active:states.filter(s=>s==="active").length,
+      finishedSlots:states.filter(s=>s==="finished").length,
       slotIssues:states.filter(s=>s==="damaged"||s==="unavailable").length};
   }
   function firstSlots(root,store){
@@ -114,7 +115,9 @@
         live.className="player-overview-live";
         live.dataset.active=String(item.active);
         live.dataset.issues=String(item.slotIssues||0);
-        live.textContent="В работе: "+item.active+(item.slotIssues?" · Сохранений требуют проверки: "+item.slotIssues:"");
+        live.dataset.finished=String(item.finishedSlots);
+        live.textContent="В работе: "+item.active+" · Завершённых слотов: "+item.finishedSlots+
+          (item.slotIssues?" · Проблемных сохранений: "+item.slotIssues:"");
         card.append(live);
       }
       holder.append(card);
