@@ -49,3 +49,26 @@ test("profile counts only confirmed stamps, preserves invalid and incomplete rec
  assert.equal(snapshot({localStorage:invalid})[0].status,"damaged");
  assert.equal(invalid.writes,0);
 });
+
+
+test("unfinished slots stay independent of confirmed completion totals and malformed saves",()=>{
+ const row={key:"001:jack:1",caseId:"001",heroId:"jack",ending:"endingEvidence"};
+ const st=store({
+  birmingham_campaign_records_v1:JSON.stringify([row]),
+  birmingham_campaign_unique_rewards_v1:JSON.stringify({"001:jack:endingEvidence":1}),
+  birmingham_case_smol_heath_v1_jack:JSON.stringify({started:2,node:"intro"}),
+  birmingham_case_smol_heath_v1_finn:"{broken"
+ });
+ const r=snapshot({localStorage:st,
+  BirminghamCase:{hasSavedCase:id=>id==="jack",hasProgress:id=>id==="jack"},
+  BirminghamCase002CampaignArchive:{snapshot:()=>({status:"ready",records:{status:"damaged"},rewards:{status:"ready"},saves:{jack:{status:"ready",finished:false},finn:{status:"damaged"}}})},
+  BirminghamCase002Data:{contract:{},graph:{}},BirminghamCase002Engine:{},BirminghamCase002Achievements:{},
+  CriminalContent:{missions:{CR01:{},CR02:{},CR03:{}}},
+  CriminalArchive:{ledger:()=>({ok:true,value:{attempts:[{},{}],rewards:{a:"id"}}}),
+   load:(_,id)=>id==="CR01"?{kind:"valid",state:{status:"active"}}:id==="CR02"?{kind:"corrupt"}:{kind:"empty"}}
+ });
+ assert.deepEqual(r.map(x=>[x.active,x.slotIssues]),[[1,1],[1,1],[1,1]]);
+ assert.equal(r[0].count,1);assert.equal(r[0].unique,1);
+ assert.equal(r[1].status,"damaged");assert.equal(r[2].count,2);
+ assert.equal(st.writes,0);
+});

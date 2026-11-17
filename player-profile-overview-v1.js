@@ -10,6 +10,34 @@
   const heroes=new Set(["jack","finn","eleanor","victor","samuel"]);
   const endings=new Set(["endingRescue","endingEvidence","endingDeal","endingTruth","endingPower","endingDeath"]);
   const validKey=k=>{const p=k.split(":");return p.length===3&&p[0]==="001"&&heroes.has(p[1])&&endings.has(p[2])};
+  // Slot status is deliberately independent from the terminal archive.
+  // A new active run can coexist with historical confirmed rewards.
+  function slotSummary(states){
+    return {active:states.filter(s=>s==="active").length,
+      slotIssues:states.filter(s=>s==="damaged"||s==="unavailable").length};
+  }
+  function firstSlots(root,store){
+    if(!root.BirminghamCase?.hasSavedCase||!root.BirminghamCase?.hasProgress)return {};
+    return slotSummary([...heroes].map(hero=>{
+      try{
+        const raw=store.getItem("birmingham_case_smol_heath_v1_"+hero);
+        if(raw===null)return "empty";
+        const s=JSON.parse(raw);
+        if(!Number.isFinite(s?.started)||!root.BirminghamCase.hasSavedCase(hero))return "damaged";
+        return endings.has(s.node)?"finished":root.BirminghamCase.hasProgress(hero)?"active":"damaged";
+      }catch(_){return "damaged";}
+    }));
+  }
+  function criminalSlots(root,store){
+    const api=root.CriminalArchive,missions=root.CriminalContent?.missions;
+    if(!api?.load||!missions)return {};
+    return slotSummary(Object.keys(missions).map(id=>{
+      try{
+        const slot=api.load(store,id);
+        return slot.kind==="valid"?slot.state.status:slot.kind==="corrupt"?"damaged":slot.kind;
+      }catch(_){return "unavailable";}
+    }));
+  }
   function case001(store) {
     let raw,rewardRaw;
     try{raw=store.getItem("birmingham_campaign_records_v1");rewardRaw=store.getItem("birmingham_campaign_unique_rewards_v1");}
@@ -36,9 +64,11 @@
     if(!api||!data||!engine||!achieves)return {status:"unavailable"};
     try{
       const r=api.snapshot(store,data.contract,engine,achieves,data.graph);
-      if(r.status!=="ready"||r.records.status==="unavailable"||r.rewards.status==="unavailable")return {status:"unavailable"};
-      if(r.records.status!=="ready"||r.rewards.status!=="ready")return {status:"damaged"};
-      return {status:r.orphaned||r.withoutSeals||(r.earned&&r.earned.status!=="ready")?"partial":"ready",count:r.completed.length,unique:r.confirmed.size};
+      if(r.status!=="ready")return {status:"unavailable"};
+      const slots=r.saves?slotSummary(Object.values(r.saves).map(s=>s.status==="ready"?(s.finished?"finished":"active"):s.status)):{};
+      if(r.records.status==="unavailable"||r.rewards.status==="unavailable")return {status:"unavailable",...slots};
+      if(r.records.status!=="ready"||r.rewards.status!=="ready")return {status:"damaged",...slots};
+      return {status:r.orphaned||r.withoutSeals||(r.earned&&r.earned.status!=="ready")?"partial":"ready",count:r.completed.length,unique:r.confirmed.size,...slots};
     }catch(_){return {status:"unavailable"};}
   }
   function criminal(root,store) {
@@ -55,9 +85,9 @@
     try{store=root.localStorage;}catch(_){return [{name:"Дело №001",status:"unavailable"},{name:"Дело №002",status:"unavailable"},{name:"Работа для своих",status:"unavailable"}];}
     if(!store)return [{name:"Дело №001",status:"unavailable"},{name:"Дело №002",status:"unavailable"},{name:"Работа для своих",status:"unavailable"}];
     return [
-      {name:"Дело №001",...case001(store)},
+      {name:"Дело №001",...case001(store),...firstSlots(root,store)},
       {name:"Дело №002",...case002(root,store)},
-      {name:"Работа для своих",...criminal(root,store)}
+      {name:"Работа для своих",...criminal(root,store),...criminalSlots(root,store)}
     ];
   }
   function render(root){
@@ -78,7 +108,16 @@
         ?"Завершений: "+item.count+" · подтверждённых знаков: "+item.unique+
           (item.status==="partial"?" · Есть неподтверждённые записи.":"")
         :item.status==="damaged"?"Архив требует проверки":"Локальный архив недоступен";
-      card.append(h,count,desc);holder.append(card);
+      card.append(h,count,desc);
+      if(Number.isInteger(item.active)){
+        const live=root.document.createElement("p");
+        live.className="player-overview-live";
+        live.dataset.active=String(item.active);
+        live.dataset.issues=String(item.slotIssues||0);
+        live.textContent="В работе: "+item.active+(item.slotIssues?" · Сохранений требуют проверки: "+item.slotIssues:"");
+        card.append(live);
+      }
+      holder.append(card);
     }
   }
   function attach(root){

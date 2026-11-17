@@ -105,3 +105,10 @@
 - Case002 player-facing recap no longer uses draft/technical node labels in its report or new reward; campaign entry's final action returns directly to Digbeth using existing map link, isolated entry retains hero selection. No new campaign link, no changed story, reward key or archive bytes.
 - Criminal chronicle opened from a saved final gets a temporary return point, filtered to that mission. Exact raw slot/attempt validated before reopening; changed/unavailable slot refused, no memory-only bookmark. Existing idempotent resume, no award reissue. Map/menu/other entry clears bookmark.
 - Browser matrix extended: Case001 terminal display with explicit synthetic archive-damage fixture, same existing real Case002 route completed to map with exact saved bytes, CR01 confirmed final/chronicle/return with byte-identical slot/ledger. Remote browser results pending; no Safari publication/main change.
+
+
+## V59 — связность карты, досье и личного профиля
+- V58 44164904955 and 44164904959 SUCCESS (unified and mobile, real Chromium/WebKit touch scenarios).
+- Profile now displays active saved slots for Case001, Case002 and criminal missions separately from accumulated confirmed terminal records and unique stamps; slot damage remains separate from archive damage. All slot queries read-only and use existing validators; no new keys. Never treats inaccessible API as zero when absent.
+- Detective district progress explicitly counts current character slots, not cumulative archived completions. Corrupt slots no longer show the empty-state message; valid active slots remain visible alongside warning. Refresh on actual map visibility. Dossier no longer exposes internal Case001 scene identifier in in-progress label.
+- Added pure unit test for active slot and corruption independence without writes, existing combined browser flow extends to profile and dossier, portrait layout check. No new menu links, no new story/mechanics, no main/Safari publication. Remote acceptance pending.

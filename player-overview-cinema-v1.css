@@ -47,3 +47,13 @@
 .trial-archive-warning,#trialSaveStatus[data-status]:not([data-status=ready]){padding:10px 12px;border:1px solid #b17c54;background:#38251a;color:#ffe0b4;border-radius:5px;font:14px/1.5 system-ui,sans-serif}
 #trialSaveStatus[data-status=ready]{color:#c9d9b1;font:13px/1.5 system-ui,sans-serif}
 #profile #dossierNumber{font-size:clamp(12px,3.5vw,16px);overflow-wrap:anywhere}
+
+
+/* V59: live slots are distinct from cumulative archived completions. */
+#profile .player-overview-live{
+ margin:3px 0 0;padding-top:8px;border-top:1px solid #72563b;
+ color:#ddc6a5;font:650 .78rem/1.45 system-ui,sans-serif;
+ overflow-wrap:anywhere;grid-column:1/-1;
+}
+#profile .player-overview-live[data-active]:not([data-active="0"]){color:#f2d5a4}
+#profile .player-overview-live:not([data-issues="0"]){border-top-color:#bd856c}

@@ -227,6 +227,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    assert page.locator("#profile .profile-v21-art img").evaluate("el=>el.naturalHeight===540 && getComputedStyle(el).objectFit==='contain'")
    page.locator("#profile .profile-v21-art").screenshot(path=str(OUT/f"{engine}-{width}-v22-profile-art.png"))
    assert page.locator("#profile .player-overview-card").count()==3
+   assert page.locator("#profile .player-overview-live").count()==3
+   assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.every(e=>e.scrollWidth<=e.clientWidth+1)")
    assert cabinet_material(page,"#profile .player-campaign-overview")==cabinet_reference
    assert page.locator("#profile .player-overview-card").evaluate_all("els=>els.every(e=>getComputedStyle(e).borderTopLeftRadius==='7px')")
    assert page.evaluate("scrollY")<12,(engine,width,"profile unexpectedly scrolled to middle")

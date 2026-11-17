@@ -60,10 +60,10 @@
   const active=valid.filter(row=>row.status==="active");
   const complete=valid.filter(row=>row.status==="finished");
   const damaged=rows.filter(row=>row==="damaged").length;
-  kicker.textContent="АРХИВ НА ЭТОМ УСТРОЙСТВЕ · ДЕЛО №"+id;
+  kicker.textContent="ТЕКУЩИЕ СОХРАНЕНИЯ · ДЕЛО №"+id;
   headline.textContent=valid.length?
-   "В РАБОТЕ: "+active.length+" · ЗАВЕРШЕНО: "+complete.length:
-   "ЕЩЁ НЕТ СОХРАНЁННЫХ ПРОХОЖДЕНИЙ";
+   "В РАБОТЕ: "+active.length+" · ЗАВЕРШЁННЫХ СЛОТОВ: "+complete.length:
+   damaged?"СОХРАНЕНИЯ ТРЕБУЮТ ПРОВЕРКИ":"ЕЩЁ НЕТ СОХРАНЁННЫХ ПРОХОЖДЕНИЙ";
   // The map and hero entry must agree: lead with an unfinished case even
   // when another hero's completed report was the last viewed slot.
   const selected=id==="001"?(window.BirminghamHero?.selectedId||"jack"):null;
@@ -72,15 +72,15 @@
    valid.find(row=>row.hero===selected)||
    [...complete].sort((a,b)=>b.started-a.started)[0];
   const name=current?names[current.hero]:"";
-  note.textContent=damaged?
-   "Не удалось прочитать "+damaged+" сохранение(й). Данные не изменены.":
-   current&&current.status==="active"?
+  const message=current&&current.status==="active"?
     "Можно продолжить за персонажа: "+name+".":
    active.length?
     "Выбери персонажа с незавершённым расследованием.":
    complete.length?
     "Отчёты доступны через выбор героя и общий архив.":
     "Выбери одного из пяти участников ближнего круга и начни дело.";
+  note.textContent=(damaged?"Не удалось прочитать сохранений: "+damaged+". Данные не изменены. ":"")+
+   (damaged&&!valid.length?"":message);
   if(id==="001"){
    first.textContent=active.length?
     "ВЫБРАТЬ ГЕРОЯ · ПРОДОЛЖИТЬ №001 →":
@@ -121,5 +121,6 @@
  window.addEventListener("hashchange",()=>queueMicrotask(paint));
  window.addEventListener("pageshow",paint);
  window.addEventListener("storage",paint);
+ new MutationObserver(()=>{if(!map.hidden)paint()}).observe(map,{attributes:true,attributeFilter:["hidden"]});
  paint();
 })();

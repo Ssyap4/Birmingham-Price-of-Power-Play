@@ -113,7 +113,7 @@ function renderDossiers(el,runs){
   const image=make('img','campaign-portrait');image.src='assets/heroes/'+hero.id+'.webp';image.alt='Портрет: '+hero.name;image.loading='lazy';card.append(image);
   const body=make('div','campaign-card-body');body.append(make('small','campaign-eyebrow',hero.alias+' · '+hero.role),make('h3','',hero.name),make('p','',hero.trait));
   body.append(make('p','campaign-count','Дело №001: '+own.length+' прохождений · '+unique.length+' / 6 разных концовок'));
-  if(s&&!Object.prototype.hasOwnProperty.call(ENDINGS,s.node))body.append(make('p','campaign-live','Продолжается: '+s.node+' · найдено '+s.items.length+' улик'));
+  if(s&&window.BirminghamCase?.hasProgress(hero.id))body.append(make('p','campaign-live','Расследование в работе · найдено улик: '+s.items.length));
   const tags=make('div','campaign-tags');for(const [id,name] of Object.entries(ENDINGS)){const t=make('span',unique.includes(id)?'earned':'locked',(unique.includes(id)?'✦ ':'◇ ')+name);tags.append(t)}body.append(tags);
   card.append(body);grid.append(card);
  }el.append(grid);

@@ -286,11 +286,20 @@ def run():
                     )
                     == second
                 )
+                tap(page,"#homeBtn")
+                tap(page,"#cabinetProfile")
+                page.locator("#profile").wait_for(state="visible")
+                assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.map(e=>e.dataset.active)")==["1","1","1"]
+                assert page.locator("#profile .player-overview-live").evaluate_all("els=>els.every(e=>e.dataset.issues==='0')")
+                assert page.evaluate("localStorage.getItem('birmingham_case_smol_heath_v1_jack')")==first
+                assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==second
+                tap(page,"#profile .campaign-profile-links [data-open-section='campaignDossiers']")
+                assert page.locator("#campaignDossiers .campaign-live").first.inner_text().startswith("Расследование в работе")
                 assert not errors, errors
                 print(
                     "PASS",
                     name,
-                    "same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive, slots unchanged",
+                    "same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive -> profile active slots, saves unchanged",
                 )
                 # Fresh context: follow one canonical Case002 route until an
                 # actual earned achievement is followed by an ordinary decision.
