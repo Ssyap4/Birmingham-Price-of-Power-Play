@@ -204,6 +204,7 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    tap(page,"#districtsCard")
    page.locator("#districts").wait_for(state="visible")
    assert page.locator("body>.shell>.top").evaluate("""el=>{const brand=el.querySelector('.brand'),actions=el.querySelector('.top-actions'),word=brand.querySelector('strong'),menu=el.querySelector('#homeBtn');const b=brand.getBoundingClientRect(),a=actions.getBoundingClientRect();return b.right<=a.left+1&&word.scrollWidth<=word.clientWidth+1&&menu.getBoundingClientRect().height>=44}"""),(engine,width,"internal header overlap")
+   assert page.locator("#districtBack").is_hidden()
    page.locator("body>.shell>.top").screenshot(path=str(OUT/f"{engine}-{width}-v29-internal-header.png"))
    title=page.locator("#districts .district-atlas-title")
    assert title.evaluate("""el=>{const bounds=el.getBoundingClientRect(), words=[...el.querySelectorAll('span')];return words.length===2&&words.every(w=>{const range=document.createRange();range.selectNodeContents(w);const rects=[...range.getClientRects()];return rects.length===1&&rects[0].left>=bounds.left-1&&rects[0].right<=bounds.right+1})}"""),(engine,width,"atlas heading wraps or clips")

@@ -756,3 +756,9 @@
  #districts .map-pin,#districts #districtCase,#criminalScreen .cr-pin{scroll-margin-top:8px}
  #districts .campaign-portal-v13,#criminalScreen .campaign-portal-v13{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+
+/* V73: the shared sticky Menu is the sole portrait atlas exit. Keep the legacy desktop binding. */
+@media(orientation:portrait) and (max-width:700px){
+ #districts #districtBack{display:none!important}
+ #districts #launchFirstCase,#districts #launchSecondCase,#criminalScreen .cr-mission-list button{scroll-margin-top:8px}
+}

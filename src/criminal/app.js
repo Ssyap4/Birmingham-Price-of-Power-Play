@@ -78,7 +78,13 @@
       memory && state?.status === "active" ? confirm("Эта попытка не сохраняется. При выходе весь её прогресс будет потерян. Покинуть поручение?") : true
     );
   }
+  let artDeadline = null;
+  function clearArtDeadline() {
+    if (artDeadline !== null) clearTimeout(artDeadline);
+    artDeadline = null;
+  }
   function close() {
+    clearArtDeadline();
     finalReturn = null;
     pending = null;
     state = null;
@@ -91,24 +97,28 @@
     document.getElementById("criminalEntry")?.focus({ preventScroll: true });
   }
   function render(html) {
+    clearArtDeadline();
     open();
     root.innerHTML = top() + html;
     root.querySelectorAll("img").forEach((img) => {
       const frame=img.closest(".cr-frame");
       const fallback=()=>{
         if(!img.isConnected||!root.contains(img))return;
-        if(frame)frame.dataset.artState="unavailable";
+        if(frame){clearArtDeadline();frame.dataset.artState="unavailable";}
         const f = document.createElement("p");
         f.className = "cr-art-fallback";
+        if(frame)f.setAttribute("role","status");
         f.textContent = "Кадр недоступен. История и управление продолжают работать.";
         img.replaceWith(f);
       };
       img.addEventListener("error",fallback,{once:true});
       if(!frame)return;
+      // A stalled request/decode must not leave the story in an endless loading state.
+      artDeadline=setTimeout(fallback,12000);
       const ready=()=>{
         if(!img.isConnected||!root.contains(img))return;
         if(!img.naturalWidth)return fallback();
-        const done=()=>{if(img.isConnected&&root.contains(img)&&img.naturalWidth)frame.dataset.artState="ready"};
+        const done=()=>{if(img.isConnected&&root.contains(img)&&img.naturalWidth){clearArtDeadline();frame.dataset.artState="ready"}};
         if(typeof img.decode==="function")img.decode().then(done,()=>{if(img.complete&&img.naturalWidth)done();else if(img.complete)fallback()});
         else done();
       };

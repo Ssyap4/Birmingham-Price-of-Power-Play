@@ -59,6 +59,19 @@ def touch(page, selector):
     loc.tap()
 
 
+def atlas_header_return(page, engine, width, label, action):
+    # The shared header must not cover the player's actionable card or itself.
+    page.locator(action).evaluate("e=>e.scrollIntoView({block:'center',behavior:'instant'})")
+    page.wait_for_function("""sel=>{const e=document.querySelector(sel),r=e.getBoundingClientRect(),h=document.querySelector('.shell>.top').getBoundingClientRect();return r.top>=h.bottom-1&&r.bottom<=innerHeight&&e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2))}""", arg=action)
+    page.evaluate("window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'})")
+    page.wait_for_function("""()=>{const e=document.querySelector('#homeBtn'),r=e.getBoundingClientRect();return scrollY>0&&r.top>=0&&r.bottom<=innerHeight&&e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2))&&document.documentElement.scrollWidth<=innerWidth+1}""")
+    if width == 390:
+        page.screenshot(path=str(OUT/f"{engine}-v73-{label}-scrolled.png"))
+    page.locator("#homeBtn").tap()
+    page.locator("#home").wait_for(state="visible")
+    page.wait_for_function("scrollY<=1")
+
+
 def start(page, id, seed):
     touch(page, "#criminalEntry")
     touch(page, f'.cr-pin[data-mission="{id}"]')
@@ -235,7 +248,8 @@ def run():
                     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                     if width == 390:
                         page.screenshot(path=str(OUT / (name + "-unified-v13-detective-map.png")), full_page=True)
-                    touch(page, "#districtBack")
+                    assert page.locator("#districtBack").is_hidden()
+                    atlas_header_return(page, name, width, "detective-atlas", "#launchFirstCase")
                     assert page.locator("#home").is_visible()
                     if width == 390:
                         page.screenshot(path=str(OUT / (name + "-main-menu-v7.png")), full_page=True)
@@ -272,7 +286,7 @@ def run():
                         page.screenshot(
                             path=str(OUT / (name + "-map.png")), full_page=True
                         )
-                    touch(page, "#homeBtn")
+                    atlas_header_return(page, name, width, "criminal-atlas", '.cr-mission-list [data-mission="CR05"]')
                     assert page.locator("#home").is_visible()
                     # Set raw legacy bytes after startup. The criminal mode must not write them.
                     page.evaluate(
@@ -506,6 +520,33 @@ def run():
                             "errors": errors,
                         }
                     )
+                    ctx.close()
+                # A genuinely failed or stalled frame must not change any story bytes
+                # or disable the normal start action. Fresh contexts avoid cached images.
+                for stalled in (False, True):
+                    ctx = browser.new_context(viewport={"width":390,"height":844},is_mobile=True,has_touch=True)
+                    page = ctx.new_page()
+                    page.route("https://**/*", lambda r: r.abort())
+                    page.goto(origin + "/index.html", wait_until="domcontentloaded")
+                    touch(page, "#criminalEntry")
+                    held = []
+                    pattern = "**/cr01-arrival.webp"
+                    page.route(pattern, lambda r: held.append(r) if stalled else r.abort())
+                    keys = OLD + [PREFIX+"save_CR01",PREFIX+"ledger"]
+                    original = page.evaluate("ks=>ks.map(k=>localStorage.getItem(k))",keys)
+                    touch(page, '.cr-pin[data-mission="CR01"]')
+                    if stalled:
+                        page.locator('.cr-frame[data-art-state="loading"]').wait_for()
+                    page.locator('.cr-frame[data-art-state="unavailable"]').wait_for(timeout=18000)
+                    assert page.locator('.cr-frame .cr-art-fallback[role="status"]').is_visible()
+                    assert page.evaluate("ks=>ks.map(k=>localStorage.getItem(k))",keys)==original
+                    assert page.locator('[data-action="start"]').is_visible()
+                    for request in held:
+                        request.abort()
+                    page.unroute(pattern)
+                    touch(page, '[data-action="start"]')
+                    assert page.locator('[data-choice="accept"]').is_visible()
+                    print("PASS frame fault recovery", name, "stalled" if stalled else "failed",flush=True)
                     ctx.close()
                 # Read-blocked storage and quota states are new-mode warnings, never success claims.
                 ctx = browser.new_context(
