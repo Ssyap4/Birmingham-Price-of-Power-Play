@@ -14,9 +14,29 @@ const put=(k,v)=>{try{
 }catch(e){console.warn('[campaign] Local archive unavailable',e);return false}};
 function state(hero){const s=readJSON('birmingham_case_smol_heath_v1_'+hero,null);return s&&Array.isArray(s.items)&&Array.isArray(s.trail)&&typeof s.started==='number'?s:null}
 function findings(hero,s){const f=readJSON('birmingham_case_v20_findings_'+hero,null);return f&&f.started===s?.started&&Array.isArray(f.deductions)?f.deductions:[]}
-function records(){const a=readJSON(RECORD_KEY,[]);return Array.isArray(a)?a.filter(x=>x&&x.caseId&&x.heroId&&x.ending&&x.key):[]}
+// Do not treat malformed archives as empty and overwrite their original bytes.
+const knownHeroes=new Set(['jack','finn','eleanor','victor','samuel']);
+const knownEnding=id=>Object.prototype.hasOwnProperty.call(ENDINGS,id);
+const validRecord=r=>r&&r.caseId===CASE_ID&&knownHeroes.has(r.heroId)&&knownEnding(r.ending)&&
+ typeof r.key==='string'&&r.key.length>0&&['items','deductions','visited'].every(k=>r[k]===undefined||Array.isArray(r[k]));
+const validRows=a=>Array.isArray(a)&&a.every(validRecord)&&new Set(a.map(r=>r.key)).size===a.length;
+const validStamp=v=>v===true||(Number.isFinite(v)&&v>0);
+const validMap=(a,keyOk)=>!!a&&typeof a==='object'&&!Array.isArray(a)&&
+ Object.entries(a).every(([k,v])=>keyOk(k)&&validStamp(v));
+const validRewardKey=k=>{const p=k.split(':');return p.length===3&&p[0]===CASE_ID&&knownHeroes.has(p[1])&&knownEnding(p[2])};
+function readArchive(k,empty,validate){
+ let raw;try{raw=localStorage.getItem(k)}catch{return {status:'unavailable',value:empty}}
+ if(raw===null)return {status:'ready',value:empty};
+ try{const value=JSON.parse(raw);if(validate(value))return {status:'ready',value}}catch{}
+ return {status:'damaged',value:empty};
+}
+function recordArchive(){return readArchive(RECORD_KEY,[],validRows)}
+function rewardArchive(){return readArchive(UNIQUE_KEY,{},a=>validMap(a,validRewardKey))}
+function awardArchive(){return readArchive(AWARD_KEY,{},a=>validMap(a,k=>ACH.some(x=>x[0]===k)))}
+function records(){return recordArchive().value}
 function persistFinished(){
- let runs=records(),dirty=false;
+ const archive=recordArchive();if(archive.status!=='ready')return [];
+ let runs=archive.value,dirty=false;
  for(const hero of HEROES()){
   const s=state(hero.id);if(!s||!Object.prototype.hasOwnProperty.call(ENDINGS,s.node))continue;
   const key=[CASE_ID,hero.id,s.started,s.node].join(':');
@@ -32,19 +52,19 @@ function persistFinished(){
  return runs;
 }
 function uniqueRewards(runs){
- let rewards=readJSON(UNIQUE_KEY,{});
- if(!rewards||typeof rewards!=='object'||Array.isArray(rewards))rewards={};
+ const archive=rewardArchive();
+ if(archive.status!=='ready'||recordArchive().status!=='ready')return {};
+ let rewards=archive.value;
  let changed=false;
  for(const r of runs){
   if(r.caseId!==CASE_ID||!HEROES().some(h=>h.id===r.heroId)||!Object.prototype.hasOwnProperty.call(ENDINGS,r.ending))continue;
   const key=[r.caseId,r.heroId,r.ending].join(':');
   if(!rewards[key]){rewards[key]=r.finished||Date.now();changed=true}
  }
- if(changed&&!put(UNIQUE_KEY,rewards)){
-  const onDisk=readJSON(UNIQUE_KEY,{});
-  return onDisk&&typeof onDisk==="object"&&!Array.isArray(onDisk)?onDisk:{};
- }
- return rewards;
+ if(changed&&!put(UNIQUE_KEY,rewards))rewards=rewardArchive().value;
+ // Orphaned legacy stamps are left on disk, never counted as confirmed.
+ const proven=new Set(runs.map(r=>[r.caseId,r.heroId,r.ending].join(':')));
+ return Object.fromEntries(Object.entries(rewards).filter(([k])=>proven.has(k)));
 }
 const screens=[
  ['campaignDossiers','Досье персонажей','ПЯТЬ ПУТЕЙ · ОДИН ГОРОД'],
@@ -73,7 +93,12 @@ document.addEventListener('click',e=>{
  e.preventDefault();e.stopImmediatePropagation();
  open(target.id==='storyStart'?'campaignAchievements':'campaignDossiers');
 },true);
-for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(id).addEventListener('click',e=>{if(e.target.closest('[data-open-section]'))open(e.target.closest('[data-open-section]').dataset.openSection)});
+for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(id).addEventListener('click',e=>{
+ const tab=e.target.closest('[data-open-section]');if(!tab||tab.dataset.openSection===id)return;
+ open(tab.dataset.openSection);
+ const target=$(tab.dataset.openSection)?.querySelector('.campaign-tabs [aria-current="true"]');
+ target?.focus({preventScroll:true});
+});
 $('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>$(id).hidden=true)},true);
 // Legacy quiz achievements/history live only in the old quiz data; do not mislabel them as campaign awards.
 for(const id of ['achievementList','dossierHistory','levelRecords']){const el=$(id);if(el){const parent=el.closest('.profile-section');if(parent)parent.hidden=true}}
@@ -145,10 +170,12 @@ function celebrate(title,group){
  next();
 }
 function awards(runs,announce=false){
- const m=metrics(runs),stored=readJSON(AWARD_KEY,{});
- const previous=stored&&typeof stored==='object'&&!Array.isArray(stored)?stored:{};
- const a={...previous},fresh=[];
- let dirty=stored!==previous;
+ const archive=awardArchive();
+ if(archive.status!=='ready')return {};
+ const previous=archive.value;
+ if(recordArchive().status!=='ready')return previous;
+ const m=metrics(runs),a={...previous},fresh=[];
+ let dirty=false;
  for(const [id,title,,group,pred] of ACH){
   if(!a[id]&&pred(m)){
    a[id]=Date.now();dirty=true;
@@ -249,6 +276,16 @@ function renderHistory(el,runs){
   if(id==='campaignAchievements')renderAchievements(box,runs);
   if(id==='campaignHistory')renderHistory(box,runs);
   document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}));
+  const badRecords=recordArchive().status!=='ready',badRewards=rewardArchive().status!=='ready',badAwards=awardArchive().status!=='ready';
+  const confirmed=rewardArchive().value,combos=new Set(runs.map(r=>[r.caseId,r.heroId,r.ending].join(':')));
+  const orphans=!badRecords&&!badRewards&&Object.keys(confirmed).some(k=>!combos.has(k));
+  if(badRecords||badRewards||badAwards||orphans){
+   const warning=make('p','campaign-001-alert','Архив №001 требует проверки. Повреждённые или неподтверждённые записи не считаются прогрессом. Данные не удалены.');
+   warning.setAttribute('role','status');box.prepend(warning);
+   if(badRecords||((badRewards||badAwards)&&id==='campaignAchievements')){
+    for(const el of box.querySelectorAll('.campaign-summary strong,.campaign-002-overview .campaign-002-metric strong'))el.textContent='—';
+   }
+  }
   let anchor=null,focus=null;
   for(const el of box.querySelectorAll('details')){
    const key=foldKey(el);if(!key)continue;

@@ -191,6 +191,34 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.screenshot(path=str(OUT/f"{engine}-{width}-digbeth-resume.png"))
     tap(page,"#homeBtn")
     page.locator("#home").wait_for(state="visible")
+    # Assert criminal atlas -> common archive -> profile -> detective atlas.
+    tap(page,"#criminalEntry")
+    page.locator("#criminalScreen .cr-map").wait_for(state="visible")
+    tap(page,"#criminalScreen .campaign-portal-v13 [data-campaign-jump='archive']")
+    page.locator("#campaignAchievements").wait_for(state="visible")
+    tap(page,"#campaignAchievements .campaign-portal-v13 [data-campaign-jump='profile']")
+    page.locator("#profile").wait_for(state="visible")
+    tap(page,"#profile .campaign-portal-v13 [data-campaign-jump='detective']")
+    page.locator("#districts").wait_for(state="visible")
+    assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+    tap(page,"#homeBtn")
+    page.locator("#home").wait_for(state="visible")
+    # Isolated test context only: malformed archive bytes must survive browsing.
+    page.evaluate("""() => {
+     localStorage.setItem('birmingham_campaign_records_v1','{broken-records');
+     localStorage.setItem('birmingham_campaign_unique_rewards_v1','{broken-rewards');
+     localStorage.setItem('birmingham_campaign_awards_v1','{broken-awards');
+    }""")
+    page.goto(url,wait_until="domcontentloaded")
+    tap(page,"#cabinetProfile")
+    assert page.locator("#profile .player-overview-card").first.get_attribute("data-status")=="damaged"
+    tap(page,"#profile .campaign-profile-links [data-open-section='campaignAchievements']")
+    page.locator("#campaignAchievements .campaign-001-alert").wait_for(state="visible")
+    assert page.locator("#campaignFirstCaseAchievements .campaign-award.unlocked").count()==0
+    assert page.evaluate("""() => ['records','unique_rewards','awards'].map(k=>localStorage.getItem('birmingham_campaign_'+k+'_v1'))""")==["{broken-records","{broken-rewards","{broken-awards"]
+    assert page.evaluate("localStorage.getItem('birmingham_case002_draft_v3_jack')")==save
+    tap(page,"#homeBtn")
+    page.locator("#home").wait_for(state="visible")
    assert not errors,(engine,width,errors)
    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
    report.append({"engine":engine,"width":width,"status":"PASS",

@@ -141,3 +141,8 @@
 @media(prefers-reduced-motion:reduce){
  #home .cinema-rain::after{transform:none!important}
 }
+
+/* V19: local integrity / incomplete archive notice, no invented progress. */
+.campaign-hub .campaign-001-alert{margin:12px 0;padding:12px 14px;border:1px solid #b78c61;border-left:4px solid #d2a472;background:#352419;color:#ffe0b5;font:14px/1.55 system-ui,sans-serif;overflow-wrap:anywhere}
+#profile .player-overview-card[data-status="partial"]{border-left-color:#c19a63}
+#profile .player-overview-card[data-status="unavailable"]{border-left-color:#8e8980}

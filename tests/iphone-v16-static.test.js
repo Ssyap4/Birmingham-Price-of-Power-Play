@@ -84,3 +84,12 @@ test("V18 decorative motion pauses offscreen and archive remains mobile safe",()
  assert.ok(css.includes("translate3d(0,180px,0)"));
  assert.ok(read("campaign-achievements-rebalance-v1.css").includes("var(--bh-inset-top"));
 });
+
+
+test("V19 damaged Case001 archive is not overwritten or counted as confirmed",()=>{
+ const hub=read("campaign-hub-v1.js");
+ assert.ok(hub.includes("archive.status!=='ready'"));
+ assert.ok(hub.includes("proven.has(k)"));
+ assert.ok(hub.includes("campaign-001-alert"));
+ assert.ok(read("player-profile-overview-v1.js").includes("подтверждённых знаков"));
+});
