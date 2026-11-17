@@ -1,7 +1,7 @@
 "use strict";
 const test=require('node:test'),assert=require('node:assert/strict');
 const {groups,createDeck,createRotation,resolveContext,fadeGains}=require('../src/audio/playlist-v27.js');
-const manifest=require('../assets/audio/soundtrack-v27.json');
+const manifest=require('../docs/criminal-operations/soundtrack-v27.json');
 test('author approved exactly 2+2+3 distinct tracks',()=>{for(const [mode,ids] of Object.entries(groups))assert.deepEqual(manifest.tracks.filter(t=>t.mode===mode).map(t=>t.id),ids);assert.equal(new Set(manifest.tracks.map(t=>t.file)).size,7);});
 test('shuffle bags exhaust before repeating and never repeat across cycles',()=>{for(const ids of Object.values(groups)){const deck=createDeck(ids,()=>0);let previous=null;for(let cycle=0;cycle<30;cycle++){const values=ids.map(()=>deck.next());assert.equal(new Set(values).size,ids.length);assert.notEqual(values[0],previous);previous=values.at(-1);}}});
 test('same context does not restart; separate contexts never share tracks',()=>{const rotation=createRotation(()=>.4);for(const mode of ['menu','detective','criminal','detective','menu']){assert.ok(groups[mode].includes(rotation.enter(mode)));assert.equal(rotation.enter(mode),null);assert.ok(groups[mode].includes(rotation.next()));}});

@@ -3,7 +3,7 @@ No credentials, no writes to Git refs, no runtime third-party requests.
 """
 import hashlib, json, pathlib, subprocess, tempfile, urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-data = json.loads((ROOT / "assets/audio/soundtrack-v27.json").read_text())
+data = json.loads((ROOT / "docs/criminal-operations/soundtrack-v27.json").read_text())
 out = ROOT / "soundtrack-v27-review"
 out.mkdir(exist_ok=True)
 def sha(path):

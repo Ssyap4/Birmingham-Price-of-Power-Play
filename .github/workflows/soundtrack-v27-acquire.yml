@@ -3,7 +3,7 @@ on:
   push:
     branches: [feat/criminal-operations-polish-v3]
     paths:
-      - 'assets/audio/soundtrack-v27.json'
+      - 'docs/criminal-operations/soundtrack-v27.json'
       - 'scripts/fetch-soundtrack-v27.py'
       - 'src/audio/playlist-v27.js'
       - 'tests/audio-v27-playlist.test.js'
@@ -23,8 +23,12 @@ jobs:
           node-version: '22'
       - name: Test approved shuffle and mode isolation
         run: node --test tests/audio-v27-playlist.test.js
-      - name: Check audio codecs
+      - name: Install and check audio codecs
         run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
           ffmpeg -version
           ffprobe -version
       - name: Acquire and validate approved music

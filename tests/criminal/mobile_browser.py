@@ -221,6 +221,7 @@ def run():
                     touch(page, "#homeBtn")
                     touch(page, "#criminalEntry")
                     assert page.locator("#criminalScreen .cr-map").is_visible()
+                    assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == 5
                     assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 3
                     touch(page, '#criminalScreen [data-campaign-jump="detective"]')
                     assert page.locator("#districts").is_visible()

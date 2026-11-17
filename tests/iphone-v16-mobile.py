@@ -153,6 +153,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     page.evaluate("document.body.classList.remove('bh-music-playing')")
    tap(page,"#districtsCard")
    page.locator("#districts").wait_for(state="visible")
+   assert page.locator("body>.shell>.top").evaluate("""el=>{const brand=el.querySelector('.brand'),actions=el.querySelector('.top-actions'),word=brand.querySelector('strong'),menu=el.querySelector('#homeBtn');const b=brand.getBoundingClientRect(),a=actions.getBoundingClientRect();return b.right<=a.left+1&&word.scrollWidth<=word.clientWidth+1&&menu.getBoundingClientRect().height>=44}"""),(engine,width,"internal header overlap")
+   page.locator("body>.shell>.top").screenshot(path=str(OUT/f"{engine}-{width}-v29-internal-header.png"))
    title=page.locator("#districts .district-atlas-title")
    assert title.evaluate("""el=>{const bounds=el.getBoundingClientRect(), words=[...el.querySelectorAll('span')];return words.length===2&&words.every(w=>{const range=document.createRange();range.selectNodeContents(w);const rects=[...range.getClientRects()];return rects.length===1&&rects[0].left>=bounds.left-1&&rects[0].right<=bounds.right+1})}"""),(engine,width,"atlas heading wraps or clips")
    page.locator("#districts .districts-heading").screenshot(path=str(OUT/f"{engine}-{width}-v28-atlas-heading.png"))
@@ -241,6 +243,9 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
    if width==390:
     tap(page,"#districtsCard")
     tap(page,'.map-pin[data-district="digbeth"]')
+    launch=page.locator("#launchSecondCase")
+    assert launch.evaluate("el=>el.getBoundingClientRect().height>=60&&el.scrollWidth<=el.clientWidth+1")
+    launch.screenshot(path=str(OUT/f"{engine}-{width}-v29-case-entry.png"))
     tap(page,"#launchSecondCase")
     page.wait_for_url("**/preview/case002-prototype/index.html?from=map")
     tap(page,"#briefContinue")
@@ -278,6 +283,8 @@ with socketserver.TCPServer(("127.0.0.1",0),Handler) as srv:
     # Assert criminal atlas -> common archive -> profile -> detective atlas.
     tap(page,"#criminalEntry")
     page.locator("#criminalScreen .cr-map").wait_for(state="visible")
+    assert page.locator("#criminalScreen .cr-mission-list").evaluate("""el=>{const cards=[...el.querySelectorAll('button[data-mission]')];return cards.length===5&&cards.every(c=>c.getBoundingClientRect().height>=98&&c.scrollWidth<=c.clientWidth+1&&c.querySelector('.cr-mission-action'))}""")
+    page.locator("#criminalScreen .cr-mission-list").screenshot(path=str(OUT/f"{engine}-{width}-v29-criminal-entry.png"))
     tap(page,"#criminalScreen .campaign-portal-v13 [data-campaign-jump='archive']")
     page.locator("#campaignAchievements").wait_for(state="visible")
     tap(page,"#homeBtn")
