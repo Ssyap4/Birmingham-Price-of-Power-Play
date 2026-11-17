@@ -15,6 +15,9 @@ on:
       - "case001-unified-evidence-v1.css"
       - "case001-unified-quicknav-v1.js"
       - "case001-unified-quicknav-v1.css"
+      - "campaign-visual-language-v1.css"
+      - "case001-unified-finale-v1.js"
+      - "campaign-map-journey-v1.js"
       - "audio-v1.css"
       - "cinema-home-v1.css"
       - "cinema-home-v1.js"
@@ -89,8 +92,8 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           python tests/criminal/art_package.py
-          python tests/criminal/mobile_browser.py
           python tests/criminal/legacy_smoke.py
+          python tests/criminal/mobile_browser.py
           python tests/criminal/standalone_mobile.py
       - name: Keep route proofs and mobile screenshots
         if: always()

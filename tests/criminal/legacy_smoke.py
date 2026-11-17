@@ -97,7 +97,18 @@ def run():
                 tap(page, 'button.choice[data-to="P02"]')
                 assert page.locator("#sceneId").inner_text().startswith("P02")
                 second_visual=reading_language(page,"#sceneText")
-                assert page.locator("#readScene").evaluate("e=>{const s=getComputedStyle(e);return e.getBoundingClientRect().height>=48&&s.borderTopLeftRadius==='5px'}")
+                # Measure the actual released touch target, not a transient
+                # animation frame; record geometry on failure for diagnosis.
+                read=page.locator("#readScene")
+                read.wait_for(state="visible")
+                read.scroll_into_view_if_needed()
+                page.wait_for_function("""()=>{const e=document.querySelector('#readScene');
+                  return e&&e.getClientRects().length&&e.getAnimations().every(a=>a.playState!=='running')&&
+                    !e.matches(':active')}""")
+                read_metrics=read.evaluate("""e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();
+                  return {height:r.height,width:r.width,layoutHeight:e.offsetHeight,
+                    minHeight:s.minHeight,radius:s.borderTopLeftRadius,transform:s.transform}}""")
+                assert read_metrics["height"]>=48 and read_metrics["layoutHeight"]>=48 and read_metrics["radius"]=="5px",read_metrics
                 assert page.locator("#casePulse span").evaluate_all("""els=>els.length===3&&els.every(e=>{const s=getComputedStyle(e);return s.borderTopLeftRadius==='5px'&&s.fontVariantNumeric==='tabular-nums'&&s.color==='rgb(239, 221, 198)'})""")
                 assert page.locator("#caseTools").evaluate("e=>getComputedStyle(e).borderTopLeftRadius")== "7px"
                 second = page.evaluate(

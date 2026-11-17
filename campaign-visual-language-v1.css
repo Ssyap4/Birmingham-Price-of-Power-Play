@@ -434,7 +434,7 @@
   #game #readScene,
   #criminalScreen .cr-reader-jump button {
     box-sizing:border-box;
-    min-height:48px !important;
+    min-height:50px !important;
     width:100%;
     border:1px solid #b18d5d !important;
     border-radius:5px !important;
