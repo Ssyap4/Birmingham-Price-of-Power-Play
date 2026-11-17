@@ -157,3 +157,26 @@ test("V40 common archive excludes case launch and obsolete future-case placehold
  assert.ok(archive.includes("campaignSecondCaseAchievements"));
  assert.ok(archive.includes("campaignSecondCaseHistory"));
 });
+
+
+test("V41 Case001 irreversible transitions for all heroes and resumed saves",()=>{
+ const vm=require("node:vm"),source=read("case-v14.js");
+ const at=source.indexOf("window.BirminghamCase={");
+ assert.ok(at>0);
+ const injected=source.slice(0,at)+`render=()=>save();notify=()=>{};window.audit={fresh:()=>{state=fresh();return state},load:()=>{state=load();return state},state:()=>state,move,storyAllows};})();`;
+ for(const hero of ["jack","finn","eleanor","victor","samuel"]){
+  const store=new Map(),window={BirminghamHero:{selectedId:hero},scrollTo(){}};
+  const math=Object.create(Math);math.random=()=>.99;
+  vm.runInNewContext(injected,{window,document:{addEventListener(){}},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},Math:math,console});
+  const api=window.audit;
+  const go=(...nodes)=>{for(const node of nodes){api.move(node);assert.equal(api.state().node,node,hero+" -> "+node);}};
+  api.fresh();go("widow","office","canal","bribe","warehouse","pump","yard","rescue","confront");
+  assert.equal(api.storyAllows("yard"),false);api.move("yard");assert.equal(api.state().node,"confront");
+  api.load();assert.equal(api.storyAllows("yard"),false);api.move("yard");assert.equal(api.state().node,"confront");go("endingDeal");
+  api.fresh();go("widow","canal","bribe","pump","confront","yard","confront");
+  assert.equal(api.storyAllows("yard"),false);go("endingDeal");
+  api.fresh();go("widow","office","canal","bribe","warehouse","warn","office","canal","bribe","warehouse");
+  assert.equal(api.storyAllows("warn"),false);api.move("warn");assert.equal(api.state().node,"warehouse");go("pump","yard","rescue","endingRescue");
+  api.fresh();go("widow","interview","envelope","widow");assert.equal(api.storyAllows("interview"),false);api.move("interview");assert.equal(api.state().node,"widow");
+ }
+});
