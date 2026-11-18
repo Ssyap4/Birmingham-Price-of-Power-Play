@@ -1,0 +1,58 @@
+name: CR06 complete art and mobile acceptance
+on:
+  push:
+    branches: [feat/criminal-operations-wave2]
+    paths:
+      - 'src/criminal/**'
+      - 'assets/criminal/**'
+      - 'deployment/**'
+      - 'index.html'
+      - 'preview/criminal/**'
+      - 'tests/criminal/**'
+      - 'docs/criminal-operations/CR06-ART-CANDIDATES.json'
+      - '.github/workflows/cr06-art-acceptance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cr06-art-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Engine, saves, reward identity and complete illustration contracts
+        run: |
+          node --test tests/criminal/*.test.js
+          node tests/criminal/playthroughs.js
+          node deployment/campaign-unified-release.js
+          node tests/case002/unified-package-integrity.test.js
+          node deployment/criminal-standalone-preview.js
+      - name: Install decoders and phone browser engines
+        run: |
+          python -m pip install 'playwright==1.62.0' 'Pillow==11.3.0'
+          python -m playwright install --with-deps chromium webkit
+      - name: Real mobile taps, all CR06 moments and both offline packages
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          python tests/criminal/art_package.py
+          python tests/criminal/cr06_art_mobile.py
+          python tests/criminal/catalog_v85.py
+          python tests/criminal/standalone_mobile.py
+          python tests/criminal/startup_isolation.py
+          python tests/criminal/legacy_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cr06-art-mobile-evidence
+          path: work/criminal/
+          retention-days: 14

@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "criminal-preview-dist");
 const scripts = [
   "src/criminal/content.js",
-  ...[1,2,3,4,5].map(n => "src/criminal/missions/cr0" + n + ".js"),
+  ...[1,2,3,4,5,6].map(n => "src/criminal/missions/cr0" + n + ".js"),
   "src/criminal/engine.js",
   "src/criminal/archive.js",
   "src/criminal/art-manifest.js",
@@ -28,8 +28,7 @@ const images = manifest.frames.map(f => f.path);
 const equipment = Object.keys(require("../src/criminal/content.js").items).map(id => "assets/criminal/equipment/" + id + ".svg");
 if(equipment.length!==28) throw Error("Incomplete illustrated equipment catalog");
 const required = [ ...scripts, ...styles, ...heroes, ...images, ...equipment ];
-if(manifest.frames.length !== 40)
-  throw Error("Unexpected reviewed image count");
+require("./criminal-art-contract.js")(manifest, scripts);
 if(new Set(required).size !== required.length)
   throw Error("Duplicate preview reference");
 if(!required.every(name => !name.startsWith("/") && !name.split(/[\\/]/).includes("..")))
@@ -65,9 +64,6 @@ for(const s of scripts.concat(styles))
   if(!fs.statSync(path.join(OUT,s)).size)throw Error("Empty resource "+s);
 for(const name of required)
   if(!fs.existsSync(path.join(OUT,name)))throw Error("Missing preview file "+name);
-for(const id of ["CR01","CR02","CR03","CR04","CR05"])
-  if(manifest.frames.filter(f=>f.missionId===id).length!==8)
-    throw Error("Wrong art count for "+id);
 const size = files.reduce((total,f)=>total+fs.statSync(path.join(OUT,f)).size,0);
 if(size>9*1024*1024)throw Error("Standalone preview unexpectedly large");
 console.log(JSON.stringify({ok:true,files:files.length,frames:images.length,heroes:heroes.length,bytes:size,directory:"criminal-preview-dist",entry:"index.html"},null,2));

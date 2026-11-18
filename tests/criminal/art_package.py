@@ -20,7 +20,7 @@ content = json.loads(
         [
             "node",
             "-e",
-            "const C=require('./src/criminal/content');for(let i=1;i<=5;i++)require('./src/criminal/missions/cr0'+i);console.log(JSON.stringify(C.missions))",
+            "const fs=require('node:fs'),C=require('./src/criminal/content');const html=fs.readFileSync('index.html','utf8');for(const m of html.matchAll(/src=\"(src\\/criminal\\/missions\\/cr[0-9]+\\.js)\"/g))require('./'+m[1]);console.log(JSON.stringify(C.missions))",
         ],
         cwd=ROOT,
     )
@@ -39,6 +39,7 @@ for frame in m["frames"]:
         assert im.format == "WEBP" and im.size == (720, 900)
         im.load()
     assert (ROOT / "campaign-unified-dist" / frame["path"]).read_bytes() == payload
+    assert (ROOT / "criminal-preview-dist" / frame["path"]).read_bytes() == payload
     for scene in frame["scenes"]:
         assert scene in content[frame["missionId"]]["scenes"] or scene in [
             "end:clean",

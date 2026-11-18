@@ -1,4 +1,4 @@
-// CR06 story candidate. Not in public script list until art and acceptance.
+// CR06: complete independent scene/ending art; registered in the working build.
 (function (C) {
   "use strict";
   const { F, N, S, AND, OR, fx, c, d, mod, node:n } = C;

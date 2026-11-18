@@ -748,10 +748,504 @@
         alt: "Фургон во дворе мастерской",
         scenes: ["industrial", "repair", "lastRepair"],
       },
+      {
+        "id": "cr06-order",
+        "width": 720,
+        "height": 900,
+        "bytes": 108604,
+        "sha256": "dc055950336ef31da1b74fdf6f328367853405c7c46d1b0187318cad075f8726",
+        "gitBlobSha1": "a4f6d0c5090e475b31f02dbf560bf9b53da3a714",
+        "sourceSha256": "d113ab919eb01a526b6c8c95cad4ad7d4e4929dc9f036f019eb0dd7e454a5e48",
+        "missionId": "CR06",
+        "kind": "arrival",
+        "path": "assets/criminal/cr06-order.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Ранее принятый кадр сохранён байт-в-байт; активная копия сверена с исходным кандидатом.",
+        "alt": "Вейн кладёт записку на стол в комнате над лавкой",
+        "scenes": [
+          "order"
+        ]
+      },
+      {
+        "id": "cr06-crossroads",
+        "width": 720,
+        "height": 900,
+        "bytes": 227586,
+        "sha256": "7769ab316c7cdc34a2828f81d8f594184de043dfd08296b7f9bbf6c35579ce3e",
+        "gitBlobSha1": "5758116eafc553bbcedea9277ce3268798a0122b",
+        "sourceSha256": "63661b57210a9a6b145f6778fcd82ce3a32af482ed93fd6f78a92644ecc2e898",
+        "missionId": "CR06",
+        "kind": "crossroads",
+        "path": "assets/criminal/cr06-crossroads.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Дождливый перекрёсток у афиш ветеранского клуба",
+        "scenes": [
+          "crossroads"
+        ]
+      },
+      {
+        "id": "cr06-oldfriend",
+        "width": 720,
+        "height": 900,
+        "bytes": 138726,
+        "sha256": "7f1d59a9f94d9c2a6ff28fda0300426af523d539d3931c778a4850b28298792e",
+        "gitBlobSha1": "1de8efc0a3d9f72c8b844a303f5d52fbade1f157",
+        "sourceSha256": "40a099267ee4f8fd4d9b766adc8ecaee8be4f60ea9099b26809bdc857bdc6b66",
+        "missionId": "CR06",
+        "kind": "oldfriend",
+        "path": "assets/criminal/cr06-oldfriend.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Артур Белл на краю кровати в холодной комнате",
+        "scenes": [
+          "oldfriend"
+        ]
+      },
+      {
+        "id": "cr06-clerk",
+        "width": 720,
+        "height": 900,
+        "bytes": 151716,
+        "sha256": "02eb5b6e98ba2469f278957cbf70e08c909c135f37156785cd50a5122f5ac689",
+        "gitBlobSha1": "808e17c9aa0b750a1c69733f3f64af6f44b86edb",
+        "sourceSha256": "b78603b9f8664c224ca48eb83a006f0299a79afb6fdd925b39c95e50317282bc",
+        "missionId": "CR06",
+        "kind": "clerk",
+        "path": "assets/criminal/cr06-clerk.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Эстер Шоу держит папку в частном бюро",
+        "scenes": [
+          "clerk"
+        ]
+      },
+      {
+        "id": "cr06-messenger",
+        "width": 720,
+        "height": 900,
+        "bytes": 182112,
+        "sha256": "d734e6a603e5959adf316d27db567b71cc594136b18f0644b3e5f70a76f300cf",
+        "gitBlobSha1": "61147a17f48ad06c91fc94df24a20f5a24493982",
+        "sourceSha256": "06ef3883c0bde9dc59bd819840ce9789397a404d48d9804693163c9a4bc993b0",
+        "missionId": "CR06",
+        "kind": "messenger",
+        "path": "assets/criminal/cr06-messenger.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Гарольд Кроу протягивает копию обвинения из дверей бюро",
+        "scenes": [
+          "messenger"
+        ]
+      },
+      {
+        "id": "cr06-club",
+        "width": 720,
+        "height": 900,
+        "bytes": 121964,
+        "sha256": "1ba85f38796cd9c8ced3b40a25232c17327391a2d32c33d3de0ef6f655502f04",
+        "gitBlobSha1": "745785428ca6aba7a6586e0ae0c946c84b68b5f2",
+        "sourceSha256": "9d639c015183775c4454f0c00bcc8aaeb82e25d3c9ea112f9bc535def6a3a90f",
+        "missionId": "CR06",
+        "kind": "club",
+        "path": "assets/criminal/cr06-club.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Белл у остывшего чая и ряда пустых стульев",
+        "scenes": [
+          "club"
+        ]
+      },
+      {
+        "id": "cr06-infirmary",
+        "width": 720,
+        "height": 900,
+        "bytes": 146852,
+        "sha256": "bfe664272dc28694213cff6036b4ff4575f7851b71a06ccda4dbdd0925175101",
+        "gitBlobSha1": "835b01d6a277c9664bbf999c9a3365b876f97a5c",
+        "sourceSha256": "c5c63fc9e7899c7fe05903e82de3d12421a350722eb99c571739031a8287375b",
+        "missionId": "CR06",
+        "kind": "infirmary",
+        "path": "assets/criminal/cr06-infirmary.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Мэри Хейл показывает журнал дежурств в лазарете",
+        "scenes": [
+          "infirmary"
+        ]
+      },
+      {
+        "id": "cr06-ledger",
+        "width": 720,
+        "height": 900,
+        "bytes": 188252,
+        "sha256": "a0dac0ba4b9be572974b22951f76f3211dc97cc43e9957353f0d726efb521cff",
+        "gitBlobSha1": "c4c39b23d981b942b72c9e4436bd925ad71bf4dc",
+        "sourceSha256": "ea0fc69e37f576322b4c05e519c1de83f42d1c5518efdd4c5722696b2ee9540c",
+        "missionId": "CR06",
+        "kind": "ledger",
+        "path": "assets/criminal/cr06-ledger.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Эстер указывает на оригинал и копию записи",
+        "scenes": [
+          "ledger"
+        ]
+      },
+      {
+        "id": "cr06-shelter",
+        "width": 720,
+        "height": 900,
+        "bytes": 174070,
+        "sha256": "8970fa3a10d6c666d985220fef81354dd1f5440f253a92cc007d5a9e27db18cb",
+        "gitBlobSha1": "761dee81ace65a2d4ba3fb5d410f35e3cb57ac9c",
+        "sourceSha256": "9c0c815759b880b61d40397f8b0fd636e89ac03f63588d7f211fe1ed083e23ad",
+        "missionId": "CR06",
+        "kind": "shelter",
+        "path": "assets/criminal/cr06-shelter.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Эстер размышляет у дождливого окна; решение ещё не принято",
+        "scenes": [
+          "shelter"
+        ]
+      },
+      {
+        "id": "cr06-escort",
+        "width": 720,
+        "height": 900,
+        "bytes": 147542,
+        "sha256": "985b628dc38851f448c9d89b5dfefd5e0a9cf8cf667edf79cca69771fb4e7c99",
+        "gitBlobSha1": "50bd3e771aae5cdd1bcfce92dc0cca5e2b3d9d32",
+        "sourceSha256": "2f390b32cdc3793a27cbdeceba69a465f71511cad0f618f5d053b17316d46372",
+        "missionId": "CR06",
+        "kind": "escort",
+        "path": "assets/criminal/cr06-escort.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Белл застёгивает старую шинель перед выходом",
+        "scenes": [
+          "escort"
+        ]
+      },
+      {
+        "id": "cr06-queue",
+        "width": 720,
+        "height": 900,
+        "bytes": 135432,
+        "sha256": "9531712cf5691997cc01d59f79b8eecb5c73a91cc0a331e3b868f9f54e67e463",
+        "gitBlobSha1": "881f50cdf81eb5611934f97abf0f2c2e4b6201ef",
+        "sourceSha256": "51b6bf483ffcc6707f83bec8058f3a2575a74e535fc8b458f90365ef5a233490",
+        "missionId": "CR06",
+        "kind": "queue",
+        "path": "assets/criminal/cr06-queue.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Томас проверяет записи у закрытой двери; Белл ждёт",
+        "scenes": [
+          "queue"
+        ]
+      },
+      {
+        "id": "cr06-hearing",
+        "width": 720,
+        "height": 900,
+        "bytes": 178256,
+        "sha256": "718b7638e61d73b24a11e6a4ec60fd5956bff317bc591a1b589adb9d5e636979",
+        "gitBlobSha1": "26e9b86c9d5764e43e67562ea60de4a28f4ba113",
+        "sourceSha256": "f2da5aeb6ba8303fbfa1da4de7885b703c18f33845f81ccf7efd689df9190f91",
+        "missionId": "CR06",
+        "kind": "hearing",
+        "path": "assets/criminal/cr06-hearing.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Вейн выслушивает посетителя в приёмной; Кроу рядом, Белл под наблюдением Томаса",
+        "scenes": [
+          "hearing"
+        ]
+      },
+      {
+        "id": "cr06-contradiction",
+        "width": 720,
+        "height": 900,
+        "bytes": 170718,
+        "sha256": "3ff7b4a65b8a83ad90833711433390c29bb549a017d60054a791a1ec3955dec3",
+        "gitBlobSha1": "0456c8884e86e57052fedb92e51719177fbf4330",
+        "sourceSha256": "d34b2bb12dbb58d5f8bdc6b0e4574f8e58841f110145cb9cbbccdce27b8183b4",
+        "missionId": "CR06",
+        "kind": "contradiction",
+        "path": "assets/criminal/cr06-contradiction.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Вейн сопоставляет две записи перед Кроу",
+        "scenes": [
+          "contradiction"
+        ]
+      },
+      {
+        "id": "cr06-witnesschoice",
+        "width": 720,
+        "height": 900,
+        "bytes": 154838,
+        "sha256": "539fdd4a8923f9de9da4645ca7452aaa019bafcdae223fd14fbda7a9b5edb50d",
+        "gitBlobSha1": "8f99118977c560179c2a487d709a123289fda0ba",
+        "sourceSha256": "7abf2baf5a2d8006b7b6901770f8e779e7a911e6cd92964d3a354a0af7c8de00",
+        "missionId": "CR06",
+        "kind": "witnesschoice",
+        "path": "assets/criminal/cr06-witnesschoice.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Томас держит закрытый конверт; Белл ждёт решения",
+        "scenes": [
+          "witnesschoice"
+        ]
+      },
+      {
+        "id": "cr06-pressure",
+        "width": 720,
+        "height": 900,
+        "bytes": 166736,
+        "sha256": "0cf0cf08401adaeba9ce6bf715a9bb2186996d24df784d741cf7881280348d43",
+        "gitBlobSha1": "70a817587e443c1a1ab1ed69f6a65ed9febc623e",
+        "sourceSha256": "0ebae9503e59524e582bd12d98f98fb8bf5cb8b537c8ee7abf5a12bc64651e9f",
+        "missionId": "CR06",
+        "kind": "pressure",
+        "path": "assets/criminal/cr06-pressure.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Томас сдерживает людей на тесной лестничной площадке рядом с Беллом",
+        "scenes": [
+          "pressure"
+        ]
+      },
+      {
+        "id": "cr06-confrontation",
+        "width": 720,
+        "height": 900,
+        "bytes": 149034,
+        "sha256": "4d56f9fa534b0036aa7fd95b819666719ee83164a5c286f5d9193ab4d8f40ec9",
+        "gitBlobSha1": "41fef5082d0ed89fec3f4337fd9b398bcac83dbf",
+        "sourceSha256": "9e4b30e533fa3fc84c804d20cec18fe41b7a3b5c1a53ccf5d54d74091d1451bc",
+        "missionId": "CR06",
+        "kind": "confrontation",
+        "path": "assets/criminal/cr06-confrontation.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания. Первый вариант с лишним Вейном отвергнут; установлен переработанный кадр.",
+        "alt": "Томас пытается остановить конфликт в коридоре; Белл и Кроу позади",
+        "scenes": [
+          "confrontation"
+        ]
+      },
+      {
+        "id": "cr06-corridor",
+        "width": 720,
+        "height": 900,
+        "bytes": 164948,
+        "sha256": "3a606fe086c69153b60ef379360290c7afd259a8d15b0af4f1e116013a9a4a7d",
+        "gitBlobSha1": "8feeadcb0577c66ae8822cf643178d3717bf0693",
+        "sourceSha256": "e13dfe144291d79953c0cb186ef627cf89149f283b860dd34299bc13082657eb",
+        "missionId": "CR06",
+        "kind": "corridor",
+        "path": "assets/criminal/cr06-corridor.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Вейн освобождает проход в дверях приёмной",
+        "scenes": [
+          "corridor"
+        ]
+      },
+      {
+        "id": "cr06-tribunal",
+        "width": 720,
+        "height": 900,
+        "bytes": 169414,
+        "sha256": "caebebd9fc6c55ee686c9483487838e7901c7181ceea014eaca19be1aeac834d",
+        "gitBlobSha1": "0ebf50ab0036f2bf97a22f56a12c288c201936a3",
+        "sourceSha256": "d77d9403433a7ca2fff666b3dfeccf646f975501dca654dc082ccf2dd9e30080",
+        "missionId": "CR06",
+        "kind": "tribunal",
+        "path": "assets/criminal/cr06-tribunal.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Вейн закрывает папку перед Кроу; первоначальное обвинение требует пересмотра",
+        "scenes": [
+          "tribunal"
+        ]
+      },
+      {
+        "id": "cr06-bargain",
+        "width": 720,
+        "height": 900,
+        "bytes": 183114,
+        "sha256": "8e2f8e90266e2d617c76e7b2606f7c86b3f0b7309d5dd3d61092476451e3cf0c",
+        "gitBlobSha1": "0445fbec4c8a20857d4c11f0469675f0f2032bcd",
+        "sourceSha256": "22ce6834551e2b6fb1369c219b3207f9e02a3d84c6ae964dc0c012ad5bce684f",
+        "missionId": "CR06",
+        "kind": "bargain",
+        "path": "assets/criminal/cr06-bargain.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Неполная папка на столе; Белл ждёт у стула рядом с Вейном",
+        "scenes": [
+          "bargain"
+        ]
+      },
+      {
+        "id": "cr06-exit",
+        "width": 720,
+        "height": 900,
+        "bytes": 204328,
+        "sha256": "c17b7356ff7c7c0ca790748029aef8f2e22d85b761df12347a32cbc2b1c65055",
+        "gitBlobSha1": "2f0a5fc771aba2d0fdaed781bb1cbf286193a994",
+        "sourceSha256": "fda46ac66a22bb0470a09bc08e67eb5a822df2963b792a162d76dacdb0bef224",
+        "missionId": "CR06",
+        "kind": "exit",
+        "path": "assets/criminal/cr06-exit.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Холодный мокрый порог и открытая дверь на улицу",
+        "scenes": [
+          "exit"
+        ]
+      },
+      {
+        "id": "cr06-return",
+        "width": 720,
+        "height": 900,
+        "bytes": 155606,
+        "sha256": "ed7533378f53bc04f354447382bd603ae5d422ba18b6e3b6ec4889991e72e4e1",
+        "gitBlobSha1": "08db8759a5fc4c3cfc47167480787eff4c10d57d",
+        "sourceSha256": "ed016e681692eb8ddd2bb7ac33411cc5c4ee915b89e9245faa4b8ec2641238c1",
+        "missionId": "CR06",
+        "kind": "return",
+        "path": "assets/criminal/cr06-return.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Белл на стороне комнаты, Томас у двери после передачи; дальнейшая судьба неизвестна",
+        "scenes": [
+          "return"
+        ]
+      },
+      {
+        "id": "cr06-retreat",
+        "width": 720,
+        "height": 900,
+        "bytes": 208912,
+        "sha256": "f6b664756d594a494c50fc1885540b4333e79ded44e0209a638647244940ce79",
+        "gitBlobSha1": "3953a44c5e094b083faeda3af789bb4081ee4b86",
+        "sourceSha256": "c46c6db9824cac41bf417288800b61f1d160bd009747d46a8f92a523e722c49b",
+        "missionId": "CR06",
+        "kind": "retreat",
+        "path": "assets/criminal/cr06-retreat.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Пустая ночная мостовая на обратном пути",
+        "scenes": [
+          "retreat"
+        ]
+      },
+      {
+        "id": "cr06-end-clean",
+        "width": 720,
+        "height": 900,
+        "bytes": 174474,
+        "sha256": "3fa635e2fa4788ee2e307bc34e6ef0f378ccfa758a25f73a95dcd78b923d19fd",
+        "gitBlobSha1": "cb7533322287cb2cc6bf95aa8b51628f23116a22",
+        "sourceSha256": "c7251d83348139e997dfa57bdc8e1b8430c90f02ac4d848c1d8c3231e9ce60fa",
+        "missionId": "CR06",
+        "kind": "ending",
+        "path": "assets/criminal/cr06-end-clean.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Закрытая папка с новой закладкой и пустой стул для следующего разговора",
+        "scenes": [
+          "end:clean"
+        ]
+      },
+      {
+        "id": "cr06-end-costly",
+        "width": 720,
+        "height": 900,
+        "bytes": 158082,
+        "sha256": "e0bd7f6dbe502e08690e40006a5ba3940643b14347d057ff1c6d16c5a7efd8c8",
+        "gitBlobSha1": "e7dd06bfd95b4436ea1eacb423df5a52d8c51c36",
+        "sourceSha256": "3c1d6e1eb485dfbef818cbb0b20e67aa5e2b1c18b79c3cc7b8afd7d7d191fd19",
+        "missionId": "CR06",
+        "kind": "ending",
+        "path": "assets/criminal/cr06-end-costly.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Подписанный лист с чернильной кляксой в сумрачной комнате",
+        "scenes": [
+          "end:costly"
+        ]
+      },
+      {
+        "id": "cr06-end-failed",
+        "width": 720,
+        "height": 900,
+        "bytes": 200336,
+        "sha256": "733b571b99644330fb84933105453da5c42b7c621d9c752c3de15e85a1887587",
+        "gitBlobSha1": "9f4ca59b365d84aef37718b9133eda4407cdb6ab",
+        "sourceSha256": "4da78c74a3bd08b89dec0421e9b734cbfc28d59a81b3a4fe3c0186d63a8ca14e",
+        "missionId": "CR06",
+        "kind": "ending",
+        "path": "assets/criminal/cr06-end-failed.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Неподписанный лист на столе; за окном идёт дождь",
+        "scenes": [
+          "end:failed"
+        ]
+      },
+      {
+        "id": "cr06-end-dead",
+        "width": 720,
+        "height": 900,
+        "bytes": 114628,
+        "sha256": "aa552ff3000dc9ceb989028850005eb555a36d75a81bfc1917ce2c815e3d8ce6",
+        "gitBlobSha1": "6521ee121435e99f73c192ccf9c2b43028f47584",
+        "sourceSha256": "7fd532313edf64a50e604c2f5471fa347168924d28b3f02f6c8c9fb88dd078ae",
+        "missionId": "CR06",
+        "kind": "ending",
+        "path": "assets/criminal/cr06-end-dead.webp",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Самостоятельная художественная приёмка полного комплекта: конкретный сюжетный момент, канон внешности/одежды, без читаемого текста и утверждения вариативных последствий; RGB WebP 720×900 без растягивания.",
+        "alt": "Пустое пальто на вешалке и погасшая лампа; причина гибели не показана",
+        "scenes": [
+          "end:dead"
+        ]
+      },
     ],
     artGaps: [
-      "Иллюстрации разделяются соседними сценами одной локации; не у каждого из 105 узлов свой кадр.",
-      "Четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет.",
+      "CR01–CR05: иллюстрации разделяются соседними сценами одной локации; не у каждого из 105 узлов свой кадр.",
+      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06 имеет 22 самостоятельных сцены и 4 отдельных финала.",
       "Пять героев представлены каноническими портретами; новые полнофигурные изображения героев не создавались.",
     ],
   };

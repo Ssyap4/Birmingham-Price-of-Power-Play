@@ -75,7 +75,7 @@ def atlas_header_return(page, engine, width, label, action):
 
 def start(page, id, seed):
     touch(page, "#criminalEntry")
-    touch(page, f'.cr-pin[data-mission="{id}"]')
+    touch(page, f'.cr-mission-list [data-mission="{id}"]')
     page.evaluate("(n)=>window.__crSeed=n", seed)
     if page.locator('[data-action="start"]').count():
         touch(page, '[data-action="start"]')
@@ -240,7 +240,7 @@ def run():
                     touch(page, "#homeBtn")
                     touch(page, "#criminalEntry")
                     assert page.locator("#criminalScreen .cr-map").is_visible()
-                    assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == 5
+                    assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == 6
                     assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 2
                     touch(page, '#criminalScreen [data-campaign-jump="detective"]')
                     assert page.locator("#districts").is_visible()
@@ -330,7 +330,7 @@ def run():
                         )
                         touch(page, "#homeBtn")
                         touch(page, "#criminalEntry")
-                        assert page.locator('.cr-pin[data-mission="CR01"]').get_attribute("data-progress") == "active"
+                        assert page.locator('.cr-mission-list [data-mission="CR01"]').get_attribute("data-progress") == "active"
                         assert "В работе · акт" in page.locator('.cr-mission-list [data-mission="CR01"]').inner_text()
                         touch(page, "#homeBtn")
                     else:
@@ -535,7 +535,7 @@ def run():
                     page.route(pattern, lambda r: held.append(r) if stalled else r.abort())
                     keys = OLD + [PREFIX+"save_CR01",PREFIX+"ledger"]
                     original = page.evaluate("ks=>ks.map(k=>localStorage.getItem(k))",keys)
-                    touch(page, '.cr-pin[data-mission="CR01"]')
+                    touch(page, '.cr-mission-list [data-mission="CR01"]')
                     if stalled:
                         page.locator('.cr-frame[data-art-state="loading"]').wait_for()
                     page.locator('.cr-frame[data-art-state="unavailable"]').wait_for(timeout=18000)
@@ -562,7 +562,7 @@ def run():
                     """()=>{const g=Storage.prototype.getItem;Storage.prototype.getItem=function(k){if(k.startsWith('birmingham_criminal_v2_'))throw Error('private');return g.call(this,k);};}"""
                 )
                 touch(page, "#criminalEntry")
-                touch(page, '.cr-pin[data-mission="CR01"]')
+                touch(page, '.cr-mission-list [data-mission="CR01"]')
                 assert not page.locator('[data-action="start"]').count()
                 assert page.locator('[data-action="memoryStart"]').is_visible()
                 touch(page, '[data-action="memoryStart"]')
@@ -591,7 +591,7 @@ def run():
                     PREFIX + "save_CR01",
                 )
                 touch(page, "#criminalEntry")
-                touch(page, '.cr-pin[data-mission="CR01"]')
+                touch(page, '.cr-mission-list [data-mission="CR01"]')
                 assert not page.locator('[data-action="start"]').count()
                 touch(page, '[data-action="resetCorrupt"]')
                 assert value(page, "CR01")["revision"] == 0
@@ -610,7 +610,7 @@ def run():
                 page.route("https://**/*", lambda r: r.abort())
                 page.goto(origin + "/index.html", wait_until="domcontentloaded")
                 touch(page, "#criminalEntry")
-                touch(page, '.cr-pin[data-mission="CR01"]')
+                touch(page, '.cr-mission-list [data-mission="CR01"]')
                 touch(page, '[data-action="start"]')
                 touch(page, '[data-choice="accept"]')
                 touch(page, '[data-action="ack"]')

@@ -156,6 +156,8 @@ function copyCriminalScripts(relative){
 }
 copyCriminalScripts("src/criminal");
 const criminalArt=require("../src/criminal/art-manifest.js");
+require("./criminal-art-contract.js")(criminalArt,
+ [...liveMarkup.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m=>m[1]));
 for(const frame of criminalArt.frames){
  if(frame.review!=="approved"||frame.width!==720||frame.height!==900||
    !/^assets\/criminal\/[a-z0-9-]+\.webp$/.test(frame.path)||!frame.sha256)

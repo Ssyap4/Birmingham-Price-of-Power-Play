@@ -49,13 +49,13 @@ def run():
                     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                     if width==390:
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-map.png")),full_page=True)
-                    for mission in ("CR01","CR02","CR03","CR04","CR05"):
+                    for mission in ("CR01","CR02","CR03","CR04","CR05","CR06"):
                         # Some file/sandbox browsers prohibit history.replaceState;
                         # mission identity must not depend on a writable hash.
                         blocked_hash = mission == "CR01" and width == 390
                         if blocked_hash:
                             page.evaluate("() => {window.__oldReplace=history.replaceState;history.replaceState=()=>{throw Error('history denied')};}")
-                        tap(page,f'.cr-pin[data-mission="{mission}"]')
+                        tap(page,f'.cr-mission-list [data-mission="{mission}"]')
                         assert page.locator("#criminalScreen h1").first.is_visible()
                         image = page.locator(".cr-frame img").first
                         page.wait_for_function("""() => {
@@ -87,7 +87,7 @@ def run():
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-last.png")),full_page=True)
                     ctx.close()
                 browser.close()
-        print("PASS standalone mobile Chromium/WebKit 320/390/430: all five missions, art, scenes, save, back nav")
+        print("PASS standalone mobile Chromium/WebKit 320/390/430: all six missions, art, scenes, save, back nav")
     finally:
         server.shutdown()
 if __name__=="__main__":
