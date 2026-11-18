@@ -1,0 +1,541 @@
+{
+  "schemaVersion": 1,
+  "status": "design-only",
+  "caseId": "003",
+  "district": "jewellery",
+  "title": "Цена чужого золота",
+  "heroes": [
+    "jack",
+    "finn",
+    "eleanor",
+    "victor",
+    "samuel"
+  ],
+  "evidence": [
+    {
+      "id": "glass",
+      "title": "Стекло изнутри",
+      "source": "scene-glass"
+    },
+    {
+      "id": "sound",
+      "title": "Последовательность звуков",
+      "source": "nell"
+    },
+    {
+      "id": "body",
+      "title": "Положение тела и осколков: стекло разбито после смертельного удара",
+      "source": "exam"
+    },
+    {
+      "id": "safe",
+      "title": "Опись сейфа и накладные: заявленные ценности выведены до вскрытия",
+      "source": "safe-inventory"
+    },
+    {
+      "id": "receipt",
+      "title": "Квитанция Клары",
+      "source": "clara"
+    },
+    {
+      "id": "returnbook",
+      "title": "Книга возвратов",
+      "source": "office-book"
+    },
+    {
+      "id": "repair",
+      "title": "Запись ремонта с личным знаком",
+      "source": "repair-shop"
+    },
+    {
+      "id": "invoice",
+      "title": "Накладная Дарна",
+      "source": "dealer-record"
+    },
+    {
+      "id": "note",
+      "title": "Контрольная копия Коула",
+      "source": "cole-copy"
+    },
+    {
+      "id": "ida",
+      "title": "Личная помета Иды",
+      "source": "ida-private"
+    },
+    {
+      "id": "key",
+      "title": "Дубликат выдачи ключей",
+      "source": "key-register"
+    },
+    {
+      "id": "watch",
+      "title": "Запись дежурства",
+      "source": "watch-register"
+    },
+    {
+      "id": "marsh",
+      "title": "Показания Марша о приходе и ссоре",
+      "source": "marsh"
+    },
+    {
+      "id": "trace",
+      "title": "След Восса на предмете у тела",
+      "source": "exam-object"
+    },
+    {
+      "id": "voss",
+      "title": "Независимая расписка, связывающая Восса с предметом у тела и временем встречи",
+      "source": "delivery-receipt"
+    },
+    {
+      "id": "alibi",
+      "title": "Подтверждение местонахождения Белла",
+      "source": "neighbour-receipt"
+    },
+    {
+      "id": "parcel",
+      "title": "Опознанный предмет из партии",
+      "source": "parcel-object"
+    },
+    {
+      "id": "owner",
+      "title": "Независимое описание владельца",
+      "source": "second-owner"
+    },
+    {
+      "id": "contract",
+      "title": "Договор хранения/залога",
+      "source": "contract-office"
+    },
+    {
+      "id": "transfer",
+      "title": "Подтверждение передачи партии",
+      "source": "carrier-record"
+    },
+    {
+      "id": "cuff",
+      "title": "Обрывок манжеты в руке Коула и совпадающий разрыв одежды Восса",
+      "source": "coat-comparison"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "I",
+      "title": "Пустая витрина",
+      "nodes": [
+        {
+          "id": "P01",
+          "title": "Обращение Клары",
+          "grants": [
+            "receipt"
+          ]
+        },
+        {
+          "id": "A01",
+          "title": "Мастерская и тело",
+          "grants": [
+            "body"
+          ]
+        },
+        {
+          "id": "A02",
+          "title": "Стекло",
+          "grants": [
+            "glass"
+          ]
+        },
+        {
+          "id": "A03",
+          "title": "Сейф",
+          "grants": [
+            "safe"
+          ]
+        },
+        {
+          "id": "A04",
+          "title": "Соседка",
+          "grants": [
+            "sound"
+          ]
+        },
+        {
+          "id": "A05",
+          "title": "Первая реконструкция",
+          "grants": []
+        }
+      ]
+    },
+    {
+      "id": "II",
+      "title": "Вещи, которых нет",
+      "nodes": [
+        {
+          "id": "B00",
+          "title": "Выбор линии",
+          "grants": []
+        },
+        {
+          "id": "B01",
+          "title": "Контора — книга",
+          "grants": [
+            "returnbook"
+          ]
+        },
+        {
+          "id": "B02",
+          "title": "Контора — договор",
+          "grants": [
+            "contract"
+          ]
+        },
+        {
+          "id": "B03",
+          "title": "Разговор с Идой",
+          "grants": [
+            "ida"
+          ]
+        },
+        {
+          "id": "B04",
+          "title": "Мастерская — ремонтные записи",
+          "grants": [
+            "repair"
+          ]
+        },
+        {
+          "id": "B05",
+          "title": "Торговец — накладная",
+          "grants": [
+            "invoice"
+          ]
+        },
+        {
+          "id": "B06",
+          "title": "Перевозчик",
+          "grants": [
+            "transfer"
+          ]
+        },
+        {
+          "id": "B07",
+          "title": "Служебный коридор",
+          "grants": [
+            "key"
+          ]
+        },
+        {
+          "id": "B08",
+          "title": "Будка сторожа",
+          "grants": [
+            "watch"
+          ]
+        },
+        {
+          "id": "B09",
+          "title": "Другой владелец",
+          "grants": [
+            "owner"
+          ]
+        },
+        {
+          "id": "B10",
+          "title": "Закрыть поиски",
+          "grants": []
+        }
+      ]
+    },
+    {
+      "id": "III",
+      "title": "Чужая подпись",
+      "nodes": [
+        {
+          "id": "C01",
+          "title": "Футляр Коула",
+          "grants": [
+            "note"
+          ]
+        },
+        {
+          "id": "C02",
+          "title": "Сопоставление книг",
+          "grants": []
+        },
+        {
+          "id": "C03",
+          "title": "Белл",
+          "grants": []
+        },
+        {
+          "id": "C04",
+          "title": "Расписка соседки",
+          "grants": [
+            "alibi"
+          ]
+        },
+        {
+          "id": "C05",
+          "title": "Частичная реконструкция",
+          "grants": []
+        }
+      ]
+    },
+    {
+      "id": "IV",
+      "title": "Свидетель за стеной",
+      "nodes": [
+        {
+          "id": "D01",
+          "title": "Найти сторожа",
+          "grants": [
+            "marsh"
+          ]
+        },
+        {
+          "id": "D02",
+          "title": "Предмет у тела",
+          "grants": [
+            "trace"
+          ]
+        },
+        {
+          "id": "D03",
+          "title": "Независимая расписка",
+          "grants": [
+            "voss",
+            "cuff"
+          ]
+        },
+        {
+          "id": "D04",
+          "title": "Защита свидетеля",
+          "grants": []
+        },
+        {
+          "id": "D05",
+          "title": "Проверить последовательность",
+          "grants": []
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "title": "Расплата за молчание",
+      "nodes": [
+        {
+          "id": "E01",
+          "title": "Предложение Восса",
+          "grants": []
+        },
+        {
+          "id": "E02",
+          "title": "Дарн и остатки партии",
+          "grants": [
+            "parcel"
+          ]
+        },
+        {
+          "id": "E03",
+          "title": "Эш и документы",
+          "grants": []
+        },
+        {
+          "id": "E04",
+          "title": "Решение о сохранении вещей",
+          "grants": []
+        },
+        {
+          "id": "E05",
+          "title": "Последняя возможность риска",
+          "grants": []
+        }
+      ]
+    },
+    {
+      "id": "VI",
+      "title": "Вес золота",
+      "nodes": [
+        {
+          "id": "F01",
+          "title": "Доказательства",
+          "grants": []
+        },
+        {
+          "id": "F02",
+          "title": "Доступные тактики",
+          "grants": []
+        },
+        {
+          "id": "F03",
+          "title": "Итог",
+          "grants": []
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "staged",
+      "alternatives": [
+        [
+          "glass",
+          "sound"
+        ],
+        [
+          "body",
+          "safe"
+        ]
+      ]
+    },
+    {
+      "id": "substitution",
+      "alternatives": [
+        [
+          "receipt",
+          "returnbook",
+          "repair"
+        ],
+        [
+          "note",
+          "invoice",
+          "ida"
+        ]
+      ]
+    },
+    {
+      "id": "killer",
+      "alternatives": [
+        [
+          "marsh",
+          "trace",
+          "key"
+        ],
+        [
+          "watch",
+          "cuff",
+          "voss"
+        ]
+      ]
+    },
+    {
+      "id": "provenance",
+      "alternatives": [
+        [
+          "parcel",
+          "repair",
+          "receipt"
+        ],
+        [
+          "parcel",
+          "owner",
+          "transfer"
+        ]
+      ]
+    }
+  ],
+  "flags": [
+    "witnessProtected",
+    "materialsAccepted",
+    "goodsSecured",
+    "vossAgreement",
+    "darnAgreement",
+    "warnedRisk",
+    "confirmedDeath"
+  ],
+  "endings": [
+    {
+      "id": "Z01",
+      "claims": [
+        "staged",
+        "substitution",
+        "killer"
+      ],
+      "flags": [
+        "witnessProtected",
+        "materialsAccepted"
+      ],
+      "alive": true
+    },
+    {
+      "id": "Z02",
+      "claims": [
+        "provenance"
+      ],
+      "flags": [
+        "goodsSecured"
+      ],
+      "alive": true
+    },
+    {
+      "id": "Z03",
+      "claims": [
+        "killer"
+      ],
+      "flags": [],
+      "alive": true
+    },
+    {
+      "id": "Z04",
+      "claims": [
+        "substitution"
+      ],
+      "flags": [
+        "vossAgreement",
+        "goodsSecured"
+      ],
+      "alive": true
+    },
+    {
+      "id": "Z05",
+      "claims": [
+        "substitution"
+      ],
+      "flags": [
+        "darnAgreement"
+      ],
+      "alive": true
+    },
+    {
+      "id": "Z06",
+      "claims": [],
+      "flags": [],
+      "alive": true
+    },
+    {
+      "id": "Z07",
+      "claims": [],
+      "flags": [
+        "warnedRisk",
+        "confirmedDeath"
+      ],
+      "alive": false
+    }
+  ],
+  "heroBeats": {
+    "jack": [
+      "Защитить Марша",
+      "Вывести свидетеля",
+      "Приоритет человек/погоня"
+    ],
+    "finn": [
+      "Служебная запись",
+      "Футляр Коула",
+      "Разговор с Дарном"
+    ],
+    "eleanor": [
+      "Фиксация стекла",
+      "Разговор с Идой",
+      "Независимый отчёт"
+    ],
+    "victor": [
+      "Переговоры с Беллом",
+      "Доступ к договору",
+      "Ответ на сделку Восса"
+    ],
+    "samuel": [
+      "Осмотр двери",
+      "Ремонтные записи",
+      "Осмотр кладовой"
+    ]
+  },
+  "notes": "Design-only planning beats, not runtime edges. Alternative evidence sets are proposed minimum source bundles; actual choices, timing, availability and flags require a playable graph. Both provenance routes refer to the actual recovered object: if it is lost, restitution is intentionally impossible, without blocking other outcomes."
+}
