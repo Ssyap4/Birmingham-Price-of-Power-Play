@@ -12,7 +12,7 @@ const refused=["accept","owner","question","cabinet","leave","full","argue","lea
 test("CR07 explicit routes, evidence, consent, non-disclosure",()=>{
  const good=run(clean),bad=run(costly),leak=run(exposed),walk=run(refused);
  assert.equal(good.terminalId,"clean");assert.ok(good.flags.originalSeen&&good.flags.provenance&&good.flags.voluntary&&good.flags.limited);assert.ok(!good.flags.exposed);
- assert.equal(bad.terminalId,"costly");assert.ok(bad.flags.ownerDeal&&!bad.flags.provenance);
+ assert.equal(bad.terminalId,"costly");assert.ok(bad.flags.ownerDeal&&bad.flags.discarded&&!bad.flags.provenance);
  assert.equal(leak.terminalId,"costly");assert.ok(leak.flags.exposed&&!leak.flags.voluntary);
  assert.equal(walk.terminalId,"failed");assert.ok(walk.flags.refused);
  for(const s of [good,bad,leak,walk])assert.equal(ep.describe(s).length,2);
@@ -27,12 +27,12 @@ test("CR07 genuine engine exploration: all nodes, decisions, endings, deadline, 
   for(let i=0;i<30&&s.status==="active";i++){
    nodes.add(s.sceneId);const a=E.choices(s).filter(x=>x.available);if(E.availability(s,"heal"))a.push({id:"heal"});assert.ok(a.length,s.sceneId);
    r=(Math.imul(r,1664525)+1013904223)>>>0;
-   const choice=a[r%a.length];choices.add(s.sceneId+":"+choice.id);if(choice.id==="heal")healed++;
+   const choice=a[Math.floor((r/4294967296)*a.length)];choices.add(s.sceneId+":"+choice.id);if(choice.id==="heal")healed++;
    s=E.choose(s,choice.id,s.revision);
   }
   assert.equal(s.status,"finished");assert.ok(E.validateState(s).ok);
   ends.add(s.terminalId);
-  if(s.terminalId==="clean"){assert.ok(s.flags.originalSeen&&s.flags.provenance&&s.flags.voluntary&&s.flags.limited&&!s.flags.exposed&&!s.flags.coerced&&!s.flags.ownerDeal&&s.stats.time<=20);}
+  if(s.terminalId==="clean"){assert.ok(s.flags.originalSeen&&s.flags.provenance&&!s.flags.discarded&&s.flags.voluntary&&s.flags.limited&&!s.flags.exposed&&!s.flags.coerced&&!s.flags.ownerDeal&&s.stats.time<=20);}
   if(s.flags.accepted&&s.stats.time>20&&s.hp>0){assert.equal(s.terminalId,"failed");late++;}
   if(s.objective&&s.stats.time===20)boundary++;
  }

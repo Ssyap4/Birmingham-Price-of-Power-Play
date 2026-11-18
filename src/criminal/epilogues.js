@@ -140,7 +140,7 @@
       case "CR07": {
         if (flags.exposed)
           add("Имена покинули книгу", "Полный список передан связному. Дальнейшая безопасность записанных людей неизвестна.", "cost");
-        else if (flags.voluntary && flags.limited && delivered)
+        else if (flags.voluntary && flags.limited && delivered && !flags.discarded && !flags.coerced)
           add("Согласованные границы", "Ограниченный материал принят в срок с разрешения Норы. Возврат денег и защита семей не подтверждены.", "hope");
         else if (flags.refused)
           add("Список без приёмки", "Финн отказался продолжать передачу. Судьба сведений за пределами этой попытки не установлена.", "neutral");
