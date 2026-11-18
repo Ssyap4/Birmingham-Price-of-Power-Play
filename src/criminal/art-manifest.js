@@ -2610,10 +2610,466 @@
           "end:dead"
         ]
       },
+      {
+        "id": "cr10-order",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-order.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 137856,
+        "sha256": "d6994ae543aa5f5f85b12f3349384a336aeab59b9a64113ddbd357e696dd0ea6",
+        "gitBlobSha1": "07c39011dab0553532a4a1352bb9fc50c88aeae0",
+        "sourceSha256": "52f9ad3791be6fd8ef85932a38ad9db6f3056c5ff4f6eeef1be7471ec0f5593d",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Связной у грузовой конторы",
+        "scenes": [
+          "order"
+        ]
+      },
+      {
+        "id": "cr10-gate",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-gate.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 153858,
+        "sha256": "410694854f20329093a447c741c7886bc41747f60a4b74d0162ef648b852f7de",
+        "gitBlobSha1": "f08bb4fac0f18cc9ea54d3fe0a4a6e5819f02a11",
+        "sourceSha256": "611fc0a1b29691b3c241262a233be0882d88d8fc7f413b71e6a8c3af7c23c4b0",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Ожидание у ворот фабрики",
+        "scenes": [
+          "gate"
+        ]
+      },
+      {
+        "id": "cr10-foreman",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-foreman.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 71068,
+        "sha256": "77df3c93de70f87a23004d35d6483930a30ccf5aa61a25efa69f22e35fe13a31",
+        "gitBlobSha1": "8df8290a1310b0b2e401d93b1d358da218a44efc",
+        "sourceSha256": "f9b55fb49695b806cc4f342167a79df5d11b7a3e2e435b4d207d570efc1c27f2",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент показывает пустую графу журнала",
+        "scenes": [
+          "foreman"
+        ]
+      },
+      {
+        "id": "cr10-workers",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-workers.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 63808,
+        "sha256": "a3d15a82198e14405885d5933fa4dd13f6a717d0dc673d035cb7f9c1d1fe1bcc",
+        "gitBlobSha1": "0c278a5a050c89e06ecd45fa46b081bc19893319",
+        "sourceSha256": "7a52af0e1a89aa004fc1365a06a6adde86c7faac343bfea569fc6e2b573b0369",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Айви говорит о прошлой смене",
+        "scenes": [
+          "workers"
+        ]
+      },
+      {
+        "id": "cr10-manager",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-manager.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 60390,
+        "sha256": "ae3b5ccc4fd2b258dc18b9a0e6a4f3a728a908fa2f294ba7347381c81dc1be89",
+        "gitBlobSha1": "77dd2be575f7c5ed123cf2c3b174589489274dd7",
+        "sourceSha256": "2e411ff1cd098c9aebe455d70165db9852971daf35175691702e5bed89633fb2",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Бриггс объясняет цену простоя",
+        "scenes": [
+          "manager"
+        ]
+      },
+      {
+        "id": "cr10-floor",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-floor.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 156908,
+        "sha256": "9e0354a508ded4ce8c6c3628b00c6ff87ad17dcee350035f6094da478ad580c4",
+        "gitBlobSha1": "b861a5a8244de153bbae13597c9533e841491590",
+        "sourceSha256": "2172455ed611b89fde100a87212eb84d755b39cabda5512002ce3c4c8f7d09a1",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Общий план неподвижного цеха",
+        "scenes": [
+          "floor"
+        ]
+      },
+      {
+        "id": "cr10-logbook",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-logbook.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 119502,
+        "sha256": "3889821c38253b6419eed44f4b762eed7462dd1e028a582a36f0bc9022bebcd3",
+        "gitBlobSha1": "d806dad50a0769342a59d7474367e4ae980b9aee",
+        "sourceSha256": "e35b927ce10559f5db0c0326d0c50f0adc27624f33e8cced0d21f0cd7a06f87b",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Журнал с незаполненной графой",
+        "scenes": [
+          "logbook"
+        ]
+      },
+      {
+        "id": "cr10-inspection",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-inspection.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 133976,
+        "sha256": "33b35c46114fd77253faebeb6d4f9dd40c2696aee3a1442ffa665f12b7f07e63",
+        "gitBlobSha1": "52ca68e21b9b7d3f7904540cb60fce6ba5592ffa",
+        "sourceSha256": "fcbfea3f80b257fa8d34f31111dc01c80950598959fcc9178a6164e8ce615b72",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент наблюдает станки с границы зоны",
+        "scenes": [
+          "inspection"
+        ]
+      },
+      {
+        "id": "cr10-witness",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-witness.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 90014,
+        "sha256": "24cd0d7a5527b0bd879e6a36a0821aab2ee4ea0f36d02a9ce3bc4217d624e831",
+        "gitBlobSha1": "31d334ece671441a49c3144461a27988ad77f9f8",
+        "sourceSha256": "bb3026733218af3958328a1a122c39970d0c7c7e1437ce71d280d67d29e5cb6e",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Айви рассказывает Кенту о прошлой смене",
+        "scenes": [
+          "witness"
+        ]
+      },
+      {
+        "id": "cr10-records",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-records.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 90054,
+        "sha256": "04d5dc7f9e4c7ecefd2084028e1e42cec63dbb5eb1a5152f4d8aa18a7869eb0c",
+        "gitBlobSha1": "d58bf242c0a460b12e4d4cb93daf3137282f6ace",
+        "sourceSha256": "6df13ef965da73420c1b4c3d355c521bee5bde727a0c4eb438f1b0988caa373c",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Документы и график без читаемых дат",
+        "scenes": [
+          "records"
+        ]
+      },
+      {
+        "id": "cr10-alternatives",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-alternatives.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 147826,
+        "sha256": "819ecee6923cfdda0ba2f0fe7e420099741c554f6cf74d3edbba3cf31de62bad",
+        "gitBlobSha1": "5fadd3499abde731a6395ffb896050f67d30a74d",
+        "sourceSha256": "79475d64cd0a728c536f8d075de85ae1d437e8127e660362bfb113ad085ce801",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент обсуждает варианты с Бриггсом",
+        "scenes": [
+          "alternatives"
+        ]
+      },
+      {
+        "id": "cr10-imminent",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-imminent.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 90380,
+        "sha256": "c3fb661f267eae6ef3e3dacc273f205d1e74378a4ad8aaeef10905830b0b4532",
+        "gitBlobSha1": "6b887806c8d997f82e9fad448bd209d56f5c381c",
+        "sourceSha256": "ca24087a0a88966ff156e624912ccf260f86ba686264ce96d76417d6702393e7",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Рабочие ждут у прохода",
+        "scenes": [
+          "imminent"
+        ]
+      },
+      {
+        "id": "cr10-pause",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-pause.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 154138,
+        "sha256": "e899e8b12f3b7aca5f5780d892889d41d9341109fabaa8cb88e0a3975d18f6de",
+        "gitBlobSha1": "f8fdfe0a4fc28aecae10fc4bde06e710ed9c918a",
+        "sourceSha256": "f6c72ca89c8145e23d13b8be0d597f79eb976985df44e084b4f4dd680a2dd17b",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент объявляет паузу, рабочие выходят",
+        "scenes": [
+          "pause"
+        ]
+      },
+      {
+        "id": "cr10-refusal",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-refusal.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 74688,
+        "sha256": "ee3c4da869e02b27d3c0f88555af07cea539a50dbbeb3b027c4511dd3b71e254",
+        "gitBlobSha1": "92039f8f2b77ed6ac419d760f4116c80455a1b32",
+        "sourceSha256": "9237c0710da9242227194b57e8cf7f2ef2ddde2edc9c1b42a7c0018162e98c3a",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Бриггс рассматривает документ",
+        "scenes": [
+          "refusal"
+        ]
+      },
+      {
+        "id": "cr10-danger",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-danger.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 133052,
+        "sha256": "aac8299e7df522edb9ab43433242627f1396501de64ff84c40fe2ac3cdb73f09",
+        "gitBlobSha1": "1d8588ad99598c8123ac68a514a63d80f90f755c",
+        "sourceSha256": "e214b5a71afa860d6b3eac09f3e27d0ae023305abd1e1f1526ddfea3d5a836bb",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент просит людей отойти от прохода",
+        "scenes": [
+          "danger"
+        ]
+      },
+      {
+        "id": "cr10-evacuation",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-evacuation.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 107834,
+        "sha256": "3822500cd95471ef95bc564f1ee856b6e27a590e39dec664ab9b3df6012a6fbf",
+        "gitBlobSha1": "50e1f1d2132685b9ad4037572409cd6782d6e272",
+        "sourceSha256": "d94354539557a4111456b84cf1bdb4f32e8992e9f2724c543aed61d3c95e050f",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент сверяет список у ворот",
+        "scenes": [
+          "evacuation"
+        ]
+      },
+      {
+        "id": "cr10-agreement",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-agreement.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 95862,
+        "sha256": "73e6ca10237ce5151a42f9b3ae83a9ef57bb35ab98b9d883ea0e3a75fd9fb658",
+        "gitBlobSha1": "7ff6b10f0767e4543cd142359ada965d16053a4b",
+        "sourceSha256": "3f366392618fefbc73f67db7e8e611c74a89160f383279b8753f779cb4d2e3a6",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Бриггс читает условия при Кенте",
+        "scenes": [
+          "agreement"
+        ]
+      },
+      {
+        "id": "cr10-compromise",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-compromise.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 88448,
+        "sha256": "472ab000295981a5ac5b3900ead8cd863fcb9e19840b6964b24471bc518d3b9d",
+        "gitBlobSha1": "83d60e7919c7dc9356f6505aa29e5099aeb49cdf",
+        "sourceSha256": "969a459a831fda18379995c086da23db28d0569996055105b755e95b3d634112",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Бриггс предлагает ограниченный перенос",
+        "scenes": [
+          "compromise"
+        ]
+      },
+      {
+        "id": "cr10-withdrawal",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-withdrawal.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 142046,
+        "sha256": "265068e0df1c5e920e23eaea435d8a20f4cda76a3cda056291ec8b002ee64112",
+        "gitBlobSha1": "9d15b3c3f56465f004f49a978b607f4c64ca2818",
+        "sourceSha256": "1f3096e89e8aae360062cfd31157092d0b3219be5dc500941a2e76f355f2b271",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Мокрая улица у фабричной стены",
+        "scenes": [
+          "withdrawal"
+        ]
+      },
+      {
+        "id": "cr10-report",
+        "missionId": "CR10",
+        "kind": "scene",
+        "path": "assets/criminal/cr10-report.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 100626,
+        "sha256": "33bbc5ab780483dc4eba13a861f12f6db6a5388af5f43733302e0df53814eb40",
+        "gitBlobSha1": "87213c398dfe9ea5a15f50332f09cffae833858d",
+        "sourceSha256": "3b9022f7b94044b426b155c2fa173ef6664eff282e01d3c32d559547a8c7d7b9",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Связной читает отчёт в грузовой конторе",
+        "scenes": [
+          "report"
+        ]
+      },
+      {
+        "id": "cr10-end-clean",
+        "missionId": "CR10",
+        "kind": "ending",
+        "path": "assets/criminal/cr10-end-clean.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 128552,
+        "sha256": "55d68993e55befa412515d1ea3bafb87f66ddc798976441936c86774903511fd",
+        "gitBlobSha1": "3d4a6f9f47ee38734f7ec088c1637af58ce382ce",
+        "sourceSha256": "f32a411982661b4495cac6383bfc5187fc5435878b72d422ddf27382e1a22bfd",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Неподвижный станок и люди за воротами",
+        "scenes": [
+          "end:clean"
+        ]
+      },
+      {
+        "id": "cr10-end-costly",
+        "missionId": "CR10",
+        "kind": "ending",
+        "path": "assets/criminal/cr10-end-costly.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 91910,
+        "sha256": "05097cfcb775987c7564c2ea69e898604d02ea2064791d96c594cb41cbf627ce",
+        "gitBlobSha1": "10b34a3a28369af4c59995b17e50bafc1dcc659f",
+        "sourceSha256": "7aca2df05debaac54ee1f5b38dfe134a6946a0f51d4257d987a020f6a0004487",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Кент и Бриггс после тяжёлого разговора",
+        "scenes": [
+          "end:costly"
+        ]
+      },
+      {
+        "id": "cr10-end-failed",
+        "missionId": "CR10",
+        "kind": "ending",
+        "path": "assets/criminal/cr10-end-failed.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 155094,
+        "sha256": "f7587444c55efd8b572c778454eb6d347f07a114c210980172747d8da6b977e3",
+        "gitBlobSha1": "c8e365ab3acdbf8dbb8750ebbecfebe8b05f6015",
+        "sourceSha256": "eee5a747341a95827e51c4c68e3491fa0cca305c9f88353e5ef4fde94127fec4",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Пустой проход и закрытая проходная",
+        "scenes": [
+          "end:failed"
+        ]
+      },
+      {
+        "id": "cr10-end-dead",
+        "missionId": "CR10",
+        "kind": "ending",
+        "path": "assets/criminal/cr10-end-dead.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 128666,
+        "sha256": "eaa81ce7e5acd06b252d5e047571fe262fdeae1830006087671427d78b3b33da",
+        "gitBlobSha1": "d33526e0885ff870c2836ecd5f338034ff47ec36",
+        "sourceSha256": "26a74d9918fea281c623ded87ac3829a93e29efd389e2252b55036c0c7af7de3",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, factory continuity, neutral scene states, candidate bytes preserved.",
+        "alt": "Пустая фабричная стена и погасший фонарь",
+        "scenes": [
+          "end:dead"
+        ]
+      },
     ],
     artGaps: [
       "CR01–CR05: иллюстрации разделяются соседними сценами одной локации; не у каждого из 105 узлов свой кадр.",
-      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06–CR09 имеют отдельные иллюстрации для каждого узла и финала.",
+      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06–CR10 имеют отдельные иллюстрации для каждого узла и финала.",
       "Пять героев представлены каноническими портретами; новые полнофигурные изображения героев не создавались.",
     ],
   };

@@ -49,6 +49,7 @@ jobs:
           python tests/criminal/cr07_art_mobile.py
           python tests/criminal/cr08_art_mobile.py
           python tests/criminal/cr09_art_mobile.py
+          python tests/criminal/cr10_art_mobile.py
           python tests/criminal/catalog_v85.py
           python tests/criminal/standalone_mobile.py
           python tests/criminal/startup_isolation.py

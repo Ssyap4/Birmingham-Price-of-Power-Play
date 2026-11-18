@@ -1,0 +1,182 @@
+[
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "foreman",
+      "floor",
+      "assess",
+      "observe",
+      "confirm",
+      "compare",
+      "review",
+      "pause",
+      "clear",
+      "verify",
+      "sign",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "gate",
+      "foreman",
+      "floor",
+      "inspection",
+      "witness",
+      "records",
+      "alternatives",
+      "imminent",
+      "pause",
+      "evacuation",
+      "agreement",
+      "report",
+      "end:clean"
+    ],
+    "time": 19,
+    "label": "clean"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "manager",
+      "rush",
+      "rush",
+      "deal",
+      "guarantee",
+      "finish"
+    ],
+    "end": "costly",
+    "seen": [
+      "order",
+      "gate",
+      "manager",
+      "alternatives",
+      "refusal",
+      "compromise",
+      "report",
+      "end:costly"
+    ],
+    "time": 8,
+    "label": "costly"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "foreman",
+      "promise",
+      "review",
+      "pause",
+      "withdraw",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "gate",
+      "foreman",
+      "alternatives",
+      "imminent",
+      "pause",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 7,
+    "label": "failed"
+  },
+  {
+    "seed": 14,
+    "path": [
+      "accept",
+      "foreman",
+      "promise",
+      "review",
+      "alarm",
+      "stay"
+    ],
+    "end": "dead",
+    "seen": [
+      "order",
+      "gate",
+      "foreman",
+      "alternatives",
+      "imminent",
+      "danger",
+      "end:dead"
+    ],
+    "time": 6,
+    "label": "dead"
+  },
+  {
+    "seed": 22,
+    "path": [
+      "accept",
+      "workers",
+      "floor",
+      "log",
+      "skip",
+      "assume",
+      "review",
+      "alarm",
+      "retreat",
+      "withdraw",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "gate",
+      "workers",
+      "floor",
+      "logbook",
+      "records",
+      "alternatives",
+      "imminent",
+      "danger",
+      "pause",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 11,
+    "label": "extra4"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "foreman",
+      "floor",
+      "assess",
+      "observe",
+      "confirm",
+      "compare",
+      "review",
+      "pause",
+      "clear",
+      "verify",
+      "sign",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "gate",
+      "foreman",
+      "floor",
+      "inspection",
+      "witness",
+      "records",
+      "alternatives",
+      "imminent",
+      "pause",
+      "evacuation",
+      "agreement",
+      "report",
+      "end:clean"
+    ],
+    "time": 19,
+    "label": "repeat-clean"
+  }
+]
