@@ -68,9 +68,30 @@ def invalid_save(browser,kind):
  raw='{' if kind=='json' else json.dumps({'node':'intro','items':[],'flags':[],'trail':[]})
  g.p.evaluate('([key,value])=>localStorage.setItem(key,value)',[q.BASE+'jack',raw])
  g.p.locator('#launchFirstCase').click()
- assert 'НАЧАТЬ' in g.p.locator('.hero-begin').inner_text()
- g.p.locator('.hero-begin').click()
- assert g.state()['node']=='intro' and g.state()['items']==[]
+ key=q.BASE+'jack'
+ read=lambda:g.p.evaluate('(k)=>localStorage.getItem(k)',key)
+ assert g.p.locator('.hero-begin').is_disabled()
+ assert g.p.locator('.hero-slot-note').is_visible()
+ assert g.p.locator('.hero-new').is_visible()
+ assert read()==raw
+ def replace(accept):
+  messages=[]
+  def dialog(d):
+   messages.append(d.message)
+   d.accept() if accept else d.dismiss()
+  g.p.once('dialog',dialog)
+  g.p.locator('.hero-new').click()
+  if g.p.locator('#case001Briefing').is_visible():
+   assert read()==raw
+   g.p.locator('#case001Briefing .briefing-start').click()
+  assert len(messages)==1 and 'повреждённое' in messages[0]
+ replace(False)
+ assert read()==raw and g.p.locator('#heroSelection').is_visible()
+ replace(True)
+ assert g.p.locator('#caseGame').is_visible()
+ s=g.state()
+ assert s['node']=='intro' and s['items']==[] and s['flags']=={} and s['trail']==[]
+ assert s['health']==100 and s['medicalKits']==1 and read()!=raw
 
 
 def trade(browser,mode):
