@@ -104,12 +104,17 @@
       const count=root.document.createElement("strong");
       const available=["ready","empty","partial"].includes(item.status);
       count.textContent=available?String(item.count):"—";
+      const metric=root.document.createElement("div");
+      metric.className="player-overview-completion";
+      const label=root.document.createElement("span");
+      label.textContent="Завершений";
+      metric.append(count,label);
       const desc=root.document.createElement("small");
       desc.textContent=available
-        ?"Завершений: "+item.count+" · подтверждённых знаков: "+item.unique+
+        ?"Подтверждённых знаков: "+item.unique+
           (item.status==="partial"?" · Есть неподтверждённые записи.":"")
         :item.status==="damaged"?"Архив требует проверки":"Локальный архив недоступен";
-      card.append(h,count,desc);
+      card.append(h,metric,desc);
       if(Number.isInteger(item.active)){
         const live=root.document.createElement("p");
         live.className="player-overview-live";

@@ -101,7 +101,7 @@ for(const id of ['campaignDossiers','campaignAchievements','campaignHistory'])$(
 });
 $('homeBtn')?.addEventListener('click',()=>{screens.forEach(([id])=>{const screen=$(id);if(!screen.hidden)screen.hidden=true})},true);
 // Trial history and achievements have their own clearly labelled profile and archive sections.
-const profile=$('profile');if(profile){const link=document.createElement('div');link.className='campaign-profile-links';link.innerHTML='<button type="button" data-open-section="campaignDossiers">ДОСЬЕ ПЯТИ ГЕРОЕВ</button><button type="button" data-open-section="campaignAchievements">ДОСТИЖЕНИЯ</button><button type="button" data-open-section="campaignHistory">ИСТОРИЯ ДЕЛ</button>';profile.append(link);link.addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(b.dataset.openSection)})}
+const profile=$('profile');if(profile){const link=document.createElement('div');link.className='campaign-profile-links';link.innerHTML='<button type="button" data-open-section="campaignDossiers">ДОСЬЕ ПЯТИ ГЕРОЕВ</button><button type="button" data-open-section="campaignAchievements">ДОСТИЖЕНИЯ</button><button type="button" data-open-section="campaignHistory">ИСТОРИЯ ДЕЛ</button>';link.setAttribute('role','navigation');link.setAttribute('aria-label','Разделы общего архива');const overview=$('playerCampaignOverview');if(overview)overview.after(link);else profile.append(link);link.addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(b.dataset.openSection)})}
 function make(tag,cls,txt){const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el}
 function stat(run){return ENDINGS[run.ending]||run.ending}
 function renderDossiers(el,runs){
