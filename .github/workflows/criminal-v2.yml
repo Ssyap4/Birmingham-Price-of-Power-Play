@@ -66,6 +66,7 @@ jobs:
       - name: Pure engine, persistence, branch and resource proofs
         run: |
           node --test tests/criminal/engine.test.js tests/criminal/epilogues.test.js tests/criminal/equipment-art.test.js tests/criminal/profile-overview.test.js tests/criminal/campaign-archive-bridge.test.js tests/criminal/menu-art.test.js tests/criminal/unified-v13.test.js
+          node --test tests/criminal/cr06-story.test.js
           node --test tests/trial-progress-v1.test.js
           node --check game.js
           node --check session-controls-v1.js
@@ -97,6 +98,7 @@ jobs:
           python tests/criminal/legacy_smoke.py
           python tests/criminal/mobile_browser.py
           python tests/criminal/catalog_v85.py
+          python tests/criminal/cr06_mobile.py
           python tests/criminal/standalone_mobile.py
       - name: Keep route proofs and mobile screenshots
         if: always()

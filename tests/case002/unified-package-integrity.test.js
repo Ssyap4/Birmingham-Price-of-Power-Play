@@ -146,4 +146,11 @@ for(const key of case2Keys)assert(case2.includes(key),"Case 002 save key altered
 for(const key of case1Keys)assert(!case2.includes(key),"Case 001 namespace leaked into engine 002");
 const total=fs.readdirSync(dist).length;
 assert(total>=60,"Unexpectedly small main-campaign file list");
+// Source-only candidates must not enter a public package before script registration.
+const activeMarkup=fs.readFileSync(entry("index.html"),"utf8");
+for(const file of fs.readdirSync(path.join(root,"src/criminal/missions"))){
+ if(!/^cr[0-9]+\.js$/.test(file))continue;
+ const name="src/criminal/missions/"+file;
+ assert.equal(fs.existsSync(path.join(path.dirname(entry("index.html")),name)),activeMarkup.includes('src="'+name+'"'),name);
+}
 console.log("PASS unified campaign package: two independent save namespaces, original 001 map, 002 Digbeth entry, 102 hashed scenes, 10 NPCs, 5 heroes, no drafts; root entries "+total);

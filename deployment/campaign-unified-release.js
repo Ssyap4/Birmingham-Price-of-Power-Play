@@ -146,7 +146,11 @@ function copyCriminalScripts(relative){
   const name=relative+"/"+entry.name;
   if(entry.isSymbolicLink())throw Error("Symlink in criminal sources: "+name);
   if(entry.isDirectory())copyCriminalScripts(name);
-  else if(entry.isFile()&&name.endsWith(".js"))copy(name);
+  else if(entry.isFile()&&name.endsWith(".js")){
+   // A story candidate is not a release resource until index explicitly loads it.
+   if(/^src\/criminal\/missions\/cr[0-9]+\.js$/.test(name)&&!liveMarkup.includes('src="'+name+'"'))continue;
+   copy(name);
+  }
   else throw Error("Unexpected criminal runtime file: "+name);
  }
 }
