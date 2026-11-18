@@ -1,0 +1,8 @@
+# Case 003 — briefing candidate 01 REVIEW
+Status: REJECTED for the intended briefing role; no asset uploaded, no runtime reference, no second generation this turn.
+
+Source visual plan: 04ff28440b31466d69038bb1fd595d3d55c706a2. One generated original 4:5 candidate, generation ID 9ab8d359-32cb-4ddf-b0be-68b370bec2d9. Composition, period atmosphere, rain, brick, gaslight, absence of player characters and legible labels are suitable. However, the damaged workshop window visibly displays a necklace and other gold objects; the established opening premise is an empty display. This is a material continuity error, not merely a cosmetic preference. Do not repurpose it as approved briefing art without a separate purpose and explicit review.
+
+Next generation: keep the perspective and street geography (workshop left, bindery opposite, arch, dawn), but the damaged display must visibly contain **only empty dark velvet stands or bare shelves**, no necklace, ring, gold, gems, sale items, or visible stock. No body, no culprit, no actor likeness or clue beyond the publicly known broken window. The playbook allows one generation per user message unless the user gives a new exception. The plan entry briefing remains planned. No physical WebP or approved manifest entry exists.
+
+Coverage check directly against graph-v1.js and screenplay-v2.js: exact 73/73 scene IDs, zero missing or extra IDs; 7 ending IDs and 15 personal beats, F03 excluded. 16 locations, 9 planned portraits, 1 planned briefing. GitHub verified; Alina-PC offline, local checkout/test status not newly verified. No changes to runtime, stable main or published builds.
