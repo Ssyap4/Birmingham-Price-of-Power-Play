@@ -1,0 +1,192 @@
+[
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "hostess",
+      "respect",
+      "listen",
+      "verify",
+      "neutral",
+      "reconcile",
+      "honest",
+      "confirm",
+      "neutral",
+      "sign",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "arrival",
+      "hostess",
+      "table",
+      "debt",
+      "terms",
+      "counteroffer",
+      "accusation",
+      "mediator",
+      "revision",
+      "agreement",
+      "report",
+      "end:clean"
+    ],
+    "time": 14,
+    "label": "clean"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "hostess",
+      "respect",
+      "draft",
+      "guarantee",
+      "reconcile",
+      "honest",
+      "confirm",
+      "guarantee",
+      "sign",
+      "finish"
+    ],
+    "end": "costly",
+    "seen": [
+      "order",
+      "arrival",
+      "hostess",
+      "table",
+      "terms",
+      "counteroffer",
+      "accusation",
+      "mediator",
+      "revision",
+      "concession",
+      "report",
+      "end:costly"
+    ],
+    "time": 11,
+    "label": "costly"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "rival",
+      "promise",
+      "draft",
+      "neutral",
+      "reconcile",
+      "insist",
+      "leave",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "arrival",
+      "rival",
+      "table",
+      "terms",
+      "counteroffer",
+      "accusation",
+      "refusal",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 9,
+    "label": "failed"
+  },
+  {
+    "seed": 19,
+    "path": [
+      "accept",
+      "merchant",
+      "invite",
+      "draft",
+      "neutral",
+      "reconcile",
+      "raise",
+      "stand"
+    ],
+    "end": "dead",
+    "seen": [
+      "order",
+      "arrival",
+      "merchant",
+      "table",
+      "terms",
+      "counteroffer",
+      "accusation",
+      "pressure",
+      "end:dead"
+    ],
+    "time": 8,
+    "label": "dead"
+  },
+  {
+    "seed": 18,
+    "path": [
+      "accept",
+      "merchant",
+      "invite",
+      "private",
+      "relay",
+      "mediator",
+      "check",
+      "guarantee",
+      "sign",
+      "finish"
+    ],
+    "end": "costly",
+    "seen": [
+      "order",
+      "arrival",
+      "merchant",
+      "table",
+      "private",
+      "pause",
+      "mediator",
+      "revision",
+      "concession",
+      "report",
+      "end:costly"
+    ],
+    "time": 14,
+    "label": "extra4"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "hostess",
+      "respect",
+      "listen",
+      "verify",
+      "neutral",
+      "reconcile",
+      "honest",
+      "confirm",
+      "neutral",
+      "sign",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "arrival",
+      "hostess",
+      "table",
+      "debt",
+      "terms",
+      "counteroffer",
+      "accusation",
+      "mediator",
+      "revision",
+      "agreement",
+      "report",
+      "end:clean"
+    ],
+    "time": 14,
+    "label": "repeat-clean"
+  }
+]

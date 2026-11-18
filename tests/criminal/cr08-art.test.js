@@ -13,5 +13,5 @@ test("CR08 accepted bytes exactly equal candidate and cover every moment",()=>{
  assert.equal(total,3226876);assert.ok(total<=3932160);
  assert.equal(Object.keys(C.missions.CR08.scenes).length,20);
  for(const f of ["index.html","preview/criminal/index.html"])assert.equal(fs.readFileSync(f,"utf8").split('src="src/criminal/missions/cr08.js"').length-1,1);
- assert.ok(["CR09","CR10"].every(x=>!C.missions[x]));
+ assert.ok(["CR10"].every(x=>!C.missions[x]));
 });
