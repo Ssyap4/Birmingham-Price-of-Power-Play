@@ -766,3 +766,30 @@ body[data-criminal="active"] > .bh-audio-controls button {
 #criminalScreen .cr-choices .cr-risk-info{display:grid;gap:3px;line-height:1.5}
 #criminalScreen .cr-choices .cr-risk-info strong{font-weight:700}
 #criminalScreen .cr-choices .cr-risk-info span{display:block;font-weight:400}
+
+/* V102: readable equipment names, explicit receipts and distinct final outcomes. */
+#criminalScreen :is(.cr-inventory,.cr-journal)>summary .cr-panel-count{display:inline-block;margin-left:6px;min-width:25px;padding:1px 6px;text-align:center;border:1px solid #947044;border-radius:4px;font:650 12px/1.5 system-ui,sans-serif;color:#f0d8b4}
+#criminalScreen .cr-equipment-grid{padding:10px;gap:8px}
+#criminalScreen .cr-equipment-item{flex-direction:column;align-items:stretch;gap:7px;padding:9px;min-height:0}
+#criminalScreen .cr-gear-illustration{width:48px;height:48px;flex:0 0 48px;align-self:center}
+#criminalScreen .cr-equipment-meta{gap:4px;align-items:stretch}
+#criminalScreen .cr-equipment-meta span{font:600 13px/1.4 system-ui,sans-serif;overflow-wrap:break-word}
+#criminalScreen .cr-equipment-meta strong{align-self:flex-start}
+#criminalScreen .cr-receipt-choice{display:grid;gap:4px;margin:10px 0 14px;padding:9px 10px;border-left:3px solid #c7a36e;background:#1b1712}
+#criminalScreen .cr-receipt-choice small{font:600 11px/1.4 system-ui,sans-serif;color:#cfb18a}
+#criminalScreen .cr-receipt-choice b{font:650 14px/1.5 system-ui,sans-serif;color:#f5d8ae}
+#criminalScreen .cr-resource-changes .cr-resource-item[data-delta="spent"]>b{color:#ffb5a1}
+#criminalScreen .cr-resource-changes .cr-resource-item[data-delta="added"]>b{color:#d1e7b5}
+#criminalScreen .cr-resource-changes .cr-stat-change{background:#241c15;border-color:#826641}
+#criminalScreen .cr-journal-act{display:block;margin-bottom:5px;color:#c9a875}
+#criminalScreen .cr-journal-last{margin:8px 0 0;padding-top:7px;border-top:1px solid #786043;font:400 12px/1.6 system-ui,sans-serif}
+#criminalScreen .cr-result[data-outcome]{border-left-width:4px!important}
+#criminalScreen .cr-result[data-outcome="clean"]{border-left-color:#a5be8d!important}
+#criminalScreen .cr-result[data-outcome="costly"]{border-left-color:#d4a668!important}
+#criminalScreen .cr-result[data-outcome="failed"]{border-left-color:#aeb9b4!important}
+#criminalScreen .cr-result[data-outcome="dead"]{border-left-color:#d18474!important}
+#criminalScreen .cr-result>small{display:block;margin-bottom:6px;font:700 11px/1.4 system-ui,sans-serif;letter-spacing:.05em}
+#criminalScreen .cr-result>.cr-final-metrics{display:grid;grid-template-columns:1.2fr .8fr 1fr;gap:5px;margin-top:10px}
+#criminalScreen .cr-final-metrics span{min-width:0;padding:6px 4px;border-top:1px solid #8b6b48;color:#d2b994;font:500 11px/1.4 system-ui,sans-serif;overflow-wrap:anywhere}
+#criminalScreen .cr-final-metrics strong{display:block;margin-top:4px;color:#f4d9ac;font:750 13px/1.4 system-ui,sans-serif}
+#criminalScreen .cr-fact-notes{background:#241c15;border-radius:5px;border-color:#806443}

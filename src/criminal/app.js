@@ -52,7 +52,7 @@
     // Preserve the guarded local action for internal bridge and standalone.
     const mapButton=unified&&mode==="map"?"":btn("map","← Карта");
     const homeButton=unified?'<button type="button" data-action="home" hidden>Меню</button>':btn("home","Меню");
-    return `<div class="cr-top">${mapButton}${mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${homeButton}</div>`;
+    return `<div class="cr-top">${mapButton}${mode==="ending"&&memory?"":mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${homeButton}</div>`;
   }
   function setHash(value) {
     try {
@@ -75,7 +75,7 @@
   function confirmPendingLeave() {
     return (
       pending ? confirm("Последний ход рассчитан, но не сохранён. Выход потеряет этот результат. Покинуть поручение?") :
-      memory && state?.status === "active" ? confirm("Эта попытка не сохраняется. При выходе весь её прогресс будет потерян. Покинуть поручение?") : true
+      memory && state ? confirm(state.status==="finished"?"Этот финал не сохранён. Покинуть поручение и потерять итог?":"Эта попытка не сохраняется. При выходе весь её прогресс будет потерян. Покинуть поручение?") : true
     );
   }
   let artDeadline = null;
@@ -326,7 +326,7 @@
   }
   function inventory() {
     const items = Object.entries(state.inventory).filter(([, count]) => count > 0);
-    return `<details class="cr-inventory"><summary>Снаряжение · ${items.length} позиций</summary><div class="cr-equipment-grid">${
+    return `<details class="cr-inventory"><summary>Снаряжение <span class="cr-panel-count">${items.length}</span></summary><div class="cr-equipment-grid">${
       items.map(([id, count]) => `<article class="cr-equipment-item" data-item="${id}">${gearArt(id)}<div class="cr-equipment-meta"><span>${esc(C.items[id][1])}</span><strong>×${count}</strong></div></article>`).join("") || '<p class="cr-equipment-empty">Сейчас снаряжения нет.</p>'
     }</div></details>`;
   }
@@ -344,7 +344,7 @@
       const delta = (state.inventory[id] || 0) - (before.inventory[id] || 0);
       return delta
         ? [
-            `<span class="cr-resource-item">${gearArt(id, "cr-resource-icon")}<span>${esc(C.items[id][1])}</span><b>${delta > 0 ? "+" : ""}${delta}</b></span>`,
+            `<span class="cr-resource-item" data-delta="${delta>0?"added":"spent"}">${gearArt(id, "cr-resource-icon")}<span>${esc(C.items[id][1])}</span><b>${delta > 0 ? "+" : ""}${delta}</b></span>`,
           ]
         : [];
     });
@@ -352,21 +352,20 @@
       const delta = value - before.stats[id];
       if (delta)
         changes.push(
-          `<span>${esc(statNames[id]||id)} ${delta > 0 ? "+" : ""}${delta}</span>`,
+          `<span class="cr-stat-change">${esc(statNames[id]||id)} <b>${delta > 0 ? "+" : ""}${delta}</b></span>`,
         );
     }
     return changes.length ? `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>` : '<p class="cr-small">Снаряжение и другие показатели не изменились.</p>';
   }
+  function decisionLabel(m,event) {
+    return event.choiceId==="heal"?"Перевязать раны":m.scenes[event.from]?.choices.find(c=>c.id===event.choiceId)?.label||"Последний выбор";
+  }
   function journal() {
-    const history=state.history;
-    return `<details class="cr-journal"><summary>Журнал решений · ${state.revision}</summary>${history.length?'<p class="cr-journal-intro">Новые события расположены первыми.</p>':'<p class="cr-journal-intro">Здесь появятся уже совершённые действия.</p>'}<ol reversed start="${history.length}">${[...history].reverse()
+    const history=state.history,m=C.missions[state.missionId];
+    return `<details class="cr-journal"><summary>Журнал решений <span class="cr-panel-count">${state.revision}</span></summary>${history.length?'<p class="cr-journal-intro">Новые события расположены первыми.</p>':'<p class="cr-journal-intro">Здесь появятся уже совершённые действия.</p>'}<ol reversed start="${history.length}">${[...history].reverse()
       .map((h,index) => {
-        const n = C.missions[state.missionId].scenes[h.from],
-          label =
-            h.choiceId === "heal"
-              ? "Перевязать раны"
-              : n.choices.find((c) => c.id === h.choiceId).label;
-        return `<li data-journal-order="${history.length-index}"><b>${esc(n.title)}</b><span class="cr-journal-action">${esc(label)}</span></li>`;
+        const n=m.scenes[h.from];
+        return `<li data-journal-order="${history.length-index}"><small class="cr-journal-act">Акт ${n.act} · ${esc(m.acts[n.act-1])}</small><b>${esc(n.title)}</b><span class="cr-journal-action">${esc(decisionLabel(m,h))}</span>${index===0&&state.lastEvent?`<p class="cr-journal-last">${esc(state.lastEvent.text)}</p>`:""}</li>`;
       })
       .join("")}</ol></details>`;
   }
@@ -376,7 +375,7 @@
       .join("")}</div>`;
   }
   function resultDetails(m,e){
-    return `<small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p class="cr-hp-delta" data-change="${e.hpDelta<0?"loss":e.hpDelta>0?"gain":"none"}">${e.hpDelta===0?"HP без изменений":"HP "+(e.hpDelta>0?"+":"")+e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}`;
+    return `<small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p class="cr-receipt-choice"><small>Ваш выбор</small><b>${esc(decisionLabel(m,e))}</b></p><p>${esc(e.text)}</p><p class="cr-hp-delta" data-change="${e.hpDelta<0?"loss":e.hpDelta>0?"gain":"none"}">${e.hpDelta===0?"HP без изменений":"HP "+(e.hpDelta>0?"+":"")+e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}`;
   }
   function scene(showResult) {
     mode = "scene";
@@ -510,7 +509,7 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>ПОРУЧЕНИЕ ЗАВЕРШЕНО · ${esc(m.district)}</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${finalReceipt(m,a)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}<div class="cr-actions cr-final-actions" aria-label="Действия после поручения">${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}</div><h2 class="cr-final-detail-heading">Материалы поручения</h2>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${epilogue(state)}${verifiedNotes(r.notes)}${journal()}`,
+      `${awardBanner()}<header class="cr-heading"><span>ПОРУЧЕНИЕ ЗАВЕРШЕНО · ${esc(m.district)}</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result" data-outcome="${state.terminalId}"><small>ИТОГ ПОРУЧЕНИЯ</small><b>${({clean:"Приказ выполнен",costly:"Дорогая победа",failed:"Приказ не выполнен",dead:"Герой погиб"})[state.terminalId]}</b><p class="cr-final-metrics"><span>Здоровье <strong>${state.hp}/100</strong></span><span>Ходы <strong>${state.stats.time}</strong></span><span>Герой <strong>${state.hp===0?"погиб":"выжил"}</strong></span></p></div>${finalReceipt(m,a)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику на этом устройстве.</p>` : warning(memory?a.error+" Этот итог доступен только до выхода из поручения.":a.error+" Награда не подтверждена. Сохранённый финал можно повторно записать в хронику после устранения ошибки.")}<div class="cr-actions cr-final-actions" aria-label="Действия после поручения">${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}${memory?"":btn("finalChronicle", "Открыть хронику")}${btn("map", "К поручениям")}${btn("restart", "Новая попытка", "cr-primary")}</div><h2 class="cr-final-detail-heading">Материалы поручения</h2>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${epilogue(state)}${verifiedNotes(r.notes)}${journal()}`,
     );
   }
   function chronicle(returnTo = null, returnWarning = "") {
