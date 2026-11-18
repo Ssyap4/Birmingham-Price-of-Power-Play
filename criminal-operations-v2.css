@@ -735,3 +735,16 @@ body[data-criminal="active"] > .bh-audio-controls button {
 #criminalScreen .cr-catalog-filter label{font-size:.9rem}
 #criminalScreen .cr-catalog-filter select{width:100%;min-height:48px;border:1px solid #8a7350;border-radius:8px;background:#211d19;color:#f3e5ca;padding:8px 10px;font:inherit}
 #criminalScreen .cr-catalog-filter select:focus-visible{outline:2px solid #c9a86c;outline-offset:2px}
+
+/* V100: catalog navigation and mission-specific visual identity. */
+#criminalScreen .cr-catalog-overview{display:grid;gap:8px;margin:12px 0}
+#criminalScreen .cr-catalog-overview .cr-progress-summary{margin:0;padding:8px 0}
+#criminalScreen .cr-catalog-overview button{min-height:44px;text-align:center}
+#criminalScreen .cr-catalog-filter h2{margin:0 0 4px;scroll-margin-top:84px}
+#criminalScreen .cr-catalog-count{margin:0;font:600 12px/1.5 system-ui,sans-serif;color:#d6bc90}
+#criminalScreen .cr-mission-list button.cr-mission-card{display:flex;align-items:flex-start;gap:12px}
+#criminalScreen .cr-mission-card .cr-card-art{flex:none;width:64px;height:80px;object-fit:cover;border:1px solid #9e8054;border-radius:3px;margin:2px 0}
+#criminalScreen .cr-mission-card .cr-card-copy{min-width:0;flex:1;display:grid;gap:4px;margin:0}
+#criminalScreen .cr-mission-card .cr-card-copy b{overflow-wrap:anywhere}
+#criminalScreen .cr-mission-card .cr-card-status{color:#d6c3a4;font-size:12px}
+#criminalScreen .cr-pin[aria-pressed="true"]{outline:2px solid #efd09b;outline-offset:2px;background:#493824}

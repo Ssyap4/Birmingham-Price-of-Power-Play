@@ -44,13 +44,29 @@ def run():
       totals=page.evaluate("""()=>({all:CriminalContent.catalog().length,jack:CriminalContent.catalog().filter(m=>m.heroId==="jack").length,district:CriminalContent.catalog().filter(m=>m.districtId==="balsall-heath").length})""")
       assert page.locator('.cr-pin:visible').count()==5
       assert page.locator('.cr-mission-list [data-mission]').count()==totals["all"]
+      assert page.locator("#crCatalogFilter optgroup").count()==2
+      assert page.locator(".cr-catalog-count").inner_text()==f"Показано {totals['all']} из {totals['all']}"
+      assert page.locator('#criminalScreen [data-action="chronicle"]:visible').count()==1
+      assert page.locator(".cr-card-art").count()==10
+      assert page.evaluate("new Set([...document.querySelectorAll('.cr-card-art')].map(i=>i.src)).size")==10
+      tap('#criminalScreen [data-action="catalog"]')
+      assert page.locator("#crCatalogHeading").evaluate("e=>e===document.activeElement")
+      assert page.locator("#crCatalogHeading").bounding_box()["y"]>=60
+      if not extra:
+       page.locator(".cr-card-art").first.evaluate("i=>i.decode()")
+       page.wait_for_timeout(500)
+       page.screenshot(path=str(OUT/f'v100-{engine}-{width}-list.png'),animations="disabled")
       if extra:
        tap('.cr-pin[data-catalog-district="balsall-heath"]')
        assert page.locator('#crCatalogFilter').input_value()=='district:balsall-heath'
+       assert page.locator('.cr-pin[data-catalog-district="balsall-heath"]').get_attribute("aria-pressed")=="true"
+       assert page.locator(".cr-catalog-count").inner_text()==f"Показано {totals['district']} из {totals['all']}"
        assert page.locator('.cr-mission-list [data-mission]').count()==totals["district"]
        assert page.locator('.cr-mission-list [data-mission="CR9999"]').is_visible()
       page.locator('#crCatalogFilter').select_option('hero:jack')
       assert page.locator('.cr-mission-list [data-mission]').count()==totals["jack"]
+      assert page.locator(".cr-catalog-count").inner_text()==f"Показано {totals['jack']} из {totals['all']}"
+      assert page.locator('.cr-pin[aria-pressed="true"]').count()==0
       assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
       if extra:
        page.screenshot(path=str(OUT/f'{engine}-{width}-group.png'),animations='disabled')

@@ -111,6 +111,7 @@
       const frame=img.closest(".cr-frame");
       const fallback=()=>{
         if(!img.isConnected||!root.contains(img))return;
+        if(img.classList.contains("cr-card-art")){img.remove();return;}
         if(frame){clearArtDeadline();frame.dataset.artState="unavailable";}
         const f = document.createElement("p");
         f.className = "cr-art-fallback";
@@ -190,25 +191,28 @@
     const entries=C.catalog();
     const progress=Object.fromEntries(entries.map(({id})=>[id,missionProgress(id)]));
     const visible=entries.filter(e=>filter==="all"||filter==="district:"+e.districtId||filter==="hero:"+e.heroId);
-    const options=[["all","Все поручения"],...C.districts.map(d=>["district:"+d.id,d.name]),
-      ...C.heroes.map(id=>["hero:"+id,entries.find(e=>e.heroId===id)?.mission.hero.name]).filter(e=>e[1])];
-    const filterUI=`<div class="cr-catalog-filter"><label for="crCatalogFilter">Поручения по району или герою</label><select id="crCatalogFilter">${options.map(([value,label])=>`<option value="${esc(value)}"${value===filter?" selected":""}>${esc(label)}</option>`).join("")}</select></div>`;
+    const districts=C.districts.map(d=>["district:"+d.id,d.name+" · "+entries.filter(e=>e.districtId===d.id).length]);
+    const heroes=C.heroes.map(id=>["hero:"+id,entries.find(e=>e.heroId===id)?.mission.hero.name,entries.filter(e=>e.heroId===id).length]).filter(e=>e[1]).map(([id,name,n])=>[id,name+" · "+n]);
+    const option=([value,label])=>`<option value="${esc(value)}"${value===filter?" selected":""}>${esc(label)}</option>`;
+    const filterUI=`<section class="cr-catalog-filter" aria-label="Каталог поручений"><h2 id="crCatalogHeading" tabindex="-1">Поручения</h2><label for="crCatalogFilter">Район или герой</label><select id="crCatalogFilter">${option(["all","Все поручения · "+entries.length])}<optgroup label="Районы">${districts.map(option).join("")}</optgroup><optgroup label="Герои">${heroes.map(option).join("")}</optgroup></select><p class="cr-catalog-count" role="status">Показано ${visible.length} из ${entries.length}</p></section>`;
     const inProgress = Object.values(progress).filter((p) => p.status === "active").length;
     const finished = Object.values(progress).filter((p) => ["clean", "costly", "failed", "dead"].includes(p.status)).length;
     render(
-      `<header class="cr-heading"><span>ПРИКАЗЫ БЛИЖНЕГО КРУГА</span><h1>Работа для своих</h1><p class="cr-tagline">Приказы, которым нет простых решений.<br>Вернутся не все.</p></header><p>Здесь нужно <b>выполнить поручение и остаться в живых</b>. Риск выше, чем в расследованиях. Решения необратимы внутри попытки; каждый ход сохраняется до показа результата, если браузер разрешает запись.</p><div class="cr-map" aria-label="Схематическая карта пяти криминальных районов"><svg viewBox="0 0 360 460" aria-hidden="true"><defs><pattern id="crBlocks" width="36" height="38" patternUnits="userSpaceOnUse"><path d="M4 6h24v24H4z" fill="none" stroke="#584c3b" stroke-width=".8"/></pattern></defs><rect width="360" height="460" fill="#171c1c"/><path d="M18 12L327 20 348 412 279 447 29 414Z" fill="url(#crBlocks)" stroke="#8e7955"/><path d="M50 0Q120 180 210 220T350 460M0 250Q160 180 360 235M180 0Q170 180 120 460M0 370Q180 300 360 320" fill="none" stroke="#64543d" stroke-width="8"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#315c64" stroke-width="12"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#9baca6" stroke-width="1"/><path d="M10 335L348 120" stroke="#888073" stroke-dasharray="5 5" stroke-width="2"/><text x="185" y="250" fill="#c4b18b" font-size="14">ЦЕНТР</text><text x="15" y="438" fill="#baa578" font-size="12">С ↑ · СХЕМА ГОРОДА</text></svg>${C.districts.map(d=>{
+      `<header class="cr-heading"><span>ПРИКАЗЫ БЛИЖНЕГО КРУГА</span><h1>Работа для своих</h1><p class="cr-tagline">Приказы, которым нет простых решений.<br>Вернутся не все.</p></header><p>Выполните приказ и останьтесь в живых. Риск выше, чем в расследованиях; решения внутри попытки необратимы.</p><div class="cr-catalog-overview"><p class="cr-progress-summary" role="status">${inProgress} в работе · ${finished} завершено · ${entries.length} всего</p>${btn("catalog","К поручениям ↓")}</div><div class="cr-map" aria-label="Схематическая карта пяти криминальных районов"><svg viewBox="0 0 360 460" aria-hidden="true"><defs><pattern id="crBlocks" width="36" height="38" patternUnits="userSpaceOnUse"><path d="M4 6h24v24H4z" fill="none" stroke="#584c3b" stroke-width=".8"/></pattern></defs><rect width="360" height="460" fill="#171c1c"/><path d="M18 12L327 20 348 412 279 447 29 414Z" fill="url(#crBlocks)" stroke="#8e7955"/><path d="M50 0Q120 180 210 220T350 460M0 250Q160 180 360 235M180 0Q170 180 120 460M0 370Q180 300 360 320" fill="none" stroke="#64543d" stroke-width="8"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#315c64" stroke-width="12"/><path d="M5 193Q90 120 171 228T355 270" fill="none" stroke="#9baca6" stroke-width="1"/><path d="M10 335L348 120" stroke="#888073" stroke-dasharray="5 5" stroke-width="2"/><text x="185" y="250" fill="#c4b18b" font-size="14">ЦЕНТР</text><text x="15" y="438" fill="#baa578" font-size="12">С ↑ · СХЕМА ГОРОДА</text></svg>${C.districts.map(d=>{
           const group=entries.filter(e=>e.districtId===d.id);
           if(group.length===1){
             const {id,mission:m}=group[0],p=progress[id];
             return `<button type="button" class="cr-pin" data-mission="${id}" data-progress="${p.status}" aria-label="${esc(m.district)}. ${esc(m.title)}. ${esc(p.label)}" style="left:${d.x}%;top:${d.y}%"><span>${d.icon} ${id}</span><strong>${esc(d.name)}</strong></button>`;
           }
-          return `<button type="button" class="cr-pin" data-catalog-district="${d.id}" ${group.length?"":"disabled"} aria-label="${esc(d.name)}. ${group.length} поручений" style="left:${d.x}%;top:${d.y}%"><span>${d.icon} · ${group.length}</span><strong>${esc(d.name)}</strong></button>`;
-        }).join("")}</div><p class="cr-small">Север сверху. Канал и дороги показаны схематически. Все адреса поручений вымышлены; это игровая карта, а не исторический план.</p>${filterUI}<div class="cr-mission-list">${visible
+          return `<button type="button" class="cr-pin" data-catalog-district="${d.id}" aria-pressed="${filter==="district:"+d.id}" ${group.length?"":"disabled"} aria-label="${esc(d.name)}. ${group.length} поручений" style="left:${d.x}%;top:${d.y}%"><span>${d.icon} · ${group.length}</span><strong>${esc(d.name)}</strong></button>`;
+        }).join("")}</div><p class="cr-small">Схема города: выберите район или откройте список поручений. Адреса вымышлены.</p>${filterUI}<div class="cr-mission-list">${visible
         .map(({mission:m}) => {
           const p = progress[m.id];
-          return `<button type="button" data-mission="${m.id}" data-progress="${p.status}"><small>${m.id} · ${esc(m.district)}</small><b>${esc(m.title)}</b><span>${esc(m.hero.name)} · ${esc(p.label)}</span><em class="cr-mission-action">${esc(p.action)} →</em></button>`;
+          const frame=globalThis.CriminalArt?.frames.find(f=>f.missionId===m.id&&f.scenes.includes(m.start));
+          const thumb=frame?`<img class="cr-card-art" src="${esc(frame.path)}" width="64" height="80" alt="" loading="lazy" decoding="async">`:"";
+          return `<button type="button" data-mission="${m.id}" data-progress="${p.status}" class="cr-mission-card">${thumb}<span class="cr-card-copy"><small>${esc(m.district)}</small><b>${esc(m.title)}</b><span>${esc(m.hero.name)}</span><span class="cr-card-status">${esc(p.label)}</span><em class="cr-mission-action">${esc(p.action)} →</em></span></button>`;
         })
-        .join("")}</div><p class="cr-progress-summary" role="status">${inProgress} в работе · ${finished} завершено · ${Object.keys(C.missions).length} поручений</p>${btn("chronicle", "Открыть локальную хронику")}`,
+        .join("")}</div>`,
     );
   }
   function brief(id) {
@@ -599,6 +603,12 @@
       return advance(b.dataset.choice, Number(b.dataset.revision));
     const id = currentId();
     switch (b.dataset.action) {
+      case "catalog": {
+        const target=root.querySelector("#crCatalogHeading");
+        target?.focus({preventScroll:true});
+        target?.scrollIntoView({block:"start",behavior:"instant"});
+        return;
+      }
       case "map":
         if (!confirmPendingLeave()) return;
         return map();
