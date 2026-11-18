@@ -5,7 +5,8 @@ No repeated 202-route campaign simulation; game engines remain unchanged.
 from pathlib import Path
 from functools import partial
 from threading import Thread
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from http.server import SimpleHTTPRequestHandler
+from local_http import LocalServer
 from playwright.sync_api import sync_playwright
 import sys, json, subprocess
 
@@ -47,7 +48,7 @@ def episode_material(page, selector, token):
     return m
 
 def run():
-    server = ThreadingHTTPServer(
+    server = LocalServer(
         ("127.0.0.1", 0), partial(Quiet, directory=str(ROOT / "campaign-unified-dist"))
     )
     Thread(target=server.serve_forever, daemon=True).start()
@@ -471,6 +472,9 @@ def run():
                     name,
                     "same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive -> profile active slots, saves unchanged",
                 )
+                # Integrated route is fully checked; release its page before opening
+                # the independent standalone proof, without shortening either route.
+                ctx.close()
                 # Fresh context: follow one canonical Case002 route until an
                 # actual earned achievement is followed by an ordinary decision.
                 # No fabricated achievement, engine or archive state.
@@ -483,6 +487,8 @@ def run():
                 proof.on("pageerror",lambda e:proof_errors.append(str(e)))
                 proof.on("dialog",lambda d:d.accept())
                 proof.goto(origin+"/preview/case002-prototype/index.html?from=map",wait_until="domcontentloaded")
+                proof.locator("#briefContinue").scroll_into_view_if_needed()
+                proof.wait_for_function("""()=>{const b=document.querySelector('#briefContinue'),r=b.getBoundingClientRect(),v=document.querySelector('.briefing-visual').getBoundingClientRect(),c=document.querySelector('.briefing-copy').getBoundingClientRect();return v.bottom<=c.top+1&&r.top>=0&&r.bottom<=innerHeight&&b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2))}""")
                 tap(proof,"#briefContinue")
                 tap(proof,"#begin")
                 known=None;verified=False

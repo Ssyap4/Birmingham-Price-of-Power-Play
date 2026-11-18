@@ -4,15 +4,13 @@ import json
 from functools import partial
 from pathlib import Path
 from threading import Thread
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from http.server import SimpleHTTPRequestHandler
+from local_http import LocalServer
 from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"work/criminal"
 OUT.mkdir(parents=True,exist_ok=True)
-
-class LocalServer(ThreadingHTTPServer):
-    request_queue_size=128
 
 class Quiet(SimpleHTTPRequestHandler):
     def log_message(self,*args): pass

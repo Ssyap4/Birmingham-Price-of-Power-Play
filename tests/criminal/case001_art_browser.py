@@ -4,7 +4,7 @@ Exercises real reader DOM using isolated, explicitly synthetic scene fixtures.
 No browser resizing during the long route, no mocked renderer or production data.
 """
 from playwright.sync_api import sync_playwright
-from http.server import ThreadingHTTPServer
+from local_http import LocalServer
 from threading import Thread
 from functools import partial
 from legacy_smoke import ROOT, OUT, Quiet, tap
@@ -23,7 +23,7 @@ KEY = "birmingham_case_smol_heath_v1_jack"
 META = "birmingham_case_v20_findings_jack"
 
 def run():
-    server=ThreadingHTTPServer(("127.0.0.1",0), partial(Quiet,directory=str(ROOT/"campaign-unified-dist")))
+    server=LocalServer(("127.0.0.1",0), partial(Quiet,directory=str(ROOT/"campaign-unified-dist")))
     Thread(target=server.serve_forever,daemon=True).start()
     origin=f"http://127.0.0.1:{server.server_port}"
     try:

@@ -2,7 +2,8 @@
 """Real-touch QA of the isolated criminal-only WebKit/Chromium preview."""
 from pathlib import Path
 from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from http.server import SimpleHTTPRequestHandler
+from local_http import LocalServer
 from threading import Thread
 from playwright.sync_api import sync_playwright
 
@@ -21,7 +22,7 @@ def tap(page, selector):
     item.tap()
 
 def run():
-    server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Quiet,directory=str(DIST)))
+    server = LocalServer(("127.0.0.1", 0), partial(Quiet,directory=str(DIST)))
     Thread(target=server.serve_forever,daemon=True).start()
     origin = f"http://127.0.0.1:{server.server_port}"
     try:
