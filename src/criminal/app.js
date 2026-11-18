@@ -159,8 +159,7 @@
   function warning(text) {
     return `<div class="cr-warning" role="status">${esc(text)}</div>`;
   }
-  function missionProgress(id) {
-    const slot = A.load(store, id);
+  function missionProgress(id, slot = A.load(store, id)) {
     if (slot.kind === "unavailable")
       return { status: "unavailable", label: "Хранилище недоступно", action: "Играть без сохранения" };
     if (slot.kind === "corrupt")
@@ -256,7 +255,7 @@
         ) + btn("restart", "Начать новую попытку вместо этой");
     else actions = btn("start", "Начать поручение", "cr-primary");
     render(
-      `<header class="cr-heading"><span>${id} · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${art(m, m.start)}<h2>Приказ</h2><p>${esc(m.brief)}</p><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p><p>HP: 0–100. При нуле попытка заканчивается гибелью. Перевязка восстанавливает 35 HP и расходуется. Гибель в поручении завершает только эту попытку и не меняет состояние героя в детективных расследованиях.</p><p class="cr-small">Автосохранение локальное, на этом устройстве. Отдельные попытки и награды не синхронизируются с другими браузерами. Случайный результат закреплён внутри попытки; перезагрузка его не меняет.</p><div class="cr-actions" data-brief="${id}">${actions}</div>`,
+      `<header class="cr-heading"><span>ПОРУЧЕНИЕ · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${slot.kind==="valid"?`<p class="cr-brief-progress">${esc(missionProgress(id, slot).label)} · Здоровье ${slot.state.hp}/100</p>`:""}${art(m, m.start)}<section class="cr-brief-order"><h2>Приказ</h2><p>${esc(m.brief)}</p></section><section class="cr-brief-rules"><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p></section><details class="cr-common-rules"><summary>Здоровье и сохранение</summary><p>Здоровье: от 0 до 100. При нуле герой погибает, но только в этом поручении. Перевязка восстанавливает до 35 единиц здоровья и расходует одну перевязку и один ход.</p><p>Прогресс и награды сохраняются на этом устройстве, если браузер разрешает запись. Перезагрузка не меняет случайный результат. Другие браузеры не синхронизируются.</p></details><div class="cr-actions" data-brief="${id}">${actions}</div>`,
     );
   }
   function entropy() {
@@ -306,8 +305,7 @@
     notice = "";
     scene(true);
   }
-  function hud(m) {
-    const names = {
+  const statNames = {
       time: "Ходы",
       alert: "Тревога",
       suspicion: "Подозрение",
@@ -318,12 +316,9 @@
       car: "Машина",
       fuel: "Топливо",
       cargo: "Груз",
-    };
-    return `${hero(m)}<div class="cr-hud"><b class="${state.hp < 40 ? "cr-wounded" : ""}">♥ HP ${state.hp}/100</b>${Object.entries(
-      state.stats,
-    )
-      .map(([k, v]) => `<span>${names[k]} <b>${v}</b></span>`)
-      .join("")}</div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div>`;
+  };
+  function hud(m) {
+    return `${hero(m)}<section class="cr-health" data-health="${state.hp<40?"critical":"normal"}" aria-label="Состояние героя"><div class="cr-health-label"><b>♥ Здоровье</b><strong>${state.hp}/100</strong></div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div></section><div class="cr-hud" aria-label="Показатели поручения">${Object.entries(state.stats).map(([k,v])=>`<span>${esc(statNames[k]||k)} <b>${v}</b></span>`).join("")}</div>`;
   }
   function gearArt(id, cssClass = "cr-gear-illustration") {
     if (!Object.prototype.hasOwnProperty.call(C.items, id)) return "";
@@ -353,23 +348,11 @@
           ]
         : [];
     });
-    const names = {
-      time: "Ходы",
-      alert: "Тревога",
-      suspicion: "Подозрение",
-      trust: "Доверие",
-      witness: "Дэниел",
-      cover: "Укрытие",
-      siege: "Осада",
-      car: "Машина",
-      fuel: "Топливо",
-      cargo: "Груз",
-    };
     for (const [id, value] of Object.entries(state.stats)) {
       const delta = value - before.stats[id];
       if (delta)
         changes.push(
-          `<span>${names[id]} ${delta > 0 ? "+" : ""}${delta}</span>`,
+          `<span>${esc(statNames[id]||id)} ${delta > 0 ? "+" : ""}${delta}</span>`,
         );
     }
     return changes.length ? `<div class="cr-resource-changes" aria-label="Изменение ресурсов">${changes.join("")}</div>` : '<p class="cr-small">Снаряжение и другие показатели не изменились.</p>';
@@ -410,7 +393,7 @@
     const choicesHtml = choiceViews
       .map(
         (c) =>
-          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" data-risk-kind="${c.risk.lethal ? "lethal" : c.risk.probability>0 ? "wound" : "ordinary"}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small>${esc(c.risk.level)}${c.risk.probability ? " · " + c.risk.probability + "%" : ""}${c.risk.lethal ? " · Возможна гибель" : ""}: ${esc(c.risk.reason)}</small>${
+          `<button type="button" data-choice="${c.id}" data-revision="${state.revision}" data-risk="${c.risk.probability}" data-risk-kind="${c.risk.lethal ? "lethal" : c.risk.probability>0 ? "wound" : "ordinary"}" ${c.available ? "" : "disabled"}><b>${esc(c.label)}</b><small class="cr-risk-info"><strong>${esc(c.risk.level)}${c.risk.probability ? " · " + c.risk.probability + "%" : ""}${c.risk.lethal ? " · Возможна гибель" : ""}</strong><span>${esc(c.risk.reason)}</span></small>${
             Object.keys(c.cost || {}).length
               ? `<small>Расход: ${Object.entries(c.cost)
                   .map(([k, v]) => esc(C.items[k][1]) + " ×" + v)
@@ -426,7 +409,7 @@
     const heading = origin || n;
     const phase = result ? "consequence" : "scene";
     render(
-      `<header class="cr-heading" data-phase="${phase}"><span>${m.id} · АКТ ${heading.act}/${m.acts.length} · ${esc(m.acts[heading.act - 1])}${result ? " · ИТОГ РЕШЕНИЯ" : ""}</span><h1>${esc(heading.title)}</h1>${actProgress(heading.act,m.acts.length)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : '<p class="cr-save-status">Ход сохранён на этом устройстве.</p>'}${inventory()}${
+      `<header class="cr-heading" data-phase="${phase}"><span>АКТ ${heading.act}/${m.acts.length} · ${esc(m.acts[heading.act - 1])}${result ? " · ИТОГ РЕШЕНИЯ" : ""}</span><h1>${esc(heading.title)}</h1>${actProgress(heading.act,m.acts.length)}</header>${hud(m)}${memory ? warning("Игра без сохранения. Награды и хроника недоступны; после закрытия страницы прогресс исчезнет.") : notice ? warning(notice) : `<p class="cr-save-status">${state.revision?"Ход сохранён":"Поручение сохранено"} · на этом устройстве</p>`}${inventory()}${
         result ||
         `${art(m, state.sceneId)}<article class="cr-story" id="crStory" tabindex="-1"><p>${esc(n.text)}</p><div class="cr-dialogue">${n.lines
           .filter((l) => !l[2] || E.test(state, l[2]))
@@ -436,7 +419,7 @@
           )
           .join(
             "",
-          )}</div></article><div class="cr-reader-jump">${btn("choices", "К решениям ↓", "cr-primary")}</div><h2 id="crDecisionHeading" tabindex="-1">Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b class="cr-heal-label">${gearArt("bandage", "cr-heal-icon")} Перевязать раны · +35 HP</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
+          )}</div></article><div class="cr-reader-jump">${btn("choices", "К решениям ↓", "cr-primary")}</div><h2 id="crDecisionHeading" tabindex="-1">Ваше решение</h2><div class="cr-choices">${choicesHtml}${E.availability(state, "heal") ? `<button type="button" data-choice="heal" data-revision="${state.revision}"><b class="cr-heal-label">${gearArt("bandage", "cr-heal-icon")} Перевязать раны · до +35 здоровья</b><small>1 перевязка и 1 ход. Без броска.</small></button>` : ""}</div>`
       }${journal()}`,
     );
     if(result){
@@ -527,7 +510,7 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${finalReceipt(m,a)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}<div class="cr-actions cr-final-actions" aria-label="Действия после поручения">${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}</div><h2 class="cr-final-detail-heading">Материалы поручения</h2>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${epilogue(state)}${verifiedNotes(r.notes)}${journal()}`,
+      `${awardBanner()}<header class="cr-heading"><span>ПОРУЧЕНИЕ ЗАВЕРШЕНО · ${esc(m.district)}</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${finalReceipt(m,a)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}<div class="cr-actions cr-final-actions" aria-label="Действия после поручения">${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}</div><h2 class="cr-final-detail-heading">Материалы поручения</h2>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${epilogue(state)}${verifiedNotes(r.notes)}${journal()}`,
     );
   }
   function chronicle(returnTo = null, returnWarning = "") {
