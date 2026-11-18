@@ -12,7 +12,7 @@
   const FINALS = ["clean", "costly", "failed", "dead"];
   function snapshot(store, archive, content) {
     if (!archive || typeof archive.ledger !== "function" ||
-        !content || !content.missions || typeof content.awardName !== "function" ||
+        !content || !content.missions || typeof content.catalog !== "function" || typeof content.awardName !== "function" ||
         IDS.some(id => !content.missions[id])) return {status: "unavailable"};
     const result = archive.ledger(store);
     if (!result.ok) return {status: /недоступ|запрет|чтени/i.test(result.error || "") ?
@@ -35,10 +35,10 @@
       return {key, missionId:state.missionId,
         title:key.startsWith("clean:")?"Выполнено без тяжёлых потерь":"Память о невозвращении"};
     });
-    const missions=IDS.map(id=>{
+    const missions=content.catalog().map(({id})=>{
       const m=content.missions[id];
       const finished=l.attempts.filter(s=>s.missionId===id);
-      return {id, title:m.title, hero:m.hero.name, district:m.district,
+      return {id, title:m.title, heroId:m.hero.id, hero:m.hero.name, district:m.district,
         attempts:finished.length, rewards:rewards.filter(r=>r.missionId===id),
         endings:FINALS.map(outcome=>({id:outcome,title:m.endings[outcome].title,
           unlocked:rewards.some(r=>r.missionId===id && r.terminalId===outcome)}))};
@@ -75,11 +75,19 @@
       data.memories+" памятных отметок. Детективные награды хранятся отдельно."));
     if(id==="campaignDossiers"){
       const grid=make(doc,"div","campaign-criminal-heroes");
+      const groups=new Map();
       for(const m of data.missions){
+        if(!groups.has(m.heroId))groups.set(m.heroId,[]);
+        groups.get(m.heroId).push(m);
+      }
+      for(const group of groups.values()){
         const item=make(doc,"article","campaign-criminal-hero");
-        item.append(make(doc,"small","",m.id+" · "+m.district),
-          make(doc,"h4","",m.hero),make(doc,"strong","",m.attempts+" прохождений"));
-        item.append(make(doc,"p","",m.rewards.length+" / 4 уникальных исхода"));
+        item.append(make(doc,"h4","",group[0].hero));
+        for(const m of group){
+          item.append(make(doc,"small","",m.id+" · "+m.district),
+            make(doc,"strong","",m.attempts+" прохождений"),
+            make(doc,"p","",m.rewards.length+" / "+m.endings.length+" уникальных исхода"));
+        }
         grid.append(item);
       }
       wrap.append(grid);

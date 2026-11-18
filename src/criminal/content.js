@@ -28,7 +28,7 @@
     ],
   };
   function awardName(missionId, endingId) {
-    return awardNames[missionId]?.[
+    return (awardNames[missionId] || missions[missionId]?.awardNames)?.[
       ["clean", "costly", "failed", "dead"].indexOf(endingId)
     ];
   }
@@ -87,12 +87,36 @@
   function node(act, title, text, lines, choices) {
     return { act, title, text, lines, choices };
   }
+  // District identity and map position are independent of the mission graph.
+  const districts = Object.freeze([
+    {id:"handsworth",name:"Хэндсворт",x:9,y:9,icon:"♜"},
+    {id:"nechells",name:"Нечеллс",x:60,y:26,icon:"⚓"},
+    {id:"ladywood",name:"Ледивуд",x:8,y:41,icon:"◇"},
+    {id:"edgbaston",name:"Эджбастон",x:10,y:69,icon:"▤"},
+    {id:"balsall-heath",name:"Бэлсолл-Хит",x:60,y:77,icon:"⚒"}
+  ].map(Object.freeze));
+  const legacy = Object.freeze({CR01:"balsall-heath",CR02:"nechells",CR03:"edgbaston",CR04:"handsworth",CR05:"ladywood"});
+  const heroes = Object.freeze(["jack","finn","eleanor","victor","samuel"]);
+  function catalog() {
+    return Object.values(missions).map(m=>{
+      const districtId=legacy[m.id] || m.catalog?.districtId;
+      const district=districts.find(d=>d.id===districtId);
+      const wave=legacy[m.id]?1:m.catalog?.wave;
+      if(!/^CR[0-9]{2,}$/.test(m.id)||!district||district.name!==m.district||
+        !heroes.includes(m.hero?.id)||!Number.isInteger(wave)||wave<1)
+        throw Error("Invalid mission catalog: "+m.id);
+      return {id:m.id,heroId:m.hero.id,districtId,wave,mission:m};
+    }).sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
+  }
   function register(m) {
     if (missions[m.id]) throw Error("Duplicate mission");
     missions[m.id] = m;
   }
   return {
     missions,
+    districts,
+    heroes,
+    catalog,
     awardName,
     items,
     I,

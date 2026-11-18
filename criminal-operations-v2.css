@@ -729,3 +729,9 @@ body[data-criminal="active"] > .bh-audio-controls button {
  content:"Кадр загружается…";position:absolute;z-index:1;left:50%;top:44%;transform:translate(-50%,-50%);
  max-width:85%;padding:7px 10px;border:1px solid #8b6a43;border-radius:4px;background:#201811;color:#e9cda3;font:600 .78rem/1.4 system-ui,sans-serif;text-align:center;pointer-events:none;
 }
+
+/* V85 — catalog filtering; existing map points remain unchanged. */
+#criminalScreen .cr-catalog-filter{display:grid;gap:6px;margin:12px 0;color:inherit}
+#criminalScreen .cr-catalog-filter label{font-size:.9rem}
+#criminalScreen .cr-catalog-filter select{width:100%;min-height:48px;border:1px solid #8a7350;border-radius:8px;background:#211d19;color:#f3e5ca;padding:8px 10px;font:inherit}
+#criminalScreen .cr-catalog-filter select:focus-visible{outline:2px solid #c9a86c;outline-offset:2px}
