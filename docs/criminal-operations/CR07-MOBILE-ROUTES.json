@@ -1,0 +1,186 @@
+[
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "clerk",
+      "respect",
+      "cabinet",
+      "read",
+      "confirm",
+      "limited",
+      "refuse",
+      "prepare",
+      "agree",
+      "submit",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "approach",
+      "clerk",
+      "office",
+      "cabinet",
+      "proof",
+      "custody",
+      "demand",
+      "redaction",
+      "consent",
+      "handoff",
+      "report",
+      "end:clean"
+    ],
+    "time": 18,
+    "label": "clean"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "owner",
+      "deal",
+      "take",
+      "copy",
+      "deal",
+      "limited",
+      "finish"
+    ],
+    "end": "costly",
+    "seen": [
+      "order",
+      "approach",
+      "owner",
+      "copybook",
+      "custody",
+      "demand",
+      "trade",
+      "report",
+      "end:costly"
+    ],
+    "time": 8,
+    "label": "costly"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "owner",
+      "question",
+      "cabinet",
+      "leave",
+      "full",
+      "argue",
+      "leave",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "approach",
+      "owner",
+      "office",
+      "cabinet",
+      "custody",
+      "demand",
+      "pressure",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 9,
+    "label": "failed"
+  },
+  {
+    "seed": 10,
+    "path": [
+      "accept",
+      "owner",
+      "question",
+      "cabinet",
+      "leave",
+      "full",
+      "argue",
+      "stand",
+      "hold"
+    ],
+    "end": "dead",
+    "seen": [
+      "order",
+      "approach",
+      "owner",
+      "office",
+      "cabinet",
+      "custody",
+      "demand",
+      "pressure",
+      "danger",
+      "end:dead"
+    ],
+    "time": 9,
+    "label": "dead"
+  },
+  {
+    "seed": 7,
+    "path": [
+      "accept",
+      "dockman",
+      "listen",
+      "names",
+      "take",
+      "full",
+      "argue",
+      "leave",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "approach",
+      "dockman",
+      "office",
+      "names",
+      "custody",
+      "demand",
+      "pressure",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 9,
+    "label": "coverage4"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "clerk",
+      "respect",
+      "cabinet",
+      "read",
+      "confirm",
+      "limited",
+      "refuse",
+      "prepare",
+      "agree",
+      "submit",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "approach",
+      "clerk",
+      "office",
+      "cabinet",
+      "proof",
+      "custody",
+      "demand",
+      "redaction",
+      "consent",
+      "handoff",
+      "report",
+      "end:clean"
+    ],
+    "time": 18,
+    "label": "repeat"
+  }
+]

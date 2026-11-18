@@ -1242,10 +1242,466 @@
           "end:dead"
         ]
       },
+      {
+        "id": "cr07-order",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-order.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 94924,
+        "sha256": "9e7f3cb49b322483c4dc8c42d9b3103d8bc4a5f087005b977fda8bf84fb3c9ae",
+        "gitBlobSha1": "c559421c8b129840a9aee21fed9d85737ca742b7",
+        "sourceSha256": "916a8f06d310d6481869428467ba0f95fc218ef74a1b3d91fb03a46ee8f51955",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Два пустых чайных прибора и записка связного в полутёмной комнате",
+        "scenes": [
+          "order"
+        ]
+      },
+      {
+        "id": "cr07-approach",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-approach.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 177902,
+        "sha256": "011c2ff0cb392c23926ad4b299416f79f46c3bff39f493015ace1d0a730be5fe",
+        "gitBlobSha1": "14fe7a293957917ff6e86616dcb8c204087190de",
+        "sourceSha256": "29e7905c24d377f6ad52dc6035487212011b5d63be06714dadaf4a0f66eb2888",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Контора Кейна под дождём; Доул, хозяин и Нора ждут в разных местах",
+        "scenes": [
+          "approach"
+        ]
+      },
+      {
+        "id": "cr07-dockman",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-dockman.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 131192,
+        "sha256": "9396b533bec0d154503f9278df17a4b7f54d4d0d9f9ea232cb3725fc7a534cb7",
+        "gitBlobSha1": "9adb503f8365601a81a37bec5f1c60587f6ed5cc",
+        "sourceSha256": "7ca9647e3d08d3dddc19321c21d1b6a89b3f04871fb8cb47cde0e22b3bc68172",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Патрик Доул укрывает квитанцию в своей ладони у мокрой стены",
+        "scenes": [
+          "dockman"
+        ]
+      },
+      {
+        "id": "cr07-owner",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-owner.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 124906,
+        "sha256": "b61d5b8088152a9b4b425801f6215b80afea7f910611134891ef37d02a3abf91",
+        "gitBlobSha1": "df4826c31733ffe7be44bad4c258205274fff524",
+        "sourceSha256": "a5b289b567d28365f808248a0484f3a0b150036bd2c6d0fb5b400ad5f921889a",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Морис Кейн на пороге конторы предлагает разговор",
+        "scenes": [
+          "owner"
+        ]
+      },
+      {
+        "id": "cr07-clerk",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-clerk.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 137252,
+        "sha256": "60a2fbba13c5da5f67d1ec60a79b48d2467f3ebf55c2249998e056b1e9014da9",
+        "gitBlobSha1": "4e9a2b490cabe49daafd458127f32c2ae584ffe6",
+        "sourceSha256": "c84539ac828314e49cb07db2a1777a1580f1ffba16ee1f657e81eb16b7f5e0e1",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Нора Бреннан у боковой двери держит папку с пустыми бланками",
+        "scenes": [
+          "clerk"
+        ]
+      },
+      {
+        "id": "cr07-office",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-office.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 120438,
+        "sha256": "33ff661a39657afb7cff0a09eb2d395a5bd81b2b1cdf08f4814b44f9c2312c1b",
+        "gitBlobSha1": "24c3615b747e6d06d27f7f4418cab47a3f14fbe9",
+        "sourceSha256": "dcf32846aa2a12dd359c0a9ac14e8b8d02ddf5118a98cc51c73242c69291c040",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Рабочий стол с потёртой печатью и пустой футляр у полок",
+        "scenes": [
+          "office"
+        ]
+      },
+      {
+        "id": "cr07-cabinet",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-cabinet.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 129280,
+        "sha256": "6d537508d67901dd68f2c511c4591990c3624d7a86d1cfc6eb00c7120023599d",
+        "gitBlobSha1": "353da58d1097255fb8264017fe4123119d259048",
+        "sourceSha256": "1a56de089af29d3229bb74a0b1a646d92cb5ccb7ec33dd97afb40cf7f19d3228",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Нора показывает рабочий том рядом с пустым футляром на полке",
+        "scenes": [
+          "cabinet"
+        ]
+      },
+      {
+        "id": "cr07-copybook",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-copybook.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 116746,
+        "sha256": "9c95b4e8db068826fc862ef2474c16eb0ca9214a893e77cd4c0df053ff3d75dd",
+        "gitBlobSha1": "a0e035aecfb20ff00c8cbd7e5c64bf45254b430f",
+        "sourceSha256": "abb7ddc025165378fb3810be42a569357df59329ba2a1426690db8bb5b76728a",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Кейн предъявляет собственную выписку с нечитаемой подписью и печатью",
+        "scenes": [
+          "copybook"
+        ]
+      },
+      {
+        "id": "cr07-names",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-names.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 98622,
+        "sha256": "9aca03a0569bfa1d8a7939d9df57d9ace85c9ad2b9738eb0bca297f76e089526",
+        "gitBlobSha1": "280e4599d3c32c8a5f41bd177592ba40218d55c3",
+        "sourceSha256": "63c7565b7edcc28d89894542d1fdbd0a22358a0e52dc4b421b1e095a39c9b713",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Нора у раскрытой ведомости объясняет разницу между людьми в списке",
+        "scenes": [
+          "names"
+        ]
+      },
+      {
+        "id": "cr07-proof",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-proof.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 106290,
+        "sha256": "1680d5ec2ea6c7eeee3b26ed4df7c27065b3fc5dcd330180b56741f4196587c3",
+        "gitBlobSha1": "bfe1e0ff8e870009ca07b5db164cf2933c629e1f",
+        "sourceSha256": "92ccbbd59a28381160ea051e84f31ae1ada67943638dbd501a6f8d46f0d8db74",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Нора объясняет происхождение исходных записей",
+        "scenes": [
+          "proof"
+        ]
+      },
+      {
+        "id": "cr07-custody",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-custody.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 126390,
+        "sha256": "17db4ec58955edebcdf5302ed897c5e75d6cb845ca63a72652a4ab1aae47e22a",
+        "gitBlobSha1": "7e41f9f84c3135cd4517b6001968429ed2ad3728",
+        "sourceSha256": "1f713eb1bd7c15fcf2b736d0d8b4964da5196fe98674aae954e974bf4dcdf96b",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Книга лежит между Кейном и Норой на столе",
+        "scenes": [
+          "custody"
+        ]
+      },
+      {
+        "id": "cr07-demand",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-demand.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 92404,
+        "sha256": "1c000163dfc03b8c17fb0e9c317cd9d00efc5a17d7c7cc9cdf520431b6d3846e",
+        "gitBlobSha1": "af19a7ffc9f323427abaf8470b594b149d3aa35c",
+        "sourceSha256": "dc7c399a81dd7a255c98765fa83c7256abfe134bc6c658634a0bb38231c96c69",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Кейн в дверном проёме выдвигает условие, Нора слушает из соседней комнаты",
+        "scenes": [
+          "demand"
+        ]
+      },
+      {
+        "id": "cr07-pressure",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-pressure.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 104522,
+        "sha256": "772d227f83bd23853d3565b350c21a4bc3f5c21e73ccd3e44ac806eae38636fd",
+        "gitBlobSha1": "00a0f84cc44757a60e1d9878467ca982653af395",
+        "sourceSha256": "c3fb660122e17d5453199b1d4c0554b67cd74a2759c614890a5d02cbba40993f",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Двое у лестницы и Доул у двери в тесном коридоре",
+        "scenes": [
+          "pressure"
+        ]
+      },
+      {
+        "id": "cr07-redaction",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-redaction.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 134676,
+        "sha256": "0c36323eaf9034378aae38cf439b2d3130a13b258229988f68a01027cdcbb12d",
+        "gitBlobSha1": "91f525a54ba258d6fd90f9e2445f20c535bd2e1f",
+        "sourceSha256": "cdc4f6ca5cbd64e747d02c175acd5669515b444c342780d35c86e97d024df9fa",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Чистый лист рядом с ведомостью, Нора в свете лампы",
+        "scenes": [
+          "redaction"
+        ]
+      },
+      {
+        "id": "cr07-danger",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-danger.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 134202,
+        "sha256": "c91640d37de6e375827ddae9bdef8b15bc8c43c5ba4825909f3419652941fa6e",
+        "gitBlobSha1": "7ff2fb757e3b9c89580c568d0c38806d8677f757",
+        "sourceSha256": "9aaf01f1548784218f8e79268dff865509e21f0fb18fafe2fbb88b6595d469e9",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Осколки в коридоре, Кейн отступил, у выхода видна Нора",
+        "scenes": [
+          "danger"
+        ]
+      },
+      {
+        "id": "cr07-consent",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-consent.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 107370,
+        "sha256": "dd3adbf37f8b406a0fd4dad9dc18ac95bc03627cb273bf6abb3a998665abc61d",
+        "gitBlobSha1": "4e38f2dcb7834984a7185b621a1ef0655980357c",
+        "sourceSha256": "d2d120194856070d52c35e16537fa5393e76487190679eea9507cfc852a6181d",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Нора у выхода смотрит внимательно на собеседника",
+        "scenes": [
+          "consent"
+        ]
+      },
+      {
+        "id": "cr07-handoff",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-handoff.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 107790,
+        "sha256": "660a772baca2010e3654843c0d02c1df23312b1ba5076f5ad17d5f6b6149c22e",
+        "gitBlobSha1": "978c847530975bd4e17069baccc76946a22ee346",
+        "sourceSha256": "9f4bb2cb78c480bd7ccd325f7fbe36833dd016f95c55dfd2592d3295b88f8212",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Связной перед чистым конвертом задаёт вопрос о пределах отчёта",
+        "scenes": [
+          "handoff"
+        ]
+      },
+      {
+        "id": "cr07-trade",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-trade.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 76740,
+        "sha256": "acb45aab8c9a5a5a42b8567a12579f08d05a3379d7d33573437bc2d76a20f053",
+        "gitBlobSha1": "84029a083e8d4ea5040795a292453a235ca0bde0",
+        "sourceSha256": "6342c9b37725e4a7ec40cdaa7c3d2a374228f92dd9d3fa9699bbf0d67570ac84",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Связной у окна в тёмной комнате готов выслушать спорный материал",
+        "scenes": [
+          "trade"
+        ]
+      },
+      {
+        "id": "cr07-withdrawal",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-withdrawal.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 174602,
+        "sha256": "ef2e4c71eddf158597dad78b18bc310a45ce626c01d4b2afc54f3f8e3c87cba1",
+        "gitBlobSha1": "e73981c3d04f8bbe55eeed9dc101499aa8196dfc",
+        "sourceSha256": "fb04cfc87ab689626d85d365886f5c25ebf71df0f7aa67e8fd0d64d5a730b737",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "У конторы под дождём готовят дверь к опечатыванию",
+        "scenes": [
+          "withdrawal"
+        ]
+      },
+      {
+        "id": "cr07-report",
+        "missionId": "CR07",
+        "kind": "scene",
+        "path": "assets/criminal/cr07-report.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 104678,
+        "sha256": "11a158bc33af6818d55a06b9a782743955e1b255dee177563b42d3dd0f5fc6fe",
+        "gitBlobSha1": "f330e0b207c4fc37bf6eb08bedaea820f56b38fb",
+        "sourceSha256": "59e017af6745c27869e843a5b2e6642ec4c7fdf8fe28a09ff0fb6fb19dedf4cb",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Связной проверяет переданный материал и время",
+        "scenes": [
+          "report"
+        ]
+      },
+      {
+        "id": "cr07-end-clean",
+        "missionId": "CR07",
+        "kind": "ending",
+        "path": "assets/criminal/cr07-end-clean.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 86766,
+        "sha256": "f4ed5dfe7d3f62fdf25253b73234e774cdef678b5d974bfba39c73e42fdc429a",
+        "gitBlobSha1": "de06c60a2ed0d13b22a3c5316ba8d845ae80c07f",
+        "sourceSha256": "7984a9a51d74253b974b52333abbe2fe1e3b5f46f501d17c052d7f3c3913621a",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Чистый конверт перед закрытой дверью в утреннем свете",
+        "scenes": [
+          "end:clean"
+        ]
+      },
+      {
+        "id": "cr07-end-costly",
+        "missionId": "CR07",
+        "kind": "ending",
+        "path": "assets/criminal/cr07-end-costly.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 93354,
+        "sha256": "20d8938a85ae557075bd42b5806d462f2fec8685018c2c25307fd90fa186dc54",
+        "gitBlobSha1": "1801a6610990449063dec55aaf10fdc5d9ea7101",
+        "sourceSha256": "b79cbce4e87bf54425b6a1b7237460fd8364893ce4e886ff2125a49772d37136",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Связной и спорные бумаги в сумрачной комнате",
+        "scenes": [
+          "end:costly"
+        ]
+      },
+      {
+        "id": "cr07-end-failed",
+        "missionId": "CR07",
+        "kind": "ending",
+        "path": "assets/criminal/cr07-end-failed.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 162968,
+        "sha256": "3b9979a3d2298928d82626c15725c9cf1d1705d0bdf3683c983355290200e549",
+        "gitBlobSha1": "3ef6b055b6ed709581783e796d326d7a27cf6fed",
+        "sourceSha256": "509f0370622dcf68865197dd617ea24dbd746f082b72ce94e0dd6197800e2953",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Рассвет у опечатанной конторы и пустой тротуар",
+        "scenes": [
+          "end:failed"
+        ]
+      },
+      {
+        "id": "cr07-end-dead",
+        "missionId": "CR07",
+        "kind": "ending",
+        "path": "assets/criminal/cr07-end-dead.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 118524,
+        "sha256": "74246f12364b0688616237c70833c971398cd505e9960830bb2b8629eed3fff8",
+        "gitBlobSha1": "fef8e01f6a85cde18630c3a9e27264f142134a6a",
+        "sourceSha256": "bb36b74a77036ebac0e8c35c7daddf7f8d26ec3524f66d128eae0f082cc5aa35",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Независимый просмотр 24 WebP: единый канон NPC и интерьеров, отдельный момент, нейтральность вариативных исходов; байты кандидата сохранены.",
+        "alt": "Пустой коридор с разбитым стеклом и погасшей лампой",
+        "scenes": [
+          "end:dead"
+        ]
+      },
     ],
     artGaps: [
       "CR01–CR05: иллюстрации разделяются соседними сценами одной локации; не у каждого из 105 узлов свой кадр.",
-      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06 имеет 22 самостоятельных сцены и 4 отдельных финала.",
+      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06 и CR07 имеют отдельные иллюстрации для каждого узла и финала.",
       "Пять героев представлены каноническими портретами; новые полнофигурные изображения героев не создавались.",
     ],
   };
