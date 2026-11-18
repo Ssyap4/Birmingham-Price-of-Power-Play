@@ -1,0 +1,12 @@
+# Case 003 — production graph v1 (internal draft)
+Base: V107 stable. Branch: feat/case003-story-bible-v1. Scope: isolated Node model; no browser, art, integration or public release.
+
+The design-only contract remains the authority for evidence identities, claims and minimum bundles, and endings. The new graph has 61 named records (60 playable nodes, F03 is a virtual epilogue marker), 103 explicit actions, six chapters and 15 optional hero-specific text episodes. D03 is split into independent receipt and clothing observations. D00 and E00 are investigation/decision hubs; E05a provides a second warning. Obtaining evidence and confirming a deduction are distinct actions; no repeated evidence gain. Closing a chapter voluntarily can omit clues. A completed outcome is terminal. Z06 stays available to living heroes. Incompatible agreements are excluded; fatal outcome requires an explicit warned action.
+
+Text is a first full-graph draft, not a final screenplay. The individual hero beats need more substantive alternate actions and consequences in the next wave; the current entries primarily offer distinct observations. The exact year remains open: Case002 uses 1920; no historical detail here assumes a later year. Do not publish story spoilers or deploy this graph to main.
+
+State is replay-validated from action history; reward ID is computed only, not a persistent entitlement ledger. Browser storage adapter, conflict protection, reward idempotency ledger, accessibility, mobile UI, asset production and final story editing remain outstanding. Keep the new save namespace; do not reuse Case001/002 store keys.
+
+Local QA: node --test tests/case003/*.test.js, 15/15 passing; includes 35 actual outcome paths, both independently reachable murder evidence bundles, alternate provenance bundle, rejected corrupt/forged saves, 1000 seeded sampled paths with no dead end, role-gated once-only beats. Not an exhaustive state-space traversal or browser acceptance.
+
+Legacy CI 44386200174: both invalid_save cases expected automatic new attempt, conflicting with current heroes-v1.js damaged-slot protection (disabled resume, explicit replacement confirmation). Address separately without weakening protection. Main and old implementation untouched.
