@@ -43,6 +43,12 @@ function prove(s,id,evidence){
  return {accepted:true,state:{...s,claims:[...s.claims,id],history:[...s.history,{type:"prove",id,evidence:[...evidence]}]}};
 }
 // Rebuild state from validated actions rather than trusting arbitrary saved flags, claims or endings.
+function same(a,b){
+ if(a===b)return true;
+ if(!a||!b||typeof a!=="object"||typeof b!=="object"||Array.isArray(a)!==Array.isArray(b))return false;
+ const keys=Object.keys(a);
+ return keys.length===Object.keys(b).length&&keys.every(k=>Object.prototype.hasOwnProperty.call(b,k)&&same(a[k],b[k]));
+}
 function restore(raw,hero){
  try{
   const v=JSON.parse(raw);
@@ -53,7 +59,7 @@ function restore(raw,hero){
    else if(h.type==="prove"){const p=prove(s,h.id,h.evidence);if(!p.accepted||p.state===s)return null;s=p.state;}
    else return null;
   }
-  if(!require("node:util").isDeepStrictEqual(s,v))return null;
+  if(!same(s,v))return null;
   return s;
  }catch{return null;}
 }
