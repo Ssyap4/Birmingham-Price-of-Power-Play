@@ -1,0 +1,1284 @@
+{
+  "schemaVersion": 1,
+  "missionId": "CR07",
+  "title": "Чужие секреты",
+  "branch": "feat/cr07-art-wave2",
+  "baseCommit": "e7e984f5de8a40ec13c6ee15288bd767f51e221b",
+  "review": "candidate",
+  "status": "candidate",
+  "completeness": "complete",
+  "independentArtAcceptance": "pending",
+  "runtimeIntegrated": false,
+  "expectedFrames": 24,
+  "actualFrames": 24,
+  "totalBytes": 2862538,
+  "maxFrameBytes": 262144,
+  "maxPackageBytes": 3932160,
+  "missingSceneIds": [],
+  "rejectedAttempts": [
+    {
+      "sceneId": "copybook",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-be1f1f15-65ec-4b2a-b906-182f2b340baa.png",
+      "sourceSha256": "f227726b8dd780cf322f4ba2b6bfde429f9589b71d7fbe4588f49611b2f0283e",
+      "reason": "Лишние Нора и Доул в сцене предъявления выписки; заменяется отдельной композицией с Кейном и одним листом."
+    }
+  ],
+  "frames": [
+    {
+      "id": "cr07-order",
+      "missionId": "CR07",
+      "sceneId": "order",
+      "kind": "scene",
+      "title": "До первой печати",
+      "path": "assets/criminal/candidates/cr07/cr07-order.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Два пустых чайных прибора и записка связного в полутёмной комнате",
+      "composition": "Деталь стола и фигура связного в полутени; записка между двумя чашками",
+      "branchNeutrality": "Поручение ещё не принято; никто не забирает записку",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 94924,
+      "sha256": "9e7f3cb49b322483c4dc8c42d9b3103d8bc4a5f087005b977fda8bf84fb3c9ae",
+      "gitBlobSha1": "c559421c8b129840a9aee21fed9d85737ca742b7",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-d5193abd-6a07-4ced-ada0-b321588261c7.png",
+      "sourceSha256": "916a8f06d310d6481869428467ba0f95fc218ef74a1b3d91fb03a46ee8f51955",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "ONE ORIGINAL finished cinematic photorealistic story illustration for CR07 'Other People's Secrets', an original 1922 Birmingham crime game. Portrait aspect ratio 4:5, designed for final 720x900 pixels with the main dramatic motif inside central 75 percent. Authentic Nechells Birmingham England, one rainy night. Restrained cold rain-blue grey light with muted warm amber practical lamps, natural skin colour, deep yet readable shadows, varied photographic depth, tactile wet brick, worn wool and timber, subtle film grain. Real people and natural hands, no exaggerated caricatures. No readable text or personal details, no letters legible on paper, no UI, logos, watermark, border, collage or panels, no modern equipment, no television actor or celebrity likeness. Finn O'Connor is ONLY the unseen first-person viewer; show NO protagonist face or body. This must be a fully illustrated original moment, not a reused crop of any previous picture. Scene order 'Before the first seal'. Intimate tabletop foreground: exactly TWO EMPTY plain ivory teacups in saucers, one to left and one to right, and a small unsealed folded NOTE lying BETWEEN them, no legible writing. The note has just been left by an unnamed circle contact; his right hand withdrawing naturally from it, no hand taking it. Contact partially visible in shadow beyond table, ORIGINAL restrained figure around 53, short salt-and-pepper hair, clean-shaven, narrow round-wire spectacles, dark navy-charcoal wool coat over black waistcoat and high ivory shirt with plain umber tie; mostly shadowed profile, no recognisable actor. A SMALL AMBER ELECTRIC desk lamp with milk-glass shade, dark timber tea-room walls, single frosted sash window at rear left with distant records-office lights across rainy lane. The commission has not been accepted. Medium close view, cups and note focal, no stack of documents, no identical composition to CR06 order.",
+      "referenceFrames": [],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-approach",
+      "missionId": "CR07",
+      "sceneId": "approach",
+      "kind": "scene",
+      "title": "Дождь над Нечеллсом",
+      "path": "assets/criminal/candidates/cr07/cr07-approach.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Контора Кейна под дождём; Доул, хозяин и Нора ждут в разных местах",
+      "composition": "Общий план двухэтажного фасада, трёх собеседников и мокрой мостовой",
+      "branchNeutrality": "Выбор собеседника открыт; документы не передаются",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 177902,
+      "sha256": "011c2ff0cb392c23926ad4b299416f79f46c3bff39f493015ace1d0a730be5fe",
+      "gitBlobSha1": "14fe7a293957917ff6e86616dcb8c204087190de",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-4022f276-0b1c-4d8e-8770-1c8b7ab32973.png",
+      "sourceSha256": "29e7905c24d377f6ad52dc6035487212011b5d63be06714dadaf4a0f66eb2888",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene approach 'Rain over Nechells': a WIDE establishing STREET view from several metres back, all THREE characters small but clear and spatially separated outside the SAME modest TWO-STOREY soot-red-brick records office. Maurice at the PUBLIC FRONT green door with semicircular fanlight, tall sash to its right; Patrick at wet wall a few paces left; Nora near the SIDE green door with rectangular frosted fanlight in alley at right. The unseen viewer has not approached any of them. Each face and outfit from correct reference; do not clone figures, exactly three principals. Wet coal dust on pavement, distant gaslamp and canal-industrial haze, upper-floor office windows lit. No case, no money or receipt being passed. Portrait shot still expresses broad street geometry, no new building replacing established facade.",
+      "referenceFrames": [
+        "owner",
+        "clerk",
+        "dockman"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-dockman",
+      "missionId": "CR07",
+      "sceneId": "dockman",
+      "kind": "scene",
+      "title": "Не сумма, а имя",
+      "path": "assets/criminal/candidates/cr07/cr07-dockman.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Патрик Доул укрывает квитанцию в своей ладони у мокрой стены",
+      "composition": "Близкий человеческий план рабочего; квитанция не содержит читаемых данных",
+      "branchNeutrality": "Доул не передаёт квитанцию и не даёт согласия на раскрытие имени",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 131192,
+      "sha256": "9396b533bec0d154503f9278df17a4b7f54d4d0d9f9ea232cb3725fc7a534cb7",
+      "gitBlobSha1": "9adb503f8365601a81a37bec5f1c60587f6ed5cc",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-4cae482c-e3d0-4e91-95a0-6fc831959cdb.png",
+      "sourceSha256": "7ca9647e3d08d3dddc19321c21d1b6a89b3f04871fb8cb47cde0e22b3bc68172",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "ONE ORIGINAL finished cinematic photorealistic story illustration for CR07 'Other People's Secrets', an original 1922 Birmingham crime game. Portrait aspect ratio 4:5, designed for final 720x900 pixels with the main dramatic motif inside central 75 percent. Authentic Nechells Birmingham England, one rainy night. Restrained cold rain-blue grey light with muted warm amber practical lamps, natural skin colour, deep yet readable shadows, varied photographic depth, tactile wet brick, worn wool and timber, subtle film grain. Real people and natural hands, no exaggerated caricatures. No readable text or personal details, no letters legible on paper, no UI, logos, watermark, border, collage or panels, no modern equipment, no television actor or celebrity likeness. Finn O'Connor is ONLY the unseen first-person viewer; show NO protagonist face or body. This must be a fully illustrated original moment, not a reused crop of any previous picture. Consistent building: a modest TWO-STOREY soot-stained red-brick private records office. Its public front door is dark bottle green, inset brass knob and semicircular fanlight, with a tall three-over-three sash office window to its RIGHT. A narrow alley on the building's right leads to the separate dark bottle-green SIDE door with a small rectangular opaque fanlight and two worn stone steps. Green-painted lower walls, cream peeling plaster, narrow oak staircase inside. Scene dockman 'Not a sum, a name'. Patrick Dowle, ORIGINAL 40-year-old former dock worker, sturdy work-hardened build, weathered broad face, broad slightly flattened nose, grey-blue eyes, short sandy brown hair under a battered dark brown flatcap, SHORT sandy moustache, no beard. Wearing a faded russet-brown heavy canvas WORK JACKET with a patched left elbow, charcoal waistcoat and grey-green work shirt, no tie or polished suit. He stands by the wet brick wall outside records office. CLOSE human three-quarter moment, he shelters a small creased RECEIPT low in his own cupped hand against drizzle, no readable text, not passing it to viewer. He looks towards unseen listener with guarded vulnerability. Cold rain on brick, faint amber window reflection; no big cargo box, no boat, no lantern in hands, no force or injury.",
+      "referenceFrames": [],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-owner",
+      "missionId": "CR07",
+      "sceneId": "owner",
+      "kind": "scene",
+      "title": "Удобная цена",
+      "path": "assets/criminal/candidates/cr07/cr07-owner.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Морис Кейн на пороге конторы предлагает разговор",
+      "composition": "Средний план хозяина у зелёной двери с полукруглой фрамугой",
+      "branchNeutrality": "Предложение ещё не принято; нет передачи бумаги или денег",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 124906,
+      "sha256": "b61d5b8088152a9b4b425801f6215b80afea7f910611134891ef37d02a3abf91",
+      "gitBlobSha1": "df4826c31733ffe7be44bad4c258205274fff524",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-4459d0b7-f044-4ab8-99b4-9a403d87e8c1.png",
+      "sourceSha256": "a5b289b567d28365f808248a0484f3a0b150036bd2c6d0fb5b400ad5f921889a",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "ONE ORIGINAL finished cinematic photorealistic story illustration for CR07 'Other People's Secrets', an original 1922 Birmingham crime game. Portrait aspect ratio 4:5, designed for final 720x900 pixels with the main dramatic motif inside central 75 percent. Authentic Nechells Birmingham England, one rainy night. Restrained cold rain-blue grey light with muted warm amber practical lamps, natural skin colour, deep yet readable shadows, varied photographic depth, tactile wet brick, worn wool and timber, subtle film grain. Real people and natural hands, no exaggerated caricatures. No readable text or personal details, no letters legible on paper, no UI, logos, watermark, border, collage or panels, no modern equipment, no television actor or celebrity likeness. Finn O'Connor is ONLY the unseen first-person viewer; show NO protagonist face or body. This must be a fully illustrated original moment, not a reused crop of any previous picture. Consistent building: a modest TWO-STOREY soot-stained red-brick private records office. Its public front door is dark bottle green, inset brass knob and semicircular fanlight, with a tall three-over-three sash office window to its RIGHT. A narrow alley on the building's right leads to the separate dark bottle-green SIDE door with a small rectangular opaque fanlight and two worn stone steps. Green-painted lower walls, cream peeling plaster, narrow oak staircase inside. Scene owner 'A convenient price'. Maurice Kane, exact new original man age 50, lean narrow long face with high forehead, pale grey eyes, thin lips, clean-shaven, short dark hair with grey temples and distinct widow's peak, dark midnight wool OVERCOAT with modest lapels over a charcoal suit, ivory stiff collar and muted moss-green plain tie, no hat and no glasses. He stands on the threshold of the PUBLIC FRONT door, controlled, courteous but guarded, one open hand making a restrained offer, empty hands with no transfer occurring. Medium eye-level three-quarter portrait including upper body and door arch, wet brick wall, bottle-green front door with fanlight, warm interior light behind him, cold rain to viewer. A believable middle-aged office owner, no villain grin, no weapon or injuries. He must remain visually distinct from CR06 Crowe and Vane. His offer is unresolved.",
+      "referenceFrames": [],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-clerk",
+      "missionId": "CR07",
+      "sceneId": "clerk",
+      "kind": "scene",
+      "title": "Человек у двери",
+      "path": "assets/criminal/candidates/cr07/cr07-clerk.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Нора Бреннан у боковой двери держит папку с пустыми бланками",
+      "composition": "Средний план Норы в сером костюме на фоне бокового входа",
+      "branchNeutrality": "В папке пустые формы; согласие на передачу не показано",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 137252,
+      "sha256": "60a2fbba13c5da5f67d1ec60a79b48d2467f3ebf55c2249998e056b1e9014da9",
+      "gitBlobSha1": "4e9a2b490cabe49daafd458127f32c2ae584ffe6",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-07515722-0c86-49c1-b954-cf752190cd82.png",
+      "sourceSha256": "c84539ac828314e49cb07db2a1777a1580f1ffba16ee1f657e81eb16b7f5e0e1",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "ONE ORIGINAL finished cinematic photorealistic story illustration for CR07 'Other People's Secrets', an original 1922 Birmingham crime game. Portrait aspect ratio 4:5, designed for final 720x900 pixels with the main dramatic motif inside central 75 percent. Authentic Nechells Birmingham England, one rainy night. Restrained cold rain-blue grey light with muted warm amber practical lamps, natural skin colour, deep yet readable shadows, varied photographic depth, tactile wet brick, worn wool and timber, subtle film grain. Real people and natural hands, no exaggerated caricatures. No readable text or personal details, no letters legible on paper, no UI, logos, watermark, border, collage or panels, no modern equipment, no television actor or celebrity likeness. Finn O'Connor is ONLY the unseen first-person viewer; show NO protagonist face or body. This must be a fully illustrated original moment, not a reused crop of any previous picture. Consistent building: a modest TWO-STOREY soot-stained red-brick private records office. Its public front door is dark bottle green, inset brass knob and semicircular fanlight, with a tall three-over-three sash office window to its RIGHT. A narrow alley on the building's right leads to the separate dark bottle-green SIDE door with a small rectangular opaque fanlight and two worn stone steps. Green-painted lower walls, cream peeling plaster, narrow oak staircase inside. Scene clerk 'The person at the door'. Nora Brennan, ORIGINAL 30-year-old clerk with chestnut brown hair gathered in a neat LOW COILED BUN with a side part, soft square face, hazel eyes, straight medium nose, a few subtle freckles across cheeks, no resemblance to any actor. Modest GREY WOOL SKIRT SUIT, fitted three-button jacket over high cream blouse with small plain dark oval brooch, no hat, no gloves. She stands just outside the SIDE door in narrow right-hand alley holding a buff folder of visibly BLANK white forms close to her side, both natural hands visible. A thoughtful self-possessed wary expression as she hears a difficult request. Medium shot with strong human presence, rain beads on soot-red brick, distinct rectangular opaque fanlight above bottle-green side door, two shallow worn stone steps, slight warm spill from inside. Keep her entirely distinct from older sea captain Nora of CR02 and Esther of CR06.",
+      "referenceFrames": [],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-office",
+      "missionId": "CR07",
+      "sceneId": "office",
+      "kind": "scene",
+      "title": "Комната после работы",
+      "path": "assets/criminal/candidates/cr07/cr07-office.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Рабочий стол с потёртой печатью и пустой футляр у полок",
+      "composition": "Общий диагональный план: окно слева, стол в центре, полки справа, соседняя комната",
+      "branchNeutrality": "Ни наличие книги у героя, ни чья-либо виновность не утверждаются",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 120438,
+      "sha256": "33ff661a39657afb7cff0a09eb2d395a5bd81b2b1cdf08f4814b44f9c2312c1b",
+      "gitBlobSha1": "24c3615b747e6d06d27f7f4418cab47a3f14fbe9",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-605b6486-3b30-4f9e-9f28-a292e618b1fd.png",
+      "sourceSha256": "dcf32846aa2a12dd359c0a9ac14e8b8d02ddf5118a98cc51c73242c69291c040",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "ONE ORIGINAL finished cinematic photorealistic story illustration for CR07 'Other People's Secrets', an original 1922 Birmingham crime game. Portrait aspect ratio 4:5, designed for final 720x900 pixels with the main dramatic motif inside central 75 percent. Authentic Nechells Birmingham England, one rainy night. Restrained cold rain-blue grey light with muted warm amber practical lamps, natural skin colour, deep yet readable shadows, varied photographic depth, tactile wet brick, worn wool and timber, subtle film grain. Real people and natural hands, no exaggerated caricatures. No readable text or personal details, no letters legible on paper, no UI, logos, watermark, border, collage or panels, no modern equipment, no television actor or celebrity likeness. Finn O'Connor is ONLY the unseen first-person viewer; show NO protagonist face or body. This must be a fully illustrated original moment, not a reused crop of any previous picture. Scene office 'The room after work', no people. Establish the ONE consistent office INTERIOR for later scenes: a small rectangular first-floor private records room, peeling warm cream upper plaster and dark desaturated GREEN wainscoting. From the entrance looking in: tall rain-streaked three-over-three sash window on LEFT exterior wall, worn dark OAK DESK in centre with an inset faded green blotter, heavy worn round BRASS RUBBER STAMP front-right of desk, a thin draft fund worksheet with entirely illegible marks, and a compact brass oil lamp rear-left. Dark wooden book shelves against the RIGHT wall, an EMPTY rectangular binder case lying open on lower shelf and a clean dusty rectangular gap beside it where it used to stand. At rear-right a HALF-OPEN timber door into a small COPYING ROOM. At entrance edge, glimpse of narrow corridor and oak stair rail. Medium-wide interior establishing shot, camera diagonal, foreground desk only part of room so architecture reads, no heap of identical paperwork. Do not show the ledger being taken or delivered, no money or jewellery, no implication of who owns the book now. Different from CR06's reception room.",
+      "referenceFrames": [],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-cabinet",
+      "missionId": "CR07",
+      "sceneId": "cabinet",
+      "kind": "scene",
+      "title": "Пустой футляр",
+      "path": "assets/criminal/candidates/cr07/cr07-cabinet.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Нора показывает рабочий том рядом с пустым футляром на полке",
+      "composition": "Средний план у полок; книга поддерживается рабочей поверхностью",
+      "branchNeutrality": "Книга остаётся в конторе; показана первичная запись, а не готовое доказательство",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 129280,
+      "sha256": "6d537508d67901dd68f2c511c4591990c3624d7a86d1cfc6eb00c7120023599d",
+      "gitBlobSha1": "353da58d1097255fb8264017fe4123119d259048",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-0ccdcb1a-bdbf-4e66-a060-389f1958c89a.png",
+      "sourceSha256": "1a56de089af29d3229bb74a0b1a646d92cb5ccb7ec33dd97afb40cf7f19d3228",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene cabinet 'The empty case': medium three-quarter shot of NORA at the RIGHT-WALL shelves inside the established office. She opens and shows a modest worn BURGUNDY-BROWN CLOTH working ledger on the lower shelf/work ledge, beside the same OPEN EMPTY rectangular binder case and its dusty gap. The book is supported by shelf, her own two hands touch edges naturally; no hand taking it. Its primary entries are only soft tiny illegible strokes, no readable columns or names. Show her attentive face and the shelf relationship, tall window softly at left background, just a corner of green-blotter desk at lower left. She shows the primary record exists, not agreement or a proven crime. No other characters.",
+      "referenceFrames": [
+        "office",
+        "clerk"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-copybook",
+      "missionId": "CR07",
+      "sceneId": "copybook",
+      "kind": "scene",
+      "title": "Запечатанная выписка",
+      "path": "assets/criminal/candidates/cr07/cr07-copybook.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Кейн предъявляет собственную выписку с нечитаемой подписью и печатью",
+      "composition": "Косой ракурс стола, лицо Кейна и один лист на зелёном бюваре",
+      "branchNeutrality": "Подпись не выдаётся за доказанный возврат; Финн не держит документ",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 116746,
+      "sha256": "9c95b4e8db068826fc862ef2474c16eb0ca9214a893e77cd4c0df053ff3d75dd",
+      "gitBlobSha1": "a0e035aecfb20ff00c8cbd7e5c64bf45254b430f",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-2c819d60-3f51-4faa-afc6-7704324076ef.png",
+      "sourceSha256": "abb7ddc025165378fb3810be42a569357df59329ba2a1426690db8bb5b76728a",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene copybook, replacement to remove all unnecessary people. EXACTLY ONE PERSON: Maurice Kane, exact lean clean-shaven greying man with widow's peak, midnight dark overcoat, charcoal suit, cream stiff collar and muted moss-green tie. TIGHT diagonal side view across the same oak desk, Maurice's face in three-quarter profile in UPPER LEFT, one of his hands indicating a SINGLE extract sheet on the faded green blotter, his other hand relaxed by his side. The sheet has only indistinct illegible script, one small faded stamp impression and abstract signature-like scribble, no readable names. Brass seal offset near front-right, rain-blue window soft behind his shoulder, shelves barely hinted beyond. Nobody else anywhere, NO Nora, NO Patrick, no silhouettes or reflections of people, no book being held by player. The extract is being offered for consideration, not handed over. This is a close material-and-authority moment, not a wide group discussion.",
+      "referenceFrames": [
+        "owner",
+        "office"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-names",
+      "missionId": "CR07",
+      "sceneId": "names",
+      "kind": "scene",
+      "title": "Список живых людей",
+      "path": "assets/criminal/candidates/cr07/cr07-names.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Нора у раскрытой ведомости объясняет разницу между людьми в списке",
+      "composition": "Средний психологический план, ведомость остаётся у нижнего края",
+      "branchNeutrality": "Имена и адреса нечитаемы; список не передан",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 98622,
+      "sha256": "9aca03a0569bfa1d8a7939d9df57d9ace85c9ad2b9738eb0bca297f76e089526",
+      "gitBlobSha1": "280e4599d3c32c8a5f41bd177592ba40218d55c3",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-a1ce0e7f-816e-46e9-ab74-73ef7f9bae28.png",
+      "sourceSha256": "63c7565b7edcc28d89894542d1fdbd0a22358a0e52dc4b421b1e095a39c9b713",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene names 'A list of living people': medium CLOSE emotionally focused portrait of NORA looking away from an OPEN fund ledger toward the unseen listener, genuine concern and precision as she explains that not everyone was denied repayment. Ledger lies on the desk at bottom edge, slightly blurred, all text and identifying data illegible. Nora's exact face and grey suit, coiled chestnut bun, blouse and oval brooch. Camera near left WINDOW looking diagonally toward the right shelves, so muted blue light outlines her cheek and warm lamp catches eyes. One hand lightly beside the book, no grasping away, no consent, no full list in player's hands. Do not turn this into a close-up of readable evidence or repeat her standing-door pose.",
+      "referenceFrames": [
+        "office",
+        "clerk"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-proof",
+      "missionId": "CR07",
+      "sceneId": "proof",
+      "kind": "scene",
+      "title": "Голос над книгой",
+      "path": "assets/criminal/candidates/cr07/cr07-proof.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Нора объясняет происхождение исходных записей",
+      "composition": "Крупный психологический план лица; полки и дверь в нерезком фоне",
+      "branchNeutrality": "Объяснение не изображает уже данное согласие на передачу",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 106290,
+      "sha256": "1680d5ec2ea6c7eeee3b26ed4df7c27065b3fc5dcd330180b56741f4196587c3",
+      "gitBlobSha1": "bfe1e0ff8e870009ca07b5db164cf2933c629e1f",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-544be5fa-367d-4b65-90df-32d2ca9069a5.png",
+      "sourceSha256": "92ccbbd59a28381160ea051e84f31ae1ada67943638dbd501a6f8d46f0d8db74",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene proof 'A voice above the book': TIGHT PSYCHOLOGICAL CLOSE-UP of NORA from upper chest upward, her exact original face, fine freckles, hazel eyes, chestnut low bun and cream collar/brooch in frame. She calmly explains who made the record; serious direct attention, lips slightly parted as speaking, no smile or nod implying consent already given. Shallow photographic depth: right-wall book spines and green copying-room door softly behind her, very blurred corner of working book at extreme lower edge optional, no table filling frame. Blue light from left window, delicate amber bounce; varied cool-neutral skin tone, no uniform brown filter. No other person, no paper transfer or signed agreement.",
+      "referenceFrames": [
+        "clerk",
+        "office"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-custody",
+      "missionId": "CR07",
+      "sceneId": "custody",
+      "kind": "scene",
+      "title": "В чьих руках",
+      "path": "assets/criminal/candidates/cr07/cr07-custody.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Книга лежит между Кейном и Норой на столе",
+      "composition": "Широкий интерьерный план двух собеседников и книги между ними",
+      "branchNeutrality": "Ни книга, ни иной документ не находятся в руках Финна",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 126390,
+      "sha256": "17db4ec58955edebcdf5302ed897c5e75d6cb845ca63a72652a4ab1aae47e22a",
+      "gitBlobSha1": "7e41f9f84c3135cd4517b6001968429ed2ad3728",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-f7973440-aeb8-4bab-991b-41ff28db55bc.png",
+      "sourceSha256": "1f713eb1bd7c15fcf2b736d0d8b4964da5196fe98674aae954e974bf4dcdf96b",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene custody 'In whose hands': WIDE interior composition from entrance so fixed plan reads, same desk in centre with ONE CLOSED modest burgundy-brown working LEDGER lying on green blotter BETWEEN Maurice on LEFT by window and Nora on RIGHT by shelves. BOTH characters match their own references exactly, watching the unseen visitor, both pairs of hands rest clear of the ledger or by their sides. The book remains on desk; nobody has taken it and no document is held by Finn. Brass stamp to front-right, oil lamp rear-left; empty binder case on shelf, green door to copying room rear-right. Space between opposing people is the focal tension, no villain caricature, no weapons or wounds. Choice of custody is still entirely open. Strong architectural wide shot, not another single-person paperwork close-up.",
+      "referenceFrames": [
+        "office",
+        "clerk",
+        "owner"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-demand",
+      "missionId": "CR07",
+      "sceneId": "demand",
+      "kind": "scene",
+      "title": "Новая строка сделки",
+      "path": "assets/criminal/candidates/cr07/cr07-demand.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Кейн в дверном проёме выдвигает условие, Нора слушает из соседней комнаты",
+      "composition": "Три пространственных плана: коридор, хозяин в дверях, Нора в комнате переписчицы",
+      "branchNeutrality": "Условие ещё не принято; нет денег, передачи или насилия",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 92404,
+      "sha256": "1c000163dfc03b8c17fb0e9c317cd9d00efc5a17d7c7cc9cdf520431b6d3846e",
+      "gitBlobSha1": "af19a7ffc9f323427abaf8470b594b149d3aa35c",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-085e5405-8608-455d-a6e2-64720f561b09.png",
+      "sourceSha256": "dc7c399a81dd7a255c98765fa83c7256abfe134bc6c658634a0bb38231c96c69",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Recompose the supplied original CR07 reference images into ONE NEW, independently generated cinematic photorealistic story scene. Preserve the returning characters' EXACT faces, age, hair and clothing, and the established building/interior plan, while changing camera, pose and dramatic moment completely; do NOT merely crop or duplicate a source. Portrait 4:5 for 720x900, central 75% safe area. Birmingham Nechells 1922, one rainy night, cold blue-grey window light and restrained amber practical lamps, natural skin colour, rich but not uniformly sepia, tactile period detail, believable hands, film grain. No modern objects, readable text, personal names, captions, UI, borders, watermarks, collage or actor likeness. Finn is the unseen first-person viewpoint, never visible; no protagonist hands holding any item. Nora: exact chestnut hair in low coiled bun, hazel eyes, softly square freckled face, grey wool skirt suit, cream high blouse and small dark oval brooch. Maurice: exact lean clean-shaven man age50, greying dark hair and widow's peak, dark overcoat, charcoal suit, ivory shirt and muted moss-green tie. Patrick: exact stocky weathered moustached 40-year-old in dark flatcap, russet patched canvas jacket and grey-green shirt. Interior plan: entrance and narrow oak stair/corridor near left; tall rainy sash window LEFT exterior wall; central dark oak desk with faded GREEN leather blotter, worn brass stamp near front-right and small oil lamp rear-left; tall bookshelves RIGHT wall; half-open dark green timber door at rear-right into small copying room. Scene demand 'A new clause': composition using the OFFICE DOORWAY as frame, viewer in narrow entrance CORRIDOR. MAURICE has returned and stands half in doorway foreground, same dark coat and moss tie, one empty hand on jamb, quietly firm offer. NORA is visible deeper in the ADJACENT COPYING ROOM at rear-right, listening through its half-open green door, same face and grey suit. The main office remains between them: partial oak desk, window on LEFT and shelves on RIGHT. An old manual copying press may be dimly visible in adjacent room, no modern machine. No list passed or consent given, no bribery cash or violence. Moody overlapping spatial planes, not the public-front-door owner composition, no prominent document foreground.",
+      "referenceFrames": [
+        "owner",
+        "clerk",
+        "office"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-pressure",
+      "missionId": "CR07",
+      "sceneId": "pressure",
+      "kind": "scene",
+      "title": "В коридоре стало тесно",
+      "path": "assets/criminal/candidates/cr07/cr07-pressure.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Двое у лестницы и Доул у двери в тесном коридоре",
+      "composition": "Глубинная композиция коридора с лестницей и ожидающими людьми",
+      "branchNeutrality": "Спор не изображается как уже состоявшаяся драка; нет ран",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 104522,
+      "sha256": "772d227f83bd23853d3565b350c21a4bc3f5c21e73ccd3e44ac806eae38636fd",
+      "gitBlobSha1": "00a0f84cc44757a60e1d9878467ca982653af395",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-288d3347-d74d-4ff1-958a-745ac0e555c8.png",
+      "sourceSha256": "c3fb660122e17d5453199b1d4c0554b67cd74a2759c614890a5d02cbba40993f",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene pressure 'The corridor became cramped'. Establish the consistent upper-floor NARROW CORRIDOR outside the same office: cream peeling plaster, desaturated green lower panelling, worn oak floor, narrow oak-railed staircase descending on LEFT; OFFICE door on RIGHT beside a small glazed internal panel, its glass INTACT. A simple amber wall oil lamp by that door; cold blue light from a small landing window at far end. Exactly TWO anonymous men in plain dark work coats wait near the stair rail, seen in side/back view, hands down, not striking. PATRICK DOWLE appears by the office door at right, his same sandy moustache/flatcap/russet jacket with patched left elbow/grey-green shirt; guarded expression, not promising to fight. NORA can appear partially inside office behind him in same grey suit, asking for restraint. No Maurice required. Wide vertical depth, real tension but no fight, wounds, weapons, broken glass or aftermath yet. No ledger in anybody's hands.",
+      "referenceFrames": [
+        "office",
+        "dockman",
+        "clerk"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-redaction",
+      "missionId": "CR07",
+      "sceneId": "redaction",
+      "kind": "scene",
+      "title": "То, чего не будет в отчёте",
+      "path": "assets/criminal/candidates/cr07/cr07-redaction.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Чистый лист рядом с ведомостью, Нора в свете лампы",
+      "composition": "Предметы в ближнем плане и Нора на второй глубине",
+      "branchNeutrality": "Обезличивание только обсуждается; нет переписанных или зачёркнутых имён",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 134676,
+      "sha256": "0c36323eaf9034378aae38cf439b2d3130a13b258229988f68a01027cdcbb12d",
+      "gitBlobSha1": "91f525a54ba258d6fd90f9e2445f20c535bd2e1f",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-942eac0c-4fbf-47cc-ac26-b491b733c013.png",
+      "sourceSha256": "cdc4f6ca5cbd64e747d02c175acd5669515b444c342780d35c86e97d024df9fa",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene redaction 'What will not be in the report'. A close oblique STILL-LIFE foreground on the established desk: ONE CLEAN BLANK WHITE SHEET beside an OPEN burgundy-brown working ledger with only blurred illegible rows, a dry dip pen laid aside, worn brass stamp at far edge. NORA on second plane in oil-lamp light, her exact original face/chestnut low bun/grey wool suit/cream blouse/oval brooch, one empty hand open as she explains limits. Camera from SIDE by shelves so foreground paper is lower-left and Nora upper-right; rain window now reflected in desk grain, green panels and copying-room doorway still coherent. No writing in progress, no crossed-out names, no completed anonymised report, no signature, no hand of Finn, no other people. The redaction work has only been proposed, no consent or transmission.",
+      "referenceFrames": [
+        "office",
+        "clerk"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-danger",
+      "missionId": "CR07",
+      "sceneId": "danger",
+      "kind": "scene",
+      "title": "Разбитое стекло",
+      "path": "assets/criminal/candidates/cr07/cr07-danger.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Осколки в коридоре, Кейн отступил, у выхода видна Нора",
+      "composition": "Низкая точка обзора и глубина прохода, осколки внизу",
+      "branchNeutrality": "Нет раненых, тел, оружия или утверждения, что Нора уже ушла",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 134202,
+      "sha256": "c91640d37de6e375827ddae9bdef8b15bc8c43c5ba4825909f3419652941fa6e",
+      "gitBlobSha1": "7ff2fb757e3b9c89580c568d0c38806d8677f757",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-aa1e896a-5204-49c5-acf4-e5d9bd8ae2a1.png",
+      "sourceSha256": "9aaf01f1548784218f8e79268dff865509e21f0fb18fafe2fbb88b6595d469e9",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create ONE completely NEW full cinematic photorealistic CR07 illustration using these original references for precise character and location continuity, not a crop or colour variant. ONLY the explicitly requested people may appear. Finn is never shown, no protagonist face/body or player hands. Original Birmingham Nechells England 1922, portrait 4:5, central 75% motif for 720x900, realistic period film still with nuanced cool rain-grey/blue and muted amber lights, natural anatomy, tactile materials and subtle grain. No actor likeness, modern objects, readable text/names, borders, captions, UI, watermark or collage. Scene danger 'Broken glass': the SAME narrow first-floor corridor as reference, oak staircase descending left, green lower panelling/peeling cream plaster, landing rain window far end, OFFICE glass-panelled door on RIGHT with amber wall oil lamp next to it. LOW viewpoint emphasises newly fallen small shards of clear GLASS on oak floor in lower foreground; one pane of office door is broken, not the exterior wall. MAURICE, exact gaunt clean-shaven face and dark coat/moss tie, has visibly RETREATED INSIDE THE OFFICE beyond the right-hand door, empty hands lowered. NORA, exact grey suit/chestnut bun, now near the stair EXIT at LEFT but STILL INSIDE, awaiting the last conversation, not already gone. No Patrick or anonymous men needed, no person on floor, NO blood, cuts, bandages, death, guns or strikes. Visible passage remains open between viewer and exit. Cinematic sense that escalation proves nothing; concrete shards and retreat are established, wounds and choices are not.",
+      "referenceFrames": [
+        "pressure",
+        "owner",
+        "clerk"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-consent",
+      "missionId": "CR07",
+      "sceneId": "consent",
+      "kind": "scene",
+      "title": "Разрешение, которое нельзя взять",
+      "path": "assets/criminal/candidates/cr07/cr07-consent.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Нора у выхода смотрит внимательно на собеседника",
+      "composition": "Прямой средний психологический план у лестничной двери",
+      "branchNeutrality": "Решение остаётся за Норой; она ещё внутри, нет передачи или согласия заранее",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 107370,
+      "sha256": "dd3adbf37f8b406a0fd4dad9dc18ac95bc03627cb273bf6abb3a998665abc61d",
+      "gitBlobSha1": "4e38f2dcb7834984a7185b621a1ef0655980357c",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-7fca26d5-dcf5-412e-960d-675beac17b86.png",
+      "sourceSha256": "d2d120194856070d52c35e16537fa5393e76487190679eea9507cfc852a6181d",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene consent 'Permission cannot be taken'. Only NORA, exact same original face, grey wool skirt suit, chestnut low coiled bun, hazel eyes, high cream blouse and dark oval brooch. STRAIGHT attentive medium portrait of her still INSIDE at the EXIT to the stair landing, framed by dark green timber door and worn oak stair rail, cream plaster/green panelling. Direct steady questioning gaze to unseen listener, mouth relaxed, no nod or agreement smile. Empty natural hands loosely at her sides, no documents or envelope. Cold rain-blue landing window one side, dim amber lamp other side. The decision is still hers; do not show her already leaving, outside, rescued, forced, injured or accepting anything. No Maurice, Patrick, contact or additional faces.",
+      "referenceFrames": [
+        "clerk",
+        "office"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-handoff",
+      "missionId": "CR07",
+      "sceneId": "handoff",
+      "kind": "scene",
+      "title": "Без чужих адресов",
+      "path": "assets/criminal/candidates/cr07/cr07-handoff.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Связной перед чистым конвертом задаёт вопрос о пределах отчёта",
+      "composition": "Средний план связного и пустого конверта в комнате встречи",
+      "branchNeutrality": "Передача ещё не состоялась; списки и раскрытые имена отсутствуют",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 107790,
+      "sha256": "660a772baca2010e3654843c0d02c1df23312b1ba5076f5ad17d5f6b6149c22e",
+      "gitBlobSha1": "978c847530975bd4e17069baccc76946a22ee346",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-1afe6555-79f7-4443-9776-73044d567209.png",
+      "sourceSha256": "9f4bb2cb78c480bd7ccd325f7fbe36833dd016f95c55dfd2592d3295b88f8212",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene handoff 'Without other people's addresses'. Preserve the EXACT unnamed contact from reference: middle-aged clean-shaven man with short salt-and-pepper hair, narrow round-wire glasses, dark navy-charcoal coat, black waistcoat, ivory high collar and plain umber tie; restrained shadowed face. Reframe into NEW medium shot across the same dark wooden tea-room table. A SINGLE CLEAN EMPTY BUFF ENVELOPE lies flat between contact and unseen visitor; contact's two hands open beside it, not touching a list. He asks why there are no names. Milk-glass amber ELECTRIC lamp at right, frosted rainy sash window rear-left, dark timber walls, original two ivory cups now in soft rear background rather than foreground. No note from order, no papers being given or received, no full list or readable writing. No additional people. Distinct camera/action from order, boundary discussion before transmission.",
+      "referenceFrames": [
+        "order"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-trade",
+      "missionId": "CR07",
+      "sceneId": "trade",
+      "kind": "scene",
+      "title": "Книга с оговоркой",
+      "path": "assets/criminal/candidates/cr07/cr07-trade.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Связной у окна в тёмной комнате готов выслушать спорный материал",
+      "composition": "Боковой профиль у окна, большая часть кадра отдана пространству",
+      "branchNeutrality": "Полный список ещё не находится у связного",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 76740,
+      "sha256": "acb45aab8c9a5a5a42b8567a12579f08d05a3379d7d33573437bc2d76a20f053",
+      "gitBlobSha1": "84029a083e8d4ea5040795a292453a235ca0bde0",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-f7551cd5-578a-419c-9926-636a34e24f3b.png",
+      "sourceSha256": "6342c9b37725e4a7ec40cdaa7c3d2a374228f92dd9d3fa9699bbf0d67570ac84",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene trade 'A book with a qualification'. Preserve the EXACT unnamed round-glasses contact, same short salt-and-pepper hair, clean-shaven face, navy-charcoal coat, black waistcoat and ivory collar/umber tie. He now STANDS in SIDE PROFILE beside the tea room's single frosted rain window, one empty hand resting on timber sill, other relaxed at side. Camera wider from opposite room corner, strong cool grey-blue rain light outlines restrained silhouette, small amber milk-glass lamp far behind to right, most frame is DARK ROOM and window rather than desk/papers. NO list, ledger, document or envelope in his hands or on prominent foreground table: possible controversial transmission has not occurred. No other people, no weapons. Psychological possibility and honest doubt, not a completed deal.",
+      "referenceFrames": [
+        "order"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-withdrawal",
+      "missionId": "CR07",
+      "sceneId": "withdrawal",
+      "kind": "scene",
+      "title": "Дверь за спиной",
+      "path": "assets/criminal/candidates/cr07/cr07-withdrawal.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "У конторы под дождём готовят дверь к опечатыванию",
+      "composition": "Наружный косой план входа, приготовленных средств опечатывания и мостовой",
+      "branchNeutrality": "Судьба Норы не показана; опечатывание ещё готовят",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 174602,
+      "sha256": "ef2e4c71eddf158597dad78b18bc310a45ce626c01d4b2afc54f3f8e3c87cba1",
+      "gitBlobSha1": "e73981c3d04f8bbe55eeed9dc101499aa8196dfc",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-f9b5dbd1-dfa0-4aed-be38-9cd1aea0f707.png",
+      "sourceSha256": "fb04cfc87ab689626d85d365886f5c25ebf71df0f7aa67e8fd0d64d5a730b737",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene withdrawal 'The door behind'. EXTERIOR oblique street view of SAME modest two-storey brick office in rainy predawn: bottle-green main public door with semicircular fanlight, large ground-floor sash to right, separate right-side alley green door with rectangular frosted fanlight. Preparations for sealing: one anonymous official seen STRICTLY FROM BEHIND at far right edge, in plain long coat, preparing BLANK PAPER sealing strips and twine on a small wooden portable work tray; a small wax pot and stamp beside them. NO seal is yet attached to either office door; no official notice or readable text, no modern crime-scene tape. Main frame is rain, closed but unsealed doors, dim office lights and empty wet pavement. Do NOT show Nora or her fate, Maurice, Patrick or Finn. New closer diagonal geometry and lower viewpoint from wide approach, not its crop.",
+      "referenceFrames": [
+        "approach",
+        "owner"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-report",
+      "missionId": "CR07",
+      "sceneId": "report",
+      "kind": "scene",
+      "title": "Последняя отметка",
+      "path": "assets/criminal/candidates/cr07/cr07-report.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Связной проверяет переданный материал и время",
+      "composition": "Ракурс через край стола, сведения нечитаемы, часы в руках связного",
+      "branchNeutrality": "Отметки о зачёте, подписи приёмки и обещания безопасности отсутствуют",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 104678,
+      "sha256": "11a158bc33af6818d55a06b9a782743955e1b255dee177563b42d3dd0f5fc6fe",
+      "gitBlobSha1": "f330e0b207c4fc37bf6eb08bedaea820f56b38fb",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-021d2d82-2f6b-4cc2-b1cc-a6251dfdd76b.png",
+      "sourceSha256": "59e017af6745c27869e843a5b2e6642ec4c7fdf8fe28a09ff0fb6fb19dedf4cb",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene report 'The last notation'. Same exact unnamed round-wire-glasses contact with matching salt-and-pepper hair, navy-charcoal coat/black waistcoat/ivory collar/umber tie, in same wood-panelled tea room. NEW elevated oblique medium view: he studies ONE already-submitted UNREADABLE sheet lying flat on table under milk-glass amber lamp at right, while holding an OPEN period SILVER POCKETWATCH in his own left hand to check time. Right hand rests beside paper, no pen signing or stamp marking acceptance. Clock face too small/defocused to read an exact hour, NO legible text on report. Contact face thoughtful in shadow, rainy frosted window upper-left. Only him, no hands of player, no full ledger, no triumphant verdict, no guarantees. Different perspective from handoff and order, review is happening before final acceptance.",
+      "referenceFrames": [
+        "order"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-end-clean",
+      "missionId": "CR07",
+      "sceneId": "end:clean",
+      "kind": "ending",
+      "title": "Чужое имя осталось чужим",
+      "path": "assets/criminal/candidates/cr07/cr07-end-clean.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Чистый конверт перед закрытой дверью в утреннем свете",
+      "composition": "Спокойный предметно-пространственный финал без людей",
+      "branchNeutrality": "Не обещает дальнейшей безопасности или возврата денег",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 86766,
+      "sha256": "f4ed5dfe7d3f62fdf25253b73234e774cdef678b5d974bfba39c73e42fdc429a",
+      "gitBlobSha1": "de06c60a2ed0d13b22a3c5316ba8d845ae80c07f",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-c12d7dd7-df1d-44a7-af94-1302bb03fa12.png",
+      "sourceSha256": "7984a9a51d74253b974b52333abbe2fe1e3b5f46f501d17c052d7f3c3913621a",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create a NEW independently generated CR07 story illustration using the supplied references only to retain exact faces, clothing and architecture. Never just crop or repeat a reference composition. ONLY show people explicitly requested in this scene; do not add other people merely because they appear in a reference or previous scene. Finn, the player, is entirely unseen, no hero face/body/hands. Original 1922 Nechells Birmingham, one rainy night, portrait 4:5 composition for 720x900 with main motif in central 75%, cinematic photorealistic period film still, natural anatomy and skin, cold rain-blue/grey against muted warm amber practical lights, tactile wool and wood, subtle film grain. No recognisable actor faces, modern objects, legible writing or personal data, UI, watermark, borders, collage. Scene shows only established facts, never a choice already made. Scene end:clean, entirely EMPTY reflective aftermath. Same wood-panelled tea-room material identity but new medium-wide composition: a CLEAN CLOSED BUFF ENVELOPE resting on a narrow dark timber shelf in foreground and a CLOSED dark wooden interior DOOR beyond it. A band of COOL PALE MORNING light from the frosted sash window at left falls across envelope and worn floor; small milk-glass electric desk lamp off to right, no flame or oil lantern. No people, cups not focal, no open report or readable mark, no victory seal. Quiet specific result: limited report accepted, nothing promises anyone's future safety or returned money. Restrained cool dawn with a little residual warm wood tone, not golden sepia. No bodies, weapons, crowds or released witnesses, no copy of CR06 clean folder composition.",
+      "referenceFrames": [
+        "order"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-end-costly",
+      "missionId": "CR07",
+      "sceneId": "end:costly",
+      "kind": "ending",
+      "title": "Книга с ценником",
+      "path": "assets/criminal/candidates/cr07/cr07-end-costly.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Связной и спорные бумаги в сумрачной комнате",
+      "composition": "Фигура связного на втором плане, бумаги без читаемых данных",
+      "branchNeutrality": "Не навязывает кровь, раскрытие конкретных имён или одну причину дорогого исхода",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 93354,
+      "sha256": "20d8938a85ae557075bd42b5806d462f2fec8685018c2c25307fd90fa186dc54",
+      "gitBlobSha1": "1801a6610990449063dec55aaf10fdc5d9ea7101",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-c5d8ba29-7303-4e34-9815-8e46ec98cb9d.png",
+      "sourceSha256": "b79cbce4e87bf54425b6a1b7237460fd8364893ce4e886ff2125a49772d37136",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create ONE completely NEW full cinematic photorealistic CR07 illustration using these original references for precise character and location continuity, not a crop or colour variant. ONLY the explicitly requested people may appear. Finn is never shown, no protagonist face/body or player hands. Original Birmingham Nechells England 1922, portrait 4:5, central 75% motif for 720x900, realistic period film still with nuanced cool rain-grey/blue and muted amber lights, natural anatomy, tactile materials and subtle grain. No actor likeness, modern objects, readable text/names, borders, captions, UI, watermark or collage. Scene end:costly, distinct sombre ending. Same unnamed contact EXACT round-wire glasses, short salt-and-pepper hair, clean-shaven face, navy-charcoal coat over black waistcoat, ivory collar and umber tie. He SITS SIDEWAYS farther back in the dark wood-panelled tea-room, a restrained half-silhouette facing away three-quarter toward the frosted rain window. In near foreground a few disputed report papers lie on small table, folded so only UNREADABLE marks and blank reverse sides are visible; no full list or names, no sign of disclosure. Milk-glass electric lamp at right at low brightness, blue-grey window light rather than all-over amber. New composition with contact on left depth and paper edges on right foreground, no pocketwatch or act of checking time; no pen signing, no seals or money. Cost may be credibility, coercion or terms on different paths: no mandatory injury, blood, visible victims or fate. Exactly one person, no hero.",
+      "referenceFrames": [
+        "order"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-end-failed",
+      "missionId": "CR07",
+      "sceneId": "end:failed",
+      "kind": "ending",
+      "title": "Пустая графа",
+      "path": "assets/criminal/candidates/cr07/cr07-end-failed.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Рассвет у опечатанной конторы и пустой тротуар",
+      "composition": "Общий наружный план того же здания в холодном утреннем свете",
+      "branchNeutrality": "Не утверждает конкретный отказ, вину или судьбу Норы",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 162968,
+      "sha256": "3b9979a3d2298928d82626c15725c9cf1d1705d0bdf3683c983355290200e549",
+      "gitBlobSha1": "3ef6b055b6ed709581783e796d326d7a27cf6fed",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-67367b57-dc87-4abf-ad5d-c649e96c4894.png",
+      "sourceSha256": "509f0370622dcf68865197dd617ea24dbd746f082b72ce94e0dd6197800e2953",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create ONE completely NEW full cinematic photorealistic CR07 illustration using these original references for precise character and location continuity, not a crop or colour variant. ONLY the explicitly requested people may appear. Finn is never shown, no protagonist face/body or player hands. Original Birmingham Nechells England 1922, portrait 4:5, central 75% motif for 720x900, realistic period film still with nuanced cool rain-grey/blue and muted amber lights, natural anatomy, tactile materials and subtle grain. No actor likeness, modern objects, readable text/names, borders, captions, UI, watermark or collage. Scene end:failed: EMPTY PAVEMENT at cold grey DAWN outside the EXACT SAME two-storey red-brick records office. Main dark bottle-green door under semicircular fanlight and separate side alley green door with rectangular frosted fanlight are NOW SEALED with plain crossed off-white paper strips and small dark red wax spots, with NO writing or printed notice. Large ground-floor sash to right of front door and matching upper windows, simple industrial canal street, wet coal-dark paving, most interior lamps now dark, pale morning sky. Camera from across lane at lower diagonal angle, wider environment and different viewpoint from approach; no crop or replay of three waiting people. Absolutely NO people anywhere, no Nora, no evicted families, no bodies or police. It records absence of a credited report and a sealed building, never a specific refusal, guilt or NPC fate. Avoid golden sunrise and uniform sepia.",
+      "referenceFrames": [
+        "approach"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    },
+    {
+      "id": "cr07-end-dead",
+      "missionId": "CR07",
+      "sceneId": "end:dead",
+      "kind": "ending",
+      "title": "До последней строки",
+      "path": "assets/criminal/candidates/cr07/cr07-end-dead.webp",
+      "review": "candidate",
+      "reviewedAt": "2026-11-18",
+      "alt": "Пустой коридор с разбитым стеклом и погасшей лампой",
+      "composition": "Низкая пустая перспектива знакомого коридора после конфликта",
+      "branchNeutrality": "Нет тела, лица героя, крови, причин смерти или выдуманной судьбы NPC",
+      "width": 720,
+      "height": 900,
+      "mode": "RGB",
+      "format": "WEBP",
+      "bytes": 118524,
+      "sha256": "74246f12364b0688616237c70833c971398cd505e9960830bb2b8629eed3fff8",
+      "gitBlobSha1": "fef8e01f6a85cde18630c3a9e27264f142134a6a",
+      "sourceProvider": "image_gen.imagegen",
+      "sourceFilename": "exec-81b5c027-3f19-4652-a4b7-c40b3d7bb619.png",
+      "sourceSha256": "bb36b74a77036ebac0e8c35c7daddf7f8d26ec3524f66d128eae0f082cc5aa35",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "sourceRetained": "Original PNG retained locally under work/cr07/originals; not a runtime asset",
+      "generationPrompt": "Create ONE completely NEW full cinematic photorealistic CR07 illustration using these original references for precise character and location continuity, not a crop or colour variant. ONLY the explicitly requested people may appear. Finn is never shown, no protagonist face/body or player hands. Original Birmingham Nechells England 1922, portrait 4:5, central 75% motif for 720x900, realistic period film still with nuanced cool rain-grey/blue and muted amber lights, natural anatomy, tactile materials and subtle grain. No actor likeness, modern objects, readable text/names, borders, captions, UI, watermark or collage. Scene end:dead: the EXACT SAME narrow office CORRIDOR after conflict, completely EMPTY. Same oak stair rail descending LEFT, green lower wall panelling and peeling cream plaster, rain-blue window at far end, right-hand dark green glass-panelled office door with one broken pane, a restrained spread of broken glass across worn oak floor. The wall OIL LAMP beside the door is now EXTINGUISHED: dark wick, no flame, slight residual smoke allowed; other office illumination off. Camera near floor looking along deserted corridor, strong negative space, cold dark blue night ambience. NO people, bodies, faces, abandoned body-shaped clothing, blood, bandages, weapon or cause-of-death clue. Death is only established by game UI, not a graphic scene; nothing assigns fate to NPCs. A unique contemplative empty composition, not a darkened crop of pressure or danger.",
+      "referenceFrames": [
+        "pressure"
+      ],
+      "encoding": {
+        "quality": 88,
+        "method": 6,
+        "resampling": "uniform Lanczos with minimal central crop; no stretch"
+      },
+      "visualSelfReview": {
+        "status": "candidate",
+        "independentAcceptance": "pending",
+        "checks": [
+          "scene moment",
+          "period",
+          "NPC continuity",
+          "location continuity",
+          "no readable personal data",
+          "branch neutrality",
+          "portrait composition"
+        ]
+      },
+      "normalization": {
+        "sourceCropWidth": 1121.6000000000001,
+        "sourceCropHeight": 1402
+      }
+    }
+  ]
+}
