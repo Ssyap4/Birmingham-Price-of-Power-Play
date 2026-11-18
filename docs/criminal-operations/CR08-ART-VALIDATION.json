@@ -1,27 +1,16 @@
 {
-  "status": "partial",
-  "checkedFrames": 11,
+  "status": "pass",
+  "artReview": "candidate",
+  "checkedFrames": 24,
   "expectedFrames": 24,
-  "totalBytes": 1620414,
-  "largest": "assets/criminal/candidates/cr08/cr08-end-dead.webp",
-  "largestBytes": 189370,
-  "format": "11 decoded RGB WebP 720x900",
+  "totalBytes": 3226876,
+  "largest": "assets/criminal/candidates/cr08/cr08-index.webp",
+  "largestBytes": 192494,
+  "format": "24 decoded RGB WebP 720x900",
   "uniqueWebpAndSources": true,
-  "browserTest": "not run",
+  "sha256AndGitBlobsVerified": true,
+  "originalElevenByteIdentical": true,
+  "browserTest": "pass: Chromium 156.0.8078.79, 320x844 and 390x844, local HTTP gallery only; 24 decoded, no horizontal overflow or page errors",
   "runtimeIntegrated": false,
-  "missingSceneIds": [
-    "index",
-    "print",
-    "witness",
-    "authorship",
-    "promise",
-    "meeting",
-    "offer",
-    "consent",
-    "pressure",
-    "handoff",
-    "limited",
-    "report",
-    "end:costly"
-  ]
+  "missingSceneIds": []
 }
