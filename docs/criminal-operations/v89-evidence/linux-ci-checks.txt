@@ -1,0 +1,32 @@
+Source: https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/44290493738
+Commit: 8b83de169dd5eb74caf68b0822082149c615f6f6
+ CR06 coverage 22 66 missing [] ends [ 'failed', 'clean', 'costly', 'dead' ] boundary true late true dead true healed true escaped true failedExit true
+ ℹ tests 49
+ ℹ pass 49
+ ℹ fail 0
+ PASS unified campaign release: 89 scenes / 102 reviewed WebPs, 10 NPCs, Cases 001+002, 554 files, 293 staged references, 57.49 MiB
+ PASS unified campaign package: two independent save namespaces, original 001 map, 002 Digbeth entry, 102 hashed scenes, 10 NPCs, 5 heroes, no drafts; root entries 117
+ PASS WebP decode/SHA/720x900/package: {'CR01': 8, 'CR02': 8, 'CR03': 8, 'CR04': 8, 'CR05': 8, 'CR06': 26}
+ chromium 320 PASS CR06: district/hero, 26 decodes, save/reload, 4 finals, late/medical/repeat, old slots, epilogues, chronicle/common archive
+ chromium 390 PASS CR06: district/hero, 26 decodes, save/reload, 4 finals, late/medical/repeat, old slots, epilogues, chronicle/common archive
+ webkit 320 PASS CR06: district/hero, 26 decodes, save/reload, 4 finals, late/medical/repeat, old slots, epilogues, chronicle/common archive
+ webkit 390 PASS CR06: district/hero, 26 decodes, save/reload, 4 finals, late/medical/repeat, old slots, epilogues, chronicle/common archive
+ chromium 320 extra False PASS
+ chromium 320 extra True PASS
+ chromium 390 extra False PASS
+ chromium 390 extra True PASS
+ webkit 320 extra False PASS
+ webkit 320 extra True PASS
+ webkit 390 extra False PASS
+ webkit 390 extra True PASS
+ PASS standalone mobile Chromium/WebKit 320/390/430: all six missions, art, scenes, save, back nav
+ {"browser": "chromium", "bank": "normal", "status": "PASS"}
+ {"browser": "chromium", "bank": "blocked", "status": "PASS"}
+ {"browser": "webkit", "bank": "normal", "status": "PASS"}
+ {"browser": "webkit", "bank": "blocked", "status": "PASS"}
+ PASS common narrative material and reading metrics chromium
+ PASS chromium same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive -> profile active slots, saves unchanged
+ PASS common briefing and persistent receipt material chromium
+ PASS common narrative material and reading metrics webkit
+ PASS webkit same package: criminal return -> 002 P02 -> 001 start -> criminal -> shared archive -> profile active slots, saves unchanged
+ PASS common briefing and persistent receipt material webkit

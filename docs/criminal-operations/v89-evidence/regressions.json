@@ -1,0 +1,21 @@
+{
+  "platform": "Windows Local First",
+  "results": [
+    {
+      "test": "catalog_v85.py",
+      "returncode": 0
+    },
+    {
+      "test": "standalone_mobile.py",
+      "returncode": 0
+    },
+    {
+      "test": "startup_isolation.py",
+      "returncode": 0
+    },
+    {
+      "test": "legacy_smoke.py",
+      "returncode": 0
+    }
+  ]
+}

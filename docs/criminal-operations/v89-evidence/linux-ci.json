@@ -1,0 +1,17 @@
+{
+  "runId": 44290493738,
+  "commit": "8b83de169dd5eb74caf68b0822082149c615f6f6",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/44290493738",
+  "completedAt": "2026-11-18T11:04:29Z",
+  "jobId": 134754168360,
+  "artifacts": [
+    {
+      "id": 14420389335,
+      "name": "cr06-art-mobile-evidence",
+      "size": 39617549,
+      "url": "https://github.com/Ssyap4/Birmingham-Price-of-Power-Play/actions/runs/44290493738/artifacts/14420389335"
+    }
+  ]
+}
