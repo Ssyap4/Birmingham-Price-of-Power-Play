@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "missionId": "CR06",
+  "expectedFrames": 26,
+  "frames": [
+    {
+      "id": "cr06-order",
+      "sceneId": "order",
+      "path": "assets/criminal/candidates/cr06-order.webp",
+      "width": 720,
+      "height": 900,
+      "bytes": 108604,
+      "sha256": "dc055950336ef31da1b74fdf6f328367853405c7c46d1b0187318cad075f8726",
+      "sourceSha256": "d113ab919eb01a526b6c8c95cad4ad7d4e4929dc9f036f019eb0dd7e454a5e48",
+      "review": "accepted-candidate",
+      "reviewedAt": "2026-11-18",
+      "reviewNote": "Сюжетный момент соответствует order; канон лица Вейна не изменён, лицо Джека отсутствует; без читаемого текста и интерфейса. WebP RGB 720×900; проверено декодирование. Не включать в активный манифест до полного комплекта."
+    }
+  ]
+}
