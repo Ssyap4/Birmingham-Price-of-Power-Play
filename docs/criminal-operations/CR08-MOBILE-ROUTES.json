@@ -1,0 +1,190 @@
+[
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "source",
+      "promise",
+      "photo",
+      "confirm",
+      "compare",
+      "verify",
+      "promise",
+      "consent",
+      "agree",
+      "exact",
+      "submit",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "ruins",
+      "source",
+      "print",
+      "witness",
+      "dates",
+      "authorship",
+      "promise",
+      "meeting",
+      "consent",
+      "edition",
+      "handoff",
+      "report",
+      "end:clean"
+    ],
+    "time": 19,
+    "label": "clean"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "lawyer",
+      "take",
+      "record",
+      "skip",
+      "offer",
+      "deal",
+      "limited",
+      "submit",
+      "finish"
+    ],
+    "end": "costly",
+    "seen": [
+      "order",
+      "ruins",
+      "lawyer",
+      "authorship",
+      "promise",
+      "meeting",
+      "offer",
+      "edition",
+      "limited",
+      "report",
+      "end:costly"
+    ],
+    "time": 10,
+    "label": "costly"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "source",
+      "listen",
+      "skip",
+      "record",
+      "skip",
+      "pressure",
+      "leave",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "ruins",
+      "source",
+      "index",
+      "authorship",
+      "promise",
+      "meeting",
+      "pressure",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 9,
+    "label": "failed"
+  },
+  {
+    "seed": 12,
+    "path": [
+      "accept",
+      "source",
+      "listen",
+      "skip",
+      "record",
+      "skip",
+      "pressure",
+      "stay"
+    ],
+    "end": "dead",
+    "seen": [
+      "order",
+      "ruins",
+      "source",
+      "index",
+      "authorship",
+      "promise",
+      "meeting",
+      "pressure",
+      "end:dead"
+    ],
+    "time": 8,
+    "label": "dead"
+  },
+  {
+    "seed": 7,
+    "path": [
+      "accept",
+      "printer",
+      "index",
+      "skip",
+      "accuse",
+      "consent",
+      "withdraw",
+      "return"
+    ],
+    "end": "failed",
+    "seen": [
+      "order",
+      "ruins",
+      "printer",
+      "index",
+      "authorship",
+      "meeting",
+      "consent",
+      "withdrawal",
+      "end:failed"
+    ],
+    "time": 8,
+    "label": "extra4"
+  },
+  {
+    "seed": 0,
+    "path": [
+      "accept",
+      "source",
+      "promise",
+      "photo",
+      "confirm",
+      "compare",
+      "verify",
+      "promise",
+      "consent",
+      "agree",
+      "exact",
+      "submit",
+      "finish"
+    ],
+    "end": "clean",
+    "seen": [
+      "order",
+      "ruins",
+      "source",
+      "print",
+      "witness",
+      "dates",
+      "authorship",
+      "promise",
+      "meeting",
+      "consent",
+      "edition",
+      "handoff",
+      "report",
+      "end:clean"
+    ],
+    "time": 19,
+    "label": "repeat-clean"
+  }
+]

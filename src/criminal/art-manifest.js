@@ -1698,10 +1698,466 @@
           "end:dead"
         ]
       },
+      {
+        "id": "cr08-order",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-order.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 113908,
+        "sha256": "53668f4dae2fd93b00942b10f84d02d1f3b0c7e8038845a12e93ae0d670d0d94",
+        "gitBlobSha1": "94afdfe655f4037a609f71498110e877be80a765",
+        "sourceSha256": "00b7de936dbc61dd75fb5b2bfa1385ac278a24e3d8ff134bf41ef356f78e8168",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Связной с газетной вырезкой",
+        "scenes": [
+          "order"
+        ]
+      },
+      {
+        "id": "cr08-ruins",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-ruins.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 189356,
+        "sha256": "6e160c80c231ca22addd3ea545561365bf40cbf5e3b4b945a1a47ac9483b8321",
+        "gitBlobSha1": "5c6694eeef29684eff5b82f241037d761a4c5633",
+        "sourceSha256": "ab0c730203f21a9939e7a6118f4deda00a8334b96ab17fde95dd1e4ae35ad9b1",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Сгоревшая редакция и лестница",
+        "scenes": [
+          "ruins"
+        ]
+      },
+      {
+        "id": "cr08-printer",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-printer.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 151726,
+        "sha256": "56051c5145d0dddcea27a4c02315445cc5ac11af6bb24957a3f0d1c0e953cac4",
+        "gitBlobSha1": "40ce5e6a248d2e2d2a913ff503bcf26e2ff15520",
+        "sourceSha256": "9bd4d20225bb430224d90747436631db852fba6814c1f2fc74df5f9c2079aa5a",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Бэзил у наборного стола",
+        "scenes": [
+          "printer"
+        ]
+      },
+      {
+        "id": "cr08-lawyer",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-lawyer.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 92934,
+        "sha256": "7b9badd7cc3d851964844656f4887d1cb00c684af643e66247a61b1d515d964d",
+        "gitBlobSha1": "325f198b64e2d2cbe8c4f82e51e369a582670c3a",
+        "sourceSha256": "f3c1a47bf2cb744ed52db45aec94241410f7f700b95b3d8432841e8694f90667",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Доу достаёт лист из портфеля",
+        "scenes": [
+          "lawyer"
+        ]
+      },
+      {
+        "id": "cr08-source",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-source.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 130892,
+        "sha256": "1f893d1b5d142b2c06cffd6ff2c8c3d3041a581dc0ea334a551a958cf83c5f57",
+        "gitBlobSha1": "7bc20ae5e7684eaf50333e4170df9d4797fd58c1",
+        "sourceSha256": "ff262c86b9d40c8737e4e7c0c8f08d1e112f3fee5c5be4f912cdd3cd32531a12",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Рут в чайной с закрытым конвертом",
+        "scenes": [
+          "source"
+        ]
+      },
+      {
+        "id": "cr08-index",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-index.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 192494,
+        "sha256": "2def669db5f075303848aa8697fcdcfad61e96b89ba54b9d051e124b6ff7596d",
+        "gitBlobSha1": "eb87e54cda8b73aeebcde8c2ca4c83fedee55e0f",
+        "sourceSha256": "1da18462a8ba27bee16ecb82a039879d3128a10f6c7de438b813f3a5b0f45f73",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Раскрытый журнал на столе печатника",
+        "scenes": [
+          "index"
+        ]
+      },
+      {
+        "id": "cr08-print",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-print.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 157174,
+        "sha256": "9bcd5900b88b844ae629be772b213a178492c5bfab082058d068f12520a74770",
+        "gitBlobSha1": "0b412846509653749215f9a930c841063136db18",
+        "sourceSha256": "e8e3cd754e56427dc8eb7b859f4b10afd19af9d95464c39a6029c7abb719e4ca",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Оттиск и наборные литеры",
+        "scenes": [
+          "print"
+        ]
+      },
+      {
+        "id": "cr08-witness",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-witness.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 114110,
+        "sha256": "29add9309a88a7f6a8fd52bf0f0dbd59eb5feb130866ef1cb8ea1a6a2334aa7e",
+        "gitBlobSha1": "49e2bc92edad4548a7873889a2cfb4ac6b2ac6b8",
+        "sourceSha256": "ec3b27dacee9464cf75fa1902d0563c50b19459be665d4c6fd80e6560b8cfc45",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Бэзил даёт показание",
+        "scenes": [
+          "witness"
+        ]
+      },
+      {
+        "id": "cr08-dates",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-dates.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 161176,
+        "sha256": "4518b1c828690377065dbe79217d68ca06ba3e5b5ab166df892b8027c10c588e",
+        "gitBlobSha1": "88fa8783f779b0f67697711d72d38680f2c9bb0f",
+        "sourceSha256": "af3072344f28823a28580558cf74c563a348c70319ef33cb825031fda89e116f",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Сопоставление журнала и документа",
+        "scenes": [
+          "dates"
+        ]
+      },
+      {
+        "id": "cr08-authorship",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-authorship.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 138896,
+        "sha256": "90a1e3f70d5eff25bde01ab30332e73fe7581a279dbb4e4fcbf1abe44b273adc",
+        "gitBlobSha1": "5326d8a652e5905b857da60d460143eaa6724cab",
+        "sourceSha256": "6aa76aa088483ac2b8715245adcd1765d74a96e7eee35c5a604912c14fec41b2",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Доу поясняет распоряжение",
+        "scenes": [
+          "authorship"
+        ]
+      },
+      {
+        "id": "cr08-promise",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-promise.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 88864,
+        "sha256": "c199a22751b2b5f0a97d7d9cd06d07769c9d1b8fd6c854f70109e3d8f2aae791",
+        "gitBlobSha1": "fe5d608b66b5cb0aa59ec25d11f9e069f9fa7047",
+        "sourceSha256": "8c3cd24c33ba9c4e97e000639f0385284dfc51675c3b5356237f582e36966ee8",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Рут держит редакционную папку",
+        "scenes": [
+          "promise"
+        ]
+      },
+      {
+        "id": "cr08-meeting",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-meeting.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 139798,
+        "sha256": "6a4e93aaf00e7bbb1632cc6c88299d113fe9562ca799b6264f5686423c586858",
+        "gitBlobSha1": "1da73d1ca28c402373fb9fc133800a5d9dd60c9f",
+        "sourceSha256": "4d02097066434f1dc5b0df451ab9236bedc52f07bd7ae59fc521fe690f8c7a36",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Бэзил, Рут и Доу за столом в типографии",
+        "scenes": [
+          "meeting"
+        ]
+      },
+      {
+        "id": "cr08-offer",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-offer.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 95494,
+        "sha256": "25699b325a349052588a5bcf6164ca488d04e218b2daa5857f1b92c16eaa5542",
+        "gitBlobSha1": "990fd176cfb408505e4495611afadf714efcad74",
+        "sourceSha256": "92f7d103db7fa31a71228c077c759b60904e40386810ec5219f0cc5829caf041",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Доу предлагает неподписанный лист",
+        "scenes": [
+          "offer"
+        ]
+      },
+      {
+        "id": "cr08-consent",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-consent.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 156796,
+        "sha256": "c84a73171f0dcf8112b02a171cfd385492269f6a1909043df24548997c588de8",
+        "gitBlobSha1": "3bb536526f87d7462c61411a302383e5b1603fa5",
+        "sourceSha256": "a89ab610996362625503f2bbb259f8b590f2297e615d4f6f3c8b6a8608e5c95e",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Рут ждёт решения",
+        "scenes": [
+          "consent"
+        ]
+      },
+      {
+        "id": "cr08-pressure",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-pressure.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 189548,
+        "sha256": "ff62820317c6f54890a9fae36a3386766090f4d9bcdfe1ee0c413af56d339963",
+        "gitBlobSha1": "51938ece6f093c6b5eaea289fb131e0e76ce03c5",
+        "sourceSha256": "8835264f83df6c1952dd992709408e16789abc66bba5744f67a4150c183761e8",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Бэзил у выхода, Доу уходит к машине",
+        "scenes": [
+          "pressure"
+        ]
+      },
+      {
+        "id": "cr08-edition",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-edition.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 95664,
+        "sha256": "54f19a8b69684e438caec3179ebc2c9588ea92f554d7481f3c3064ffb3ee6f78",
+        "gitBlobSha1": "2d82fe2f61d83d64a20c4e91798cb0ff37dd8a92",
+        "sourceSha256": "fe679a3f3626e53504ff172a3575d366380c7757586dff96828d6790611feced",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Чистый лист и чернила",
+        "scenes": [
+          "edition"
+        ]
+      },
+      {
+        "id": "cr08-handoff",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-handoff.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 93608,
+        "sha256": "e70fb8d1a4bd1ca261ed3bdddcc6564dce524f5ea32e9d0bb1fad7ece2a2e73e",
+        "gitBlobSha1": "bbcc8df64846a465ca2278d926d704976d83957b",
+        "sourceSha256": "ae6d48966bfe28ae05ac380eebabe116ff80ee5f7224fb44fc214113fae87cb2",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Связной рассматривает материал",
+        "scenes": [
+          "handoff"
+        ]
+      },
+      {
+        "id": "cr08-limited",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-limited.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 95772,
+        "sha256": "977b9818ea1dabe3ffe96a77b890e3ca9f6ae1d8704f4bdc773318d4938c1621",
+        "gitBlobSha1": "f68e2ec1544682e1d26e4e131f54ea18fe0280af",
+        "sourceSha256": "f825ad7b53c33c5861f1b1170d232525bdbabde0a066e4b5dc99293c35765bee",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Связной у окна с неполным материалом",
+        "scenes": [
+          "limited"
+        ]
+      },
+      {
+        "id": "cr08-withdrawal",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-withdrawal.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 171408,
+        "sha256": "538d738c5aaecd258cd284e7c8a0b57f5113842dad1e7d994ff059c9a373e654",
+        "gitBlobSha1": "ee0de8b93d4babf64f3967596c051b5c46dd8f2c",
+        "sourceSha256": "a4b3b9367dfb2c91430982ae346464a7e3da6ab759ff0beefb74df279d297dc9",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Закрытый киоск до рассвета",
+        "scenes": [
+          "withdrawal"
+        ]
+      },
+      {
+        "id": "cr08-report",
+        "missionId": "CR08",
+        "kind": "scene",
+        "path": "assets/criminal/cr08-report.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 89066,
+        "sha256": "2854b3cb9c6938e25def6e5ee83284607114a0c30708f92d735df569a6bf8d8a",
+        "gitBlobSha1": "bb0b82fe056ed2387a0bf0ebee19b8e48c67b328",
+        "sourceSha256": "6e848f637dc36cdce8294ea36f0ed9954d3d4b433283e97b000e7d9374c7737d",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Связной сверяет часы и отчёт",
+        "scenes": [
+          "report"
+        ]
+      },
+      {
+        "id": "cr08-end-clean",
+        "missionId": "CR08",
+        "kind": "ending",
+        "path": "assets/criminal/cr08-end-clean.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 150500,
+        "sha256": "7a117833b8d53f3793fdd6f2c1954cb91e1334904ec0ad21c9925c712597d515",
+        "gitBlobSha1": "61e7776a4784e38b9dd7d7be3d8778b68591bc49",
+        "sourceSha256": "d6e604003c18d905d2620f279cff7010364907bb1c1389ddab84a309ad60385f",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Безымянная полоса среди литер",
+        "scenes": [
+          "end:clean"
+        ]
+      },
+      {
+        "id": "cr08-end-costly",
+        "missionId": "CR08",
+        "kind": "ending",
+        "path": "assets/criminal/cr08-end-costly.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 54842,
+        "sha256": "38801bb11f92a3fa5f31ad1c635edfe8586082d30e6cb0e843546a5424fc5da6",
+        "gitBlobSha1": "2eae855abe6eeba2f0b4a0a854ed74681a480e5b",
+        "sourceSha256": "012e8e8a3e2a2a9723d282283ac985119ada6f170820fa2518f9c7da410e1200",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Спорные бумаги и силуэт поверенного",
+        "scenes": [
+          "end:costly"
+        ]
+      },
+      {
+        "id": "cr08-end-failed",
+        "missionId": "CR08",
+        "kind": "ending",
+        "path": "assets/criminal/cr08-end-failed.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 173480,
+        "sha256": "5dc5fe59dd2167caa5def7cb725f14af6c0700b0e791fad76a22c9b0b7a1038e",
+        "gitBlobSha1": "cb3cd90aa729ab8ab9ea01a3636575ea47739be1",
+        "sourceSha256": "fb500abbe13cbe26ae7ec6936a95eafb6c20a2f491849e89cc1a5b61743e2064",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Закрытый киоск на рассвете",
+        "scenes": [
+          "end:failed"
+        ]
+      },
+      {
+        "id": "cr08-end-dead",
+        "missionId": "CR08",
+        "kind": "ending",
+        "path": "assets/criminal/cr08-end-dead.webp",
+        "width": 720,
+        "height": 900,
+        "bytes": 189370,
+        "sha256": "c417a10c40d382c5a9ac571324d5d2153e60058f8d26936d9f42dbad7ebcce32",
+        "gitBlobSha1": "010db2f1564efc3dee9a1e24a758187e3bf26015",
+        "sourceSha256": "4501b2b9c37721dd0b8e979da7062ce12bf9e0c83a336162b18ab9a8d6fe2274",
+        "review": "approved",
+        "reviewedAt": "2026-11-18",
+        "reviewNote": "Independent review of 24 WebP; consistent NPCs, neutral scene states, original candidate bytes preserved.",
+        "alt": "Пустой двор с погасшим фонарём",
+        "scenes": [
+          "end:dead"
+        ]
+      },
     ],
     artGaps: [
       "CR01–CR05: иллюстрации разделяются соседними сценами одной локации; не у каждого из 105 узлов свой кадр.",
-      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06 и CR07 имеют отдельные иллюстрации для каждого узла и финала.",
+      "CR01–CR05: четыре исхода используют пустую локацию после ночи; отдельных 20 финальных рендеров нет. CR06–CR08 имеют отдельные иллюстрации для каждого узла и финала.",
       "Пять героев представлены каноническими портретами; новые полнофигурные изображения героев не создавались.",
     ],
   };
