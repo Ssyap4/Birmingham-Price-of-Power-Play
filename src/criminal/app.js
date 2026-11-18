@@ -32,6 +32,8 @@
     archiveMission = "all",
     archivePage = 0,
     finalReturn = null,
+    catalogFilter = "all",
+    catalogOrigin = null,
     mode = "map";
   const esc = (x) =>
     String(x ?? "").replace(
@@ -52,7 +54,8 @@
     // Preserve the guarded local action for internal bridge and standalone.
     const mapButton=unified&&mode==="map"?"":btn("map","← Карта");
     const homeButton=unified?'<button type="button" data-action="home" hidden>Меню</button>':btn("home","Меню");
-    return `<div class="cr-top">${mapButton}${mode==="ending"&&memory?"":mode==="chronicle"&&finalReturn?btn("returnFinal","← К итогу"):btn("chronicle", "Хроника")}${homeButton}</div>`;
+    const chronicleButton=mode==="chronicle"?finalReturn?btn("returnFinal",finalReturn.kind==="ending"?"← К итогу":finalReturn.kind==="brief"?"← К приказу":"← К поручению"):"":mode==="ending"&&memory?"":btn("chronicle","Хроника");
+    return `<div class="cr-top">${mapButton}${chronicleButton}${homeButton}</div>`;
   }
   function setHash(value) {
     try {
@@ -86,8 +89,12 @@
   function close() {
     clearArtDeadline();
     finalReturn = null;
+    catalogOrigin = null;
     pending = null;
     state = null;
+    raw = null;
+    memory = false;
+    notice = "";
     rewardNotice = null;
     selectedMissionId = null;
     root.hidden = true;
@@ -180,6 +187,11 @@
     return { status: s.terminalId, label: outcomes[s.terminalId] || "Попытка завершена", action: "Посмотреть результат" };
   }
   function map(filter = "all") {
+    catalogFilter = filter;
+    catalogOrigin = null;
+    memory = false;
+    raw = null;
+    notice = "";
     finalReturn = null;
     selectedMissionId = null;
     mode = "map";
@@ -223,6 +235,8 @@
     if (!m) return map();
     state = null;
     pending = null;
+    memory = false;
+    notice = "";
     setHash(id);
     const slot = A.load(store, id);
     raw = slot.raw ?? null;
@@ -255,7 +269,7 @@
         ) + btn("restart", "Начать новую попытку вместо этой");
     else actions = btn("start", "Начать поручение", "cr-primary");
     render(
-      `<header class="cr-heading"><span>ПОРУЧЕНИЕ · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${slot.kind==="valid"?`<p class="cr-brief-progress">${esc(missionProgress(id, slot).label)} · Здоровье ${slot.state.hp}/100</p>`:""}${art(m, m.start)}<section class="cr-brief-order"><h2>Приказ</h2><p>${esc(m.brief)}</p></section><section class="cr-brief-rules"><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p></section><details class="cr-common-rules"><summary>Здоровье и сохранение</summary><p>Здоровье: от 0 до 100. При нуле герой погибает, но только в этом поручении. Перевязка восстанавливает до 35 единиц здоровья и расходует одну перевязку и один ход.</p><p>Прогресс и награды сохраняются на этом устройстве, если браузер разрешает запись. Перезагрузка не меняет случайный результат. Другие браузеры не синхронизируются.</p></details><div class="cr-actions" data-brief="${id}">${actions}</div>`,
+      `<header class="cr-heading"><span>ПОРУЧЕНИЕ · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${slot.kind==="valid"?`<p class="cr-brief-progress">${esc(missionProgress(id, slot).label)} · Здоровье ${slot.state.hp}/100</p>`:""}${art(m, m.start)}<section class="cr-brief-order"><h2>Приказ</h2><p>${esc(m.brief)}</p></section><section class="cr-brief-rules"><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p></section><details class="cr-common-rules"><summary>Здоровье и сохранение</summary><p>Здоровье: от 0 до 100. При нуле герой погибает, но только в этом поручении. Перевязка восстанавливает до 35 единиц здоровья и расходует одну перевязку и один ход.</p><p>Прогресс и награды сохраняются на этом устройстве, если браузер разрешает запись. Перезагрузка не меняет случайный результат. Другие браузеры не синхронизируются.</p></details><div class="cr-actions" data-brief="${id}">${actions}${catalogOrigin?btn("returnCatalog","← К выбранному списку"):""}</div>`,
     );
   }
   function entropy() {
@@ -294,7 +308,7 @@
       setHash(id);
     }
   }
-  function resume(id) {
+  function resume(id, showResult = true) {
     selectedMissionId = id;
     const s = A.load(store, id);
     if (s.kind !== "valid") return brief(id);
@@ -303,7 +317,7 @@
     memory = false;
     rewardNotice = null;
     notice = "";
-    scene(true);
+    scene(showResult);
   }
   const statNames = {
       time: "Ходы",
@@ -542,7 +556,7 @@
       return `<details class="cr-collection-fold" ${archiveMission===m.id?"open":""}><summary><span>${esc(m.title)}</span><small>${awards.length}/4</small></summary><div class="cr-awards">${awards.map(s=>`<article data-outcome="${s.terminalId}"><span aria-hidden="true">${s.terminalId==="clean"?"✦":s.terminalId==="dead"?"†":"◈"}</span><b>${esc(C.awardName(s.missionId,s.terminalId))}</b><small>${esc(m.endings[s.terminalId].title)}</small></article>`).join("")||"<p>Знаки ещё не получены.</p>"}</div></details>`;
     }).join("");
     render(
-      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника поручений</h1></header>${returnWarning?warning(returnWarning):""}${finalReturn?'<p class="cr-small">К сохранённому итогу можно вернуться через верхнюю панель.</p>':""}<div class="cr-archive-overview"><div><strong>${l.value.attempts.length}</strong><small>Попыток</small></div><div><strong>${seals.length}/${entries.length*4}</strong><small>Знаков</small></div><div><strong>${Object.keys(l.value.achievements).length}</strong><small>Отметок</small></div></div><p class="cr-small">Один знак на уникальный исход поручения. Повторные попытки не дают его второй раз.</p>${btn("commonArchive","Открыть общий архив")}<h2>По поручениям</h2>${filters}<h2>Завершённые попытки</h2><p class="cr-archive-count" role="status">Показано ${first}–${shown.length?first+shown.length-1:0} из ${history.length}</p>${shown.map(s=>{
+      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника поручений</h1></header>${returnWarning?warning(returnWarning):""}${finalReturn?'<p class="cr-small">Вернуться к поручению можно через верхнюю панель. Просмотр хроники не меняет сохранение.</p>':""}<div class="cr-archive-overview"><div><strong>${l.value.attempts.length}</strong><small>Попыток</small></div><div><strong>${seals.length}/${entries.length*4}</strong><small>Знаков</small></div><div><strong>${Object.keys(l.value.achievements).length}</strong><small>Отметок</small></div></div><p class="cr-small">Один знак на уникальный исход поручения. Повторные попытки не дают его второй раз.</p>${unified?btn("commonArchive","Открыть общий архив"):'<p class="cr-small">Общий архив доступен в основной кампании.</p>'}<h2>По поручениям</h2>${filters}<h2>Завершённые попытки</h2><p class="cr-archive-count" role="status">Показано ${first}–${shown.length?first+shown.length-1:0} из ${history.length}</p>${shown.map(s=>{
         const m=C.missions[s.missionId],r=E.report(s);
         const isFirst=l.value.rewards[[s.missionId,s.heroId,s.terminalId].join(":")]===s.attemptId;
         return `<article class="cr-record" data-outcome="${s.terminalId}"><small>${esc(m.title)} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p class="cr-record-metrics">Здоровье ${s.hp}/100 · ${s.revision} решений</p><p class="cr-record-seal">${isFirst?"✦ Уникальный знак":"Повторный исход · без нового знака"}</p><details class="cr-record-body"><summary>Отчёт о поручении</summary><p>${esc(r.text)}</p>${epilogue(s,true)}${verifiedNotes(r.notes)}</details></article>`;
@@ -571,7 +585,10 @@
   root.addEventListener("click", (e) => {
     const b = e.target.closest("button");
     if (!b || b.disabled) return;
-    if (b.dataset.mission) return brief(b.dataset.mission);
+    if (b.dataset.mission) {
+      catalogOrigin=mode==="map"&&catalogFilter!=="all"?{filter:catalogFilter,id:b.dataset.mission}:null;
+      return brief(b.dataset.mission);
+    }
     if (b.dataset.catalogDistrict) return filterCatalog("district:"+b.dataset.catalogDistrict);
     if (b.dataset.archiveMission) {
       archiveMission = b.dataset.archiveMission;
@@ -588,6 +605,15 @@
         target?.scrollIntoView({block:"start",behavior:"instant"});
         return;
       }
+      case "returnCatalog": {
+        if(!confirmPendingLeave())return;
+        const point=catalogOrigin;
+        map(point?.filter||"all");
+        const target=point&&root.querySelector(`.cr-mission-list [data-mission="${point.id}"]`);
+        target?.focus({preventScroll:true});
+        target?.scrollIntoView({block:"center",behavior:"instant"});
+        return;
+      }
       case "map":
         if (!confirmPendingLeave()) return;
         return map();
@@ -602,26 +628,33 @@
       case "finalChronicle":
       case "chronicle":
         if (!confirmPendingLeave()) return;
-        // Bookmark only a persisted, confirmed terminal slot. Never revive a
-        // memory-only attempt or overwrite a slot changed in another tab.
+        // Keep an exact read-only return point for a briefing or confirmed slot.
+        // Pending writes and memory-only runs must never be revived here.
         finalReturn=null;
-        if(mode==="ending"&&!memory&&state?.status==="finished"){
+        if(!pending&&!memory&&mode==="brief"&&selectedMissionId){
+          const slot=A.load(store,selectedMissionId);
+          if(["empty","valid","corrupt"].includes(slot.kind)&&(slot.raw??null)===raw){
+            finalReturn={id:selectedMissionId,kind:"brief",slotKind:slot.kind,raw:slot.raw??null};
+          }
+        }else if(!pending&&!memory&&["scene","ending"].includes(mode)&&state){
           const slot=A.load(store,state.missionId);
           if(slot.kind==="valid"&&slot.raw===raw&&slot.state.attemptId===state.attemptId){
-            finalReturn={id:state.missionId,attemptId:state.attemptId,raw:slot.raw};
-            archiveMission=state.missionId;archivePage=0;
+            finalReturn={id:state.missionId,kind:mode,slotKind:"valid",attemptId:state.attemptId,raw:slot.raw,showResult:!!root.querySelector(".cr-consequence")};
           }
         }
+        if(finalReturn){archiveMission=finalReturn.id;archivePage=0;}
+        else{archiveMission="all";archivePage=0;}
         pending=null;state=null;memory=false;
         return chronicle();
       case "returnFinal": {
         const point=finalReturn;finalReturn=null;
         if(!point||mode!=="chronicle")return chronicle();
         const slot=A.load(store,point.id);
-        if(slot.kind!=="valid"||slot.raw!==point.raw||slot.state.attemptId!==point.attemptId||slot.state.status!=="finished"){
-          return chronicle(null,"Сохранение поручения изменилось или недоступно. Итог не открыт; текущие данные не изменены.");
+        if(slot.kind!==point.slotKind||(slot.raw??null)!==point.raw||
+          (point.kind!=="brief"&&(slot.state?.attemptId!==point.attemptId||slot.state?.status!==(point.kind==="ending"?"finished":"active")))){
+          return chronicle(null,"Сохранение поручения изменилось или недоступно. Возврат отменён; текущие данные не изменены.");
         }
-        return resume(point.id);
+        return point.kind==="brief"?brief(point.id):resume(point.id,point.showResult);
       }
       case "archivePrev":
         archivePage = Math.max(0, archivePage - 1);
@@ -691,6 +724,7 @@
       case "retryArchive":
         return ending();
       case "commonArchive":
+        if(!unified)return;
         close();
         document.getElementById("storyStart").click();
         return;
@@ -742,9 +776,14 @@
         e.stopImmediatePropagation();
         return;
       }
+      clearArtDeadline();
       finalReturn = null;
+      catalogOrigin = null;
       pending = null;
       state = null;
+      raw = null;
+      memory = false;
+      notice = "";
       rewardNotice = null;
       selectedMissionId = null;
       root.hidden = true;
