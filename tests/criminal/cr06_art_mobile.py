@@ -47,6 +47,7 @@ def run():
      page = ctx.new_page(); page.set_default_timeout(15000)
      errors, missing, viewed = [], [], set()
      page.on('pageerror',lambda e: errors.append(str(e)))
+     page.on('dialog',lambda dialog: dialog.accept())
      page.on('response',lambda r: missing.append(r.url) if r.status>=400 and r.url.startswith(origin) else None)
      page.route('https://**/*',lambda r:r.abort())
      page.goto(origin+'/index.html',wait_until='domcontentloaded')
@@ -101,9 +102,10 @@ def run():
       # Control only entropy before starting; no flags/stats/finished saves injected.
       page.evaluate("""seed=>{window.__cr06Random=crypto.getRandomValues.bind(crypto);crypto.getRandomValues=a=>{if(a instanceof Uint32Array&&a.length===2){a[0]=seed;a[1]=12345;return a}return window.__cr06Random(a)}}""",seed)
       tap('#criminalScreen [data-action="start"]' if label=='clean' else '#criminalScreen [data-action="restart"]')
-      page.evaluate('crypto.getRandomValues=window.__cr06Random')
+      page.evaluate('()=>{crypto.getRandomValues=window.__cr06Random;}')
       assert state()['rng']['seed']==seed
-      assert page.locator('.cr-act-progress span').count()==4
+      assert state()['status']=='active', label
+      assert page.locator('.cr-act-progress span').count()==4, label
       route=ROUTES['clean' if label=='repeat' else label]
       for index,choice in enumerate(route):
        choose(choice)
