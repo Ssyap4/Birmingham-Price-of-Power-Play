@@ -1,0 +1,687 @@
+{
+  "schemaVersion": 1,
+  "caseId": "003",
+  "sourceHead": "b3c598959633e088c5cc54d5f1a8cdbbdfe0ae20",
+  "status": "planning-only",
+  "format": {
+    "width": 720,
+    "height": 900,
+    "encoding": "WebP",
+    "color": "RGB"
+  },
+  "briefing": {
+    "id": "briefing",
+    "path": "assets/case003/briefing/case003-briefing.webp",
+    "status": "planned",
+    "brief": "Раннее утро в Ювелирном квартале: вид мокрой улицы из-под навеса, мрачная мастерская с повреждённой витриной, напротив лавка переплётчика, дальний газовый фонарь. Никаких персонажей крупно, тел, текста, логотипов и раскрытия загадки."
+  },
+  "locations": {
+    "street": "Улица: мокрые кирпичные фасады, вывески без читаемого текста, узкая переплётная лавка напротив мастерской; один уличный фонарь и боковой проезд.",
+    "workshop": "«Чёрный напёрсток»: спереди витрина на улицу; справа от входа верстак Коула с лупой и чашкой, сейф в глубине слева, дверь в служебный коридор позади. Остывшая печь, тёмное дерево, сталь и латунь. Не переставлять мебель по кадрам.",
+    "bindery": "Лавка Нелл: один переплётный стол у окна, пресс для книг, полки обложек, стойка и дверь на улицу.",
+    "office": "«Медный ключ»: узкий зал, кассовая стойка и окно для очереди, шкафы книг и лестница за служебной дверью.",
+    "office-back": "Малый задний кабинет Иды на лестнице, один стол и щель двери, отдельные ведомости.",
+    "office-private": "Кабинет Восса: строгий стол, два стула, часы под стеклянным колпаком, лампа и зелёно-серые стены (не зелёный фильтр).",
+    "dealer": "Лавка Дарна: тёмные ставни, узкий прилавок, полки, лотки с войлоком, боковое окно.",
+    "carrier": "Конюшенный двор, телега, бочка, кирпичные хозяйственные ворота.",
+    "service": "Служебная дверь, лестница вниз, шкафчик с дубликатом ключевого журнала, будка за перегородкой. Без прямого вида на витрину.",
+    "watch": "Будка: узкий стол у небольшого мутного окна, кружка, дневник обхода.",
+    "hideout": "Каморка за переплётной лавкой: стул, трость, один низкий источник света, проход к отдельному выходу.",
+    "supplier": "Рабочее помещение поставщика прижимов: деревянный прилавок, полки металлических изделий, корешки расписок.",
+    "ash": "Кабинет Эш: стол, шкаф документов, крючок для жакета, кожаный портфель и окно.",
+    "storage": "Сухая отдельная кладовая: полки, дверь с целым запором, пустая опись; не показывать передачу до решения.",
+    "yard": "Задний двор: ворота напротив входа, боковой освещённый проход со ступенью; одинаковая география E05/E05a/Z07.",
+    "decision": "Нейтральный стол следственных материалов: дерево, лампа, окно с рассветом в VI главе; никаких новых персонажей."
+  },
+  "portraits": [
+    {
+      "id": "clara",
+      "name": "Клара Хейт, 37",
+      "brief": "Узкое мягкое лицо, карие глаза, тёмно-каштановые волосы под неброской шляпкой, тёмное шерстяное пальто, потёртая коричневая сумка; сдержанность, а не театральное горе.",
+      "path": "assets/case003/portraits/clara.webp",
+      "status": "planned"
+    },
+    {
+      "id": "bell",
+      "name": "Август Белл, 58",
+      "brief": "Круглые очки, широкое усталое лицо, редкие седые волосы, тёмный сюртук, жилет цвета мокрого дерева; руки мастера, не карикатура.",
+      "path": "assets/case003/portraits/bell.webp",
+      "status": "planned"
+    },
+    {
+      "id": "voss",
+      "name": "Эдмунд Восс, 45",
+      "brief": "Удлинённое лицо и прямой нос, короткие аккуратные тёмные усы, тёмные гладко уложенные волосы, строгий серый костюм и белая рубашка; нейтральная манжета в портрете, повреждение только в D03a.",
+      "path": "assets/case003/portraits/voss.webp",
+      "status": "planned"
+    },
+    {
+      "id": "ida",
+      "name": "Ида Меррик, 29",
+      "brief": "Округлое лицо с выразительными бровями, тёмно-русый короткий аккуратный боб, простая светлая блуза и тёмный жилет; пятна чернил на пальцах, без украшений.",
+      "path": "assets/case003/portraits/ida.webp",
+      "status": "planned"
+    },
+    {
+      "id": "marsh",
+      "name": "Рубен Марш, 52",
+      "brief": "Вытянутое обветренное лицо, сероватая щетина, тёмная поношенная кепка и тяжёлое коричневое пальто; деревянная трость.",
+      "path": "assets/case003/portraits/marsh.webp",
+      "status": "planned"
+    },
+    {
+      "id": "darn",
+      "name": "Феликс Дарн, 39",
+      "brief": "Угловатый подбородок, короткие тёмные волосы с боковым пробором, чисто выбрит, тёмное пальто, перчатки на улице; без показной роскоши.",
+      "path": "assets/case003/portraits/darn.webp",
+      "status": "planned"
+    },
+    {
+      "id": "ash",
+      "name": "Мириам Эш, 47",
+      "brief": "Высокий лоб, собранные тёмные волосы с серебряными прядями, строгий графитовый жакет, светлая блуза и кожаный портфель; внимательная, не надменная.",
+      "path": "assets/case003/portraits/ash.webp",
+      "status": "planned"
+    },
+    {
+      "id": "nell",
+      "name": "Нелл Прайс, 63",
+      "brief": "Седые волосы убраны назад, глубокие носогубные складки, тёмное повседневное платье и выцветший фартук переплётчицы; деятельная и прямая.",
+      "path": "assets/case003/portraits/nell.webp",
+      "status": "planned"
+    },
+    {
+      "id": "cole",
+      "name": "Натан Коул, 42",
+      "brief": "Усталое лицо с негустой бородой, короткие каштановые волосы, потёртая рабочая куртка; только нейтральный архивный портрет, не появляется как говорящий живой персонаж после смерти.",
+      "path": "assets/case003/portraits/cole.webp",
+      "status": "planned"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "P01",
+      "chapter": "I",
+      "location": "street",
+      "brief": "Клара на ступенях закрытой переплётной лавки, сложенная квитанция в руках; напротив тёмная мастерская. Полуоборот со спины, лицо не открывать.",
+      "path": "assets/case003/scenes/case003-p01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "P01a",
+      "chapter": "I",
+      "location": "street",
+      "brief": "Крупный план раскрытой пустой ладони Клары, у края потёртая сумка; кольца на пальце нет.",
+      "path": "assets/case003/scenes/case003-p01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A01",
+      "chapter": "I",
+      "location": "workshop",
+      "brief": "Общий вид с порога: верстак, чашка, лупа, незаконченный рисунок, укрытое тело у основания. Никакой крови крупным планом.",
+      "path": "assets/case003/scenes/case003-a01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A01a",
+      "chapter": "I",
+      "location": "workshop",
+      "brief": "Лист с двумя овальными рисунками на верстаке, рука Белла остановилась над бумагой.",
+      "path": "assets/case003/scenes/case003-a01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A02",
+      "chapter": "I",
+      "location": "workshop",
+      "brief": "Снаружи низкий ракурс повреждённой рамы и рассыпанного на мокром тротуаре стекла.",
+      "path": "assets/case003/scenes/case003-a02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A03",
+      "chapter": "I",
+      "location": "workshop",
+      "brief": "Открытый сейф, пустые гнёзда под лотки, корешки на дверце; ракурс из глубины помещения.",
+      "path": "assets/case003/scenes/case003-a03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A04",
+      "chapter": "I",
+      "location": "bindery",
+      "brief": "Нелл возле переплётного стола, незаконченная обложка, щётка рядом с дверью.",
+      "path": "assets/case003/scenes/case003-a04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "A05",
+      "chapter": "I",
+      "location": "street",
+      "brief": "Дворник ждёт у витрины; за оградой Клара, в дверях Белл с листом. Без читаемых записей.",
+      "path": "assets/case003/scenes/case003-a05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B00",
+      "chapter": "II",
+      "location": "street",
+      "brief": "Перекрёсток узких улиц, угольная тележка, пар над крышей, три расходящихся перспективы.",
+      "path": "assets/case003/scenes/case003-b00.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B01",
+      "chapter": "II",
+      "location": "office",
+      "brief": "Ида за кассовой стойкой перелистывает большую книгу возвратов; монеты и свисающий звонок.",
+      "path": "assets/case003/scenes/case003-b01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B01a",
+      "chapter": "II",
+      "location": "office",
+      "brief": "Очередь у окна: пожилой клиент спорит с приказчиком, другой тихо убирает листок.",
+      "path": "assets/case003/scenes/case003-b01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B02",
+      "chapter": "II",
+      "location": "office",
+      "brief": "Два бумажных поля договора на краю кассовой стойки, рука Иды указывает строку.",
+      "path": "assets/case003/scenes/case003-b02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B03",
+      "chapter": "II",
+      "location": "office-back",
+      "brief": "Ида с отдельной ведомостью в маленькой комнате; щель в двери, полоса света лестницы.",
+      "path": "assets/case003/scenes/case003-b03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B04",
+      "chapter": "II",
+      "location": "workshop",
+      "brief": "Ремонтная книга рядом с инструментами гравёра, рисунок внутренней поверхности кольца.",
+      "path": "assets/case003/scenes/case003-b04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B04a",
+      "chapter": "II",
+      "location": "workshop",
+      "brief": "Рабочий у весов кладёт обломок цепочки; задний план — другие верстаки.",
+      "path": "assets/case003/scenes/case003-b04a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B05",
+      "chapter": "II",
+      "location": "dealer",
+      "brief": "Дарн за прилавком с яблоком, ножом и стопкой накладных, настороженный взгляд.",
+      "path": "assets/case003/scenes/case003-b05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B06",
+      "chapter": "II",
+      "location": "carrier",
+      "brief": "Конюшенный двор, телега, бочка, перевозчик протягивает корешок; открытый дневной воздух.",
+      "path": "assets/case003/scenes/case003-b06.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B07",
+      "chapter": "II",
+      "location": "service",
+      "brief": "Узкая кирпичная лестница, целый косяк и шкафчик с журналом; общий план с лестницы.",
+      "path": "assets/case003/scenes/case003-b07.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B07a",
+      "chapter": "II",
+      "location": "service",
+      "brief": "Вид с нижней площадки на вход и будку за перегородкой, улица не видна.",
+      "path": "assets/case003/scenes/case003-b07a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B08",
+      "chapter": "II",
+      "location": "watch",
+      "brief": "Пустая будка сторожа, кружка с чайным осадком, раскрытый журнал под мутным окном.",
+      "path": "assets/case003/scenes/case003-b08.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B09",
+      "chapter": "II",
+      "location": "street",
+      "brief": "Неназванный владелец мнёт шляпу и рисует описание часов на бумаге; без выразительного портрета нового NPC.",
+      "path": "assets/case003/scenes/case003-b09.webp",
+      "status": "planned"
+    },
+    {
+      "id": "B10",
+      "chapter": "II",
+      "location": "workshop",
+      "brief": "Первый фонарь за окном, Белл открывает ящик личных инструментов; плоский футляр.",
+      "path": "assets/case003/scenes/case003-b10.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C01",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Двойное картонное дно плоского футляра, спрятанные тонкие листы у потрёпанной линейки.",
+      "path": "assets/case003/scenes/case003-c01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C01a",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Ненаписанное письмо в складке футляра, прерванная строка, чернильное пятно; без читаемого текста.",
+      "path": "assets/case003/scenes/case003-c01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C02",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Документы разложены отдельными стопками; Белл в тёмном дверном проёме, не нависает над игроком.",
+      "path": "assets/case003/scenes/case003-c02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C02a",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Список невручённых вещей боком на столе, пустые строки; рядом небольшие квитанции.",
+      "path": "assets/case003/scenes/case003-c02a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C03",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Белл сжимает спинку стула, пустой верстак на заднем плане.",
+      "path": "assets/case003/scenes/case003-c03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C03a",
+      "chapter": "III",
+      "location": "workshop",
+      "brief": "Открытая коробка с инструментами и двумя рабочими куртками; Белл стоит рядом.",
+      "path": "assets/case003/scenes/case003-c03a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C04",
+      "chapter": "III",
+      "location": "bindery",
+      "brief": "Нелл у настольной лампы достаёт расписку о переплёте, закрытая книга заказов.",
+      "path": "assets/case003/scenes/case003-c04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "C05",
+      "chapter": "III",
+      "location": "street",
+      "brief": "Ставни закрываются по обеим сторонам улицы, последний освещённый проезд.",
+      "path": "assets/case003/scenes/case003-c05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D00",
+      "chapter": "IV",
+      "location": "service",
+      "brief": "Сумеречный служебный проезд, у двери новый неустановленный замок.",
+      "path": "assets/case003/scenes/case003-d00.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D01",
+      "chapter": "IV",
+      "location": "hideout",
+      "brief": "Марш в тесной каморке за лавкой, трость у стены; осторожный взгляд, виден свободный выход.",
+      "path": "assets/case003/scenes/case003-d01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D01a",
+      "chapter": "IV",
+      "location": "hideout",
+      "brief": "Руки Марша на трости, короткая пауза в разговоре, тёплый свет у пола.",
+      "path": "assets/case003/scenes/case003-d01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D02",
+      "chapter": "IV",
+      "location": "workshop",
+      "brief": "Стальной прижим у верстака и фрагмент сургуча; рядом край опечатанной папки только в фазе осмотра.",
+      "path": "assets/case003/scenes/case003-d02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D03",
+      "chapter": "IV",
+      "location": "supplier",
+      "brief": "На рабочем столе поставщика корешок расписки и схематичный рисунок прижима; другое помещение, не контора.",
+      "path": "assets/case003/scenes/case003-d03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D03a",
+      "chapter": "IV",
+      "location": "office",
+      "brief": "Разорванная манжета серого костюма Восса и отдельная зарисовка края ткани; без сцены насилия.",
+      "path": "assets/case003/scenes/case003-d03a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D04",
+      "chapter": "IV",
+      "location": "hideout",
+      "brief": "Марш поднимается со стула и берёт трость; приоткрыта дверь в проход.",
+      "path": "assets/case003/scenes/case003-d04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "D05",
+      "chapter": "IV",
+      "location": "street",
+      "brief": "Ночной ряд окон, улица опустела, дальние тени; переход к решениям.",
+      "path": "assets/case003/scenes/case003-d05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E00",
+      "chapter": "V",
+      "location": "decision",
+      "brief": "Три сложенные записки на столе под лампой; нейтральная точка принятия решений.",
+      "path": "assets/case003/scenes/case003-e00.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E01",
+      "chapter": "V",
+      "location": "office-private",
+      "brief": "Восс пододвигает чистый лист, часы под стеклянным колпаком, спокойное лицо.",
+      "path": "assets/case003/scenes/case003-e01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E01a",
+      "chapter": "V",
+      "location": "office-private",
+      "brief": "Боковой ракурс на два стула, лист на краю стола и руку Восса; не показывать подписанное соглашение до выбора.",
+      "path": "assets/case003/scenes/case003-e01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E02",
+      "chapter": "V",
+      "location": "dealer",
+      "brief": "При закрытых ставнях Дарн показывает остатки партии: лоток с кольцом, часами и пустыми ячейками.",
+      "path": "assets/case003/scenes/case003-e02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E02a",
+      "chapter": "V",
+      "location": "dealer",
+      "brief": "Пустые ячейки лотка, выцветшая ткань и далёкий силуэт Дарна. Другой ракурс, чем E02.",
+      "path": "assets/case003/scenes/case003-e02a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E03",
+      "chapter": "V",
+      "location": "ash",
+      "brief": "Эш за столом отодвигает бумаги, на крючке жакет, портфель ещё открыт.",
+      "path": "assets/case003/scenes/case003-e03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E03a",
+      "chapter": "V",
+      "location": "ash",
+      "brief": "Стопка конвертов, два надписанных неразборчиво, пальцы Эш удерживают один.",
+      "path": "assets/case003/scenes/case003-e03a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E04",
+      "chapter": "V",
+      "location": "storage",
+      "brief": "Сухая кладовая с отдельной дверью и пустой описью, без фактического перемещения партии до решения.",
+      "path": "assets/case003/scenes/case003-e04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E05",
+      "chapter": "V",
+      "location": "yard",
+      "brief": "Закрытые ворота, дальний силуэт, освещённый боковой выход остаётся видим.",
+      "path": "assets/case003/scenes/case003-e05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "E05a",
+      "chapter": "V",
+      "location": "yard",
+      "brief": "Тесный проход, удалённый вооружённый силуэт и безопасная боковая ступень; без открытого лица.",
+      "path": "assets/case003/scenes/case003-e05a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "F01",
+      "chapter": "VI",
+      "location": "decision",
+      "brief": "Документы на столе в четырёх смысловых стопках; без схемы, текста и интерфейса.",
+      "path": "assets/case003/scenes/case003-f01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "F01a",
+      "chapter": "VI",
+      "location": "decision",
+      "brief": "Незаконченное письмо Кларе у окна с первым светом; не обещать возврат.",
+      "path": "assets/case003/scenes/case003-f01a.webp",
+      "status": "planned"
+    },
+    {
+      "id": "F02",
+      "chapter": "VI",
+      "location": "decision",
+      "brief": "Собранные папки и гаснущая лампа; другой широкий ракурс перед решением.",
+      "path": "assets/case003/scenes/case003-f02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z01",
+      "chapter": "VI",
+      "location": "ash",
+      "brief": "Эш закрывает портфель с материалами; рассвет в окне, прохожие вдалеке.",
+      "path": "assets/case003/scenes/case003-z01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z02",
+      "chapter": "VI",
+      "location": "ash",
+      "brief": "Опись и несколько предметов на столе, пустые раскрытые руки получателя без идентификации. Не утверждать возврат конкретно кольца или часов.",
+      "path": "assets/case003/scenes/case003-z02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z03",
+      "chapter": "VI",
+      "location": "decision",
+      "brief": "Закрытая папка о смерти, пустое место для остальных документов, квитанция у края; без лица Клары.",
+      "path": "assets/case003/scenes/case003-z03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z04",
+      "chapter": "VI",
+      "location": "office-private",
+      "brief": "Погашенная лампа, лист обязательства сложен, часы продолжают идти; без вручения денег.",
+      "path": "assets/case003/scenes/case003-z04.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z05",
+      "chapter": "VI",
+      "location": "dealer",
+      "brief": "Дарн закрывает счёт, оставшаяся партия на прилавке; силуэты ожидающих за окном.",
+      "path": "assets/case003/scenes/case003-z05.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z06",
+      "chapter": "VI",
+      "location": "workshop",
+      "brief": "Утро, пустой верстак Коула, закрытая мастерская и холодная полоска света.",
+      "path": "assets/case003/scenes/case003-z06.webp",
+      "status": "planned"
+    },
+    {
+      "id": "Z07",
+      "chapter": "VI",
+      "location": "yard",
+      "brief": "Пустой боковой проход после выстрела, тёмные ворота, ни тела героя, ни чужого узнаваемого лица.",
+      "path": "assets/case003/scenes/case003-z07.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HJ01",
+      "chapter": "Личные эпизоды",
+      "location": "hideout",
+      "brief": "Марш напротив пустого пространства у стула, свободная дверь, расслабляющиеся пальцы на трости.",
+      "path": "assets/case003/scenes/case003-hj01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HJ02",
+      "chapter": "Личные эпизоды",
+      "location": "hideout",
+      "brief": "Марш у бокового выхода, трость, тихий двор; не изображать уже состоявшуюся защиту.",
+      "path": "assets/case003/scenes/case003-hj02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HJ03",
+      "chapter": "Личные эпизоды",
+      "location": "yard",
+      "brief": "Освещённая боковая улица противопоставлена тёмным воротам, без погони.",
+      "path": "assets/case003/scenes/case003-hj03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HF01",
+      "chapter": "Личные эпизоды",
+      "location": "service",
+      "brief": "Низкий ракурс грязных следов от будки к короткой лестнице; без взлома.",
+      "path": "assets/case003/scenes/case003-hf01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HF02",
+      "chapter": "Личные эпизоды",
+      "location": "workshop",
+      "brief": "Потёртый картонный угол открытого футляра у линейки, ракурс сбоку.",
+      "path": "assets/case003/scenes/case003-hf02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HF03",
+      "chapter": "Личные эпизоды",
+      "location": "dealer",
+      "brief": "Дарн держит ладонь рядом с меткой партии, не подписывает и не передаёт вещи.",
+      "path": "assets/case003/scenes/case003-hf03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HE01",
+      "chapter": "Личные эпизоды",
+      "location": "workshop",
+      "brief": "Лист зарисовки повреждённой рамы на краю неубранного подоконника.",
+      "path": "assets/case003/scenes/case003-he01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HE02",
+      "chapter": "Личные эпизоды",
+      "location": "office-back",
+      "brief": "Ида у приоткрытой двери, ведомость раскрыта, взгляд становится спокойнее.",
+      "path": "assets/case003/scenes/case003-he02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HE03",
+      "chapter": "Личные эпизоды",
+      "location": "ash",
+      "brief": "Отчёт разложен отдельными листами, Эш рассматривает их, портфель не закрыт.",
+      "path": "assets/case003/scenes/case003-he03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HV01",
+      "chapter": "Личные эпизоды",
+      "location": "workshop",
+      "brief": "Белл в кресле при холодном боковом свете, расписки рядом с книгой, без самообвинения.",
+      "path": "assets/case003/scenes/case003-hv01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HV02",
+      "chapter": "Личные эпизоды",
+      "location": "office",
+      "brief": "Пункт договора отмечен карандашом; Ида взглядом указывает на отдельную ведомость.",
+      "path": "assets/case003/scenes/case003-hv02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HV03",
+      "chapter": "Личные эпизоды",
+      "location": "office-private",
+      "brief": "Восс отодвигает часы и смотрит на оставленный лист; сделка не совершена.",
+      "path": "assets/case003/scenes/case003-hv03.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HS01",
+      "chapter": "Личные эпизоды",
+      "location": "service",
+      "brief": "Крупный план целой щеколды и язычка двери при естественном свете, без снятых деталей.",
+      "path": "assets/case003/scenes/case003-hs01.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HS02",
+      "chapter": "Личные эпизоды",
+      "location": "workshop",
+      "brief": "Рисунок старой отметки рядом с лупой и рабочими инструментами, без обнаруженного физического кольца.",
+      "path": "assets/case003/scenes/case003-hs02.webp",
+      "status": "planned"
+    },
+    {
+      "id": "HS03",
+      "chapter": "Личные эпизоды",
+      "location": "storage",
+      "brief": "Крупный план сухих полок, прочного дверного запора и пустого места под опись.",
+      "path": "assets/case003/scenes/case003-hs03.webp",
+      "status": "planned"
+    }
+  ]
+}
