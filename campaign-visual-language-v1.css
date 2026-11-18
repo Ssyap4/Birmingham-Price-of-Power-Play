@@ -866,3 +866,24 @@
  }
  #launch #heroGallery .hero-card:not(:last-child) small{margin-top:4px;overflow-wrap:normal}
 }
+
+/* V78: the quick-nav reserve belongs below the separate audio dock, not
+   between the investigation and its sound controls. */
+@media(orientation:portrait) and (max-width:700px){
+ #app[data-screen="game"]>#game{padding-bottom:0!important}
+ #game .story-read-action{margin:10px 0 14px}
+ #game .pair-item{transform:none;align-items:flex-start;gap:8px}
+ #game .pair-item strong{font-size:.88rem;overflow-wrap:normal}
+ #game .pair-item .pair-item-copy{overflow-wrap:break-word}
+ #game .pair-item .pair-item-hint{font-size:.78rem;line-height:1.5}
+ #game .pair-item:last-child:nth-child(odd){grid-column:1/-1}
+ #game .pair-board[data-availability="awaiting-second"] .pair-connection-slot:last-child{color:#d4b58b}
+ #game .pair-board[data-availability="awaiting-second"] .pair-items{grid-template-columns:minmax(0,1fr)}
+ #game .pair-board[data-availability="awaiting-second"] .pair-item{padding:12px;min-height:86px}
+ #game .pair-board[data-availability="awaiting-second"] .pair-item svg{width:40px;height:40px;flex-basis:40px}
+ #game .journal-compass-action[data-go="witnesses"]:nth-child(3){grid-column:1/-1}
+ #caseGame .v33-board>.v33-empty{grid-column:1/-1}
+}
+@media(orientation:portrait) and (max-width:380px){
+ #game .pair-items{grid-template-columns:minmax(0,1fr)}
+}
