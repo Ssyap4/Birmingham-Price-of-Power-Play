@@ -6,7 +6,7 @@ from pathlib import Path
 from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler
-from local_http import LocalServer
+from local_http import LocalServer, tap_mission_pin
 from playwright.sync_api import sync_playwright
 import sys, json, subprocess
 
@@ -357,7 +357,7 @@ def run():
                 assert page.evaluate("k=>localStorage.getItem(k)",keys["key"])==first
                 # Leaving old entry UI and playing a new intro must preserve both raw slots.
                 tap(page, "#criminalEntry")
-                tap(page, '.cr-pin[data-mission="CR02"]')
+                tap_mission_pin(page,'CR02',lambda s:tap(page,s))
                 tap(page, '[data-action="start"]')
                 criminal_visual=reading_language(page,"#crStory > p")
                 assert page.locator("#criminalScreen").evaluate("e=>getComputedStyle(e).backgroundColor")=="rgb(24, 20, 16)"

@@ -49,7 +49,7 @@ def run():
                     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
                     if width==390:
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-map.png")),full_page=True)
-                    for mission in ("CR01","CR02","CR03","CR04","CR05","CR06"):
+                    for mission in page.evaluate("CriminalContent.catalog().map(m=>m.id)"):
                         # Some file/sandbox browsers prohibit history.replaceState;
                         # mission identity must not depend on a writable hash.
                         blocked_hash = mission == "CR01" and width == 390
@@ -87,7 +87,7 @@ def run():
                         page.screenshot(path=str(OUT/(browser_name+"-standalone-last.png")),full_page=True)
                     ctx.close()
                 browser.close()
-        print("PASS standalone mobile Chromium/WebKit 320/390/430: all six missions, art, scenes, save, back nav")
+        print("PASS standalone mobile Chromium/WebKit 320/390/430: all registered missions, art, scenes, save, back nav")
     finally:
         server.shutdown()
 if __name__=="__main__":

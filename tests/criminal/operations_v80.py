@@ -4,7 +4,7 @@ from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler
 import json
-from local_http import LocalServer
+from local_http import LocalServer, tap_mission_pin
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'work/criminal/v80';OUT.mkdir(parents=True,exist_ok=True)
@@ -34,7 +34,7 @@ def run():
                         page.locator(s).first.evaluate("e=>e.scrollIntoView({block:'start',behavior:'instant'})")
                         page.screenshot(path=str(OUT/f'{engine}-{width}-{n}-after.png'),animations='disabled')
                     def fit():assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
-                    tap('#criminalEntry');tap('.cr-pin[data-mission=CR02]')
+                    tap('#criminalEntry');tap_mission_pin(page,'CR02',tap)
                     assert page.locator('.cr-actions[data-brief=CR02]').is_visible()
                     tap('[data-action=start]');raw=save('save_CR02')
                     tap('[data-choice=go]')
@@ -48,7 +48,7 @@ def run():
                         state=PLANS[id]['care']
                         page.evaluate("([id,s])=>localStorage.setItem('birmingham_criminal_v2_save_'+id,JSON.stringify(s))",[id,state])
                         before=save('save_'+id)
-                        tap(f'.cr-pin[data-mission={id}]');tap('[data-action=resume]')
+                        tap_mission_pin(page,id,tap);tap('[data-action=resume]')
                         assert page.locator('.cr-result').is_visible() and page.locator('.cr-final-receipt').is_visible()
                         assert page.locator('.cr-final-consequence').is_visible()
                         assert page.locator('.cr-hp-delta').is_visible()
@@ -70,7 +70,7 @@ def run():
                         assert save('save_'+id)==before
                     # Damaged ledger cannot claim a verified award; retry is ahead of optional details.
                     page.evaluate("localStorage.setItem('birmingham_criminal_v2_ledger','{broken')")
-                    tap('.cr-pin[data-mission=CR03]');tap('[data-action=resume]')
+                    tap_mission_pin(page,'CR03',tap);tap('[data-action=resume]')
                     assert page.locator('.cr-final-receipt').count()==0
                     assert page.locator('.cr-final-actions [data-action=retryArchive]').is_visible()
                     assert save('ledger')=='{broken'

@@ -6,16 +6,16 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "criminal-preview-dist");
-const scripts = [
-  "src/criminal/content.js",
-  ...[1,2,3,4,5,6].map(n => "src/criminal/missions/cr0" + n + ".js"),
-  "src/criminal/engine.js",
-  "src/criminal/archive.js",
-  "src/criminal/art-manifest.js",
-  "src/criminal/epilogues.js",
-  "src/criminal/app.js",
-  "preview/criminal/bridge.js"
-];
+const main = fs.readFileSync(path.join(ROOT,"preview/criminal/index.html"),"utf8");
+const core = ["src/criminal/content.js","src/criminal/engine.js","src/criminal/archive.js","src/criminal/art-manifest.js","src/criminal/epilogues.js","src/criminal/app.js","preview/criminal/bridge.js"];
+const scripts = [...main.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m=>m[1]);
+const isMission = s=>/^src\/criminal\/missions\/cr[0-9]+\.js$/.test(s);
+if(JSON.stringify(scripts.filter(s=>!isMission(s)))!==JSON.stringify(core) ||
+   scripts.some(s=>isMission(s)&&(scripts.indexOf(s)<=scripts.indexOf(core[0])||scripts.indexOf(s)>=scripts.indexOf(core[1]))))
+  throw Error("Invalid standalone script order");
+const unified = fs.readFileSync(path.join(ROOT,"index.html"),"utf8");
+const unifiedMissions = [...unified.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m=>m[1]).filter(isMission);
+if(JSON.stringify(scripts.filter(isMission))!==JSON.stringify(unifiedMissions))throw Error("Mission lists differ between packages");
 const styles = [
   "criminal-operations-v2.css",
   "preview/criminal/preview.css",
@@ -56,7 +56,6 @@ for(const f of manifest.frames)
     throw Error("Unreviewed scene art "+f.id);
 const byPath=new Map(manifest.frames.map(f=>[f.path,f.sha256]));
 for(const name of required)copy(name,byPath.get(name));
-const main = fs.readFileSync(path.join(ROOT,"preview/criminal/index.html"),"utf8");
 if(!main.includes('<base href="../../">'))throw Error("Non-portable standalone base");
 fs.writeFileSync(path.join(OUT,"index.html"),main);
 const files=Array.from(new Set([...required,"index.html"]));
@@ -65,5 +64,5 @@ for(const s of scripts.concat(styles))
 for(const name of required)
   if(!fs.existsSync(path.join(OUT,name)))throw Error("Missing preview file "+name);
 const size = files.reduce((total,f)=>total+fs.statSync(path.join(OUT,f)).size,0);
-if(size>9*1024*1024)throw Error("Standalone preview unexpectedly large");
-console.log(JSON.stringify({ok:true,files:files.length,frames:images.length,heroes:heroes.length,bytes:size,directory:"criminal-preview-dist",entry:"index.html"},null,2));
+const budget = require("./criminal-package-budget.js")(manifest, name=>fs.statSync(path.join(OUT,name)).size, size);
+console.log(JSON.stringify({ok:true,files:files.length,frames:images.length,heroes:heroes.length,bytes:size,budgetBytes:budget.maxBytes,directory:"criminal-preview-dist",entry:"index.html"},null,2));

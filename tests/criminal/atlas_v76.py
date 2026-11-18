@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler
-from local_http import LocalServer
+from local_http import LocalServer, tap_mission_pin
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'work/criminal/v76'
@@ -57,7 +57,7 @@ def run():
                     assert page.locator('#criminalScreen [data-action="map"]').is_visible()
                     tap('#criminalScreen [data-action="map"]')
                     assert page.locator('.cr-pin:visible').count()==5
-                    tap('.cr-pin[data-mission="CR02"]')
+                    tap_mission_pin(page,'CR02',tap)
                     assert page.locator('#criminalScreen [data-action="start"]').is_visible()
                     tap('#criminalScreen [data-action="map"]')
                     tap('#criminalScreen [data-campaign-jump="archive"]')

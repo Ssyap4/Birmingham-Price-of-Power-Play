@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler
-from local_http import LocalServer
+from local_http import LocalServer, tap_mission_pin
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'work/criminal/v85'
@@ -30,7 +30,7 @@ def run():
       if extra:
        # Test-only registration in the browser; not shipped in the game.
        source=(dist/'src/criminal/missions/cr05.js').read_text(encoding='utf-8')
-       source+=';CriminalContent.register({...CriminalContent.missions.CR01,id:"CR07",title:"QA catalog fixture",catalog:{districtId:"balsall-heath",wave:2},awardNames:["A","B","C","D"]});'
+       source+=';CriminalContent.register({...CriminalContent.missions.CR01,id:"CR9999",title:"QA catalog fixture",catalog:{districtId:"balsall-heath",wave:2},awardNames:["A","B","C","D"]});'
        page.route('**/src/criminal/missions/cr05.js',lambda r:r.fulfill(status=200,content_type='application/javascript',body=source))
       page.goto(origin+'/index.html',wait_until='load')
       def tap(selector):
@@ -40,15 +40,17 @@ def run():
       def snapshot():return page.evaluate("JSON.stringify(Object.entries(localStorage).filter(([k])=>k.startsWith('birmingham_')).sort())")
       tap('#criminalEntry')
       before=snapshot()
+      assert page.evaluate("Boolean(CriminalContent.missions.CR9999)")==extra
+      totals=page.evaluate("""()=>({all:CriminalContent.catalog().length,jack:CriminalContent.catalog().filter(m=>m.heroId==="jack").length,district:CriminalContent.catalog().filter(m=>m.districtId==="balsall-heath").length})""")
       assert page.locator('.cr-pin:visible').count()==5
-      assert page.locator('.cr-mission-list [data-mission]').count()==(7 if extra else 6)
+      assert page.locator('.cr-mission-list [data-mission]').count()==totals["all"]
       if extra:
        tap('.cr-pin[data-catalog-district="balsall-heath"]')
        assert page.locator('#crCatalogFilter').input_value()=='district:balsall-heath'
-       assert page.locator('.cr-mission-list [data-mission]').count()==3
-       assert page.locator('.cr-mission-list [data-mission="CR07"]').is_visible()
+       assert page.locator('.cr-mission-list [data-mission]').count()==totals["district"]
+       assert page.locator('.cr-mission-list [data-mission="CR9999"]').is_visible()
       page.locator('#crCatalogFilter').select_option('hero:jack')
-      assert page.locator('.cr-mission-list [data-mission]').count()==(3 if extra else 2)
+      assert page.locator('.cr-mission-list [data-mission]').count()==totals["jack"]
       assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
       if extra:
        page.screenshot(path=str(OUT/f'{engine}-{width}-group.png'),animations='disabled')
@@ -57,12 +59,11 @@ def run():
       tap('#criminalScreen [data-action="map"]')
       assert page.locator('#crCatalogFilter').input_value()=='all'
       if extra:
-       tap('.cr-pin[data-catalog-district="balsall-heath"]')
-       tap('.cr-mission-list [data-mission="CR07"]')
+       tap_mission_pin(page,'CR9999',tap)
        assert page.locator('#criminalScreen [data-action="start"]').is_visible()
        tap('#criminalScreen [data-action="map"]')
       tap('#criminalScreen [data-campaign-jump="archive"]')
-      assert page.locator('#campaignCriminalAchievements .campaign-criminal-hero-folds details').count()==(7 if extra else 6)
+      assert page.locator('#campaignCriminalAchievements .campaign-criminal-hero-folds details').count()==totals["all"]
       assert snapshot()==before
       assert not errors,errors
       print(engine,width,'extra',extra,'PASS',flush=True)

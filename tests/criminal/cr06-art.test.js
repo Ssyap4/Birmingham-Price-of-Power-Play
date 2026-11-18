@@ -7,7 +7,7 @@ const validate = require("../../deployment/criminal-art-contract.js");
 const shell = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 const scripts = [...shell.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m => m[1]);
 test("CR06 complete reviewed art, one original image per scene and ending; accepted order preserved", () => {
-  assert.equal(validate(art, scripts).length, 6);
+  assert.ok(validate(art, scripts).includes("CR06"));
   const frames = art.frames.filter(f => f.missionId === "CR06");
   assert.equal(frames.length, 26);
   const candidates = require("../../docs/criminal-operations/CR06-ART-CANDIDATES.json");

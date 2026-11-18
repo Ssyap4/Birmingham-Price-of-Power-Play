@@ -8,7 +8,7 @@ from pathlib import Path
 from functools import partial
 from threading import Thread
 from http.server import SimpleHTTPRequestHandler
-from local_http import LocalServer
+from local_http import LocalServer, tap_mission_pin
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -240,7 +240,7 @@ def run():
                     touch(page, "#homeBtn")
                     touch(page, "#criminalEntry")
                     assert page.locator("#criminalScreen .cr-map").is_visible()
-                    assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == 6
+                    assert page.locator("#criminalScreen .cr-mission-list [data-mission]").count() == page.evaluate("CriminalContent.catalog().length")
                     assert page.locator('#criminalScreen .campaign-portal-v13 [data-campaign-jump]').count() == 2
                     touch(page, '#criminalScreen [data-campaign-jump="detective"]')
                     assert page.locator("#districts").is_visible()
@@ -661,7 +661,7 @@ def run():
                     """()=>{window.__oldSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='birmingham_criminal_v2_ledger')throw Error('quota ledger');return window.__oldSet.call(this,k,v);};}"""
                 )
                 touch(page, "#criminalEntry")
-                touch(page, '.cr-pin[data-mission="CR03"]')
+                tap_mission_pin(page,'CR03',lambda s:touch(page,s))
                 # Direct restart from briefing must not erase an unarchived final.
                 page.once("dialog",lambda d:d.accept())
                 touch(page, '[data-action="restart"]')
@@ -689,7 +689,7 @@ def run():
                 )
                 # A second tab edits a slot after the briefing opens.
                 touch(page,'[data-action="map"]')
-                touch(page,'.cr-pin[data-mission="CR03"]')
+                tap_mission_pin(page,'CR03',lambda s:touch(page,s))
                 newer=page.evaluate("()=>CriminalEngine.create('CR03',123,'qa-newer-attempt',Date.now())")
                 page.evaluate("(s)=>localStorage.setItem('birmingham_criminal_v2_save_CR03',JSON.stringify(s))",newer)
                 page.once("dialog",lambda d:d.accept())
@@ -743,7 +743,7 @@ def run():
                         (DIST / "index.html").as_uri(), wait_until="domcontentloaded"
                     )
                     touch(page, "#criminalEntry")
-                    touch(page, '.cr-pin[data-mission="CR05"]')
+                    tap_mission_pin(page,'CR05',lambda s:touch(page,s))
                     assert (
                         page.locator("#criminalScreen h1").inner_text()
                         == "Последний рейс"
