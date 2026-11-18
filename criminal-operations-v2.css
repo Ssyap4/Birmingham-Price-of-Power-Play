@@ -825,3 +825,19 @@ body[data-criminal="active"] > .bh-audio-controls button {
 
 /* V105: keep decorative icon failure compact, without a second story message. */
 #criminalScreen .cr-icon-fallback{display:inline-block;box-sizing:border-box;background:#25241e;border:1px dashed #786444}
+
+/* V106: unavailable decisions stay readable without looking actionable. */
+#criminalScreen .cr-choices button[data-choice]:disabled {
+  opacity:1;
+  color:#c9baa4;
+  background:#252019;
+  border-color:#63503b;
+}
+#criminalScreen .cr-choices button[data-choice]:disabled b,
+#criminalScreen .cr-choices button[data-choice]:disabled small,
+#criminalScreen .cr-choices button[data-choice]:disabled .cr-risk-info strong {
+  color:#c9baa4;
+}
+#criminalScreen .cr-choices button[data-choice]:disabled small:last-child {
+  color:#e0c29a;
+}

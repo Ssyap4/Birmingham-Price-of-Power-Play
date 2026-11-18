@@ -28,9 +28,20 @@ def run():
                     for blocked in (False,True):
                         context=browser.new_context(viewport={"width":390,"height":844},is_mobile=True,has_touch=True)
                         page=context.new_page()
-                        errors=[]; missing=[]
+                        errors=[]; missing=[]; cancelled_audio=set()
                         page.on("pageerror",lambda e:errors.append(str(e)))
-                        page.on("requestfailed",lambda r:missing.append([r.url,r.failure]) if r.url.startswith(origin) and not (blocked and r.url.endswith("/questions.js")) else None)
+                        def failed(r):
+                            if not r.url.startswith(origin) or (blocked and r.url.endswith("/questions.js")):
+                                return
+                            # A rapid screen change retires the previous audio request.
+                            # Verify that exact MP3 independently below; never suppress
+                            # unrelated request failures or a missing media file.
+                            if r.url.startswith(origin+"/assets/audio/soundtrack/") and r.url.endswith(".mp3") and r.failure in ("Load request cancelled","net::ERR_ABORTED"):
+                                cancelled_audio.add(r.url)
+                            else:
+                                missing.append([r.url,r.failure])
+                        page.on("requestfailed",failed)
+                        page.on("response",lambda r:missing.append([r.url,r.status]) if r.url.startswith(origin) and r.status>=400 else None)
                         page.route("https://**/*",lambda r:r.abort())
                         if blocked:page.route("**/questions.js",lambda r:r.abort())
                         try:
@@ -51,9 +62,13 @@ def run():
                                 if screen=="#districts":assert page.locator(".map-pin").count()==5
                                 if screen=="#criminalScreen .cr-map":assert page.locator(".cr-pin").count()==5
                             assert page.evaluate("JSON.stringify(Object.entries(localStorage).sort())")==original
+                            for url in sorted(cancelled_audio):
+                                response=context.request.get(url)
+                                assert response.ok and len(response.body())>1024,(url,response.status)
+                                response.dispose()
                             assert not errors,errors
                             assert not missing,missing
-                            result={"browser":name,"bank":"blocked" if blocked else "normal","status":"PASS"}
+                            result={"browser":name,"bank":"blocked" if blocked else "normal","status":"PASS","verified_cancelled_audio":len(cancelled_audio)}
                         except Exception as e:
                             result={"browser":name,"bank":"blocked" if blocked else "normal","status":"FAIL","error":str(e),"missing":missing,"pageerrors":errors}
                         finally:context.close()
