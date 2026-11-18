@@ -57,7 +57,8 @@ for(const f of manifest.frames)
 const byPath=new Map(manifest.frames.map(f=>[f.path,f.sha256]));
 for(const name of required)copy(name,byPath.get(name));
 if(!main.includes('<base href="../../">'))throw Error("Non-portable standalone base");
-fs.writeFileSync(path.join(OUT,"index.html"),main);
+// The source entry is nested, but the exported entry lives at package root.
+fs.writeFileSync(path.join(OUT,"index.html"),main.replace('<base href="../../">','<base href="./">'));
 const files=Array.from(new Set([...required,"index.html"]));
 for(const s of scripts.concat(styles))
   if(!fs.statSync(path.join(OUT,s)).size)throw Error("Empty resource "+s);
