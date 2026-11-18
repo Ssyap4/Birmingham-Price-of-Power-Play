@@ -55,3 +55,12 @@
   transform:none!important;
   filter:none!important;
 }
+
+/* V103: mission titles and readable collection counts. */
+.campaign-hub .campaign-criminal-fold summary{gap:9px;justify-content:space-between}
+.campaign-hub .campaign-criminal-fold-copy{display:grid;min-width:0;gap:4px;flex:1}
+.campaign-hub .campaign-criminal-fold-copy b{font:700 15px/1.4 Georgia,serif;overflow-wrap:break-word}
+.campaign-hub .campaign-criminal-fold-copy small{font:500 11px/1.35 system-ui,sans-serif;color:#cbb18e}
+.campaign-hub .campaign-criminal-fold-count{flex:none;font:700 12px/1.4 system-ui,sans-serif;color:#e8c28c}
+.campaign-hub .campaign-criminal-mission-title{margin:7px 0 4px;font:600 15px/1.4 Georgia,serif;color:#f0d1a0}
+.campaign-hub .campaign-criminal-hero>small:not(:first-child){display:block;margin-top:12px}

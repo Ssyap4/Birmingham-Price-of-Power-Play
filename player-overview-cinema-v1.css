@@ -72,3 +72,8 @@
  margin:6px 0 9px;color:#f6d7a6;font:750 .82rem/1.45 system-ui,sans-serif;
 }
 #profile .profile-trial-rank #rankInfo{display:block;font:600 .75rem/1.45 system-ui,sans-serif}
+
+#profile .player-overview-seals{grid-column:1/-1;width:100%;height:7px;accent-color:#c7a36e;border:0;border-radius:6px;background:#33271d}
+#profile .player-overview-seals::-webkit-progress-bar{background:#33271d;border-radius:6px}
+#profile .player-overview-seals::-webkit-progress-value{background:#c7a36e;border-radius:6px}
+#profile .player-overview-seals::-moz-progress-bar{background:#c7a36e;border-radius:6px}

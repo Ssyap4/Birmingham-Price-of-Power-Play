@@ -522,37 +522,34 @@
       return render(
         `<h1>Локальная хроника</h1>${returnWarning?warning(returnWarning):""}${warning(l.error + " Существующие байты хроники не изменены.")}`,
       );
-    const history = l.value.attempts.slice().reverse().filter((s) => archiveMission === "all" || s.missionId === archiveMission);
+    const entries=C.catalog().map(e=>e.mission);
+    const seals=Object.values(l.value.rewards);
+    const lookup=new Map(l.value.attempts.map(s=>[s.attemptId,s]));
+    const selected=entries.filter(m=>archiveMission==="all"||m.id===archiveMission);
+    const history = l.value.attempts.slice().reverse().filter(s=>archiveMission==="all"||s.missionId===archiveMission);
+    const counts=new Map(entries.map(m=>[m.id,l.value.attempts.filter(s=>s.missionId===m.id).length]));
     const pageSize = 10;
     const pages = Math.max(1, Math.ceil(history.length / pageSize));
     archivePage = Math.max(0, Math.min(archivePage, pages - 1));
     const shown = history.slice(archivePage * pageSize, (archivePage + 1) * pageSize);
     const first = shown.length ? archivePage * pageSize + 1 : 0;
-    const filters = `<nav class="cr-archive-filters" aria-label="Фильтр по поручению">${[["all", "Все"], ...Object.keys(C.missions).map((id) => [id, id])].map(([id, title]) => `<button type="button" data-archive-mission="${id}" aria-pressed="${archiveMission === id}">${title}</button>`).join("")}</nav>`;
-    const pager = `<nav class="cr-archive-pager" aria-label="Страницы хроники"><button type="button" data-action="archivePrev" ${archivePage === 0 ? "disabled" : ""}>← Назад</button><span>Страница ${archivePage + 1} из ${pages}</span><button type="button" data-action="archiveNext" ${archivePage >= pages - 1 ? "disabled" : ""}>Далее →</button></nav>`;
+    const filters = `<nav class="cr-archive-filters" aria-label="Фильтр по поручению">${[["all","Все поручения",l.value.attempts.length],...entries.map(m=>[m.id,m.title,counts.get(m.id)])].map(([id,title,n])=>`<button type="button" data-archive-mission="${id}" aria-pressed="${archiveMission===id}"><span>${esc(title)}</span><small>${n}</small></button>`).join("")}</nav>`;
+    const pager = `<nav class="cr-archive-pager" aria-label="Страницы хроники"><button type="button" data-action="archivePrev" ${archivePage===0?"disabled":""}>← Назад</button><span>Страница ${archivePage+1} из ${pages}</span><button type="button" data-action="archiveNext" ${archivePage>=pages-1?"disabled":""}>Далее →</button></nav>`;
+    const earned=selected.flatMap(m=>seals.map(id=>lookup.get(id)).filter(s=>s.missionId===m.id));
+    const memories=Object.entries(l.value.achievements).filter(([,id])=>selected.some(m=>m.id===lookup.get(id).missionId));
+    const folds=selected.map(m=>{
+      const awards=earned.filter(s=>s.missionId===m.id);
+      return `<details class="cr-collection-fold" ${archiveMission===m.id?"open":""}><summary><span>${esc(m.title)}</span><small>${awards.length}/4</small></summary><div class="cr-awards">${awards.map(s=>`<article data-outcome="${s.terminalId}"><span aria-hidden="true">${s.terminalId==="clean"?"✦":s.terminalId==="dead"?"†":"◈"}</span><b>${esc(C.awardName(s.missionId,s.terminalId))}</b><small>${esc(m.endings[s.terminalId].title)}</small></article>`).join("")||"<p>Знаки ещё не получены.</p>"}</div></details>`;
+    }).join("");
     render(
-      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника криминальных дел</h1></header>${returnWarning?warning(returnWarning):""}${finalReturn?'<p class="cr-small">Открыта из завершённого поручения. К его итогу можно вернуться через верхнюю панель.</p>':""}<p>${l.value.attempts.length} завершённых попыток · ${Object.keys(l.value.rewards).length} уникальных знаков · ${Object.keys(l.value.achievements).length} памятных отметок</p><p class="cr-small">Знак хранит ссылку на доказанный завершённый исход. Повтор того же финала тем же героем остаётся новой попыткой, но второго знака не даёт. Детективный архив не изменяется.</p><h2>Знаки этой ночи</h2><div class="cr-awards">${
-        Object.entries(l.value.rewards)
-          .map(([key, attemptId]) => {
-            const s = l.value.attempts.find((s) => s.attemptId === attemptId);
-            return `<article><span aria-hidden="true">${s.terminalId === "clean" ? "✦" : s.terminalId === "dead" ? "†" : "◈"}</span><b>${esc(C.awardName(s.missionId, s.terminalId))}</b><small>${s.missionId} · ${esc(C.missions[s.missionId].endings[s.terminalId].title)}</small><small>Подтверждено завершённым отчётом</small></article>`;
-          })
-          .join("") || "<p>Первый знак появится после записанного финала.</p>"
-      }</div><h2>Достижения и память</h2>${
-        Object.entries(l.value.achievements)
-          .map(([key, attemptId]) => {
-            const s = l.value.attempts.find((s) => s.attemptId === attemptId);
-            return `<p class="cr-achievement">${key.startsWith("clean:") ? "✦ Приказ выполнен без тяжёлых потерь" : "† Память о невозвращении"} · ${s.missionId} · ${esc(C.missions[s.missionId].hero.name)}</p>`;
-          })
-          .join("") || "<p>Эта страница ещё ждёт имён.</p>"
-      }<h2>Завершённые попытки</h2>${filters}<p class="cr-archive-count" role="status">Показано ${first}–${shown.length ? first + shown.length - 1 : 0} из ${history.length}</p>${
-        shown.map((s) => {
-            const m = C.missions[s.missionId],
-              r = E.report(s);
-            return `<article class="cr-record"><small>${m.id} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p>${esc(r.text)}</p><p>HP ${s.hp}/100 · ${s.revision} решений</p>${epilogue(s, true)}${verifiedNotes(r.notes)}</article>`;
-          })
-          .join("") || "<p>Завершённых попыток пока нет.</p>"
-      }${pager}${btn("commonArchive", "Открыть общие достижения кампании")}`,
+      `<header class="cr-heading"><span>ТОЛЬКО НА ЭТОМ УСТРОЙСТВЕ</span><h1>Хроника поручений</h1></header>${returnWarning?warning(returnWarning):""}${finalReturn?'<p class="cr-small">К сохранённому итогу можно вернуться через верхнюю панель.</p>':""}<div class="cr-archive-overview"><div><strong>${l.value.attempts.length}</strong><small>Попыток</small></div><div><strong>${seals.length}/${entries.length*4}</strong><small>Знаков</small></div><div><strong>${Object.keys(l.value.achievements).length}</strong><small>Отметок</small></div></div><p class="cr-small">Один знак на уникальный исход поручения. Повторные попытки не дают его второй раз.</p>${btn("commonArchive","Открыть общий архив")}<h2>По поручениям</h2>${filters}<h2>Завершённые попытки</h2><p class="cr-archive-count" role="status">Показано ${first}–${shown.length?first+shown.length-1:0} из ${history.length}</p>${shown.map(s=>{
+        const m=C.missions[s.missionId],r=E.report(s);
+        const isFirst=l.value.rewards[[s.missionId,s.heroId,s.terminalId].join(":")]===s.attemptId;
+        return `<article class="cr-record" data-outcome="${s.terminalId}"><small>${esc(m.title)} · ${esc(m.hero.name)}</small><h2>${esc(r.title)}</h2><p class="cr-record-metrics">Здоровье ${s.hp}/100 · ${s.revision} решений</p><p class="cr-record-seal">${isFirst?"✦ Уникальный знак":"Повторный исход · без нового знака"}</p><details class="cr-record-body"><summary>Отчёт о поручении</summary><p>${esc(r.text)}</p>${epilogue(s,true)}${verifiedNotes(r.notes)}</details></article>`;
+      }).join("")||"<p>Завершённых попыток пока нет.</p>"}${pager}<h2>Коллекция знаков · ${earned.length}/${selected.length*4}</h2><div class="cr-collection">${folds}</div><details class="cr-memory-fold"><summary>Достижения и память · ${memories.length}</summary>${memories.map(([key,id])=>{
+        const s=lookup.get(id),m=C.missions[s.missionId];
+        return `<p class="cr-achievement">${key.startsWith("clean:")?"✦ Приказ выполнен без тяжёлых потерь":"† Память о невозвращении"} · ${esc(m.title)} · ${esc(m.hero.name)}</p>`;
+      }).join("")||"<p>Эта страница ещё ждёт имён.</p>"}</details>`,
     );
     if(returnTo){
       const target=root.querySelector(returnTo)||root.querySelector(".cr-archive-count");

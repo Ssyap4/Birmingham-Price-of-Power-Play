@@ -10,6 +10,7 @@
   "use strict";
   const IDS = ["CR01", "CR02", "CR03", "CR04", "CR05"];
   const FINALS = ["clean", "costly", "failed", "dead"];
+  const outcomeLabels={clean:"Выполненный приказ",costly:"Дорогая победа",failed:"Невыполненный приказ",dead:"Гибель героя"};
   function snapshot(store, archive, content) {
     if (!archive || typeof archive.ledger !== "function" ||
         !content || !content.missions || typeof content.catalog !== "function" || typeof content.awardName !== "function" ||
@@ -32,7 +33,7 @@
     const achievements = Object.entries(l.achievements).map(([key, attemptId]) => {
       const state=lookup.get(attemptId);
       if(!state || !key.endsWith(":"+state.missionId))throw Error("Отметка без финала");
-      return {key, missionId:state.missionId,
+      return {key, missionId:state.missionId, missionTitle:content.missions[state.missionId].title,
         title:key.startsWith("clean:")?"Выполнено без тяжёлых потерь":"Память о невозвращении"};
     });
     const missions=content.catalog().map(({id})=>{
@@ -45,13 +46,13 @@
     });
     const history=l.attempts.slice(-8).reverse().map(s=>{
       const m=content.missions[s.missionId];
-      return {attemptId:s.attemptId, missionId:s.missionId,
+      return {attemptId:s.attemptId, missionId:s.missionId, missionTitle:m.title,
         hero:m.hero.name, title:m.endings[s.terminalId].title,
         outcome:s.terminalId, hp:s.hp, decisions:s.revision,
         newSeal:l.rewards[[s.missionId,s.heroId,s.terminalId].join(":")]===s.attemptId};
     });
     return {status:"ready",total:l.attempts.length,unique:rewards.length,
-      memories:achievements.length,missions,rewards,achievements,history};
+      memories:achievements.length,capacity:missions.reduce((n,m)=>n+m.endings.length,0),missions,rewards,achievements,history};
   }
   function make(doc,tag,cls,txt){
     const el=doc.createElement(tag);
@@ -71,7 +72,7 @@
       box.append(wrap);return;
     }
     wrap.append(make(doc,"p","campaign-criminal-intro",
-      data.total+" завершённых попыток · "+data.unique+" уникальных знаков · "+
+      data.total+" завершённых попыток · "+data.unique+" / "+data.capacity+" уникальных знаков · "+
       data.memories+" памятных отметок. Детективные награды хранятся отдельно."));
     if(id==="campaignDossiers"){
       const grid=make(doc,"div","campaign-criminal-heroes");
@@ -84,7 +85,7 @@
         const item=make(doc,"article","campaign-criminal-hero");
         item.append(make(doc,"h4","",group[0].hero));
         for(const m of group){
-          item.append(make(doc,"small","",m.id+" · "+m.district),
+          item.append(make(doc,"small","",m.district),make(doc,"h5","campaign-criminal-mission-title",m.title),
             make(doc,"strong","",m.attempts+" прохождений"),
             make(doc,"p","",m.rewards.length+" / "+m.endings.length+" уникальных исхода"));
         }
@@ -97,13 +98,15 @@
       for(const m of data.missions){
         const fold=make(doc,"details","campaign-criminal-fold");
         fold.dataset.archiveFold="criminal:reward:"+m.id;
-        const summary=make(doc,"summary","",m.id+" · "+m.hero+" · "+
-          m.rewards.length+" / 4 знака");
+        const summary=make(doc,"summary","");
+        const copy=make(doc,"span","campaign-criminal-fold-copy");
+        copy.append(make(doc,"b","",m.title),make(doc,"small","",m.hero));
+        summary.append(copy,make(doc,"span","campaign-criminal-fold-count",m.rewards.length+" / "+m.endings.length));
         fold.append(summary);
         const items=make(doc,"div","campaign-criminal-seals");
         for(const ending of m.endings){
           const el=make(doc,"div",ending.unlocked?"campaign-criminal-seal earned":"campaign-criminal-seal",
-            (ending.unlocked?"✦ ":"◇ ")+ending.title);
+            (ending.unlocked?"✦ "+ending.title:"◇ "+outcomeLabels[ending.id]+" · не открыт"));
           if(ending.unlocked){
             const reward=m.rewards.find(r=>r.terminalId===ending.id);
             el.append(make(doc,"small","",reward.title+" · подтверждено"));
@@ -119,7 +122,7 @@
         memory.append(make(doc,"summary","","Памятные отметки · "+data.achievements.length));
         const group=make(doc,"div","campaign-criminal-seals");
         for(const x of data.achievements)
-          group.append(make(doc,"p","campaign-criminal-memory",x.missionId+" · "+x.title));
+          group.append(make(doc,"p","campaign-criminal-memory",x.missionTitle+" · "+x.title));
         memory.append(group);wrap.append(memory);
       }
     }
@@ -128,7 +131,7 @@
       if(!data.history.length) history.append(make(doc,"p","","Завершённых попыток пока нет."));
       for(const attempt of data.history){
         const card=make(doc,"article","campaign-criminal-attempt");
-        card.append(make(doc,"small","",attempt.missionId+" · "+attempt.hero),
+        card.append(make(doc,"small","",attempt.missionTitle+" · "+attempt.hero),
           make(doc,"h4","",attempt.title),make(doc,"p","",
             "HP "+attempt.hp+"/100 · "+attempt.decisions+" решений · "+
             (attempt.newSeal?"Уникальный знак":"Повторный исход без новой награды")));

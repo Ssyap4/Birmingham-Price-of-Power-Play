@@ -78,7 +78,9 @@
     try{
       const r=api.ledger(store);
       if(!r.ok)return {status:/недоступ|запрет|чтени/i.test(r.error||"")?"unavailable":"damaged"};
-      return {status:"ready",count:r.value.attempts.length,unique:Object.keys(r.value.rewards).length};
+      const catalog=root.CriminalContent?.catalog?.();
+      const capacity=Array.isArray(catalog)?catalog.reduce((n,e)=>n+Object.keys(e.mission.endings).length,0):null;
+      return {status:"ready",count:r.value.attempts.length,unique:Object.keys(r.value.rewards).length,capacity};
     }catch(_){return {status:"unavailable"};}
   }
   function snapshot(root){
@@ -111,10 +113,16 @@
       metric.append(count,label);
       const desc=root.document.createElement("small");
       desc.textContent=available
-        ?"подтверждённых знаков: "+item.unique+
+        ?"подтверждённых знаков: "+item.unique+(Number.isInteger(item.capacity)?"\u00a0/\u00a0"+item.capacity:"")+
           (item.status==="partial"?" · Есть неподтверждённые записи.":"")
         :item.status==="damaged"?"Архив требует проверки":"Локальный архив недоступен";
       card.append(h,metric,desc);
+      if(available&&Number.isInteger(item.capacity)&&item.capacity>0){
+        const progress=root.document.createElement("progress");
+        progress.className="player-overview-seals";progress.max=item.capacity;progress.value=item.unique;
+        progress.setAttribute("aria-label","Коллекция знаков: "+item.unique+" из "+item.capacity);
+        card.append(progress);
+      }
       if(Number.isInteger(item.active)){
         const live=root.document.createElement("p");
         live.className="player-overview-live";
