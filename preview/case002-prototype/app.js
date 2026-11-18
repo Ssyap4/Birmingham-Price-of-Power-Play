@@ -225,7 +225,8 @@ function init(){
  window.BirminghamCase002TelegramSafeArea?.bind(window);
  if(!data||!api||!data.narration||data.graph.nodes.length!==89){
   appError("Не удалось загрузить сценарный пакет. Откройте страницу из полной папки проекта.");
-  $("begin").disabled=true;$("resume").disabled=true;return;
+  $("begin").disabled=true;$("resume").disabled=true;
+  $("briefLoading").textContent="Не удалось загрузить материалы. Обновите страницу или вернитесь к карте.";return;
  }
  store=readStorage();
  if(!store)appError("Хранилище браузера недоступно. Можно читать прототип, но прогресс не сохранится.");
@@ -320,6 +321,10 @@ function init(){
   card.addEventListener("click",()=>{$("hero").value=card.dataset.hero;refreshResume();});
  }
  refreshResume();
+ // The briefing is readable during loading, but its action belongs to the initialized app.
+ $("briefLoading").hidden=true;
+ $("briefContinue").removeAttribute("aria-describedby");
+ $("briefContinue").disabled=false;
 }
 function selectedHeroButton(){
  return document.querySelector('#heroGallery [data-hero="'+$("hero").value+'"]');

@@ -41,7 +41,8 @@
         <div class="briefing-rule"><span aria-hidden="true">02</span><p>Собирайте улики. В «Выводах» можно сопоставить две находки; подсказки доступны по нажатию, ошибок не бойтесь.</p></div>
         <div class="briefing-rule"><span aria-hidden="true">03</span><p>Прогресс сохраняется после решений, если браузер разрешает хранение. Продолжайте за тем, кому доверили дело.</p></div>
       </div>
-      <button id="briefContinue" type="button" class="briefing-enter">ВЫБРАТЬ СВОЕГО <span aria-hidden="true">→</span></button>
+      <p id="briefLoading" class="briefing-note" role="status">Загружаются материалы расследования…</p>
+      <button id="briefContinue" type="button" class="briefing-enter" disabled aria-describedby="briefLoading">ВЫБРАТЬ СВОЕГО <span aria-hidden="true">→</span></button>
       <p class="briefing-note">Второе расследование не изменяет историю №001. Связь с прежним исходом выбирается отдельно.</p>
     </div>
   </section>
