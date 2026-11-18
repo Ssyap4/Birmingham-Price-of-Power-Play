@@ -802,3 +802,67 @@
   font:700 13px/1.4 system-ui,sans-serif;
  }
 }
+
+/* V77: the same compact, actionable portrait cast selector in both cases.
+   Keep all existing hero dossier content and save status labels. */
+@media(orientation:portrait) and (max-width:700px){
+ #heroSelection .hero-top h2{
+  font:700 clamp(25px,7.2vw,32px)/1.15 Georgia,serif!important;
+  color:#f2d5a7;margin:7px 0 8px!important;text-wrap:balance;
+ }
+ #heroSelection .hero-top p{margin-bottom:12px!important}
+ #heroSelection .hero-cards{gap:8px!important}
+ #heroSelection .hero-card{
+  display:grid!important;grid-template-columns:clamp(43px,13vw,58px) minmax(0,1fr);
+  grid-template-rows:auto auto;align-content:center;align-items:center;
+  column-gap:7px!important;row-gap:3px!important;padding:7px!important;
+  min-height:86px!important;text-align:left!important;
+ }
+ #heroSelection .hero-card img{
+  grid-column:1;grid-row:1/3;width:100%!important;height:auto!important;
+  aspect-ratio:4/5!important;object-fit:cover!important;object-position:center 24%!important;
+ }
+ #heroSelection .hero-card strong{
+  grid-column:2;grid-row:1;align-self:end;
+  font:600 clamp(.76rem,3.4vw,.93rem)/1.23 Georgia,serif!important;
+ }
+ #heroSelection .hero-card small{
+  grid-column:2;grid-row:2;align-self:start;font:500 .69rem/1.3 system-ui,sans-serif!important;
+  overflow-wrap:anywhere;
+ }
+ #heroSelection .hero-card .hero-case-progress{grid-column:1/-1;margin:3px 0 0}
+ #heroSelection .hero-card:last-child:nth-child(odd){grid-column:1/-1}
+ #launch #heroGallery .hero-card:last-child:nth-child(odd){grid-column:1/-1}
+ #launch .launch-actions{margin-top:12px}
+ #launch #caseRewardArchive{margin-top:18px}
+ #case002AudioDock{margin:18px 0 8px}
+ #case002AudioDock .bh-music-credits:not([open]) summary{min-height:44px}
+}
+
+/* The separate audio dock is after #game, so it needs its own space
+   below the fixed quick navigation (including Telegram safe insets). */
+@media(orientation:portrait) and (max-width:700px){
+ #app[data-screen="game"]{padding-bottom:calc(116px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom,0px)))!important}
+}
+@media(orientation:portrait) and (max-width:359px){
+ #app[data-screen="game"]{padding-bottom:calc(180px + max(env(safe-area-inset-bottom,0px),var(--case002-safe-bottom,0px)))!important}
+ #heroSelection .hero-card:not(:last-child){grid-template-rows:auto auto}
+ #heroSelection .hero-card:not(:last-child) img{grid-row:1;align-self:center}
+ #heroSelection .hero-card:not(:last-child) strong{align-self:center}
+ #heroSelection .hero-card:not(:last-child) small{grid-column:1/-1;grid-row:2;text-align:center}
+}
+
+/* A 320px picker has too little horizontal space for full Cyrillic names
+   beside a portrait. Keep two columns, but stack the first four cards. */
+@media(orientation:portrait) and (max-width:359px){
+ #launch #heroGallery .hero-card:not(:last-child){
+  flex-direction:column;align-items:center;text-align:center;gap:4px;padding:7px 5px;
+ }
+ #launch #heroGallery .hero-card:not(:last-child) img{
+  width:42px;height:53px;flex:0 0 auto;
+ }
+ #launch #heroGallery .hero-card:not(:last-child)>span{
+  width:100%;font-size:.79rem;line-height:1.23;overflow-wrap:normal;
+ }
+ #launch #heroGallery .hero-card:not(:last-child) small{margin-top:4px;overflow-wrap:normal}
+}

@@ -1,0 +1,10 @@
+# V77 — compact investigation entry and story-first Case002
+
+V76 HEAD d046e99521e529acdc12d7068db548081ccb3586: integrated CI 44208700347 SUCCESS. Local First: clean matching HEAD before work.
+
+- Visual audit: 12 actual 390×844 captures of both case entry flows (hero selector, briefing, first scene) in Chromium and WebKit. No horizontal document overflow. Case001 oversized picker cards and Case002 top audio block/collection-before-action were selected for correction.
+- Case001: mobile compact portrait-plus-name hero cards, matching Georgia heading, full-width fifth card, intact biography/gear/status/guard; 320px roles span card to avoid splitting. Case002: matching fifth card, narrow stacked portraits and full readable names; actions precede collections, optional prior outcome remains before action.
+- Case002 audio dock moved after visible content (same IDs, original handlers, credits). Real 320px tap initially failed because the fixed quick nav intercepted it. Added shell bottom reserve accounting for narrow two-row nav and safe-area; actual tap and hit-test pass. Old game padding retained. No new art/engine/route/save-key/reward changes.
+- Local package integrity PASS (527 files, 89 scenes, 102 reviewed WebPs, 10 NPCs). entry_v77.py: 8/8 case × engine × width checks after audio fix; --narrow-second 2/2 retest after final narrow-only Case002 styling. Real taps, damaged save guard, cancel overwrite, entry P01, effect toggle with identical case save, credits expansion. No page JS errors or failed local browser requests in passing contexts; local HTTP server did log ConnectionAbortedError during Chromium navigation/context teardown; cause not independently established.
+- Screenshots inspected, including final narrow layout. No full 202-route replay, no physical iPhone/Telegram or actual safe-area hardware validation, no new Safari release, no main change. General CI status to verify after sync. Next: in-scene hierarchy, inventory/deductions, journals and final screens.
+

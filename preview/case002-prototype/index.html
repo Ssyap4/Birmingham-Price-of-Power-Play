@@ -21,7 +21,6 @@
   </a>
 </nav>
 <div id="app" class="app-shell" data-screen="briefing">
-  <div id="case002AudioDock" aria-label="Управление музыкой расследования"></div>
   <header class="masthead">
     <small>БИРМИНГЕМ • 1920</small>
     <h1>Последний поезд из Бирмингема</h1>
@@ -63,14 +62,6 @@
       <span>АРХИВ · ДЕЛО №002</span>
       <button id="collectionReturnFromLaunch" type="button">← К ИТОГУ РАССЛЕДОВАНИЯ</button>
     </div>
-    <details id="caseRewardArchive" class="case-reward-archive">
-      <summary>НАГРАДЫ ДЕЛА №002 <span id="caseRewardCount">0</span></summary>
-      <div id="caseRewardList" class="case-reward-list" aria-label="Уже полученные награды этого дела"></div>
-    </details>
-    <details id="caseAchievementArchive" class="case-achievement-archive">
-      <summary>ДОСТИЖЕНИЯ ДЕЛА №002 <span id="caseAchievementCount">0 / 18</span></summary>
-      <div id="caseAchievementList" class="case-achievement-list" aria-label="Достижения расследования"></div>
-    </details>
     <details id="priorDetails" class="prior-details" hidden>
       <summary>Связать с Делом №001 <span>необязательно</span></summary>
       <label for="prior">Сохранённый исход предыдущего дела</label>
@@ -83,6 +74,14 @@
     </div>
     <button id="backToBriefing" class="launch-brief-back" type="button">← ОПИСАНИЕ ДЕЛА И ПРАВИЛА</button>
     <p class="error" id="launchError" role="alert" hidden></p>
+    <details id="caseRewardArchive" class="case-reward-archive">
+      <summary>НАГРАДЫ ДЕЛА №002 <span id="caseRewardCount">0</span></summary>
+      <div id="caseRewardList" class="case-reward-list" aria-label="Уже полученные награды этого дела"></div>
+    </details>
+    <details id="caseAchievementArchive" class="case-achievement-archive">
+      <summary>ДОСТИЖЕНИЯ ДЕЛА №002 <span id="caseAchievementCount">0 / 18</span></summary>
+      <div id="caseAchievementList" class="case-achievement-list" aria-label="Достижения расследования"></div>
+    </details>
   </section>
   <main id="game" hidden>
     <div class="chapter-row">
@@ -172,6 +171,7 @@
       <button id="backToLaunch" type="button" class="text-button">К ВЫБОРУ ГЕРОЯ</button>
     </div>
   </main>
+  <div id="case002AudioDock" aria-label="Управление музыкой расследования"></div>
 </div>
 <!-- Browsers cannot lock physical rotation consistently. A landscape phone
      shows this pause screen; the running game and saved choices are untouched. -->
