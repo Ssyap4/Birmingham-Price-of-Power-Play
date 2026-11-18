@@ -1555,6 +1555,7 @@ function render(){
    preflight.dataset.blocked=String(blocked);
    preflight.dataset.dangerous=String(dangerous);
    preflight.dataset.revisited=String(revisited);
+   preflight.dataset.compact=String(allowed===1&&!blocked&&!dangerous&&!revisited);
    preflight.setAttribute("aria-label","Подготовка к решению");
    preflight.append(make("span","ПЕРЕД РЕШЕНИЕМ · "+scene.id,"decision-preflight-kicker"));
    const metrics=make("div",undefined,"decision-preflight-metrics");
@@ -1573,6 +1574,7 @@ function render(){
      "Среди доступных действий есть смертельно опасное. Оно выделено и потребует отдельного подтверждения.":
      revisited?
      "Некоторые открытые пути уже посещались. Выберите дальнейшее действие осознанно.":
+     allowed===1?"Доступно одно действие. Продолжите, когда будете готовы.":
      "Выберите действие — последствия изменят ход расследования.",
      "decision-preflight-note"));
    if(s.evidence.length){
@@ -1629,7 +1631,7 @@ function renderEndingRecap(target,view){
  panel.dataset.ending=recap.endingId;
  panel.append(make("p","БИРМИНГЕМ · ДЕЛО №002 ЗАКРЫТО","finale-eyebrow"));
  panel.append(make("h4",recap.title,"finale-title"));
- panel.append(make("p","История "+heroNames[recap.hero]+
+ panel.append(make("p","Герой: "+heroNames[recap.hero]+
   " · Принято решений: "+recap.decisionCount,"finale-subtitle"));
  const currentReward="002:"+recap.hero+":"+recap.endingId;
  const achievementCheck=completionArchiveStatus(view.state);
@@ -1652,6 +1654,7 @@ function renderEndingRecap(target,view){
  }
  panel.append(facts);
  panel.append(make("p","«В безопасности» — защищённые и эвакуированные. Защита не означает, что человека уже вывезли из города.","finale-metric-note"));
+ const summaryEnd=panel.lastElementChild;
  // The screenplay no longer repeats a computer-generated witness/fact ledger.
  // Keep verified proofs readable here, next to their true count. Unknown
  // identities remain excluded by EndingRecap's discovered-only people list.
@@ -1782,7 +1785,11 @@ function renderEndingRecap(target,view){
  const back=make("button",fromMap?"К КАРТЕ БИРМИНГЕМА":"К ВЫБОРУ ГЕРОЯ","finale-action");
  back.type="button";back.addEventListener("click",()=>{if(fromMap)mapLink.click();else returnToLaunch();});
  actions.append(journalButton,back);
- panel.append(actions);
+ // V79: the verified archive and original exit actions belong to the outcome
+ // summary, before the optional detailed witness/history/collection sections.
+ summaryEnd.after(archive,actions);
+ const detailHeading=make("h5","Материалы итогового отчёта","finale-detail-heading");
+ actions.after(detailHeading);
  target.append(panel);
 }
 // The dossier uses replaceChildren on each tab, which used to collapse

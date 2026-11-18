@@ -887,3 +887,39 @@
 @media(orientation:portrait) and (max-width:380px){
  #game .pair-items{grid-template-columns:minmax(0,1fr)}
 }
+
+/* V79: consistent closure hierarchy. Single-action preflight is compact;
+   all risk/lock counters and the evidence check remain available. */
+@media(orientation:portrait) and (max-width:700px){
+ #game .decision-preflight[data-compact="true"]{
+  grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 10px;
+  padding:9px 10px;
+ }
+ #game .decision-preflight[data-compact="true"] .decision-preflight-metrics{display:block}
+ #game .decision-preflight[data-compact="true"] .decision-preflight-metric{
+  min-height:31px;padding:4px 7px;gap:4px;
+ }
+ #game .decision-preflight[data-compact="true"] .decision-preflight-metric strong{font-size:1rem}
+ #game .decision-preflight[data-compact="true"] :is(.decision-preflight-note,.decision-check-evidence){grid-column:1/-1}
+ #caseGame .v33-ending-report>.case001-finale-subtitle{
+  margin:0 0 14px!important;color:#c9ad8a!important;
+  font:600 .79rem/1.5 system-ui,sans-serif!important;
+ }
+ #game .finale-detail-heading{
+  border-top:1px solid #947246;margin:20px 0 12px;padding-top:13px;
+  color:#f2d4aa;font:700 1.12rem/1.3 Georgia,serif;
+ }
+ #game .finale-panel>.finale-actions{margin:11px 0 16px}
+ #game .finale-panel .finale-action:last-child,
+ #caseGame .case001-finale-actions button:last-child{
+  background:linear-gradient(135deg,#624726,#39291b)!important;
+  border-color:#d7af75!important;color:#fae1b7!important;
+ }
+ #game .finale-metric{justify-content:center;min-height:78px}
+ #game .finale-metric span{font-size:.69rem;line-height:1.35;overflow-wrap:normal}
+}
+@media(orientation:portrait) and (max-width:359px){
+ #game .finale-metric span{font-size:.62rem}
+ #game .decision-preflight[data-compact="true"]{gap:6px;padding:9px 7px}
+ #game .decision-preflight[data-compact="true"] .decision-preflight-kicker{letter-spacing:0}
+}

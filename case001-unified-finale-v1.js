@@ -59,7 +59,7 @@
   const kicker=report.querySelector(".v33-ending-head small");
   if(kicker)kicker.textContent="БИРМИНГЕМ · ДЕЛО №001 ЗАКРЫТО";
   const subtitle=el("p","case001-finale-subtitle",
-   "История "+(data.hero?.name||"участника ближнего круга")+
+   "Герой: "+(data.hero?.name||"участник ближнего круга")+
    " · Завершённое расследование");
   const metrics=report.querySelector(".v33-ending-metrics");
   if(metrics)report.insertBefore(subtitle,metrics);
