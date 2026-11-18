@@ -1,0 +1,27 @@
+{
+  "status": "partial",
+  "checkedFrames": 11,
+  "expectedFrames": 24,
+  "totalBytes": 1620414,
+  "largest": "assets/criminal/candidates/cr08/cr08-end-dead.webp",
+  "largestBytes": 189370,
+  "format": "11 decoded RGB WebP 720x900",
+  "uniqueWebpAndSources": true,
+  "browserTest": "not run",
+  "runtimeIntegrated": false,
+  "missingSceneIds": [
+    "index",
+    "print",
+    "witness",
+    "authorship",
+    "promise",
+    "meeting",
+    "offer",
+    "consent",
+    "pressure",
+    "handoff",
+    "limited",
+    "report",
+    "end:costly"
+  ]
+}
