@@ -118,8 +118,18 @@
       const frame=img.closest(".cr-frame");
       const fallback=()=>{
         if(!img.isConnected||!root.contains(img))return;
-        if(img.classList.contains("cr-card-art")){img.remove();return;}
-        if(frame){clearArtDeadline();frame.dataset.artState="unavailable";}
+        if(!frame){
+          // Portrait names and equipment labels are already rendered as text.
+          // Missing decorative assets must not insert a full story-sized panel.
+          if(img.getAttribute("aria-hidden")==="true"){
+            const placeholder=document.createElement("span");
+            placeholder.className=img.className+" cr-icon-fallback";
+            placeholder.setAttribute("aria-hidden","true");
+            img.replaceWith(placeholder);
+          }else img.remove();
+          return;
+        }
+        clearArtDeadline();frame.dataset.artState="unavailable";
         const f = document.createElement("p");
         f.className = "cr-art-fallback";
         if(frame)f.setAttribute("role","status");
@@ -127,7 +137,10 @@
         img.replaceWith(f);
       };
       img.addEventListener("error",fallback,{once:true});
-      if(!frame)return;
+      if(!frame){
+        if(img.complete&&!img.naturalWidth)fallback();
+        return;
+      }
       // A stalled request/decode must not leave the story in an endless loading state.
       artDeadline=setTimeout(fallback,12000);
       const ready=()=>{
@@ -332,7 +345,7 @@
       cargo: "Груз",
   };
   function hud(m) {
-    return `${hero(m)}<section class="cr-health" data-health="${state.hp<40?"critical":"normal"}" aria-label="Состояние героя"><div class="cr-health-label"><b>♥ Здоровье</b><strong>${state.hp}/100</strong></div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div></section><div class="cr-hud" aria-label="Показатели поручения">${Object.entries(state.stats).map(([k,v])=>`<span>${esc(statNames[k]||k)} <b>${v}</b></span>`).join("")}</div>`;
+    return `${hero(m)}<section class="cr-health" data-health="${state.hp<40?"critical":"normal"}" aria-label="Состояние героя"><div class="cr-health-label"><b>${state.hp<40?"♥ Критическое здоровье":"♥ Здоровье"}</b><strong>${state.hp}/100</strong></div><div class="cr-hp-track" role="progressbar" aria-label="Здоровье героя" aria-valuenow="${state.hp}" aria-valuemin="0" aria-valuemax="100"><span style="width:${state.hp}%"></span></div></section><div class="cr-hud" aria-label="Показатели поручения">${Object.entries(state.stats).map(([k,v])=>`<span>${esc(statNames[k]||k)} <b>${v}</b></span>`).join("")}</div>`;
   }
   function gearArt(id, cssClass = "cr-gear-illustration") {
     if (!Object.prototype.hasOwnProperty.call(C.items, id)) return "";

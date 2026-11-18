@@ -822,3 +822,6 @@ body[data-criminal="active"] > .bh-audio-controls button {
 #criminalScreen .cr-awards article{border-radius:4px;background:#30241a;min-width:0;overflow-wrap:anywhere}
 #criminalScreen .cr-awards>p{grid-column:1/-1;margin:5px}
 #criminalScreen .cr-record-body>p,#criminalScreen .cr-record-body>details,#criminalScreen .cr-memory-fold>p{margin:10px}
+
+/* V105: keep decorative icon failure compact, without a second story message. */
+#criminalScreen .cr-icon-fallback{display:inline-block;box-sizing:border-box;background:#25241e;border:1px dashed #786444}
