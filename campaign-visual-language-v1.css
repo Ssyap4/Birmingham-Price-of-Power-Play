@@ -923,3 +923,24 @@
  #game .decision-preflight[data-compact="true"]{gap:6px;padding:9px 7px}
  #game .decision-preflight[data-compact="true"] .decision-preflight-kicker{letter-spacing:0}
 }
+
+/* V80: mission closure shares the campaign's report-first hierarchy.
+   Preserve archive failures, all earned epilogues and actual resource deltas. */
+@media(orientation:portrait) and (max-width:700px){
+ #criminalScreen .cr-result{
+  border-color:#b28c58!important;padding:14px 13px;
+  background:repeating-linear-gradient(0deg,#caaa830b 0 1px,transparent 1px 7px),linear-gradient(145deg,#38281b,#19130f 75%)!important;
+ }
+ #criminalScreen .cr-result>b{display:block;font:700 clamp(1.15rem,5vw,1.45rem)/1.3 Georgia,serif}
+ #criminalScreen .cr-result>p{margin:8px 0 0;font:600 .83rem/1.5 system-ui,sans-serif}
+ #criminalScreen .cr-final-receipt{margin:12px 0;padding:12px 13px}
+ #criminalScreen .cr-final-receipt h2{margin:5px 0 7px;font-size:1.22rem}
+ #criminalScreen .cr-final-receipt p{margin:0;font:400 .86rem/1.55 system-ui,sans-serif}
+ #criminalScreen .cr-final-actions{margin:12px 0 18px}
+ #criminalScreen .cr-final-actions button{min-height:50px;text-align:center;font:750 .8rem/1.4 system-ui,sans-serif}
+ #criminalScreen .cr-final-actions [data-action="finalChronicle"]{background:#211a14;color:#f1d2a7}
+ #criminalScreen .cr-final-actions [data-action="restart"]{background:linear-gradient(135deg,#624726,#39291b);border-color:#d7af75;color:#fae1b7}
+ #criminalScreen .cr-final-detail-heading{border-top:1px solid #947246;margin:18px 0 10px;padding-top:14px;font:700 1.18rem/1.3 Georgia,serif;color:#f2d4aa}
+ #criminalScreen .cr-hp-delta[data-change="none"]{font:600 .85rem/1.45 system-ui,sans-serif;color:#d5c0a4}
+ #criminalScreen .cr-consequence .cr-primary{min-height:50px}
+}

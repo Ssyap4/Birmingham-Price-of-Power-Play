@@ -263,7 +263,7 @@
         ) + btn("restart", "Начать новую попытку вместо этой");
     else actions = btn("start", "Начать поручение", "cr-primary");
     render(
-      `<header class="cr-heading"><span>${id} · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${art(m, m.start)}<h2>Приказ</h2><p>${esc(m.brief)}</p><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p><p>HP: 0–100. При нуле попытка заканчивается гибелью. Перевязка восстанавливает 35 HP и расходуется. Смерть здесь не затрагивает героя в Делах №001 и №002.</p><p class="cr-small">Автосохранение локальное, на этом устройстве. Отдельные попытки и награды не синхронизируются с другими браузерами. Случайный результат закреплён внутри попытки; перезагрузка его не меняет.</p><div class="cr-actions" data-brief="${id}">${actions}</div>`,
+      `<header class="cr-heading"><span>${id} · ${esc(m.district)}</span><h1>${esc(m.title)}</h1></header>${hero(m)}${art(m, m.start)}<h2>Приказ</h2><p>${esc(m.brief)}</p><h2>Правила этой ночи</h2><p>${esc(m.rules)}</p><p>HP: 0–100. При нуле попытка заканчивается гибелью. Перевязка восстанавливает 35 HP и расходуется. Гибель в поручении завершает только эту попытку и не меняет состояние героя в детективных расследованиях.</p><p class="cr-small">Автосохранение локальное, на этом устройстве. Отдельные попытки и награды не синхронизируются с другими браузерами. Случайный результат закреплён внутри попытки; перезагрузка его не меняет.</p><div class="cr-actions" data-brief="${id}">${actions}</div>`,
     );
   }
   function entropy() {
@@ -400,7 +400,7 @@
       .join("")}</div>`;
   }
   function resultDetails(m,e){
-    return `<small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p class="cr-hp-delta" data-change="${e.hpDelta<0?"loss":e.hpDelta>0?"gain":"none"}">HP ${e.hpDelta >= 0 ? "+" : ""}${e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}`;
+    return `<small class="cr-consequence-origin">ИТОГ: ${esc(m.scenes[e.from]?.title || "Последний выбор")}</small><h2>Цена решения</h2><p>${esc(e.text)}</p><p class="cr-hp-delta" data-change="${e.hpDelta<0?"loss":e.hpDelta>0?"gain":"none"}">${e.hpDelta===0?"HP без изменений":"HP "+(e.hpDelta>0?"+":"")+e.hpDelta} · ${e.roll === null ? "Без случайной проверки" : e.failed ? "Риск сработал" : "Опасности удалось избежать"}</p>${resourceChanges()}`;
   }
   function scene(showResult) {
     mode = "scene";
@@ -534,7 +534,7 @@
       };
     }
     render(
-      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${finalReceipt(m,a)}${epilogue(state)}${verifiedNotes(r.notes)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}${journal()}<div class="cr-actions">${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}</div>`,
+      `${awardBanner()}<header class="cr-heading"><span>${m.id} · ПОПЫТКА ЗАВЕРШЕНА</span><h1>${esc(r.title)}</h1></header>${hero(m)}${art(m, "end:" + state.terminalId)}<p>${esc(r.text)}</p><div class="cr-result"><b>Вы ${state.hp === 0 ? "погибли" : "выжили"} · HP ${state.hp}/100</b><p>Приказ ${["clean", "costly"].includes(state.terminalId) ? "выполнен" : "не выполнен"} · ${state.stats.time} ходов</p></div>${finalReceipt(m,a)}${a.ok ? `<p class="cr-save-status">Финал записан в хронику. Знак «${esc(C.awardName(m.id, state.terminalId))}» учтён один раз за этот исход.</p>` : warning(a.error + " Финал не объявляется награждённым. При сохранённом слоте хроника восстановится после устранения ошибки.")}<div class="cr-actions cr-final-actions" aria-label="Действия после поручения">${!a.ok && !memory ? btn("retryArchive", "Повторить запись хроники") : ""}${btn("finalChronicle", "Открыть хронику")}${btn("restart", "Новая попытка", "cr-primary")}</div><h2 class="cr-final-detail-heading">Материалы поручения</h2>${state.lastEvent?`<section class="cr-final-consequence">${resultDetails(m,state.lastEvent)}</section>`:""}${epilogue(state)}${verifiedNotes(r.notes)}${journal()}`,
     );
   }
   function chronicle(returnTo = null, returnWarning = "") {
