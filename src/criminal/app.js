@@ -100,6 +100,13 @@
     clearArtDeadline();
     open();
     root.innerHTML = top() + html;
+    // V76: on the unified atlas, the map is the primary destination.
+    // Keep the original delegated Chronicle/Home actions and standalone order.
+    if (unified && mode === "map") {
+      const mapLegend = root.querySelector(".cr-map + .cr-small");
+      const controls = root.querySelector(".cr-top");
+      if (mapLegend && controls) mapLegend.after(controls);
+    }
     root.querySelectorAll("img").forEach((img) => {
       const frame=img.closest(".cr-frame");
       const fallback=()=>{
