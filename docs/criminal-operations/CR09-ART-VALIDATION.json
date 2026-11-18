@@ -1,0 +1,15 @@
+{
+  "technicalStatus": "pass",
+  "review": "candidate",
+  "frames": 24,
+  "totalBytes": 2132662,
+  "largest": "assets/criminal/candidates/cr09/cr09-arrival.webp",
+  "largestBytes": 172724,
+  "decodedRGB720x900": true,
+  "distinctWebpSha256": 24,
+  "distinctActualSourceSha256": 24,
+  "gitHashObjectVerified": true,
+  "browser": "pass: Chromium 156.0.8078.79, 320×844 and 390×844, 24 decoded, no horizontal overflow or page errors",
+  "runtimeIntegrated": false,
+  "exactSceneCoverage": true
+}

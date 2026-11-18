@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "scope": "local candidate gallery only",
+  "results": [
+    {
+      "browser": "Chromium",
+      "version": "156.0.8078.79",
+      "width": 320,
+      "height": 844,
+      "decodedFrames": 24,
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "browser": "Chromium",
+      "version": "156.0.8078.79",
+      "width": 390,
+      "height": 844,
+      "decodedFrames": 24,
+      "horizontalOverflow": false,
+      "errors": []
+    }
+  ],
+  "note": "Local HTTP; favicon.ico returned 404; all 24 image requests succeeded. WebKit and physical devices not tested."
+}
