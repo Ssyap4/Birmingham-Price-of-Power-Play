@@ -111,7 +111,7 @@
       metric.append(count,label);
       const desc=root.document.createElement("small");
       desc.textContent=available
-        ?"Подтверждённых знаков: "+item.unique+
+        ?"подтверждённых знаков: "+item.unique+
           (item.status==="partial"?" · Есть неподтверждённые записи.":"")
         :item.status==="damaged"?"Архив требует проверки":"Локальный архив недоступен";
       card.append(h,metric,desc);

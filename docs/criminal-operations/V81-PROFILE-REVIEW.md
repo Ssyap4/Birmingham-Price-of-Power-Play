@@ -9,3 +9,5 @@ Base V80 1902fc0333f99ab5b882249db12f50552337c4fa: local and remote clean/equal;
 - No new images, no engine/save/reward changes, no merge to main, no Vercel release or physical phone test.
 - Codex remains optional for independent review or substantial new development. Future content direction remains V80 roadmap; choose new operations or detective Case003 after current polish/acceptance.
 
+
+- Remote mobile CI 44215982963 on initial V81 failed on exact lowercase label contract. Restored the original lowercase phrase without weakening the assertion; local static 19/19, profile 5/5, unified build and integrity passed. The text-only correction does not change the previously verified geometry or storage. Final remote rerun remains to be confirmed.
