@@ -179,4 +179,5 @@ for(const [id,hero,from,title,text,to] of heroBeats){
   scene(id,[text],back(to,"Продолжить основное действие"),{chapter:nodes[from].chapter,title,hero});
   nodes[from].actions.unshift(enter("hero-"+id,title,id,{hero}));
 }
+require("./screenplay-v2")(nodes);
 module.exports={nodes,contract,start:"P01"};
