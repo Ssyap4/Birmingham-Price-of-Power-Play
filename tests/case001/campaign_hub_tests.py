@@ -26,7 +26,12 @@ assert "shade.addEventListener('wheel'" not in inventory, "Wheel trap must be ab
 assert 'gameExitBtn' in content("session-controls-v1.js")
 assert "document.querySelector('.bh-audio-controls')" in content("session-controls-v1.js")
 assert all(x in chapter for x in ("intro.webp","office-approved.webp","canal-approved.webp","reed.webp","pump.webp"))
-assert all(x in game for x in ("campaignDossiers","campaignAchievements","campaignHistory"))
+# The campaign module owns archive screens; the bridge and menu wire their real destinations.
+bridge=content("campaign-bridge-v13.js")
+assert all(x in bridge for x in ("campaignDossiers","campaignAchievements","campaignHistory"))
+assert "hub.open(" in bridge
+assert "campaign-bridge-v13.js" in html
+assert "open(target.id==='storyStart'?'campaignAchievements':'campaignDossiers')" in hub
 # Profile shortcuts are owned by campaign-hub-v1.js, not the trial profile renderer.
 assert "const profile=$('profile');if(profile)" in hub
 assert "profile.append(link)" in hub

@@ -32,7 +32,9 @@ with sync_playwright() as p:
  # previously earned popups.
  page.locator('#caseBack').click()
  if page.locator('#districts').is_visible():
-  page.locator('#districtBack').click()
+  assert page.locator('#districtBack').is_hidden()
+  page.locator('#homeBtn').click()
+ assert page.locator('#home').is_visible()
  page.locator('#storyStart').click()
  assert page.locator('#campaignFirstCaseAchievements .campaign-award').count()==18
  assert page.locator('#campaignSecondCaseAchievements .campaign-award').count()==18
