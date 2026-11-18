@@ -971,3 +971,17 @@
   margin:7px 0 12px!important;
  }
 }
+
+/* V82: explicit local returns in long archives, not another fixed overlay. */
+.campaign-hub .campaign-section-return{
+ display:block;width:100%;min-height:48px;box-sizing:border-box;
+ margin:14px 0 4px;padding:10px 9px;border:1px solid #9b794b;border-radius:6px;
+ background:linear-gradient(120deg,#302418,#1b1713);color:#f1d4a7;
+ font:700 .76rem/1.4 system-ui,sans-serif;letter-spacing:.025em;text-align:center;
+}
+.campaign-hub .campaign-section-return:focus-visible{outline:3px solid #f5cc88;outline-offset:2px}
+.campaign-hub .campaign-002-jumps{scroll-margin-top:12px}
+@media(orientation:portrait) and (max-width:700px){
+ .campaign-hub .campaign-return{display:block;width:100%;text-align:center}
+ .campaign-hub #campaignFirstCaseAchievements>.campaign-section-return{width:calc(100% - 20px);margin:8px 10px 12px}
+}

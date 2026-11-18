@@ -289,6 +289,34 @@ function renderHistory(el,runs){
 }
 // View-only state: keep opened AND explicitly closed folds across rebuilds.
  // No persistent keys, timers, engine changes or extra navigation.
+ // V82: section-local returns reuse the existing archive index. They
+ // never change folds, records or the active game direction.
+ function archiveReturns(id,box){
+  const index=box.querySelector('.campaign-002-jumps');if(!index)return;
+  const add=(target,after=false,origin='')=>{
+   if(!target)return;
+   const button=make('button','campaign-section-return','↑ К СПИСКУ РАЗДЕЛОВ');
+   button.type='button';
+   button.addEventListener('click',()=>{
+    const source=[...index.querySelectorAll('[data-jump-to]')].find(b=>b.dataset.jumpTo===origin)||index.querySelector('button');
+    index.scrollIntoView({block:'start',behavior:'instant'});
+    source?.focus({preventScroll:true});
+   });
+   if(after)target.after(button);else target.append(button);
+  };
+  if(id==='campaignAchievements'){
+   add(box.querySelector('#campaignFirstCaseAchievements'),false,'campaignFirstCaseAchievements');
+   add(box.querySelector('#campaignSecondCaseAchievements'),false,'campaignSecondCaseAchievements');
+   add(box.querySelector('#campaignCriminalAchievements'),false,'campaignCriminalAchievements');
+  }else if(id==='campaignHistory'){
+   add(box.querySelector('.campaign-history-list'),true,'campaignFirstCaseHistory');
+   add(box.querySelector('#campaignSecondCaseHistory'),false,'campaignSecondCaseHistory');
+   add(box.querySelector('#campaignCriminalHistory'),false,'campaignCriminalHistory');
+  }else if(id==='campaignDossiers'){
+   const target=box.querySelector('#campaignCriminalDossiers');
+   if(target){add(target);target.lastElementChild.textContent='↑ К СПИСКУ ГЕРОЕВ';}
+  }
+ }
  function foldKey(el){return el.dataset.archiveFold||el.id||''}
  function render(id){
   const runs=persistFinished(),screen=$(id),box=screen?.querySelector('.campaign-content');if(!box)return;
@@ -312,6 +340,7 @@ function renderHistory(el,runs){
   document.dispatchEvent(new CustomEvent('birmingham:campaign-render',{detail:{id,box,runs}}));
   // Independent projections must append after Case002 has wrapped Case001 cards.
   document.dispatchEvent(new CustomEvent('birmingham:campaign-render-complete',{detail:{id,box,runs}}));
+  archiveReturns(id,box);
   const badRecords=recordArchive().status!=='ready',badRewards=rewardArchive().status!=='ready',badAwards=awardArchive().status!=='ready';
   const confirmed=rewardArchive().value,combos=new Set(runs.map(r=>[r.caseId,r.heroId,r.ending].join(':')));
   const orphans=!badRecords&&!badRewards&&Object.keys(confirmed).some(k=>!combos.has(k));

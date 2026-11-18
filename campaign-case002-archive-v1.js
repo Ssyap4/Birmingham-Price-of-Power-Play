@@ -191,7 +191,7 @@ function renderDossiers(doc,box,archive,heroes){
   returnButton.type="button";
   returnButton.addEventListener("click",()=>{
    nav.scrollIntoView({block:"start",behavior:"auto"});
-   nav.querySelector("button")?.focus({preventScroll:true});
+   ([...nav.querySelectorAll("button")].find(b=>b.dataset.jumpTo===card.id)||nav.querySelector("button"))?.focus({preventScroll:true});
   });
  });
  showAlert(doc,box,archive);
