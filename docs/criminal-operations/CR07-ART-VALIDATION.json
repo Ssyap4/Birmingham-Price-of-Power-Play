@@ -372,6 +372,7 @@
       "assets/criminal/candidates/cr07/cr07-report.webp",
       "assets/criminal/candidates/cr07/cr07-trade.webp",
       "assets/criminal/candidates/cr07/cr07-withdrawal.webp",
+      "docs/criminal-operations/CR07-ART-BROWSER-QA.json",
       "docs/criminal-operations/CR07-ART-CANDIDATES.json",
       "docs/criminal-operations/CR07-ART-GALLERY.html",
       "docs/criminal-operations/CR07-ART-REPORT.md",
@@ -388,6 +389,15 @@
     "per-frame and whole-set budget",
     "24 local gallery images/links without external resources",
     "candidate status only",
-    "runtime and all protected files unchanged"
-  ]
+    "runtime and all protected files unchanged",
+    "Chromium and WebKit gallery 320x844 / 390x844: decode, layout, tap and return"
+  ],
+  "browserGallery": {
+    "status": "pass",
+    "report": "CR07-ART-BROWSER-QA.json",
+    "configurations": 4,
+    "artCommit": "b4ba3086449568ec51bded6679252a7203940371",
+    "gameRuntimeTested": false,
+    "hardwareDeviceTested": false
+  }
 }
